@@ -1,0 +1,47 @@
+import { Text, Pressable, StyleSheet, StyleProp, ViewStyle, PressableProps } from 'react-native'
+import React, { Children } from 'react'
+import themeColor from '../../theme/themeColor';
+import RNTextComponent from '../RNTextComponent';
+
+interface Props {
+    props?: PressableProps;
+    customStyle?: StyleProp<ViewStyle>
+    onlyBorder?: boolean;
+    color?: string;
+    children?: string;
+    buttonColor?: string;
+    noBorderRadius?: boolean;
+}
+
+const RNButton = ({ props, customStyle, onlyBorder, children = 'Text', buttonColor, noBorderRadius }: Props) => {
+    return (
+        <Pressable style={{
+            ...styles.container,
+            ...(buttonColor && { borderColor: buttonColor, backgroundColor: buttonColor }),
+            ...(onlyBorder && { backgroundColor: 'white' }
+            ),
+            ...(noBorderRadius && { borderRadius: 0 }),
+            ...(customStyle as Object),
+        }} {...props} >
+            <RNTextComponent isSemiBold style={{ color: themeColor.white, ...(onlyBorder && { color: buttonColor || themeColor.themeBlue }), fontSize: 16 }}>
+                {children}
+            </RNTextComponent>
+        </Pressable>
+    )
+}
+
+export default RNButton;
+
+const styles = StyleSheet.create({
+
+    container: {
+        borderWidth: 1,
+        maxHeight: 54,
+        height: 54,
+        borderRadius: 16,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderColor: themeColor.themeBlue,
+        backgroundColor: themeColor.themeBlue,
+    }
+})

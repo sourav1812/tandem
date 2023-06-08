@@ -1,37 +1,30 @@
-import React from 'react';
-import {ScrollView, TextInput, View} from 'react-native';
+import { View, Text, StyleSheet } from 'react-native'
+import React, { FC } from 'react';
+import RNTextComponent from './src/components/RNTextComponent';
+import RNButton from './src/components/RNButton';
+import RNTextInputWithLabel from './src/components/RNTextInputWithLabel';
+import RNSecureTextInput from './src/components/RNSecureTextInput';
 
-const App: () => JSX.Element = () => {
+
+const App: FC = () => {
   return (
-    <View
-      style={{
-        backgroundColor: 'yellow',
-        flex: 1,
-        flexDirection: 'column-reverse',
-      }}>
-      <View
-        style={{
-          backgroundColor: 'red',
-          flex: 0.7,
-        }}>
-        <View style={{flex: 0.7, backgroundColor: 'purple'}}>
-          <ScrollView style={{backgroundColor: 'blue'}}>
-            {[...new Array(1000)].map(() => (
-              <TextInput
-                style={{
-                  backgroundColor: 'white',
-                  marginVertical: 5,
-                }}
-              />
-            ))}
-          </ScrollView>
-        </View>
-      </View>
-      <View style={{backgroundColor: 'white', flex: 0.2}}>
-        <View style={{backgroundColor: 'orange', flex: 0.5}} />
-        <View style={{backgroundColor: 'brown', flex: 0.5}} />
-      </View>
+    <View style={styles.view} >
+      <RNSecureTextInput showIcon />
     </View>
-  );
-};
+  )
+}
+
 export default App;
+
+
+const styles = StyleSheet.create({
+  view: {
+    flex: 1,
+    justifyContent: 'center',
+    // alignItems: 'center',
+  },
+  text: {
+    fontSize: 40,
+    // fontFamily: 'Poppins-Regular'
+  }
+})
