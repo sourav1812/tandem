@@ -3,4 +3,5 @@ export enum COMPONENTSNAME {
   BOOKSHELF = 'Bookshelf',
   PEOPLE = 'People',
   BOTTOM_TAB = 'BottomTab',
+  GENERATE_STORY = 'GenerateStory',
 }

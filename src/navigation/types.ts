@@ -1,5 +1,6 @@
 export type RootStackParamList = {
   BottomTab: RootTabParamList;
+  GenerateStory : undefined;
 };
 
 export type RootTabParamList = {

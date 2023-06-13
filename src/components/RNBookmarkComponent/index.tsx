@@ -15,7 +15,7 @@ const RNBookmarkComponent = ({
   showIcon = true,
 }: Props) => {
   return (
-    <Pressable
+    <View
       style={[
         styles.container,
         {
@@ -54,7 +54,7 @@ const RNBookmarkComponent = ({
           </RNTextComponent>
         </>
       )}
-    </Pressable>
+    </View>
   );
 };
 

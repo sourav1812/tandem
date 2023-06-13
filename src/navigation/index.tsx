@@ -4,6 +4,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {RootStackParamList} from './types';
 import {COMPONENTSNAME} from './ComponentName';
 import BottomTab from './BottomTab';
+import GenerateStory from '../screens/GenerateStory';
 
 const AppNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -12,6 +13,7 @@ const AppNavigator = () => {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen component={BottomTab} name={COMPONENTSNAME.BOTTOM_TAB} />
+        <Stack.Screen component={GenerateStory} name={COMPONENTSNAME.GENERATE_STORY} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -1,4 +1,4 @@
-import {View, Image} from 'react-native';
+import {View, Image, Pressable} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
 import RNScreenWrapper from '../../components/RNScreenWrapper';
@@ -7,8 +7,9 @@ import RNTextComponent from '../../components/RNTextComponent';
 import themeColor from '../../theme/themeColor';
 import {scale, verticalScale} from 'react-native-size-matters';
 import RNBookmarkComponent from '../../components/RNBookmarkComponent';
+import { COMPONENTSNAME } from '../../navigation/ComponentName';
 
-const Home = () => {
+const Home = ({navigation} : any) => {
 
   const portrait = useOrientation().isPortrait
 
@@ -53,11 +54,14 @@ const Home = () => {
           </RNTextComponent>
           <View style={{...styles.options , ...(!portrait && styles.optionsPortrait ) }}>
             {dummyData.map((item, index) => (
-              <RNBookmarkComponent
+              <Pressable onPress={()=>{navigation.navigate(COMPONENTSNAME.GENERATE_STORY)}} >
+                    <RNBookmarkComponent
                 customStyle={{marginTop: verticalScale(24), ...(!portrait && styles.cardPortrait )}}
                 borderIconColor={item.color}
-                showIcon={index == 0}
+                showIcon={index == 0} 
               />
+              </Pressable>
+            
             ))}
           </View>
         </View>

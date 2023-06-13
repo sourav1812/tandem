@@ -1,7 +1,7 @@
-import {PressableProps} from 'react-native';
+
 
 export interface Props {
-  props?: PressableProps;
+  props?: any;
   customStyle?: any;
   borderIconColor: string;
   heading?: string;
