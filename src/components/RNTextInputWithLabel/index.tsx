@@ -1,20 +1,11 @@
-import { View, Text, TextInputProps, TextInput, StyleSheet, StyleProp, TextInputStyle } from 'react-native'
+import { View, Text, TextInputProps, TextInput, StyleSheet, StyleProp } from 'react-native'
 import React, { useState } from 'react'
 import RNTextComponent from '../RNTextComponent';
 import themeColor from '../../theme/themeColor';
-import Show from './../../assets/fonts/svg/Eye'
+import Show from '../../assets/svg/Eye'
+import { Props } from './interface';
 
-interface Props {
-    props?: TextInputProps;
-    label: string;
-    showLabel?: boolean;
-    hint: string;
-    value: string;
-    updateText: (value: string) => void;
-    inputStyle?: StyleProp<TextInputStyle>;
-    showIcon?: boolean;
-    Icon?: any
-}
+
 
 const RNTextInputWithLabel = ({ props, label = 'Label', showLabel = true, hint = 'Text...', updateText, value, inputStyle, showIcon, Icon }: Props) => {
 

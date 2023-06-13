@@ -1,30 +1,8 @@
-import { View, Text, StyleSheet } from 'react-native'
-import React, { FC } from 'react';
-import RNTextComponent from './src/components/RNTextComponent';
-import RNButton from './src/components/RNButton';
-import RNTextInputWithLabel from './src/components/RNTextInputWithLabel';
-import RNSecureTextInput from './src/components/RNSecureTextInput';
-
+import React, {FC} from 'react';
+import AppNavigator from './src/navigation';
 
 const App: FC = () => {
-  return (
-    <View style={styles.view} >
-      <RNSecureTextInput showIcon />
-    </View>
-  )
-}
+  return <AppNavigator />;
+};
 
 export default App;
-
-
-const styles = StyleSheet.create({
-  view: {
-    flex: 1,
-    justifyContent: 'center',
-    // alignItems: 'center',
-  },
-  text: {
-    fontSize: 40,
-    // fontFamily: 'Poppins-Regular'
-  }
-})
