@@ -5,11 +5,14 @@ import {COMPONENTSNAME} from './ComponentName';
 import Home from '../screens/Home';
 import Bookshelf from '../screens/Bookshelf';
 import People from '../screens/People';
-import {StyleSheet, View, Text} from 'react-native';
-import HomeIcon from '../assets/svg/Home';
+import {StyleSheet, View} from 'react-native';
 import BookshelfIcon from '../assets/svg/Bookmark';
 import RNTextComponent from '../components/RNTextComponent';
 import {scale, verticalScale} from 'react-native-size-matters';
+import PeopleIcon from '../assets/svg/People';
+import HomeIcon from '../assets/svg/Home';
+import BookmarkActive from '../assets/svg/BookmarkActive';
+import HomeActive from '../assets/svg/HomeActive';
 
 const BottomTab = () => {
   const Tab = createBottomTabNavigator<RootTabParamList>();
@@ -26,10 +29,10 @@ const BottomTab = () => {
         name={COMPONENTSNAME.BOOKSHELF}
         options={{
           tabBarIcon: ({focused}: any) => {
-            console.log(focused, 'focused');
             return (
               <View style={styles.iconContainer}>
-                <BookshelfIcon />
+                {focused ? <BookmarkActive /> : <BookshelfIcon />}
+
                 <RNTextComponent isMedium style={styles.title}>
                   Bookshelf
                 </RNTextComponent>
@@ -43,10 +46,9 @@ const BottomTab = () => {
         name={COMPONENTSNAME.HOME}
         options={{
           tabBarIcon: ({focused}: any) => {
-            console.log(focused, 'focused');
             return (
               <View style={styles.iconContainer}>
-                <BookshelfIcon />
+                {focused ? <HomeActive /> : <HomeIcon />}
                 <RNTextComponent isMedium style={styles.title}>
                   Home
                 </RNTextComponent>
@@ -60,10 +62,9 @@ const BottomTab = () => {
         name={COMPONENTSNAME.PEOPLE}
         options={{
           tabBarIcon: ({focused}: any) => {
-            console.log(focused, 'focused');
             return (
               <View style={styles.iconContainer}>
-                <BookshelfIcon />
+                <PeopleIcon />
                 <RNTextComponent isMedium style={styles.title}>
                   People
                 </RNTextComponent>
@@ -80,13 +81,13 @@ export default BottomTab;
 
 const styles = StyleSheet.create({
   tabBar: {
-    height: verticalScale(55),
+    height: verticalScale(52),
     justifyContent: 'center',
   },
   iconContainer: {
     alignItems: 'center',
     width: scale(100),
-    // borderWidth: 1,
+    marginTop: verticalScale(8),
   },
   title: {
     fontSize: 15,

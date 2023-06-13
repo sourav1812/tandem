@@ -3,8 +3,9 @@ import Svg, {SvgProps, Path} from 'react-native-svg';
 const SvgComponent = (props: SvgProps) => (
   <Svg
     xmlns="http://www.w3.org/2000/svg"
-    width={18}
-    height={22}
+    width={17}
+    height={20}
+    viewBox="0 0 17 20"
     fill="none"
     {...props}>
     <Path
@@ -13,7 +14,7 @@ const SvgComponent = (props: SvgProps) => (
       strokeLinejoin="round"
       strokeOpacity={0.6}
       strokeWidth={1.5}
-      d="M17.239 5.154c0-2.751-1.88-3.854-4.589-3.854H6.291C3.667 1.3 1.7 2.328 1.7 4.97v14.724a.95.95 0 0 0 1.413.828l6.382-3.58 6.327 3.574a.95.95 0 0 0 1.417-.827V5.154Z"
+      d="M8.485 13.346c-3.868 0-7.17.585-7.17 2.927s3.281 2.948 7.17 2.948c3.867 0 7.17-.586 7.17-2.927s-3.282-2.948-7.17-2.948Z"
       clipRule="evenodd"
     />
     <Path
@@ -21,8 +22,9 @@ const SvgComponent = (props: SvgProps) => (
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeOpacity={0.6}
-      strokeWidth={1.5}
-      d="M5.771 8.028h7.318"
+      strokeWidth={1.429}
+      d="M8.485 10.006A4.596 4.596 0 1 0 3.888 5.41a4.58 4.58 0 0 0 4.564 4.596h.033Z"
+      clipRule="evenodd"
     />
   </Svg>
 );

@@ -10,8 +10,6 @@ export const useOrientation = () => {
     };
 
     Dimensions.addEventListener('change', onChange);
-
-    return () => Dimensions.removeEventListener('change', onChange);
   }, []);
 
   return {
