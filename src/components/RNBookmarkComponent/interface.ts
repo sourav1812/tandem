@@ -1,9 +1,10 @@
-import {PressableProps, ViewStyle, StyleProp} from 'react-native';
+import {PressableProps} from 'react-native';
 
 export interface Props {
   props?: PressableProps;
-  customStyle?: StyleProp<ViewStyle>;
-  borderIconColor?: string;
-  heading: string;
-  subHeading: string;
+  customStyle?: any;
+  borderIconColor: string;
+  heading?: string;
+  subHeading?: string;
+  showIcon?: boolean;
 }

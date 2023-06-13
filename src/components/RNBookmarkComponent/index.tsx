@@ -1,33 +1,61 @@
-import { View, Text, Pressable, StyleSheet, TextComponent } from 'react-native'
-import React from 'react'
-import { Props } from './interface'
-import Bookmark from '../../assets/svg/Bookmark'
-import { styles } from './styles'
-import themeColor from '../../theme/themeColor'
-import RNTextComponent from '../RNTextComponent'
+import {View, Pressable, Image} from 'react-native';
+import React from 'react';
+import {Props} from './interface';
+import Bookmark from '../../assets/svg/Bookmark';
+import {styles} from './styles';
+import RNTextComponent from '../RNTextComponent';
+import {verticalScale} from 'react-native-size-matters';
 
-
-const RNBookmarkComponent = ({ props, customStyle, borderIconColor, heading = "I can't decide", subHeading = 'COMING SOON' }: Props) => {
-    return (
-        <Pressable style={[styles.container, {
-            ...(borderIconColor && { borderColor: borderIconColor }),
-            ...(customStyle as Object),
-        }]} {...props} >
-            <View style={styles.icon} >
-                <Bookmark fill={(borderIconColor && borderIconColor)} />
-            </View>
-            <RNTextComponent style={styles.heading} >
-                {heading}
-            </RNTextComponent>
-            <RNTextComponent style={{
-                ...styles.subHeading,
-                ...(borderIconColor && { color: borderIconColor }),
+const RNBookmarkComponent = ({
+  props,
+  customStyle,
+  borderIconColor,
+  heading = "I can't decide",
+  subHeading = 'COMING SOON',
+  showIcon = true,
+}: Props) => {
+  return (
+    <Pressable
+      style={[
+        styles.container,
+        {
+          ...(borderIconColor && {borderColor: borderIconColor}),
+          ...(showIcon && {backgroundColor: borderIconColor, paddingVertical: verticalScale(8)}),
+          ...(customStyle as Object),
+        },
+      ]}
+      {...props}>
+      {!showIcon ? (
+        <>
+          <View style={styles.icon}>
+            <Bookmark fill={borderIconColor && borderIconColor} />
+          </View>
+          <RNTextComponent style={styles.heading}>{heading}</RNTextComponent>
+          <RNTextComponent
+            style={{
+              ...styles.subHeading,
+              ...(borderIconColor && {color: borderIconColor}),
             }}>
-                {subHeading}
-            </RNTextComponent>
-        </Pressable>
-    )
-}
+            {subHeading}
+          </RNTextComponent>
+        </>
+      ) : (
+        <>
+          <View style={styles.imgContainer}>
+            <Image
+              source={{
+                uri: 'https://www.pngkit.com/png/full/216-2163934_magicians-wand-emoji-magic-wand.png',
+              }}
+              style={styles.img}
+            />
+          </View>
+          <RNTextComponent numberOfLines={2} isSemiBold style={styles.text2}>
+            Write a story
+          </RNTextComponent>
+        </>
+      )}
+    </Pressable>
+  );
+};
 
 export default RNBookmarkComponent;
-

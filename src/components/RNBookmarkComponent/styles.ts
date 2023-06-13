@@ -1,18 +1,20 @@
 import {StyleSheet} from 'react-native';
+import {verticalScale} from 'react-native-size-matters';
+import themeColor from '../../theme/themeColor';
 
 export const styles = StyleSheet.create({
   container: {
     borderWidth: 1,
-    height: 130,
-    width: 130,
+    height: verticalScale(134),
+    width: verticalScale(134),
     borderRadius: 16,
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
   },
   icon: {
     position: 'absolute',
-    top: '-8%',
-    right: '20%',
+    top: '-2%',
+    right: '10%',
   },
   heading: {
     fontSize: 16,
@@ -20,6 +22,25 @@ export const styles = StyleSheet.create({
   },
   subHeading: {
     fontSize: 14,
+    letterSpacing: 0,
+  },
+  imgContainer: {
+    height: verticalScale(45),
+    width: verticalScale(45),
+    borderRadius: 72,
+    backgroundColor: themeColor.white,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  img: {
+    height: verticalScale(28),
+    width: verticalScale(28),
+  },
+  text2: {
+    fontSize: verticalScale(18),
+    color: themeColor.white,
+    marginHorizontal: verticalScale(18),
+    textAlign: 'center',
     letterSpacing: 0,
   },
 });
