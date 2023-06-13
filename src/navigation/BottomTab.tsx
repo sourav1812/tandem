@@ -13,6 +13,8 @@ import PeopleIcon from '../assets/svg/People';
 import HomeIcon from '../assets/svg/Home';
 import BookmarkActive from '../assets/svg/BookmarkActive';
 import HomeActive from '../assets/svg/HomeActive';
+import PeopleActive from '../assets/svg/PeopleActive';
+import themeColor from '../theme/themeColor';
 
 const BottomTab = () => {
   const Tab = createBottomTabNavigator<RootTabParamList>();
@@ -30,7 +32,14 @@ const BottomTab = () => {
         options={{
           tabBarIcon: ({focused}: any) => {
             return (
-              <View style={styles.iconContainer}>
+              <View
+                style={{
+                  ...styles.iconContainer,
+                  ...(focused && {
+                    borderTopWidth: 3,
+                    borderColor: themeColor.themeBlue,
+                  }),
+                }}>
                 {focused ? <BookmarkActive /> : <BookshelfIcon />}
 
                 <RNTextComponent isMedium style={styles.title}>
@@ -47,9 +56,21 @@ const BottomTab = () => {
         options={{
           tabBarIcon: ({focused}: any) => {
             return (
-              <View style={styles.iconContainer}>
+              <View
+                style={{
+                  ...styles.iconContainer,
+                  ...(focused && {
+                    borderTopWidth: 3,
+                    borderColor: themeColor.themeBlue,
+                  }),
+                }}>
                 {focused ? <HomeActive /> : <HomeIcon />}
-                <RNTextComponent isMedium style={styles.title}>
+                <RNTextComponent
+                  isMedium
+                  style={{
+                    ...styles.title,
+                    ...(focused && {color: themeColor.themeBlue}),
+                  }}>
                   Home
                 </RNTextComponent>
               </View>
@@ -63,9 +84,21 @@ const BottomTab = () => {
         options={{
           tabBarIcon: ({focused}: any) => {
             return (
-              <View style={styles.iconContainer}>
-                <PeopleIcon />
-                <RNTextComponent isMedium style={styles.title}>
+              <View
+                style={{
+                  ...styles.iconContainer,
+                  ...(focused && {
+                    borderTopWidth: 3,
+                    borderColor: themeColor.themeBlue,
+                  }),
+                }}>
+                {focused ? <PeopleActive /> : <PeopleIcon />}
+                <RNTextComponent
+                  isMedium
+                  style={{
+                    ...styles.title,
+                    ...(focused && {color: themeColor.themeBlue}),
+                  }}>
                   People
                 </RNTextComponent>
               </View>
@@ -82,12 +115,13 @@ export default BottomTab;
 const styles = StyleSheet.create({
   tabBar: {
     height: verticalScale(52),
-    justifyContent: 'center',
   },
   iconContainer: {
     alignItems: 'center',
-    width: scale(100),
-    marginTop: verticalScale(8),
+    width: scale(80),
+    borderTopWidth: 3,
+    borderColor: themeColor.white,
+    paddingTop: verticalScale(8),
   },
   title: {
     fontSize: 15,
