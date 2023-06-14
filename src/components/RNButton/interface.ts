@@ -6,6 +6,6 @@ export interface Props {
   onlyBorder?: boolean;
   color?: string;
   children?: string;
-  buttonColor?: string;
+  buttonColor?: string | any;
   noBorderRadius?: boolean;
 }

@@ -15,11 +15,23 @@ export const styles = StyleSheet.create({
     marginTop : verticalScale(50)
   },
   heading : {
-    fontSize : scale(20),
+    fontSize : scale(18),
   },
   questionNumber : {
-    fontSize : scale(20),
+    fontSize : scale(18),
 
     color : themeColor.themeBlue
+  },
+  progressBar : {
+    flexDirection : 'row',
+    alignItems : 'center',
+    justifyContent : 'space-between',
+    marginTop : verticalScale(16)
+  },
+  indicator : {
+    height : verticalScale(10),
+    width : scale(48),
+    borderRadius : verticalScale(8),
+    backgroundColor : 'rgba(66, 133, 246, 0.5)'
   }
 });

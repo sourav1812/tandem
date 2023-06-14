@@ -7,13 +7,13 @@ import { Props } from './interface';
 
 const RNButton = ({ props, customStyle, onlyBorder, children = 'Text', buttonColor, noBorderRadius }: Props) => {
     return (
-        <Pressable style={[styles.container, {
-            ...(buttonColor && { borderColor: buttonColor, backgroundColor: buttonColor }),
-            ...(onlyBorder && { backgroundColor: 'white' }
+        <Pressable style={[styles.container, 
+            (buttonColor && { borderColor: buttonColor, backgroundColor: buttonColor }),
+            (onlyBorder && { backgroundColor: 'white' }
             ),
-            ...(noBorderRadius && { borderRadius: 0 }),
-            ...(customStyle as Object),
-        }]} {...props} >
+            (noBorderRadius && { borderRadius: 0 }),
+            ( customStyle &&  customStyle),
+        ]} {...props} >
             <RNTextComponent isSemiBold style={{ color: themeColor.white, ...(onlyBorder && { color: buttonColor || themeColor.themeBlue }), fontSize: 16 }}>
                 {children}
             </RNTextComponent>

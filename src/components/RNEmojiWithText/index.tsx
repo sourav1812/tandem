@@ -9,10 +9,10 @@ import RNTextComponent from '../RNTextComponent'
 
 const RNEmojiWithText = ({ props, customStyle, heading = "Lion", emoji, showText }: Props) => {
     return (
-        <Pressable style={{
-            ...styles.container,
-            ...(customStyle as Object),
-        }} {...props} >
+        <Pressable style={[
+            styles.container,
+            (customStyle && customStyle),
+        ]} {...props} >
             <RNTextComponent style={{ ...styles.emoji, ...(emoji as Object), ...(showText && { fontSize: 30 }) }} >
                 🦁
             </RNTextComponent>

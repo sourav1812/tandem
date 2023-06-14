@@ -10,8 +10,8 @@ import { Props } from './interface';
 
 const RNSecureTextInput = ({ props, label = 'Label', showLabel = true, hint = 'Text...', updateText, value, inputStyle, showError }: Props) => {
 
-    const [highlight, setHighlight] = useState(false)
-    const [showPassword, setShowPassword] = useState(false)
+    const [highlight, setHighlight] = useState<boolean>(false)
+    const [showPassword, setShowPassword] = useState<boolean>(false)
 
     const toggleHighlight = () => {
         setHighlight(!highlight)
@@ -28,15 +28,15 @@ const RNSecureTextInput = ({ props, label = 'Label', showLabel = true, hint = 'T
             <RNTextComponent style={{ fontSize: 14, marginBottom: 8 }}>
                 Password
             </RNTextComponent>
-            <View style={{
-                ...styles.box,
-                ...(highlight && { borderColor: themeColor.themeBlue }),
-            }} >
+            <View style={[
+                styles.box,
+                (highlight && { borderColor: themeColor.themeBlue }),
+            ]} >
                 <TextInput
-                    style={{
-                        ...styles.textinput,
-                        ...(inputStyle as Object),
-                    }}
+                    style={[
+                        styles.textinput,
+                        (inputStyle && inputStyle),
+                    ]}
                     {...props}
                     placeholder={hint}
                     onFocus={toggleHighlight}

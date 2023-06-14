@@ -3,6 +3,7 @@ import React from 'react';
 import {styles} from './styles';
 import RNTextComponent from '../RNTextComponent';
 import RightArrow from '../../assets/svg/RightArrow';
+import { Props } from './interface';
 
 const RNStoryCard = ({props}: Props) => {
   return (

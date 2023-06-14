@@ -24,18 +24,18 @@ const RNTextComponent = ({
             numberOfLines={numberOfLines}
             style={[
                 styles.text,
-                {
-                    ...(isMedium && {
+                
+                    (isMedium && {
                         fontSize: 16,
                         fontFamily: 'Poppins-Medium',
                     }),
 
-                    ...(isSemiBold && { fontSize: 16, fontFamily: 'Poppins-SemiBold' }),
+                    (isSemiBold && { fontSize: 16, fontFamily: 'Poppins-SemiBold' }),
 
-                    ...(isBold && { fontSize: 14, fontFamily: 'Poppins-Bold' }),
+                    (isBold && { fontSize: 14, fontFamily: 'Poppins-Bold' }),
 
-                    ...(style as object),
-                },
+                    (style && style),
+                
             ]}
             onPress={handleOnPress}
         >

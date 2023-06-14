@@ -18,11 +18,9 @@ const RNBookmarkComponent = ({
     <View
       style={[
         styles.container,
-        {
-          ...(borderIconColor && {borderColor: borderIconColor}),
-          ...(showIcon && {backgroundColor: borderIconColor, paddingVertical: verticalScale(8)}),
-          ...(customStyle as Object),
-        },
+        (borderIconColor && {borderColor: borderIconColor}),
+        (showIcon && {backgroundColor: borderIconColor, paddingVertical: verticalScale(8)}),
+        (customStyle as Object),
       ]}
       {...props}>
       {!showIcon ? (

@@ -20,18 +20,18 @@ const RNTextInputWithLabel = ({ props, label = 'Label', showLabel = true, hint =
             {showLabel && <RNTextComponent style={{ fontSize: 14, marginBottom: 8 }}>
                 {label}
             </RNTextComponent>}
-            <View style={{
-                ...styles.box,
-                ...(highlight && { borderColor: themeColor.themeBlue }),
-            }} >
+            <View style={[
+                styles.box,
+                (highlight && { borderColor: themeColor.themeBlue }),
+            ]} >
                 {showIcon && (
                     <Show />
                 )}
                 <TextInput
-                    style={{
-                        ...styles.textinput,
-                        ...(inputStyle as Object)
-                    }}
+                    style={[
+                        styles.textinput,
+                        (inputStyle as Object)
+                    ]}
                     {...props}
                     placeholder={hint}
                     onFocus={toggleHighlight}

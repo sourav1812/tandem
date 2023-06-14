@@ -1,7 +1,7 @@
 import {StyleProp, TextStyle} from 'react-native';
 
 export interface Props {
-  children: string;
+  children: string | Element ;
   isBold?: boolean;
   isSemiBold?: boolean;
   isMedium?: boolean;
