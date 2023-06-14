@@ -5,17 +5,16 @@ import RNTextComponent from '../RNTextComponent';
 import { Props } from './interface';
 
 
-const RNButton = ({ props, customStyle, onlyBorder, children = 'Text', buttonColor, noBorderRadius }: Props) => {
+const RNButton = ({ props, customStyle, onlyBorder, title , buttonColor, noBorderRadius }: Props) => {
     return (
         <Pressable style={[styles.container, 
-            (buttonColor && { borderColor: buttonColor, backgroundColor: buttonColor }),
-            (onlyBorder && { backgroundColor: 'white' }
-            ),
-            (noBorderRadius && { borderRadius: 0 }),
+            {...buttonColor && { borderColor: buttonColor, backgroundColor: buttonColor }},
+            {...onlyBorder && { backgroundColor: 'white' }},
+            {...noBorderRadius && { borderRadius: 0 }},
             ( customStyle &&  customStyle),
         ]} {...props} >
             <RNTextComponent isSemiBold style={{ color: themeColor.white, ...(onlyBorder && { color: buttonColor || themeColor.themeBlue }), fontSize: 16 }}>
-                {children}
+                {title}
             </RNTextComponent>
         </Pressable>
     )

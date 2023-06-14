@@ -7,7 +7,7 @@ import { Props } from './interface';
 
 
 
-const RNTextInputWithLabel = ({ props, label = 'Label', showLabel = true, hint = 'Text...', updateText, value, inputStyle, showIcon, Icon }: Props) => {
+const RNTextInputWithLabel = ({ props, label, showLabel = true, hint , updateText, value, inputStyle, showIcon, Icon }: Props) => {
 
     const [highlight, setHighlight] = useState(false)
 
@@ -30,7 +30,7 @@ const RNTextInputWithLabel = ({ props, label = 'Label', showLabel = true, hint =
                 <TextInput
                     style={[
                         styles.textinput,
-                        (inputStyle as Object)
+                        (inputStyle && inputStyle)
                     ]}
                     {...props}
                     placeholder={hint}

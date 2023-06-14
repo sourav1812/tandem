@@ -8,7 +8,7 @@ import { Props } from './interface';
 
 
 
-const RNSecureTextInput = ({ props, label = 'Label', showLabel = true, hint = 'Text...', updateText, value, inputStyle, showError }: Props) => {
+const RNSecureTextInput = ({ props, label ,  hint , updateText, value, inputStyle, showError }: Props) => {
 
     const [highlight, setHighlight] = useState<boolean>(false)
     const [showPassword, setShowPassword] = useState<boolean>(false)
@@ -53,7 +53,7 @@ const RNSecureTextInput = ({ props, label = 'Label', showLabel = true, hint = 'T
                     )}
                 </Pressable>
             </View>
-            {showError && <RNTextComponent style={{ fontSize: 15, marginTop: 5, color: themeColor.red }}>
+            {showError && <RNTextComponent style={styles.label}>
                 {label}
             </RNTextComponent>}
         </View>
@@ -81,5 +81,6 @@ const styles = StyleSheet.create({
         fontSize: 14,
         marginRight: 16
         // backgroundColor: themeColor.themeBlue,
-    }
+    },
+    label : {fontSize: 15, marginTop: 5, color: themeColor.red }
 })

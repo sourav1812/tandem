@@ -7,7 +7,7 @@ import themeColor from '../../theme/themeColor'
 import RNTextComponent from '../RNTextComponent'
 
 
-const RNEmojiWithText = ({ props, customStyle, heading = "Lion", emoji, showText }: Props) => {
+const RNEmojiWithText = ({ props, customStyle, heading , emoji, showText }: Props) => {
     return (
         <Pressable style={[
             styles.container,

@@ -5,7 +5,7 @@ export interface Props {
   customStyle?: StyleProp<ViewStyle>;
   onlyBorder?: boolean;
   color?: string;
-  children?: string;
-  buttonColor?: string | any;
+  title: string;
+  buttonColor?: string;
   noBorderRadius?: boolean;
 }

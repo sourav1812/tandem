@@ -13,11 +13,11 @@ const Home = ({navigation} : any) => {
 
   const portrait = useOrientation().isPortrait
 
-  const dummyData: {color: string}[] = [
-    {color: themeColor.purple},
-    {color: themeColor.purple},
-    {color: themeColor.gold},
-    {color: themeColor.green},
+  const dummyData: {color: string , title: string}[] = [
+    {color: themeColor.purple , title : "I can't decide" },
+    {color: themeColor.purple , title  :"I can't decide"  },
+    {color: themeColor.gold , title : "Learn something"  },
+    {color: themeColor.green , title : "Have fun"  },  
   ];
 
   return (
@@ -59,6 +59,8 @@ const Home = ({navigation} : any) => {
                 customStyle={{marginTop: verticalScale(24), ...(!portrait && styles.cardPortrait )}}
                 borderIconColor={item.color}
                 showIcon={index == 0} 
+                heading={item.title}
+                subHeading='COMING SOON'
               />
               </Pressable>
             

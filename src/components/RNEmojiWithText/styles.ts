@@ -1,10 +1,11 @@
 import {StyleSheet} from 'react-native';
 import themeColor from '../../theme/themeColor';
+import { verticalScale } from 'react-native-size-matters';
 
 export const styles = StyleSheet.create({
   container: {
-    height: 130,
-    width: 130,
+    height: verticalScale(120),
+    width: verticalScale(120),
     borderRadius: 16,
     justifyContent: 'center',
     alignItems: 'center',

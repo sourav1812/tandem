@@ -1,11 +1,11 @@
-import {StyleProp, TextStyle} from 'react-native';
+import {StyleProp, TextStyle , GestureResponderEvent} from 'react-native';
 
 export interface Props {
-  children: string | Element ;
+  children: any ;
   isBold?: boolean;
   isSemiBold?: boolean;
   isMedium?: boolean;
   style?: StyleProp<TextStyle>;
   numberOfLines?: number;
-  handleOnPress?: any;
+  handleOnPress?: ((event: GestureResponderEvent) => void) | undefined
 }

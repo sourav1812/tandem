@@ -23,6 +23,7 @@ export const styles = StyleSheet.create({
   subHeading: {
     fontSize: 14,
     letterSpacing: 0,
+    marginTop : verticalScale(4)
   },
   imgContainer: {
     height: verticalScale(45),

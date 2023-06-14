@@ -8,19 +8,20 @@ import {verticalScale} from 'react-native-size-matters';
 
 const RNBookmarkComponent = ({
   props,
-  customStyle,
+  customStyle ,
   borderIconColor,
-  heading = "I can't decide",
-  subHeading = 'COMING SOON',
+  heading,
+  subHeading ,
   showIcon = true,
 }: Props) => {
   return (
     <View
       style={[
         styles.container,
-        (borderIconColor && {borderColor: borderIconColor}),
-        (showIcon && {backgroundColor: borderIconColor, paddingVertical: verticalScale(8)}),
-        (customStyle as Object),
+        {...borderIconColor && {borderColor: borderIconColor}},
+        {...showIcon && {backgroundColor: borderIconColor, paddingVertical: verticalScale(8)}},
+        {...!showIcon && {justifyContent : 'center' }},
+        (customStyle  &&  customStyle),
       ]}
       {...props}>
       {!showIcon ? (
@@ -30,10 +31,10 @@ const RNBookmarkComponent = ({
           </View>
           <RNTextComponent style={styles.heading}>{heading}</RNTextComponent>
           <RNTextComponent
-            style={{
-              ...styles.subHeading,
-              ...(borderIconColor && {color: borderIconColor}),
-            }}>
+            style={[
+              styles.subHeading,
+              {...borderIconColor && {color: borderIconColor}},
+            ]}>
             {subHeading}
           </RNTextComponent>
         </>

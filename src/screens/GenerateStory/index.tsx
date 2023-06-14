@@ -27,7 +27,7 @@ const GenerateStory = () => {
                 )
               }).map((index , value)=>{
                 return (
-                  <View style={{...styles.indicator , backgroundColor  : index.index==questionNumber ? themeColor.themeBlue   : 'rgba(66, 133, 246, 0.5)'  }} />
+                  <View style={[styles.indicator , {...{backgroundColor  : index.index==questionNumber ? themeColor.themeBlue   : 'rgba(66, 133, 246, 0.5)'  }}]} />
                 )
               })}
             </View>

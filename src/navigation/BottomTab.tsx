@@ -33,13 +33,13 @@ const BottomTab = () => {
           tabBarIcon: ({focused}: any) => {
             return (
               <View
-                style={{
-                  ...styles.iconContainer,
-                  ...(focused && {
+                style={[
+                  styles.iconContainer,
+                  {...focused && {
                     borderTopWidth: 3,
                     borderColor: themeColor.themeBlue,
-                  }),
-                }}>
+                  }},
+                ]}>
                 {focused ? <BookmarkActive /> : <BookshelfIcon />}
 
                 <RNTextComponent isMedium style={styles.title}>
@@ -57,13 +57,13 @@ const BottomTab = () => {
           tabBarIcon: ({focused}: any) => {
             return (
               <View
-                style={{
-                  ...styles.iconContainer,
-                  ...(focused && {
-                    borderTopWidth: 3,
-                    borderColor: themeColor.themeBlue,
-                  }),
-                }}>
+              style={[
+                styles.iconContainer,
+                {...focused && {
+                  borderTopWidth: 3,
+                  borderColor: themeColor.themeBlue,
+                }},
+              ]}>
                 {focused ? <HomeActive /> : <HomeIcon />}
                 <RNTextComponent
                   isMedium
@@ -85,13 +85,13 @@ const BottomTab = () => {
           tabBarIcon: ({focused}: any) => {
             return (
               <View
-                style={{
-                  ...styles.iconContainer,
-                  ...(focused && {
-                    borderTopWidth: 3,
-                    borderColor: themeColor.themeBlue,
-                  }),
-                }}>
+              style={[
+                styles.iconContainer,
+                {...focused && {
+                  borderTopWidth: 3,
+                  borderColor: themeColor.themeBlue,
+                }},
+              ]}>
                 {focused ? <PeopleActive /> : <PeopleIcon />}
                 <RNTextComponent
                   isMedium
