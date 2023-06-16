@@ -14,8 +14,10 @@ import PinkSplash from '../../assets/svg/PinkSplash';
 import YellowSplash from '../../assets/svg/YellowSplash';
 import RedSplash from '../../assets/svg/RedSplash';
 import { verticalScale } from 'react-native-size-matters';
-import { COLOR_PALETTE } from './interface';
+import { colorPalette } from './interface';
 import Camera from '../../assets/svg/Camera'
+import LeftArrow from '../../assets/svg/LeftArrow'
+import QuestionMark from '../../assets/svg/QuestionMark'
 
 const GenerateStory = ({ navigation }) => {
   const [state, setState] = useState<STATE>({
@@ -144,7 +146,7 @@ const GenerateStory = ({ navigation }) => {
     let colorList = [...colorPalette];
     let indexOfFirst = colorList.indexOf();
     if (
-      colorList.filter((item: COLOR_PALETTE) => item.isSelected === true)
+      colorList.filter((item: colorPalette) => item.isSelected === true)
         .length < 2
     ) {
     }
@@ -298,14 +300,15 @@ const GenerateStory = ({ navigation }) => {
     <RNScreenWrapper>
       <View style={styles.container}>
         <View style={styles.header}>
-          <RNHeaderIconButton label="<" onClick={previousQuestion} />
+
+          <RNButton onlyIcon onClick={previousQuestion} icon={<LeftArrow/>} />
           <RNTextComponent style={styles.heading} isSemiBold>
             Generate Story{' '}
             <RNTextComponent isSemiBold style={styles.questionNumber}>
               {questionNumber + 1}/6
             </RNTextComponent>
           </RNTextComponent>
-          <RNHeaderIconButton label="?" onClick={() => { }} />
+          <RNButton onlyIcon onClick={previousQuestion} icon={<QuestionMark/>} />
         </View>
         <View style={styles.progressBar}>
           {Array.from({ length: 6 }, (_, index) => {

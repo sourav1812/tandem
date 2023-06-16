@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet } from 'react-native'
+import { Pressable, StyleSheet, } from 'react-native'
 import React from 'react'
 import themeColor from '../../theme/themeColor';
 import RNTextComponent from '../RNTextComponent';
@@ -6,9 +6,10 @@ import { Props } from './interface';
 import { verticalScale } from 'react-native-size-matters';
 
 
-const RNButton = ({ props, customStyle, onlyBorder, title , buttonColor, noBorderRadius , onClick  }: Props) => {
+const RNButton = ({ props, customStyle, onlyBorder, title , buttonColor, noBorderRadius , onClick , onlyIcon , IconButtoncustomStyle , icon }: Props) => {
     return (
-        <Pressable style={[styles.container, 
+        <>
+      {!onlyIcon ?  <Pressable style={[styles.container, 
             {...buttonColor && { borderColor: buttonColor, backgroundColor: buttonColor }},
             {...onlyBorder && { backgroundColor: 'white' }},
             {...noBorderRadius && { borderRadius: 0 }},
@@ -17,7 +18,12 @@ const RNButton = ({ props, customStyle, onlyBorder, title , buttonColor, noBorde
             <RNTextComponent isSemiBold style={{ color: themeColor.white, ...(onlyBorder && { color: buttonColor || themeColor.themeBlue }), fontSize: verticalScale(15) }}>
                 {title}
             </RNTextComponent>
-        </Pressable>
+        </Pressable> : (
+            <Pressable style={[styles.iconContainer, (IconButtoncustomStyle  && IconButtoncustomStyle)]} {...props} onPress={onClick}    >
+                {icon}
+            </Pressable>
+        )  }
+        </>
     )
 }
 
@@ -34,5 +40,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderColor: themeColor.themeBlue,
         backgroundColor: themeColor.themeBlue,
-    }
+    },
+    iconContainer: {
+        borderRadius: 12,
+        backgroundColor: '#F1F4F9',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height : verticalScale(36),
+        width : verticalScale(36),
+      },
 })

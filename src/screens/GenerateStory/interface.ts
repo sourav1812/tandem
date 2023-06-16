@@ -1,13 +1,13 @@
 import { FC, ReactNode } from "react";
 
-export interface COLOR_PALETTE {
+export interface colorPalette {
     color : string,
     icon : ReactNode,
     isSelected : boolean;
 }
 export interface STATE {
     questionNumber : number;
-    colorPalette : COLOR_PALETTE[]
+    colorPalette : colorPalette[]
 }
 
 interface PLACE {

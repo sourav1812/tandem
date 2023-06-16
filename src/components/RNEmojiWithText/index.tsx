@@ -1,9 +1,11 @@
-import {  Pressable } from 'react-native'
+import {  Pressable, Text } from 'react-native'
 import React, { useState } from 'react'
 import { Props } from './interface'
 import { styles } from './styles'
 import themeColor from '../../theme/themeColor'
 import RNTextComponent from '../RNTextComponent'
+import { verticalScale } from 'react-native-size-matters'
+
 
 
 const RNEmojiWithText = ({ props, customStyle, heading , emoji, showText , icon }: Props) => {
@@ -20,9 +22,9 @@ const RNEmojiWithText = ({ props, customStyle, heading , emoji, showText , icon 
             setIsSelected(!isSelected)
         }}
         >
-            <RNTextComponent style={{ ...styles.emoji, ...(emoji as Object), ...((showText || isSelected) && { fontSize: 40 }) }} >
+            <Text style={[styles.emoji ,  {...(showText || isSelected) && { fontSize: verticalScale(40) }} , (emoji && emoji) ]} >
                 {icon}
-            </RNTextComponent>
+            </Text>
             {
                 showText || isSelected && <RNTextComponent style={styles.heading} isSemiBold numberOfLines={2} >
                     {heading}
