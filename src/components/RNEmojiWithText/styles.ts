@@ -9,13 +9,14 @@ export const styles = StyleSheet.create({
     borderRadius: 16,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: themeColor.themeBlue,
+    backgroundColor: themeColor.lightGray,
   },
   heading: {
     fontSize: 22,
     color: themeColor.white,
+    textAlign : 'center',
   },
   emoji: {
-    fontSize: 45,
+    fontSize: 50,
   },
 });

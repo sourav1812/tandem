@@ -3,17 +3,18 @@ import React from 'react'
 import themeColor from '../../theme/themeColor';
 import RNTextComponent from '../RNTextComponent';
 import { Props } from './interface';
+import { verticalScale } from 'react-native-size-matters';
 
 
-const RNButton = ({ props, customStyle, onlyBorder, title , buttonColor, noBorderRadius }: Props) => {
+const RNButton = ({ props, customStyle, onlyBorder, title , buttonColor, noBorderRadius , onClick  }: Props) => {
     return (
         <Pressable style={[styles.container, 
             {...buttonColor && { borderColor: buttonColor, backgroundColor: buttonColor }},
             {...onlyBorder && { backgroundColor: 'white' }},
             {...noBorderRadius && { borderRadius: 0 }},
             ( customStyle &&  customStyle),
-        ]} {...props} >
-            <RNTextComponent isSemiBold style={{ color: themeColor.white, ...(onlyBorder && { color: buttonColor || themeColor.themeBlue }), fontSize: 16 }}>
+        ]} {...props} onPress={onClick}>
+            <RNTextComponent isSemiBold style={{ color: themeColor.white, ...(onlyBorder && { color: buttonColor || themeColor.themeBlue }), fontSize: verticalScale(15) }}>
                 {title}
             </RNTextComponent>
         </Pressable>
@@ -25,8 +26,8 @@ export default RNButton;
 const styles = StyleSheet.create({
 
     container: {
-        borderWidth: 1,
-        maxHeight: 54,
+        borderWidth: 2,
+        // maxHeight: 54,
         height: 54,
         borderRadius: 16,
         justifyContent: 'center',

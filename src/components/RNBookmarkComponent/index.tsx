@@ -58,3 +58,6 @@ const RNBookmarkComponent = ({
 };
 
 export default RNBookmarkComponent;
+
+
+

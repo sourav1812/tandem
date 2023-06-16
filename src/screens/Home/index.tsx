@@ -54,7 +54,7 @@ const Home = ({navigation} : any) => {
           </RNTextComponent>
           <View style={{...styles.options , ...(!portrait && styles.optionsPortrait ) }}>
             {dummyData.map((item, index) => (
-              <Pressable onPress={()=>{navigation.navigate(COMPONENTSNAME.GENERATE_STORY)}} >
+              <Pressable onPress={()=>{if(index == 0){navigation.navigate(COMPONENTSNAME.GENERATE_STORY)}}} >
                     <RNBookmarkComponent
                 customStyle={{marginTop: verticalScale(24), ...(!portrait && styles.cardPortrait )}}
                 borderIconColor={item.color}

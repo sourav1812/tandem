@@ -5,4 +5,5 @@ export interface Props {
   customStyle?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
   label: string;
+  onClick : ()=>void;
 }
