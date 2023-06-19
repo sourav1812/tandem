@@ -1,3 +1,6 @@
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { COMPONENTSNAME } from "./ComponentName";
+
 export type RootStackParamList = {
   BottomTab: RootTabParamList;
   GenerateStory : undefined;
@@ -8,3 +11,5 @@ export type RootTabParamList = {
   Bookshelf: undefined;
   People: undefined;
 };
+
+export type GeneratingStoryScreenProps = NativeStackScreenProps<RootStackParamList , COMPONENTSNAME.GENERATE_STORY >

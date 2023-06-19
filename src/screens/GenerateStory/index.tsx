@@ -2,13 +2,12 @@ import { View, ScrollView, Pressable, ImageBackground } from 'react-native';
 import React, { useState } from 'react';
 import RNScreenWrapper from '../../components/RNScreenWrapper';
 import { styles } from './styles';
-import RNHeaderIconButton from '../../components/RNHeaderIconButton';
 import RNTextComponent from '../../components/RNTextComponent';
 import themeColor from '../../theme/themeColor';
 import RNEmojiWithText from '../../components/RNEmojiWithText';
 import RNButton from '../../components/RNButton';
 import { place , audience , typeOfStory} from './interface';
-import { STATE } from './interface';
+import { stateObject } from './interface';
 import BlueSplash from '../../assets/svg/BlueSplash';
 import PinkSplash from '../../assets/svg/PinkSplash';
 import YellowSplash from '../../assets/svg/YellowSplash';
@@ -18,9 +17,12 @@ import { colorPalette } from './interface';
 import Camera from '../../assets/svg/Camera'
 import LeftArrow from '../../assets/svg/LeftArrow'
 import QuestionMark from '../../assets/svg/QuestionMark'
+import { GeneratingStoryScreenProps } from '../../navigation/types';
+import { COMPONENTSNAME } from '../../navigation/ComponentName';
 
-const GenerateStory = ({ navigation }) => {
-  const [state, setState] = useState<STATE>({
+
+const GenerateStory = ({ navigation} :GeneratingStoryScreenProps) => {
+  const [state, setState] = useState<stateObject>({
     questionNumber: 0,
     colorPalette: [
       {
@@ -29,6 +31,7 @@ const GenerateStory = ({ navigation }) => {
           <BlueSplash height={verticalScale(130)} width={verticalScale(130)} />
         ),
         isSelected: false,
+        colorCode : themeColor.themeBlue
       },
       {
         color: 'Pink',
@@ -36,23 +39,28 @@ const GenerateStory = ({ navigation }) => {
           <PinkSplash height={verticalScale(130)} width={verticalScale(130)} />
         ),
         isSelected: false,
+        colorCode : themeColor.pink
+
       },
       {
         color: 'Yellow',
         icon: (
           <YellowSplash
-            height={verticalScale(130)}
-            width={verticalScale(130)}
+            height={verticalScale(160)}
+            width={verticalScale(160)}
           />
         ),
         isSelected: false,
+        colorCode : themeColor.gold
+
       },
       {
         color: 'Red',
         icon: (
-          <RedSplash height={verticalScale(130)} width={verticalScale(130)} />
+          <RedSplash height={verticalScale(120)} width={verticalScale(120)} />
         ),
         isSelected: false,
+        colorCode : themeColor.red
       },
     ],
   });
@@ -84,14 +92,14 @@ const GenerateStory = ({ navigation }) => {
           <>
             <RNTextComponent
               isSemiBold
-              style={{ ...styles.question, color: 'rgba(10, 8, 4, 0.6)' }}>
+              style={styles.question}>
               Where colors{' '}
-              <RNTextComponent isSemiBold style={styles.question}>
+              <RNTextComponent isSemiBold style={{...styles.question , color:  "rgba(10, 8, 4, 0.6)"}}>
                 should we use
               </RNTextComponent>{' '}
               <RNTextComponent
                 isSemiBold
-                style={{ ...styles.question, color: 'rgba(10, 8, 4, 0.6)' }}>
+                style={styles.question}>
                 in our story?
               </RNTextComponent>{' '}
             </RNTextComponent>
@@ -104,7 +112,7 @@ const GenerateStory = ({ navigation }) => {
       case 2:
         return (
           <RNTextComponent isSemiBold style={styles.question}>
-            Do you want to be included in this story?
+            Do you want to be included in this story Alisa?
           </RNTextComponent>
         );
         break;
@@ -143,14 +151,29 @@ const GenerateStory = ({ navigation }) => {
   };
 
   const selectColors = (index: number) => {
-    let colorList = [...colorPalette];
-    let indexOfFirst = colorList.indexOf();
+    let colorList  : any = [...colorPalette];
+    let indexOfFirst = colorList.findIndex((value : colorPalette)=>value.isSelected);
+    let indexOfLast = colorList.findLastIndex((value :colorPalette)=>value.isSelected);
+    console.log(indexOfFirst, indexOfLast , "indexOfFirstindexOfFirst")
     if (
       colorList.filter((item: colorPalette) => item.isSelected === true)
-        .length < 2
+        .length < 2 || indexOfFirst == index || indexOfLast== index
     ) {
+      colorList[index].isSelected = !colorList[index].isSelected
     }
+    updateState({colorPalette : colorList})
   };
+
+  // const blendColors = ()=>{
+  //   switch (colorPalette.filter((item)=>item.isSelected)[0].colorCode ,colorPalette.filter((item)=>item.isSelected)[1].colorCode) {
+  //     case :
+        
+  //       break;
+    
+  //     default:
+  //       break;
+  //   }
+  // }
 
   const dynamicContent = () => {
     switch (questionNumber) {
@@ -161,12 +184,12 @@ const GenerateStory = ({ navigation }) => {
             scrollEnabled
             showsVerticalScrollIndicator={false}>
             {place.map((value, index) => {
-              console.log(value, index, 'valuevalue');
               return (
                 <RNEmojiWithText
                   heading={value.name}
                   customStyle={styles.optionsCustom}
                   icon={value.icon}
+                  bgcColor={value.bgc}
                 />
               );
             })}
@@ -182,18 +205,18 @@ const GenerateStory = ({ navigation }) => {
                   <Pressable
                     style={styles.colorView}
                     onPress={() => selectColors(index)}>
-                    <RNTextComponent style={styles.colorName} isSemiBold>
+                    {value.isSelected &&   <RNTextComponent style={styles.colorName} isSemiBold>
                       {value.color}
-                    </RNTextComponent>
+                    </RNTextComponent> }
                     {value.icon}
                   </Pressable>
                 );
               })}
             </View>
             <View style={styles.colorInfo}>
-              <View style={styles.circle} />
-              <View style={styles.mixedColor} />
-              <View style={styles.circle} />
+            <View style={[styles.circle , {backgroundColor : colorPalette.filter((item)=>item.isSelected).length >0 ? colorPalette.filter((item)=>item.isSelected)[0].colorCode : themeColor.white}   ]} />
+              <View style={[styles.mixedColor]} />
+              <View style={[styles.circle , {backgroundColor : colorPalette.filter((item)=>item.isSelected).length >1 ? colorPalette.filter((item)=>item.isSelected)[1].colorCode : themeColor.white}   ]} />
             </View>
           </>
         );
@@ -207,10 +230,8 @@ const GenerateStory = ({ navigation }) => {
               }}
               style={styles.addImage}
               imageStyle={{ borderRadius: 16 }}>
-                <Pressable>
-                <Camera style={styles.camera} />
-
-                </Pressable>
+  
+                <RNButton onlyIcon icon={<Camera/>} onClick={()=>{}} IconButtoncustomStyle={styles.camera} />
               </ImageBackground>
             <RNTextComponent style={styles.yesOrNo} isMedium>
               Yes or No?
@@ -229,12 +250,12 @@ const GenerateStory = ({ navigation }) => {
             scrollEnabled
             showsVerticalScrollIndicator={false}>
             {audience.map((value, index) => {
-              console.log(value, index, 'valuevalue');
               return (
                 <RNEmojiWithText
                   heading={value.name}
                   customStyle={styles.optionsCustom}
                   icon={value.icon}
+                  bgcColor={value.bgc}
                 />
               );
             })}
@@ -248,12 +269,12 @@ const GenerateStory = ({ navigation }) => {
             scrollEnabled
             showsVerticalScrollIndicator={false}>
             {typeOfStory.map((value, index) => {
-              console.log(value, index, 'valuevalue');
               return (
                 <RNEmojiWithText
                   heading={value.name}
                   customStyle={styles.optionsCustom}
                   icon={value.icon}
+                  bgcColor={value.bgc}
                 />
               );
             })}
@@ -267,12 +288,12 @@ const GenerateStory = ({ navigation }) => {
             scrollEnabled
             showsVerticalScrollIndicator={false}>
             {audience.map((value, index) => {
-              console.log(value, index, 'valuevalue');
               return (
                 <RNEmojiWithText
                   heading={value.name}
                   customStyle={styles.optionsCustom}
                   icon={value.icon}
+                  bgcColor={value.bgc}
                 />
               );
             })}
@@ -296,11 +317,11 @@ const GenerateStory = ({ navigation }) => {
     }
   };
 
+
   return (
     <RNScreenWrapper>
       <View style={styles.container}>
         <View style={styles.header}>
-
           <RNButton onlyIcon onClick={previousQuestion} icon={<LeftArrow/>} />
           <RNTextComponent style={styles.heading} isSemiBold>
             Generate Story{' '}
@@ -321,7 +342,7 @@ const GenerateStory = ({ navigation }) => {
                   {
                     ...{
                       backgroundColor:
-                        index.index == questionNumber
+                        index.index <= questionNumber
                           ? themeColor.themeBlue
                           : 'rgba(66, 133, 246, 0.5)',
                     },

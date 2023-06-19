@@ -8,7 +8,7 @@ import { verticalScale } from 'react-native-size-matters'
 
 
 
-const RNEmojiWithText = ({ props, customStyle, heading , emoji, showText , icon }: Props) => {
+const RNEmojiWithText = ({ props, customStyle, heading , emoji, showText , icon ,bgcColor }: Props) => {
 
    const [isSelected, setIsSelected] = useState(false)
 
@@ -16,7 +16,7 @@ const RNEmojiWithText = ({ props, customStyle, heading , emoji, showText , icon 
         <Pressable style={[
             styles.container,
             (customStyle && customStyle),
-            {...(showText || isSelected) && { backgroundColor : themeColor.themeBlue }}
+            {...(showText || isSelected) && bgcColor && { backgroundColor : bgcColor }}
         ]} {...props} 
         onPress={()=>{
             setIsSelected(!isSelected)

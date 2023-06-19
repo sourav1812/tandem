@@ -77,7 +77,7 @@ export const  styles = StyleSheet.create({
     flexDirection : 'row',
     alignItems: 'center',
     justifyContent : 'space-between',
-    marginTop : verticalScale(30)
+    marginTop : verticalScale(10)
   },
   circle : {
     height : verticalScale(65),
@@ -121,6 +121,7 @@ export const  styles = StyleSheet.create({
   camera : {
     position : 'absolute',
     top : '6%',
-    right : '5%'
+    right : '5%',
+    zIndex: 3
   }
 });

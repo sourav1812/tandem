@@ -8,5 +8,6 @@ export interface Props {
   emoji?: StyleProp<TextStyle>;
   showText?: boolean;
   icon :string;
+  bgcColor : string;
 }
   

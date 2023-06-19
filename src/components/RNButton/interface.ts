@@ -10,7 +10,7 @@ export interface Props {
   buttonColor?: string;
   noBorderRadius?: boolean;
   onClick : ()=>void;
-  onlyIcon : boolean;
+  onlyIcon? : boolean;
   IconButtoncustomStyle ?: StyleProp<ViewStyle>;
-  icon : ReactNode;
+  icon ?: ReactNode;
 }

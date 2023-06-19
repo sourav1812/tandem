@@ -1,42 +1,45 @@
 import { FC, ReactNode } from "react";
+import themeColor from "../../theme/themeColor";
 
 export interface colorPalette {
     color : string,
     icon : ReactNode,
     isSelected : boolean;
+    colorCode : string;
 }
-export interface STATE {
+export interface stateObject {
     questionNumber : number;
     colorPalette : colorPalette[]
 }
 
-interface PLACE {
+interface placeType {
     name : string;
     icon :string ;
+    bgc : string;
 }
 
-export  const place : PLACE[] = [
-    {name : 'Home' , icon : '🏠' },
-    {name : 'City' , icon : '🏙️' },
-    {name : 'Jungle' , icon : '🌴' },
-    {name : 'Farm' , icon : '🐮' },
-    {name : 'Hill' , icon : '⛰️' },
-    {name : 'Camp' , icon : '⛺' },
+export  const place : placeType[] = [
+    {name : 'Home' , icon : '🏠' , bgc : themeColor.themeBlue },
+    {name : 'City' , icon : '🏙️' , bgc : themeColor.gold },
+    {name : 'Jungle' , icon : '🌴' , bgc : themeColor.lightGreen },
+    {name : 'Farm' , icon : '🐮' , bgc : themeColor.pink },
+    {name : 'Hill' , icon : '⛰️' , bgc : themeColor.themeBlue },
+    {name : 'Camp' , icon : '⛺', bgc : themeColor.gold  },
 ]  
 
-export  const audience : PLACE[] = [
-    {name : 'Domestic nimals' , icon : '🐱' },
-    {name : 'Peoples' , icon : '👦🏽' },
-    {name : 'Farm animals' , icon : '🐮' },
-    {name : 'Jungle animals' , icon : '🦁' },
-    {name : 'Space aliens' , icon : '👽' },
-    {name : 'Scientists' , icon : '👨‍🔬' },
+export  const audience : placeType[] = [
+    {name : 'Domestic nimals' , icon : '🐱' , bgc : themeColor.themeBlue },
+    {name : 'Peoples' , icon : '👦🏽' , bgc : themeColor.gold },
+    {name : 'Farm animals' , icon : '🐮' , bgc : themeColor.lightGreen },
+    {name : 'Jungle animals' , icon : '🦁' , bgc : themeColor.pink },
+    {name : 'Space aliens' , icon : '👽', bgc : themeColor.themeBlue },
+    {name : 'Scientists' , icon : '👨‍🔬' , bgc : themeColor.gold },
 ]  
 
-export  const typeOfStory : PLACE[] = [
-    {name : 'Fairy tale' , icon : '✨' },
-    {name : 'Adventure' , icon : '🏄' },
-    {name : 'Silly/Comedy' , icon : '🤣' },
-    {name : "I don't know" , icon : '☹️' },
+export  const typeOfStory : placeType[] = [
+    {name : 'Fairy tale' , icon : '✨'  , bgc : themeColor.themeBlue},
+    {name : 'Adventure' , icon : '🏄' , bgc : themeColor.gold},
+    {name : 'Silly/Comedy' , icon : '🤣' , bgc : themeColor.lightGreen},
+    {name : "I don't know" , icon : '☹️' , bgc : themeColor.pink},
 ]  
 
