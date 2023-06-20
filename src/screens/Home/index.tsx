@@ -8,6 +8,9 @@ import themeColor from '../../theme/themeColor';
 import {scale, verticalScale} from 'react-native-size-matters';
 import RNBookmarkComponent from '../../components/RNBookmarkComponent';
 import { COMPONENTSNAME } from '../../navigation/ComponentName';
+import CongratsModal from '../../components/RNCongratsModal';
+import RNCongratsModal from '../../components/RNCongratsModal';
+import RNWellDoneModal from '../../components/RNWellDoneModal';
 
 const Home = ({navigation} : any) => {
 

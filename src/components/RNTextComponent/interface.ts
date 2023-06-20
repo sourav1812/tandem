@@ -1,6 +1,7 @@
-import {StyleProp, TextStyle , GestureResponderEvent} from 'react-native';
+import {StyleProp, TextStyle , GestureResponderEvent , TextProps} from 'react-native';
 
 export interface Props {
+  props ?: TextProps;
   children: any ;
   isBold?: boolean;
   isSemiBold?: boolean;

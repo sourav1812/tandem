@@ -10,6 +10,7 @@ import { Props } from './interface';
 
 
 const RNTextComponent = ({
+    props,
     children,
     style,
     isBold,
@@ -38,6 +39,7 @@ const RNTextComponent = ({
                 
             ]}
             onPress={handleOnPress}
+            {...props}
         >
             {children}
         </Text>
