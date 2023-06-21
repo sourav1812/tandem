@@ -4,6 +4,7 @@ import { COMPONENTSNAME } from "./ComponentName";
 export type RootStackParamList = {
   BottomTab: RootTabParamList;
   GenerateStory : undefined;
+  StoryTelling: undefined;
 };
 
 export type RootTabParamList = {

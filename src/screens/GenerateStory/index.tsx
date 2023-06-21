@@ -306,6 +306,8 @@ const GenerateStory = ({ navigation} :GeneratingStoryScreenProps) => {
   const nextQuestion = () => {
     if (questionNumber <= 4) {
       updateState({ questionNumber: questionNumber + 1 });
+    }else  {
+      navigation.navigate(COMPONENTSNAME.STORY_TELLING)
     }
   };
 

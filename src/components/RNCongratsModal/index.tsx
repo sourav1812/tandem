@@ -10,7 +10,7 @@ import RNButton from '../RNButton';
 
 const RNCongratsModal = ({ visible = false, renderModal }: congratsModalProps) => {
   return (
-    <Modal style={styles.modal} isVisible={visible} backdropOpacity={0.2}>
+    <Modal style={styles.modal} isVisible={visible} backdropOpacity={0.2} onBackButtonPress={renderModal} onBackdropPress={renderModal}>
       <View style={styles.container}>
         <View style={styles.top}>
           <View style={styles.image}>
