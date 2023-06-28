@@ -1,27 +1,32 @@
-import {View, Image, Pressable} from 'react-native';
-import React from 'react';
-import {styles} from './styles';
+import { View, Image, Pressable } from 'react-native';
+import React, { useState } from 'react';
+import { styles } from './styles';
 import RNScreenWrapper from '../../components/RNScreenWrapper';
-import {useOrientation} from '../../hooks/useOrientation';
+import { useOrientation } from '../../hooks/useOrientation';
 import RNTextComponent from '../../components/RNTextComponent';
 import themeColor from '../../theme/themeColor';
-import {scale, verticalScale} from 'react-native-size-matters';
+import { verticalScale } from 'react-native-size-matters';
 import RNBookmarkComponent from '../../components/RNBookmarkComponent';
 import { COMPONENTSNAME } from '../../navigation/ComponentName';
-import CongratsModal from '../../components/RNCongratsModal';
-import RNCongratsModal from '../../components/RNCongratsModal';
-import RNWellDoneModal from '../../components/RNWellDoneModal';
+import RNReadingLevelModal from '../../components/RNReadingLevelModal';
+import DeviceInfo from 'react-native-device-info';
 
-const Home = ({navigation} : any) => {
+const Home = ({ navigation }: any) => {
 
   const portrait = useOrientation().isPortrait
 
-  const dummyData: {color: string , title: string}[] = [
-    {color: themeColor.purple , title : "I can't decide" },
-    {color: themeColor.purple , title  :"I can't decide"  },
-    {color: themeColor.gold , title : "Learn something"  },
-    {color: themeColor.green , title : "Have fun"  },  
+
+  const dummyData: { color: string, title: string }[] = [
+    { color: themeColor.purple, title: "I can't decide" },
+    { color: themeColor.purple, title: "I can't decide" },
+    { color: themeColor.gold, title: "Learn something" },
+    { color: themeColor.green, title: "Have fun" },
   ];
+
+  const [showModal, setShowModal] = useState(false)
+  const toggleModal = () => {
+    setShowModal(!showModal)
+  }
 
   return (
     <RNScreenWrapper>
@@ -32,45 +37,45 @@ const Home = ({navigation} : any) => {
             ...styles.heading,
             color: themeColor.white,
             position: 'absolute',
-            top:  portrait ? '7.8%' : '4%',
-            ...(portrait && { alignSelf: 'center'}),
-            ...(!portrait && { right : '10%'}),
+            top: portrait ? '7.8%' : '4%',
+            ...(portrait && { alignSelf: 'center' }),
+            ...(!portrait && { right: '10%' }),
             zIndex: 3,
           }}>
           Hello, Adam! 👋🏻
         </RNTextComponent>
-        <View style={[styles.header , {...(!portrait &&{ height: verticalScale(100)} )}]}>
+        <View style={[styles.header, { ...(!portrait && { height: verticalScale(100) }) }]}>
           <View style={styles.left} />
           <View style={styles.middle}>
             <Image
               source={{
                 uri: 'https://static.vecteezy.com/system/resources/previews/016/461/449/non_2x/cute-giraffe-face-wild-animal-character-in-animated-cartoon-illustration-vector.jpg',
               }}
-              style={{...styles.profilePic , ...(!portrait && {top : '52%'})}}
+              style={{ ...styles.profilePic, ...(!portrait && { top: '52%' }) }}
             />
           </View>
           <View style={styles.right} />
         </View>
         <View style={styles.content}>
-          <RNTextComponent isSemiBold style={{...styles.heading , ...(!portrait && styles.headingPortrait )}}>
+          <RNTextComponent isSemiBold style={{ ...styles.heading, ...(!portrait && styles.headingPortrait) }}>
             What shall we do today?
           </RNTextComponent>
-          <View style={{...styles.options , ...(!portrait && styles.optionsPortrait ) }}>
+          <View style={{ ...styles.options, ...(!portrait && styles.optionsPortrait) }}>
             {dummyData.map((item, index) => (
-              <Pressable onPress={()=>{if(index == 0){navigation.navigate(COMPONENTSNAME.GENERATE_STORY)}}} >
-                    <RNBookmarkComponent
-                customStyle={{marginTop: verticalScale(24), ...(!portrait && styles.cardPortrait )}}
-                borderIconColor={item.color}
-                showIcon={index == 0} 
-                heading={item.title}
-                subHeading='COMING SOON'
-              />
+              <Pressable onPress={() => { if (index == 0) { navigation.navigate(COMPONENTSNAME.GENERATE_STORY) } else { toggleModal() } }} >
+                <RNBookmarkComponent
+                  customStyle={{ marginTop: verticalScale(24), ...(!portrait && styles.cardPortrait) }}
+                  borderIconColor={item.color}
+                  showIcon={index == 0}
+                  heading={item.title}
+                  subHeading='COMING SOON'
+                />
               </Pressable>
-            
             ))}
           </View>
         </View>
       </View>
+      <RNReadingLevelModal visible={showModal} renderModal={toggleModal} nextClick={toggleModal} />
     </RNScreenWrapper>
   );
 };

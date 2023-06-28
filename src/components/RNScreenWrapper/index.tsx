@@ -1,9 +1,11 @@
-import {View, StatusBar} from 'react-native';
+import {View, StatusBar, Dimensions} from 'react-native';
 import React from 'react';
 import {Props} from './interface';
 import {styles} from './styles';
 
 const RNScreenWrapper = ({children, style}: Props) => {
+
+
   return (
     <View style={style || [styles.container]}>
       <StatusBar

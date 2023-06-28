@@ -1,13 +1,15 @@
-import {TextInputProps , StyleProp , TextStyle} from 'react-native';
+import {TextInputProps, StyleProp, TextStyle, ViewStyle} from 'react-native';
 
 export interface Props {
   props?: TextInputProps;
   label?: string;
   showLabel?: boolean;
-  hint: string;
+  hint?: string;
   value: string;
   updateText: (value: string) => void;
-  inputStyle?:  StyleProp<TextStyle>;
+  inputStyle?: StyleProp<TextStyle>;
   showIcon?: boolean;
   Icon?: any;
+  backgroundColor?: string;
+  containerStyle?: StyleProp<ViewStyle>;
 }

@@ -24,9 +24,8 @@ export const styles = StyleSheet.create({
   storyContent : {
     position :'absolute',
     bottom : 0,
-    maxHeight : verticalScale(230),
     width : '100%',
-    paddingVertical : verticalScale(22),
+    paddingVertical : verticalScale(18),
     alignItems : 'center',
   },
   imageStyle: {
@@ -36,6 +35,7 @@ export const styles = StyleSheet.create({
   slideNo : {
     fontSize  : verticalScale(18),
     color : themeColor.themeBlue,
+    marginHorizontal : verticalScale(12)
   },
   summary : {
     height : verticalScale(400),

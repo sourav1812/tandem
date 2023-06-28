@@ -1,10 +1,11 @@
-import {Dimensions, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {scale, verticalScale} from 'react-native-size-matters';
 import themeColor from '../../theme/themeColor';
-import { useOrientation } from '../../hooks/useOrientation';
+import DeviceInfo from 'react-native-device-info';
 
 
-
+const isIpad = DeviceInfo.getSystemName() == 'iPadOS' ? true : false
+const isAndroidTablet = DeviceInfo.isTablet() 
 
 export const styles = StyleSheet.create({
   container: {
@@ -51,10 +52,11 @@ export const styles = StyleSheet.create({
     marginTop: verticalScale(35),
   },
   options: {
-    height: verticalScale(280),
     flexDirection: 'row',
+    ...((isIpad || isAndroidTablet )&& {maxWidth : 290}) ,
     flexWrap: 'wrap',
     justifyContent: 'space-between',
+    alignSelf : 'center',
   },
   cardPortrait:  {
     height: verticalScale(120),

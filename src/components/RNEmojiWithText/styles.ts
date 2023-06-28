@@ -10,14 +10,15 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: themeColor.lightGray,
+    padding : verticalScale(14)
   },
   heading: {
-    fontSize: 22,
+    fontSize: verticalScale(17),
     color: themeColor.white,
     textAlign : 'center',
   },
   emoji: {
-    fontSize: verticalScale(44),
+    fontSize: verticalScale(38),
     fontFamily : 'Poppins-Bold',
   },
 });

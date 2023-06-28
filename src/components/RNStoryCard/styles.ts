@@ -1,45 +1,64 @@
-import {StyleSheet} from 'react-native';
-import themeColor from '../../theme/themeColor';
+import {Platform, StyleSheet} from 'react-native';
+import { scale, verticalScale } from 'react-native-size-matters';
 
 export const styles = StyleSheet.create({
-  container: {
-    // borderWidth: 1,
-    flexDirection: 'row',
+  cardContainer: {
+    borderRadius: 20,
+    padding: verticalScale(10),
+    backgroundColor: '#F1F4F9',
+    flexDirection  :'row',
+    justifyContent: 'space-between',
+    alignItems : 'center',
+    marginBottom  :verticalScale(10),
+  },
+  progressIndicatorTop: {
+    width: '100%',
+    height: 8,
+    backgroundColor: 'white',
+    borderRadius: 2,
+  },
+  imageViewContainer: {flexDirection: 'row' },
+  imageImojiContainer: {
+    position: 'absolute',
+    right: 5,
+    zIndex: 1,
+    borderRadius: 20,
+    backgroundColor: '#F1F4F9',
     alignItems: 'center',
-    justifyContent: 'space-evenly',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    backgroundColor: themeColor.lightGray,
+    padding: 3,
+    paddingLeft: Platform.OS === 'ios' ? 3 : 3.8,
+    marginTop: 5,
+  },
+  emojiTextContainer: {maxWidth: '40%', alignItems: 'center'},
+  emojiText: {fontSize: 15},
+  newTextComponentContainer: {
+    backgroundColor: '#9A00FF',
+    zIndex: 1,
+    marginTop: -30,
+    width: '70%',
+    alignItems: 'center',
+    justifyContent: 'center',
     borderRadius: 16,
   },
-  img: {
-    height: 126,
-    width: 108,
-    borderRadius: 16,
+  newText: {color: 'white', padding: 10},
+  headerTitleContainer: {
+    width: '60%',
+    padding: 10,
+    justifyContent: 'space-between',
+    // borderWidth : 1
   },
-  right: {
-    marginLeft: 13,
-    width: '58%',
-  },
-  heading: {
-    fontSize: 20,
-  },
-  date: {
+  time: {
     fontSize: 14,
     marginVertical: 4,
   },
-  progressContainer: {
-    height: 9,
-    width: '100%',
-
-    borderRadius: 50,
-    overflow: 'hidden',
-    backgroundColor: themeColor.white,
+  minReading: {
+    color: ' rgba(2, 4, 8, 0.6)',
+    marginBottom: 4,
+    marginTop: 0,
   },
-  progress: {
-    backgroundColor: themeColor.gold,
-    flexDirection: 'row',
-    height: 9,
-    width: '70%',
+  img : {
+    height : verticalScale(110),
+    width : scale(105),
+    borderRadius : 16,
   },
 });

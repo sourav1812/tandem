@@ -43,7 +43,8 @@ export const  styles = StyleSheet.create({
     // borderWidth :1,
     flexWrap : 'wrap',
     flexDirection : 'row',
-    justifyContent :'space-between'
+    justifyContent :'space-between',
+    alignSelf : 'center',
   },
   optionsCustom : {
     height : verticalScale(132),
@@ -77,7 +78,11 @@ export const  styles = StyleSheet.create({
     flexDirection : 'row',
     alignItems: 'center',
     justifyContent : 'space-between',
-    marginTop : verticalScale(10)
+    // marginTop : verticalScale(10)
+    position : 'absolute',
+    bottom : '5%',
+    alignSelf  :'center',
+    width : '100%',
   },
   circle : {
     height : verticalScale(65),
@@ -94,7 +99,6 @@ export const  styles = StyleSheet.create({
     borderColor : themeColor.themeBlue,
   },
   picView : {
-    // borderWidth : 1 ,
     flex : 1,
     marginTop : verticalScale(20),
     alignItems : 'center'
@@ -123,5 +127,15 @@ export const  styles = StyleSheet.create({
     top : '6%',
     right : '5%',
     zIndex: 3
+  },
+  img : {
+    height : verticalScale(120),
+    width  : verticalScale(120),
+    // marginRight : verticalScale(30)
+  },
+  isSelected : {
+    height : verticalScale(140),
+    width  : verticalScale(140),
+    // marginRight : verticalScale(30)
   }
 });

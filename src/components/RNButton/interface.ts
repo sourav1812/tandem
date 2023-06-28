@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import {StyleProp, ViewStyle, PressableProps} from 'react-native';
+import {StyleProp, ViewStyle, PressableProps, TextStyle} from 'react-native';
 
 export interface Props {
   props?: PressableProps;
@@ -13,4 +13,5 @@ export interface Props {
   onlyIcon? : boolean;
   IconButtoncustomStyle ?: StyleProp<ViewStyle>;
   icon ?: ReactNode;
+  textStyle ?: StyleProp<TextStyle>;
 }

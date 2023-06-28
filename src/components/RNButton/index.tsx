@@ -6,7 +6,7 @@ import { Props } from './interface';
 import { verticalScale } from 'react-native-size-matters';
 
 
-const RNButton = ({ props, customStyle, onlyBorder, title , buttonColor, noBorderRadius , onClick , onlyIcon , IconButtoncustomStyle , icon }: Props) => {
+const RNButton = ({ props, customStyle, onlyBorder, title , buttonColor, noBorderRadius , onClick , onlyIcon , IconButtoncustomStyle , icon, textStyle }: Props) => {
     return (
         <>
       {!onlyIcon ?  <Pressable style={[styles.container, 
@@ -15,7 +15,7 @@ const RNButton = ({ props, customStyle, onlyBorder, title , buttonColor, noBorde
             {...noBorderRadius && { borderRadius: 0 }},
             ( customStyle &&  customStyle),
         ]} {...props} onPress={onClick}>
-            <RNTextComponent isSemiBold style={{ color: themeColor.white, ...(onlyBorder && { color: buttonColor || themeColor.themeBlue }), fontSize: verticalScale(15) }}>
+            <RNTextComponent isSemiBold style={[{ color: themeColor.white, ...(onlyBorder && { color: buttonColor || themeColor.themeBlue }) } , (textStyle && textStyle) ]}>
                 {title}
             </RNTextComponent>
         </Pressable> : (
@@ -34,15 +34,16 @@ const styles = StyleSheet.create({
     container: {
         borderWidth: 2,
         // maxHeight: 54,
-        height: 54,
+        height: verticalScale(50),
         borderRadius: 16,
         justifyContent: 'center',
         alignItems: 'center',
         borderColor: themeColor.themeBlue,
         backgroundColor: themeColor.themeBlue,
+        paddingHorizontal : verticalScale(28)
     },
     iconContainer: {
-        borderRadius: 12,
+        borderRadius: verticalScale(12),
         backgroundColor: '#F1F4F9',
         justifyContent: 'center',
         alignItems: 'center',

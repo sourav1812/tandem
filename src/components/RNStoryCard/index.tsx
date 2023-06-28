@@ -1,39 +1,73 @@
-import {View, Pressable, Image, TextComponent} from 'react-native';
+import { View, Image, ImageSourcePropType, Text } from 'react-native';
 import React from 'react';
-import {styles} from './styles';
+import { styles } from './styles';
 import RNTextComponent from '../RNTextComponent';
 import RightArrow from '../../assets/svg/RightArrow';
-import { Props } from './interface';
+import { checkIfTablet } from '../../hooks/isTabletHook';
+import { matrixTransform } from 'react-native-svg/lib/typescript/elements/Shape';
 
-const RNStoryCard = ({props}: Props) => {
+const ProgressIndicator = ({ progress }: { progress: number }) => {
+  const progressPercentage = `${progress * 10}%`;
   return (
-    <Pressable style={styles.container}>
-      <Image
-        source={{
-          uri: 'https://i.pinimg.com/originals/71/9e/80/719e80760999b4c355a723224120eb07.png',
+    <View style={styles.progressIndicatorTop}>
+      <View
+        // eslint-disable-next-line react-native/no-inline-styles
+        style={{
+          height: '100%',
+          width: progressPercentage,
+          backgroundColor: '#FEC247',
+          borderRadius: 2,
         }}
-        style={styles.img}
       />
-      <View style={styles.right}>
-        <RNTextComponent isSemiBold style={styles.heading}>
-          Story of Wonderland
-        </RNTextComponent>
-        <RNTextComponent style={styles.date}>09.06.2023</RNTextComponent>
-        <RNTextComponent
-          style={{
-            ...styles.date,
-            color: ' rgba(2, 4, 8, 0.6)',
-            marginBottom: 4,
-            marginTop: 0,
-          }}>
-          2 min story
-        </RNTextComponent>
-        <View style={styles.progressContainer}>
-          <View style={styles.progress} />
+    </View>
+  );
+};
+const RNStoryCard = ({
+  item,
+}: {
+  item: {
+    id: number;
+    headerTitle: string;
+    time: string;
+    image: ImageSourcePropType;
+    readingTime: number;
+    isNew: boolean;
+    emogi: string;
+    week: string;
+  };
+}) => {
+
+  const isTablet = checkIfTablet()
+
+  return (
+    <View style={styles.cardContainer}>
+      <View style={styles.imageViewContainer}>
+        <View style={styles.emojiTextContainer}>
+          <View style={styles.imageImojiContainer}>
+            <Text style={styles.emojiText}>{'\u{1F60D}'}</Text>
+          </View>
+          <Image source={item.image} style={[styles.img ]} resizeMode='contain' />
+          {item.isNew && (
+            <View style={styles.newTextComponentContainer}>
+              <RNTextComponent style={styles.newText} isBold>
+                New
+              </RNTextComponent>
+            </View>
+          )}
+        </View>
+        <View style={[styles.headerTitleContainer , (isTablet && { maxWidth  :220})]}>
+          <RNTextComponent numberOfLines={2} isBold>
+            {item.headerTitle}
+          </RNTextComponent>
+          <RNTextComponent style={styles.time}>{item.time}</RNTextComponent>
+          <RNTextComponent style={styles.minReading}>
+            {`${10 - item.readingTime} min reading`}
+          </RNTextComponent>
+          <ProgressIndicator progress={item.readingTime} />
         </View>
       </View>
-      <RightArrow />
-    </Pressable>
+        <RightArrow />
+    </View>
   );
 };
 

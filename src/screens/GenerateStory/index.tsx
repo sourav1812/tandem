@@ -1,4 +1,4 @@
-import { View, ScrollView, Pressable, ImageBackground } from 'react-native';
+import { View, ScrollView, ImageBackground } from 'react-native';
 import React, { useState } from 'react';
 import RNScreenWrapper from '../../components/RNScreenWrapper';
 import { styles } from './styles';
@@ -6,29 +6,26 @@ import RNTextComponent from '../../components/RNTextComponent';
 import themeColor from '../../theme/themeColor';
 import RNEmojiWithText from '../../components/RNEmojiWithText';
 import RNButton from '../../components/RNButton';
-import { place , audience , typeOfStory} from './interface';
+import { place , audience , typeOfStory, attribute} from './interface';
 import { stateObject } from './interface';
-import BlueSplash from '../../assets/svg/BlueSplash';
-import PinkSplash from '../../assets/svg/PinkSplash';
-import YellowSplash from '../../assets/svg/YellowSplash';
-import RedSplash from '../../assets/svg/RedSplash';
-import { verticalScale } from 'react-native-size-matters';
-import { colorPalette } from './interface';
 import Camera from '../../assets/svg/Camera'
 import LeftArrow from '../../assets/svg/LeftArrow'
 import QuestionMark from '../../assets/svg/QuestionMark'
 import { GeneratingStoryScreenProps } from '../../navigation/types';
 import { COMPONENTSNAME } from '../../navigation/ComponentName';
+import RNChooseColor from '../../components/RNChooseColor';
+import { checkIfTablet } from '../../hooks/isTabletHook';
 
 
 const GenerateStory = ({ navigation} :GeneratingStoryScreenProps) => {
+  const isTablet = checkIfTablet();
   const [state, setState] = useState<stateObject>({
     questionNumber: 0,
     colorPalette: [
       {
         color: 'Blue',
         icon: (
-          <BlueSplash height={verticalScale(130)} width={verticalScale(130)} />
+          require('../../assets/png/blueSplash.png')
         ),
         isSelected: false,
         colorCode : themeColor.themeBlue
@@ -36,7 +33,7 @@ const GenerateStory = ({ navigation} :GeneratingStoryScreenProps) => {
       {
         color: 'Pink',
         icon: (
-          <PinkSplash height={verticalScale(130)} width={verticalScale(130)} />
+          require('../../assets/png/pinkSplash.png')
         ),
         isSelected: false,
         colorCode : themeColor.pink
@@ -45,10 +42,7 @@ const GenerateStory = ({ navigation} :GeneratingStoryScreenProps) => {
       {
         color: 'Yellow',
         icon: (
-          <YellowSplash
-            height={verticalScale(160)}
-            width={verticalScale(160)}
-          />
+          require('../../assets/png/yellowSplash.png')
         ),
         isSelected: false,
         colorCode : themeColor.gold
@@ -57,7 +51,7 @@ const GenerateStory = ({ navigation} :GeneratingStoryScreenProps) => {
       {
         color: 'Red',
         icon: (
-          <RedSplash height={verticalScale(120)} width={verticalScale(120)} />
+          require('../../assets/png/redSplash.png')
         ),
         isSelected: false,
         colorCode : themeColor.red
@@ -82,37 +76,15 @@ const GenerateStory = ({ navigation} :GeneratingStoryScreenProps) => {
             style={{ ...styles.question, color: 'rgba(10, 8, 4, 0.6)' }}>
             Where shall we {`\n`}{' '}
             <RNTextComponent isSemiBold style={styles.question}>
-              go in our story today
+              go in our story today?
             </RNTextComponent>
           </RNTextComponent>
-        );
-        break;
-      case 1:
-        return (
-          <>
-            <RNTextComponent
-              isSemiBold
-              style={styles.question}>
-              Where colors{' '}
-              <RNTextComponent isSemiBold style={{...styles.question , color:  "rgba(10, 8, 4, 0.6)"}}>
-                should we use
-              </RNTextComponent>{' '}
-              <RNTextComponent
-                isSemiBold
-                style={styles.question}>
-                in our story?
-              </RNTextComponent>{' '}
-            </RNTextComponent>
-            <RNTextComponent style={styles.subHeading}>
-              Select two colors to get a third
-            </RNTextComponent>
-          </>
         );
         break;
       case 2:
         return (
           <RNTextComponent isSemiBold style={styles.question}>
-            Do you want to be included in this story Alisa?
+            Do you want to be included in the story, Alisa?
           </RNTextComponent>
         );
         break;
@@ -123,7 +95,7 @@ const GenerateStory = ({ navigation} :GeneratingStoryScreenProps) => {
             <RNTextComponent
               isSemiBold
               style={{ ...styles.question, color: 'rgba(10, 8, 4, 0.6)' }}>
-              is goin to be in our story?{' '}
+              is going to be in our story?{' '}
             </RNTextComponent>{' '}
           </RNTextComponent>
         );
@@ -143,44 +115,19 @@ const GenerateStory = ({ navigation} :GeneratingStoryScreenProps) => {
       case 5:
         return (
           <RNTextComponent isSemiBold style={styles.question}>
-            What sort of story do you want to make today?{' '}
+            Shall we include any of these things in the story?{' '}
           </RNTextComponent>
         );
         break;
     }
   };
 
-  const selectColors = (index: number) => {
-    let colorList  : any = [...colorPalette];
-    let indexOfFirst = colorList.findIndex((value : colorPalette)=>value.isSelected);
-    let indexOfLast = colorList.findLastIndex((value :colorPalette)=>value.isSelected);
-    console.log(indexOfFirst, indexOfLast , "indexOfFirstindexOfFirst")
-    if (
-      colorList.filter((item: colorPalette) => item.isSelected === true)
-        .length < 2 || indexOfFirst == index || indexOfLast== index
-    ) {
-      colorList[index].isSelected = !colorList[index].isSelected
-    }
-    updateState({colorPalette : colorList})
-  };
-
-  // const blendColors = ()=>{
-  //   switch (colorPalette.filter((item)=>item.isSelected)[0].colorCode ,colorPalette.filter((item)=>item.isSelected)[1].colorCode) {
-  //     case :
-        
-  //       break;
-    
-  //     default:
-  //       break;
-  //   }
-  // }
-
   const dynamicContent = () => {
     switch (questionNumber) {
       case 0:
         return (
           <ScrollView
-            contentContainerStyle={styles.scrollView}
+            contentContainerStyle={[styles.scrollView , (isTablet && {maxWidth : 295})]}
             scrollEnabled
             showsVerticalScrollIndicator={false}>
             {place.map((value, index) => {
@@ -198,27 +145,7 @@ const GenerateStory = ({ navigation} :GeneratingStoryScreenProps) => {
         break;
       case 1:
         return (
-          <>
-            <View style={[styles.scrollView]}>
-              {colorPalette.map((value, index) => {
-                return (
-                  <Pressable
-                    style={styles.colorView}
-                    onPress={() => selectColors(index)}>
-                    {value.isSelected &&   <RNTextComponent style={styles.colorName} isSemiBold>
-                      {value.color}
-                    </RNTextComponent> }
-                    {value.icon}
-                  </Pressable>
-                );
-              })}
-            </View>
-            <View style={styles.colorInfo}>
-            <View style={[styles.circle , {backgroundColor : colorPalette.filter((item)=>item.isSelected).length >0 ? colorPalette.filter((item)=>item.isSelected)[0].colorCode : themeColor.white}   ]} />
-              <View style={[styles.mixedColor]} />
-              <View style={[styles.circle , {backgroundColor : colorPalette.filter((item)=>item.isSelected).length >1 ? colorPalette.filter((item)=>item.isSelected)[1].colorCode : themeColor.white}   ]} />
-            </View>
-          </>
+          <RNChooseColor/>
         );
         break;
       case 2:
@@ -246,7 +173,7 @@ const GenerateStory = ({ navigation} :GeneratingStoryScreenProps) => {
         case 3:
           return (
             <ScrollView
-            contentContainerStyle={styles.scrollView}
+            contentContainerStyle={[styles.scrollView ,  , (isTablet && {maxWidth : 295})]}
             scrollEnabled
             showsVerticalScrollIndicator={false}>
             {audience.map((value, index) => {
@@ -265,7 +192,7 @@ const GenerateStory = ({ navigation} :GeneratingStoryScreenProps) => {
         case 4:
           return (
             <ScrollView
-            contentContainerStyle={styles.scrollView}
+            contentContainerStyle={[styles.scrollView,   (isTablet && {maxWidth : 295})]}
             scrollEnabled
             showsVerticalScrollIndicator={false}>
             {typeOfStory.map((value, index) => {
@@ -284,10 +211,10 @@ const GenerateStory = ({ navigation} :GeneratingStoryScreenProps) => {
         case 5:
           return (
             <ScrollView
-            contentContainerStyle={styles.scrollView}
+            contentContainerStyle={[styles.scrollView ,  , (isTablet && {maxWidth : 295})]}
             scrollEnabled
             showsVerticalScrollIndicator={false}>
-            {audience.map((value, index) => {
+            {attribute.map((value, index) => {
               return (
                 <RNEmojiWithText
                   heading={value.name}
@@ -303,11 +230,12 @@ const GenerateStory = ({ navigation} :GeneratingStoryScreenProps) => {
     }
   };
 
+
   const nextQuestion = () => {
     if (questionNumber <= 4) {
       updateState({ questionNumber: questionNumber + 1 });
     }else  {
-      navigation.navigate(COMPONENTSNAME.STORY_TELLING)
+      navigation.navigate(COMPONENTSNAME.ACTIVITIES)
     }
   };
 
@@ -318,6 +246,7 @@ const GenerateStory = ({ navigation} :GeneratingStoryScreenProps) => {
       navigation.goBack();
     }
   };
+
 
 
   return (

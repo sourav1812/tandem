@@ -1,0 +1,78 @@
+import { View, Image, ScrollView, Text } from 'react-native';
+import React, { useState } from 'react';
+import { styles } from './styles';
+import RNScreenWrapper from '../../components/RNScreenWrapper';
+import RNTextComponent from '../../components/RNTextComponent';
+import RNButton from '../../components/RNButton';
+import { StoryScreenProps } from '../../navigation/types';
+import { COMPONENTSNAME } from '../../navigation/ComponentName';
+import Back from '../../assets/svg/LeftArrow'
+import Options from '../../assets/svg/ThreeDots'
+import { Menu, MenuItem, MenuDivider } from 'react-native-material-menu';
+
+const Story = ({ navigation }: StoryScreenProps) => {
+
+    const [visible, setVisible] = useState(false);
+
+    const toggelMenuBar = () => {
+        setVisible(!visible)
+    }
+
+    return (
+        <RNScreenWrapper>
+            <View style={styles.headerButtons} >
+                <RNButton onlyIcon icon={<Back />} onClick={() => { navigation.goBack() }} />
+                <Menu
+                    visible={visible}
+                    anchor={<RNButton onlyIcon icon={<Options />} onClick={toggelMenuBar} />}
+                    onRequestClose={toggelMenuBar}
+                >
+                    <MenuItem onPress={toggelMenuBar}>Share pdf</MenuItem>
+                    <MenuDivider />
+                    <MenuItem onPress={toggelMenuBar}>Invite to read on tandem</MenuItem>
+                    <MenuDivider />
+                    <MenuItem onPress={toggelMenuBar}>Delete</MenuItem>
+                </Menu>
+
+            </View>
+            <View style={styles.midContent}>
+                <View style={styles.rating} >
+                    <RNTextComponent style={styles.emoji} >
+                        😍
+                    </RNTextComponent>
+                </View>
+                <View style={styles.duration} >
+                    <RNTextComponent style={styles.emoji} isSemiBold>
+                        New
+                    </RNTextComponent>
+                </View>
+            </View>
+            <View style={styles.container}>
+                <Image style={styles.poster} source={{ uri: 'https://i.pinimg.com/originals/92/bc/57/92bc5785532102412df54f1623bf0c02.jpg' }} />
+                <View style={styles.scrollView} >
+                    <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false} >
+                        <View style={styles.dateTime} >
+                            <RNTextComponent style={styles.date} >
+                                14.08.2023
+                            </RNTextComponent>
+                            <RNTextComponent style={[styles.date, { color: 'rgba(0, 0, 0, 0.6)' }]}>
+                                {'     '}2 min reading
+                            </RNTextComponent>
+                        </View>
+                        <RNTextComponent isSemiBold style={styles.heading} >
+                            Lola and her friends
+                        </RNTextComponent>
+                        <RNTextComponent style={styles.story} >
+                            A silly parrot, an adventurous iguana, and a young girl called Lola. Make the story about them going on an adventure, and finding new friends".{'\n'}{'\n'}
+
+                            Once upon a time, in a vibrant, lush rainforest full of colorful flowers and the sweetest fruits.
+                        </RNTextComponent>
+                    </ScrollView>
+                </View>
+                <RNButton title='Rereads' customStyle={styles.button} onClick={() => { navigation.navigate(COMPONENTSNAME.STORY_TELLING) }} />
+            </View>
+        </RNScreenWrapper>
+    );
+};
+
+export default Story;

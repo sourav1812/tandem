@@ -22,7 +22,7 @@ const RNEmojiWithText = ({ props, customStyle, heading , emoji, showText , icon 
             setIsSelected(!isSelected)
         }}
         >
-            <Text style={[styles.emoji ,  {...(showText || isSelected) && { fontSize: verticalScale(40) }} , (emoji && emoji) ]} >
+            <Text style={[styles.emoji ,  {...(showText || isSelected) && { fontSize: verticalScale(33) }} , (emoji && emoji) ]} >
                 {icon}
             </Text>
             {

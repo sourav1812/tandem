@@ -7,19 +7,38 @@ import Close from '../../assets/svg/Cross';
 import Speaker from '../../assets/svg/VolumeDown';
 import RNTextComponent from '../../components/RNTextComponent';
 import RNCharacterComponent from '../../components/RNCharacterComponent';
-import { characterList } from './interface';
+import { characterList, stateObject } from './interface';
 import { characterProps } from '../../components/RNCharacterComponent/interface';
 import RNCongratsModal from '../../components/RNCongratsModal';
-import { BlurView } from '@react-native-community/blur';
 import themeColor from '../../theme/themeColor';
-import { Text } from 'react-native-svg';
+import { StoryTellingScreenProps } from '../../navigation/types';
+import { COMPONENTSNAME } from '../../navigation/ComponentName';
+import Meter from '../../assets/svg/Meter'
+import { useAppSelector } from '../../hooks/navigationHooks';
+import RNReadingLevelModal from '../../components/RNReadingLevelModal';
+import RNReadingTipsModal from '../../components/RNReadingTipsModal';
+import RNRatingModal from '../../components/RNRatingModal';
 
 
-const StoryTelling = () => {
 
+const StoryTelling = ({navigation} : StoryTellingScreenProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [goToEnd, setGoToEnd] = useState(false)
   const [renderModal, setRenderModal] = useState(false)
+  const [readingLevel, setReadingLevel] = useState(false)
+  const [readingTip, setReadingTip] = useState(true)
+  const [state, setState] = useState<stateObject>({
+    ratingModal: true,
+  });
+
+  const { ratingModal } = state;
+
+  const updateState = (date: any) => {
+    setState((previouState: any) => {
+      return { ...previouState, ...date };
+    });
+  };
+  const mode = useAppSelector((state)=>state.mode.mode)
+  console.log(mode , "StoryTellingScreenProps")
   const renderStory = ({ index, item }: any) => {
     return (
       <ImageBackground style={styles.container} source={require('../../assets/png/storyBackground.png')} >
@@ -30,9 +49,9 @@ const StoryTelling = () => {
               Magic Castle
             </RNTextComponent>
             <RNTextComponent style={styles.mainCharacter} isSemiBold>
-              Main Characters
+              The main Characters
             </RNTextComponent>
-            <View style={styles.characterList} >
+            <View style={styles.characterList}>
               {characterList.map((item: characterProps) => {
                 return (
                   <RNCharacterComponent characterName={item.characterName} url={item.url} customStyle={styles.boxStyle} />
@@ -59,15 +78,29 @@ const StoryTelling = () => {
   const toggleModal = ()=>{
     setRenderModal(!renderModal)
   }
+ const renderReadingLevel = ()=>{
+   setReadingLevel(!readingLevel)
+ }
+ const renderTipLevel = ()=>{
+  setReadingTip(!readingTip)
+}
+
+const renderRatingModal = ()=>{
+  updateState({ratingModal : !ratingModal})
+}
 
   return (
     <RNScreenWrapper>
       <View style={styles.headingButton} >
-        <RNButton onlyIcon icon={<Close />} onClick={() => { }} />
+        <RNButton onlyIcon icon={<Close />} onClick={() => {navigation.navigate(COMPONENTSNAME.BOOKSHELF)}} />
         {currentIndex +1 == 5 && <RNTextComponent isSemiBold style={styles.summaryTitle} >
           Summary
         </RNTextComponent>}
-        <RNButton onlyIcon icon={<Speaker />} onClick={() => { }} />
+        <RNButton onlyIcon icon={mode == 'bmode' && currentIndex +1 < 5  ? <Meter/> :  <Speaker />} onClick={() => {
+          if(mode == 'bmode' && currentIndex +1 < 5){
+            renderReadingLevel()
+          }
+         }} />
       </View>
       <FlatList
         data={Array.from({ length: 5 }, (_, i) => { return ({ index: i }) })}
@@ -79,7 +112,7 @@ const StoryTelling = () => {
         bounces={false}
         onViewableItemsChanged={onViewableItemsChanged}
         viewabilityConfig={{
-          itemVisiblePercentThreshold: 100 // adjust threshold as needed
+          itemVisiblePercentThreshold: 2// adjust threshold as needed
         }}
         showsHorizontalScrollIndicator={false}
       />
@@ -92,6 +125,9 @@ const StoryTelling = () => {
           </RNTextComponent>
         </ImageBackground>}
       <RNCongratsModal visible={renderModal} renderModal={toggleModal}  />
+      <RNReadingLevelModal visible={readingLevel} renderModal={renderReadingLevel} nextClick={renderReadingLevel} />
+      {currentIndex == 3 &&  <RNReadingTipsModal visible={readingTip} renderModal={renderTipLevel} nextClick={renderTipLevel} /> }
+    {currentIndex +1 == 5 && mode == 'bmode' && <RNRatingModal visible={ratingModal} renderModal={renderRatingModal} nextClick={renderRatingModal}/>}
     </RNScreenWrapper>
   );
 };

@@ -1,4 +1,4 @@
-import { View, Pressable, Image } from 'react-native';
+import { View, Pressable, Image, StatusBar } from 'react-native';
 import React from 'react';
 import { wellDoneModalProps } from './interface';
 import Bookmark from '../../assets/svg/Bookmark';
@@ -9,9 +9,15 @@ import Modal from 'react-native-modal';
 import RNButton from '../RNButton';
 
 
-const RNWellDoneModal = ({ visible = true, renderModal }: wellDoneModalProps) => {
+const RNWellDoneModal = ({ visible = true, renderModal  , nextClick }: wellDoneModalProps) => {
     return (
-        <Modal isVisible={visible} style={styles.modal} backdropOpacity={0.2}>
+        <Modal isVisible={visible} style={styles.modal} backdropOpacity={0.4} onBackButtonPress={renderModal} onBackdropPress={renderModal} >
+              <StatusBar
+        translucent
+        backgroundColor={'rgba(0, 0, 0, 0.4)'}
+        hidden={false}
+        showHideTransition={'slide'}
+      />
             <View style={styles.container}>
                 <Image
                     source={require('../../assets/png/greenTick.png')}
@@ -21,9 +27,9 @@ const RNWellDoneModal = ({ visible = true, renderModal }: wellDoneModalProps) =>
                     Well Done
                 </RNTextComponent>
                 <RNTextComponent style={styles.info} >
-                    you named 2 animals begining with the letter c!
+                    you named 2 animals beginning with the letter C!
                 </RNTextComponent>
-                <RNButton customStyle={styles.button} onClick={()=>{}} title='Next'/>
+                <RNButton customStyle={styles.button} onClick={nextClick} title='Next'/>
             </View>
         </Modal>
     );
