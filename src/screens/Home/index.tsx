@@ -5,15 +5,17 @@ import RNScreenWrapper from '../../components/RNScreenWrapper';
 import { useOrientation } from '../../hooks/useOrientation';
 import RNTextComponent from '../../components/RNTextComponent';
 import themeColor from '../../theme/themeColor';
-import { verticalScale } from 'react-native-size-matters';
+import { scale, verticalScale } from 'react-native-size-matters';
 import RNBookmarkComponent from '../../components/RNBookmarkComponent';
 import { COMPONENTSNAME } from '../../navigation/ComponentName';
 import RNReadingLevelModal from '../../components/RNReadingLevelModal';
 import DeviceInfo from 'react-native-device-info';
+import { checkIfTablet } from '../../hooks/isTabletHook';
 
 const Home = ({ navigation }: any) => {
 
   const portrait = useOrientation().isPortrait
+  const isTablet = checkIfTablet();
 
 
   const dummyData: { color: string, title: string }[] = [
@@ -38,6 +40,7 @@ const Home = ({ navigation }: any) => {
             color: themeColor.white,
             position: 'absolute',
             top: portrait ? '7.8%' : '4%',
+            ...(isTablet && {fontSize : scale(14) ,marginTop : verticalScale(0)}),
             ...(portrait && { alignSelf: 'center' }),
             ...(!portrait && { right: '10%' }),
             zIndex: 3,
@@ -51,16 +54,16 @@ const Home = ({ navigation }: any) => {
               source={{
                 uri: 'https://static.vecteezy.com/system/resources/previews/016/461/449/non_2x/cute-giraffe-face-wild-animal-character-in-animated-cartoon-illustration-vector.jpg',
               }}
-              style={{ ...styles.profilePic, ...(!portrait && { top: '52%' }) }}
+              style={{ ...styles.profilePic, ...(!portrait && { top: '52%' }) , ...(isTablet && {bottom : '-25%'}) }}
             />
           </View>
           <View style={styles.right} />
         </View>
         <View style={styles.content}>
-          <RNTextComponent isSemiBold style={{ ...styles.heading, ...(!portrait && styles.headingPortrait) }}>
+          <RNTextComponent isSemiBold style={{ ...styles.heading, ...(!portrait && styles.headingPortrait) , ...(isTablet && {fontSize : scale(18) })  }}  >
             What shall we do today?
           </RNTextComponent>
-          <View style={{ ...styles.options, ...(!portrait && styles.optionsPortrait) }}>
+          <View style={{ ...styles.options, ...(!portrait && styles.optionsPortrait) , ...(isTablet && {maxWidth : 430 }) }}>
             {dummyData.map((item, index) => (
               <Pressable onPress={() => { if (index == 0) { navigation.navigate(COMPONENTSNAME.GENERATE_STORY) } else { toggleModal() } }} >
                 <RNBookmarkComponent

@@ -7,9 +7,11 @@ import RNTextComponent from '../RNTextComponent';
 import { verticalScale } from 'react-native-size-matters';
 import Modal from 'react-native-modal';
 import RNButton from '../RNButton';
+import { checkIfTablet } from '../../hooks/isTabletHook';
 
 
 const RNWellDoneModal = ({ visible = true, renderModal  , nextClick }: wellDoneModalProps) => {
+    const isTablet = checkIfTablet()
     return (
         <Modal isVisible={visible} style={styles.modal} backdropOpacity={0.4} onBackButtonPress={renderModal} onBackdropPress={renderModal} >
               <StatusBar
@@ -18,7 +20,7 @@ const RNWellDoneModal = ({ visible = true, renderModal  , nextClick }: wellDoneM
         hidden={false}
         showHideTransition={'slide'}
       />
-            <View style={styles.container}>
+            <View style={[styles.container , (isTablet && {marginHorizontal : verticalScale(80)  }) ]}>
                 <Image
                     source={require('../../assets/png/greenTick.png')}
                     style={styles.tick}

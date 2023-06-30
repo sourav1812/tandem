@@ -137,5 +137,8 @@ export const  styles = StyleSheet.create({
     height : verticalScale(140),
     width  : verticalScale(140),
     // marginRight : verticalScale(30)
+  },
+  buttonText : {
+    fontSize : verticalScale(16)
   }
 });

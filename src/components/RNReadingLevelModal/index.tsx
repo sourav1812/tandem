@@ -1,22 +1,21 @@
-import { View, Pressable, Image, StatusBar } from 'react-native';
+import { View, StatusBar } from 'react-native';
 import React, { useState } from 'react';
 import { readingTipsModalProps } from './interface';
-import Bookmark from '../../assets/svg/Bookmark';
 import { styles } from './styles';
 import RNTextComponent from '../RNTextComponent';
 import { verticalScale } from 'react-native-size-matters';
 import Modal from 'react-native-modal';
 import RNButton from '../RNButton';
-import en from '../../constants/api/lang/en';
 import Info from '../../assets/svg/Note'
 import Less from '../../assets/svg/Subtract'
 import More from '../../assets/svg/Plus'
 import themeColor from '../../theme/themeColor';
+import { checkIfTablet } from '../../hooks/isTabletHook';
 
 
 
 const RNReadingLevelModal = ({ visible = true, renderModal, nextClick }: readingTipsModalProps) => {
-
+    let isTablet = checkIfTablet()
     const [indicators, setIndicators] = useState([
         { color: themeColor.gold },
         { color: themeColor.gold },
@@ -34,7 +33,7 @@ const RNReadingLevelModal = ({ visible = true, renderModal, nextClick }: reading
         hidden={false}
         showHideTransition={'slide'}
       />
-            <View style={styles.container}>
+            <View style={[styles.container , (isTablet && {width : verticalScale(270) , alignSelf : 'center'} ) ]}>
                 <Info style={styles.icon} />
                 <RNTextComponent isSemiBold style={styles.heading}>
                     Adjust the reading level:

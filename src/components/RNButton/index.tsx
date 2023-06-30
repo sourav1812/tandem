@@ -15,7 +15,7 @@ const RNButton = ({ props, customStyle, onlyBorder, title , buttonColor, noBorde
             {...noBorderRadius && { borderRadius: 0 }},
             ( customStyle &&  customStyle),
         ]} {...props} onPress={onClick}>
-            <RNTextComponent isSemiBold style={[{ color: themeColor.white, ...(onlyBorder && { color: buttonColor || themeColor.themeBlue }) } , (textStyle && textStyle) ]}>
+            <RNTextComponent isSemiBold style={[{fontSize : verticalScale(14), color: themeColor.white, ...(onlyBorder && { color: buttonColor || themeColor.themeBlue }) } , (textStyle && textStyle) ]}>
                 {title}
             </RNTextComponent>
         </Pressable> : (

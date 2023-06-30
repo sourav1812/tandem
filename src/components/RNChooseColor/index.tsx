@@ -103,7 +103,7 @@ const RNChooseColor = () => {
             <RNTextComponent style={styles.subHeading}>
                 Select two colors to get a third
             </RNTextComponent>
-            <View style={[styles.scrollView , (isTablet && {maxWidth : 300})]}>
+            <View style={[styles.scrollView , (isTablet && {maxWidth : verticalScale(300) , borderWidth : 0})]}>
                 {colorPalette.map((value, index) => {
                     return (
                         <Pressable
@@ -116,7 +116,7 @@ const RNChooseColor = () => {
                             {value.isSelected && <RNTextComponent style={styles.colorName} isSemiBold>
                                 {value.color}
                             </RNTextComponent>}
-                            <Animated.Image source={value.icon} style={[{ height: value.isSelected ? verticalScale(140) : verticalScale(120), width: value.isSelected ? verticalScale(142) : verticalScale(120)  }]} resizeMode='contain' />
+                            <Animated.Image source={value.icon} style={[{ height: value.isSelected ? verticalScale(130) : verticalScale(110), width: value.isSelected ? verticalScale(132) : verticalScale(110)  }]} resizeMode='contain' />
                             {/* <Animated.Image source={value.icon} style={[{  transform : [{scale: value.isSelected ?  scaleValue : 1}]  }  ]} resizeMode='contain' /> */}
                         </Pressable>
                     );

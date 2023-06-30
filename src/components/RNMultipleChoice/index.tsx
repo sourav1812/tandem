@@ -24,7 +24,7 @@ const RNMultipleChoice = ({onNextPress}  : multipleChoiceProps) => {
                     <RNTextComponent style={styles.heading} isSemiBold>
                     How many animals can you name that starts with the letter C?
                     </RNTextComponent>
-                    <View style={[styles.options , (isTablet && {maxWidth : 265})]} >
+                    <View style={[styles.options]} >
                         <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
                             {place.map((value, index) => {
                                 return (

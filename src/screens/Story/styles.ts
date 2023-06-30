@@ -83,5 +83,24 @@ export const styles = StyleSheet.create({
     top : verticalScale(44),
     zIndex : 3,
     width : '100%',
+  },
+  menuItem : {
+    height : verticalScale(26),
+    paddingRight  :0
+  },
+  menuBox : {
+    width : verticalScale(150),
+    marginRight  :verticalScale(22),
+  },
+  menu : {
+    backgroundColor:  'yellow',
+    width : verticalScale(170),
+    flexDirection : 'row',
+    justifyContent: 'space-between',
+    alignItems : 'center',
+    paddingHorizontal : verticalScale(8)
+  },
+  text:  {
+    fontSize : verticalScale(16)
   }
 });

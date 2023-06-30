@@ -67,7 +67,7 @@ const Bookshelf = ({navigation}: BookShelfScreenProps) => {
   const renderItem = React.useCallback(({item}: any) => {
     return (
       <>
-      <View style={[{borderWidth : 0}]} >
+      <View style={[{borderWidth : 0 , marginHorizontal : verticalScale(30)  }]} >
       {item.week && (
           <RNTextComponent style={styles.heading}  numberOfLines={2} isSemiBold>
             {item.week}
@@ -100,7 +100,7 @@ const Bookshelf = ({navigation}: BookShelfScreenProps) => {
             value={''}
             showLabel={false}
             updateText={() => {}}
-            inputStyle={styles.searchBoxInputStyle}
+            inputStyle={[styles.searchBoxInputStyle, , (isTablet && {width : '78%', alignSelf : 'center'  } )]}
             backgroundColor="#ffffff"
             containerStyle={styles.searchBoxContainerStyle}
             Icon={<SearchIcon />}

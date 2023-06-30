@@ -20,7 +20,7 @@ export const styles = StyleSheet.create({
     backgroundColor: themeColor.gold,
     flex: 1,
     // width : scale()
-    borderBottomRightRadius: verticalScale(16),
+    borderBottomRightRadius: verticalScale(8),
   },
   middle: {
     backgroundColor: themeColor.gold,
@@ -30,12 +30,12 @@ export const styles = StyleSheet.create({
     backgroundColor: themeColor.gold,
     flex: 1,
 
-    borderBottomLeftRadius: verticalScale(16),
+    borderBottomLeftRadius: verticalScale(8),
   },
   profilePic: {
     position: 'absolute',
     bottom: '-19%',
-    borderRadius: 72,
+    borderRadius: 100,
     borderWidth: 10,
     borderColor: themeColor.white,
     height: scale(89),
@@ -53,7 +53,6 @@ export const styles = StyleSheet.create({
   },
   options: {
     flexDirection: 'row',
-    ...((isIpad || isAndroidTablet )&& {maxWidth : 290}) ,
     flexWrap: 'wrap',
     justifyContent: 'space-between',
     alignSelf : 'center',

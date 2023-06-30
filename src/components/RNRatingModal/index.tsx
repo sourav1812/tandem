@@ -7,11 +7,14 @@ import RNTextComponent from '../RNTextComponent';
 import { verticalScale } from 'react-native-size-matters';
 import Modal from 'react-native-modal';
 import RNButton from '../RNButton';
+import { checkIfTablet } from '../../hooks/isTabletHook';
+
 
 
 
 
 const RNRatingModal = ({ visible , renderModal  , nextClick }: ratingModalProps) => {
+    let isTablet = checkIfTablet()
     return (
         <Modal isVisible={visible} style={styles.modal} backdropOpacity={0.4} onBackButtonPress={renderModal} onBackdropPress={renderModal} >
                <StatusBar
@@ -20,7 +23,7 @@ const RNRatingModal = ({ visible , renderModal  , nextClick }: ratingModalProps)
         hidden={false}
         showHideTransition={'slide'}
       />
-            <View style={styles.container}>
+            <View style={[styles.container ,  (isTablet && {width : verticalScale(270) , alignSelf : 'center'} )]}>
                 <RNTextComponent isSemiBold style={styles.heading}>
                     Agree on a rating for the story:
                 </RNTextComponent>

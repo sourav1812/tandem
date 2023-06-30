@@ -1,4 +1,4 @@
-import { View, Image, ScrollView, Text } from 'react-native';
+import { View, Image, ScrollView } from 'react-native';
 import React, { useState } from 'react';
 import { styles } from './styles';
 import RNScreenWrapper from '../../components/RNScreenWrapper';
@@ -8,7 +8,7 @@ import { StoryScreenProps } from '../../navigation/types';
 import { COMPONENTSNAME } from '../../navigation/ComponentName';
 import Back from '../../assets/svg/LeftArrow'
 import Options from '../../assets/svg/ThreeDots'
-import { Menu, MenuItem, MenuDivider } from 'react-native-material-menu';
+import RNMenuModal from '../../components/RNMenuModal';
 
 const Story = ({ navigation }: StoryScreenProps) => {
 
@@ -19,21 +19,11 @@ const Story = ({ navigation }: StoryScreenProps) => {
     }
 
     return (
+        <>
         <RNScreenWrapper>
             <View style={styles.headerButtons} >
                 <RNButton onlyIcon icon={<Back />} onClick={() => { navigation.goBack() }} />
-                <Menu
-                    visible={visible}
-                    anchor={<RNButton onlyIcon icon={<Options />} onClick={toggelMenuBar} />}
-                    onRequestClose={toggelMenuBar}
-                >
-                    <MenuItem onPress={toggelMenuBar}>Share pdf</MenuItem>
-                    <MenuDivider />
-                    <MenuItem onPress={toggelMenuBar}>Invite to read on tandem</MenuItem>
-                    <MenuDivider />
-                    <MenuItem onPress={toggelMenuBar}>Delete</MenuItem>
-                </Menu>
-
+                <RNButton onlyIcon icon={<Options />} onClick={toggelMenuBar} />
             </View>
             <View style={styles.midContent}>
                 <View style={styles.rating} >
@@ -72,6 +62,8 @@ const Story = ({ navigation }: StoryScreenProps) => {
                 <RNButton title='Rereads' customStyle={styles.button} onClick={() => { navigation.navigate(COMPONENTSNAME.STORY_TELLING) }} />
             </View>
         </RNScreenWrapper>
+        <RNMenuModal visible={visible} renderModal={toggelMenuBar} />
+        </>
     );
 };
 

@@ -15,6 +15,7 @@ import { GeneratingStoryScreenProps } from '../../navigation/types';
 import { COMPONENTSNAME } from '../../navigation/ComponentName';
 import RNChooseColor from '../../components/RNChooseColor';
 import { checkIfTablet } from '../../hooks/isTabletHook';
+import { verticalScale } from 'react-native-size-matters';
 
 
 const GenerateStory = ({ navigation} :GeneratingStoryScreenProps) => {
@@ -127,7 +128,7 @@ const GenerateStory = ({ navigation} :GeneratingStoryScreenProps) => {
       case 0:
         return (
           <ScrollView
-            contentContainerStyle={[styles.scrollView , (isTablet && {maxWidth : 295})]}
+            contentContainerStyle={[styles.scrollView ]}
             scrollEnabled
             showsVerticalScrollIndicator={false}>
             {place.map((value, index) => {
@@ -173,7 +174,7 @@ const GenerateStory = ({ navigation} :GeneratingStoryScreenProps) => {
         case 3:
           return (
             <ScrollView
-            contentContainerStyle={[styles.scrollView ,  , (isTablet && {maxWidth : 295})]}
+            contentContainerStyle={[styles.scrollView ]}
             scrollEnabled
             showsVerticalScrollIndicator={false}>
             {audience.map((value, index) => {
@@ -192,7 +193,7 @@ const GenerateStory = ({ navigation} :GeneratingStoryScreenProps) => {
         case 4:
           return (
             <ScrollView
-            contentContainerStyle={[styles.scrollView,   (isTablet && {maxWidth : 295})]}
+            contentContainerStyle={[styles.scrollView]}
             scrollEnabled
             showsVerticalScrollIndicator={false}>
             {typeOfStory.map((value, index) => {
@@ -211,7 +212,7 @@ const GenerateStory = ({ navigation} :GeneratingStoryScreenProps) => {
         case 5:
           return (
             <ScrollView
-            contentContainerStyle={[styles.scrollView ,  , (isTablet && {maxWidth : 295})]}
+            contentContainerStyle={[styles.scrollView ]}
             scrollEnabled
             showsVerticalScrollIndicator={false}>
             {attribute.map((value, index) => {
@@ -290,6 +291,7 @@ const GenerateStory = ({ navigation} :GeneratingStoryScreenProps) => {
         customStyle={styles.footerButton}
         title={'Select'}
         onClick={nextQuestion}
+        textStyle={styles.buttonText}
       />}
     </RNScreenWrapper>
   );

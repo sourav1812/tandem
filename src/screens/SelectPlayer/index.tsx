@@ -25,7 +25,7 @@ const SelectPlayer = ({navigation} : SelectPlayerScreenProps) => {
         {en.WHO_IS_GOING_TO}
       </RNTextComponent>
 
-      <View style={[styles.scrollViewParent   , (isTablet && {maxWidth :295})  ]} >
+      <View style={[styles.scrollViewParent   , (isTablet && {maxWidth :500 })  ]} >
         <ScrollView contentContainerStyle= {styles.scrollView} showsVerticalScrollIndicator={false} >
           {players.map((item, index)=> <Pressable style={[styles.players , {backgroundColor : item.color}]} onPress={()=>{
             navigation.navigate(COMPONENTSNAME.BOOKSHELF)

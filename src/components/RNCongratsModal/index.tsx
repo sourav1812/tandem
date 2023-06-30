@@ -9,10 +9,11 @@ import themeColor from '../../theme/themeColor';
 import RNButton from '../RNButton';
 import { useNavigation } from '@react-navigation/native';
 import { COMPONENTSNAME } from '../../navigation/ComponentName';
+import { checkIfTablet } from '../../hooks/isTabletHook';
 
 
 const RNCongratsModal = ({ visible = false, renderModal }: congratsModalProps) => {
-
+   let isTablet = checkIfTablet()
   const navigation = useNavigation()
 
   return (
@@ -23,7 +24,7 @@ const RNCongratsModal = ({ visible = false, renderModal }: congratsModalProps) =
         hidden={false}
         showHideTransition={'slide'}
       />
-      <View style={styles.container}>
+      <View style={[styles.container  , (isTablet && {width : verticalScale(320) , alignSelf : 'center' } )]}>
         <View style={styles.top}>
           <View style={styles.image}>
             <RNTextComponent style={{ fontSize: verticalScale(32) }}>

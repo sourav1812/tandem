@@ -20,7 +20,7 @@ export const styles = StyleSheet.create({
   imageViewContainer: {flexDirection: 'row' },
   imageImojiContainer: {
     position: 'absolute',
-    right: 5,
+    right: verticalScale(5),
     zIndex: 1,
     borderRadius: 20,
     backgroundColor: '#F1F4F9',
@@ -40,25 +40,29 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 16,
   },
-  newText: {color: 'white', padding: 10},
+  newText: {color: 'white', padding: 10, fontSize : verticalScale(12)},
   headerTitleContainer: {
     width: '60%',
     padding: 10,
     justifyContent: 'space-between',
-    // borderWidth : 1
   },
   time: {
-    fontSize: 14,
+    fontSize: scale(12.5),
     marginVertical: 4,
+    
   },
   minReading: {
     color: ' rgba(2, 4, 8, 0.6)',
     marginBottom: 4,
     marginTop: 0,
+    fontSize : scale(13)
   },
   img : {
     height : verticalScale(110),
     width : scale(105),
     borderRadius : 16,
   },
+  heading : {
+    fontSize  : verticalScale(17)
+  }
 });

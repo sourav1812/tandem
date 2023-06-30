@@ -7,6 +7,7 @@ import {
     TextStyle,
 } from 'react-native';
 import { Props } from './interface';
+import { scale } from 'react-native-size-matters';
 
 
 const RNTextComponent = ({
@@ -50,7 +51,7 @@ const styles = StyleSheet.create({
     text: {
         color: 'black',
         fontFamily: 'Poppins-Regular',
-        fontSize: 16,
+        fontSize: scale(14),
     },
 });
 

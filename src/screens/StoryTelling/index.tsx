@@ -18,10 +18,13 @@ import { useAppSelector } from '../../hooks/navigationHooks';
 import RNReadingLevelModal from '../../components/RNReadingLevelModal';
 import RNReadingTipsModal from '../../components/RNReadingTipsModal';
 import RNRatingModal from '../../components/RNRatingModal';
+import { checkIfTablet } from '../../hooks/isTabletHook';
+import { verticalScale } from 'react-native-size-matters';
 
 
 
 const StoryTelling = ({navigation} : StoryTellingScreenProps) => {
+  const isTablet = checkIfTablet()
   const [currentIndex, setCurrentIndex] = useState(0);
   const [renderModal, setRenderModal] = useState(false)
   const [readingLevel, setReadingLevel] = useState(false)
@@ -63,7 +66,6 @@ const StoryTelling = ({navigation} : StoryTellingScreenProps) => {
             </RNTextComponent>
           </ScrollView>
           </View>
-        
           <RNButton title='Great!' customStyle={styles.footerButton} onClick={toggleModal} />
         </View>}
       </ImageBackground>
@@ -116,7 +118,7 @@ const renderRatingModal = ()=>{
         }}
         showsHorizontalScrollIndicator={false}
       />
-      {currentIndex +1 != 5 &&    <ImageBackground style={styles.storyContent} blurRadius={20} source={require('../../assets/png/blurBgc.png')} imageStyle={styles.imageStyle} >
+      {currentIndex +1 != 5 &&    <ImageBackground style={styles.storyContent} blurRadius={20} source={require('../../assets/png/blurBgc.png')} imageStyle={[styles.imageStyle , (isTablet && {borderTopLeftRadius : verticalScale(8) , borderTopRightRadius : verticalScale(8) } )]} >
           <RNTextComponent style={styles.slideNo} isSemiBold >
             1/{currentIndex + 1}
           </RNTextComponent>

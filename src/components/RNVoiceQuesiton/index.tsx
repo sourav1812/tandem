@@ -9,9 +9,11 @@ import Mic from '../../assets/svg/Mic'
 import MicOn from '../../assets/svg/MinOn'
 import { verticalScale } from 'react-native-size-matters'
 import { VoiceQuestionProps } from './interface'
+import { checkIfTablet } from '../../hooks/isTabletHook'
 
 const RNVoiceQuesiton = ({onClick } : VoiceQuestionProps) => {
 
+    const isTablet = checkIfTablet()
     const [inputList, setInputList] = useState<inputListState[]>([{ answer: '' }])
     const [micStatus, setMicStatus] = useState(false)
 
@@ -48,7 +50,7 @@ const RNVoiceQuesiton = ({onClick } : VoiceQuestionProps) => {
                                         </RNTextComponent>
                                     </View>
                                     <TextInput
-                                        style={styles.input}
+                                        style={[styles.input]}
                                         onChangeText={(e) => {
                                             let answerArry = [...inputList]
                                             answerArry[index].answer = e

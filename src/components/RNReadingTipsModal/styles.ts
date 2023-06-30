@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
         padding : verticalScale(20),
         alignItems : 'center',
         backgroundColor : themeColor.white,
-        borderRadius : verticalScale(16)
+        borderRadius : verticalScale(16),
       },
       tick : {
         height : verticalScale(130),
