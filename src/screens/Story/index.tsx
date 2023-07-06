@@ -24,6 +24,7 @@ const Story = ({ navigation }: StoryScreenProps) => {
             <View style={styles.headerButtons} >
                 <RNButton onlyIcon icon={<Back />} onClick={() => { navigation.goBack() }} />
                 <RNButton onlyIcon icon={<Options />} onClick={toggelMenuBar} />
+        <RNMenuModal visible={visible} renderModal={toggelMenuBar} />
             </View>
             <View style={styles.midContent}>
                 <View style={styles.rating} >
@@ -49,7 +50,7 @@ const Story = ({ navigation }: StoryScreenProps) => {
                                 {'     '}2 min reading
                             </RNTextComponent>
                         </View>
-                        <RNTextComponent isSemiBold style={styles.heading} >
+                        <RNTextComponent isSemiBold style={styles.heading}>
                             Lola and her friends
                         </RNTextComponent>
                         <RNTextComponent style={styles.story} >
@@ -62,7 +63,6 @@ const Story = ({ navigation }: StoryScreenProps) => {
                 <RNButton title='Rereads' customStyle={styles.button} onClick={() => { navigation.navigate(COMPONENTSNAME.STORY_TELLING) }} />
             </View>
         </RNScreenWrapper>
-        <RNMenuModal visible={visible} renderModal={toggelMenuBar} />
         </>
     );
 };

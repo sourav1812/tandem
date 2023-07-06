@@ -2,8 +2,9 @@ import {View, TextInput, StyleSheet} from 'react-native';
 import React, {useState} from 'react';
 import RNTextComponent from '../RNTextComponent';
 import themeColor from '../../theme/themeColor';
-import Show from '../../assets/svg/Eye';
 import {Props} from './interface';
+import { verticalScale } from 'react-native-size-matters';
+import { checkIfTablet } from '../../hooks/isTabletHook';
 
 const RNTextInputWithLabel = ({
   props,
@@ -13,36 +14,44 @@ const RNTextInputWithLabel = ({
   updateText,
   value,
   inputStyle,
-  showIcon,
   backgroundColor,
   Icon,
+  containerStyle,
+  inputViewStyle ,
 }: Props) => {
   const [highlight, setHighlight] = useState(false);
+  const isTablet = checkIfTablet()
 
-  const toggleHighlight = () => {
-    setHighlight(!highlight);
-  };
+  const onFocus = () => {
+    setHighlight(true)
+  }
+
+  const onBlur = () => {
+    setHighlight(false)
+  }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, (containerStyle && containerStyle)]}>
       {showLabel && (
-        <RNTextComponent style={{fontSize: 14, marginBottom: 8}}>
+        <RNTextComponent style={{fontSize: isTablet ? 16 : verticalScale(12), marginBottom: 2}}>
           {label}
         </RNTextComponent>
       )}
       <View
         style={[
           styles.box,
-          highlight && {borderColor: themeColor.themeBlue},
+          highlight && {borderWidth : 1 , borderColor: themeColor.themeBlue},
           {backgroundColor: backgroundColor ? backgroundColor : undefined},
+          (inputViewStyle && inputViewStyle)
         ]}>
         {Icon && Icon}
         <TextInput
-          style={[styles.textinput, inputStyle && inputStyle]}
+          style={[styles.textinput , isTablet && {  paddingHorizontal: 12,
+            paddingVertical : 16,} , inputStyle && inputStyle]}
           {...props}
           placeholder={hint}
-          onFocus={toggleHighlight}
-          onBlur={toggleHighlight}
+          onFocus={onFocus}
+          onBlur={onBlur}
           onChangeText={updateText}
           value={value}
         />
@@ -56,18 +65,17 @@ export default RNTextInputWithLabel;
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
-    alignItems: 'center',
-    // borderWidth: 1
   },
   box: {
-    paddingHorizontal: 16,
-    borderRadius: 10,
+    paddingHorizontal: verticalScale(10),
+    borderRadius: verticalScale(12),
     flexDirection: 'row',
     alignItems: 'center',
   },
   textinput: {
-    padding: 14,
+    paddingHorizontal: verticalScale(8),
+    paddingVertical : verticalScale(14),
     color: themeColor.black,
-    fontSize: 14,
+    fontSize: verticalScale(11),
   },
 });

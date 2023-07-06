@@ -42,7 +42,7 @@ const RNMenuModal = ({ visible, renderModal }: menuModalProps) => {
                     <Notes />
                 </Pressable>
                 <Pressable style={styles.menu} >
-                    <RNTextComponent style={styles.text} >
+                    <RNTextComponent style={styles.text}  >
                         Invite to read on tandem
                     </RNTextComponent>
                     <Send />

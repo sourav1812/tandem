@@ -9,8 +9,6 @@ import LeftArrow from '../../assets/svg/LeftArrow'
 import QuestionMark from '../../assets/svg/QuestionMark'
 import {  QuestionsScreenProps } from '../../navigation/types';
 import { COMPONENTSNAME } from '../../navigation/ComponentName';
-import RNVoiceQuesiton from '../../components/RNVoiceQuesiton';
-import  en  from '../../constants/api/lang/en';
 import RNMultipleChoice from '../../components/RNMultipleChoice';
 import RNWellDoneModal from '../../components/RNWellDoneModal';
 import RNVoiceWithTextInput from '../../components/RNVoiceWithTextInput';

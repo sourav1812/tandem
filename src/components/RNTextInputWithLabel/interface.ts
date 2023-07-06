@@ -12,4 +12,5 @@ export interface Props {
   Icon?: any;
   backgroundColor?: string;
   containerStyle?: StyleProp<ViewStyle>;
+  inputViewStyle ?: StyleProp<ViewStyle>;
 }

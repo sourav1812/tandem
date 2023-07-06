@@ -8,5 +8,11 @@ export enum COMPONENTSNAME {
   STORY = 'Story',
   ACTIVITIES = 'Activities',
   SELECT_PLAYER = 'SelectPlayer',
-  QUESTIONS = 'Questions'
+  QUESTIONS = 'Questions',
+  SELECT_LANGUAGE = 'SelectLanguage',
+  SIGN_UP = 'SignUp',
+  SIGN_IN = 'SignIn',
+  TERMS_AND_CONDITIONS = 'TermsAndConditions',
+  HELP_CENTER = 'HelpCenter',
+  ACCOUNT = 'Account',
 }

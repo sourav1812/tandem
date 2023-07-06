@@ -5,6 +5,8 @@ import themeColor from '../../theme/themeColor';
 import Show from '../../assets/svg/Eye';
 import Hide from '../../assets/svg/CloseEye';
 import {Props} from './interface';
+import { verticalScale } from 'react-native-size-matters';
+import { checkIfTablet } from '../../hooks/isTabletHook';
 
 const RNSecureTextInput = ({
   props,
@@ -14,37 +16,45 @@ const RNSecureTextInput = ({
   value,
   inputStyle,
   showError,
+  title,
+  customStyle ,
 }: Props) => {
+  const isTablet = checkIfTablet()
   const [highlight, setHighlight] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
-
-  const toggleHighlight = () => {
-    setHighlight(!highlight);
-  };
 
   const togglePassword = () => {
     setShowPassword(!showPassword);
   };
 
+  const onFocus = () => {
+    setHighlight(true)
+  }
+
+  const onBlur = () => {
+      setHighlight(false)
+  }
+
   return (
-    <View style={styles.container}>
-      <RNTextComponent style={{fontSize: 14, marginBottom: 8}}>
-        Password
+    <View style={[styles.container, (customStyle && customStyle) ]}>
+      <RNTextComponent style={{fontSize: isTablet ? 16 : verticalScale(12), marginBottom: 2}}>
+        {title}
       </RNTextComponent>
       <View
-        style={[styles.box, highlight && {borderColor: themeColor.themeBlue}]}>
+        style={[styles.box, highlight && { borderWidth : 1, borderColor: themeColor.themeBlue}]}>
         <TextInput
-          style={[styles.textinput, inputStyle && inputStyle]}
+            style={[styles.textinput , isTablet && {  paddingHorizontal: 12,
+              paddingVertical : 16,} , inputStyle && inputStyle]}
           {...props}
           placeholder={hint}
-          onFocus={toggleHighlight}
-          onBlur={toggleHighlight}
+          onFocus={onFocus}
+          onBlur={onBlur}
           onChangeText={updateText}
           value={value}
-          secureTextEntry={showPassword}
+          secureTextEntry={!showPassword}
         />
         <Pressable onPress={togglePassword}>
-          {showPassword ? <Hide /> : <Show />}
+          {showPassword ?  <Show /> : <Hide />}
         </Pressable>
       </View>
       {showError && (
@@ -61,19 +71,19 @@ const styles = StyleSheet.create({
     // borderWidth: 1
   },
   box: {
-    paddingHorizontal: 16,
-    borderWidth: 1,
-    borderRadius: 10,
+    paddingHorizontal: verticalScale(14),
+    borderRadius: verticalScale(12),
     flexDirection: 'row',
     alignItems: 'center',
+    backgroundColor : themeColor.lightGray
   },
   textinput: {
     flex: 1,
-    paddingVertical: 14,
+    paddingHorizontal: verticalScale(8),
+    paddingVertical : verticalScale(14),
     color: themeColor.black,
-    fontSize: 14,
-    marginRight: 16,
-    // backgroundColor: themeColor.themeBlue,
+    fontSize: verticalScale(12),
+    marginRight: verticalScale(14),
   },
-  label: {fontSize: 15, marginTop: 5, color: themeColor.red},
+  label: {fontSize: verticalScale(11), marginTop: 6, color: themeColor.red},
 });

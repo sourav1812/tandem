@@ -7,13 +7,13 @@ import SearchIcon from '../../assets/svg/SearchIcon';
 import RNButton from '../../components/RNButton';
 import RNTextComponent from '../../components/RNTextComponent';
 import RNStoryCard from '../../components/RNStoryCard';
-import { verticalScale } from 'react-native-size-matters';
-import { BookShelfScreenProps } from '../../navigation/types';
-import { COMPONENTSNAME } from '../../navigation/ComponentName';
-import { checkIfTablet } from '../../hooks/isTabletHook';
+import {scale, verticalScale} from 'react-native-size-matters';
+import {BookShelfScreenProps} from '../../navigation/types';
+import {COMPONENTSNAME} from '../../navigation/ComponentName';
+import {checkIfTablet} from '../../hooks/isTabletHook';
 
 const Bookshelf = ({navigation}: BookShelfScreenProps) => {
-  const isTablet = checkIfTablet()
+  const isTablet = checkIfTablet();
 
   const data = [
     {
@@ -60,62 +60,68 @@ const Bookshelf = ({navigation}: BookShelfScreenProps) => {
         <RNTextComponent numberOfLines={2} style={styles.whyDontWriteStory}>
           {"Why don't we write a story \n together now?"}
         </RNTextComponent>
-        <RNButton title="Write a story" onClick={()=>{}}/>
+        <RNButton title="Write a story" onClick={() => {}} />
       </View>
     );
   }, []);
   const renderItem = React.useCallback(({item}: any) => {
     return (
       <>
-      <View style={[{borderWidth : 0 , marginHorizontal : verticalScale(30)  }]} >
-      {item.week && (
-          <RNTextComponent style={styles.heading}  numberOfLines={2} isSemiBold>
-            {item.week}
-          </RNTextComponent>
-        )}
-        <Pressable onPress={()=>{navigation.navigate(COMPONENTSNAME.STORY)}} >
-        <RNStoryCard item={item} />
-        </Pressable>
-      </View>
-      
+        <View style={[{marginHorizontal: isTablet ? verticalScale(30) : 0}]}>
+          {item.week && (
+            <RNTextComponent
+              style={styles.heading}
+              numberOfLines={2}
+              isSemiBold>
+              {item.week}
+            </RNTextComponent>
+          )}
+          <Pressable
+            onPress={() => {
+              navigation.navigate(COMPONENTSNAME.STORY);
+            }}>
+            <RNStoryCard item={item} />
+          </Pressable>
+        </View>
       </>
     );
   }, []);
 
-  const seperateComponent = ()=>{
-    return (
-      <View style={{height: verticalScale(12)}} />
-    )
-  }
+  const seperateComponent = () => {
+    return <View style={{height: verticalScale(12)}} />;
+  };
 
   return (
     <RNScreenWrapper>
       <View style={styles.container}>
-          <RNTextComponent style={styles.bookshelfHeaderText} isSemiBold >
-            Bookshelf
-          </RNTextComponent>
-          <RNTextInputWithLabel
-            label={''}
-            hint={'Search'}
-            value={''}
-            showLabel={false}
-            updateText={() => {}}
-            inputStyle={[styles.searchBoxInputStyle, , (isTablet && {width : '78%', alignSelf : 'center'  } )]}
-            backgroundColor="#ffffff"
-            containerStyle={styles.searchBoxContainerStyle}
-            Icon={<SearchIcon />}
+        <RNTextComponent style={styles.bookshelfHeaderText} isSemiBold>
+          Bookshelf
+        </RNTextComponent>
+        <RNTextInputWithLabel
+          label={''}
+          hint={'Search'}
+          value={''}
+          showLabel={false}
+          updateText={() => {}}
+          inputStyle={styles.searchBoxInputStyle}
+          backgroundColor="#ffffff"
+          containerStyle={[
+            styles.searchBoxContainerStyle,
+            isTablet && {marginHorizontal: scale(12)},
+          ]}
+          Icon={<SearchIcon />}
+        />
+        <View style={styles.bottomViewContainer}>
+          <FlatList
+            style={styles.flatListContatiner}
+            contentContainerStyle={[styles.flatListContentContainer]}
+            data={data}
+            renderItem={renderItem}
+            ListEmptyComponent={listEmptyComponent}
+            showsVerticalScrollIndicator={false}
+            ItemSeparatorComponent={seperateComponent}
           />
-          <View style={styles.bottomViewContainer}>
-            <FlatList
-              style={styles.flatListContatiner}
-              contentContainerStyle={[styles.flatListContentContainer]}
-              data={data} 
-              renderItem={renderItem}
-              ListEmptyComponent={listEmptyComponent}
-              showsVerticalScrollIndicator={false}
-              ItemSeparatorComponent={seperateComponent}
-            />
-          </View>
+        </View>
       </View>
     </RNScreenWrapper>
   );

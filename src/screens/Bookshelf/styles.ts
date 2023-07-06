@@ -1,6 +1,6 @@
 import {Platform, StyleSheet} from 'react-native';
 import themeColor from '../../theme/themeColor';
-import { verticalScale } from 'react-native-size-matters';
+import {verticalScale} from 'react-native-size-matters';
 
 export const styles = StyleSheet.create({
   container: {
@@ -13,21 +13,22 @@ export const styles = StyleSheet.create({
     marginTop: verticalScale(70),
     fontSize: verticalScale(22),
     color: themeColor.white,
-    marginBottom  : verticalScale(14)
+    marginBottom: verticalScale(14),
   },
   bottomViewContainer: {
-    height: '82%',
+    flex: 1,
     flexDirection: 'column',
-    marginTop: verticalScale(17) ,
+    marginTop: verticalScale(17),
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
     backgroundColor: themeColor.white,
   },
   searchBoxContainerStyle: {
-    width: '90%',
+    alignSelf: 'center',
   },
   searchBoxInputStyle: {
     width: '85%',
+    alignSelf: 'center',
   },
   listEmptyComponentContainer: {
     height: '100%',
@@ -57,9 +58,13 @@ export const styles = StyleSheet.create({
   flatListContatiner: {
     marginBottom: verticalScale(62),
   },
-  flatListContentContainer: {marginTop: verticalScale(20), marginBottom: verticalScale(25), paddingHorizontal : verticalScale(16)},
-  heading : {
-    fontSize : verticalScale(14),
-    marginBottom : verticalScale(8)
-  }
+  flatListContentContainer: {
+    marginTop: verticalScale(20),
+    marginBottom: verticalScale(25),
+    paddingHorizontal: verticalScale(16),
+  },
+  heading: {
+    fontSize: verticalScale(14),
+    marginBottom: verticalScale(8),
+  },
 });

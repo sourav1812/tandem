@@ -7,7 +7,7 @@ const RNScreenWrapper = ({children, style}: Props) => {
 
 
   return (
-    <View style={style || [styles.container]}>
+    <View style={[styles.container , (style && style)]}>
       <StatusBar
         translucent
         backgroundColor={'transparent'}

@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
     },
     container : {
         marginRight  : verticalScale(20),
-        marginTop : verticalScale(100),
+        marginTop : verticalScale(50),
         backgroundColor : themeColor.white,
         borderRadius : verticalScale(4),
         paddingHorizontal : 10,
