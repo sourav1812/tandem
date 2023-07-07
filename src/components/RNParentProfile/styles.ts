@@ -7,8 +7,8 @@ export const styles = StyleSheet.create({
     marginRight: scale(20),
   },
   profile: {
-    height: verticalScale(95),
-    width: verticalScale(95),
+    height: verticalScale(90),
+    width: verticalScale(90),
   },
   name: {
     fontSize: verticalScale(14),

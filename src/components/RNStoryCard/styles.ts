@@ -1,15 +1,15 @@
 import {Platform, StyleSheet} from 'react-native';
-import { scale, verticalScale } from 'react-native-size-matters';
+import {scale, verticalScale} from 'react-native-size-matters';
 
 export const styles = StyleSheet.create({
   cardContainer: {
     borderRadius: 20,
     padding: verticalScale(10),
     backgroundColor: '#F1F4F9',
-    flexDirection  :'row',
+    flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems : 'center',
-    marginBottom  :verticalScale(10),
+    alignItems: 'center',
+    marginBottom: verticalScale(10),
   },
   progressIndicatorTop: {
     width: '100%',
@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 2,
   },
-  imageViewContainer: {flexDirection: 'row' },
+  imageViewContainer: {flexDirection: 'row'},
   imageImojiContainer: {
     position: 'absolute',
     right: verticalScale(5),
@@ -40,7 +40,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 16,
   },
-  newText: {color: 'white', padding: 10, fontSize : verticalScale(12)},
+  newText: {color: 'white', padding: 10, fontSize: verticalScale(12)},
   headerTitleContainer: {
     width: '60%',
     padding: 10,
@@ -49,20 +49,19 @@ export const styles = StyleSheet.create({
   time: {
     fontSize: scale(12.5),
     marginVertical: 4,
-    
   },
   minReading: {
     color: ' rgba(2, 4, 8, 0.6)',
     marginBottom: 4,
     marginTop: 0,
-    fontSize : scale(13)
+    fontSize: scale(13),
   },
-  img : {
-    height : verticalScale(110),
-    width : scale(105),
-    borderRadius : 16,
+  img: {
+    height: verticalScale(110),
+    width: scale(105),
+    borderRadius: 16,
   },
-  heading : {
-    fontSize  : verticalScale(17)
-  }
+  heading: {
+    fontSize: verticalScale(17),
+  },
 });

@@ -1,34 +1,31 @@
-import { View, Text , ViewStyle, Pressable, Alert} from 'react-native'
-import React  , {useState} from 'react'
-import { styles } from './styles'
-import Inactive from '../../assets/svg/InactiveCheckbox'
-import Active from '../../assets/svg/ActiveCheckbox'
-import RNTextComponent from '../RNTextComponent'
+import {View, ViewStyle, Pressable} from 'react-native';
+import React, {useState} from 'react';
+import {styles} from './styles';
+import Inactive from '@tandem/assets/svg/InactiveCheckbox';
+import Active from '@tandem/assets/svg/ActiveCheckbox';
+import RNTextComponent from '../RNTextComponent';
 
 export interface Props {
-    customStyle ?: ViewStyle
+  customStyle?: ViewStyle;
 }
 
+const RNCheckboxWithText = ({customStyle}: Props) => {
+  const [select, setSelect] = useState(false);
 
-const RNCheckboxWithText = ({customStyle}:Props) => {
-    const [select, setSelect] = useState(false)
-
-    const toggleCheckbox = ()=>{
-        setSelect(!select)
-    }
+  const toggleCheckbox = () => {
+    setSelect(!select);
+  };
 
   return (
-    <View style={styles.container} >
-        <Pressable onPress={toggleCheckbox}>
-        {
-            select ? (<Active/>) : (<Inactive/>)
-        }
-        </Pressable>
-        <RNTextComponent style={styles.text} >
+    <View style={[styles.container, customStyle && customStyle]}>
+      <Pressable onPress={toggleCheckbox}>
+        {select ? <Active /> : <Inactive />}
+      </Pressable>
+      <RNTextComponent style={styles.text}>
         I agree to the terms and conditions of the End-User License Agreement.
-        </RNTextComponent>
+      </RNTextComponent>
     </View>
-  )
-}
+  );
+};
 
-export default RNCheckboxWithText
+export default RNCheckboxWithText;

@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import {PressableProps, ViewStyle, StyleProp, TextStyle} from 'react-native';
 
 export interface Props {
@@ -7,7 +6,6 @@ export interface Props {
   heading: string;
   emoji?: StyleProp<TextStyle>;
   showText?: boolean;
-  icon :string;
-  bgcColor : string;
+  icon: string;
+  bgcColor: string;
 }
-  

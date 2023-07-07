@@ -1,12 +1,12 @@
 import {View, TextInput, StyleSheet, Pressable} from 'react-native';
 import React, {useState} from 'react';
 import RNTextComponent from '../RNTextComponent';
-import themeColor from '../../theme/themeColor';
-import Show from '../../assets/svg/Eye';
-import Hide from '../../assets/svg/CloseEye';
+import themeColor from '@tandem/theme/themeColor';
+import Show from '@tandem/assets/svg/Eye';
+import Hide from '@tandem/assets/svg/CloseEye';
 import {Props} from './interface';
-import { verticalScale } from 'react-native-size-matters';
-import { checkIfTablet } from '../../hooks/isTabletHook';
+import {verticalScale} from 'react-native-size-matters';
+import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 
 const RNSecureTextInput = ({
   props,
@@ -17,9 +17,9 @@ const RNSecureTextInput = ({
   inputStyle,
   showError,
   title,
-  customStyle ,
+  customStyle,
 }: Props) => {
-  const isTablet = checkIfTablet()
+  const isTablet = checkIfTablet();
   const [highlight, setHighlight] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
@@ -28,23 +28,30 @@ const RNSecureTextInput = ({
   };
 
   const onFocus = () => {
-    setHighlight(true)
-  }
+    setHighlight(true);
+  };
 
   const onBlur = () => {
-      setHighlight(false)
-  }
+    setHighlight(false);
+  };
 
   return (
-    <View style={[styles.container, (customStyle && customStyle) ]}>
-      <RNTextComponent style={{fontSize: isTablet ? 16 : verticalScale(12), marginBottom: 2}}>
+    <View style={[styles.container, customStyle && customStyle]}>
+      <RNTextComponent
+        style={{fontSize: isTablet ? 16 : verticalScale(12), marginBottom: 2}}>
         {title}
       </RNTextComponent>
       <View
-        style={[styles.box, highlight && { borderWidth : 1, borderColor: themeColor.themeBlue}]}>
+        style={[
+          styles.box,
+          highlight && {borderWidth: 1, borderColor: themeColor.themeBlue},
+        ]}>
         <TextInput
-            style={[styles.textinput , isTablet && {  paddingHorizontal: 12,
-              paddingVertical : 16,} , inputStyle && inputStyle]}
+          style={[
+            styles.textinput,
+            isTablet && {paddingHorizontal: 12, paddingVertical: 16},
+            inputStyle && inputStyle,
+          ]}
           {...props}
           placeholder={hint}
           onFocus={onFocus}
@@ -54,7 +61,7 @@ const RNSecureTextInput = ({
           secureTextEntry={!showPassword}
         />
         <Pressable onPress={togglePassword}>
-          {showPassword ?  <Show /> : <Hide />}
+          {showPassword ? <Show /> : <Hide />}
         </Pressable>
       </View>
       {showError && (
@@ -75,12 +82,12 @@ const styles = StyleSheet.create({
     borderRadius: verticalScale(12),
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor : themeColor.lightGray
+    backgroundColor: themeColor.lightGray,
   },
   textinput: {
     flex: 1,
     paddingHorizontal: verticalScale(8),
-    paddingVertical : verticalScale(14),
+    paddingVertical: verticalScale(14),
     color: themeColor.black,
     fontSize: verticalScale(12),
     marginRight: verticalScale(14),

@@ -1,15 +1,16 @@
+/* eslint-disable react-native/no-inline-styles */
 import {View, TextInput, StyleSheet} from 'react-native';
 import React, {useState} from 'react';
 import RNTextComponent from '../RNTextComponent';
-import themeColor from '../../theme/themeColor';
+import themeColor from '@tandem/theme/themeColor';
 import {Props} from './interface';
-import { verticalScale } from 'react-native-size-matters';
-import { checkIfTablet } from '../../hooks/isTabletHook';
+import {verticalScale} from 'react-native-size-matters';
+import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 
 const RNTextInputWithLabel = ({
   props,
   label,
-  showLabel ,
+  showLabel,
   hint,
   updateText,
   value,
@@ -17,37 +18,44 @@ const RNTextInputWithLabel = ({
   backgroundColor,
   Icon,
   containerStyle,
-  inputViewStyle ,
+  inputViewStyle,
 }: Props) => {
   const [highlight, setHighlight] = useState(false);
-  const isTablet = checkIfTablet()
+  const isTablet = checkIfTablet();
 
   const onFocus = () => {
-    setHighlight(true)
-  }
+    setHighlight(true);
+  };
 
   const onBlur = () => {
-    setHighlight(false)
-  }
+    setHighlight(false);
+  };
 
   return (
-    <View style={[styles.container, (containerStyle && containerStyle)]}>
+    <View style={[styles.container, containerStyle && containerStyle]}>
       {showLabel && (
-        <RNTextComponent style={{fontSize: isTablet ? 16 : verticalScale(12), marginBottom: 2}}>
+        <RNTextComponent
+          style={{
+            fontSize: isTablet ? 16 : verticalScale(12),
+            marginBottom: 2,
+          }}>
           {label}
         </RNTextComponent>
       )}
       <View
         style={[
           styles.box,
-          highlight && {borderWidth : 1 , borderColor: themeColor.themeBlue},
+          highlight && {borderWidth: 1, borderColor: themeColor.themeBlue},
           {backgroundColor: backgroundColor ? backgroundColor : undefined},
-          (inputViewStyle && inputViewStyle)
+          inputViewStyle && inputViewStyle,
         ]}>
         {Icon && Icon}
         <TextInput
-          style={[styles.textinput , isTablet && {  paddingHorizontal: 12,
-            paddingVertical : 16,} , inputStyle && inputStyle]}
+          style={[
+            styles.textinput,
+            isTablet && {paddingHorizontal: 12, paddingVertical: 16},
+            inputStyle && inputStyle,
+          ]}
           {...props}
           placeholder={hint}
           onFocus={onFocus}
@@ -74,7 +82,7 @@ const styles = StyleSheet.create({
   },
   textinput: {
     paddingHorizontal: verticalScale(8),
-    paddingVertical : verticalScale(14),
+    paddingVertical: verticalScale(14),
     color: themeColor.black,
     fontSize: verticalScale(11),
   },

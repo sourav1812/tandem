@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {scale, verticalScale} from 'react-native-size-matters';
-import themeColor from '../../theme/themeColor';
+import themeColor from '@tandem/theme/themeColor';
 
 export const styles = StyleSheet.create({
   container: {
@@ -45,5 +45,42 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: verticalScale(14),
     paddingHorizontal: scale(5),
+  },
+  footer: {
+    height: verticalScale(56),
+    marginTop: verticalScale(30),
+    borderRadius: 100,
+    backgroundColor: themeColor.themeBlue,
+    maxHeight: 60,
+    overflow: 'hidden',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  button: {
+    flex: 0.8,
+    height: verticalScale(56),
+    borderRadius: 100,
+    backgroundColor: themeColor.white,
+    maxHeight: 60,
+    overflow: 'hidden',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  text: {
+    color: themeColor.white,
+    marginLeft: 20,
+  },
+  profile: {
+    height: 30,
+    width: 30,
   },
 });

@@ -1,3 +1,3 @@
-export let  mode =  {
-    mode : 'cmode'
-}
+export let mode = {
+  mode: 'cmode',
+};

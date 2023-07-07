@@ -1,4 +1,4 @@
 export interface menuModalProps {
-    visible : boolean;
-    renderModal : ()=> void;
+  visible: boolean;
+  renderModal: () => void;
 }

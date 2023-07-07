@@ -1,18 +1,18 @@
 import {View} from 'react-native';
 import React, {useState} from 'react';
-import RNScreenWrapper from '../../components/RNScreenWrapper';
+import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {styles} from './styles';
-import RNTextComponent from '../../components/RNTextComponent';
-import RNButton from '../../components/RNButton';
+import RNTextComponent from '@tandem/components/RNTextComponent';
+import RNButton from '@tandem/components/RNButton';
 import {stateObject} from './interface';
-import LeftArrow from '../../assets/svg/LeftArrow';
-import QuestionMark from '../../assets/svg/QuestionMark';
-import {ActivitiesScreenProps} from '../../navigation/types';
-import {COMPONENTSNAME} from '../../navigation/ComponentName';
-import RNVoiceQuesiton from '../../components/RNVoiceQuesiton';
-import en from '../../constants/api/lang/en';
-import RNMultipleChoice from '../../components/RNMultipleChoice';
-import RNWellDoneModal from '../../components/RNWellDoneModal';
+import LeftArrow from '@tandem/assets/svg/LeftArrow';
+import QuestionMark from '@tandem/assets/svg/QuestionMark';
+import {ActivitiesScreenProps} from '@tandem/navigation/types';
+import {COMPONENTSNAME} from '@tandem/navigation/ComponentName';
+import RNVoiceQuesiton from '@tandem/components/RNVoiceQuesiton';
+import en from '@tandem/constants/api/lang/en';
+import RNMultipleChoice from '@tandem/components/RNMultipleChoice';
+import RNWellDoneModal from '@tandem/components/RNWellDoneModal';
 
 const Activities = ({navigation}: ActivitiesScreenProps) => {
   // const heighWidth = useRef(new Animated.Value(120)).current;

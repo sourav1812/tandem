@@ -1,11 +1,10 @@
-import { StyleProp, ViewStyle } from "react-native";
+import {StyleProp, ViewStyle} from 'react-native';
 
 export interface inputListState {
-    answer : string;
+  answer: string;
 }
 
-
 export interface VoiceQuestionProps {
-    onNextPress : ()=>void;
-    customStyle ? : StyleProp<ViewStyle>;
+  onNextPress: () => void;
+  customStyle?: StyleProp<ViewStyle>;
 }

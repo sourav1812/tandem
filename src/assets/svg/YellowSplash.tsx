@@ -1,4 +1,4 @@
-import * as React from "react"
+import * as React from 'react';
 import Svg, {
   SvgProps,
   G,
@@ -7,7 +7,7 @@ import Svg, {
   LinearGradient,
   Stop,
   ClipPath,
-} from "react-native-svg"
+} from 'react-native-svg';
 const SvgComponent = (props: SvgProps) => (
   <Svg
     // xmlns="http://www.w3.org/2000/svg"
@@ -15,8 +15,7 @@ const SvgComponent = (props: SvgProps) => (
     height={156}
     width={173}
     fill="none"
-    {...props}
-  >
+    {...props}>
     <G clipPath="url(#a)">
       <Path
         fill="#FF9B26"
@@ -146,8 +145,7 @@ const SvgComponent = (props: SvgProps) => (
         x2={102.141}
         y1={151.664}
         y2={150.61}
-        gradientUnits="userSpaceOnUse"
-      >
+        gradientUnits="userSpaceOnUse">
         <Stop offset={0.463} stopColor="#F7722A" stopOpacity={0.5} />
         <Stop offset={0.622} stopColor="#F7722A" stopOpacity={0.5} />
       </LinearGradient>
@@ -157,8 +155,7 @@ const SvgComponent = (props: SvgProps) => (
         x2={97.881}
         y1={150.043}
         y2={149.62}
-        gradientUnits="userSpaceOnUse"
-      >
+        gradientUnits="userSpaceOnUse">
         <Stop offset={0.134} stopColor="#FCEE21" stopOpacity={0.5} />
         <Stop offset={0.502} stopColor="#FCEE21" stopOpacity={0.5} />
       </LinearGradient>
@@ -168,8 +165,7 @@ const SvgComponent = (props: SvgProps) => (
         x2={44.478}
         y1={21.77}
         y2={20.727}
-        gradientUnits="userSpaceOnUse"
-      >
+        gradientUnits="userSpaceOnUse">
         <Stop offset={0.463} stopColor="#F7722A" stopOpacity={0.5} />
         <Stop offset={0.622} stopColor="#F7722A" stopOpacity={0.5} />
       </LinearGradient>
@@ -179,8 +175,7 @@ const SvgComponent = (props: SvgProps) => (
         x2={40.892}
         y1={17.943}
         y2={17.433}
-        gradientUnits="userSpaceOnUse"
-      >
+        gradientUnits="userSpaceOnUse">
         <Stop offset={0.134} stopColor="#FCEE21" stopOpacity={0.5} />
         <Stop offset={0.502} stopColor="#FCEE21" stopOpacity={0.5} />
       </LinearGradient>
@@ -190,8 +185,7 @@ const SvgComponent = (props: SvgProps) => (
         x2={12.454}
         y1={55.638}
         y2={54.422}
-        gradientUnits="userSpaceOnUse"
-      >
+        gradientUnits="userSpaceOnUse">
         <Stop offset={0.463} stopColor="#F7722A" stopOpacity={0.5} />
         <Stop offset={0.622} stopColor="#F7722A" stopOpacity={0.5} />
       </LinearGradient>
@@ -201,8 +195,7 @@ const SvgComponent = (props: SvgProps) => (
         x2={8.08}
         y1={50.584}
         y2={50.148}
-        gradientUnits="userSpaceOnUse"
-      >
+        gradientUnits="userSpaceOnUse">
         <Stop offset={0.134} stopColor="#FCEE21" stopOpacity={0.5} />
         <Stop offset={0.502} stopColor="#FCEE21" stopOpacity={0.5} />
       </LinearGradient>
@@ -212,8 +205,7 @@ const SvgComponent = (props: SvgProps) => (
         x2={65.136}
         y1={102.877}
         y2={99.188}
-        gradientUnits="userSpaceOnUse"
-      >
+        gradientUnits="userSpaceOnUse">
         <Stop offset={0.463} stopColor="#F7722A" stopOpacity={0.5} />
         <Stop offset={0.622} stopColor="#F7722A" stopOpacity={0.5} />
       </LinearGradient>
@@ -223,8 +215,7 @@ const SvgComponent = (props: SvgProps) => (
         x2={55.178}
         y1={69.156}
         y2={66.002}
-        gradientUnits="userSpaceOnUse"
-      >
+        gradientUnits="userSpaceOnUse">
         <Stop offset={0.463} stopColor="#F7722A" stopOpacity={0.5} />
         <Stop offset={0.622} stopColor="#F7722A" stopOpacity={0.5} />
       </LinearGradient>
@@ -234,8 +225,7 @@ const SvgComponent = (props: SvgProps) => (
         x2={86.541}
         y1={125.401}
         y2={122.225}
-        gradientUnits="userSpaceOnUse"
-      >
+        gradientUnits="userSpaceOnUse">
         <Stop offset={0.463} stopColor="#F7722A" stopOpacity={0.5} />
         <Stop offset={0.622} stopColor="#F7722A" stopOpacity={0.5} />
       </LinearGradient>
@@ -245,8 +235,7 @@ const SvgComponent = (props: SvgProps) => (
         x2={138.88}
         y1={121.158}
         y2={115.623}
-        gradientUnits="userSpaceOnUse"
-      >
+        gradientUnits="userSpaceOnUse">
         <Stop offset={0.463} stopColor="#F7722A" stopOpacity={0.5} />
         <Stop offset={0.622} stopColor="#F7722A" stopOpacity={0.5} />
       </LinearGradient>
@@ -256,8 +245,7 @@ const SvgComponent = (props: SvgProps) => (
         x2={173.12}
         y1={61.443}
         y2={57.821}
-        gradientUnits="userSpaceOnUse"
-      >
+        gradientUnits="userSpaceOnUse">
         <Stop offset={0.463} stopColor="#F7722A" stopOpacity={0.5} />
         <Stop offset={0.622} stopColor="#F7722A" stopOpacity={0.5} />
       </LinearGradient>
@@ -267,8 +255,7 @@ const SvgComponent = (props: SvgProps) => (
         x2={161.973}
         y1={92.366}
         y2={88.169}
-        gradientUnits="userSpaceOnUse"
-      >
+        gradientUnits="userSpaceOnUse">
         <Stop offset={0.463} stopColor="#F7722A" stopOpacity={0.5} />
         <Stop offset={0.622} stopColor="#F7722A" stopOpacity={0.5} />
       </LinearGradient>
@@ -278,8 +265,7 @@ const SvgComponent = (props: SvgProps) => (
         x2={106.614}
         y1={13.789}
         y2={12.179}
-        gradientUnits="userSpaceOnUse"
-      >
+        gradientUnits="userSpaceOnUse">
         <Stop offset={0.463} stopColor="#F7722A" stopOpacity={0.5} />
         <Stop offset={0.622} stopColor="#F7722A" stopOpacity={0.5} />
       </LinearGradient>
@@ -289,8 +275,7 @@ const SvgComponent = (props: SvgProps) => (
         x2={134.596}
         y1={33.57}
         y2={32.92}
-        gradientUnits="userSpaceOnUse"
-      >
+        gradientUnits="userSpaceOnUse">
         <Stop offset={0.463} stopColor="#F7722A" stopOpacity={0.5} />
         <Stop offset={0.622} stopColor="#F7722A" stopOpacity={0.5} />
       </LinearGradient>
@@ -300,8 +285,7 @@ const SvgComponent = (props: SvgProps) => (
         x2={147.501}
         y1={46.478}
         y2={45.538}
-        gradientUnits="userSpaceOnUse"
-      >
+        gradientUnits="userSpaceOnUse">
         <Stop offset={0.463} stopColor="#F7722A" stopOpacity={0.5} />
         <Stop offset={0.622} stopColor="#F7722A" stopOpacity={0.5} />
       </LinearGradient>
@@ -311,8 +295,7 @@ const SvgComponent = (props: SvgProps) => (
         x2={37.59}
         y1={100.495}
         y2={99.734}
-        gradientUnits="userSpaceOnUse"
-      >
+        gradientUnits="userSpaceOnUse">
         <Stop offset={0.134} stopColor="#FCEE21" stopOpacity={0.5} />
         <Stop offset={0.502} stopColor="#FCEE21" stopOpacity={0.5} />
       </LinearGradient>
@@ -322,8 +305,7 @@ const SvgComponent = (props: SvgProps) => (
         x2={104.322}
         y1={9.362}
         y2={8.576}
-        gradientUnits="userSpaceOnUse"
-      >
+        gradientUnits="userSpaceOnUse">
         <Stop offset={0.134} stopColor="#FCEE21" stopOpacity={0.5} />
         <Stop offset={0.502} stopColor="#FCEE21" stopOpacity={0.5} />
       </LinearGradient>
@@ -333,8 +315,7 @@ const SvgComponent = (props: SvgProps) => (
         x2={169.378}
         y1={56.216}
         y2={55.454}
-        gradientUnits="userSpaceOnUse"
-      >
+        gradientUnits="userSpaceOnUse">
         <Stop offset={0.134} stopColor="#FCEE21" stopOpacity={0.5} />
         <Stop offset={0.502} stopColor="#FCEE21" stopOpacity={0.5} />
       </LinearGradient>
@@ -344,8 +325,7 @@ const SvgComponent = (props: SvgProps) => (
         x2={53.633}
         y1={36.004}
         y2={35.403}
-        gradientUnits="userSpaceOnUse"
-      >
+        gradientUnits="userSpaceOnUse">
         <Stop offset={0.463} stopColor="#F7722A" stopOpacity={0.5} />
         <Stop offset={0.622} stopColor="#F7722A" stopOpacity={0.5} />
       </LinearGradient>
@@ -355,8 +335,7 @@ const SvgComponent = (props: SvgProps) => (
         x2={68.952}
         y1={20.804}
         y2={19.971}
-        gradientUnits="userSpaceOnUse"
-      >
+        gradientUnits="userSpaceOnUse">
         <Stop offset={0.463} stopColor="#F7722A" stopOpacity={0.5} />
         <Stop offset={0.622} stopColor="#F7722A" stopOpacity={0.5} />
       </LinearGradient>
@@ -366,8 +345,7 @@ const SvgComponent = (props: SvgProps) => (
         x2={34.335}
         y1={53.753}
         y2={52.827}
-        gradientUnits="userSpaceOnUse"
-      >
+        gradientUnits="userSpaceOnUse">
         <Stop offset={0.134} stopColor="#FCEE21" stopOpacity={0.5} />
         <Stop offset={0.502} stopColor="#FCEE21" stopOpacity={0.5} />
       </LinearGradient>
@@ -377,8 +355,7 @@ const SvgComponent = (props: SvgProps) => (
         x2={67.378}
         y1={11.691}
         y2={11.143}
-        gradientUnits="userSpaceOnUse"
-      >
+        gradientUnits="userSpaceOnUse">
         <Stop offset={0.134} stopColor="#FCEE21" stopOpacity={0.5} />
         <Stop offset={0.502} stopColor="#FCEE21" stopOpacity={0.5} />
       </LinearGradient>
@@ -388,8 +365,7 @@ const SvgComponent = (props: SvgProps) => (
         x2={151.288}
         y1={12.946}
         y2={14.633}
-        gradientUnits="userSpaceOnUse"
-      >
+        gradientUnits="userSpaceOnUse">
         <Stop offset={0.463} stopColor="#F7722A" stopOpacity={0.5} />
         <Stop offset={0.622} stopColor="#F7722A" stopOpacity={0.5} />
       </LinearGradient>
@@ -399,8 +375,7 @@ const SvgComponent = (props: SvgProps) => (
         x2={146.458}
         y1={6.461}
         y2={7.12}
-        gradientUnits="userSpaceOnUse"
-      >
+        gradientUnits="userSpaceOnUse">
         <Stop offset={0.134} stopColor="#FCEE21" stopOpacity={0.5} />
         <Stop offset={0.502} stopColor="#FCEE21" stopOpacity={0.5} />
       </LinearGradient>
@@ -410,8 +385,7 @@ const SvgComponent = (props: SvgProps) => (
         x2={147.86}
         y1={11.287}
         y2={11.444}
-        gradientUnits="userSpaceOnUse"
-      >
+        gradientUnits="userSpaceOnUse">
         <Stop offset={0.134} stopColor="#FCEE21" stopOpacity={0.5} />
         <Stop offset={0.502} stopColor="#FCEE21" stopOpacity={0.5} />
       </LinearGradient>
@@ -420,5 +394,5 @@ const SvgComponent = (props: SvgProps) => (
       </ClipPath>
     </Defs>
   </Svg>
-)
-export default SvgComponent
+);
+export default SvgComponent;

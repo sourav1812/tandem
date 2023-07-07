@@ -35,4 +35,12 @@ export default {
   SIGN_OUT: 'Sign out',
   IF_YOU_SIGN_OUT_OF_THIS_APP:
     'If you sign out of this app, it will log out all family members on this device',
+  ENTER_MESSAGE: 'Enter message',
+  WELCOME_TO_TANDEM: 'Welcome to Tandem',
+  SPARK_YOUR_CHILD_CREATIVITY: "Spark Your Child's Creativity",
+  CREATE_MAGIC_WITH_AI: 'Create Magic With AI',
+  WITH_TANDEM_YOU_WILL_THE_POWER:
+    "With Tandem, you'll be able to see the power of AI to bring your child's imagination to life",
+  YOUR_CHILD_CAN_CHOOSE_FROM_A_VARIETY:
+    'Your child can choose from a variety of characters, settings, and objects to create their own unique story  ',
 };

@@ -1,19 +1,22 @@
+/* eslint-disable quotes */
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable eqeqeq */
 import {View, ScrollView, ImageBackground} from 'react-native';
 import React, {useState} from 'react';
-import RNScreenWrapper from '../../components/RNScreenWrapper';
+import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {styles} from './styles';
-import RNTextComponent from '../../components/RNTextComponent';
-import themeColor from '../../theme/themeColor';
-import RNEmojiWithText from '../../components/RNEmojiWithText';
-import RNButton from '../../components/RNButton';
+import RNTextComponent from '@tandem/components/RNTextComponent';
+import themeColor from '@tandem/theme/themeColor';
+import RNEmojiWithText from '@tandem/components/RNEmojiWithText';
+import RNButton from '@tandem/components/RNButton';
 import {place, audience, typeOfStory, attribute} from './interface';
 import {stateObject} from './interface';
-import Camera from '../../assets/svg/Camera';
-import LeftArrow from '../../assets/svg/LeftArrow';
-import QuestionMark from '../../assets/svg/QuestionMark';
-import {GeneratingStoryScreenProps} from '../../navigation/types';
-import {COMPONENTSNAME} from '../../navigation/ComponentName';
-import RNChooseColor from '../../components/RNChooseColor';
+import Camera from '@tandem/assets/svg/Camera';
+import LeftArrow from '@tandem/assets/svg/LeftArrow';
+import QuestionMark from '@tandem/assets/svg/QuestionMark';
+import {GeneratingStoryScreenProps} from '@tandem/navigation/types';
+import {COMPONENTSNAME} from '@tandem/navigation/ComponentName';
+import RNChooseColor from '@tandem/components/RNChooseColor';
 
 const GenerateStory = ({navigation}: GeneratingStoryScreenProps) => {
   const [state, setState] = useState<stateObject>({
@@ -166,7 +169,7 @@ const GenerateStory = ({navigation}: GeneratingStoryScreenProps) => {
             contentContainerStyle={[styles.scrollView]}
             scrollEnabled
             showsVerticalScrollIndicator={false}>
-            {audience.map((value, index) => {
+            {audience.map(value => {
               return (
                 <RNEmojiWithText
                   heading={value.name}
@@ -184,7 +187,7 @@ const GenerateStory = ({navigation}: GeneratingStoryScreenProps) => {
             contentContainerStyle={[styles.scrollView]}
             scrollEnabled
             showsVerticalScrollIndicator={false}>
-            {typeOfStory.map((value, index) => {
+            {typeOfStory.map(value => {
               return (
                 <RNEmojiWithText
                   heading={value.name}

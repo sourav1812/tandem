@@ -1,10 +1,13 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Dimensions} from 'react-native';
 import {verticalScale} from 'react-native-size-matters';
-import themeColor from '../../theme/themeColor';
+import themeColor from '@tandem/theme/themeColor';
+
+const height = Dimensions.get('screen').height;
 
 export const styles = StyleSheet.create({
   modal: {
     flex: 1,
+    height: height,
     justifyContent: 'center',
     padding: 0,
     margin: 0,

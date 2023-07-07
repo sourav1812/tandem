@@ -1,10 +1,11 @@
+/* eslint-disable react-native/no-inline-styles */
 import {Pressable, StyleSheet} from 'react-native';
 import React from 'react';
-import themeColor from '../../theme/themeColor';
+import themeColor from '@tandem/theme/themeColor';
 import RNTextComponent from '../RNTextComponent';
 import {Props} from './interface';
 import {verticalScale} from 'react-native-size-matters';
-import {checkIfTablet} from '../../hooks/isTabletHook';
+import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 
 const RNButton = ({
   props,
@@ -34,6 +35,7 @@ const RNButton = ({
             },
             {...(onlyBorder && {backgroundColor: 'white'})},
             {...(noBorderRadius && {borderRadius: 0})},
+            isTablet && {maxHeight: 55},
             customStyle && customStyle,
           ]}
           {...props}

@@ -6,7 +6,7 @@ import RNTextComponent from '../RNTextComponent';
 import {verticalScale} from 'react-native-size-matters';
 import Modal from 'react-native-modal';
 import RNButton from '../RNButton';
-import {checkIfTablet} from '../../hooks/isTabletHook';
+import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 
 const RNWellDoneModal = ({
   visible = true,

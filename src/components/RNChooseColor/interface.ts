@@ -1,11 +1,11 @@
-import { ImageSourcePropType } from "react-native";
+import {ImageSourcePropType} from 'react-native';
 
-export interface colorPalette {
-    color : string,
-    icon : ImageSourcePropType,
-    isSelected : boolean;
-    colorCode : string;
+export interface colorPaletteType {
+  color: string;
+  icon: ImageSourcePropType;
+  isSelected: boolean;
+  colorCode: string;
 }
 export interface stateObject {
-    colorPalette : colorPalette[],
+  colorPalette: colorPaletteType[];
 }

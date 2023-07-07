@@ -1,8 +1,7 @@
 export interface inputListState {
-    answer : string;
+  answer: string;
 }
 
-
 export interface VoiceQuestionProps {
-    onClick : ()=>void;
+  onClick: () => void;
 }

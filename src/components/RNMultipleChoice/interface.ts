@@ -1,24 +1,22 @@
-import themeColor from "../../theme/themeColor";
+import themeColor from '@tandem/theme/themeColor';
 
 export interface inputListState {
-    answer : string;
+  answer: string;
 }
 
 export interface multipleChoiceProps {
-    onNextPress : ()=>void;
+  onNextPress: () => void;
 }
 
 interface placeType {
-    name : string;
-    icon :string ;
-    bgc : string;
+  name: string;
+  icon: string;
+  bgc: string;
 }
 
-export  const place : placeType[] = [
-    {name : 'Bear' , icon : '🐻' , bgc : themeColor.red },
-    {name : 'Cat' , icon : '🐱' , bgc : '#74D949' },
-    {name : 'Cow' , icon : '🐮' , bgc : themeColor.red },
-    {name : 'Dog' , icon : '🐶' , bgc : '#74D949' },
-
-]  
-
+export const place: placeType[] = [
+  {name: 'Bear', icon: '🐻', bgc: themeColor.red},
+  {name: 'Cat', icon: '🐱', bgc: '#74D949'},
+  {name: 'Cow', icon: '🐮', bgc: themeColor.red},
+  {name: 'Dog', icon: '🐶', bgc: '#74D949'},
+];

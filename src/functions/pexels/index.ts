@@ -1,5 +1,5 @@
 import {createClient} from 'pexels';
-import {PEXELS_API_KEY} from '../../constants/api';
+import {PEXELS_API_KEY} from '@tandem/constants/api';
 
 interface PexelParamenters {
   query: string;

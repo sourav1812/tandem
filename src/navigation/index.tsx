@@ -1,22 +1,25 @@
+/* eslint-disable eqeqeq */
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {RootStackParamList} from './types';
 import {COMPONENTSNAME} from './ComponentName';
 import BottomTab from './BottomTab';
-import GenerateStory from '../screens/GenerateStory';
-import StoryTelling from '../screens/StoryTelling';
-import Story from '../screens/Story';
-import Activities from '../screens/Activities';
-import SelectPlayer from '../screens/SelectPlayer';
-import {useAppSelector} from '../hooks/navigationHooks';
-import Questions from '../screens/Questions';
-import SelectLanguage from '../screens/SelectLanguage';
-import SignUp from '../screens/SignUp';
-import SignIn from '../screens/SignIn';
-import TermsAndConditions from '../screens/TermsAndConditions';
-import HelpCenter from '../screens/HelpCenter';
-import Account from '../screens/Account';
+import GenerateStory from '@tandem/screens/GenerateStory';
+import StoryTelling from '@tandem/screens/StoryTelling';
+import Story from '@tandem/screens/Story';
+import Activities from '@tandem/screens/Activities';
+import SelectPlayer from '@tandem/screens/SelectPlayer';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import Questions from '@tandem/screens/Questions';
+import SelectLanguage from '@tandem/screens/SelectLanguage';
+import SignUp from '@tandem/screens/SignUp';
+import SignIn from '@tandem/screens/SignIn';
+import TermsAndConditions from '@tandem/screens/TermsAndConditions';
+import HelpCenter from '@tandem/screens/HelpCenter';
+import Account from '@tandem/screens/Account';
+import SplashScreen from '@tandem/screens/SplashScreen';
+import Onboarding from '@tandem/screens/Onboarding';
 
 const AppNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -26,9 +29,14 @@ const AppNavigator = () => {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen
+          component={SplashScreen}
+          name={COMPONENTSNAME.SPLASH_SCREEN}
+        />
+        <Stack.Screen
           component={SelectLanguage}
           name={COMPONENTSNAME.SELECT_LANGUAGE}
         />
+        <Stack.Screen component={Onboarding} name={COMPONENTSNAME.ONBOARDING} />
         <Stack.Screen component={SignUp} name={COMPONENTSNAME.SIGN_UP} />
         <Stack.Screen component={SignIn} name={COMPONENTSNAME.SIGN_IN} />
         <Stack.Screen
@@ -40,7 +48,7 @@ const AppNavigator = () => {
           name={COMPONENTSNAME.HELP_CENTER}
         />
         <Stack.Screen component={Account} name={COMPONENTSNAME.ACCOUNT} />
-        {mode == 'bmode' && (
+        {mode === 'bmode' && (
           <Stack.Screen
             component={SelectPlayer}
             name={COMPONENTSNAME.SELECT_PLAYER}

@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {verticalScale} from 'react-native-size-matters';
-import themeColor from '../../theme/themeColor';
+import themeColor from '@tandem/theme/themeColor';
 
 export const styles = StyleSheet.create({
   modal: {

@@ -1,16 +1,16 @@
 import {View, Text, FlatList, Pressable} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
-import RNScreenWrapper from '../../components/RNScreenWrapper';
-import RNTextInputWithLabel from '../../components/RNTextInputWithLabel';
-import SearchIcon from '../../assets/svg/SearchIcon';
-import RNButton from '../../components/RNButton';
-import RNTextComponent from '../../components/RNTextComponent';
-import RNStoryCard from '../../components/RNStoryCard';
+import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
+import RNTextInputWithLabel from '@tandem/components/RNTextInputWithLabel';
+import SearchIcon from '@tandem/assets/svg/SearchIcon';
+import RNButton from '@tandem/components/RNButton';
+import RNTextComponent from '@tandem/components/RNTextComponent';
+import RNStoryCard from '@tandem/components/RNStoryCard';
 import {scale, verticalScale} from 'react-native-size-matters';
-import {BookShelfScreenProps} from '../../navigation/types';
-import {COMPONENTSNAME} from '../../navigation/ComponentName';
-import {checkIfTablet} from '../../hooks/isTabletHook';
+import {BookShelfScreenProps} from '@tandem/navigation/types';
+import {COMPONENTSNAME} from '@tandem/navigation/ComponentName';
+import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 
 const Bookshelf = ({navigation}: BookShelfScreenProps) => {
   const isTablet = checkIfTablet();
@@ -85,6 +85,7 @@ const Bookshelf = ({navigation}: BookShelfScreenProps) => {
         </View>
       </>
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const seperateComponent = () => {

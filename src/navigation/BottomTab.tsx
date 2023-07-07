@@ -1,20 +1,21 @@
+/* eslint-disable react/no-unstable-nested-components */
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {RootTabParamList} from './types';
 import {COMPONENTSNAME} from './ComponentName';
-import Home from '../screens/Home';
-import Bookshelf from '../screens/Bookshelf';
-import People from '../screens/People';
+import Home from '@tandem/screens/Home';
+import Bookshelf from '@tandem/screens/Bookshelf';
+import People from '@tandem/screens/People';
 import {StyleSheet, View} from 'react-native';
-import BookshelfIcon from '../assets/svg/Bookmark';
-import RNTextComponent from '../components/RNTextComponent';
+import BookshelfIcon from '@tandem/assets/svg/Bookmark';
+import RNTextComponent from '@tandem/components/RNTextComponent';
 import {scale, verticalScale} from 'react-native-size-matters';
-import PeopleIcon from '../assets/svg/People';
-import HomeIcon from '../assets/svg/Home';
-import BookmarkActive from '../assets/svg/BookmarkActive';
-import HomeActive from '../assets/svg/HomeActive';
-import PeopleActive from '../assets/svg/PeopleActive';
-import themeColor from '../theme/themeColor';
+import PeopleIcon from '@tandem/assets/svg/People';
+import HomeIcon from '@tandem/assets/svg/Home';
+import BookmarkActive from '@tandem/assets/svg/BookmarkActive';
+import HomeActive from '@tandem/assets/svg/HomeActive';
+import PeopleActive from '@tandem/assets/svg/PeopleActive';
+import themeColor from '@tandem/theme/themeColor';
 
 const BottomTab = () => {
   const Tab = createBottomTabNavigator<RootTabParamList>();
@@ -35,10 +36,12 @@ const BottomTab = () => {
               <View
                 style={[
                   styles.iconContainer,
-                  {...focused && {
-                    borderTopWidth: 3,
-                    borderColor: themeColor.themeBlue,
-                  }},
+                  {
+                    ...(focused && {
+                      borderTopWidth: 3,
+                      borderColor: themeColor.themeBlue,
+                    }),
+                  },
                 ]}>
                 {focused ? <BookmarkActive /> : <BookshelfIcon />}
 
@@ -57,13 +60,15 @@ const BottomTab = () => {
           tabBarIcon: ({focused}: any) => {
             return (
               <View
-              style={[
-                styles.iconContainer,
-                {...focused && {
-                  borderTopWidth: 3,
-                  borderColor: themeColor.themeBlue,
-                }},
-              ]}>
+                style={[
+                  styles.iconContainer,
+                  {
+                    ...(focused && {
+                      borderTopWidth: 3,
+                      borderColor: themeColor.themeBlue,
+                    }),
+                  },
+                ]}>
                 {focused ? <HomeActive /> : <HomeIcon />}
                 <RNTextComponent
                   isMedium
@@ -85,13 +90,15 @@ const BottomTab = () => {
           tabBarIcon: ({focused}: any) => {
             return (
               <View
-              style={[
-                styles.iconContainer,
-                {...focused && {
-                  borderTopWidth: 3,
-                  borderColor: themeColor.themeBlue,
-                }},
-              ]}>
+                style={[
+                  styles.iconContainer,
+                  {
+                    ...(focused && {
+                      borderTopWidth: 3,
+                      borderColor: themeColor.themeBlue,
+                    }),
+                  },
+                ]}>
                 {focused ? <PeopleActive /> : <PeopleIcon />}
                 <RNTextComponent
                   isMedium
@@ -114,12 +121,13 @@ export default BottomTab;
 
 const styles = StyleSheet.create({
   tabBar: {
-    height: verticalScale(52),
+    // height: verticalScale(50),
   },
   iconContainer: {
     alignItems: 'center',
     width: scale(80),
-    borderTopWidth: 3,
+    maxWidth: 80,
+    borderTopWidth: 2,
     borderColor: themeColor.white,
     paddingTop: verticalScale(8),
   },

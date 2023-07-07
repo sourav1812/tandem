@@ -1,27 +1,32 @@
-import {View, Pressable, Image} from 'react-native';
+import {View, Image} from 'react-native';
 import React from 'react';
 import {Props} from './interface';
-import Bookmark from '../../assets/svg/Bookmark';
+import Bookmark from '@tandem/assets/svg/Bookmark';
 import {styles} from './styles';
 import RNTextComponent from '../RNTextComponent';
 import {verticalScale} from 'react-native-size-matters';
 
 const RNBookmarkComponent = ({
   props,
-  customStyle ,
+  customStyle,
   borderIconColor,
   heading,
-  subHeading ,
+  subHeading,
   showIcon = true,
 }: Props) => {
   return (
     <View
       style={[
         styles.container,
-        {...borderIconColor && {borderColor: borderIconColor}},
-        {...showIcon && {backgroundColor: borderIconColor, paddingVertical: verticalScale(8)}},
-        {...!showIcon && {justifyContent : 'center' }},
-        (customStyle  &&  customStyle),
+        {...(borderIconColor && {borderColor: borderIconColor})},
+        {
+          ...(showIcon && {
+            backgroundColor: borderIconColor,
+            paddingVertical: verticalScale(8),
+          }),
+        },
+        {...(!showIcon && {justifyContent: 'center'})},
+        customStyle && customStyle,
       ]}
       {...props}>
       {!showIcon ? (
@@ -33,7 +38,7 @@ const RNBookmarkComponent = ({
           <RNTextComponent
             style={[
               styles.subHeading,
-              {...borderIconColor && {color: borderIconColor}},
+              {...(borderIconColor && {color: borderIconColor})},
             ]}>
             {subHeading}
           </RNTextComponent>
@@ -58,6 +63,3 @@ const RNBookmarkComponent = ({
 };
 
 export default RNBookmarkComponent;
-
-
-

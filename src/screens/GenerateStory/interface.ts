@@ -1,5 +1,4 @@
-import {FC, ReactNode} from 'react';
-import themeColor from '../../theme/themeColor';
+import themeColor from '@tandem/theme/themeColor';
 import {ImageSourcePropType} from 'react-native';
 
 export interface colorPalette {

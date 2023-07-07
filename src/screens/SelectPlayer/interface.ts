@@ -1,4 +1,4 @@
 export interface player {
-    name: string;
-    color : string;
+  name: string;
+  color: string;
 }

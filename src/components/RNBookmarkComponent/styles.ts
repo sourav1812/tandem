@@ -7,8 +7,8 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     height: verticalScale(134),
     width: verticalScale(134),
-    maxHeight : 190,
-    maxWidth : 190,
+    maxHeight: 190,
+    maxWidth: 190,
     borderRadius: 16,
     justifyContent: 'space-evenly',
     alignItems: 'center',
@@ -25,13 +25,13 @@ export const styles = StyleSheet.create({
   subHeading: {
     fontSize: 14,
     letterSpacing: 0,
-    marginTop : verticalScale(4)
+    marginTop: verticalScale(4),
   },
   imgContainer: {
     height: verticalScale(45),
-    maxWidth : 47,
-    maxHeight : 47,
-    width: verticalScale(45), 
+    maxWidth: 47,
+    maxHeight: 47,
+    width: verticalScale(45),
     borderRadius: 72,
     backgroundColor: themeColor.white,
     justifyContent: 'center',

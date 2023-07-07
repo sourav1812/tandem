@@ -1,30 +1,21 @@
-import * as React from "react"
-import Svg, {
-  SvgProps,
-  Path,
-  Defs,
-  Pattern,
-  Use,
-  Image,
-} from "react-native-svg"
+import * as React from 'react';
+import Svg, {SvgProps, Path, Defs, Pattern, Use, Image} from 'react-native-svg';
 const SvgComponent = (props: SvgProps) => (
   <Svg
-  viewBox=" 0 0 71 71"
+    viewBox=" 0 0 71 71"
     // xmlns="http://www.w3.org/2000/svg"
     // xmlnsXlink="http://www.w3.org/1999/xlink"
     width={71}
     height={71}
     fill="none"
-    {...props}
-  >
+    {...props}>
     <Path fill="url(#a)" d="M.617 70.384h69.766V.618H.617v69.766Z" />
     <Defs>
       <Pattern
         id="a"
         width={1}
         height={1}
-        patternContentUnits="objectBoundingBox"
-      >
+        patternContentUnits="objectBoundingBox">
         <Use xlinkHref="#b" transform="scale(.00625)" />
       </Pattern>
       <Image
@@ -35,5 +26,5 @@ const SvgComponent = (props: SvgProps) => (
       />
     </Defs>
   </Svg>
-)
-export default SvgComponent
+);
+export default SvgComponent;

@@ -1,11 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {scale, verticalScale} from 'react-native-size-matters';
-import themeColor from '../../theme/themeColor';
-import DeviceInfo from 'react-native-device-info';
-
-
-const isIpad = DeviceInfo.getSystemName() == 'iPadOS' ? true : false
-const isAndroidTablet = DeviceInfo.isTablet() 
+import themeColor from '@tandem/theme/themeColor';
 
 export const styles = StyleSheet.create({
   container: {
@@ -55,18 +50,18 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    alignSelf : 'center',
+    alignSelf: 'center',
   },
-  cardPortrait:  {
+  cardPortrait: {
     height: verticalScale(120),
-    width : verticalScale(120),
-    marginTop :  0
+    width: verticalScale(120),
+    marginTop: 0,
   },
-  headingPortrait : {
-    textAlign : 'left',
-    marginTop : verticalScale(10)
+  headingPortrait: {
+    textAlign: 'left',
+    marginTop: verticalScale(10),
   },
-  optionsPortrait : {
-    justifyContent: 'space-evenly'
-  }
+  optionsPortrait: {
+    justifyContent: 'space-evenly',
+  },
 });

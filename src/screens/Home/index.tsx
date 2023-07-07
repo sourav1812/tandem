@@ -1,34 +1,31 @@
-import { View, Image, Pressable } from 'react-native';
-import React, { useState } from 'react';
-import { styles } from './styles';
-import RNScreenWrapper from '../../components/RNScreenWrapper';
-import { useOrientation } from '../../hooks/useOrientation';
-import RNTextComponent from '../../components/RNTextComponent';
-import themeColor from '../../theme/themeColor';
-import { scale, verticalScale } from 'react-native-size-matters';
-import RNBookmarkComponent from '../../components/RNBookmarkComponent';
-import { COMPONENTSNAME } from '../../navigation/ComponentName';
-import RNReadingLevelModal from '../../components/RNReadingLevelModal';
-import DeviceInfo from 'react-native-device-info';
-import { checkIfTablet } from '../../hooks/isTabletHook';
+import {View, Image, Pressable} from 'react-native';
+import React, {useState} from 'react';
+import {styles} from './styles';
+import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
+import {useOrientation} from '@tandem/hooks/useOrientation';
+import RNTextComponent from '@tandem/components/RNTextComponent';
+import themeColor from '@tandem/theme/themeColor';
+import {scale, verticalScale} from 'react-native-size-matters';
+import RNBookmarkComponent from '@tandem/components/RNBookmarkComponent';
+import {COMPONENTSNAME} from '@tandem/navigation/ComponentName';
+import RNReadingLevelModal from '@tandem/components/RNReadingLevelModal';
+import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 
-const Home = ({ navigation }: any) => {
-
-  const portrait = useOrientation().isPortrait
+const Home = ({navigation}: any) => {
+  const portrait = useOrientation().isPortrait;
   const isTablet = checkIfTablet();
 
-
-  const dummyData: { color: string, title: string }[] = [
-    { color: themeColor.purple, title: "I can't decide" },
-    { color: themeColor.purple, title: "I can't decide" },
-    { color: themeColor.gold, title: "Learn something" },
-    { color: themeColor.green, title: "Have fun" },
+  const dummyData: {color: string; title: string}[] = [
+    {color: themeColor.purple, title: "I can't decide"},
+    {color: themeColor.purple, title: "I can't decide"},
+    {color: themeColor.gold, title: 'Learn something'},
+    {color: themeColor.green, title: 'Have fun'},
   ];
 
-  const [showModal, setShowModal] = useState(false)
+  const [showModal, setShowModal] = useState(false);
   const toggleModal = () => {
-    setShowModal(!showModal)
-  }
+    setShowModal(!showModal);
+  };
 
   return (
     <RNScreenWrapper>
@@ -40,45 +37,78 @@ const Home = ({ navigation }: any) => {
             color: themeColor.white,
             position: 'absolute',
             top: portrait ? '7.8%' : '4%',
-            ...(isTablet && {fontSize : scale(14) ,marginTop : verticalScale(0)}),
-            ...(portrait && { alignSelf: 'center' }),
-            ...(!portrait && { right: '10%' }),
+            ...(isTablet && {fontSize: scale(14), marginTop: verticalScale(0)}),
+            ...(portrait && {alignSelf: 'center'}),
+            ...(!portrait && {right: '10%'}),
             zIndex: 3,
           }}>
           Hello, Adam! 👋🏻
         </RNTextComponent>
-        <View style={[styles.header, { ...(!portrait && { height: verticalScale(100) }) }]}>
+        <View
+          style={[
+            styles.header,
+            {...(!portrait && {height: verticalScale(100)})},
+          ]}>
           <View style={styles.left} />
           <View style={styles.middle}>
             <Image
               source={{
                 uri: 'https://static.vecteezy.com/system/resources/previews/016/461/449/non_2x/cute-giraffe-face-wild-animal-character-in-animated-cartoon-illustration-vector.jpg',
               }}
-              style={{ ...styles.profilePic, ...(!portrait && { top: '52%' }) , ...(isTablet && {bottom : '-25%'}) }}
+              style={{
+                ...styles.profilePic,
+                ...(!portrait && {top: '52%'}),
+                ...(isTablet && {bottom: '-25%'}),
+              }}
             />
           </View>
           <View style={styles.right} />
         </View>
         <View style={styles.content}>
-          <RNTextComponent isSemiBold style={{ ...styles.heading, ...(!portrait && styles.headingPortrait) , ...(isTablet && {fontSize : scale(18) })  }}  >
+          <RNTextComponent
+            isSemiBold
+            style={{
+              ...styles.heading,
+              ...(!portrait && styles.headingPortrait),
+              ...(isTablet && {fontSize: scale(18)}),
+            }}>
             What shall we do today?
           </RNTextComponent>
-          <View style={{ ...styles.options, ...(!portrait && styles.optionsPortrait) , ...(isTablet && {maxWidth : 430 }) }}>
+          <View
+            style={{
+              ...styles.options,
+              ...(!portrait && styles.optionsPortrait),
+              ...(isTablet && {maxWidth: 430}),
+            }}>
             {dummyData.map((item, index) => (
-              <Pressable onPress={() => { if (index == 0) { navigation.navigate(COMPONENTSNAME.GENERATE_STORY) } else { toggleModal() } }} >
+              <Pressable
+                onPress={() => {
+                  if (index === 0) {
+                    navigation.navigate(COMPONENTSNAME.GENERATE_STORY);
+                  } else {
+                    toggleModal();
+                  }
+                }}>
                 <RNBookmarkComponent
-                  customStyle={{ marginTop: verticalScale(24), ...(!portrait && styles.cardPortrait) }}
+                  customStyle={{
+                    marginTop: verticalScale(24),
+                    ...(!portrait && styles.cardPortrait),
+                  }}
                   borderIconColor={item.color}
-                  showIcon={index == 0}
+                  showIcon={index === 0}
                   heading={item.title}
-                  subHeading='COMING SOON'
+                  subHeading="COMING SOON"
                 />
               </Pressable>
             ))}
           </View>
         </View>
       </View>
-      <RNReadingLevelModal visible={showModal} renderModal={toggleModal} nextClick={toggleModal} />
+      <RNReadingLevelModal
+        visible={showModal}
+        renderModal={toggleModal}
+        nextClick={toggleModal}
+      />
     </RNScreenWrapper>
   );
 };

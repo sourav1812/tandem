@@ -15,4 +15,6 @@ export enum COMPONENTSNAME {
   TERMS_AND_CONDITIONS = 'TermsAndConditions',
   HELP_CENTER = 'HelpCenter',
   ACCOUNT = 'Account',
+  SPLASH_SCREEN = 'SplashScreen',
+  ONBOARDING = 'Onboarding',
 }

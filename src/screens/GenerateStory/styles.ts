@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import themeColor from '../../theme/themeColor';
+import themeColor from '@tandem/theme/themeColor';
 import {scale, verticalScale} from 'react-native-size-matters';
 
 export const styles = StyleSheet.create({

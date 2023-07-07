@@ -1,20 +1,21 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
-import RNScreenWrapper from '../../components/RNScreenWrapper';
+import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {styles} from './styles';
-import {checkIfTablet} from '../../hooks/isTabletHook';
-import {AccountProps} from '../../navigation/types';
+import {checkIfTablet} from '@tandem/hooks/isTabletHook';
+import {AccountProps} from '@tandem/navigation/types';
 import {View, Image, ScrollView, Pressable} from 'react-native';
-import Logout from '../../assets/svg/Logout';
-import RNButton from '../../components/RNButton';
-import RNTextComponent from '../../components/RNTextComponent';
-import en from '../../constants/api/lang/en';
+import Logout from '@tandem/assets/svg/Logout';
+import RNButton from '@tandem/components/RNButton';
+import RNTextComponent from '@tandem/components/RNTextComponent';
+import en from '@tandem/constants/api/lang/en';
 import {verticalScale} from 'react-native-size-matters';
-import RNKidsProfile from '../../components/RNKidsProfile';
-import Add from '../../assets/svg/Add';
-import RNParentProfile from '../../components/RNParentProfile';
-import RNSignoutModal from '../../components/RNSignoutModal';
+import RNKidsProfile from '@tandem/components/RNKidsProfile';
+import Add from '@tandem/assets/svg/Add';
+import RNParentProfile from '@tandem/components/RNParentProfile';
+import RNSignoutModal from '@tandem/components/RNSignoutModal';
 import {stateObject} from './interface';
-import {COMPONENTSNAME} from '../../navigation/ComponentName';
+import {COMPONENTSNAME} from '@tandem/navigation/ComponentName';
 
 const Account = ({navigation}: AccountProps) => {
   const isTablet = checkIfTablet();
@@ -49,7 +50,7 @@ const Account = ({navigation}: AccountProps) => {
         isSemiBold
         style={[
           styles.heading,
-          isTablet ? {fontSize: 24} : {fontSize: verticalScale(21)},
+          isTablet ? {fontSize: 24} : {fontSize: verticalScale(20)},
         ]}>
         {en.WHO_IS_USING_THE_APP_NEXT}
       </RNTextComponent>
@@ -94,7 +95,24 @@ const Account = ({navigation}: AccountProps) => {
             </View>
           </ScrollView>
         </View>
+        <View style={styles.footer}>
+          <RNTextComponent isSemiBold style={styles.text}>
+            {' '}
+            Start: Tandem{' '}
+          </RNTextComponent>
+          <Pressable
+            style={styles.button}
+            onPress={() => navigation.navigate(COMPONENTSNAME.BOTTOM_TAB)}>
+            <Image
+              source={{
+                uri: 'https://thumbs.dreamstime.com/b/cute-giraffe-face-wild-animal-character-animated-cartoon-png-illustration-isolated-transparent-background-hand-drawn-png-264757481.jpg',
+              }}
+              style={styles.profile}
+            />
+          </Pressable>
+        </View>
       </View>
+
       <RNSignoutModal
         visible={signoutModal}
         renderModal={toggleSignOut}

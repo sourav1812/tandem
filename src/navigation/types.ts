@@ -15,6 +15,8 @@ export type RootStackParamList = {
   TermsAndConditions: undefined;
   HelpCenter: undefined;
   Account: undefined;
+  SplashScreen: undefined;
+  Onboarding: undefined;
 };
 
 export type RootTabParamList = {
@@ -80,4 +82,14 @@ export type HelpCenterProps = NativeStackScreenProps<
 export type AccountProps = NativeStackScreenProps<
   AllStackScreenParamList,
   COMPONENTSNAME.ACCOUNT
+>;
+
+export type SplashScreenProps = NativeStackScreenProps<
+  AllStackScreenParamList,
+  COMPONENTSNAME.SPLASH_SCREEN
+>;
+
+export type OnboardingProps = NativeStackScreenProps<
+  AllStackScreenParamList,
+  COMPONENTSNAME.ONBOARDING
 >;

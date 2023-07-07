@@ -1,7 +1,7 @@
-import { PressableProps, ViewStyle } from "react-native";
+import {ViewStyle} from 'react-native';
 
 export interface LanguageComponentProps {
-    customStyle ?: ViewStyle;
-    title : string;
-    flag : string;
+  customStyle?: ViewStyle;
+  title: string;
+  flag: string;
 }

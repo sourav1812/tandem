@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {View, StatusBar} from 'react-native';
 import React from 'react';
 import {SignoutModalProps} from './interface';
@@ -5,10 +6,10 @@ import {styles} from './styles';
 import RNTextComponent from '../RNTextComponent';
 import Modal from 'react-native-modal';
 import RNButton from '../RNButton';
-import {checkIfTablet} from '../../hooks/isTabletHook';
+import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 import {verticalScale} from 'react-native-size-matters';
-import en from '../../constants/api/lang/en';
-import themeColor from '../../theme/themeColor';
+import en from '@tandem/constants/api/lang/en';
+import themeColor from '@tandem/theme/themeColor';
 
 const RNSignoutModal = ({
   visible,

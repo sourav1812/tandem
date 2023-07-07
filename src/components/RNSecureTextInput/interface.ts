@@ -9,6 +9,6 @@ export interface Props {
   updateText: (value: string) => void;
   inputStyle?: any;
   showError?: boolean;
-  title : string;
-  customStyle : StyleProp<ViewStyle>
+  title: string;
+  customStyle: StyleProp<ViewStyle>;
 }
