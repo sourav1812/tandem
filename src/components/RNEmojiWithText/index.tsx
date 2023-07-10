@@ -2,7 +2,7 @@ import {Pressable, Text} from 'react-native';
 import React, {useState} from 'react';
 import {Props} from './interface';
 import {styles} from './styles';
-import RNTextComponent from '@components/RNTextComponent';
+import RNTextComponent from '@tandem/components/RNTextComponent';
 import {verticalScale} from 'react-native-size-matters';
 
 const RNEmojiWithText = ({
