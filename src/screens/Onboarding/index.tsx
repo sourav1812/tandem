@@ -6,7 +6,7 @@ import {OnboardingProps} from '@tandem/navigation/types';
 import {onboardingList} from './interface';
 
 const Onboarding = ({}: OnboardingProps) => {
-  const renderBanner = ({item, index}) => {
+  const renderBanner = ({item}) => {
     return (
       <ImageBackground
         source={item.url}
