@@ -32,6 +32,7 @@ const Home = ({navigation}: any) => {
       <View style={styles.container}>
         <RNTextComponent
           isSemiBold
+          // eslint-disable-next-line react-native/no-inline-styles
           style={{
             ...styles.heading,
             color: themeColor.white,
