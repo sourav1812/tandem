@@ -102,6 +102,7 @@ const RNChooseColor = () => {
           return (
             <Pressable
               style={styles.colorView}
+              disabled
               onPress={() => {
                 selectColors(index);
                 handleIn();

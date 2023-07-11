@@ -1,12 +1,12 @@
-import {View, StatusBar} from 'react-native';
+import {View} from 'react-native';
 import React from 'react';
-import Modal from 'react-native-modal';
+import RNModal from '../RNModal';
 import {styles} from './styles';
 import {congratsModalProps} from './interface';
 import RNTextComponent from '../RNTextComponent';
 import {verticalScale} from 'react-native-size-matters';
 import themeColor from '@tandem/theme/themeColor';
-import RNButton from '@components/RNButton';
+import RNButton from '@tandem/components/RNButton';
 import {useNavigation} from '@react-navigation/native';
 import {COMPONENTSNAME} from '@tandem/navigation/ComponentName';
 import {checkIfTablet} from '@tandem/hooks/isTabletHook';
@@ -19,18 +19,10 @@ const RNCongratsModal = ({
   const navigation = useNavigation();
 
   return (
-    <Modal
-      style={styles.modal}
-      isVisible={visible}
-      backdropOpacity={0.4}
-      onBackButtonPress={renderModal}
-      onBackdropPress={renderModal}>
-      <StatusBar
-        translucent
-        backgroundColor={'rgba(0, 0, 0, 0.4)'}
-        hidden={false}
-        showHideTransition={'slide'}
-      />
+    <RNModal
+      customStyle={styles.modal}
+      visible={visible}
+      renderModal={renderModal}>
       <View
         style={[
           styles.container,
@@ -91,7 +83,7 @@ const RNCongratsModal = ({
           />
         </View>
       </View>
-    </Modal>
+    </RNModal>
   );
 };
 
