@@ -5,9 +5,9 @@ import RNTextComponent from '../RNTextComponent';
 import {place} from './interface';
 import RNButton from '../RNButton';
 import {verticalScale} from 'react-native-size-matters';
-import en from '@tandem/constants/api/lang/en';
 import RNEmojiWithText from '../RNEmojiWithText';
 import {multipleChoiceProps} from './interface';
+import i18n from '@tandem/constants/api/lang/i18n';
 
 const RNMultipleChoice = ({onNextPress}: multipleChoiceProps) => {
   return (
@@ -40,7 +40,7 @@ const RNMultipleChoice = ({onNextPress}: multipleChoiceProps) => {
       </View>
       <RNButton
         customStyle={styles.footerButton}
-        title={en.next}
+        title={i18n.t('NEXT')}
         onClick={onNextPress}
         textStyle={{fontSize: verticalScale(16)}}
       />

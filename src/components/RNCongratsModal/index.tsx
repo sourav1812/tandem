@@ -10,6 +10,7 @@ import RNButton from '@tandem/components/RNButton';
 import {useNavigation} from '@react-navigation/native';
 import {COMPONENTSNAME} from '@tandem/navigation/ComponentName';
 import {checkIfTablet} from '@tandem/hooks/isTabletHook';
+import i18n from '@tandem/constants/api/lang/i18n';
 
 const RNCongratsModal = ({
   visible = false,
@@ -35,26 +36,32 @@ const RNCongratsModal = ({
             </RNTextComponent>
           </View>
           <RNTextComponent isSemiBold style={styles.heading}>
-            Congrats!
+            {i18n.t('CONGRATS')}!
           </RNTextComponent>
           <View style={styles.info}>
             <View style={styles.box}>
               <RNTextComponent style={styles.title} isSemiBold>
                 100%
               </RNTextComponent>
-              <RNTextComponent style={styles.stat}>Accuracy</RNTextComponent>
+              <RNTextComponent style={styles.stat}>
+                {i18n.t('ACCURACY')}
+              </RNTextComponent>
             </View>
             <View style={styles.box}>
               <RNTextComponent style={styles.title} isSemiBold>
                 80
               </RNTextComponent>
-              <RNTextComponent style={styles.stat}>Speed</RNTextComponent>
+              <RNTextComponent style={styles.stat} numberOfLines={1}>
+                {i18n.t('SPEED')}
+              </RNTextComponent>
             </View>
             <View style={styles.box}>
               <RNTextComponent style={styles.title} isSemiBold>
                 6 min
               </RNTextComponent>
-              <RNTextComponent style={styles.stat}>Duration</RNTextComponent>
+              <RNTextComponent style={styles.stat}>
+                {i18n.t('DURATION')}
+              </RNTextComponent>
             </View>
           </View>
         </View>
@@ -67,14 +74,14 @@ const RNCongratsModal = ({
             You have create and read your own story
           </RNTextComponent>
           <RNButton
-            title="Home"
+            title={i18n.t('HOME')}
             customStyle={styles.button}
             onClick={() => {
               navigation.navigate(COMPONENTSNAME.HOME);
             }}
           />
           <RNButton
-            title="Share"
+            title={i18n.t('SHARE')}
             customStyle={styles.button}
             onClick={() => {
               navigation.navigate(COMPONENTSNAME.QUESTIONS);

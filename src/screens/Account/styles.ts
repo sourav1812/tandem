@@ -21,6 +21,7 @@ export const styles = StyleSheet.create({
   heading: {
     alignSelf: 'center',
     marginTop: verticalScale(30),
+    textAlign: 'center',
   },
   content: {
     marginTop: verticalScale(18),

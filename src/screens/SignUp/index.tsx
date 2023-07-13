@@ -3,7 +3,6 @@ import {KeyboardAvoidingView, Platform, ScrollView, View} from 'react-native';
 import React, {useState} from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import RNTextComponent from '@tandem/components/RNTextComponent';
-import en from '@tandem/constants/api/lang/en';
 import {styles} from './styles';
 import themeColor from '@tandem/theme/themeColor';
 import {checkIfTablet} from '@tandem/hooks/isTabletHook';
@@ -18,6 +17,7 @@ import FB from '@tandem/assets/svg/FBlogo';
 import {COMPONENTSNAME} from '@tandem/navigation/ComponentName';
 import {stateObject} from './interface';
 import {verticalScale} from 'react-native-size-matters';
+import i18n from '@tandem/constants/api/lang/i18n';
 
 const SignUp = ({navigation}: SignUpProps) => {
   const isTablet = checkIfTablet();
@@ -45,7 +45,8 @@ const SignUp = ({navigation}: SignUpProps) => {
         <ScrollView style={{height: '100%', width: '100%'}}>
           <RNLogoHeader customStyle={styles.header} />
           <RNTextComponent style={styles.heading} isSemiBold>
-            {en.CREATE_AN_ACCOUNT}
+            {/* {en.CREATE_AN_ACCOUNT} */}
+            {i18n.t('CREATE_AN_ACCOUNT')}
           </RNTextComponent>
           <View
             style={[
@@ -53,7 +54,7 @@ const SignUp = ({navigation}: SignUpProps) => {
               isTablet && {paddingHorizontal: verticalScale(100)},
             ]}>
             <RNTextInputWithLabel
-              label={en.NAME}
+              label={i18n.t('NAME')}
               showLabel
               backgroundColor={themeColor.lightGray}
               containerStyle={styles.input}
@@ -61,11 +62,11 @@ const SignUp = ({navigation}: SignUpProps) => {
               updateText={e => {
                 updateState({name: e});
               }}
-              hint={en.ENTER_NAME}
+              hint={i18n.t('ENTER_NAME')}
               inputStyle={styles.inputText}
             />
             <RNTextInputWithLabel
-              label={en.EMAIL}
+              label={i18n.t('EMAIL')}
               showLabel
               backgroundColor={themeColor.lightGray}
               containerStyle={styles.input2}
@@ -73,33 +74,32 @@ const SignUp = ({navigation}: SignUpProps) => {
               updateText={e => {
                 updateState({email: e});
               }}
-              hint={en.ENTER_YOUR_EMAIL}
+              hint={i18n.t('EMAIL')}
               inputStyle={styles.inputText}
             />
             <RNSecureTextInput
-              title={en.PASSWORD}
-              label={en.EMAIL}
+              title={i18n.t('PASSWORD')}
               customStyle={styles.input2}
               value={password}
               updateText={e => {
                 updateState({password: e});
               }}
-              hint={en.ENTER_PASSWORD}
+              hint={i18n.t('ENTER_PASSWORD')}
               inputStyle={styles.inputText}
             />
             <RNSecureTextInput
-              title={en.CONFIRM_PASSWORD}
-              label={en.EMAIL}
+              title={i18n.t('CONFIRM_PASSWORD')}
+              // label={en.EMAIL}
               customStyle={styles.input2}
               inputStyle={styles.inputText}
               value={confirmPassword}
               updateText={e => {
                 updateState({confirmPassword: e});
               }}
-              hint={en.CONFIRM_PASSWORD}
+              hint={i18n.t('CONFIRM_PASSWORD')}
             />
             <RNButton
-              title={en.SIGN_UP}
+              title={i18n.t('SIGN_UP')}
               customStyle={styles.button}
               onClick={() => {
                 navigation.navigate(COMPONENTSNAME.TERMS_AND_CONDITIONS);
@@ -109,7 +109,7 @@ const SignUp = ({navigation}: SignUpProps) => {
               <View style={styles.line} />
               <RNTextComponent
                 style={[styles.text, isTablet && {fontSize: 14}]}>
-                {en.OR_CONTINUE_WITH}
+                {i18n.t('OR_CONTINUE_WITH')}
               </RNTextComponent>
               <View style={styles.line} />
             </View>
@@ -138,14 +138,14 @@ const SignUp = ({navigation}: SignUpProps) => {
             </View>
             <RNTextComponent
               style={[styles.buttonText, isTablet && {fontSize: 16}]}>
-              {en.ALREADY_HAVE_AN_ACCOUNT}{' '}
+              {i18n.t('ALREADY_HAVE_AN_ACCOUNT')}{' '}
               <RNTextComponent
                 isSemiBold
                 style={[styles.signup, isTablet && {fontSize: 16}]}
                 handleOnPress={() =>
                   navigation.navigate(COMPONENTSNAME.SIGN_IN)
                 }>
-                {en.SIGN_IN}
+                {i18n.t('SIGN_IN')}
               </RNTextComponent>
             </RNTextComponent>
           </View>

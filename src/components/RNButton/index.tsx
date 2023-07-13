@@ -44,6 +44,7 @@ const RNButton = ({
             isSemiBold
             style={[
               {
+                textAlign: 'center',
                 fontSize: isTablet ? 16 : verticalScale(14),
                 color: themeColor.white,
                 ...(onlyBorder && {color: buttonColor || themeColor.themeBlue}),

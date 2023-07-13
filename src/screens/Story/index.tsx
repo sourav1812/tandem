@@ -28,7 +28,7 @@ const Story = ({navigation}: StoryScreenProps) => {
               navigation.goBack();
             }}
           />
-          <RNButton onlyIcon icon={<Options />} onClick={toggelMenuBar} />
+          <RNButton onlyIcon icon={<Options />} onClick={() => {}} />
           <RNMenuModal visible={visible} renderModal={toggelMenuBar} />
         </View>
         <View style={styles.midContent}>

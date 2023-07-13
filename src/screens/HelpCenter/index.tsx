@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import RNTextComponent from '@tandem/components/RNTextComponent';
-import en from '@tandem/constants/api/lang/en';
 import {styles} from './styles';
 import themeColor from '@tandem/theme/themeColor';
 import {checkIfTablet} from '@tandem/hooks/isTabletHook';
@@ -13,6 +12,7 @@ import RNLogoHeader from '@tandem/components/RNLogoHeader';
 import RNTextInputWithLabel from '@tandem/components/RNTextInputWithLabel';
 import {stateObject} from './interface';
 import {COMPONENTSNAME} from '@tandem/navigation/ComponentName';
+import i18n from '@tandem/constants/api/lang/i18n';
 
 const HelpCenter = ({navigation}: HelpCenterProps) => {
   const isTablet = checkIfTablet();
@@ -53,13 +53,13 @@ const HelpCenter = ({navigation}: HelpCenterProps) => {
           style={{height: '100%', width: '100%'}}
           showsVerticalScrollIndicator={false}>
           <RNLogoHeader
-            heading={en.HELP_CENTER}
+            heading={i18n.t('HELP_CENTER')}
             textHeading
             customStyle={styles.heading}
           />
           <View style={styles.customTab}>
             <RNButton
-              title={en.FAQ}
+              title={i18n.t('FAQ')}
               onlyBorder
               onClick={leftTab}
               customStyle={[
@@ -79,7 +79,7 @@ const HelpCenter = ({navigation}: HelpCenterProps) => {
               }}
             />
             <RNButton
-              title={en.CONTACT_US}
+              title={i18n.t('CONTACT_US')}
               onlyBorder
               onClick={rightTab}
               customStyle={[
@@ -108,10 +108,10 @@ const HelpCenter = ({navigation}: HelpCenterProps) => {
               <RNTextComponent
                 isSemiBold
                 style={[styles.subHeading, isTablet && {fontSize: 25}]}>
-                {en.QUESTIONS_COMMENTS}
+                {i18n.t('QUESTIONS_COMMENTS')}
               </RNTextComponent>
               <RNTextInputWithLabel
-                label={en.NAME}
+                label={i18n.t('NAME')}
                 showLabel
                 backgroundColor={themeColor.lightGray}
                 containerStyle={styles.input2}
@@ -119,11 +119,11 @@ const HelpCenter = ({navigation}: HelpCenterProps) => {
                 updateText={e => {
                   updateState({name: e});
                 }}
-                hint={en.ENTER_NAME}
+                hint={i18n.t('ENTER_NAME')}
                 inputStyle={styles.inputText}
               />
               <RNTextInputWithLabel
-                label={en.EMAIL}
+                label={i18n.t('EMAIL')}
                 showLabel
                 backgroundColor={themeColor.lightGray}
                 containerStyle={styles.input2}
@@ -131,11 +131,11 @@ const HelpCenter = ({navigation}: HelpCenterProps) => {
                 updateText={e => {
                   updateState({email: e});
                 }}
-                hint={en.ENTER_YOUR_EMAIL}
+                hint={i18n.t('ENTER_YOUR_EMAIL')}
                 inputStyle={styles.inputText}
               />
               <RNTextInputWithLabel
-                label={en.MESSAGE}
+                label={i18n.t('MESSAGE')}
                 showLabel
                 backgroundColor={themeColor.lightGray}
                 containerStyle={styles.input2}
@@ -143,13 +143,13 @@ const HelpCenter = ({navigation}: HelpCenterProps) => {
                 updateText={e => {
                   updateState({message: e});
                 }}
-                hint={en.ENTER_MESSAGE}
+                hint={i18n.t('ENTER_MESSAGE')}
                 inputStyle={[styles.inputText, {width: '100%', flex: 0}]}
                 inputViewStyle={styles.inputView}
               />
               <RNButton
                 customStyle={styles.button}
-                title={en.SEND}
+                title={i18n.t('SEND')}
                 onClick={() => {
                   navigation.navigate(COMPONENTSNAME.ACCOUNT);
                 }}

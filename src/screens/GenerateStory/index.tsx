@@ -17,6 +17,7 @@ import QuestionMark from '@tandem/assets/svg/QuestionMark';
 import {GeneratingStoryScreenProps} from '@tandem/navigation/types';
 import {COMPONENTSNAME} from '@tandem/navigation/ComponentName';
 import RNChooseColor from '@tandem/components/RNChooseColor';
+import i18n from '@tandem/constants/api/lang/i18n';
 
 const GenerateStory = ({navigation}: GeneratingStoryScreenProps) => {
   const [state, setState] = useState<stateObject>({
@@ -146,7 +147,7 @@ const GenerateStory = ({navigation}: GeneratingStoryScreenProps) => {
               />
             </ImageBackground>
             <RNTextComponent style={styles.yesOrNo} isMedium>
-              Yes or No?
+              {i18n.t('YES')} or {i18n.t('NO')}?
             </RNTextComponent>
             <View style={styles.buttonView}>
               <RNButton
@@ -242,7 +243,7 @@ const GenerateStory = ({navigation}: GeneratingStoryScreenProps) => {
         <View style={styles.header}>
           <RNButton onlyIcon onClick={previousQuestion} icon={<LeftArrow />} />
           <RNTextComponent style={styles.heading} isSemiBold>
-            Generate Story{' '}
+            {i18n.t('GENERATE_STORY')}{' '}
             <RNTextComponent isSemiBold style={styles.questionNumber}>
               {questionNumber + 1}/6
             </RNTextComponent>
@@ -280,7 +281,7 @@ const GenerateStory = ({navigation}: GeneratingStoryScreenProps) => {
       {questionNumber != 2 && (
         <RNButton
           customStyle={styles.footerButton}
-          title={'Select'}
+          title={i18n.t('SELECT')}
           onClick={nextQuestion}
           textStyle={styles.buttonText}
         />

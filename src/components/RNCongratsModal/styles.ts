@@ -49,10 +49,14 @@ export const styles = StyleSheet.create({
   },
   box: {
     alignItems: 'center',
+    // borderWidth: 1,
+    // borderColor: themeColor.white,
+    width: scale(100),
   },
   stat: {
     fontSize: verticalScale(16),
     color: themeColor.white,
+    textAlign: 'center',
   },
   bottom: {
     backgroundColor: themeColor.white,

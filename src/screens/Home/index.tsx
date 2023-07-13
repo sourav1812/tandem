@@ -1,5 +1,5 @@
 import {View, Image, Pressable} from 'react-native';
-import React, {useState} from 'react';
+import React from 'react';
 import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {useOrientation} from '@tandem/hooks/useOrientation';
@@ -8,24 +8,19 @@ import themeColor from '@tandem/theme/themeColor';
 import {scale, verticalScale} from 'react-native-size-matters';
 import RNBookmarkComponent from '@tandem/components/RNBookmarkComponent';
 import {COMPONENTSNAME} from '@tandem/navigation/ComponentName';
-import RNReadingLevelModal from '@tandem/components/RNReadingLevelModal';
 import {checkIfTablet} from '@tandem/hooks/isTabletHook';
+import i18n from '@tandem/constants/api/lang/i18n';
 
 const Home = ({navigation}: any) => {
   const portrait = useOrientation().isPortrait;
   const isTablet = checkIfTablet();
 
   const dummyData: {color: string; title: string}[] = [
-    {color: themeColor.purple, title: "I can't decide"},
-    {color: themeColor.purple, title: "I can't decide"},
-    {color: themeColor.gold, title: 'Learn something'},
-    {color: themeColor.green, title: 'Have fun'},
+    {color: themeColor.purple, title: i18n.t('I_CANT_DECIDE')},
+    {color: themeColor.purple, title: i18n.t('I_CANT_DECIDE')},
+    {color: themeColor.gold, title: i18n.t('LEARN_SOMETHING')},
+    {color: themeColor.green, title: i18n.t('HAVE_FUN')},
   ];
-
-  const [showModal, setShowModal] = useState(false);
-  const toggleModal = () => {
-    setShowModal(!showModal);
-  };
 
   return (
     <RNScreenWrapper>
@@ -43,7 +38,7 @@ const Home = ({navigation}: any) => {
             ...(!portrait && {right: '10%'}),
             zIndex: 3,
           }}>
-          Hello, Adam! 👋🏻
+          {i18n.t('HELLO')}, Adam! 👋🏻
         </RNTextComponent>
         <View
           style={[
@@ -73,7 +68,7 @@ const Home = ({navigation}: any) => {
               ...(!portrait && styles.headingPortrait),
               ...(isTablet && {fontSize: scale(18)}),
             }}>
-            What shall we do today?
+            {i18n.t('WHAT_SHALL_WE_DO_TODAY')}
           </RNTextComponent>
           <View
             style={{
@@ -87,7 +82,7 @@ const Home = ({navigation}: any) => {
                   if (index === 0) {
                     navigation.navigate(COMPONENTSNAME.GENERATE_STORY);
                   } else {
-                    toggleModal();
+                    // toggleModal();
                   }
                 }}>
                 <RNBookmarkComponent
@@ -98,18 +93,13 @@ const Home = ({navigation}: any) => {
                   borderIconColor={item.color}
                   showIcon={index === 0}
                   heading={item.title}
-                  subHeading="COMING SOON"
+                  subHeading={i18n.t('COMING_SOON')}
                 />
               </Pressable>
             ))}
           </View>
         </View>
       </View>
-      <RNReadingLevelModal
-        visible={showModal}
-        renderModal={toggleModal}
-        nextClick={toggleModal}
-      />
     </RNScreenWrapper>
   );
 };

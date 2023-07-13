@@ -21,11 +21,13 @@ export const styles = StyleSheet.create({
   heading: {
     fontSize: 16,
     color: 'rgba(2, 4, 8, 0.6)',
+    textAlign: 'center',
   },
   subHeading: {
     fontSize: 14,
     letterSpacing: 0,
     marginTop: verticalScale(4),
+    textAlign: 'center',
   },
   imgContainer: {
     height: verticalScale(45),

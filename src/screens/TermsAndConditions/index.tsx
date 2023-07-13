@@ -2,7 +2,6 @@
 import React from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import RNTextComponent from '@tandem/components/RNTextComponent';
-import en from '@tandem/constants/api/lang/en';
 import {styles} from './styles';
 import themeColor from '@tandem/theme/themeColor';
 import {checkIfTablet} from '@tandem/hooks/isTabletHook';
@@ -12,18 +11,19 @@ import {ScrollView, View} from 'react-native';
 import RNCheckboxWithText from '@tandem/components/RNCheckboxWithText';
 import RNButton from '@tandem/components/RNButton';
 import {COMPONENTSNAME} from '@tandem/navigation/ComponentName';
+import i18n from '@tandem/constants/api/lang/i18n';
 
 const TermsAndConditions = ({navigation}: TermsAndConditionsProps) => {
   const isTablet = checkIfTablet();
   return (
     <RNScreenWrapper style={{backgroundColor: themeColor.white}}>
       <RNTextComponent style={styles.heading} isSemiBold>
-        {en.T_AND_C}
+        {i18n.t('T_AND_C')}
       </RNTextComponent>
       <RNTextComponent
         style={[styles.heading, {marginTop: verticalScale(12)}]}
         isSemiBold>
-        {en.WELCOME_TO_OUR_APP}
+        {i18n.t('WELCOME_TO_OUR_APP')}
       </RNTextComponent>
       <View style={styles.content}>
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -32,27 +32,14 @@ const TermsAndConditions = ({navigation}: TermsAndConditionsProps) => {
               styles.text,
               {paddingHorizontal: verticalScale(40), textAlign: 'center'},
             ]}>
-            By using our app, you agree to our Terms of Use.{'\n'}
-            Please read them carefully.
+            {/* By using our app, you agree to our Terms of Use.{'\n'}
+            Please read them carefully. */}
+            {i18n.t('BY_USING_OUR_APP_YOU_AGREE')}
           </RNTextComponent>
           <RNTextComponent style={styles.text}>
-            User Eligibility: 1.1 The App is intended for use by children aged
-            13 and under. By using the App, you represent that you are a parent
-            or legal guardian and that you have the authority to consent to this
-            Agreement on behalf of your child. If you are under 13, you may use
-            the App only with the consent and supervision of a parent or legal
-            guardian. {'\n\n'}
-            User Eligibility: 1.2 The App is intended for use by children aged
-            13 and under. By using the App, you represent that you are a parent
-            or legal guardian and that you have the authority to consent to this
-            Agreement on behalf of your child. If you are under 13, you may use
-            the App only with the consent and supervision of a parent or legal
-            guardian. {'\n\n'}User Eligibility: 1.3 The App is intended for use
-            by children aged 13 and under. By using the App, you represent that
-            you are a parent or legal guardian and that you have the authority
-            to consent to this Agreement on behalf of your child. If you are
-            under 13, you may use the App only with the consent and supervision
-            of a parent or legal guardian. {'\n\n'}
+            {i18n.t('USER_ELIGIBILITY')} {'\n\n'}
+            {i18n.t('USER_ELIGIBILITY')} {'\n\n'}
+            {i18n.t('USER_ELIGIBILITY')} {'\n\n'}
           </RNTextComponent>
           <RNCheckboxWithText />
           <RNCheckboxWithText />
@@ -66,14 +53,14 @@ const TermsAndConditions = ({navigation}: TermsAndConditionsProps) => {
             onClick={() => {
               navigation.goBack();
             }}
-            title={en.CANCEL}
+            title={i18n.t('CANCEL')}
             customStyle={styles.button}
           />
           <RNButton
             onClick={() => {
               navigation.navigate(COMPONENTSNAME.HELP_CENTER);
             }}
-            title={en.ACCEPT}
+            title={i18n.t('ACCEPT')}
             customStyle={styles.button}
           />
         </View>
