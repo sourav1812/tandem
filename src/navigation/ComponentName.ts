@@ -17,4 +17,5 @@ export enum COMPONENTSNAME {
   ACCOUNT = 'Account',
   SPLASH_SCREEN = 'SplashScreen',
   ONBOARDING = 'Onboarding',
+  SOCIAL_SIGN_IN = 'SocialSignIn',
 }
