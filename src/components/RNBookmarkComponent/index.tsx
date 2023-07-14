@@ -5,6 +5,7 @@ import Bookmark from '@tandem/assets/svg/Bookmark';
 import {styles} from './styles';
 import RNTextComponent from '../RNTextComponent';
 import {verticalScale} from 'react-native-size-matters';
+import i18n from '@tandem/constants/api/lang/i18n';
 
 const RNBookmarkComponent = ({
   props,
@@ -54,7 +55,7 @@ const RNBookmarkComponent = ({
             />
           </View>
           <RNTextComponent numberOfLines={2} isSemiBold style={styles.text2}>
-            Write a story
+            {i18n.t('WRITE_A_STORY')}
           </RNTextComponent>
         </>
       )}

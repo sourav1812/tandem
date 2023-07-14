@@ -4,6 +4,7 @@ import {styles} from './styles';
 import Inactive from '@tandem/assets/svg/InactiveCheckbox';
 import Active from '@tandem/assets/svg/ActiveCheckbox';
 import RNTextComponent from '../RNTextComponent';
+import i18n from '@tandem/constants/api/lang/i18n';
 
 export interface Props {
   customStyle?: ViewStyle;
@@ -22,7 +23,7 @@ const RNCheckboxWithText = ({customStyle}: Props) => {
         {select ? <Active /> : <Inactive />}
       </Pressable>
       <RNTextComponent style={styles.text}>
-        I agree to the terms and conditions of the End-User License Agreement.
+        {i18n.t('I_AGREE_TO_THE_TERMS')}
       </RNTextComponent>
     </View>
   );

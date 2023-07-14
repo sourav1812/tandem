@@ -11,6 +11,7 @@ import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 import {scale, verticalScale} from 'react-native-size-matters';
 import {SelectLanguageProps} from '@tandem/navigation/types';
 import {COMPONENTSNAME} from '@tandem/navigation/ComponentName';
+import i18n from '@tandem/constants/api/lang/i18n';
 
 const SelectLanguage = ({navigation}: SelectLanguageProps) => {
   const isTablet = checkIfTablet();
@@ -26,6 +27,7 @@ const SelectLanguage = ({navigation}: SelectLanguageProps) => {
         return (
           <Pressable
             onPress={() => {
+              i18n.locale = item.code;
               navigation.navigate(COMPONENTSNAME.SIGN_UP);
             }}>
             <RNLanguageComponent

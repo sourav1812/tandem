@@ -7,6 +7,7 @@ import {verticalScale} from 'react-native-size-matters';
 import RNButton from '../RNButton';
 import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 import RNModal from '../RNModal';
+import i18n from '@tandem/constants/api/lang/i18n';
 
 const RNWellDoneModal = ({
   visible = true,
@@ -29,7 +30,7 @@ const RNWellDoneModal = ({
           style={styles.tick}
         />
         <RNTextComponent isSemiBold style={styles.heading}>
-          Well Done
+          {i18n.t('WELL_DONE')}
         </RNTextComponent>
         <RNTextComponent style={styles.info}>
           you named 2 animals beginning with the letter C!
@@ -37,7 +38,7 @@ const RNWellDoneModal = ({
         <RNButton
           customStyle={styles.button}
           onClick={nextClick}
-          title="Next"
+          title={i18n.t('NEXT')}
         />
       </View>
     </RNModal>

@@ -11,6 +11,7 @@ import Less from '../../assets/svg/Subtract';
 import More from '../../assets/svg/Plus';
 import themeColor from '../../theme/themeColor';
 import {checkIfTablet} from '../../hooks/isTabletHook';
+import i18n from '@tandem/constants/api/lang/i18n';
 
 const RNReadingLevelModal = ({
   visible = true,
@@ -39,7 +40,7 @@ const RNReadingLevelModal = ({
         ]}>
         <Info style={styles.icon} />
         <RNTextComponent isSemiBold style={styles.heading}>
-          Adjust the reading level:
+          {i18n.t('ADJUST_THE_READING_LEVEL')}:
         </RNTextComponent>
         <View style={styles.content}>
           <RNButton onlyIcon icon={<Less />} onClick={() => {}} />
@@ -59,7 +60,7 @@ const RNReadingLevelModal = ({
           <RNButton onlyIcon icon={<More />} onClick={() => {}} />
         </View>
         <RNButton
-          title="Update"
+          title={i18n.t('UPDATE')}
           customStyle={styles.button}
           onClick={() => {}}
         />

@@ -7,6 +7,7 @@ import {PeopleScreenProps} from '@tandem/navigation/types';
 import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
 import {changeMode} from '@tandem/redux/slices/mode.slice';
 import {COMPONENTSNAME} from '@tandem/navigation/ComponentName';
+import {scale} from 'react-native-size-matters';
 
 const People = ({navigation}: PeopleScreenProps) => {
   const dispatch = useAppDispatch();
@@ -19,6 +20,7 @@ const People = ({navigation}: PeopleScreenProps) => {
       <View style={styles.container}>
         <RNButton
           title="Switch Mode"
+          customStyle={{paddingHorizontal: scale(20)}}
           onClick={() => {
             if (mode === 'bmode') {
               dispatch(changeMode('cmode'));

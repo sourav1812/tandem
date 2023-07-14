@@ -7,6 +7,7 @@ import RNModal from '../RNModal';
 import RNButton from '../RNButton';
 import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 import {verticalScale} from 'react-native-size-matters';
+import i18n from '@tandem/constants/api/lang/i18n';
 
 const RNReadingTipsModal = ({
   visible,
@@ -25,7 +26,7 @@ const RNReadingTipsModal = ({
           isTablet && {width: verticalScale(270), alignSelf: 'center'},
         ]}>
         <RNTextComponent isSemiBold style={styles.heading}>
-          Reading Tips
+          {i18n.t('READING_TIPS')}
         </RNTextComponent>
         <RNTextComponent style={styles.info}>
           You're both doing great. Why don`t you also try to take turns reading,
@@ -34,7 +35,7 @@ const RNReadingTipsModal = ({
         <RNButton
           customStyle={styles.button}
           onClick={nextClick}
-          title="Well"
+          title={i18n.t('WELL')}
         />
       </View>
     </RNModal>

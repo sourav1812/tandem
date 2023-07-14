@@ -31,6 +31,7 @@ export const styles = StyleSheet.create({
     marginBottom: verticalScale(20),
   },
   button: {
-    paddingHorizontal: scale(43),
+    paddingHorizontal: scale(24),
+    maxWidth: 200,
   },
 });

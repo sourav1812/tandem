@@ -8,7 +8,6 @@ import {View, Image, ScrollView, Pressable} from 'react-native';
 import Logout from '@tandem/assets/svg/Logout';
 import RNButton from '@tandem/components/RNButton';
 import RNTextComponent from '@tandem/components/RNTextComponent';
-import en from '@tandem/constants/api/lang/en';
 import {verticalScale} from 'react-native-size-matters';
 import RNKidsProfile from '@tandem/components/RNKidsProfile';
 import Add from '@tandem/assets/svg/Add';
@@ -16,6 +15,7 @@ import RNParentProfile from '@tandem/components/RNParentProfile';
 import RNSignoutModal from '@tandem/components/RNSignoutModal';
 import {stateObject} from './interface';
 import {COMPONENTSNAME} from '@tandem/navigation/ComponentName';
+import i18n from '@tandem/constants/api/lang/i18n';
 
 const Account = ({navigation}: AccountProps) => {
   const isTablet = checkIfTablet();
@@ -52,7 +52,7 @@ const Account = ({navigation}: AccountProps) => {
           styles.heading,
           isTablet ? {fontSize: 24} : {fontSize: verticalScale(20)},
         ]}>
-        {en.WHO_IS_USING_THE_APP_NEXT}
+        {i18n.t('WHO_IS_USING_THE_APP_NEXT')}
       </RNTextComponent>
       <View style={[styles.content, isTablet && {marginHorizontal: 120}]}>
         <View>
@@ -68,7 +68,7 @@ const Account = ({navigation}: AccountProps) => {
               <RNTextComponent
                 isMedium
                 style={[styles.addText, {marginTop: verticalScale(20)}]}>
-                {en.ADD}
+                {i18n.t('ADD')}
               </RNTextComponent>
             </View>
           </ScrollView>
@@ -90,7 +90,7 @@ const Account = ({navigation}: AccountProps) => {
             <View style={styles.add}>
               <Add />
               <RNTextComponent isMedium style={styles.addText}>
-                {en.ADD}
+                {i18n.t('ADD')}
               </RNTextComponent>
             </View>
           </ScrollView>

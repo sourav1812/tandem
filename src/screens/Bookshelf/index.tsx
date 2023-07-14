@@ -11,6 +11,7 @@ import {scale, verticalScale} from 'react-native-size-matters';
 import {BookShelfScreenProps} from '@tandem/navigation/types';
 import {COMPONENTSNAME} from '@tandem/navigation/ComponentName';
 import {checkIfTablet} from '@tandem/hooks/isTabletHook';
+import i18n from '@tandem/constants/api/lang/i18n';
 
 const Bookshelf = ({navigation}: BookShelfScreenProps) => {
   const isTablet = checkIfTablet();
@@ -96,7 +97,7 @@ const Bookshelf = ({navigation}: BookShelfScreenProps) => {
     <RNScreenWrapper>
       <View style={styles.container}>
         <RNTextComponent style={styles.bookshelfHeaderText} isSemiBold>
-          Bookshelf
+          {i18n.t('BOOKSHELF')}
         </RNTextComponent>
         <RNTextInputWithLabel
           label={''}

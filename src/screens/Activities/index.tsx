@@ -10,9 +10,9 @@ import QuestionMark from '@tandem/assets/svg/QuestionMark';
 import {ActivitiesScreenProps} from '@tandem/navigation/types';
 import {COMPONENTSNAME} from '@tandem/navigation/ComponentName';
 import RNVoiceQuesiton from '@tandem/components/RNVoiceQuesiton';
-import en from '@tandem/constants/api/lang/en';
 import RNMultipleChoice from '@tandem/components/RNMultipleChoice';
 import RNWellDoneModal from '@tandem/components/RNWellDoneModal';
+import i18n from '@tandem/constants/api/lang/i18n';
 
 const Activities = ({navigation}: ActivitiesScreenProps) => {
   // const heighWidth = useRef(new Animated.Value(120)).current;
@@ -70,7 +70,7 @@ const Activities = ({navigation}: ActivitiesScreenProps) => {
         <View style={styles.header}>
           <RNButton onlyIcon onClick={previousQuestion} icon={<LeftArrow />} />
           <RNTextComponent style={styles.heading} isSemiBold>
-            {en.generate_Story}{' '}
+            {i18n.t('GENERATE_STORY')}{' '}
           </RNTextComponent>
           <RNButton
             onlyIcon

@@ -16,6 +16,7 @@ import BookmarkActive from '@tandem/assets/svg/BookmarkActive';
 import HomeActive from '@tandem/assets/svg/HomeActive';
 import PeopleActive from '@tandem/assets/svg/PeopleActive';
 import themeColor from '@tandem/theme/themeColor';
+import i18n from '@tandem/constants/api/lang/i18n';
 
 const BottomTab = () => {
   const Tab = createBottomTabNavigator<RootTabParamList>();
@@ -46,7 +47,7 @@ const BottomTab = () => {
                 {focused ? <BookmarkActive /> : <BookshelfIcon />}
 
                 <RNTextComponent isMedium style={styles.title}>
-                  Bookshelf
+                  {i18n.t('BOOKSHELF')}
                 </RNTextComponent>
               </View>
             );
@@ -76,7 +77,7 @@ const BottomTab = () => {
                     ...styles.title,
                     ...(focused && {color: themeColor.themeBlue}),
                   }}>
-                  Home
+                  {i18n.t('HOME')}
                 </RNTextComponent>
               </View>
             );
@@ -106,7 +107,7 @@ const BottomTab = () => {
                     ...styles.title,
                     ...(focused && {color: themeColor.themeBlue}),
                   }}>
-                  People
+                  {i18n.t('PEOPLE')}
                 </RNTextComponent>
               </View>
             );
@@ -121,12 +122,12 @@ export default BottomTab;
 
 const styles = StyleSheet.create({
   tabBar: {
-    // height: verticalScale(50),
+    height: verticalScale(50),
   },
   iconContainer: {
     alignItems: 'center',
-    width: scale(80),
-    maxWidth: 80,
+    width: scale(95),
+    maxWidth: 95,
     borderTopWidth: 2,
     borderColor: themeColor.white,
     paddingTop: verticalScale(8),

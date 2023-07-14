@@ -16,6 +16,7 @@
     "@react-navigation/native-stack": "^6.9.12",
     "@reduxjs/toolkit": "^1.9.5",
     "@types/react-redux": "^7.1.25",
+    "i18n-js": "^4.3.0",
     "pexels": "^1.4.0",
     "react": "18.2.0",
     "react-native": "0.71.8",

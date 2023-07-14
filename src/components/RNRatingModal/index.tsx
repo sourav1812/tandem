@@ -7,6 +7,7 @@ import {verticalScale} from 'react-native-size-matters';
 import RNButton from '../RNButton';
 import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 import RNModal from '../RNModal';
+import i18n from '@tandem/constants/api/lang/i18n';
 
 const RNRatingModal = ({visible, renderModal, nextClick}: ratingModalProps) => {
   let isTablet = checkIfTablet();
@@ -21,7 +22,7 @@ const RNRatingModal = ({visible, renderModal, nextClick}: ratingModalProps) => {
           isTablet && {width: verticalScale(270), alignSelf: 'center'},
         ]}>
         <RNTextComponent isSemiBold style={styles.heading}>
-          Agree on a rating for the story:
+          {i18n.t('AGREE_ON_A_RATING_FOR_THE_STORY')}:
         </RNTextComponent>
         <View style={styles.content}>
           {ratingList.map(item => {
@@ -37,7 +38,7 @@ const RNRatingModal = ({visible, renderModal, nextClick}: ratingModalProps) => {
         <RNButton
           customStyle={styles.button}
           onClick={nextClick}
-          title="Rate"
+          title={i18n.t('RATE')}
         />
       </View>
     </RNModal>

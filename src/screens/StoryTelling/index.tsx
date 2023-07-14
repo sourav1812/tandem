@@ -23,6 +23,7 @@ import RNReadingTipsModal from '@tandem/components/RNReadingTipsModal';
 import RNRatingModal from '@tandem/components/RNRatingModal';
 import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 import {verticalScale} from 'react-native-size-matters';
+import i18n from '@tandem/constants/api/lang/i18n';
 
 const StoryTelling = ({navigation}: StoryTellingScreenProps) => {
   const isTablet = checkIfTablet();
@@ -80,7 +81,7 @@ const StoryTelling = ({navigation}: StoryTellingScreenProps) => {
               </ScrollView>
             </View>
             <RNButton
-              title="Great!"
+              title={`${i18n.t('GREAT')}!`}
               customStyle={styles.footerButton}
               onClick={toggleModal}
             />
@@ -121,7 +122,7 @@ const StoryTelling = ({navigation}: StoryTellingScreenProps) => {
         />
         {currentIndex + 1 === 5 && (
           <RNTextComponent isSemiBold style={styles.summaryTitle}>
-            Summary
+            {i18n.t('SUMMARY')}
           </RNTextComponent>
         )}
         <RNButton
