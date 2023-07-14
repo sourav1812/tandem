@@ -17,6 +17,7 @@ export type RootStackParamList = {
   Account: undefined;
   SplashScreen: undefined;
   Onboarding: undefined;
+  SocialSignIn: undefined;
 };
 
 export type RootTabParamList = {
@@ -92,4 +93,9 @@ export type SplashScreenProps = NativeStackScreenProps<
 export type OnboardingProps = NativeStackScreenProps<
   AllStackScreenParamList,
   COMPONENTSNAME.ONBOARDING
+>;
+
+export type SocialSignInProps = NativeStackScreenProps<
+  AllStackScreenParamList,
+  COMPONENTSNAME.SOCIAL_SIGN_IN
 >;

@@ -20,6 +20,7 @@ import HelpCenter from '@tandem/screens/HelpCenter';
 import Account from '@tandem/screens/Account';
 import SplashScreen from '@tandem/screens/SplashScreen';
 import Onboarding from '@tandem/screens/Onboarding';
+import SocialSignIn from '@tandem/screens/SocialSignIn';
 
 const AppNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -37,6 +38,10 @@ const AppNavigator = () => {
           name={COMPONENTSNAME.SELECT_LANGUAGE}
         />
         <Stack.Screen component={Onboarding} name={COMPONENTSNAME.ONBOARDING} />
+        <Stack.Screen
+          component={SocialSignIn}
+          name={COMPONENTSNAME.SOCIAL_SIGN_IN}
+        />
         <Stack.Screen component={SignUp} name={COMPONENTSNAME.SIGN_UP} />
         <Stack.Screen component={SignIn} name={COMPONENTSNAME.SIGN_IN} />
         <Stack.Screen

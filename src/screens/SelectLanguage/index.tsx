@@ -28,7 +28,7 @@ const SelectLanguage = ({navigation}: SelectLanguageProps) => {
           <Pressable
             onPress={() => {
               i18n.locale = item.code;
-              navigation.navigate(COMPONENTSNAME.SIGN_UP);
+              navigation.navigate(COMPONENTSNAME.ONBOARDING);
             }}>
             <RNLanguageComponent
               title={item.name}

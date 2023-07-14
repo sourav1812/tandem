@@ -43,7 +43,7 @@ const SignIn = ({navigation}: SignInProps) => {
         <ScrollView style={{height: '100%', width: '100%'}}>
           <RNLogoHeader customStyle={styles.header} />
           <RNTextComponent style={styles.heading} isSemiBold>
-            {i18n.t('CREATE_AN_ACCOUNT')}
+            {i18n.t('SIGN_IN')}
           </RNTextComponent>
           <View
             style={[
@@ -77,7 +77,7 @@ const SignIn = ({navigation}: SignInProps) => {
               {i18n.t('FORGOT_PASSWORD')}
             </RNTextComponent>
             <RNButton
-              title={i18n.t('SIGN_UP')}
+              title={i18n.t('SIGN_IN')}
               customStyle={styles.button}
               onClick={() => {
                 navigation.navigate(COMPONENTSNAME.TERMS_AND_CONDITIONS);
