@@ -8,33 +8,21 @@ export const styles = StyleSheet.create({
     backgroundColor: themeColor.white,
   },
   header: {
-    height: verticalScale(185),
+    height: verticalScale(155),
     flexDirection: 'row',
-  },
-  left: {
+    justifyContent: 'center',
     backgroundColor: themeColor.gold,
-    flex: 1,
-    // width : scale()
-    borderBottomRightRadius: verticalScale(8),
-  },
-  middle: {
-    backgroundColor: themeColor.gold,
-    width: scale(88),
-  },
-  right: {
-    backgroundColor: themeColor.gold,
-    flex: 1,
-
-    borderBottomLeftRadius: verticalScale(8),
   },
   profilePic: {
     position: 'absolute',
-    bottom: '-19%',
+    bottom: -verticalScale(26),
     borderRadius: 100,
-    borderWidth: 10,
+    borderWidth: 1,
+    padding: 10,
     borderColor: themeColor.white,
-    height: scale(89),
-    width: scale(89),
+    backgroundColor: '#fff',
+    height: verticalScale(89),
+    width: verticalScale(89),
     zIndex: 5,
   },
   content: {
@@ -42,9 +30,9 @@ export const styles = StyleSheet.create({
     paddingHorizontal: scale(20),
   },
   heading: {
-    fontSize: scale(21),
+    fontSize: verticalScale(21),
     textAlign: 'center',
-    marginTop: verticalScale(35),
+    marginTop: verticalScale(55),
   },
   options: {
     flexDirection: 'row',

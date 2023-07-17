@@ -2,7 +2,7 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {RootTabParamList} from './types';
-import {COMPONENTSNAME} from './ComponentName';
+import {SCREEN_NAME} from './ComponentName';
 import Home from '@tandem/screens/Home';
 import Bookshelf from '@tandem/screens/Bookshelf';
 import People from '@tandem/screens/People';
@@ -16,7 +16,7 @@ import BookmarkActive from '@tandem/assets/svg/BookmarkActive';
 import HomeActive from '@tandem/assets/svg/HomeActive';
 import PeopleActive from '@tandem/assets/svg/PeopleActive';
 import themeColor from '@tandem/theme/themeColor';
-import i18n from '@tandem/constants/api/lang/i18n';
+import i18n from '@tandem/constants/lang/i18n';
 
 const BottomTab = () => {
   const Tab = createBottomTabNavigator<RootTabParamList>();
@@ -30,7 +30,7 @@ const BottomTab = () => {
       }}>
       <Tab.Screen
         component={Bookshelf}
-        name={COMPONENTSNAME.BOOKSHELF}
+        name={SCREEN_NAME.BOOKSHELF}
         options={{
           tabBarIcon: ({focused}: any) => {
             return (
@@ -56,7 +56,7 @@ const BottomTab = () => {
       />
       <Tab.Screen
         component={Home}
-        name={COMPONENTSNAME.HOME}
+        name={SCREEN_NAME.HOME}
         options={{
           tabBarIcon: ({focused}: any) => {
             return (
@@ -86,7 +86,7 @@ const BottomTab = () => {
       />
       <Tab.Screen
         component={People}
-        name={COMPONENTSNAME.PEOPLE}
+        name={SCREEN_NAME.PEOPLE}
         options={{
           tabBarIcon: ({focused}: any) => {
             return (

@@ -2,7 +2,6 @@ import React, {useCallback, useState} from 'react';
 import {ImageBackground, FlatList, View} from 'react-native';
 import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
-import {OnboardingProps} from '@tandem/navigation/types';
 import {onboardingList} from './interface';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import {translation} from '@tandem/utils/methods';
@@ -10,13 +9,14 @@ import RNButton from '@tandem/components/RNButton';
 import {scale} from 'react-native-size-matters';
 import themeColor from '@tandem/theme/themeColor';
 import {checkIfTablet} from '@tandem/hooks/isTabletHook';
-import {COMPONENTSNAME} from '@tandem/navigation/ComponentName';
+import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
+import navigateTo from '@tandem/navigation/navigate';
 
-const Onboarding = ({navigation}: OnboardingProps) => {
+const Onboarding = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const isTablet = checkIfTablet();
 
-  const renderBanner = ({item}) => {
+  const renderBanner = ({item}: {item: any}) => {
     return (
       <ImageBackground
         source={item.url}
@@ -72,7 +72,7 @@ const Onboarding = ({navigation}: OnboardingProps) => {
         <RNButton
           title={translation('GET_STARTED')}
           onClick={() => {
-            navigation.navigate(COMPONENTSNAME.SOCIAL_SIGN_IN);
+            navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN);
           }}
           customStyle={[
             styles.button,

@@ -1,5 +1,5 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {COMPONENTSNAME} from './ComponentName';
+import {SCREEN_NAME} from './ComponentName';
 
 export type RootStackParamList = {
   BottomTab: RootTabParamList;
@@ -30,72 +30,72 @@ export type AllStackScreenParamList = RootStackParamList & RootTabParamList;
 
 export type GeneratingStoryScreenProps = NativeStackScreenProps<
   AllStackScreenParamList,
-  COMPONENTSNAME.GENERATE_STORY
+  SCREEN_NAME.GENERATE_STORY
 >;
 export type StoryTellingScreenProps = NativeStackScreenProps<
   AllStackScreenParamList,
-  COMPONENTSNAME.STORY_TELLING
+  SCREEN_NAME.STORY_TELLING
 >;
 export type BookShelfScreenProps = NativeStackScreenProps<
   AllStackScreenParamList,
-  COMPONENTSNAME.BOOKSHELF
+  SCREEN_NAME.BOOKSHELF
 >;
 export type StoryScreenProps = NativeStackScreenProps<
   AllStackScreenParamList,
-  COMPONENTSNAME.STORY
+  SCREEN_NAME.STORY
 >;
 export type ActivitiesScreenProps = NativeStackScreenProps<
   AllStackScreenParamList,
-  COMPONENTSNAME.ACTIVITIES
+  SCREEN_NAME.ACTIVITIES
 >;
 export type SelectPlayerScreenProps = NativeStackScreenProps<
   AllStackScreenParamList,
-  COMPONENTSNAME.SELECT_PLAYER
+  SCREEN_NAME.SELECT_PLAYER
 >;
 export type PeopleScreenProps = NativeStackScreenProps<
   AllStackScreenParamList,
-  COMPONENTSNAME.PEOPLE
+  SCREEN_NAME.PEOPLE
 >;
 export type QuestionsScreenProps = NativeStackScreenProps<
   AllStackScreenParamList,
-  COMPONENTSNAME.QUESTIONS
+  SCREEN_NAME.QUESTIONS
 >;
 export type SelectLanguageProps = NativeStackScreenProps<
   AllStackScreenParamList,
-  COMPONENTSNAME.SELECT_LANGUAGE
+  SCREEN_NAME.SELECT_LANGUAGE
 >;
 export type SignUpProps = NativeStackScreenProps<
   AllStackScreenParamList,
-  COMPONENTSNAME.SIGN_UP
+  SCREEN_NAME.SIGN_UP
 >;
 export type SignInProps = NativeStackScreenProps<
   AllStackScreenParamList,
-  COMPONENTSNAME.SIGN_IN
+  SCREEN_NAME.SIGN_IN
 >;
 export type TermsAndConditionsProps = NativeStackScreenProps<
   AllStackScreenParamList,
-  COMPONENTSNAME.TERMS_AND_CONDITIONS
+  SCREEN_NAME.TERMS_AND_CONDITIONS
 >;
 export type HelpCenterProps = NativeStackScreenProps<
   AllStackScreenParamList,
-  COMPONENTSNAME.HELP_CENTER
+  SCREEN_NAME.HELP_CENTER
 >;
 export type AccountProps = NativeStackScreenProps<
   AllStackScreenParamList,
-  COMPONENTSNAME.ACCOUNT
+  SCREEN_NAME.ACCOUNT
 >;
 
 export type SplashScreenProps = NativeStackScreenProps<
   AllStackScreenParamList,
-  COMPONENTSNAME.SPLASH_SCREEN
+  SCREEN_NAME.SPLASH_SCREEN
 >;
 
 export type OnboardingProps = NativeStackScreenProps<
   AllStackScreenParamList,
-  COMPONENTSNAME.ONBOARDING
+  SCREEN_NAME.ONBOARDING
 >;
 
 export type SocialSignInProps = NativeStackScreenProps<
   AllStackScreenParamList,
-  COMPONENTSNAME.SOCIAL_SIGN_IN
+  SCREEN_NAME.SOCIAL_SIGN_IN
 >;

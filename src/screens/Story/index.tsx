@@ -4,13 +4,13 @@ import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import RNButton from '@tandem/components/RNButton';
-import {StoryScreenProps} from '@tandem/navigation/types';
-import {COMPONENTSNAME} from '@tandem/navigation/ComponentName';
+import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import Back from '@tandem/assets/svg/LeftArrow';
 import Options from '@tandem/assets/svg/ThreeDots';
 import RNMenuModal from '@tandem/components/RNMenuModal';
+import navigateTo from '@tandem/navigation/navigate';
 
-const Story = ({navigation}: StoryScreenProps) => {
+const Story = () => {
   const [visible, setVisible] = useState(false);
 
   const toggelMenuBar = () => {
@@ -25,7 +25,7 @@ const Story = ({navigation}: StoryScreenProps) => {
             onlyIcon
             icon={<Back />}
             onClick={() => {
-              navigation.goBack();
+              navigateTo();
             }}
           />
           <RNButton onlyIcon icon={<Options />} onClick={() => {}} />
@@ -78,7 +78,7 @@ const Story = ({navigation}: StoryScreenProps) => {
             title="Rereads"
             customStyle={styles.button}
             onClick={() => {
-              navigation.navigate(COMPONENTSNAME.STORY_TELLING);
+              navigateTo(SCREEN_NAME.STORY_TELLING);
             }}
           />
         </View>

@@ -6,7 +6,6 @@ import RNTextComponent from '@tandem/components/RNTextComponent';
 import {styles} from './styles';
 import themeColor from '@tandem/theme/themeColor';
 import {checkIfTablet} from '@tandem/hooks/isTabletHook';
-import {SignInProps} from '@tandem/navigation/types';
 import RNButton from '@tandem/components/RNButton';
 import RNLogoHeader from '@tandem/components/RNLogoHeader';
 import RNTextInputWithLabel from '@tandem/components/RNTextInputWithLabel';
@@ -14,12 +13,13 @@ import RNSecureTextInput from '@tandem/components/RNSecureTextInput';
 import Google from '@tandem/assets/svg/GoogleLogo';
 import Apple from '@tandem/assets/svg/AppleLogo';
 import FB from '@tandem/assets/svg/FBlogo';
-import {COMPONENTSNAME} from '@tandem/navigation/ComponentName';
+import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {stateObject} from './interface';
 import {verticalScale} from 'react-native-size-matters';
-import i18n from '@tandem/constants/api/lang/i18n';
+import i18n from '@tandem/constants/lang/i18n';
+import navigateTo from '@tandem/navigation/navigate';
 
-const SignIn = ({navigation}: SignInProps) => {
+const SignIn = () => {
   const isTablet = checkIfTablet();
 
   const [state, setState] = useState<stateObject>({
@@ -80,7 +80,7 @@ const SignIn = ({navigation}: SignInProps) => {
               title={i18n.t('SIGN_IN')}
               customStyle={styles.button}
               onClick={() => {
-                navigation.navigate(COMPONENTSNAME.TERMS_AND_CONDITIONS);
+                navigateTo(SCREEN_NAME.TERMS_AND_CONDITIONS);
               }}
             />
             <View style={styles.continueDesign}>
@@ -120,9 +120,7 @@ const SignIn = ({navigation}: SignInProps) => {
               <RNTextComponent
                 isSemiBold
                 style={styles.signup}
-                handleOnPress={() =>
-                  navigation.navigate(COMPONENTSNAME.SIGN_UP)
-                }>
+                handleOnPress={() => navigateTo(SCREEN_NAME.SIGN_UP)}>
                 {i18n.t('SIGN_UP')}
               </RNTextComponent>
             </RNTextComponent>

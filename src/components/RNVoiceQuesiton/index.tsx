@@ -9,7 +9,7 @@ import Mic from '@tandem/assets/svg/Mic';
 import MicOn from '@tandem/assets/svg/MinOn';
 import {verticalScale} from 'react-native-size-matters';
 import {VoiceQuestionProps} from './interface';
-import i18n from '@tandem/constants/api/lang/i18n';
+import i18n from '@tandem/constants/lang/i18n';
 
 const RNVoiceQuesiton = ({onClick}: VoiceQuestionProps) => {
   const [inputList, setInputList] = useState<inputListState[]>([{answer: ''}]);

@@ -2,18 +2,18 @@ import {Pressable} from 'react-native';
 import React from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import RNTextComponent from '@tandem/components/RNTextComponent';
-import en from '@tandem/constants/api/lang/en';
+import en from '@tandem/constants/lang/en';
 import {styles} from './styles';
 import RNLanguageComponent from '@tandem/components/RNLanguageComponent';
 import themeColor from '@tandem/theme/themeColor';
 import {languages} from './interface';
 import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 import {scale, verticalScale} from 'react-native-size-matters';
-import {SelectLanguageProps} from '@tandem/navigation/types';
-import {COMPONENTSNAME} from '@tandem/navigation/ComponentName';
-import i18n from '@tandem/constants/api/lang/i18n';
+import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
+import i18n from '@tandem/constants/lang/i18n';
+import navigateTo from '@tandem/navigation/navigate';
 
-const SelectLanguage = ({navigation}: SelectLanguageProps) => {
+const SelectLanguage = () => {
   const isTablet = checkIfTablet();
   return (
     <RNScreenWrapper style={{backgroundColor: themeColor.white}}>
@@ -28,7 +28,7 @@ const SelectLanguage = ({navigation}: SelectLanguageProps) => {
           <Pressable
             onPress={() => {
               i18n.locale = item.code;
-              navigation.navigate(COMPONENTSNAME.ONBOARDING);
+              navigateTo(SCREEN_NAME.ONBOARDING);
             }}>
             <RNLanguageComponent
               title={item.name}

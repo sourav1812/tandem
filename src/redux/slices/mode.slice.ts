@@ -1,13 +1,14 @@
 import {createSlice} from '@reduxjs/toolkit';
+import {MODE} from '@tandem/constants/mode';
 
 // Define a type for the slice state
 interface ModeState {
-  mode: string;
+  mode: MODE.A | MODE.B | MODE.C;
 }
 
 // Define the initial state using that type
 const initialState: ModeState = {
-  mode: 'cmode',
+  mode: MODE.C,
 };
 
 export const modeSlice = createSlice({

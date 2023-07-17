@@ -11,7 +11,7 @@ import Less from '../../assets/svg/Subtract';
 import More from '../../assets/svg/Plus';
 import themeColor from '../../theme/themeColor';
 import {checkIfTablet} from '../../hooks/isTabletHook';
-import i18n from '@tandem/constants/api/lang/i18n';
+import i18n from '@tandem/constants/lang/i18n';
 
 const RNReadingLevelModal = ({
   visible = true,

@@ -7,17 +7,16 @@ import RNTextComponent from '../RNTextComponent';
 import {verticalScale} from 'react-native-size-matters';
 import themeColor from '@tandem/theme/themeColor';
 import RNButton from '@tandem/components/RNButton';
-import {useNavigation} from '@react-navigation/native';
-import {COMPONENTSNAME} from '@tandem/navigation/ComponentName';
+import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {checkIfTablet} from '@tandem/hooks/isTabletHook';
-import i18n from '@tandem/constants/api/lang/i18n';
+import i18n from '@tandem/constants/lang/i18n';
+import navigateTo from '@tandem/navigation/navigate';
 
 const RNCongratsModal = ({
   visible = false,
   renderModal,
 }: congratsModalProps) => {
   let isTablet = checkIfTablet();
-  const navigation = useNavigation();
 
   return (
     <RNModal
@@ -77,14 +76,14 @@ const RNCongratsModal = ({
             title={i18n.t('HOME')}
             customStyle={styles.button}
             onClick={() => {
-              navigation.navigate(COMPONENTSNAME.HOME);
+              navigateTo(SCREEN_NAME.HOME);
             }}
           />
           <RNButton
             title={i18n.t('SHARE')}
             customStyle={styles.button}
             onClick={() => {
-              navigation.navigate(COMPONENTSNAME.QUESTIONS);
+              navigateTo(SCREEN_NAME.QUESTIONS);
             }}
             onlyBorder
           />

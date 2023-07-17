@@ -7,7 +7,7 @@ import RNButton from '../RNButton';
 import {verticalScale} from 'react-native-size-matters';
 import RNEmojiWithText from '../RNEmojiWithText';
 import {multipleChoiceProps} from './interface';
-import i18n from '@tandem/constants/api/lang/i18n';
+import i18n from '@tandem/constants/lang/i18n';
 
 const RNMultipleChoice = ({onNextPress}: multipleChoiceProps) => {
   return (

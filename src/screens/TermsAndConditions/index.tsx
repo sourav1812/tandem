@@ -5,15 +5,15 @@ import RNTextComponent from '@tandem/components/RNTextComponent';
 import {styles} from './styles';
 import themeColor from '@tandem/theme/themeColor';
 import {checkIfTablet} from '@tandem/hooks/isTabletHook';
-import {TermsAndConditionsProps} from '@tandem/navigation/types';
 import {verticalScale} from 'react-native-size-matters';
 import {ScrollView, View} from 'react-native';
 import RNCheckboxWithText from '@tandem/components/RNCheckboxWithText';
 import RNButton from '@tandem/components/RNButton';
-import {COMPONENTSNAME} from '@tandem/navigation/ComponentName';
-import i18n from '@tandem/constants/api/lang/i18n';
+import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
+import i18n from '@tandem/constants/lang/i18n';
+import navigateTo from '@tandem/navigation/navigate';
 
-const TermsAndConditions = ({navigation}: TermsAndConditionsProps) => {
+const TermsAndConditions = () => {
   const isTablet = checkIfTablet();
   return (
     <RNScreenWrapper style={{backgroundColor: themeColor.white}}>
@@ -51,14 +51,14 @@ const TermsAndConditions = ({navigation}: TermsAndConditionsProps) => {
             onlyBorder
             buttonColor={themeColor.themeBlue}
             onClick={() => {
-              navigation.goBack();
+              navigateTo();
             }}
             title={i18n.t('CANCEL')}
             customStyle={styles.button}
           />
           <RNButton
             onClick={() => {
-              navigation.navigate(COMPONENTSNAME.HELP_CENTER);
+              navigateTo(SCREEN_NAME.HELP_CENTER);
             }}
             title={i18n.t('ACCEPT')}
             customStyle={styles.button}
