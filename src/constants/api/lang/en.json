@@ -80,5 +80,25 @@
 
   "CONTINUE_WITH": "Continue with",
   "SIGN_IN_WITH_PASSWORD": "Sign in with password",
-  "DONT_HAVE_AN_ACCOUNT": "Don't have an account"
+  "DONT_HAVE_AN_ACCOUNT": "Don't have an account",
+  "LETS_START_WITH_YOUR_CHILD": "Let's start with your child",
+  "ADD_ONE_OF_YOUR_CHILDREN": "Add one of your children to get started. Then you can add others and change settings",
+  "BOY": "Boy",
+  "GIRL": "Girl",
+  "PREFER_NOT_TO_SAY": "Prefer Not To Say",
+  "ADD_CHILD_INFO": "Add child info",
+  "COMPLETE_A_QUESTIONAIRE": "Complete a questionnaire to track your child's development",
+  "WHAT_IS_CHILD_NAME": "What is your child's name?",
+  "DATE_OF_BIRTH": "Date of birth",
+  "ENTER_DATE_OF_BIRTH": "Enter Date of birth",
+  "SELECT_AN_AVATAR": "Select an avatar",
+  "YOU_CAN_CHANGE_IT_AFTER": "You can change it after logging in",
+  "BIG_PEOPLE": "Big People",
+  "LITTLE_PEOPLE": "Little People",
+  "PROFILE_SETTINGS": "Profile Settings",
+  "HELP_CENTER": "Help Center",
+  "CHANGE_PASSWORD": "Change Password",
+  "ABOUT_APP": "About App",
+  "TERMS_OF_USE": "Terms of Use",
+  "PRIVACY_POLICY": "Privacy Policy"
 }

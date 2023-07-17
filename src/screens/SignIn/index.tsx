@@ -115,11 +115,12 @@ const SignIn = ({navigation}: SignInProps) => {
                 <Apple />
               </View>
             </View>
-            <RNTextComponent style={styles.buttonText}>
+            <RNTextComponent
+              style={[styles.buttonText, isTablet && {fontSize: 22}]}>
               {i18n.t('ALREADY_HAVE_AN_ACCOUNT')}{' '}
               <RNTextComponent
                 isSemiBold
-                style={styles.signup}
+                style={[styles.signup, isTablet && {fontSize: 22}]}
                 handleOnPress={() =>
                   navigation.navigate(COMPONENTSNAME.SIGN_UP)
                 }>

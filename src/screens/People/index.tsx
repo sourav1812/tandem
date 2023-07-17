@@ -1,38 +1,98 @@
-import {View} from 'react-native';
-import React from 'react';
+/* eslint-disable react-native/no-inline-styles */
+import React, {useState} from 'react';
 import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
-import RNButton from '@tandem/components/RNButton';
 import {PeopleScreenProps} from '@tandem/navigation/types';
-import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
-import {changeMode} from '@tandem/redux/slices/mode.slice';
-import {COMPONENTSNAME} from '@tandem/navigation/ComponentName';
-import {scale} from 'react-native-size-matters';
+import {menuArray, stateObject} from './interface';
+import BlueButton from '@tandem/assets/svg/BlueButton';
+import RNButton from '@tandem/components/RNButton';
+import {View} from 'react-native';
+import themeColor from '@tandem/theme/themeColor';
+import {translation} from '@tandem/utils/methods';
+import RNTextComponent from '@tandem/components/RNTextComponent';
+import RNMenuModal from '@tandem/components/RNMenuModal';
+import RNMenuButton from '@tandem/components/RNMenuButton';
+// import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 
-const People = ({navigation}: PeopleScreenProps) => {
-  const dispatch = useAppDispatch();
-  const mode = useAppSelector(state => state.mode.mode);
+const People = ({}: PeopleScreenProps) => {
+  // const isTablet = checkIfTablet();
 
-  console.log(mode);
+  const [state, setState] = useState<stateObject>({
+    firstTab: false,
+  });
+
+  const {firstTab} = state;
+
+  const updateState = (date: any) => {
+    setState((previouState: any) => {
+      return {...previouState, ...date};
+    });
+  };
+
+  const leftTab = () => {
+    updateState({firstTab: false});
+  };
+
+  const rightTab = () => {
+    updateState({firstTab: true});
+  };
 
   return (
-    <RNScreenWrapper>
-      <View style={styles.container}>
+    <RNScreenWrapper style={styles.container}>
+      <BlueButton style={styles.button} />
+      <View style={styles.customTab}>
         <RNButton
-          title="Switch Mode"
-          customStyle={{paddingHorizontal: scale(20)}}
-          onClick={() => {
-            if (mode === 'bmode') {
-              dispatch(changeMode('cmode'));
-            } else {
-              dispatch(changeMode('bmode'));
-              setTimeout(() => {
-                navigation.navigate(COMPONENTSNAME.SELECT_PLAYER);
-              }, 2000);
-            }
+          title={translation('BIG_PEOPLE')}
+          onlyBorder
+          onClick={leftTab}
+          customStyle={[
+            styles.tab,
+            !firstTab
+              ? {
+                  borderWidth: 0,
+                  borderBottomWidth: 2,
+                  borderBottomColor: themeColor.themeBlue,
+                }
+              : {borderWidth: 0},
+          ]}
+          textStyle={{
+            fontWeight: '600',
+            fontSize: 17,
+            color: !firstTab ? themeColor.themeBlue : 'rgba(2, 4, 8, 0.6)',
+          }}
+        />
+        <RNButton
+          title={translation('LITTLE_PEOPLE')}
+          onlyBorder
+          onClick={rightTab}
+          customStyle={[
+            styles.tab,
+            firstTab
+              ? {
+                  borderWidth: 0,
+                  borderBottomWidth: 2,
+                  borderBottomColor: themeColor.themeBlue,
+                }
+              : {borderWidth: 0},
+          ]}
+          textStyle={{
+            fontWeight: '600',
+            fontSize: 17,
+            color: firstTab ? themeColor.themeBlue : 'rgba(2, 4, 8, 0.6)',
           }}
         />
       </View>
+      {!firstTab && (
+        <>
+          <View style={styles.profile} />
+          <RNTextComponent style={styles.name} isSemiBold>
+            Ella
+          </RNTextComponent>
+          {menuArray.map(item => (
+            <RNMenuButton title={item.name} customStyle={styles.menu} />
+          ))}
+        </>
+      )}
     </RNScreenWrapper>
   );
 };

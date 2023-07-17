@@ -21,6 +21,7 @@ import Account from '@tandem/screens/Account';
 import SplashScreen from '@tandem/screens/SplashScreen';
 import Onboarding from '@tandem/screens/Onboarding';
 import SocialSignIn from '@tandem/screens/SocialSignIn';
+import CreateChildProfile from '@tandem/screens/CreateChildProfile';
 
 const AppNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -53,6 +54,10 @@ const AppNavigator = () => {
           name={COMPONENTSNAME.HELP_CENTER}
         />
         <Stack.Screen component={Account} name={COMPONENTSNAME.ACCOUNT} />
+        <Stack.Screen
+          component={CreateChildProfile}
+          name={COMPONENTSNAME.CREATE_CHILD_PROFILE}
+        />
         {mode === 'bmode' && (
           <Stack.Screen
             component={SelectPlayer}

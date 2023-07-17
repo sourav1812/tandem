@@ -10,7 +10,6 @@ const RNEmojiWithText = ({
   customStyle,
   heading,
   emoji,
-  showText,
   icon,
   bgcColor,
 }: Props) => {
@@ -22,8 +21,7 @@ const RNEmojiWithText = ({
         styles.container,
         customStyle && customStyle,
         {
-          ...((showText || isSelected) &&
-            bgcColor && {backgroundColor: bgcColor}),
+          ...(isSelected && bgcColor && {backgroundColor: bgcColor}),
         },
       ]}
       {...props}
@@ -33,17 +31,16 @@ const RNEmojiWithText = ({
       <Text
         style={[
           styles.emoji,
-          {...((showText || isSelected) && {fontSize: verticalScale(33)})},
+          {...(heading && isSelected && {fontSize: verticalScale(33)})},
           emoji && emoji,
         ]}>
         {icon}
       </Text>
-      {showText ||
-        (isSelected && (
-          <RNTextComponent style={styles.heading} isSemiBold numberOfLines={2}>
-            {heading}
-          </RNTextComponent>
-        ))}
+      {heading && isSelected && (
+        <RNTextComponent style={styles.heading} isSemiBold numberOfLines={2}>
+          {heading}
+        </RNTextComponent>
+      )}
     </Pressable>
   );
 };

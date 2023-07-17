@@ -151,7 +151,7 @@ const HelpCenter = ({navigation}: HelpCenterProps) => {
                 customStyle={styles.button}
                 title={i18n.t('SEND')}
                 onClick={() => {
-                  navigation.navigate(COMPONENTSNAME.ACCOUNT);
+                  navigation.navigate(COMPONENTSNAME.CREATE_CHILD_PROFILE);
                 }}
               />
             </ScrollView>
