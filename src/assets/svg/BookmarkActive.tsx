@@ -1,17 +1,17 @@
 import * as React from 'react';
-import Svg, {SvgProps, Path} from 'react-native-svg';
-const SvgComponent = (props: SvgProps) => (
+import {verticalScale} from 'react-native-size-matters';
+import Svg, {Path} from 'react-native-svg';
+const SvgComponent = ({focused}: {focused: boolean}) => (
   <Svg
     // xmlns="http://www.w3.org/2000/svg"
-    width={20}
-    height={24}
+    width={verticalScale(20)}
+    height={verticalScale(24)}
     viewBox="0 0 18 22"
-    fill="none"
-    {...props}>
+    fill="none">
     <Path
-      fill="#4285F6"
+      fill={focused ? '#4285F6' : '#FFFFFF'}
       fillRule="evenodd"
-      stroke="#fff"
+      stroke={focused ? '#4285F6' : '#474747'}
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={1.5}
@@ -19,13 +19,13 @@ const SvgComponent = (props: SvgProps) => (
       clipRule="evenodd"
     />
     <Path
-      fill="#4285F6"
+      fill={focused ? '#4285F6' : '#FFFFFF'}
       fillRule="evenodd"
       d="M5.271 8.028h7.318-7.318Z"
       clipRule="evenodd"
     />
     <Path
-      stroke="#fff"
+      stroke={focused ? '#fff' : '#474747'}
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={1.5}
