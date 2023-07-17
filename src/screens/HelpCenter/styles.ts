@@ -1,3 +1,4 @@
+import themeColor from '@tandem/theme/themeColor';
 import {StyleSheet} from 'react-native';
 import {verticalScale} from 'react-native-size-matters';
 
@@ -41,4 +42,33 @@ export const styles = StyleSheet.create({
   button: {
     marginTop: verticalScale(30),
   },
+  expandDetailsWrapper: {
+    backgroundColor: '#F1F4F9',
+    padding: 16,
+    borderRadius: 16,
+    flexDirection: 'row',
+    marginTop: 16,
+    width: '100%',
+    justifyContent: 'space-between',
+  },
+  expandedText: {
+    fontSize: verticalScale(12.5),
+    color: '#020408',
+    opacity: 0.5,
+    marginTop: 10,
+  },
+  switchButton: {
+    borderRadius: 8,
+    marginLeft: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: verticalScale(35),
+    width: verticalScale(35),
+  },
+  highlightedTab: {
+    borderWidth: 0,
+    borderBottomWidth: 2,
+    borderBottomColor: themeColor.themeBlue,
+  },
+  tabText: {fontWeight: '600', fontSize: 18},
 });

@@ -14,12 +14,12 @@ import {stateObject} from './interface';
 import Camera from '@tandem/assets/svg/Camera';
 import LeftArrow from '@tandem/assets/svg/LeftArrow';
 import QuestionMark from '@tandem/assets/svg/QuestionMark';
-import {GeneratingStoryScreenProps} from '@tandem/navigation/types';
-import {COMPONENTSNAME} from '@tandem/navigation/ComponentName';
+import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import RNChooseColor from '@tandem/components/RNChooseColor';
-import i18n from '@tandem/constants/api/lang/i18n';
+import i18n from '@tandem/constants/lang/i18n';
+import navigateTo from '@tandem/navigation/navigate';
 
-const GenerateStory = ({navigation}: GeneratingStoryScreenProps) => {
+const GenerateStory = () => {
   const [state, setState] = useState<stateObject>({
     questionNumber: 0,
     colorPalette: [
@@ -225,7 +225,7 @@ const GenerateStory = ({navigation}: GeneratingStoryScreenProps) => {
     if (questionNumber <= 4) {
       updateState({questionNumber: questionNumber + 1});
     } else {
-      navigation.navigate(COMPONENTSNAME.ACTIVITIES);
+      navigateTo(SCREEN_NAME.ACTIVITIES);
     }
   };
 
@@ -233,7 +233,7 @@ const GenerateStory = ({navigation}: GeneratingStoryScreenProps) => {
     if (questionNumber > 0) {
       updateState({questionNumber: questionNumber - 1});
     } else {
-      navigation.goBack();
+      navigateTo();
     }
   };
 

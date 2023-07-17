@@ -1,17 +1,16 @@
 import React, {useEffect} from 'react';
 import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
-import {SplashScreenProps} from '@tandem/navigation/types';
 import {Image} from 'react-native';
 import RNTextComponent from '@tandem/components/RNTextComponent';
-import {COMPONENTSNAME} from '@tandem/navigation/ComponentName';
+import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
+import navigateTo from '@tandem/navigation/navigate';
 
-const SplashScreen = ({navigation}: SplashScreenProps) => {
+const SplashScreen = () => {
   useEffect(() => {
     setTimeout(() => {
-      navigation.navigate(COMPONENTSNAME.SELECT_LANGUAGE);
+      navigateTo(SCREEN_NAME.SELECT_LANGUAGE);
     }, 2000);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

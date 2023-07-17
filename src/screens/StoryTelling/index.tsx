@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-shadow */
-/* eslint-disable react-native/no-inline-styles */
-/* eslint-disable eqeqeq */
 import {View, ImageBackground, FlatList, ScrollView} from 'react-native';
 import React, {useState, useCallback} from 'react';
 import {styles} from './style';
@@ -14,8 +11,7 @@ import {characterList, stateObject} from './interface';
 import {characterProps} from '@tandem/components/RNCharacterComponent/interface';
 import RNCongratsModal from '@tandem/components/RNCongratsModal';
 import themeColor from '@tandem/theme/themeColor';
-import {StoryTellingScreenProps} from '@tandem/navigation/types';
-import {COMPONENTSNAME} from '@tandem/navigation/ComponentName';
+import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import Meter from '@tandem/assets/svg/Meter';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import RNReadingLevelModal from '@tandem/components/RNReadingLevelModal';
@@ -23,9 +19,11 @@ import RNReadingTipsModal from '@tandem/components/RNReadingTipsModal';
 import RNRatingModal from '@tandem/components/RNRatingModal';
 import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 import {verticalScale} from 'react-native-size-matters';
-import i18n from '@tandem/constants/api/lang/i18n';
+import i18n from '@tandem/constants/lang/i18n';
+import navigateTo from '@tandem/navigation/navigate';
+import {MODE} from '@tandem/constants/mode';
 
-const StoryTelling = ({navigation}: StoryTellingScreenProps) => {
+const StoryTelling = () => {
   const isTablet = checkIfTablet();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [renderModal, setRenderModal] = useState(false);
@@ -117,7 +115,7 @@ const StoryTelling = ({navigation}: StoryTellingScreenProps) => {
           onlyIcon
           icon={<Close />}
           onClick={() => {
-            navigation.navigate(COMPONENTSNAME.BOOKSHELF);
+            navigateTo(SCREEN_NAME.BOOKSHELF);
           }}
         />
         {currentIndex + 1 === 5 && (
@@ -128,10 +126,10 @@ const StoryTelling = ({navigation}: StoryTellingScreenProps) => {
         <RNButton
           onlyIcon
           icon={
-            mode === 'bmode' && currentIndex + 1 < 5 ? <Meter /> : <Speaker />
+            mode === MODE.B && currentIndex + 1 < 5 ? <Meter /> : <Speaker />
           }
           onClick={() => {
-            if (mode === 'bmode' && currentIndex + 1 < 5) {
+            if (mode === MODE.B && currentIndex + 1 < 5) {
               renderReadingLevel();
             }
           }}
@@ -193,7 +191,7 @@ const StoryTelling = ({navigation}: StoryTellingScreenProps) => {
           nextClick={renderTipLevel}
         />
       )}
-      {currentIndex + 1 === 5 && mode === 'bmode' && (
+      {currentIndex + 1 === 5 && mode === MODE.B && (
         <RNRatingModal
           visible={ratingModal}
           renderModal={renderRatingModal}

@@ -10,7 +10,6 @@ import {View} from 'react-native';
 import themeColor from '@tandem/theme/themeColor';
 import {translation} from '@tandem/utils/methods';
 import RNTextComponent from '@tandem/components/RNTextComponent';
-import RNMenuModal from '@tandem/components/RNMenuModal';
 import RNMenuButton from '@tandem/components/RNMenuButton';
 // import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 

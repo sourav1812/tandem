@@ -5,19 +5,27 @@ import {styles} from './styles';
 import themeColor from '@tandem/theme/themeColor';
 import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 import {verticalScale} from 'react-native-size-matters';
-import {KeyboardAvoidingView, Platform, ScrollView, View} from 'react-native';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  ScrollView,
+  View,
+} from 'react-native';
 import RNButton from '@tandem/components/RNButton';
-import {HelpCenterProps} from '@tandem/navigation/types';
 import RNLogoHeader from '@tandem/components/RNLogoHeader';
 import RNTextInputWithLabel from '@tandem/components/RNTextInputWithLabel';
-import {stateObject} from './interface';
-import {COMPONENTSNAME} from '@tandem/navigation/ComponentName';
-import i18n from '@tandem/constants/api/lang/i18n';
+import {StateObject} from './interface';
+import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
+import i18n from '@tandem/constants/lang/i18n';
+import Subtract from '@tandem/assets/svg/Subtract';
+import Add from '@tandem/assets/svg/Add';
+import navigateTo from '@tandem/navigation/navigate';
 
-const HelpCenter = ({navigation}: HelpCenterProps) => {
+const HelpCenter = () => {
   const isTablet = checkIfTablet();
 
-  const [state, setState] = useState<stateObject>({
+  const [state, setState] = useState<StateObject>({
     email: '',
     name: '',
     firstTab: false,
@@ -26,9 +34,9 @@ const HelpCenter = ({navigation}: HelpCenterProps) => {
 
   const {email, name, firstTab, message} = state;
 
-  const updateState = (date: any) => {
-    setState((previouState: any) => {
-      return {...previouState, ...date};
+  const updateState = (newState: any) => {
+    setState((previouState: StateObject) => {
+      return {...previouState, ...newState};
     });
   };
 
@@ -64,19 +72,14 @@ const HelpCenter = ({navigation}: HelpCenterProps) => {
               onClick={leftTab}
               customStyle={[
                 styles.tab,
-                !firstTab
-                  ? {
-                      borderWidth: 0,
-                      borderBottomWidth: 2,
-                      borderBottomColor: themeColor.themeBlue,
-                    }
-                  : {borderWidth: 0},
+                !firstTab ? styles.highlightedTab : {borderWidth: 0},
               ]}
-              textStyle={{
-                fontWeight: '600',
-                fontSize: 18,
-                color: !firstTab ? themeColor.themeBlue : themeColor.black,
-              }}
+              textStyle={[
+                styles.tabText,
+                {
+                  color: !firstTab ? themeColor.themeBlue : themeColor.black,
+                },
+              ]}
             />
             <RNButton
               title={i18n.t('CONTACT_US')}
@@ -84,76 +87,77 @@ const HelpCenter = ({navigation}: HelpCenterProps) => {
               onClick={rightTab}
               customStyle={[
                 styles.tab,
-                firstTab
-                  ? {
-                      borderWidth: 0,
-                      borderBottomWidth: 2,
-                      borderBottomColor: themeColor.themeBlue,
-                    }
-                  : {borderWidth: 0},
+                firstTab ? styles.highlightedTab : {borderWidth: 0},
               ]}
-              textStyle={{
-                fontWeight: '600',
-                fontSize: 18,
-                color: firstTab ? themeColor.themeBlue : themeColor.black,
-              }}
+              textStyle={[
+                styles.tabText,
+                {
+                  color: firstTab ? themeColor.themeBlue : themeColor.black,
+                },
+              ]}
             />
           </View>
           <View style={styles.content}>
             <ScrollView
               contentContainerStyle={[
                 styles.scrollView,
-                isTablet && {paddingHorizontal: 160},
+                isTablet && {paddingHorizontal: firstTab ? 160 : 50},
               ]}>
-              <RNTextComponent
-                isSemiBold
-                style={[styles.subHeading, isTablet && {fontSize: 25}]}>
-                {i18n.t('QUESTIONS_COMMENTS')}
-              </RNTextComponent>
-              <RNTextInputWithLabel
-                label={i18n.t('NAME')}
-                showLabel
-                backgroundColor={themeColor.lightGray}
-                containerStyle={styles.input2}
-                value={name}
-                updateText={e => {
-                  updateState({name: e});
-                }}
-                hint={i18n.t('ENTER_NAME')}
-                inputStyle={styles.inputText}
-              />
-              <RNTextInputWithLabel
-                label={i18n.t('EMAIL')}
-                showLabel
-                backgroundColor={themeColor.lightGray}
-                containerStyle={styles.input2}
-                value={email}
-                updateText={e => {
-                  updateState({email: e});
-                }}
-                hint={i18n.t('ENTER_YOUR_EMAIL')}
-                inputStyle={styles.inputText}
-              />
-              <RNTextInputWithLabel
-                label={i18n.t('MESSAGE')}
-                showLabel
-                backgroundColor={themeColor.lightGray}
-                containerStyle={styles.input2}
-                value={message}
-                updateText={e => {
-                  updateState({message: e});
-                }}
-                hint={i18n.t('ENTER_MESSAGE')}
-                inputStyle={[styles.inputText, {width: '100%', flex: 0}]}
-                inputViewStyle={styles.inputView}
-              />
-              <RNButton
-                customStyle={styles.button}
-                title={i18n.t('SEND')}
-                onClick={() => {
-                  navigation.navigate(COMPONENTSNAME.CREATE_CHILD_PROFILE);
-                }}
-              />
+              {firstTab ? (
+                <>
+                  <RNTextComponent
+                    isSemiBold
+                    style={[styles.subHeading, isTablet && {fontSize: 25}]}>
+                    {i18n.t('QUESTIONS_COMMENTS')}
+                  </RNTextComponent>
+                  <RNTextInputWithLabel
+                    label={i18n.t('NAME')}
+                    showLabel
+                    backgroundColor={themeColor.lightGray}
+                    containerStyle={styles.input2}
+                    value={name}
+                    updateText={e => {
+                      updateState({name: e});
+                    }}
+                    hint={i18n.t('ENTER_NAME')}
+                    inputStyle={styles.inputText}
+                  />
+                  <RNTextInputWithLabel
+                    label={i18n.t('EMAIL')}
+                    showLabel
+                    backgroundColor={themeColor.lightGray}
+                    containerStyle={styles.input2}
+                    value={email}
+                    updateText={e => {
+                      updateState({email: e});
+                    }}
+                    hint={i18n.t('ENTER_YOUR_EMAIL')}
+                    inputStyle={styles.inputText}
+                  />
+                  <RNTextInputWithLabel
+                    label={i18n.t('MESSAGE')}
+                    showLabel
+                    backgroundColor={themeColor.lightGray}
+                    containerStyle={styles.input2}
+                    value={message}
+                    updateText={e => {
+                      updateState({message: e});
+                    }}
+                    hint={i18n.t('ENTER_MESSAGE')}
+                    inputStyle={[styles.inputText, {width: '100%', flex: 0}]}
+                    inputViewStyle={styles.inputView}
+                  />
+                  <RNButton
+                    customStyle={styles.button}
+                    title={i18n.t('SEND')}
+                    onClick={() => {
+                      navigateTo(SCREEN_NAME.ACCOUNT);
+                    }}
+                  />
+                </>
+              ) : (
+                <FAQScreen />
+              )}
             </ScrollView>
           </View>
         </ScrollView>
@@ -162,4 +166,57 @@ const HelpCenter = ({navigation}: HelpCenterProps) => {
   );
 };
 
+const FAQScreen = () => {
+  return (
+    <View>
+      <ExpandDetails />
+      <ExpandDetails />
+      <ExpandDetails />
+      <ExpandDetails />
+      <RNButton
+        customStyle={styles.button}
+        title={'Continue'}
+        onClick={() => {
+          navigateTo(SCREEN_NAME.ACCOUNT);
+        }}
+      />
+    </View>
+  );
+};
+
 export default HelpCenter;
+
+const ExpandDetails = () => {
+  const [open, setOpen] = React.useState(false);
+
+  const handleSwitching = () => {
+    setOpen(prev => !prev);
+  };
+
+  return (
+    <Pressable onPress={handleSwitching} style={styles.expandDetailsWrapper}>
+      <View style={{flexShrink: 1}}>
+        <RNTextComponent
+          isSemiBold
+          style={{fontSize: verticalScale(13), color: '#000'}}>
+          Alright, but what exactly do you do?
+        </RNTextComponent>
+        {open && (
+          <RNTextComponent style={styles.expandedText}>
+            As a creative agency we work with you to develop solutions to
+            address your brand needs. That includes various aspects of brand
+            planning and strategy, marketing and design.
+          </RNTextComponent>
+        )}
+      </View>
+      <Pressable
+        onPress={handleSwitching}
+        style={[
+          styles.switchButton,
+          {backgroundColor: open ? '#fff' : '#4285F6'},
+        ]}>
+        {!open ? <Add color="#fff" /> : <Subtract />}
+      </Pressable>
+    </Pressable>
+  );
+};

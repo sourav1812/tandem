@@ -10,7 +10,7 @@ import {verticalScale} from 'react-native-size-matters';
 import {VoiceQuestionProps} from './interface';
 import RNTextComponent from '../RNTextComponent';
 import RNTextInputWithLabel from '../RNTextInputWithLabel';
-import en from '@tandem/constants/api/lang/en';
+import en from '@tandem/constants/lang/en';
 
 const RNVoiceWithTextInput = ({
   onNextPress,

@@ -7,7 +7,7 @@ import RNModal from '../RNModal';
 import RNButton from '../RNButton';
 import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 import {verticalScale} from 'react-native-size-matters';
-import i18n from '@tandem/constants/api/lang/i18n';
+import i18n from '@tandem/constants/lang/i18n';
 
 const RNReadingTipsModal = ({
   visible,

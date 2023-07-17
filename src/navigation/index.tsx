@@ -1,9 +1,8 @@
-/* eslint-disable eqeqeq */
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {RootStackParamList} from './types';
-import {COMPONENTSNAME} from './ComponentName';
+import {SCREEN_NAME} from './ComponentName';
 import BottomTab from './BottomTab';
 import GenerateStory from '@tandem/screens/GenerateStory';
 import StoryTelling from '@tandem/screens/StoryTelling';
@@ -22,60 +21,59 @@ import SplashScreen from '@tandem/screens/SplashScreen';
 import Onboarding from '@tandem/screens/Onboarding';
 import SocialSignIn from '@tandem/screens/SocialSignIn';
 import CreateChildProfile from '@tandem/screens/CreateChildProfile';
+import {navigationRef} from './navigate';
+import {MODE} from '@tandem/constants/mode';
 
 const AppNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
   const mode = useAppSelector(state => state.mode.mode);
 
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen
           component={SplashScreen}
-          name={COMPONENTSNAME.SPLASH_SCREEN}
+          name={SCREEN_NAME.SPLASH_SCREEN}
         />
         <Stack.Screen
           component={SelectLanguage}
-          name={COMPONENTSNAME.SELECT_LANGUAGE}
+          name={SCREEN_NAME.SELECT_LANGUAGE}
         />
-        <Stack.Screen component={Onboarding} name={COMPONENTSNAME.ONBOARDING} />
+        <Stack.Screen component={Onboarding} name={SCREEN_NAME.ONBOARDING} />
         <Stack.Screen
           component={SocialSignIn}
-          name={COMPONENTSNAME.SOCIAL_SIGN_IN}
+          name={SCREEN_NAME.SOCIAL_SIGN_IN}
         />
-        <Stack.Screen component={SignUp} name={COMPONENTSNAME.SIGN_UP} />
-        <Stack.Screen component={SignIn} name={COMPONENTSNAME.SIGN_IN} />
+        <Stack.Screen component={SignUp} name={SCREEN_NAME.SIGN_UP} />
+        <Stack.Screen component={SignIn} name={SCREEN_NAME.SIGN_IN} />
         <Stack.Screen
           component={TermsAndConditions}
-          name={COMPONENTSNAME.TERMS_AND_CONDITIONS}
+          name={SCREEN_NAME.TERMS_AND_CONDITIONS}
         />
-        <Stack.Screen
-          component={HelpCenter}
-          name={COMPONENTSNAME.HELP_CENTER}
-        />
-        <Stack.Screen component={Account} name={COMPONENTSNAME.ACCOUNT} />
+        <Stack.Screen component={HelpCenter} name={SCREEN_NAME.HELP_CENTER} />
         <Stack.Screen
           component={CreateChildProfile}
-          name={COMPONENTSNAME.CREATE_CHILD_PROFILE}
+          name={SCREEN_NAME.CREATE_CHILD_PROFILE}
         />
-        {mode === 'bmode' && (
+        <Stack.Screen component={Account} name={SCREEN_NAME.ACCOUNT} />
+        {mode === MODE.B && (
           <Stack.Screen
             component={SelectPlayer}
-            name={COMPONENTSNAME.SELECT_PLAYER}
+            name={SCREEN_NAME.SELECT_PLAYER}
           />
         )}
-        <Stack.Screen component={BottomTab} name={COMPONENTSNAME.BOTTOM_TAB} />
+        <Stack.Screen component={BottomTab} name={SCREEN_NAME.BOTTOM_TAB} />
         <Stack.Screen
           component={GenerateStory}
-          name={COMPONENTSNAME.GENERATE_STORY}
+          name={SCREEN_NAME.GENERATE_STORY}
         />
         <Stack.Screen
           component={StoryTelling}
-          name={COMPONENTSNAME.STORY_TELLING}
+          name={SCREEN_NAME.STORY_TELLING}
         />
-        <Stack.Screen component={Story} name={COMPONENTSNAME.STORY} />
-        <Stack.Screen component={Activities} name={COMPONENTSNAME.ACTIVITIES} />
-        <Stack.Screen component={Questions} name={COMPONENTSNAME.QUESTIONS} />
+        <Stack.Screen component={Story} name={SCREEN_NAME.STORY} />
+        <Stack.Screen component={Activities} name={SCREEN_NAME.ACTIVITIES} />
+        <Stack.Screen component={Questions} name={SCREEN_NAME.QUESTIONS} />
       </Stack.Navigator>
     </NavigationContainer>
   );

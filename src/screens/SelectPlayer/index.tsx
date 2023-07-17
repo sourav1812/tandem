@@ -4,15 +4,15 @@ import {styles} from './styels';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import Back from '@tandem/assets/svg/Cross';
 import RNButton from '@tandem/components/RNButton';
-import {SelectPlayerScreenProps} from '@tandem/navigation/types';
 import RNTextComponent from '@tandem/components/RNTextComponent';
-import i18n from '@tandem/constants/api/lang/i18n';
+import i18n from '@tandem/constants/lang/i18n';
 import themeColor from '@tandem/theme/themeColor';
 import {player} from './interface';
-import {COMPONENTSNAME} from '@tandem/navigation/ComponentName';
+import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {checkIfTablet} from '@tandem/hooks/isTabletHook';
+import navigateTo from '@tandem/navigation/navigate';
 
-const SelectPlayer = ({navigation}: SelectPlayerScreenProps) => {
+const SelectPlayer = () => {
   const players: player[] = [
     {name: 'Alysa', color: themeColor.gold},
     {name: 'Kashish', color: themeColor.lightGreen},
@@ -21,7 +21,7 @@ const SelectPlayer = ({navigation}: SelectPlayerScreenProps) => {
 
   return (
     <RNScreenWrapper style={styles.container}>
-      <RNButton icon={<Back />} onlyIcon onClick={() => navigation.goBack()} />
+      <RNButton icon={<Back />} onlyIcon onClick={() => navigateTo()} />
       <RNTextComponent isSemiBold style={styles.heading}>
         {i18n.t('WHO_IS_GOING_TO')}
       </RNTextComponent>
@@ -33,7 +33,7 @@ const SelectPlayer = ({navigation}: SelectPlayerScreenProps) => {
             <Pressable
               style={[styles.players, {backgroundColor: item.color}]}
               onPress={() => {
-                navigation.navigate(COMPONENTSNAME.BOOKSHELF);
+                navigateTo(SCREEN_NAME.BOOKSHELF);
               }}
             />
           ))}

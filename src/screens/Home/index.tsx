@@ -1,4 +1,4 @@
-import {View, Image, Pressable} from 'react-native';
+import {View, Image, Pressable, useWindowDimensions} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
@@ -7,14 +7,15 @@ import RNTextComponent from '@tandem/components/RNTextComponent';
 import themeColor from '@tandem/theme/themeColor';
 import {scale, verticalScale} from 'react-native-size-matters';
 import RNBookmarkComponent from '@tandem/components/RNBookmarkComponent';
-import {COMPONENTSNAME} from '@tandem/navigation/ComponentName';
+import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {checkIfTablet} from '@tandem/hooks/isTabletHook';
-import i18n from '@tandem/constants/api/lang/i18n';
+import i18n from '@tandem/constants/lang/i18n';
+import navigateTo from '@tandem/navigation/navigate';
 
-const Home = ({navigation}: any) => {
+const Home = () => {
   const portrait = useOrientation().isPortrait;
   const isTablet = checkIfTablet();
-
+  const {width} = useWindowDimensions();
   const dummyData: {color: string; title: string}[] = [
     {color: themeColor.purple, title: i18n.t('I_CANT_DECIDE')},
     {color: themeColor.purple, title: i18n.t('I_CANT_DECIDE')},
@@ -25,40 +26,51 @@ const Home = ({navigation}: any) => {
   return (
     <RNScreenWrapper>
       <View style={styles.container}>
-        <RNTextComponent
-          isSemiBold
-          // eslint-disable-next-line react-native/no-inline-styles
-          style={{
-            ...styles.heading,
-            color: themeColor.white,
-            position: 'absolute',
-            top: portrait ? '7.8%' : '4%',
-            ...(isTablet && {fontSize: scale(14), marginTop: verticalScale(0)}),
-            ...(portrait && {alignSelf: 'center'}),
-            ...(!portrait && {right: '10%'}),
-            zIndex: 3,
-          }}>
-          {i18n.t('HELLO')}, Adam! 👋🏻
-        </RNTextComponent>
-        <View
-          style={[
-            styles.header,
-            {...(!portrait && {height: verticalScale(100)})},
-          ]}>
-          <View style={styles.left} />
-          <View style={styles.middle}>
-            <Image
-              source={{
-                uri: 'https://static.vecteezy.com/system/resources/previews/016/461/449/non_2x/cute-giraffe-face-wild-animal-character-in-animated-cartoon-illustration-vector.jpg',
-              }}
+        <View style={[styles.header]}>
+          <RNTextComponent
+            isSemiBold
+            style={{
+              ...styles.heading,
+              color: themeColor.white,
+            }}>
+            {i18n.t('HELLO')}, Adam! 👋🏻
+          </RNTextComponent>
+          <View
+            style={{
+              width: '100%',
+              backgroundColor: 'transparent',
+              height: 25,
+              position: 'absolute',
+              bottom: -17,
+              justifyContent: 'space-between',
+              flexDirection: 'row',
+              zIndex: 100,
+            }}>
+            <View
               style={{
-                ...styles.profilePic,
-                ...(!portrait && {top: '52%'}),
-                ...(isTablet && {bottom: '-25%'}),
+                backgroundColor: themeColor.gold,
+                width: (+width - verticalScale(80)) / 2,
+                borderBottomRightRadius: 100,
+                borderTopRightRadius: 100,
+              }}
+            />
+            <View
+              style={{
+                backgroundColor: themeColor.gold,
+                width: (+width - verticalScale(80)) / 2,
+                borderBottomLeftRadius: 100,
+                borderTopLeftRadius: 100,
               }}
             />
           </View>
-          <View style={styles.right} />
+          <Image
+            source={{
+              uri: 'https://static.vecteezy.com/system/resources/previews/016/461/449/non_2x/cute-giraffe-face-wild-animal-character-in-animated-cartoon-illustration-vector.jpg',
+            }}
+            style={{
+              ...styles.profilePic,
+            }}
+          />
         </View>
         <View style={styles.content}>
           <RNTextComponent
@@ -80,7 +92,7 @@ const Home = ({navigation}: any) => {
               <Pressable
                 onPress={() => {
                   if (index === 0) {
-                    navigation.navigate(COMPONENTSNAME.GENERATE_STORY);
+                    navigateTo(SCREEN_NAME.GENERATE_STORY);
                   } else {
                     // toggleModal();
                   }

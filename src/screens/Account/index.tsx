@@ -3,7 +3,6 @@ import React, {useState} from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {styles} from './styles';
 import {checkIfTablet} from '@tandem/hooks/isTabletHook';
-import {AccountProps} from '@tandem/navigation/types';
 import {View, Image, ScrollView, Pressable} from 'react-native';
 import Logout from '@tandem/assets/svg/Logout';
 import RNButton from '@tandem/components/RNButton';
@@ -14,10 +13,11 @@ import Add from '@tandem/assets/svg/Add';
 import RNParentProfile from '@tandem/components/RNParentProfile';
 import RNSignoutModal from '@tandem/components/RNSignoutModal';
 import {stateObject} from './interface';
-import {COMPONENTSNAME} from '@tandem/navigation/ComponentName';
-import i18n from '@tandem/constants/api/lang/i18n';
+import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
+import i18n from '@tandem/constants/lang/i18n';
+import navigateTo from '@tandem/navigation/navigate';
 
-const Account = ({navigation}: AccountProps) => {
+const Account = () => {
   const isTablet = checkIfTablet();
 
   const [state, setState] = useState<stateObject>({
@@ -75,7 +75,7 @@ const Account = ({navigation}: AccountProps) => {
         </View>
         <Pressable
           style={styles.body}
-          onPress={() => navigation.navigate(COMPONENTSNAME.BOTTOM_TAB)}>
+          onPress={() => navigateTo(SCREEN_NAME.BOTTOM_TAB)}>
           <RNKidsProfile />
           <RNParentProfile />
         </Pressable>
@@ -102,7 +102,7 @@ const Account = ({navigation}: AccountProps) => {
           </RNTextComponent>
           <Pressable
             style={styles.button}
-            onPress={() => navigation.navigate(COMPONENTSNAME.BOTTOM_TAB)}>
+            onPress={() => navigateTo(SCREEN_NAME.BOTTOM_TAB)}>
             <Image
               source={{
                 uri: 'https://thumbs.dreamstime.com/b/cute-giraffe-face-wild-animal-character-animated-cartoon-png-illustration-isolated-transparent-background-hand-drawn-png-264757481.jpg',
@@ -117,7 +117,7 @@ const Account = ({navigation}: AccountProps) => {
         visible={signoutModal}
         renderModal={toggleSignOut}
         nextClick={() => {
-          navigation.navigate(COMPONENTSNAME.SELECT_LANGUAGE);
+          navigateTo(SCREEN_NAME.SELECT_LANGUAGE);
         }}
       />
     </RNScreenWrapper>

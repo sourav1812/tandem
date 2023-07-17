@@ -4,7 +4,7 @@ import {styles} from './styles';
 import Inactive from '@tandem/assets/svg/InactiveCheckbox';
 import Active from '@tandem/assets/svg/ActiveCheckbox';
 import RNTextComponent from '../RNTextComponent';
-import i18n from '@tandem/constants/api/lang/i18n';
+import i18n from '@tandem/constants/lang/i18n';
 
 export interface Props {
   customStyle?: ViewStyle;

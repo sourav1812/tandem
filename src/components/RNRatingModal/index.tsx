@@ -7,7 +7,7 @@ import {verticalScale} from 'react-native-size-matters';
 import RNButton from '../RNButton';
 import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 import RNModal from '../RNModal';
-import i18n from '@tandem/constants/api/lang/i18n';
+import i18n from '@tandem/constants/lang/i18n';
 
 const RNRatingModal = ({visible, renderModal, nextClick}: ratingModalProps) => {
   let isTablet = checkIfTablet();
