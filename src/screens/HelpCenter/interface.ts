@@ -1,4 +1,4 @@
-export interface stateObject {
+export interface StateObject {
   firstTab: boolean;
   name: string;
   email: string;

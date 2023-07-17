@@ -2,21 +2,18 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {RootTabParamList} from './types';
-import {COMPONENTSNAME} from './ComponentName';
+import {SCREEN_NAME} from './ComponentName';
 import Home from '@tandem/screens/Home';
 import Bookshelf from '@tandem/screens/Bookshelf';
 import People from '@tandem/screens/People';
 import {StyleSheet, View} from 'react-native';
-import BookshelfIcon from '@tandem/assets/svg/Bookmark';
 import RNTextComponent from '@tandem/components/RNTextComponent';
-import {scale, verticalScale} from 'react-native-size-matters';
+import {verticalScale} from 'react-native-size-matters';
 import PeopleIcon from '@tandem/assets/svg/People';
 import HomeIcon from '@tandem/assets/svg/Home';
 import BookmarkActive from '@tandem/assets/svg/BookmarkActive';
-import HomeActive from '@tandem/assets/svg/HomeActive';
-import PeopleActive from '@tandem/assets/svg/PeopleActive';
 import themeColor from '@tandem/theme/themeColor';
-import i18n from '@tandem/constants/api/lang/i18n';
+import i18n from '@tandem/constants/lang/i18n';
 
 const BottomTab = () => {
   const Tab = createBottomTabNavigator<RootTabParamList>();
@@ -27,10 +24,11 @@ const BottomTab = () => {
         headerShown: false,
         tabBarShowLabel: false,
         tabBarStyle: styles.tabBar,
+        tabBarLabelPosition: 'below-icon',
       }}>
       <Tab.Screen
         component={Bookshelf}
-        name={COMPONENTSNAME.BOOKSHELF}
+        name={SCREEN_NAME.BOOKSHELF}
         options={{
           tabBarIcon: ({focused}: any) => {
             return (
@@ -39,14 +37,23 @@ const BottomTab = () => {
                   styles.iconContainer,
                   {
                     ...(focused && {
-                      borderTopWidth: 3,
+                      borderTopWidth: verticalScale(1),
                       borderColor: themeColor.themeBlue,
                     }),
                   },
                 ]}>
-                {focused ? <BookmarkActive /> : <BookshelfIcon />}
+                <BookmarkActive focused={focused} />
 
-                <RNTextComponent isMedium style={styles.title}>
+                <RNTextComponent
+                  isMedium
+                  style={[
+                    styles.title,
+                    {
+                      ...(focused && {
+                        color: themeColor.themeBlue,
+                      }),
+                    },
+                  ]}>
                   {i18n.t('BOOKSHELF')}
                 </RNTextComponent>
               </View>
@@ -56,7 +63,7 @@ const BottomTab = () => {
       />
       <Tab.Screen
         component={Home}
-        name={COMPONENTSNAME.HOME}
+        name={SCREEN_NAME.HOME}
         options={{
           tabBarIcon: ({focused}: any) => {
             return (
@@ -65,17 +72,19 @@ const BottomTab = () => {
                   styles.iconContainer,
                   {
                     ...(focused && {
-                      borderTopWidth: 3,
+                      borderTopWidth: verticalScale(1),
                       borderColor: themeColor.themeBlue,
                     }),
                   },
                 ]}>
-                {focused ? <HomeActive /> : <HomeIcon />}
+                <HomeIcon focused={focused} />
                 <RNTextComponent
                   isMedium
                   style={{
                     ...styles.title,
-                    ...(focused && {color: themeColor.themeBlue}),
+                    ...(focused && {
+                      color: themeColor.themeBlue,
+                    }),
                   }}>
                   {i18n.t('HOME')}
                 </RNTextComponent>
@@ -86,7 +95,7 @@ const BottomTab = () => {
       />
       <Tab.Screen
         component={People}
-        name={COMPONENTSNAME.PEOPLE}
+        name={SCREEN_NAME.PEOPLE}
         options={{
           tabBarIcon: ({focused}: any) => {
             return (
@@ -95,12 +104,12 @@ const BottomTab = () => {
                   styles.iconContainer,
                   {
                     ...(focused && {
-                      borderTopWidth: 3,
+                      borderTopWidth: verticalScale(1),
                       borderColor: themeColor.themeBlue,
                     }),
                   },
                 ]}>
-                {focused ? <PeopleActive /> : <PeopleIcon />}
+                <PeopleIcon focused={focused} />
                 <RNTextComponent
                   isMedium
                   style={{
@@ -122,18 +131,27 @@ export default BottomTab;
 
 const styles = StyleSheet.create({
   tabBar: {
-    height: verticalScale(50),
+    width: '100%',
+    elevation: 0,
+    borderTopColor: 'transparent',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    height: verticalScale(75),
   },
   iconContainer: {
     alignItems: 'center',
-    width: scale(95),
-    maxWidth: 95,
-    borderTopWidth: 2,
-    borderColor: themeColor.white,
-    paddingTop: verticalScale(8),
+    justifyContent: 'center',
+    borderTopWidth: verticalScale(1),
+    borderColor: 'transparent',
+    height: '100%',
+    width: '70%',
+    paddingTop: verticalScale(7),
   },
   title: {
-    fontSize: 15,
+    fontSize: verticalScale(11.5),
     color: 'rgba(2, 4, 8, 0.6)',
+    width: '100%',
+    textAlign: 'center',
+    marginTop: 5,
   },
 });

@@ -2,7 +2,6 @@ import {ImageBackground, Image, View} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
-import {SocialSignInProps} from '@tandem/navigation/types';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import {translation} from '@tandem/utils/methods';
 import Fb from '@tandem/assets/svg/FBlogo';
@@ -12,9 +11,10 @@ import RNSocialButton from '@tandem/components/RNSocialButton';
 import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 import {scale} from 'react-native-size-matters';
 import RNButton from '@tandem/components/RNButton';
-import {COMPONENTSNAME} from '@tandem/navigation/ComponentName';
+import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
+import navigateTo from '@tandem/navigation/navigate';
 
-const SocialSignIn = ({navigation}: SocialSignInProps) => {
+const SocialSignIn = () => {
   const isTablet = checkIfTablet();
   return (
     <RNScreenWrapper>
@@ -63,7 +63,7 @@ const SocialSignIn = ({navigation}: SocialSignInProps) => {
           <RNButton
             title={translation('SIGN_IN_WITH_PASSWORD')}
             onClick={() => {
-              navigation.navigate(COMPONENTSNAME.SIGN_IN);
+              navigateTo(SCREEN_NAME.SIGN_IN);
             }}
           />
           <RNTextComponent
@@ -73,7 +73,7 @@ const SocialSignIn = ({navigation}: SocialSignInProps) => {
               isSemiBold
               style={[styles.signup, isTablet && {fontSize: 18}]}
               handleOnPress={() => {
-                navigation.navigate(COMPONENTSNAME.SIGN_UP);
+                navigateTo(SCREEN_NAME.SIGN_UP);
               }}>
               {translation('SIGN_IN')}
             </RNTextComponent>

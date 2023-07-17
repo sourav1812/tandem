@@ -8,7 +8,7 @@ import RNModal from '../RNModal';
 import RNButton from '../RNButton';
 import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 import {verticalScale} from 'react-native-size-matters';
-import en from '@tandem/constants/api/lang/en';
+import en from '@tandem/constants/lang/en';
 import themeColor from '@tandem/theme/themeColor';
 
 const RNSignoutModal = ({

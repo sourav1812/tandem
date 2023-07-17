@@ -7,13 +7,13 @@ import RNButton from '@tandem/components/RNButton';
 import {stateObject} from './interface';
 import LeftArrow from '@tandem/assets/svg/LeftArrow';
 import QuestionMark from '@tandem/assets/svg/QuestionMark';
-import {QuestionsScreenProps} from '@tandem/navigation/types';
-import {COMPONENTSNAME} from '@tandem/navigation/ComponentName';
+import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import RNMultipleChoice from '@tandem/components/RNMultipleChoice';
 import RNWellDoneModal from '@tandem/components/RNWellDoneModal';
 import RNVoiceWithTextInput from '@tandem/components/RNVoiceWithTextInput';
+import navigateTo from '@tandem/navigation/navigate';
 
-const Questions = ({navigation}: QuestionsScreenProps) => {
+const Questions = () => {
   // const heighWidth = useRef(new Animated.Value(120)).current;
   const [state, setState] = useState<stateObject>({
     questionNumber: 0,
@@ -45,7 +45,7 @@ const Questions = ({navigation}: QuestionsScreenProps) => {
         return (
           <RNMultipleChoice
             onNextPress={() => {
-              navigation.navigate(COMPONENTSNAME.STORY_TELLING);
+              navigateTo(SCREEN_NAME.STORY_TELLING);
             }}
           />
         );
@@ -56,7 +56,7 @@ const Questions = ({navigation}: QuestionsScreenProps) => {
     if (questionNumber <= 1) {
       updateState({questionNumber: questionNumber + 1});
     } else {
-      navigation.navigate(COMPONENTSNAME.STORY_TELLING);
+      navigateTo(SCREEN_NAME.STORY_TELLING);
     }
   };
 
@@ -64,7 +64,7 @@ const Questions = ({navigation}: QuestionsScreenProps) => {
     if (questionNumber > 0) {
       updateState({questionNumber: questionNumber - 1});
     } else {
-      navigation.goBack();
+      navigateTo();
     }
   };
 

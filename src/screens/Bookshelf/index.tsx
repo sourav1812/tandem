@@ -8,12 +8,12 @@ import RNButton from '@tandem/components/RNButton';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import RNStoryCard from '@tandem/components/RNStoryCard';
 import {scale, verticalScale} from 'react-native-size-matters';
-import {BookShelfScreenProps} from '@tandem/navigation/types';
-import {COMPONENTSNAME} from '@tandem/navigation/ComponentName';
+import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {checkIfTablet} from '@tandem/hooks/isTabletHook';
-import i18n from '@tandem/constants/api/lang/i18n';
+import i18n from '@tandem/constants/lang/i18n';
+import navigateTo from '@tandem/navigation/navigate';
 
-const Bookshelf = ({navigation}: BookShelfScreenProps) => {
+const Bookshelf = () => {
   const isTablet = checkIfTablet();
 
   const data = [
@@ -79,7 +79,7 @@ const Bookshelf = ({navigation}: BookShelfScreenProps) => {
           )}
           <Pressable
             onPress={() => {
-              navigation.navigate(COMPONENTSNAME.STORY);
+              navigateTo(SCREEN_NAME.STORY);
             }}>
             <RNStoryCard item={item} />
           </Pressable>

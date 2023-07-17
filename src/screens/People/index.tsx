@@ -3,13 +3,14 @@ import React from 'react';
 import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import RNButton from '@tandem/components/RNButton';
-import {PeopleScreenProps} from '@tandem/navigation/types';
 import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
 import {changeMode} from '@tandem/redux/slices/mode.slice';
-import {COMPONENTSNAME} from '@tandem/navigation/ComponentName';
+import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {scale} from 'react-native-size-matters';
+import navigateTo from '@tandem/navigation/navigate';
+import {MODE} from '@tandem/constants/mode';
 
-const People = ({navigation}: PeopleScreenProps) => {
+const People = () => {
   const dispatch = useAppDispatch();
   const mode = useAppSelector(state => state.mode.mode);
 
@@ -22,12 +23,12 @@ const People = ({navigation}: PeopleScreenProps) => {
           title="Switch Mode"
           customStyle={{paddingHorizontal: scale(20)}}
           onClick={() => {
-            if (mode === 'bmode') {
-              dispatch(changeMode('cmode'));
+            if (mode === MODE.B) {
+              dispatch(changeMode(MODE.C));
             } else {
-              dispatch(changeMode('bmode'));
+              dispatch(changeMode(MODE.B));
               setTimeout(() => {
-                navigation.navigate(COMPONENTSNAME.SELECT_PLAYER);
+                navigateTo(SCREEN_NAME.SELECT_PLAYER);
               }, 2000);
             }
           }}

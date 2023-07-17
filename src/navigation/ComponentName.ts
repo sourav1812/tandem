@@ -1,4 +1,4 @@
-export enum COMPONENTSNAME {
+export enum SCREEN_NAME {
   HOME = 'Home',
   BOOKSHELF = 'Bookshelf',
   PEOPLE = 'People',
