@@ -20,6 +20,7 @@ import Account from '@tandem/screens/Account';
 import SplashScreen from '@tandem/screens/SplashScreen';
 import Onboarding from '@tandem/screens/Onboarding';
 import SocialSignIn from '@tandem/screens/SocialSignIn';
+import CreateChildProfile from '@tandem/screens/CreateChildProfile';
 import {navigationRef} from './navigate';
 import {MODE} from '@tandem/constants/mode';
 
@@ -50,6 +51,10 @@ const AppNavigator = () => {
           name={SCREEN_NAME.TERMS_AND_CONDITIONS}
         />
         <Stack.Screen component={HelpCenter} name={SCREEN_NAME.HELP_CENTER} />
+        <Stack.Screen
+          component={CreateChildProfile}
+          name={SCREEN_NAME.CREATE_CHILD_PROFILE}
+        />
         <Stack.Screen component={Account} name={SCREEN_NAME.ACCOUNT} />
         {mode === MODE.B && (
           <Stack.Screen

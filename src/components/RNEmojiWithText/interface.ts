@@ -3,9 +3,8 @@ import {PressableProps, ViewStyle, StyleProp, TextStyle} from 'react-native';
 export interface Props {
   props?: PressableProps;
   customStyle?: StyleProp<ViewStyle>;
-  heading: string;
+  heading?: string;
   emoji?: StyleProp<TextStyle>;
-  showText?: boolean;
   icon: string;
   bgcColor: string;
 }

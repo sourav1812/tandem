@@ -1,0 +1,88 @@
+import themeColor from '@tandem/theme/themeColor';
+import {StyleSheet} from 'react-native';
+import {scale, verticalScale} from 'react-native-size-matters';
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: themeColor.white,
+    paddingHorizontal: scale(20),
+  },
+  button: {
+    marginTop: verticalScale(40),
+    alignSelf: 'flex-end',
+  },
+  indicator: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: verticalScale(24),
+  },
+  heading: {
+    fontSize: verticalScale(18),
+    textAlign: 'center',
+    marginTop: verticalScale(23),
+  },
+  content: {
+    textAlign: 'center',
+  },
+  girl: {alignSelf: 'center', backgroundColor: 'rgba(154,0, 255 , 0.3)'},
+  boy: {alignSelf: 'center', backgroundColor: 'rgba(134, 211, 159, 0.3)'},
+  sex: {
+    fontSize: scale(13),
+    textAlign: 'center',
+    marginTop: 8,
+  },
+  options: {
+    marginTop: verticalScale(16),
+  },
+  footerButton: {
+    width: scale(160),
+    alignSelf: 'center',
+    marginTop: verticalScale(16),
+  },
+  bottomButtons: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    position: 'absolute',
+    width: '100%',
+    alignSelf: 'center',
+    bottom: '3%',
+  },
+  left: {
+    width: scale(60),
+  },
+  leftText: {
+    fontSize: scale(22),
+  },
+  rightText: {
+    width: scale(230),
+  },
+  inputField: {
+    marginTop: 8,
+  },
+  inputBox: {
+    backgroundColor: themeColor.lightGray,
+  },
+  containerBox: {
+    marginTop: verticalScale(14),
+  },
+  avatarBox: {
+    // borderWidth: 1,
+    flex: 0.83,
+  },
+  list: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
+  avatar: {
+    marginTop: verticalScale(12),
+  },
+  avatar2: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: verticalScale(12),
+  },
+});

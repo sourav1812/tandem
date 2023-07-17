@@ -141,7 +141,7 @@ const GenerateStory = () => {
               imageStyle={{borderRadius: 16}}>
               <RNButton
                 onlyIcon
-                icon={<Camera />}
+                icon={<Camera height={18} width={20} />}
                 onClick={() => {}}
                 IconButtoncustomStyle={styles.camera}
               />
