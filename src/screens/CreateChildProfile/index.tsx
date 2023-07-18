@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {Pressable, ScrollView, View} from 'react-native';
-import {CreateChildProfileProps} from '@tandem/navigation/types';
 import BlueButton from '@tandem/assets/svg/BlueButton';
 import {styles} from './styles';
 import RNNumericBulletin from '@tandem/components/RNNumericBulletin';
@@ -9,15 +8,16 @@ import {avatarArray, childProfileStateObject, indicatorType} from './interface';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import {translation} from '@tandem/utils/methods';
 import {checkIfTablet} from '@tandem/hooks/isTabletHook';
-import {COMPONENTSNAME} from '@tandem/navigation/ComponentName';
 import RNEmojiWithText from '@tandem/components/RNEmojiWithText';
 import themeColor from '@tandem/theme/themeColor';
 import RNButton from '@tandem/components/RNButton';
 import RNTextInputWithLabel from '@tandem/components/RNTextInputWithLabel';
 import RNAvatarComponent from '@tandem/components/RNAvatarComponent';
 import Camera from '@tandem/assets/svg/Camera';
+import navigateTo from '@tandem/navigation/navigate';
+import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 
-const CreateChildProfile = ({navigation}: CreateChildProfileProps) => {
+const CreateChildProfile = () => {
   const isTablet = checkIfTablet();
   const [state, setState] = useState<childProfileStateObject>({
     bulletinArray: [
@@ -48,7 +48,7 @@ const CreateChildProfile = ({navigation}: CreateChildProfileProps) => {
       });
       updateState({questionIndex: questionIndex + 1, bulletinArray: indexArry});
     } else {
-      navigation.navigate(COMPONENTSNAME.ACCOUNT);
+      navigateTo(SCREEN_NAME.ACCOUNT);
     }
   };
 

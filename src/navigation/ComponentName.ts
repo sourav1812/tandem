@@ -19,4 +19,5 @@ export enum SCREEN_NAME {
   ONBOARDING = 'Onboarding',
   SOCIAL_SIGN_IN = 'SocialSignIn',
   CREATE_CHILD_PROFILE = 'CreateChildProfile',
+  PROFILE_SETTINGS = 'ProfileSettings',
 }

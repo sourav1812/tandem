@@ -23,6 +23,7 @@ import SocialSignIn from '@tandem/screens/SocialSignIn';
 import CreateChildProfile from '@tandem/screens/CreateChildProfile';
 import {navigationRef} from './navigate';
 import {MODE} from '@tandem/constants/mode';
+import ProfileSettings from '@tandem/screens/ProfileSettings';
 
 const AppNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -74,6 +75,10 @@ const AppNavigator = () => {
         <Stack.Screen component={Story} name={SCREEN_NAME.STORY} />
         <Stack.Screen component={Activities} name={SCREEN_NAME.ACTIVITIES} />
         <Stack.Screen component={Questions} name={SCREEN_NAME.QUESTIONS} />
+        <Stack.Screen
+          component={ProfileSettings}
+          name={SCREEN_NAME.PROFILE_SETTINGS}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

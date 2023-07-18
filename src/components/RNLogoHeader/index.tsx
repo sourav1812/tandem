@@ -7,7 +7,12 @@ import RNButton from '../RNButton';
 import {useNavigation} from '@react-navigation/native';
 import RNTextComponent from '../RNTextComponent';
 
-const RNLogoHeader = ({customStyle, textHeading, heading}: LogoHeaderProps) => {
+const RNLogoHeader = ({
+  customStyle,
+  textHeading,
+  heading,
+  titleStyle,
+}: LogoHeaderProps) => {
   const navigation = useNavigation();
   return (
     <View style={[styles.container, customStyle && customStyle]}>
@@ -27,7 +32,9 @@ const RNLogoHeader = ({customStyle, textHeading, heading}: LogoHeaderProps) => {
           resizeMode="contain"
         />
       ) : (
-        <RNTextComponent isSemiBold style={styles.header}>
+        <RNTextComponent
+          isSemiBold
+          style={[styles.header, titleStyle && titleStyle]}>
           {heading}
         </RNTextComponent>
       )}

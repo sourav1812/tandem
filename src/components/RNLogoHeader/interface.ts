@@ -1,7 +1,8 @@
-import {StyleProp, ViewStyle} from 'react-native';
+import {StyleProp, TextStyle, ViewStyle} from 'react-native';
 
 export interface LogoHeaderProps {
-  customStyle: StyleProp<ViewStyle>;
+  customStyle?: StyleProp<ViewStyle>;
   textHeading?: boolean;
   heading?: string;
+  titleStyle?: StyleProp<TextStyle>;
 }

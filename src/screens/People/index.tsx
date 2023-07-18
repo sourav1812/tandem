@@ -6,11 +6,12 @@ import {PeopleScreenProps} from '@tandem/navigation/types';
 import {menuArray, stateObject} from './interface';
 import BlueButton from '@tandem/assets/svg/BlueButton';
 import RNButton from '@tandem/components/RNButton';
-import {View} from 'react-native';
+import {Pressable, View} from 'react-native';
 import themeColor from '@tandem/theme/themeColor';
 import {translation} from '@tandem/utils/methods';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import RNMenuButton from '@tandem/components/RNMenuButton';
+import navigateTo from '@tandem/navigation/navigate';
 // import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 
 const People = ({}: PeopleScreenProps) => {
@@ -88,7 +89,10 @@ const People = ({}: PeopleScreenProps) => {
             Ella
           </RNTextComponent>
           {menuArray.map(item => (
-            <RNMenuButton title={item.name} customStyle={styles.menu} />
+            <Pressable
+              onPress={() => item.navigate && navigateTo(item.navigate)}>
+              <RNMenuButton title={item.name} customStyle={styles.menu} />
+            </Pressable>
           ))}
         </>
       )}

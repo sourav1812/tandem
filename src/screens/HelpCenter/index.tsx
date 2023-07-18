@@ -151,7 +151,7 @@ const HelpCenter = () => {
                     customStyle={styles.button}
                     title={i18n.t('SEND')}
                     onClick={() => {
-                      navigateTo(SCREEN_NAME.ACCOUNT);
+                      navigateTo(SCREEN_NAME.CREATE_CHILD_PROFILE);
                     }}
                   />
                 </>
@@ -177,7 +177,7 @@ const FAQScreen = () => {
         customStyle={styles.button}
         title={'Continue'}
         onClick={() => {
-          navigateTo(SCREEN_NAME.ACCOUNT);
+          navigateTo(SCREEN_NAME.CREATE_CHILD_PROFILE);
         }}
       />
     </View>
