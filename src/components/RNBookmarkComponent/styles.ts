@@ -5,8 +5,8 @@ import themeColor from '../../theme/themeColor';
 export const styles = StyleSheet.create({
   container: {
     borderWidth: 1,
-    height: verticalScale(134),
-    width: verticalScale(134),
+    height: verticalScale(120),
+    width: verticalScale(120),
     maxHeight: 190,
     maxWidth: 190,
     borderRadius: 16,

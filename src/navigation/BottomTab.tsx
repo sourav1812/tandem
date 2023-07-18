@@ -37,7 +37,7 @@ const BottomTab = () => {
                   styles.iconContainer,
                   {
                     ...(focused && {
-                      borderTopWidth: verticalScale(1),
+                      borderTopWidth: verticalScale(2),
                       borderColor: themeColor.themeBlue,
                     }),
                   },
@@ -72,7 +72,7 @@ const BottomTab = () => {
                   styles.iconContainer,
                   {
                     ...(focused && {
-                      borderTopWidth: verticalScale(1),
+                      borderTopWidth: verticalScale(2),
                       borderColor: themeColor.themeBlue,
                     }),
                   },
@@ -104,7 +104,7 @@ const BottomTab = () => {
                   styles.iconContainer,
                   {
                     ...(focused && {
-                      borderTopWidth: verticalScale(1),
+                      borderTopWidth: verticalScale(2),
                       borderColor: themeColor.themeBlue,
                     }),
                   },
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
   iconContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    borderTopWidth: verticalScale(1),
+    borderTopWidth: verticalScale(2),
     borderColor: 'transparent',
     height: '100%',
     width: '70%',

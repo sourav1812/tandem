@@ -1,4 +1,4 @@
-import {Platform, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {scale, verticalScale} from 'react-native-size-matters';
 import themeColor from '@tandem/theme/themeColor';
 
@@ -7,10 +7,10 @@ export const styles = StyleSheet.create({
     flex: 1,
   },
   poster: {
-    height: verticalScale(330),
+    height: '48%',
   },
   scrollView: {
-    height: Platform.OS === 'ios' ? verticalScale(310) : verticalScale(345),
+    flexGrow: 1,
     width: '100%',
     borderTopLeftRadius: verticalScale(16),
     borderTopRightRadius: verticalScale(16),
@@ -18,14 +18,13 @@ export const styles = StyleSheet.create({
     backgroundColor: themeColor.white,
   },
   midContent: {
-    top: verticalScale(280),
+    top: -verticalScale(30),
     zIndex: 20,
     position: 'absolute',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     width: '100%',
-
     paddingHorizontal: scale(20),
   },
   rating: {
@@ -47,7 +46,7 @@ export const styles = StyleSheet.create({
     paddingVertical: verticalScale(6),
   },
   scrollContainer: {
-    paddingVertical: verticalScale(30),
+    paddingVertical: verticalScale(35),
     paddingHorizontal: verticalScale(18),
   },
   dateTime: {
@@ -66,10 +65,12 @@ export const styles = StyleSheet.create({
     marginTop: verticalScale(14),
   },
   button: {
-    flex: 1,
     borderRadius: 0,
-    justifyContent: 'flex-start',
-    paddingTop: verticalScale(21),
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+    height: verticalScale(60),
+    maxHeight: verticalScale(60),
   },
   headerButtons: {
     flexDirection: 'row',

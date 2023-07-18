@@ -8,7 +8,6 @@ export const styles = StyleSheet.create({
     backgroundColor: themeColor.white,
   },
   header: {
-    height: verticalScale(155),
     flexDirection: 'row',
     justifyContent: 'center',
     backgroundColor: themeColor.gold,
@@ -24,30 +23,28 @@ export const styles = StyleSheet.create({
     height: verticalScale(89),
     width: verticalScale(89),
     zIndex: 5,
+    alignItems: 'center',
   },
   content: {
     flex: 1,
     paddingHorizontal: scale(20),
   },
   heading: {
-    fontSize: verticalScale(21),
+    fontSize: verticalScale(14),
     textAlign: 'center',
-    marginTop: verticalScale(55),
   },
   options: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     alignSelf: 'center',
   },
   cardPortrait: {
     height: verticalScale(120),
     width: verticalScale(120),
-    marginTop: 0,
   },
   headingPortrait: {
-    textAlign: 'left',
-    marginTop: verticalScale(10),
+    // marginTop: verticalScale(0),
   },
   optionsPortrait: {
     justifyContent: 'space-evenly',
