@@ -73,6 +73,7 @@ export const styles = StyleSheet.create({
     backgroundColor: themeColor.white,
     maxHeight: 60,
     overflow: 'hidden',
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
   },

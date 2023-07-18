@@ -100,10 +100,8 @@ const Bookshelf = () => {
           {i18n.t('BOOKSHELF')}
         </RNTextComponent>
         <RNTextInputWithLabel
-          label={''}
           hint={'Search'}
           value={''}
-          showLabel={false}
           updateText={() => {}}
           inputStyle={styles.searchBoxInputStyle}
           backgroundColor="#ffffff"

@@ -21,6 +21,7 @@ import i18n from '@tandem/constants/lang/i18n';
 import Subtract from '@tandem/assets/svg/Subtract';
 import Add from '@tandem/assets/svg/Add';
 import navigateTo from '@tandem/navigation/navigate';
+import {translation} from '@tandem/utils/methods';
 
 const HelpCenter = () => {
   const isTablet = checkIfTablet();
@@ -79,6 +80,7 @@ const HelpCenter = () => {
                 {
                   color: !firstTab ? themeColor.themeBlue : themeColor.black,
                 },
+                isTablet && {fontSize: verticalScale(12)},
               ]}
             />
             <RNButton
@@ -94,6 +96,7 @@ const HelpCenter = () => {
                 {
                   color: firstTab ? themeColor.themeBlue : themeColor.black,
                 },
+                isTablet && {fontSize: verticalScale(12)},
               ]}
             />
           </View>
@@ -112,7 +115,6 @@ const HelpCenter = () => {
                   </RNTextComponent>
                   <RNTextInputWithLabel
                     label={i18n.t('NAME')}
-                    showLabel
                     backgroundColor={themeColor.lightGray}
                     containerStyle={styles.input2}
                     value={name}
@@ -124,7 +126,6 @@ const HelpCenter = () => {
                   />
                   <RNTextInputWithLabel
                     label={i18n.t('EMAIL')}
-                    showLabel
                     backgroundColor={themeColor.lightGray}
                     containerStyle={styles.input2}
                     value={email}
@@ -136,7 +137,6 @@ const HelpCenter = () => {
                   />
                   <RNTextInputWithLabel
                     label={i18n.t('MESSAGE')}
-                    showLabel
                     backgroundColor={themeColor.lightGray}
                     containerStyle={styles.input2}
                     value={message}
@@ -147,13 +147,6 @@ const HelpCenter = () => {
                     inputStyle={[styles.inputText, {width: '100%', flex: 0}]}
                     inputViewStyle={styles.inputView}
                   />
-                  <RNButton
-                    customStyle={styles.button}
-                    title={i18n.t('SEND')}
-                    onClick={() => {
-                      navigateTo(SCREEN_NAME.CREATE_CHILD_PROFILE);
-                    }}
-                  />
                 </>
               ) : (
                 <FAQScreen />
@@ -162,6 +155,13 @@ const HelpCenter = () => {
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
+      <RNButton
+        customStyle={styles.button}
+        title={firstTab ? translation('SEND') : translation('CONTINUE')}
+        onClick={() => {
+          navigateTo(SCREEN_NAME.CREATE_CHILD_PROFILE);
+        }}
+      />
     </RNScreenWrapper>
   );
 };
@@ -173,13 +173,13 @@ const FAQScreen = () => {
       <ExpandDetails />
       <ExpandDetails />
       <ExpandDetails />
-      <RNButton
+      {/* <RNButton
         customStyle={styles.button}
         title={'Continue'}
         onClick={() => {
           navigateTo(SCREEN_NAME.CREATE_CHILD_PROFILE);
         }}
-      />
+      /> */}
     </View>
   );
 };

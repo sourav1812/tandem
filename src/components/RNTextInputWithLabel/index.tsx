@@ -10,7 +10,6 @@ import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 const RNTextInputWithLabel = ({
   props,
   label,
-  showLabel,
   hint,
   updateText,
   value,
@@ -33,7 +32,7 @@ const RNTextInputWithLabel = ({
 
   return (
     <View style={[styles.container, containerStyle && containerStyle]}>
-      {showLabel && (
+      {label && (
         <RNTextComponent
           style={{
             fontSize: isTablet ? 16 : verticalScale(12),
@@ -76,7 +75,7 @@ const styles = StyleSheet.create({
   },
   box: {
     paddingHorizontal: verticalScale(10),
-    borderRadius: verticalScale(12),
+    borderRadius: verticalScale(10),
     flexDirection: 'row',
     alignItems: 'center',
   },

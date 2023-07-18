@@ -25,31 +25,14 @@ export const styles = StyleSheet.create({
   inputBox: {
     backgroundColor: themeColor.input,
   },
-  dropdown: {
-    backgroundColor: themeColor.input,
-    borderRadius: 12,
-    paddingHorizontal: verticalScale(16),
-    paddingVertical: verticalScale(12),
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  dropdownBox: {marginBottom: 2, marginTop: verticalScale(14)},
-  label: {
-    fontSize: verticalScale(13),
-  },
-  footerButton: {
+  button: {
     position: 'absolute',
-    bottom: '2%',
+    bottom: '4%',
     alignSelf: 'center',
     width: '100%',
   },
-  button: {
+  inputText: {
+    fontSize: verticalScale(13),
     width: '100%',
-  },
-  bottom: {
-    color: themeColor.red,
-    textAlign: 'center',
-    marginTop: verticalScale(24),
   },
 });

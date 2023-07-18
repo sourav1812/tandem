@@ -20,7 +20,7 @@ export const styles = StyleSheet.create({
     borderRadius: 0,
   },
   subHeading: {
-    fontSize: verticalScale(21),
+    fontSize: verticalScale(20.4),
     textAlign: 'center',
   },
   scrollView: {
@@ -40,14 +40,19 @@ export const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   button: {
-    marginTop: verticalScale(30),
+    // marginTop: verticalScale(30),
+    position: 'absolute',
+    alignSelf: 'center',
+    width: '100%',
+    maxWidth: 362,
+    bottom: '4%',
   },
   expandDetailsWrapper: {
     backgroundColor: '#F1F4F9',
-    padding: 16,
+    padding: verticalScale(12),
     borderRadius: 16,
     flexDirection: 'row',
-    marginTop: 16,
+    marginTop: verticalScale(14),
     width: '100%',
     justifyContent: 'space-between',
   },
@@ -70,5 +75,5 @@ export const styles = StyleSheet.create({
     borderBottomWidth: 2,
     borderBottomColor: themeColor.themeBlue,
   },
-  tabText: {fontWeight: '600', fontSize: 18},
+  tabText: {fontWeight: '600', fontSize: verticalScale(16)},
 });

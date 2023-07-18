@@ -107,7 +107,8 @@ const Home = () => {
         </View>
         <ScrollView
           style={styles.content}
-          contentContainerStyle={{paddingTop: verticalScale(40)}}>
+          contentContainerStyle={{paddingTop: verticalScale(40)}}
+          showsVerticalScrollIndicator={false}>
           <RNTextComponent
             isSemiBold
             style={{

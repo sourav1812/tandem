@@ -24,6 +24,7 @@ import CreateChildProfile from '@tandem/screens/CreateChildProfile';
 import {navigationRef} from './navigate';
 import {MODE} from '@tandem/constants/mode';
 import ProfileSettings from '@tandem/screens/ProfileSettings';
+import ChangePassword from '@tandem/screens/ChangePassword';
 
 const AppNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -78,6 +79,10 @@ const AppNavigator = () => {
         <Stack.Screen
           component={ProfileSettings}
           name={SCREEN_NAME.PROFILE_SETTINGS}
+        />
+        <Stack.Screen
+          component={ChangePassword}
+          name={SCREEN_NAME.CHANGE_PASSWORD}
         />
       </Stack.Navigator>
     </NavigationContainer>

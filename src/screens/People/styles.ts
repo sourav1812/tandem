@@ -37,4 +37,7 @@ export const styles = StyleSheet.create({
   menu: {
     marginTop: verticalScale(13),
   },
+  firstTab: {
+    flex: 1,
+  },
 });

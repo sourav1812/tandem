@@ -20,6 +20,7 @@ export type RootStackParamList = {
   SocialSignIn: undefined;
   CreateChildProfile: undefined;
   ProfileSettings: undefined;
+  ChangePassword: undefined;
 };
 
 export type RootTabParamList = {

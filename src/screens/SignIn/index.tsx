@@ -52,7 +52,6 @@ const SignIn = () => {
             ]}>
             <RNTextInputWithLabel
               label={i18n.t('EMAIL')}
-              showLabel
               backgroundColor={themeColor.lightGray}
               containerStyle={styles.input2}
               value={email}

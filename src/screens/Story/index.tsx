@@ -10,6 +10,7 @@ import Options from '@tandem/assets/svg/ThreeDots';
 import RNMenuModal from '@tandem/components/RNMenuModal';
 import navigateTo from '@tandem/navigation/navigate';
 import {verticalScale} from 'react-native-size-matters';
+import {translation} from '@tandem/utils/methods';
 
 const Story = () => {
   const [visible, setVisible] = useState(false);
@@ -77,7 +78,7 @@ const Story = () => {
             </ScrollView>
           </View>
           <RNButton
-            title="Rereads"
+            title={translation('REREAD')}
             customStyle={styles.button}
             textStyle={{fontSize: verticalScale(14)}}
             onClick={() => {

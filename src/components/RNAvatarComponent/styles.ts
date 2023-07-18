@@ -4,11 +4,11 @@ import {verticalScale} from 'react-native-size-matters';
 
 export const styles = StyleSheet.create({
   container: {
-    height: verticalScale(134),
-    width: verticalScale(134),
+    height: verticalScale(124),
+    width: verticalScale(124),
 
     backgroundColor: themeColor.lightGray,
-    borderRadius: 100,
+    borderRadius: 1000,
     alignItems: 'center',
     justifyContent: 'flex-end',
     overflow: 'hidden',

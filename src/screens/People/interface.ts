@@ -3,7 +3,7 @@ import {translation} from '@tandem/utils/methods';
 
 export interface stateObject {
   firstTab: boolean;
-  navigate: string;
+  navigate?: string;
 }
 
 export const menuArray = [
@@ -11,9 +11,12 @@ export const menuArray = [
     name: translation('PROFILE_SETTINGS'),
     navigate: SCREEN_NAME.PROFILE_SETTINGS,
   },
-  {name: translation('HELP_CENTER')},
-  {name: translation('CHANGE_PASSWORD')},
-  {name: translation('ABOUT_APP')},
-  {name: translation('TERMS_OF_USE')},
+  {name: translation('HELP_CENTER'), navigate: SCREEN_NAME.HELP_CENTER},
+  {name: translation('CHANGE_PASSWORD'), navigate: SCREEN_NAME.CHANGE_PASSWORD},
+  {name: translation('ABOUT_APP'), navigate: SCREEN_NAME.SPLASH_SCREEN},
+  {
+    name: translation('TERMS_OF_USE'),
+    navigate: SCREEN_NAME.TERMS_AND_CONDITIONS,
+  },
   {name: translation('PRIVACY_POLICY')},
 ];

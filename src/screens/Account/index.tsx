@@ -16,6 +16,7 @@ import {stateObject} from './interface';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import i18n from '@tandem/constants/lang/i18n';
 import navigateTo from '@tandem/navigation/navigate';
+import Lion from '@tandem/assets/svg/AnimatedLion';
 
 const Account = () => {
   const isTablet = checkIfTablet();
@@ -109,6 +110,7 @@ const Account = () => {
               }}
               style={styles.profile}
             />
+            <Lion height={32} width={32} />
           </Pressable>
         </View>
       </View>
