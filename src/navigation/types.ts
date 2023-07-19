@@ -21,6 +21,8 @@ export type RootStackParamList = {
   CreateChildProfile: undefined;
   ProfileSettings: undefined;
   ChangePassword: undefined;
+  People: undefined;
+  AboutApp: undefined;
 };
 
 export type RootTabParamList = {

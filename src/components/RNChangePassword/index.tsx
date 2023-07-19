@@ -8,6 +8,8 @@ import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 import {verticalScale} from 'react-native-size-matters';
 import Lock from '@tandem/assets/svg/LockServer';
 import {translation} from '@tandem/utils/methods';
+import navigateTo from '@tandem/navigation/navigate';
+import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 
 interface changePasswordModalProps {
   visible: boolean;
@@ -23,20 +25,29 @@ const RNChangePassword = ({visible, renderModal}: changePasswordModalProps) => {
       renderModal={renderModal}>
       <ImageBackground
         style={[styles.container]}
-        source={require('@tandem/assets/png/passwordChangedBgc.png')}
+        source={
+          isTablet
+            ? require('@tandem/assets/png/passwordChangedBgcTablet.png')
+            : require('@tandem/assets/png/passwordChangedBgc.png')
+        }
         resizeMode="contain">
         {/* <RNButton
           customStyle={styles.button}
           onClick={nextClick}
           title={i18n.t('WELL')}
         /> */}
-        <Lock />
+        <Lock style={styles.logo} />
         <RNTextComponent style={styles.heading} isSemiBold>
           {translation('PASSWORD_RESET')}
         </RNTextComponent>
         <RNTextComponent style={styles.content}>
           {translation('YOUR_PASSWORD_HAS_BEEN_RESET')}
         </RNTextComponent>
+        <RNButton
+          customStyle={[styles.button, isTablet && {maxWidth: 350}]}
+          title={translation('GO_TO_LOG_IN')}
+          onClick={() => navigateTo(SCREEN_NAME.SIGN_UP)}
+        />
       </ImageBackground>
     </RNModal>
   );

@@ -26,4 +26,13 @@ export const styles = StyleSheet.create({
     marginHorizontal: 40,
     textAlign: 'center',
   },
+  logo: {
+    // borderWidth: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  button: {
+    width: '88%',
+    marginTop: verticalScale(20),
+  },
 });

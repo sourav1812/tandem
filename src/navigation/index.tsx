@@ -25,6 +25,8 @@ import {navigationRef} from './navigate';
 import {MODE} from '@tandem/constants/mode';
 import ProfileSettings from '@tandem/screens/ProfileSettings';
 import ChangePassword from '@tandem/screens/ChangePassword';
+import People from '@tandem/screens/People';
+import AboutApp from '@tandem/screens/AboutApp';
 
 const AppNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -73,6 +75,7 @@ const AppNavigator = () => {
           component={StoryTelling}
           name={SCREEN_NAME.STORY_TELLING}
         />
+        <Stack.Screen component={People} name={SCREEN_NAME.PEOPLE} />
         <Stack.Screen component={Story} name={SCREEN_NAME.STORY} />
         <Stack.Screen component={Activities} name={SCREEN_NAME.ACTIVITIES} />
         <Stack.Screen component={Questions} name={SCREEN_NAME.QUESTIONS} />
@@ -84,6 +87,7 @@ const AppNavigator = () => {
           component={ChangePassword}
           name={SCREEN_NAME.CHANGE_PASSWORD}
         />
+        <Stack.Screen component={AboutApp} name={SCREEN_NAME.ABOUT_APP} />
       </Stack.Navigator>
     </NavigationContainer>
   );

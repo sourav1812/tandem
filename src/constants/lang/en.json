@@ -115,5 +115,9 @@
   "CONFIRM_NEW_PASSWORD": "Confirm New Password",
   "PASSWORD_RESET": "Password Reset",
   "YOUR_PASSWORD_HAS_BEEN_RESET": "Your password has been reset successfully",
-  "GO_TO_LOG_IN": "Go to Log In"
+  "GO_TO_LOG_IN": "Go to Log In",
+  "ABOUT_APP": "About App",
+  "DELETE_ACCOUNT": "Delete Account",
+  "DELETE": "Delete",
+  "IF_YOU_DELETE_ACCOUNT": "If you delete your account you can't get it back"
 }

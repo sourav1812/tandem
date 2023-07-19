@@ -38,7 +38,7 @@ const RNSecureTextInput = ({
   return (
     <View style={[styles.container, customStyle && customStyle]}>
       <RNTextComponent
-        style={{fontSize: isTablet ? 16 : verticalScale(12), marginBottom: 2}}>
+        style={{fontSize: isTablet ? 16 : verticalScale(12), marginBottom: 6}}>
         {title}
       </RNTextComponent>
       <View

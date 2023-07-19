@@ -12,20 +12,26 @@ import {scale, verticalScale} from 'react-native-size-matters';
 import DownArrow from '@tandem/assets/svg/DownArrow';
 import themeColor from '@tandem/theme/themeColor';
 import RNButton from '@tandem/components/RNButton';
+import RNDeleteAccount from '@tandem/components/RNDeleteAccount';
 
 const ProfileSettings = () => {
   const isTablet = checkIfTablet();
   const [state, setState] = useState<stateObject>({
     name: '',
     email: '',
+    showModal: false,
   });
 
-  const {name, email} = state;
+  const {name, email, showModal} = state;
 
   const updateState = (date: any) => {
     setState((previouState: any) => {
       return {...previouState, ...date};
     });
+  };
+
+  const toggleModal = () => {
+    updateState({showModal: !showModal});
   };
 
   return (
@@ -67,10 +73,14 @@ const ProfileSettings = () => {
           title={translation('SAVE_CHANGES')}
           onClick={() => {}}
         />
-        <RNTextComponent style={styles.bottom} isSemiBold>
+        <RNTextComponent
+          style={styles.bottom}
+          isSemiBold
+          handleOnPress={toggleModal}>
           {translation('DELETE_MY_ACCOUNT')}
         </RNTextComponent>
       </View>
+      <RNDeleteAccount visible={showModal} renderModal={toggleModal} />
     </RNScreenWrapper>
   );
 };

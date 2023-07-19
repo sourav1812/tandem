@@ -4,8 +4,8 @@ import {LogoHeaderProps} from './interface';
 import {styles} from './styles';
 import Back from '../../assets/svg/LeftArrow';
 import RNButton from '../RNButton';
-import {useNavigation} from '@react-navigation/native';
 import RNTextComponent from '../RNTextComponent';
+import navigateTo from '@tandem/navigation/navigate';
 
 const RNLogoHeader = ({
   customStyle,
@@ -13,7 +13,6 @@ const RNLogoHeader = ({
   heading,
   titleStyle,
 }: LogoHeaderProps) => {
-  const navigation = useNavigation();
   return (
     <View style={[styles.container, customStyle && customStyle]}>
       <View style={styles.sides}>
@@ -21,7 +20,7 @@ const RNLogoHeader = ({
           onlyIcon
           icon={<Back />}
           onClick={() => {
-            navigation.goBack();
+            navigateTo();
           }}
         />
       </View>
