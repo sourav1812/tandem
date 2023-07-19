@@ -6,15 +6,16 @@ import {PeopleScreenProps} from '@tandem/navigation/types';
 import {menuArray, stateObject} from './interface';
 import BlueButton from '@tandem/assets/svg/BlueButton';
 import RNButton from '@tandem/components/RNButton';
-import {View} from 'react-native';
+import {Pressable, ScrollView, View} from 'react-native';
 import themeColor from '@tandem/theme/themeColor';
 import {translation} from '@tandem/utils/methods';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import RNMenuButton from '@tandem/components/RNMenuButton';
-// import {checkIfTablet} from '@tandem/hooks/isTabletHook';
+import navigateTo from '@tandem/navigation/navigate';
+import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 
 const People = ({}: PeopleScreenProps) => {
-  // const isTablet = checkIfTablet();
+  const isTablet = checkIfTablet();
 
   const [state, setState] = useState<stateObject>({
     firstTab: false,
@@ -87,9 +88,22 @@ const People = ({}: PeopleScreenProps) => {
           <RNTextComponent style={styles.name} isSemiBold>
             Ella
           </RNTextComponent>
-          {menuArray.map(item => (
-            <RNMenuButton title={item.name} customStyle={styles.menu} />
-          ))}
+          <View style={styles.firstTab}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              {menuArray.map(item => (
+                <Pressable
+                  onPress={() => item.navigate && navigateTo(item.navigate)}>
+                  <RNMenuButton
+                    title={item.name}
+                    customStyle={[
+                      styles.menu,
+                      isTablet && {marginHorizontal: 36},
+                    ]}
+                  />
+                </Pressable>
+              ))}
+            </ScrollView>
+          </View>
         </>
       )}
     </RNScreenWrapper>

@@ -9,6 +9,8 @@ import Back from '@tandem/assets/svg/LeftArrow';
 import Options from '@tandem/assets/svg/ThreeDots';
 import RNMenuModal from '@tandem/components/RNMenuModal';
 import navigateTo from '@tandem/navigation/navigate';
+import {verticalScale} from 'react-native-size-matters';
+import {translation} from '@tandem/utils/methods';
 
 const Story = () => {
   const [visible, setVisible] = useState(false);
@@ -31,16 +33,7 @@ const Story = () => {
           <RNButton onlyIcon icon={<Options />} onClick={() => {}} />
           <RNMenuModal visible={visible} renderModal={toggelMenuBar} />
         </View>
-        <View style={styles.midContent}>
-          <View style={styles.rating}>
-            <RNTextComponent style={styles.emoji}>😍</RNTextComponent>
-          </View>
-          <View style={styles.duration}>
-            <RNTextComponent style={styles.emoji} isSemiBold>
-              New
-            </RNTextComponent>
-          </View>
-        </View>
+
         <View style={styles.container}>
           <Image
             style={styles.poster}
@@ -49,6 +42,16 @@ const Story = () => {
             }}
           />
           <View style={styles.scrollView}>
+            <View style={styles.midContent}>
+              <View style={styles.rating}>
+                <RNTextComponent style={styles.emoji}>😍</RNTextComponent>
+              </View>
+              <View style={styles.duration}>
+                <RNTextComponent style={styles.emoji} isSemiBold>
+                  New
+                </RNTextComponent>
+              </View>
+            </View>
             <ScrollView
               contentContainerStyle={styles.scrollContainer}
               showsVerticalScrollIndicator={false}>
@@ -75,8 +78,9 @@ const Story = () => {
             </ScrollView>
           </View>
           <RNButton
-            title="Rereads"
+            title={translation('REREAD')}
             customStyle={styles.button}
+            textStyle={{fontSize: verticalScale(14)}}
             onClick={() => {
               navigateTo(SCREEN_NAME.STORY_TELLING);
             }}

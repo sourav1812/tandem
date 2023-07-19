@@ -48,10 +48,15 @@ export const styles = StyleSheet.create({
     bottom: '3%',
   },
   input: {
-    width: '92%',
+    width: '90%',
     borderWidth: 2,
     borderColor: themeColor.themeBlue,
     borderRadius: verticalScale(14),
     marginTop: verticalScale(16),
+  },
+  inputBox: {
+    marginTop: verticalScale(21),
+    alignSelf: 'center',
+    alignItems: 'center',
   },
 });

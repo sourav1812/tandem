@@ -55,12 +55,9 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 25,
   },
-  flatListContatiner: {
-    marginBottom: verticalScale(62),
-  },
+  flatListContatiner: {},
   flatListContentContainer: {
     marginTop: verticalScale(20),
-    marginBottom: verticalScale(25),
     paddingHorizontal: verticalScale(16),
   },
   heading: {

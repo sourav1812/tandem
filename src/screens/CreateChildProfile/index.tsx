@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {Pressable, ScrollView, View} from 'react-native';
-import {CreateChildProfileProps} from '@tandem/navigation/types';
 import BlueButton from '@tandem/assets/svg/BlueButton';
 import {styles} from './styles';
 import RNNumericBulletin from '@tandem/components/RNNumericBulletin';
@@ -9,15 +8,17 @@ import {avatarArray, childProfileStateObject, indicatorType} from './interface';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import {translation} from '@tandem/utils/methods';
 import {checkIfTablet} from '@tandem/hooks/isTabletHook';
-import {COMPONENTSNAME} from '@tandem/navigation/ComponentName';
 import RNEmojiWithText from '@tandem/components/RNEmojiWithText';
 import themeColor from '@tandem/theme/themeColor';
 import RNButton from '@tandem/components/RNButton';
 import RNTextInputWithLabel from '@tandem/components/RNTextInputWithLabel';
 import RNAvatarComponent from '@tandem/components/RNAvatarComponent';
 import Camera from '@tandem/assets/svg/Camera';
+import navigateTo from '@tandem/navigation/navigate';
+import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
+import {verticalScale} from 'react-native-size-matters';
 
-const CreateChildProfile = ({navigation}: CreateChildProfileProps) => {
+const CreateChildProfile = () => {
   const isTablet = checkIfTablet();
   const [state, setState] = useState<childProfileStateObject>({
     bulletinArray: [
@@ -48,7 +49,7 @@ const CreateChildProfile = ({navigation}: CreateChildProfileProps) => {
       });
       updateState({questionIndex: questionIndex + 1, bulletinArray: indexArry});
     } else {
-      navigation.navigate(COMPONENTSNAME.ACCOUNT);
+      navigateTo(SCREEN_NAME.ACCOUNT);
     }
   };
 
@@ -74,7 +75,10 @@ const CreateChildProfile = ({navigation}: CreateChildProfileProps) => {
               {translation('LETS_START_WITH_YOUR_CHILD')}
             </RNTextComponent>
             <RNTextComponent
-              style={[styles.content, isTablet && {fontSize: 22}]}>
+              style={[
+                styles.content,
+                isTablet && {fontSize: 17.5, marginTop: 8},
+              ]}>
               {translation('ADD_ONE_OF_YOUR_CHILDREN')}
             </RNTextComponent>
             <View style={styles.options}>
@@ -112,23 +116,34 @@ const CreateChildProfile = ({navigation}: CreateChildProfileProps) => {
               {translation('LETS_START_WITH_YOUR_CHILD')}
             </RNTextComponent>
             <RNTextComponent
-              style={[styles.content, isTablet && {fontSize: 22}]}>
+              style={[
+                styles.content,
+                isTablet && {fontSize: 17.5, marginTop: 8},
+              ]}>
               {translation('ADD_ONE_OF_YOUR_CHILDREN')}
             </RNTextComponent>
-            <View style={styles.inputField}>
+            <View
+              style={[
+                styles.inputField,
+                isTablet && {width: 400, alignSelf: 'center'},
+              ]}>
               <RNTextInputWithLabel
-                showLabel
                 label={translation('WHAT_IS_CHILD_NAME')}
-                inputViewStyle={styles.inputBox}
+                inputViewStyle={[
+                  styles.inputBox,
+                  isTablet && {borderRadius: 12, marginTop: 8},
+                ]}
                 containerStyle={styles.containerBox}
                 value={name}
                 updateText={e => updateState({name: e})}
                 hint={translation('ENTER_NAME')}
               />
               <RNTextInputWithLabel
-                showLabel
                 label={translation('DATE_OF_BIRTH')}
-                inputViewStyle={styles.inputBox}
+                inputViewStyle={[
+                  styles.inputBox,
+                  isTablet && {borderRadius: 12, marginTop: 8},
+                ]}
                 containerStyle={styles.containerBox}
                 value={date}
                 updateText={e => updateState({date: e})}
@@ -144,7 +159,7 @@ const CreateChildProfile = ({navigation}: CreateChildProfileProps) => {
               {translation('SELECT_AN_AVATAR')}
             </RNTextComponent>
             <RNTextComponent
-              style={[styles.content, isTablet && {fontSize: 22}]}>
+              style={[styles.content, isTablet && {fontSize: 18}]}>
               {translation('YOU_CAN_CHANGE_IT_AFTER')}
             </RNTextComponent>
             <View style={styles.avatarBox}>
@@ -153,14 +168,20 @@ const CreateChildProfile = ({navigation}: CreateChildProfileProps) => {
                 showsVerticalScrollIndicator={false}>
                 <RNAvatarComponent
                   Icon={{icon: Camera}}
-                  customStyle={styles.avatar2}
+                  customStyle={[
+                    styles.avatar2,
+                    isTablet && {marginTop: verticalScale(24)},
+                  ]}
                   pressableDisable
                 />
                 {avatarArray.map(item => {
                   return (
                     <RNAvatarComponent
                       Icon={item}
-                      customStyle={styles.avatar}
+                      customStyle={[
+                        styles.avatar,
+                        isTablet && {marginTop: verticalScale(24)},
+                      ]}
                     />
                   );
                 })}
@@ -182,17 +203,17 @@ const CreateChildProfile = ({navigation}: CreateChildProfileProps) => {
         ))}
       </View>
       {form()}
-      <View style={styles.bottomButtons}>
+      <View style={[styles.bottomButtons, isTablet && {width: 430}]}>
         <RNButton
           title={'<'}
           onClick={previousQuestion}
-          customStyle={styles.left}
+          customStyle={[styles.left, isTablet && {maxWidth: 92}]}
           textStyle={styles.leftText}
         />
         <RNButton
           title={translation('NEXT')}
           onClick={nextQuestion}
-          textStyle={styles.rightText}
+          textStyle={[styles.rightText, isTablet && {maxWidth: 310}]}
         />
       </View>
     </RNScreenWrapper>

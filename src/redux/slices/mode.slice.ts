@@ -8,7 +8,7 @@ interface ModeState {
 
 // Define the initial state using that type
 const initialState: ModeState = {
-  mode: MODE.C,
+  mode: MODE.B,
 };
 
 export const modeSlice = createSlice({

@@ -52,7 +52,6 @@ const SignIn = () => {
             ]}>
             <RNTextInputWithLabel
               label={i18n.t('EMAIL')}
-              showLabel
               backgroundColor={themeColor.lightGray}
               containerStyle={styles.input2}
               value={email}
@@ -120,7 +119,7 @@ const SignIn = () => {
               {i18n.t('ALREADY_HAVE_AN_ACCOUNT')}{' '}
               <RNTextComponent
                 isSemiBold
-                style={styles.signup}
+                style={[styles.signup, isTablet && {fontSize: 22}]}
                 handleOnPress={() => navigateTo(SCREEN_NAME.SIGN_UP)}>
                 {i18n.t('SIGN_UP')}
               </RNTextComponent>

@@ -38,7 +38,8 @@ const RNVoiceWithTextInput = ({
         </RNTextComponent>
         <RNTextInputWithLabel
           inputStyle={styles.input}
-          containerStyle={{marginTop: verticalScale(21)}}
+          containerStyle={styles.inputBox}
+          inputViewStyle={{borderWidth: 0}}
         />
         <Pressable onPress={toggleMic} style={styles.icon}>
           {micStatus ? <MicOn /> : <Mic />}

@@ -4,11 +4,15 @@ import {LogoHeaderProps} from './interface';
 import {styles} from './styles';
 import Back from '../../assets/svg/LeftArrow';
 import RNButton from '../RNButton';
-import {useNavigation} from '@react-navigation/native';
 import RNTextComponent from '../RNTextComponent';
+import navigateTo from '@tandem/navigation/navigate';
 
-const RNLogoHeader = ({customStyle, textHeading, heading}: LogoHeaderProps) => {
-  const navigation = useNavigation();
+const RNLogoHeader = ({
+  customStyle,
+  textHeading,
+  heading,
+  titleStyle,
+}: LogoHeaderProps) => {
   return (
     <View style={[styles.container, customStyle && customStyle]}>
       <View style={styles.sides}>
@@ -16,7 +20,7 @@ const RNLogoHeader = ({customStyle, textHeading, heading}: LogoHeaderProps) => {
           onlyIcon
           icon={<Back />}
           onClick={() => {
-            navigation.goBack();
+            navigateTo();
           }}
         />
       </View>
@@ -27,7 +31,9 @@ const RNLogoHeader = ({customStyle, textHeading, heading}: LogoHeaderProps) => {
           resizeMode="contain"
         />
       ) : (
-        <RNTextComponent isSemiBold style={styles.header}>
+        <RNTextComponent
+          isSemiBold
+          style={[styles.header, titleStyle && titleStyle]}>
           {heading}
         </RNTextComponent>
       )}

@@ -35,6 +35,8 @@ const TermsAndConditions = () => {
             {/* By using our app, you agree to our Terms of Use.{'\n'}
             Please read them carefully. */}
             {i18n.t('BY_USING_OUR_APP_YOU_AGREE')}
+            {'\n'}
+            {i18n.t('PLEASE_READ_THEM_CAREFULLY')}
           </RNTextComponent>
           <RNTextComponent style={styles.text}>
             {i18n.t('USER_ELIGIBILITY')} {'\n\n'}

@@ -54,13 +54,14 @@ export const styles = StyleSheet.create({
     width: scale(60),
   },
   leftText: {
-    fontSize: scale(22),
+    fontSize: 22,
   },
   rightText: {
     width: scale(230),
   },
   inputField: {
     marginTop: 8,
+    // alignSelf: 'center',
   },
   inputBox: {
     backgroundColor: themeColor.lightGray,

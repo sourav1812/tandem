@@ -3,7 +3,6 @@ import {TextInputProps, StyleProp, TextStyle, ViewStyle} from 'react-native';
 export interface Props {
   props?: TextInputProps;
   label?: string;
-  showLabel?: boolean;
   hint?: string;
   value: string;
   updateText: (value: string) => void;
@@ -12,5 +11,5 @@ export interface Props {
   Icon?: any;
   backgroundColor?: string;
   containerStyle?: StyleProp<ViewStyle>;
-  inputViewStyle ?: StyleProp<ViewStyle>;
+  inputViewStyle?: StyleProp<ViewStyle>;
 }

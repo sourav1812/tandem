@@ -55,7 +55,6 @@ const SignUp = () => {
             ]}>
             <RNTextInputWithLabel
               label={i18n.t('NAME')}
-              showLabel
               backgroundColor={themeColor.lightGray}
               containerStyle={styles.input}
               value={name}
@@ -67,7 +66,6 @@ const SignUp = () => {
             />
             <RNTextInputWithLabel
               label={i18n.t('EMAIL')}
-              showLabel
               backgroundColor={themeColor.lightGray}
               containerStyle={styles.input2}
               value={email}
