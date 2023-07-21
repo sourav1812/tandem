@@ -23,6 +23,7 @@ export type RootStackParamList = {
   ChangePassword: undefined;
   People: undefined;
   AboutApp: undefined;
+  EditChildProfile: undefined;
 };
 
 export type RootTabParamList = {

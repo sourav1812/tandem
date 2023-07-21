@@ -37,6 +37,6 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   button2: {
-    width: verticalScale(120),
+    width: verticalScale(110),
   },
 });

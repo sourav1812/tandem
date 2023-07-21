@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import {ReactNode} from 'react';
 import {StyleProp, ViewStyle, PressableProps, TextStyle} from 'react-native';
 
 export interface Props {
@@ -9,9 +9,10 @@ export interface Props {
   title?: string;
   buttonColor?: string;
   noBorderRadius?: boolean;
-  onClick : ()=>void;
-  onlyIcon? : boolean;
-  IconButtoncustomStyle ?: StyleProp<ViewStyle>;
-  icon ?: ReactNode;
-  textStyle ?: StyleProp<TextStyle>;
+  onClick: () => void;
+  onlyIcon?: boolean;
+  IconButtoncustomStyle?: StyleProp<ViewStyle>;
+  icon?: ReactNode;
+  textStyle?: StyleProp<TextStyle>;
+  isDisabled?: boolean;
 }

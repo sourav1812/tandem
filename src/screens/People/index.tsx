@@ -13,6 +13,9 @@ import RNTextComponent from '@tandem/components/RNTextComponent';
 import RNMenuButton from '@tandem/components/RNMenuButton';
 import navigateTo from '@tandem/navigation/navigate';
 import {checkIfTablet} from '@tandem/hooks/isTabletHook';
+import RNAddComponent from '@tandem/components/RNAddComponent';
+import {verticalScale} from 'react-native-size-matters';
+import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 
 const People = ({}: PeopleScreenProps) => {
   const isTablet = checkIfTablet();
@@ -39,7 +42,13 @@ const People = ({}: PeopleScreenProps) => {
 
   return (
     <RNScreenWrapper style={styles.container}>
-      <BlueButton style={styles.button} />
+      <Pressable
+        onPress={() => {
+          navigateTo(SCREEN_NAME.ACCOUNT);
+        }}>
+        <BlueButton style={styles.button} />
+      </Pressable>
+
       <View style={styles.customTab}>
         <RNButton
           title={translation('BIG_PEOPLE')}
@@ -82,12 +91,20 @@ const People = ({}: PeopleScreenProps) => {
           }}
         />
       </View>
-      {!firstTab && (
+      {!firstTab ? (
         <>
-          <View style={styles.profile} />
-          <RNTextComponent style={styles.name} isSemiBold>
-            Ella
-          </RNTextComponent>
+          <View style={styles.bigpeople}>
+            <View>
+              <View style={styles.profile} />
+              <RNTextComponent style={styles.name} isSemiBold>
+                Ella
+              </RNTextComponent>
+            </View>
+            <RNAddComponent
+              customStyle={styles.addButton}
+              boxStyle={styles.addBox}
+            />
+          </View>
           <View style={styles.firstTab}>
             <ScrollView showsVerticalScrollIndicator={false}>
               {menuArray.map(item => (
@@ -102,6 +119,37 @@ const People = ({}: PeopleScreenProps) => {
                   />
                 </Pressable>
               ))}
+            </ScrollView>
+          </View>
+        </>
+      ) : (
+        <>
+          <View style={styles.littlePeople}>
+            <ScrollView contentContainerStyle={styles.scrollview}>
+              <View>
+                <View
+                  style={[
+                    styles.profile,
+                    isTablet && {
+                      height: verticalScale(94),
+                      width: verticalScale(94),
+                    },
+                  ]}
+                />
+                <RNTextComponent style={styles.name} isSemiBold>
+                  Ella
+                </RNTextComponent>
+              </View>
+              <Pressable
+                onPress={() => {
+                  navigateTo(SCREEN_NAME.EditChildProfile);
+                }}>
+                <RNAddComponent
+                  customStyle={styles.addButton}
+                  boxStyle={styles.addBox}
+                  textStyle={styles.addText}
+                />
+              </Pressable>
             </ScrollView>
           </View>
         </>

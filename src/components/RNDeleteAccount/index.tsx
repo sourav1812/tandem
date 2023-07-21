@@ -16,6 +16,8 @@ const RNDeleteAccount = ({
   visible,
   renderModal,
   nextClick,
+  heading,
+  content,
 }: SignoutModalProps) => {
   let isTablet = checkIfTablet();
 
@@ -34,11 +36,9 @@ const RNDeleteAccount = ({
           },
         ]}>
         <RNTextComponent isSemiBold style={styles.heading}>
-          {translation('DELETE_ACCOUNT')}
+          {heading}
         </RNTextComponent>
-        <RNTextComponent style={styles.info}>
-          {translation('IF_YOU_DELETE_ACCOUNT')}
-        </RNTextComponent>
+        <RNTextComponent style={styles.info}>{content}</RNTextComponent>
         <View
           style={[styles.footerButton, isTablet && {paddingHorizontal: 40}]}>
           <RNButton

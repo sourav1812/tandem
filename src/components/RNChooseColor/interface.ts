@@ -7,5 +7,7 @@ export interface colorPaletteType {
   colorCode: string;
 }
 export interface stateObject {
-  colorPalette: colorPaletteType[];
+  colorPalette: {firstColor: string; secondColor: string}[];
+  color1: string;
+  color2: string;
 }

@@ -36,7 +36,7 @@ const RNTextInputWithLabel = ({
         <RNTextComponent
           style={{
             fontSize: isTablet ? 16 : verticalScale(12),
-            marginBottom: 2,
+            marginBottom: 4,
           }}>
           {label}
         </RNTextComponent>

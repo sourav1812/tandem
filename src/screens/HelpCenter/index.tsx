@@ -159,7 +159,7 @@ const HelpCenter = () => {
         customStyle={styles.button}
         title={firstTab ? translation('SEND') : translation('CONTINUE')}
         onClick={() => {
-          navigateTo(SCREEN_NAME.CREATE_CHILD_PROFILE);
+          navigateTo(SCREEN_NAME.ACCOUNT);
         }}
       />
     </RNScreenWrapper>

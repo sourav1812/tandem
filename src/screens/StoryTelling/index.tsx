@@ -18,7 +18,7 @@ import RNReadingLevelModal from '@tandem/components/RNReadingLevelModal';
 import RNReadingTipsModal from '@tandem/components/RNReadingTipsModal';
 import RNRatingModal from '@tandem/components/RNRatingModal';
 import {checkIfTablet} from '@tandem/hooks/isTabletHook';
-import {verticalScale} from 'react-native-size-matters';
+import {scale, verticalScale} from 'react-native-size-matters';
 import i18n from '@tandem/constants/lang/i18n';
 import navigateTo from '@tandem/navigation/navigate';
 import {MODE} from '@tandem/constants/mode';
@@ -80,7 +80,11 @@ const StoryTelling = () => {
             </View>
             <RNButton
               title={`${i18n.t('GREAT')}!`}
-              customStyle={styles.footerButton}
+              customStyle={[
+                styles.footerButton,
+                isTablet && {maxHeight: verticalScale(180)},
+              ]}
+              textStyle={isTablet && {fontSize: scale(12)}}
               onClick={toggleModal}
             />
           </View>

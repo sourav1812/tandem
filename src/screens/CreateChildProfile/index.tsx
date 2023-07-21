@@ -194,7 +194,10 @@ const CreateChildProfile = () => {
 
   return (
     <RNScreenWrapper style={styles.container}>
-      <Pressable onPress={() => {}}>
+      <Pressable
+        onPress={() => {
+          navigateTo(SCREEN_NAME.ACCOUNT);
+        }}>
         <BlueButton style={styles.button} />
       </Pressable>
       <View style={styles.indicator}>

@@ -19,6 +19,7 @@ const RNButton = ({
   IconButtoncustomStyle,
   icon,
   textStyle,
+  isDisabled = false,
 }: Props) => {
   const isTablet = checkIfTablet();
   return (
@@ -38,6 +39,7 @@ const RNButton = ({
             isTablet && {maxHeight: 55},
             customStyle && customStyle,
           ]}
+          disabled={isDisabled}
           {...props}
           onPress={onClick}>
           <RNTextComponent

@@ -1,4 +1,4 @@
-import {View} from 'react-native';
+import {View, Share} from 'react-native';
 import React from 'react';
 import RNModal from '../RNModal';
 import {styles} from './styles';
@@ -17,6 +17,24 @@ const RNCongratsModal = ({
   renderModal,
 }: congratsModalProps) => {
   let isTablet = checkIfTablet();
+
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        message:
+          'React Native | A framework for building native apps using React',
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error: any) {}
+  };
 
   return (
     <RNModal
@@ -76,14 +94,14 @@ const RNCongratsModal = ({
             title={i18n.t('HOME')}
             customStyle={styles.button}
             onClick={() => {
-              navigateTo(SCREEN_NAME.HOME);
+              navigateTo(SCREEN_NAME.BOTTOM_TAB);
             }}
           />
           <RNButton
             title={i18n.t('SHARE')}
             customStyle={styles.button}
             onClick={() => {
-              navigateTo(SCREEN_NAME.QUESTIONS);
+              onShare();
             }}
             onlyBorder
           />

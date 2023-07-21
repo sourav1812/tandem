@@ -28,6 +28,7 @@ export const styles = StyleSheet.create({
   content: {
     flex: 1,
     paddingHorizontal: scale(20),
+    marginBottom: verticalScale(20),
   },
   heading: {
     fontSize: verticalScale(14),

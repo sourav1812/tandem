@@ -27,6 +27,7 @@ import ProfileSettings from '@tandem/screens/ProfileSettings';
 import ChangePassword from '@tandem/screens/ChangePassword';
 import People from '@tandem/screens/People';
 import AboutApp from '@tandem/screens/AboutApp';
+import EditChildProfile from '@tandem/screens/EditChildProfile';
 
 const AppNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -88,6 +89,10 @@ const AppNavigator = () => {
           name={SCREEN_NAME.CHANGE_PASSWORD}
         />
         <Stack.Screen component={AboutApp} name={SCREEN_NAME.ABOUT_APP} />
+        <Stack.Screen
+          component={EditChildProfile}
+          name={SCREEN_NAME.EditChildProfile}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

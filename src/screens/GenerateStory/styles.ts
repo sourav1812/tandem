@@ -118,7 +118,8 @@ export const styles = StyleSheet.create({
   },
   buttonStyle: {
     height: verticalScale(90),
-    width: verticalScale(100),
+    width: verticalScale(90),
+    maxHeight: verticalScale(80),
   },
   camera: {
     position: 'absolute',
