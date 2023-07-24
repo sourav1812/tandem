@@ -226,8 +226,9 @@ const Account = () => {
             onPress={() => {
               if (playerList.length !== 0) {
                 buttonPress();
+                // navigateTo((resetStack = true));
                 setTimeout(() => {
-                  navigateTo(SCREEN_NAME.BOTTOM_TAB);
+                  navigateTo(SCREEN_NAME.BOTTOM_TAB, {}, true);
                 }, 500);
               }
             }}>
