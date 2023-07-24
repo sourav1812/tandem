@@ -14,13 +14,13 @@ import themeColor from '@tandem/theme/themeColor';
 import {verticalScale} from 'react-native-size-matters';
 import RNBookmarkComponent from '@tandem/components/RNBookmarkComponent';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
-import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 import i18n from '@tandem/constants/lang/i18n';
 import navigateTo from '@tandem/navigation/navigate';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 
 const Home = () => {
   const portrait = useOrientation().isPortrait;
-  const isTablet = checkIfTablet();
+  const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const {width} = useWindowDimensions();
   const dummyData: {color: string; title: string}[] = [
     {color: themeColor.purple, title: i18n.t('I_CANT_DECIDE')},

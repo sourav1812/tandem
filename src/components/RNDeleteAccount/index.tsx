@@ -6,11 +6,10 @@ import {styles} from './styles';
 import RNTextComponent from '../RNTextComponent';
 import RNModal from '../RNModal';
 import RNButton from '../RNButton';
-import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 import {verticalScale} from 'react-native-size-matters';
 import en from '@tandem/constants/lang/en';
 import themeColor from '@tandem/theme/themeColor';
-import {translation} from '@tandem/utils/methods';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 
 const RNDeleteAccount = ({
   visible,
@@ -19,7 +18,7 @@ const RNDeleteAccount = ({
   heading,
   content,
 }: SignoutModalProps) => {
-  let isTablet = checkIfTablet();
+  let isTablet = useAppSelector(state => state.deviceType.isTablet);
 
   return (
     <RNModal

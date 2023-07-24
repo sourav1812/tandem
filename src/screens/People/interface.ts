@@ -1,7 +1,7 @@
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {translation} from '@tandem/utils/methods';
 
-export interface stateObject {
+export interface StateObject {
   firstTab: boolean;
   navigate?: string;
 }

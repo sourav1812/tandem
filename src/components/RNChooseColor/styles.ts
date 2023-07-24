@@ -1,6 +1,5 @@
 import {StyleSheet} from 'react-native';
 import {scale, verticalScale} from 'react-native-size-matters';
-import themeColor from '../../theme/themeColor';
 
 export const styles = StyleSheet.create({
   container: {
@@ -21,12 +20,12 @@ export const styles = StyleSheet.create({
     height: verticalScale(250),
     justifyContent: 'center',
     marginTop: verticalScale(35),
+    // borderWidth: 1,
   },
   colorPair: {
-    height: verticalScale(250),
+    height: verticalScale(270),
     justifyContent: 'space-between',
     position: 'absolute',
-    // borderWidth: 1,
   },
   colorPatch: {
     marginRight: scale(33),

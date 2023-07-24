@@ -9,12 +9,12 @@ import RNTextComponent from '@tandem/components/RNTextComponent';
 import RNStoryCard from '@tandem/components/RNStoryCard';
 import {scale, verticalScale} from 'react-native-size-matters';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
-import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 import i18n from '@tandem/constants/lang/i18n';
 import navigateTo from '@tandem/navigation/navigate';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 
 const Bookshelf = () => {
-  const isTablet = checkIfTablet();
+  const isTablet = useAppSelector(state => state.deviceType.isTablet);
 
   const data = [
     {

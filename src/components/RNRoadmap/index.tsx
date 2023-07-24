@@ -1,5 +1,5 @@
 import {Pressable, View} from 'react-native';
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {styles} from './styles';
 import {RoadmapProps} from './interface';
 import YellowButton from '@tandem/assets/svg/YellowButton';
@@ -14,21 +14,21 @@ import StyleColor from '@tandem/assets/svg/StyleColor';
 import Create from '@tandem/assets/svg/CreateIcon';
 import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
-import {checkIfTablet} from '@tandem/hooks/isTabletHook';
+
 import {scale} from 'react-native-size-matters';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 
 const RNRoadmap = ({
   customStyle,
   nextQuestion,
   questionIndex,
 }: RoadmapProps) => {
-  const [mapIndex, setMapIndex] = useState(0);
-  const isTablet = checkIfTablet();
+  // const [mapIndex, setMapIndex] = useState(0);
+  const isTablet = useAppSelector(state => state.deviceType.isTablet);
 
   useEffect(() => {
-    console.log(mapIndex);
-
-    setMapIndex(questionIndex);
+    // console.log(mapIndex)
+    // setMapIndex(questionIndex);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [questionIndex]);
 

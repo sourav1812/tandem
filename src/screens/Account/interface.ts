@@ -6,7 +6,7 @@ export interface adultProfile {
   type: string;
 }
 
-export interface stateObject {
+export interface StateObject {
   signoutModal: boolean;
   childrenList: childProfile[];
   adultList: adultProfile[];

@@ -1,4 +1,4 @@
-export interface stateObject {
+export interface StateObject {
   email: string;
   password: string;
 }

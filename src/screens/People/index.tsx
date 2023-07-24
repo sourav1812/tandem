@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {PeopleScreenProps} from '@tandem/navigation/types';
-import {menuArray, stateObject} from './interface';
+import {menuArray, StateObject} from './interface';
 import BlueButton from '@tandem/assets/svg/BlueButton';
 import RNButton from '@tandem/components/RNButton';
 import {Pressable, ScrollView, View} from 'react-native';
@@ -12,15 +12,15 @@ import {translation} from '@tandem/utils/methods';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import RNMenuButton from '@tandem/components/RNMenuButton';
 import navigateTo from '@tandem/navigation/navigate';
-import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 import RNAddComponent from '@tandem/components/RNAddComponent';
 import {verticalScale} from 'react-native-size-matters';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 
 const People = ({}: PeopleScreenProps) => {
-  const isTablet = checkIfTablet();
+  const isTablet = useAppSelector(state => state.deviceType.isTablet);
 
-  const [state, setState] = useState<stateObject>({
+  const [state, setState] = useState<StateObject>({
     firstTab: false,
   });
 

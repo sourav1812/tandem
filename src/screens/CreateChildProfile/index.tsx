@@ -7,7 +7,6 @@ import RNNumericBulletin from '@tandem/components/RNNumericBulletin';
 import {avatarArray, childProfileStateObject, indicatorType} from './interface';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import {translation} from '@tandem/utils/methods';
-import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 import RNEmojiWithText from '@tandem/components/RNEmojiWithText';
 import themeColor from '@tandem/theme/themeColor';
 import RNButton from '@tandem/components/RNButton';
@@ -17,9 +16,10 @@ import Camera from '@tandem/assets/svg/Camera';
 import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {verticalScale} from 'react-native-size-matters';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 
 const CreateChildProfile = () => {
-  const isTablet = checkIfTablet();
+  const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const [state, setState] = useState<childProfileStateObject>({
     bulletinArray: [
       {index: 1, isSelected: true},

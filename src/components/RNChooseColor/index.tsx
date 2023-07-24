@@ -1,18 +1,15 @@
-import {View, Pressable, Alert, TouchableOpacity} from 'react-native';
+import {View, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
 import {styles} from './styles';
 import RNTextComponent from '../RNTextComponent';
-import {stateObject} from './interface';
-import {checkIfTablet} from '@tandem/hooks/isTabletHook';
+import {StateObject} from './interface';
 import ColorPatchUp from '@tandem/assets/svg/ColorPatch';
 import EmptyBox from '@tandem/assets/svg/EmptyColorBox';
 import AddColor from '@tandem/assets/svg/AddColor';
 import EmptyPatch from '@tandem/assets/svg/EmptyPatch';
 
 const RNChooseColor = () => {
-  const isTablet = checkIfTablet();
-
-  const [state, setState] = useState<stateObject>({
+  const [state, setState] = useState<StateObject>({
     colorPalette: [
       {firstColor: '#0633FD', secondColor: '#FEF902'},
       {firstColor: '#0998FF', secondColor: '#FF9409'},
@@ -60,16 +57,12 @@ const RNChooseColor = () => {
               ]}>
               <TouchableOpacity
                 onPress={() => {
-                  console.log(item.secondColor);
-
                   updateState({color1: item.firstColor});
                 }}>
                 <ColorPatchUp color={item.firstColor} />
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
-                  console.log(item.secondColor);
-
                   updateState({color2: item.secondColor});
                 }}>
                 <ColorPatchUp

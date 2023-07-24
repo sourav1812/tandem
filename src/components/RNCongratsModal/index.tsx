@@ -8,21 +8,20 @@ import {verticalScale} from 'react-native-size-matters';
 import themeColor from '@tandem/theme/themeColor';
 import RNButton from '@tandem/components/RNButton';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
-import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 import i18n from '@tandem/constants/lang/i18n';
 import navigateTo from '@tandem/navigation/navigate';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 
 const RNCongratsModal = ({
   visible = false,
   renderModal,
 }: congratsModalProps) => {
-  let isTablet = checkIfTablet();
+  let isTablet = useAppSelector(state => state.deviceType.isTablet);
 
   const onShare = async () => {
     try {
       const result = await Share.share({
-        message:
-          'React Native | A framework for building native apps using React',
+        message: 'Hi , thanks for using tandem.',
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {

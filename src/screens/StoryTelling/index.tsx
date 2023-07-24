@@ -7,7 +7,7 @@ import Close from '@tandem/assets/svg/Cross';
 import Speaker from '@tandem/assets/svg/VolumeDown';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import RNCharacterComponent from '@tandem/components/RNCharacterComponent';
-import {characterList, stateObject} from './interface';
+import {characterList, StateObject} from './interface';
 import {characterProps} from '@tandem/components/RNCharacterComponent/interface';
 import RNCongratsModal from '@tandem/components/RNCongratsModal';
 import themeColor from '@tandem/theme/themeColor';
@@ -17,19 +17,18 @@ import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import RNReadingLevelModal from '@tandem/components/RNReadingLevelModal';
 import RNReadingTipsModal from '@tandem/components/RNReadingTipsModal';
 import RNRatingModal from '@tandem/components/RNRatingModal';
-import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 import {scale, verticalScale} from 'react-native-size-matters';
 import i18n from '@tandem/constants/lang/i18n';
 import navigateTo from '@tandem/navigation/navigate';
 import {MODE} from '@tandem/constants/mode';
 
 const StoryTelling = () => {
-  const isTablet = checkIfTablet();
+  const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [renderModal, setRenderModal] = useState(false);
   const [readingLevel, setReadingLevel] = useState(false);
   const [readingTip, setReadingTip] = useState(true);
-  const [state, setState] = useState<stateObject>({
+  const [state, setState] = useState<StateObject>({
     ratingModal: true,
   });
 
@@ -41,7 +40,6 @@ const StoryTelling = () => {
     });
   };
   const mode = useAppSelector(state => state.mode.mode);
-  console.log(mode, 'StoryTellingScreenProps');
   const renderStory = () => {
     return (
       <ImageBackground

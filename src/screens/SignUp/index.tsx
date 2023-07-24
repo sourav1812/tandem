@@ -5,7 +5,6 @@ import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import {styles} from './styles';
 import themeColor from '@tandem/theme/themeColor';
-import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 import RNButton from '@tandem/components/RNButton';
 import RNLogoHeader from '@tandem/components/RNLogoHeader';
 import RNTextInputWithLabel from '@tandem/components/RNTextInputWithLabel';
@@ -14,15 +13,16 @@ import Google from '@tandem/assets/svg/GoogleLogo';
 import Apple from '@tandem/assets/svg/AppleLogo';
 import FB from '@tandem/assets/svg/FBlogo';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
-import {stateObject} from './interface';
+import {StateObject} from './interface';
 import {verticalScale} from 'react-native-size-matters';
 import i18n from '@tandem/constants/lang/i18n';
 import navigateTo from '@tandem/navigation/navigate';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 
 const SignUp = () => {
-  const isTablet = checkIfTablet();
+  const isTablet = useAppSelector(state => state.deviceType.isTablet);
 
-  const [state, setState] = useState<stateObject>({
+  const [state, setState] = useState<StateObject>({
     name: '',
     email: '',
     password: '',

@@ -6,7 +6,7 @@ import Show from '@tandem/assets/svg/Eye';
 import Hide from '@tandem/assets/svg/CloseEye';
 import {Props} from './interface';
 import {verticalScale} from 'react-native-size-matters';
-import {checkIfTablet} from '@tandem/hooks/isTabletHook';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 
 const RNSecureTextInput = ({
   props,
@@ -19,7 +19,7 @@ const RNSecureTextInput = ({
   title,
   customStyle,
 }: Props) => {
-  const isTablet = checkIfTablet();
+  const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const [highlight, setHighlight] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
 

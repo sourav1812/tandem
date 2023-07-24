@@ -8,6 +8,6 @@ export const characterList: characterProps[] = [
   {characterName: 'Frutti', url: require('@tandem/assets/png/character2.png')},
 ];
 
-export interface stateObject {
+export interface StateObject {
   ratingModal: boolean;
 }

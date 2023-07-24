@@ -5,17 +5,17 @@ import RNLogoHeader from '@tandem/components/RNLogoHeader';
 import {translation} from '@tandem/utils/methods';
 import {Image, Pressable, View} from 'react-native';
 import RNTextInputWithLabel from '@tandem/components/RNTextInputWithLabel';
-import {stateObject} from './interface';
+import {StateObject} from './interface';
 import RNTextComponent from '@tandem/components/RNTextComponent';
-import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 import {scale, verticalScale} from 'react-native-size-matters';
 import DownArrow from '@tandem/assets/svg/DownArrow';
 import RNButton from '@tandem/components/RNButton';
 import RNDeleteAccount from '@tandem/components/RNDeleteAccount';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 
 const EditChildProfile = () => {
-  const isTablet = checkIfTablet();
-  const [state, setState] = useState<stateObject>({
+  const isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const [state, setState] = useState<StateObject>({
     name: '',
     email: '',
     showModal: false,
@@ -93,7 +93,7 @@ const EditChildProfile = () => {
 export default EditChildProfile;
 
 const LanguageDropDown = () => {
-  const isTablet = checkIfTablet();
+  const isTablet = useAppSelector(state => state.deviceType.isTablet);
   return (
     <View>
       <RNTextComponent

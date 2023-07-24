@@ -5,16 +5,16 @@ import {styles} from './styles';
 import RNTextComponent from '../RNTextComponent';
 import RNModal from '../RNModal';
 import RNButton from '../RNButton';
-import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 import {verticalScale} from 'react-native-size-matters';
 import i18n from '@tandem/constants/lang/i18n';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 
 const RNReadingTipsModal = ({
   visible,
   renderModal,
   nextClick,
 }: readingTipsModalProps) => {
-  let isTablet = checkIfTablet();
+  let isTablet = useAppSelector(state => state.deviceType.isTablet);
   return (
     <RNModal
       visible={visible}

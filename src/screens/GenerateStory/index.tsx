@@ -10,7 +10,7 @@ import themeColor from '@tandem/theme/themeColor';
 import RNEmojiWithText from '@tandem/components/RNEmojiWithText';
 import RNButton from '@tandem/components/RNButton';
 import {place, audience, typeOfStory, attribute} from './interface';
-import {stateObject} from './interface';
+import {StateObject} from './interface';
 import Camera from '@tandem/assets/svg/Camera';
 import LeftArrow from '@tandem/assets/svg/LeftArrow';
 import QuestionMark from '@tandem/assets/svg/QuestionMark';
@@ -20,11 +20,11 @@ import i18n from '@tandem/constants/lang/i18n';
 import navigateTo from '@tandem/navigation/navigate';
 import RNRoadmap from '@tandem/components/RNRoadmap';
 import {scale, verticalScale} from 'react-native-size-matters';
-import {checkIfTablet} from '@tandem/hooks/isTabletHook';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 
 const GenerateStory = () => {
-  const isTablet = checkIfTablet();
-  const [state, setState] = useState<stateObject>({
+  const isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const [state, setState] = useState<StateObject>({
     questionNumber: 0,
     colorPalette: [
       {
@@ -320,56 +320,62 @@ const GenerateStory = () => {
     }
   };
 
+  const showHeader = () => {
+    if (
+      (questionNumber % 2 == 0 || questionNumber == 1 || questionNumber == 2) &&
+      questionNumber != 0
+    ) {
+      return (
+        <>
+          <View style={styles.header}>
+            <RNButton
+              onlyIcon
+              onClick={previousQuestion}
+              icon={<LeftArrow />}
+            />
+            <RNTextComponent style={styles.heading} isSemiBold>
+              {i18n.t('GENERATE_STORY')}{' '}
+              <RNTextComponent isSemiBold style={styles.questionNumber}>
+                {showIndexes()}/6
+              </RNTextComponent>
+            </RNTextComponent>
+            <RNButton
+              onlyIcon
+              onClick={previousQuestion}
+              icon={<QuestionMark />}
+            />
+          </View>
+          <View style={styles.progressBar}>
+            {Array.from({length: 6}, (_, index) => {
+              return {index: index};
+            }).map(index => {
+              const currentIndex = showIndexes();
+              return (
+                <View
+                  style={[
+                    styles.indicator,
+                    {
+                      ...{
+                        backgroundColor:
+                          index.index < currentIndex
+                            ? themeColor.themeBlue
+                            : 'rgba(66, 133, 246, 0.5)',
+                      },
+                    },
+                  ]}
+                />
+              );
+            })}
+          </View>
+        </>
+      );
+    }
+  };
+
   return (
     <RNScreenWrapper>
       <View style={styles.container}>
-        {(questionNumber % 2 == 0 ||
-          questionNumber == 1 ||
-          questionNumber == 2) &&
-          questionNumber != 0 && (
-            <>
-              <View style={styles.header}>
-                <RNButton
-                  onlyIcon
-                  onClick={previousQuestion}
-                  icon={<LeftArrow />}
-                />
-                <RNTextComponent style={styles.heading} isSemiBold>
-                  {i18n.t('GENERATE_STORY')}{' '}
-                  <RNTextComponent isSemiBold style={styles.questionNumber}>
-                    {showIndexes()}/6
-                  </RNTextComponent>
-                </RNTextComponent>
-                <RNButton
-                  onlyIcon
-                  onClick={previousQuestion}
-                  icon={<QuestionMark />}
-                />
-              </View>
-              <View style={styles.progressBar}>
-                {Array.from({length: 6}, (_, index) => {
-                  return {index: index};
-                }).map(index => {
-                  const currentIndex = showIndexes();
-                  return (
-                    <View
-                      style={[
-                        styles.indicator,
-                        {
-                          ...{
-                            backgroundColor:
-                              index.index < currentIndex
-                                ? themeColor.themeBlue
-                                : 'rgba(66, 133, 246, 0.5)',
-                          },
-                        },
-                      ]}
-                    />
-                  );
-                })}
-              </View>
-            </>
-          )}
+        {showHeader()}
         {dynamicHeading()}
         {dynamicContent()}
       </View>

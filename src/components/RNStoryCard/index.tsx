@@ -6,6 +6,7 @@ import RNTextComponent from '../RNTextComponent';
 import RightArrow from '@tandem/assets/svg/RightArrow';
 import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 import {verticalScale} from 'react-native-size-matters';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 
 const ProgressIndicator = ({progress}: {progress: number}) => {
   const progressPercentage = `${progress * 10}%`;
@@ -37,7 +38,7 @@ const RNStoryCard = ({
     week: string;
   };
 }) => {
-  const isTablet = checkIfTablet();
+  const isTablet = useAppSelector(state => state.deviceType.isTablet);
 
   return (
     <View style={styles.cardContainer}>

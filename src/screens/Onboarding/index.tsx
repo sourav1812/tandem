@@ -8,13 +8,13 @@ import {translation} from '@tandem/utils/methods';
 import RNButton from '@tandem/components/RNButton';
 import {scale} from 'react-native-size-matters';
 import themeColor from '@tandem/theme/themeColor';
-import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 
 const Onboarding = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const isTablet = checkIfTablet();
+  const isTablet = useAppSelector(state => state.deviceType.isTablet);
 
   const renderBanner = ({item}: {item: any}) => {
     return (

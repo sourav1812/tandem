@@ -8,10 +8,10 @@ import {verticalScale} from 'react-native-size-matters';
 import RNEmojiWithText from '../RNEmojiWithText';
 import {multipleChoiceProps} from './interface';
 import i18n from '@tandem/constants/lang/i18n';
-import {checkIfTablet} from '@tandem/hooks/isTabletHook';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 
 const RNMultipleChoice = ({onNextPress}: multipleChoiceProps) => {
-  const isTablet = checkIfTablet();
+  const isTablet = useAppSelector(state => state.deviceType.isTablet);
 
   return (
     <>

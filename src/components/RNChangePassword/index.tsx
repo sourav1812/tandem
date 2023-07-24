@@ -4,12 +4,11 @@ import {styles} from './styles';
 import RNTextComponent from '../RNTextComponent';
 import RNModal from '../RNModal';
 import RNButton from '../RNButton';
-import {checkIfTablet} from '@tandem/hooks/isTabletHook';
-import {verticalScale} from 'react-native-size-matters';
 import Lock from '@tandem/assets/svg/LockServer';
 import {translation} from '@tandem/utils/methods';
 import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 
 interface changePasswordModalProps {
   visible: boolean;
@@ -17,7 +16,7 @@ interface changePasswordModalProps {
 }
 
 const RNChangePassword = ({visible, renderModal}: changePasswordModalProps) => {
-  let isTablet = checkIfTablet();
+  let isTablet = useAppSelector(state => state.deviceType.isTablet);
   return (
     <RNModal
       visible={visible}

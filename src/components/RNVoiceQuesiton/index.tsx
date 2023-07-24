@@ -10,10 +10,10 @@ import MicOn from '@tandem/assets/svg/MinOn';
 import {verticalScale} from 'react-native-size-matters';
 import {VoiceQuestionProps} from './interface';
 import i18n from '@tandem/constants/lang/i18n';
-import {checkIfTablet} from '@tandem/hooks/isTabletHook';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 
 const RNVoiceQuesiton = ({onClick}: VoiceQuestionProps) => {
-  const isTablet = checkIfTablet();
+  const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const [inputList, setInputList] = useState<inputListState[]>([{answer: ''}]);
   const [micStatus, setMicStatus] = useState(false);
 

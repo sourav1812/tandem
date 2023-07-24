@@ -4,15 +4,15 @@ import {styles} from './styles';
 import RNTextComponent from '../RNTextComponent';
 import {verticalScale} from 'react-native-size-matters';
 import RNModal from '../RNModal';
-import {checkIfTablet} from '../../hooks/isTabletHook';
 import {menuModalProps} from './interface';
 import Notes from '../../assets/svg/Pdf';
 import Send from '../../assets/svg/Send';
 import Delete from '../../assets/svg/Delete';
 import themeColor from '../../theme/themeColor';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 
 const RNMenuModal = ({visible, renderModal}: menuModalProps) => {
-  let isTablet = checkIfTablet();
+  let isTablet = useAppSelector(state => state.deviceType.isTablet);
   return (
     <RNModal
       visible={visible}

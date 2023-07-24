@@ -8,14 +8,14 @@ import Fb from '@tandem/assets/svg/FBlogo';
 import Google from '@tandem/assets/svg/GoogleLogo';
 import Apple from '@tandem/assets/svg/AppleLogo';
 import RNSocialButton from '@tandem/components/RNSocialButton';
-import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 import {scale} from 'react-native-size-matters';
 import RNButton from '@tandem/components/RNButton';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 
 const SocialSignIn = () => {
-  const isTablet = checkIfTablet();
+  const isTablet = useAppSelector(state => state.deviceType.isTablet);
   return (
     <RNScreenWrapper>
       <ImageBackground

@@ -4,7 +4,6 @@ import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import {styles} from './styles';
 import themeColor from '@tandem/theme/themeColor';
-import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 import {verticalScale} from 'react-native-size-matters';
 import {ScrollView, View} from 'react-native';
 import RNCheckboxWithText from '@tandem/components/RNCheckboxWithText';
@@ -12,11 +11,12 @@ import RNButton from '@tandem/components/RNButton';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import i18n from '@tandem/constants/lang/i18n';
 import navigateTo from '@tandem/navigation/navigate';
-import {stateObject} from './interface';
+import {StateObject} from './interface';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 
 const TermsAndConditions = () => {
-  const isTablet = checkIfTablet();
-  const [state, setState] = useState<stateObject>({
+  const isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const [state, setState] = useState<StateObject>({
     term1: false,
     term2: false,
     term3: false,

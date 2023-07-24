@@ -12,7 +12,7 @@ import RNKidsProfile from '@tandem/components/RNKidsProfile';
 import Add from '@tandem/assets/svg/Add';
 import RNParentProfile from '@tandem/components/RNParentProfile';
 import RNSignoutModal from '@tandem/components/RNSignoutModal';
-import {adultProfile, childProfile, stateObject} from './interface';
+import {adultProfile, childProfile, StateObject} from './interface';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import i18n from '@tandem/constants/lang/i18n';
 import navigateTo from '@tandem/navigation/navigate';
@@ -24,10 +24,10 @@ import {MODE} from '@tandem/constants/mode';
 import themeColor from '@tandem/theme/themeColor';
 
 const Account = () => {
-  const isTablet = checkIfTablet();
+  const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const dispatch = useAppDispatch();
-  const mode = useAppSelector(state => state.mode.mode);
-  const [state, setState] = useState<stateObject>({
+  // const mode = useAppSelector(state => state.mode.mode);
+  const [state, setState] = useState<StateObject>({
     signoutModal: false,
     childrenList: [{type: 'child'}, {type: 'child'}],
     adultList: [{type: 'adult'}, {type: 'adult'}],
@@ -159,7 +159,6 @@ const Account = () => {
             showsHorizontalScrollIndicator={false}
             decelerationRate={'normal'}>
             {playerList.map((item, index) => {
-              console.log(item);
               if (item.type === 'child') {
                 return (
                   <Pressable
@@ -226,10 +225,7 @@ const Account = () => {
             onPress={() => {
               if (playerList.length !== 0) {
                 buttonPress();
-                // navigateTo((resetStack = true));
-                setTimeout(() => {
-                  navigateTo(SCREEN_NAME.BOTTOM_TAB, {}, true);
-                }, 500);
+                navigateTo(SCREEN_NAME.BOTTOM_TAB, {}, true);
               }
             }}>
             {playerList.map(item => {
@@ -253,6 +249,7 @@ const Account = () => {
         visible={signoutModal}
         renderModal={toggleSignOut}
         nextClick={() => {
+          toggleSignOut();
           navigateTo(SCREEN_NAME.SELECT_LANGUAGE);
         }}
       />
