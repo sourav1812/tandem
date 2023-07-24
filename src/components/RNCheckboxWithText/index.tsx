@@ -8,24 +8,26 @@ import i18n from '@tandem/constants/lang/i18n';
 
 export interface Props {
   customStyle?: ViewStyle;
+  onAccept: () => void;
 }
 
-const RNCheckboxWithText = ({customStyle}: Props) => {
+const RNCheckboxWithText = ({customStyle, onAccept}: Props) => {
   const [select, setSelect] = useState(false);
 
   const toggleCheckbox = () => {
+    onAccept();
     setSelect(!select);
   };
 
   return (
-    <View style={[styles.container, customStyle && customStyle]}>
-      <Pressable onPress={toggleCheckbox}>
-        {select ? <Active /> : <Inactive />}
-      </Pressable>
+    <Pressable
+      onPress={toggleCheckbox}
+      style={[styles.container, customStyle && customStyle]}>
+      <View>{select ? <Active /> : <Inactive />}</View>
       <RNTextComponent style={styles.text}>
         {i18n.t('I_AGREE_TO_THE_TERMS')}
       </RNTextComponent>
-    </View>
+    </Pressable>
   );
 };
 

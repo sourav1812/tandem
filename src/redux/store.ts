@@ -1,9 +1,11 @@
 import {configureStore} from '@reduxjs/toolkit';
 import modeSlice from './slices/mode.slice';
+import deviceTypeSlice from './slices/tablet.slice';
 
 export const store = configureStore({
   reducer: {
     mode: modeSlice,
+    deviceType: deviceTypeSlice,
   },
 });
 

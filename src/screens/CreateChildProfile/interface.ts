@@ -1,7 +1,6 @@
 import LionIcon from '@tandem/assets/svg/AnimatedLion';
 import Giraffe from '@tandem/assets/svg/Giraffe';
 import Elephant from '@tandem/assets/svg/Elephant';
-import Camera from '@tandem/assets/svg/Camera';
 import Fox from '@tandem/assets/svg/Fox';
 import Rabbit from '@tandem/assets/svg/Rabbit';
 

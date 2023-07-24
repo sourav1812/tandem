@@ -6,6 +6,7 @@ import RNTextComponent from '../RNTextComponent';
 import {Props} from './interface';
 import {verticalScale} from 'react-native-size-matters';
 import {checkIfTablet} from '@tandem/hooks/isTabletHook';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 
 const RNButton = ({
   props,
@@ -19,8 +20,10 @@ const RNButton = ({
   IconButtoncustomStyle,
   icon,
   textStyle,
+  isDisabled = false,
 }: Props) => {
-  const isTablet = checkIfTablet();
+  const isTablet = useAppSelector(state => state.deviceType.isTablet);
+
   return (
     <>
       {!onlyIcon ? (
@@ -38,6 +41,7 @@ const RNButton = ({
             isTablet && {maxHeight: 55},
             customStyle && customStyle,
           ]}
+          disabled={isDisabled}
           {...props}
           onPress={onClick}>
           <RNTextComponent

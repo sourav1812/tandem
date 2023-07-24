@@ -7,7 +7,7 @@ export interface colorPalette {
   isSelected: boolean;
   colorCode: string;
 }
-export interface stateObject {
+export interface StateObject {
   questionNumber: number;
   colorPalette: colorPalette[];
 }

@@ -22,4 +22,5 @@ export enum SCREEN_NAME {
   PROFILE_SETTINGS = 'ProfileSettings',
   CHANGE_PASSWORD = 'ChangePassword',
   ABOUT_APP = 'AboutApp',
+  EditChildProfile = 'EditChildProfile',
 }

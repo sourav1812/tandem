@@ -6,18 +6,19 @@ import {styles} from './styles';
 import RNTextComponent from '../RNTextComponent';
 import RNModal from '../RNModal';
 import RNButton from '../RNButton';
-import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 import {verticalScale} from 'react-native-size-matters';
 import en from '@tandem/constants/lang/en';
 import themeColor from '@tandem/theme/themeColor';
-import {translation} from '@tandem/utils/methods';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 
 const RNDeleteAccount = ({
   visible,
   renderModal,
   nextClick,
+  heading,
+  content,
 }: SignoutModalProps) => {
-  let isTablet = checkIfTablet();
+  let isTablet = useAppSelector(state => state.deviceType.isTablet);
 
   return (
     <RNModal
@@ -34,11 +35,9 @@ const RNDeleteAccount = ({
           },
         ]}>
         <RNTextComponent isSemiBold style={styles.heading}>
-          {translation('DELETE_ACCOUNT')}
+          {heading}
         </RNTextComponent>
-        <RNTextComponent style={styles.info}>
-          {translation('IF_YOU_DELETE_ACCOUNT')}
-        </RNTextComponent>
+        <RNTextComponent style={styles.info}>{content}</RNTextComponent>
         <View
           style={[styles.footerButton, isTablet && {paddingHorizontal: 40}]}>
           <RNButton

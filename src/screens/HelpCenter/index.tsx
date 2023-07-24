@@ -3,7 +3,6 @@ import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import {styles} from './styles';
 import themeColor from '@tandem/theme/themeColor';
-import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 import {verticalScale} from 'react-native-size-matters';
 import {
   KeyboardAvoidingView,
@@ -22,9 +21,10 @@ import Subtract from '@tandem/assets/svg/Subtract';
 import Add from '@tandem/assets/svg/Add';
 import navigateTo from '@tandem/navigation/navigate';
 import {translation} from '@tandem/utils/methods';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 
 const HelpCenter = () => {
-  const isTablet = checkIfTablet();
+  const isTablet = useAppSelector(state => state.deviceType.isTablet);
 
   const [state, setState] = useState<StateObject>({
     email: '',
@@ -159,7 +159,7 @@ const HelpCenter = () => {
         customStyle={styles.button}
         title={firstTab ? translation('SEND') : translation('CONTINUE')}
         onClick={() => {
-          navigateTo(SCREEN_NAME.CREATE_CHILD_PROFILE);
+          navigateTo(SCREEN_NAME.ACCOUNT);
         }}
       />
     </RNScreenWrapper>

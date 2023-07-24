@@ -4,7 +4,7 @@ import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {styles} from './styles';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import RNButton from '@tandem/components/RNButton';
-import {stateObject} from './interface';
+import {StateObject} from './interface';
 import LeftArrow from '@tandem/assets/svg/LeftArrow';
 import QuestionMark from '@tandem/assets/svg/QuestionMark';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
@@ -16,7 +16,7 @@ import navigateTo from '@tandem/navigation/navigate';
 
 const Activities = () => {
   // const heighWidth = useRef(new Animated.Value(120)).current;
-  const [state, setState] = useState<stateObject>({
+  const [state, setState] = useState<StateObject>({
     questionNumber: 0,
     showModal: false,
   });

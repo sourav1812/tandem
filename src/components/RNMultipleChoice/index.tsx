@@ -8,8 +8,11 @@ import {verticalScale} from 'react-native-size-matters';
 import RNEmojiWithText from '../RNEmojiWithText';
 import {multipleChoiceProps} from './interface';
 import i18n from '@tandem/constants/lang/i18n';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 
 const RNMultipleChoice = ({onNextPress}: multipleChoiceProps) => {
+  const isTablet = useAppSelector(state => state.deviceType.isTablet);
+
   return (
     <>
       <View style={styles.container}>
@@ -39,7 +42,10 @@ const RNMultipleChoice = ({onNextPress}: multipleChoiceProps) => {
         </View>
       </View>
       <RNButton
-        customStyle={styles.footerButton}
+        customStyle={[
+          styles.footerButton,
+          isTablet && {maxHeight: verticalScale(70)},
+        ]}
         title={i18n.t('NEXT')}
         onClick={onNextPress}
         textStyle={{fontSize: verticalScale(16)}}

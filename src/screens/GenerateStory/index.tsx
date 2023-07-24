@@ -10,7 +10,7 @@ import themeColor from '@tandem/theme/themeColor';
 import RNEmojiWithText from '@tandem/components/RNEmojiWithText';
 import RNButton from '@tandem/components/RNButton';
 import {place, audience, typeOfStory, attribute} from './interface';
-import {stateObject} from './interface';
+import {StateObject} from './interface';
 import Camera from '@tandem/assets/svg/Camera';
 import LeftArrow from '@tandem/assets/svg/LeftArrow';
 import QuestionMark from '@tandem/assets/svg/QuestionMark';
@@ -18,9 +18,13 @@ import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import RNChooseColor from '@tandem/components/RNChooseColor';
 import i18n from '@tandem/constants/lang/i18n';
 import navigateTo from '@tandem/navigation/navigate';
+import RNRoadmap from '@tandem/components/RNRoadmap';
+import {scale, verticalScale} from 'react-native-size-matters';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 
 const GenerateStory = () => {
-  const [state, setState] = useState<stateObject>({
+  const isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const [state, setState] = useState<StateObject>({
     questionNumber: 0,
     colorPalette: [
       {
@@ -61,23 +65,8 @@ const GenerateStory = () => {
   const dynamicHeading = () => {
     switch (questionNumber) {
       case 0:
-        return (
-          <RNTextComponent
-            isSemiBold
-            style={{...styles.question, color: 'rgba(10, 8, 4, 0.6)'}}>
-            Where shall we {`\n`}{' '}
-            <RNTextComponent isSemiBold style={styles.question}>
-              go in our story today?
-            </RNTextComponent>
-          </RNTextComponent>
-        );
-      case 2:
-        return (
-          <RNTextComponent isSemiBold style={styles.question}>
-            Do you want to be included in the story, Alisa?
-          </RNTextComponent>
-        );
-      case 3:
+        return null;
+      case 1:
         return (
           <RNTextComponent isSemiBold style={styles.question}>
             Who else{' '}
@@ -88,7 +77,38 @@ const GenerateStory = () => {
             </RNTextComponent>{' '}
           </RNTextComponent>
         );
+      case 2:
+        return (
+          <RNTextComponent isSemiBold style={styles.question}>
+            Do you want to be included in the story, Alisa?
+          </RNTextComponent>
+        );
+      case 3:
+        return null;
       case 4:
+        return (
+          <RNTextComponent
+            isSemiBold
+            style={{...styles.question, color: 'rgba(10, 8, 4, 0.6)'}}>
+            Where shall we {`\n`}{' '}
+            <RNTextComponent isSemiBold style={styles.question}>
+              go in our story today?
+            </RNTextComponent>
+          </RNTextComponent>
+        );
+
+      case 5:
+        return null;
+      case 6:
+        return (
+          <RNTextComponent isSemiBold style={styles.question}>
+            Shall we include any of these things in the story?{' '}
+          </RNTextComponent>
+        );
+
+      case 7:
+        return null;
+      case 8:
         return (
           <RNTextComponent isSemiBold style={styles.question}>
             What sort of story{' '}
@@ -99,12 +119,13 @@ const GenerateStory = () => {
             </RNTextComponent>{' '}
           </RNTextComponent>
         );
-      case 5:
-        return (
-          <RNTextComponent isSemiBold style={styles.question}>
-            Shall we include any of these things in the story?{' '}
-          </RNTextComponent>
-        );
+
+      case 9:
+        return null;
+      case 10:
+        return null;
+      case 11:
+        return null;
     }
   };
 
@@ -112,11 +133,18 @@ const GenerateStory = () => {
     switch (questionNumber) {
       case 0:
         return (
+          <RNRoadmap
+            questionIndex={questionNumber}
+            nextQuestion={nextQuestion}
+          />
+        );
+      case 1:
+        return (
           <ScrollView
             contentContainerStyle={[styles.scrollView]}
             scrollEnabled
             showsVerticalScrollIndicator={false}>
-            {place.map(value => {
+            {audience.map(value => {
               return (
                 <RNEmojiWithText
                   heading={value.name}
@@ -128,8 +156,6 @@ const GenerateStory = () => {
             })}
           </ScrollView>
         );
-      case 1:
-        return <RNChooseColor />;
       case 2:
         return (
           <View style={[styles.picView]}>
@@ -149,7 +175,7 @@ const GenerateStory = () => {
             <RNTextComponent style={styles.yesOrNo} isMedium>
               {i18n.t('YES')} or {i18n.t('NO')}?
             </RNTextComponent>
-            <View style={styles.buttonView}>
+            <View style={[styles.buttonView, isTablet && {width: scale(180)}]}>
               <RNButton
                 title="✕"
                 customStyle={styles.buttonStyle}
@@ -166,21 +192,10 @@ const GenerateStory = () => {
         );
       case 3:
         return (
-          <ScrollView
-            contentContainerStyle={[styles.scrollView]}
-            scrollEnabled
-            showsVerticalScrollIndicator={false}>
-            {audience.map(value => {
-              return (
-                <RNEmojiWithText
-                  heading={value.name}
-                  customStyle={styles.optionsCustom}
-                  icon={value.icon}
-                  bgcColor={value.bgc}
-                />
-              );
-            })}
-          </ScrollView>
+          <RNRoadmap
+            questionIndex={questionNumber}
+            nextQuestion={nextQuestion}
+          />
         );
       case 4:
         return (
@@ -188,7 +203,7 @@ const GenerateStory = () => {
             contentContainerStyle={[styles.scrollView]}
             scrollEnabled
             showsVerticalScrollIndicator={false}>
-            {typeOfStory.map(value => {
+            {place.map(value => {
               return (
                 <RNEmojiWithText
                   heading={value.name}
@@ -200,7 +215,15 @@ const GenerateStory = () => {
             })}
           </ScrollView>
         );
+
       case 5:
+        return (
+          <RNRoadmap
+            questionIndex={questionNumber}
+            nextQuestion={nextQuestion}
+          />
+        );
+      case 6:
         return (
           <ScrollView
             contentContainerStyle={[styles.scrollView]}
@@ -218,11 +241,54 @@ const GenerateStory = () => {
             })}
           </ScrollView>
         );
+      case 7:
+        return (
+          <RNRoadmap
+            questionIndex={questionNumber}
+            nextQuestion={nextQuestion}
+          />
+        );
+      case 8:
+        return (
+          <ScrollView
+            contentContainerStyle={[styles.scrollView]}
+            scrollEnabled
+            showsVerticalScrollIndicator={false}>
+            {typeOfStory.map(value => {
+              return (
+                <RNEmojiWithText
+                  heading={value.name}
+                  customStyle={styles.optionsCustom}
+                  icon={value.icon}
+                  bgcColor={value.bgc}
+                />
+              );
+            })}
+          </ScrollView>
+        );
+      case 9:
+        return (
+          <RNRoadmap
+            questionIndex={questionNumber}
+            nextQuestion={nextQuestion}
+          />
+        );
+      case 10:
+        return <RNChooseColor />;
+      case 11:
+        return (
+          <RNRoadmap
+            nextQuestion={() => {
+              navigateTo(SCREEN_NAME.ACTIVITIES);
+            }}
+            questionIndex={questionNumber}
+          />
+        );
     }
   };
 
   const nextQuestion = () => {
-    if (questionNumber <= 4) {
+    if (questionNumber <= 10) {
       updateState({questionNumber: questionNumber + 1});
     } else {
       navigateTo(SCREEN_NAME.ACTIVITIES);
@@ -237,55 +303,96 @@ const GenerateStory = () => {
     }
   };
 
+  const showIndexes = () => {
+    switch (questionNumber) {
+      case 1:
+        return 1;
+      case 2:
+        return 2;
+      case 4:
+        return 3;
+      case 6:
+        return 4;
+      case 8:
+        return 5;
+      case 10:
+        return 6;
+    }
+  };
+
+  const showHeader = () => {
+    if (
+      (questionNumber % 2 == 0 || questionNumber == 1 || questionNumber == 2) &&
+      questionNumber != 0
+    ) {
+      return (
+        <>
+          <View style={styles.header}>
+            <RNButton
+              onlyIcon
+              onClick={previousQuestion}
+              icon={<LeftArrow />}
+            />
+            <RNTextComponent style={styles.heading} isSemiBold>
+              {i18n.t('GENERATE_STORY')}{' '}
+              <RNTextComponent isSemiBold style={styles.questionNumber}>
+                {showIndexes()}/6
+              </RNTextComponent>
+            </RNTextComponent>
+            <RNButton
+              onlyIcon
+              onClick={previousQuestion}
+              icon={<QuestionMark />}
+            />
+          </View>
+          <View style={styles.progressBar}>
+            {Array.from({length: 6}, (_, index) => {
+              return {index: index};
+            }).map(index => {
+              const currentIndex = showIndexes();
+              return (
+                <View
+                  style={[
+                    styles.indicator,
+                    {
+                      ...{
+                        backgroundColor:
+                          index.index < currentIndex
+                            ? themeColor.themeBlue
+                            : 'rgba(66, 133, 246, 0.5)',
+                      },
+                    },
+                  ]}
+                />
+              );
+            })}
+          </View>
+        </>
+      );
+    }
+  };
+
   return (
     <RNScreenWrapper>
       <View style={styles.container}>
-        <View style={styles.header}>
-          <RNButton onlyIcon onClick={previousQuestion} icon={<LeftArrow />} />
-          <RNTextComponent style={styles.heading} isSemiBold>
-            {i18n.t('GENERATE_STORY')}{' '}
-            <RNTextComponent isSemiBold style={styles.questionNumber}>
-              {questionNumber + 1}/6
-            </RNTextComponent>
-          </RNTextComponent>
-          <RNButton
-            onlyIcon
-            onClick={previousQuestion}
-            icon={<QuestionMark />}
-          />
-        </View>
-        <View style={styles.progressBar}>
-          {Array.from({length: 6}, (_, index) => {
-            return {index: index};
-          }).map(index => {
-            return (
-              <View
-                style={[
-                  styles.indicator,
-                  {
-                    ...{
-                      backgroundColor:
-                        index.index <= questionNumber
-                          ? themeColor.themeBlue
-                          : 'rgba(66, 133, 246, 0.5)',
-                    },
-                  },
-                ]}
-              />
-            );
-          })}
-        </View>
+        {showHeader()}
         {dynamicHeading()}
         {dynamicContent()}
       </View>
-      {questionNumber != 2 && (
-        <RNButton
-          customStyle={styles.footerButton}
-          title={i18n.t('SELECT')}
-          onClick={nextQuestion}
-          textStyle={styles.buttonText}
-        />
-      )}
+      {(questionNumber % 2 == 0 ||
+        questionNumber == 2 ||
+        questionNumber == 1) &&
+        questionNumber != 0 && (
+          <RNButton
+            customStyle={[
+              styles.footerButton,
+              isTablet && {maxHeight: verticalScale(75)},
+            ]}
+            title={i18n.t('SELECT')}
+            onClick={nextQuestion}
+            textStyle={styles.buttonText}
+          />
+        )}
     </RNScreenWrapper>
   );
 };

@@ -38,8 +38,6 @@ export const styles = StyleSheet.create({
   },
   body: {
     flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
     alignItems: 'center',
   },
   add2: {
@@ -48,11 +46,11 @@ export const styles = StyleSheet.create({
     paddingHorizontal: scale(5),
   },
   footer: {
-    height: verticalScale(56),
+    height: verticalScale(64),
     marginTop: verticalScale(30),
     borderRadius: 100,
     backgroundColor: themeColor.themeBlue,
-    maxHeight: 60,
+    maxHeight: 64,
     overflow: 'hidden',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -67,15 +65,17 @@ export const styles = StyleSheet.create({
     elevation: 5,
   },
   button: {
-    flex: 0.8,
-    height: verticalScale(56),
+    width: scale(130),
+    height: verticalScale(64),
     borderRadius: 100,
     backgroundColor: themeColor.white,
-    maxHeight: 60,
+    maxHeight: 64,
     overflow: 'hidden',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: themeColor.lightGray,
   },
   text: {
     color: themeColor.white,

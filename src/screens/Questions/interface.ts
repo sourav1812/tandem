@@ -1,6 +1,6 @@
 import themeColor from '@tandem/theme/themeColor';
 
-export interface stateObject {
+export interface StateObject {
   questionNumber: number;
   showModal: boolean;
 }

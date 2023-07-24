@@ -96,7 +96,6 @@
   "BIG_PEOPLE": "Big People",
   "LITTLE_PEOPLE": "Little People",
   "PROFILE_SETTINGS": "Profile Settings",
-  "HELP_CENTER": "Help Center",
   "CHANGE_PASSWORD": "Change Password",
   "ABOUT_APP": "About App",
   "TERMS_OF_USE": "Terms of Use",
@@ -116,8 +115,14 @@
   "PASSWORD_RESET": "Password Reset",
   "YOUR_PASSWORD_HAS_BEEN_RESET": "Your password has been reset successfully",
   "GO_TO_LOG_IN": "Go to Log In",
-  "ABOUT_APP": "About App",
   "DELETE_ACCOUNT": "Delete Account",
   "DELETE": "Delete",
-  "IF_YOU_DELETE_ACCOUNT": "If you delete your account you can't get it back"
+  "IF_YOU_DELETE_ACCOUNT": "If you delete your account you can't get it back",
+  "IF_YOU_DELETE_CHILD_ACCOUNT": "If you delete Childs account you can't get them back",
+  "ADD_ACCOUNT": "Add Account",
+  "CHILD_FEATURES": "Child Features",
+  "FEATURES": "Features",
+  "CHILD": "Child",
+  "ADULT": "Adult",
+  "SELECT_MODE": "Select Mode"
 }

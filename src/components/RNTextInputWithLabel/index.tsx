@@ -6,6 +6,7 @@ import themeColor from '@tandem/theme/themeColor';
 import {Props} from './interface';
 import {verticalScale} from 'react-native-size-matters';
 import {checkIfTablet} from '@tandem/hooks/isTabletHook';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 
 const RNTextInputWithLabel = ({
   props,
@@ -20,7 +21,7 @@ const RNTextInputWithLabel = ({
   inputViewStyle,
 }: Props) => {
   const [highlight, setHighlight] = useState(false);
-  const isTablet = checkIfTablet();
+  const isTablet = useAppSelector(state => state.deviceType.isTablet);
 
   const onFocus = () => {
     setHighlight(true);
@@ -36,7 +37,7 @@ const RNTextInputWithLabel = ({
         <RNTextComponent
           style={{
             fontSize: isTablet ? 16 : verticalScale(12),
-            marginBottom: 2,
+            marginBottom: 4,
           }}>
           {label}
         </RNTextComponent>

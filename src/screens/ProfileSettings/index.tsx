@@ -5,7 +5,7 @@ import RNLogoHeader from '@tandem/components/RNLogoHeader';
 import {translation} from '@tandem/utils/methods';
 import {Pressable, Switch, View} from 'react-native';
 import RNTextInputWithLabel from '@tandem/components/RNTextInputWithLabel';
-import {stateObject} from './interface';
+import {StateObject} from './interface';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 import {scale, verticalScale} from 'react-native-size-matters';
@@ -13,10 +13,11 @@ import DownArrow from '@tandem/assets/svg/DownArrow';
 import themeColor from '@tandem/theme/themeColor';
 import RNButton from '@tandem/components/RNButton';
 import RNDeleteAccount from '@tandem/components/RNDeleteAccount';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 
 const ProfileSettings = () => {
-  const isTablet = checkIfTablet();
-  const [state, setState] = useState<stateObject>({
+  const isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const [state, setState] = useState<StateObject>({
     name: '',
     email: '',
     showModal: false,
@@ -80,7 +81,13 @@ const ProfileSettings = () => {
           {translation('DELETE_MY_ACCOUNT')}
         </RNTextComponent>
       </View>
-      <RNDeleteAccount visible={showModal} renderModal={toggleModal} />
+      <RNDeleteAccount
+        visible={showModal}
+        renderModal={toggleModal}
+        nextClick={() => {}}
+        heading={translation('DELETE_ACCOUNT')}
+        content={translation('IF_YOU_DELETE_ACCOUNT')}
+      />
     </RNScreenWrapper>
   );
 };
@@ -88,7 +95,7 @@ const ProfileSettings = () => {
 export default ProfileSettings;
 
 const LanguageDropDown = () => {
-  const isTablet = checkIfTablet();
+  const isTablet = useAppSelector(state => state.deviceType.isTablet);
   return (
     <View>
       <RNTextComponent
@@ -113,7 +120,7 @@ const LanguageDropDown = () => {
 };
 
 const NotificationSwitch = () => {
-  const isTablet = checkIfTablet();
+  const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => {
     setIsEnabled(!isEnabled);

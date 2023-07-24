@@ -9,15 +9,15 @@ import i18n from '@tandem/constants/lang/i18n';
 import themeColor from '@tandem/theme/themeColor';
 import {player} from './interface';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
-import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 import navigateTo from '@tandem/navigation/navigate';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 
 const SelectPlayer = () => {
   const players: player[] = [
     {name: 'Alysa', color: themeColor.gold},
     {name: 'Kashish', color: themeColor.lightGreen},
   ];
-  const isTablet = checkIfTablet();
+  const isTablet = useAppSelector(state => state.deviceType.isTablet);
 
   return (
     <RNScreenWrapper style={styles.container}>

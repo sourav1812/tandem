@@ -1,4 +1,4 @@
-import {View} from 'react-native';
+import {View, Share} from 'react-native';
 import React from 'react';
 import RNModal from '../RNModal';
 import {styles} from './styles';
@@ -8,15 +8,32 @@ import {verticalScale} from 'react-native-size-matters';
 import themeColor from '@tandem/theme/themeColor';
 import RNButton from '@tandem/components/RNButton';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
-import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 import i18n from '@tandem/constants/lang/i18n';
 import navigateTo from '@tandem/navigation/navigate';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 
 const RNCongratsModal = ({
   visible = false,
   renderModal,
 }: congratsModalProps) => {
-  let isTablet = checkIfTablet();
+  let isTablet = useAppSelector(state => state.deviceType.isTablet);
+
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        message: 'Hi , thanks for using tandem.',
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error: any) {}
+  };
 
   return (
     <RNModal
@@ -76,14 +93,14 @@ const RNCongratsModal = ({
             title={i18n.t('HOME')}
             customStyle={styles.button}
             onClick={() => {
-              navigateTo(SCREEN_NAME.HOME);
+              navigateTo(SCREEN_NAME.BOTTOM_TAB);
             }}
           />
           <RNButton
             title={i18n.t('SHARE')}
             customStyle={styles.button}
             onClick={() => {
-              navigateTo(SCREEN_NAME.QUESTIONS);
+              onShare();
             }}
             onlyBorder
           />

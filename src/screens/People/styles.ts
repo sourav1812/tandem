@@ -23,9 +23,9 @@ export const styles = StyleSheet.create({
   },
   profile: {
     backgroundColor: themeColor.lightGreen,
-    height: verticalScale(64),
-    width: verticalScale(64),
-    borderRadius: 72,
+    height: verticalScale(84),
+    width: verticalScale(84),
+    borderRadius: 1000,
     alignSelf: 'center',
     marginTop: verticalScale(18),
   },
@@ -39,5 +39,34 @@ export const styles = StyleSheet.create({
   },
   firstTab: {
     flex: 1,
+  },
+  bigpeople: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: themeColor.white,
+  },
+  addButton: {
+    marginTop: verticalScale(18),
+    height: verticalScale(85),
+    width: verticalScale(85),
+  },
+  addBox: {
+    marginLeft: scale(32),
+  },
+  littlePeople: {
+    flex: 1,
+    paddingTop: verticalScale(21),
+  },
+  scrollview: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: themeColor.white,
+  },
+  addText: {
+    marginTop: verticalScale(10),
   },
 });

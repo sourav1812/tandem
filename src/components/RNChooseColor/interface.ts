@@ -6,6 +6,8 @@ export interface colorPaletteType {
   isSelected: boolean;
   colorCode: string;
 }
-export interface stateObject {
-  colorPalette: colorPaletteType[];
+export interface StateObject {
+  colorPalette: {firstColor: string; secondColor: string}[];
+  color1: string;
+  color2: string;
 }

@@ -51,7 +51,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     // borderWidth: 1,
     // borderColor: themeColor.white,
-    width: scale(100),
+    width: scale(90),
   },
   stat: {
     fontSize: verticalScale(16),

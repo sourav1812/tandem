@@ -1,78 +1,33 @@
-import {View, Animated, Pressable} from 'react-native';
-import React, {useState, useRef} from 'react';
+import {View, TouchableOpacity} from 'react-native';
+import React, {useState} from 'react';
 import {styles} from './styles';
 import RNTextComponent from '../RNTextComponent';
-import themeColor from '@tandem/theme/themeColor';
-import {stateObject} from './interface';
-import {verticalScale} from 'react-native-size-matters';
-import {colorPaletteType} from './interface';
-import {checkIfTablet} from '@tandem/hooks/isTabletHook';
-
-let memoryQue: number[] = [];
+import {StateObject} from './interface';
+import ColorPatchUp from '@tandem/assets/svg/ColorPatch';
+import EmptyBox from '@tandem/assets/svg/EmptyColorBox';
+import AddColor from '@tandem/assets/svg/AddColor';
+import EmptyPatch from '@tandem/assets/svg/EmptyPatch';
 
 const RNChooseColor = () => {
-  const isTablet = checkIfTablet();
-  const scaleValue = useRef(new Animated.Value(1)).current;
-
-  const handleIn = () => {
-    Animated.timing(scaleValue, {
-      toValue: 1.3,
-      duration: 300,
-      useNativeDriver: true,
-    }).start();
-  };
-
-  const [state, setState] = useState<stateObject>({
+  const [state, setState] = useState<StateObject>({
     colorPalette: [
-      {
-        color: 'Blue',
-        icon: require('../../assets/png/blueSplash.png'),
-        isSelected: false,
-        colorCode: themeColor.themeBlue,
-      },
-      {
-        color: 'Pink',
-        icon: require('../../assets/png/pinkSplash.png'),
-        isSelected: false,
-        colorCode: themeColor.pink,
-      },
-      {
-        color: 'Yellow',
-        icon: require('../../assets/png/yellowSplash.png'),
-        isSelected: false,
-        colorCode: themeColor.gold,
-      },
-      {
-        color: 'Red',
-        icon: require('../../assets/png/redSplash.png'),
-        isSelected: false,
-        colorCode: themeColor.red,
-      },
+      {firstColor: '#0633FD', secondColor: '#FEF902'},
+      {firstColor: '#0998FF', secondColor: '#FF9409'},
+      {firstColor: '#00FDFF', secondColor: '#FF2E09'},
+      {firstColor: '#02F98F', secondColor: '#FF2F8F'},
+      {firstColor: '#02F902', secondColor: '#FF3FFB'},
+      {firstColor: '#89F902', secondColor: '#9137FF'},
     ],
+    color1: '',
+    color2: '',
   });
 
-  const {colorPalette} = state;
+  const {colorPalette, color1, color2} = state;
 
   const updateState = (date: any) => {
     setState((previouState: any) => {
       return {...previouState, ...date};
     });
-  };
-
-  const selectColors = (index: number) => {
-    let colorList: colorPaletteType[] = [...colorPalette];
-    memoryQue.unshift(index);
-    if (memoryQue.length === 3) {
-      memoryQue.pop();
-    }
-    colorPalette.map(colorIndex => {
-      colorList[colorIndex].isSelected = false;
-    });
-    memoryQue.map(item => {
-      colorList[item].isSelected = true;
-    });
-    console.log(colorList, 'colorList1234');
-    updateState({colorPalette: colorList});
   };
 
   return (
@@ -92,69 +47,42 @@ const RNChooseColor = () => {
       <RNTextComponent style={styles.subHeading}>
         Select two colors to get a third
       </RNTextComponent>
-      <View
-        style={[
-          styles.scrollView,
-          // eslint-disable-next-line react-native/no-inline-styles
-          isTablet && {maxWidth: verticalScale(300), borderWidth: 0},
-        ]}>
-        {colorPalette.map((value, index) => {
+      <View style={styles.colorView}>
+        {colorPalette.map((item, index) => {
           return (
-            <Pressable
-              style={styles.colorView}
-              disabled
-              onPress={() => {
-                selectColors(index);
-                handleIn();
-              }}>
-              {value.isSelected && (
-                <RNTextComponent style={styles.colorName} isSemiBold>
-                  {value.color}
-                </RNTextComponent>
-              )}
-              <Animated.Image
-                source={value.icon}
-                style={[
-                  {
-                    height: value.isSelected
-                      ? verticalScale(130)
-                      : verticalScale(110),
-                    width: value.isSelected
-                      ? verticalScale(132)
-                      : verticalScale(110),
-                  },
-                ]}
-                resizeMode="contain"
-              />
-              {/* <Animated.Image source={value.icon} style={[{  transform : [{scale: value.isSelected ?  scaleValue : 1}]  }  ]} resizeMode='contain' /> */}
-            </Pressable>
+            <View
+              style={[
+                styles.colorPair,
+                {transform: [{rotate: `-${30 * index}deg`}]},
+              ]}>
+              <TouchableOpacity
+                onPress={() => {
+                  updateState({color1: item.firstColor});
+                }}>
+                <ColorPatchUp color={item.firstColor} />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  updateState({color2: item.secondColor});
+                }}>
+                <ColorPatchUp
+                  color={item.secondColor}
+                  props={{transform: [{rotate: '180deg'}]}}
+                />
+              </TouchableOpacity>
+            </View>
           );
         })}
+        <View style={styles.colorPatch}>
+          <EmptyBox color={color1} />
+          <EmptyBox props={{style: styles.secondColor}} color={color2} />
+        </View>
       </View>
-      <View style={styles.colorInfo}>
-        <View
-          style={[
-            styles.circle,
-            {
-              backgroundColor:
-                colorPalette.filter(item => item.isSelected).length > 0
-                  ? colorPalette.filter(item => item.isSelected)[0].colorCode
-                  : themeColor.white,
-            },
-          ]}
-        />
-        <View style={[styles.mixedColor]} />
-        <View
-          style={[
-            styles.circle,
-            {
-              backgroundColor:
-                colorPalette.filter(item => item.isSelected).length > 1
-                  ? colorPalette.filter(item => item.isSelected)[1].colorCode
-                  : themeColor.white,
-            },
-          ]}
-        />
+      <View style={styles.footer}>
+        <AddColor />
+        {Array.from({length: 3}, (_, i) => (
+          <EmptyPatch />
+        ))}
       </View>
     </View>
   );

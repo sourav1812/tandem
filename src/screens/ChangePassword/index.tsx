@@ -4,16 +4,16 @@ import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import RNLogoHeader from '@tandem/components/RNLogoHeader';
 import {translation} from '@tandem/utils/methods';
 import {View} from 'react-native';
-import {stateObject} from './interface';
-import {checkIfTablet} from '@tandem/hooks/isTabletHook';
+import {StateObject} from './interface';
 import {scale} from 'react-native-size-matters';
 import RNButton from '@tandem/components/RNButton';
 import RNSecureTextInput from '@tandem/components/RNSecureTextInput';
 import RNChangePassword from '@tandem/components/RNChangePassword';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 
 const ChangePassword = () => {
-  const isTablet = checkIfTablet();
-  const [state, setState] = useState<stateObject>({
+  const isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const [state, setState] = useState<StateObject>({
     name: '',
     email: '',
     showModal: false,
