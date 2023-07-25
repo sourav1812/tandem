@@ -7,19 +7,26 @@ import {View} from 'react-native';
 import {StateObject} from './interface';
 import {scale} from 'react-native-size-matters';
 import RNButton from '@tandem/components/RNButton';
-import RNSecureTextInput from '@tandem/components/RNSecureTextInput';
 import RNChangePassword from '@tandem/components/RNChangePassword';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import RNTextInputWithLabel from '@tandem/components/RNTextInputWithLabel';
+import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
 
 const ChangePassword = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const [state, setState] = useState<StateObject>({
-    name: '',
-    email: '',
     showModal: false,
   });
-
-  const {name, email, showModal} = state;
+  const [currentPassword, setCurrentPassword] = useState<ValidationError>({
+    value: '',
+  });
+  const [newPassword, setNewPassword] = useState<ValidationError>({
+    value: '',
+  });
+  const [confirmPassword, setConfirmPassword] = useState<ValidationError>({
+    value: '',
+  });
+  const {showModal} = state;
 
   const updateState = (date: any) => {
     setState((previouState: any) => {
@@ -41,24 +48,36 @@ const ChangePassword = () => {
       />
       <View
         style={[styles.content, isTablet && {paddingHorizontal: scale(65)}]}>
-        <RNSecureTextInput
-          title={translation('CURRENT_PASSWORD')}
-          customStyle={styles.input}
+        <RNTextInputWithLabel
+          label={translation('CURRENT_PASSWORD')}
+          containerStyle={styles.input}
+          value={currentPassword}
+          updateText={setCurrentPassword}
+          validationType={FORM_INPUT_TYPE.PASSWORD}
           hint={translation('PASSWORD')}
           inputStyle={styles.inputText}
+          rightSideIcon
         />
-        <RNSecureTextInput
-          title={translation('NEW_PASSWORD')}
-          customStyle={styles.input}
+        <RNTextInputWithLabel
+          label={translation('NEW_PASSWORD')}
+          containerStyle={styles.input}
+          value={newPassword}
+          updateText={setNewPassword}
+          validationType={FORM_INPUT_TYPE.PASSWORD}
           hint={translation('PASSWORD')}
           inputStyle={styles.inputText}
+          rightSideIcon
         />
-        <RNSecureTextInput
-          title={translation('CONFIRM_NEW_PASSWORD')}
-          customStyle={styles.input}
+        <RNTextInputWithLabel
+          label={translation('CONFIRM_NEW_PASSWORD')}
+          containerStyle={styles.input}
           hint={translation('PASSWORD')}
           inputStyle={styles.inputText}
           inputViewStyle={styles.inputBox}
+          value={confirmPassword}
+          updateText={setConfirmPassword}
+          validationType={FORM_INPUT_TYPE.PASSWORD}
+          rightSideIcon
         />
       </View>
       <RNButton

@@ -8,32 +8,34 @@ import themeColor from '@tandem/theme/themeColor';
 import RNButton from '@tandem/components/RNButton';
 import RNLogoHeader from '@tandem/components/RNLogoHeader';
 import RNTextInputWithLabel from '@tandem/components/RNTextInputWithLabel';
-import RNSecureTextInput from '@tandem/components/RNSecureTextInput';
 import Google from '@tandem/assets/svg/GoogleLogo';
 import Apple from '@tandem/assets/svg/AppleLogo';
 import FB from '@tandem/assets/svg/FBlogo';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
-import {StateObject} from './interface';
 import {verticalScale} from 'react-native-size-matters';
 import i18n from '@tandem/constants/lang/i18n';
 import navigateTo from '@tandem/navigation/navigate';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
 
 const SignIn = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
 
-  const [state, setState] = useState<StateObject>({
-    email: '',
-    password: '',
-  });
+  const [email, setEmail] = useState<ValidationError>({value: ''});
+  const [password, setPassword] = useState<ValidationError>({value: ''});
 
-  const {email, password} = state;
+  // const [state, setState] = useState<StateObject>({
+  //   email: {value: ''},
+  //   password: {value: ''},
+  // });
 
-  const updateState = (date: any) => {
-    setState((previouState: any) => {
-      return {...previouState, ...date};
-    });
-  };
+  // const {email, password} = state;
+
+  // const updateState = (date: any) => {
+  //   setState((previouState: any) => {
+  //     return {...previouState, ...date};
+  //   });
+  // };
 
   return (
     <RNScreenWrapper style={{backgroundColor: themeColor.white}}>
@@ -55,22 +57,22 @@ const SignIn = () => {
               backgroundColor={themeColor.lightGray}
               containerStyle={styles.input2}
               value={email}
-              updateText={e => {
-                updateState({email: e});
-              }}
+              validationType={FORM_INPUT_TYPE.EMAIL}
+              updateText={setEmail}
               hint={i18n.t('ENTER_YOUR_EMAIL')}
               inputStyle={styles.inputText}
             />
-            <RNSecureTextInput
-              title={i18n.t('PASSWORD')}
+            <RNTextInputWithLabel
+              label={i18n.t('PASSWORD')}
               // label={en.EMAIL}
-              customStyle={styles.input2}
+              backgroundColor={themeColor.lightGray}
+              containerStyle={styles.input2}
               value={password}
-              updateText={e => {
-                updateState({password: e});
-              }}
+              updateText={setPassword}
+              validationType={FORM_INPUT_TYPE.PASSWORD}
               hint={i18n.t('ENTER_PASSWORD')}
               inputStyle={styles.inputText}
+              rightSideIcon={true}
             />
             <RNTextComponent style={styles.forgotPassword}>
               {i18n.t('FORGOT_PASSWORD')}

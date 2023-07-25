@@ -17,6 +17,7 @@ import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {verticalScale} from 'react-native-size-matters';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
 
 const CreateChildProfile = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -27,11 +28,10 @@ const CreateChildProfile = () => {
       {index: 3, isSelected: false},
     ],
     questionIndex: 1,
-    name: '',
-    date: '',
   });
-
-  const {bulletinArray, questionIndex, name, date} = state;
+  const [name, setName] = useState<ValidationError>({value: ''});
+  const [date, setDate] = useState<ValidationError>({value: ''});
+  const {bulletinArray, questionIndex} = state;
 
   const updateState = (date: any) => {
     setState((previouState: any) => {
@@ -135,7 +135,8 @@ const CreateChildProfile = () => {
                 ]}
                 containerStyle={styles.containerBox}
                 value={name}
-                updateText={e => updateState({name: e})}
+                validationType={FORM_INPUT_TYPE.NAME}
+                updateText={setName}
                 hint={translation('ENTER_NAME')}
               />
               <RNTextInputWithLabel
@@ -146,7 +147,7 @@ const CreateChildProfile = () => {
                 ]}
                 containerStyle={styles.containerBox}
                 value={date}
-                updateText={e => updateState({date: e})}
+                updateText={setDate}
                 hint={translation('ENTER_DATE_OF_BIRTH')}
               />
             </View>

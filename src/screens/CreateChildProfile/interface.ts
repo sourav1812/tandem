@@ -12,8 +12,6 @@ export interface indicatorType {
 export interface childProfileStateObject {
   bulletinArray: indicatorType[];
   questionIndex: number;
-  name: string;
-  date: string;
 }
 
 export interface avatar {
