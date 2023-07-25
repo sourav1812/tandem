@@ -124,5 +124,14 @@
   "FEATURES": "Features",
   "CHILD": "Child",
   "ADULT": "Adult",
-  "SELECT_MODE": "Select Mode"
+  "SELECT_MODE": "Select Mode",
+  "READING_TIME": "Reading Time",
+  "NUMBER_OF_BOOKS": "Number of books",
+  "TIME_CREATING": "Time creating",
+  "REDEEM_VOUCHER": "Redeem voucher",
+  "CO_PARENT": "Co-parent: judgement-free parenting tips",
+  "PERSONALIZED_CHILD_DEVELOPMENT": "Personalized Child development insights",
+  "SCAN_YOUR_QR_CODE": "Scar your QR Code",
+  "ENTER_VOUCHER_CODE": "Enter voucher code",
+  "VOUCHER": "Voucher"
 }
