@@ -10,10 +10,8 @@ export const styles = StyleSheet.create({
   },
   bookshelfHeaderText: {
     alignSelf: 'center',
-    marginTop: verticalScale(70),
     fontSize: verticalScale(22),
     color: themeColor.white,
-    marginBottom: verticalScale(14),
   },
   bottomViewContainer: {
     flex: 1,
@@ -63,5 +61,18 @@ export const styles = StyleSheet.create({
   heading: {
     fontSize: verticalScale(14),
     marginBottom: verticalScale(8),
+  },
+  headingView: {
+    marginTop: verticalScale(60),
+    marginBottom: verticalScale(14),
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  spaces: {
+    flex: 1,
+  },
+  button: {
+    marginRight: verticalScale(20),
+    marginBottom: 10,
   },
 });
