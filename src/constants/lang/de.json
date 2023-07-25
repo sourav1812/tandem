@@ -90,12 +90,6 @@
     "phone-invalid": "Please enter a valid phone number",
     "pin-required": "Pin is required",
     "pin-no-spaces": "Pin must not contain whitespaces",
-    "pin-invalid": "Please enter a valid pin",
-    "category-required": "Please select a category",
-    "check-required": "Please agree to continue",
-    "year-validation": "Years must be greater than 1",
-    "rn-required": "National Insurance Number is required.",
-    "rn-no-spaces": "This does not contain spaces.",
-    "rn-format": "Use Format: NN.NN.NN-NNN.NN"
+    "pin-invalid": "Please enter a valid pin"
   }
 }

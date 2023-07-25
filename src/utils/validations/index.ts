@@ -12,8 +12,6 @@ export enum FORM_INPUT_TYPE {
   NAME = 'NAME',
   PHONE = 'PHONE',
   PIN = 'PIN',
-  YEARS = 'YEARS',
-  REGISTERATION_NUMBER = 'REGISTERATION_NUMBER',
 }
 
 const validateEmail = (value: string): ValidationError => {
@@ -79,24 +77,6 @@ const validateName = (value: string): ValidationError => {
 
   return {value};
 };
-const validateYears = (value: string): ValidationError => {
-  if (!value) {
-    return {
-      message: translation('validations.name-required'),
-      type: FORM_INPUT_TYPE.NAME,
-      value,
-    };
-  }
-  if (parseInt(value, 10) <= 1) {
-    return {
-      message: translation('validations.year-validation'),
-      type: FORM_INPUT_TYPE.YEARS,
-      value,
-    };
-  }
-
-  return {value};
-};
 
 const validatePhone = (value: string): ValidationError => {
   if (!value) {
@@ -148,31 +128,7 @@ const validatePin = (value: string): ValidationError => {
 
   return {value};
 };
-const validateRegistrationNumber = (value: string): ValidationError => {
-  if (!value) {
-    return {
-      message: translation('validations.rn-required'),
-      type: FORM_INPUT_TYPE.REGISTERATION_NUMBER,
-      value,
-    };
-  }
-  if (/\s/.test(value)) {
-    return {
-      message: translation('validations.rn-no-spaces'),
-      type: FORM_INPUT_TYPE.REGISTERATION_NUMBER,
-      value,
-    };
-  }
-  if (!/^(\d{2}\.){2}\d{2}-\d{3}\.\d{2}$/.test(value)) {
-    return {
-      message: translation('validations.rn-format'),
-      type: FORM_INPUT_TYPE.REGISTERATION_NUMBER,
-      value,
-    };
-  }
 
-  return {value};
-};
 const validateForm = (type: string, value: string): ValidationError => {
   switch (type) {
     case FORM_INPUT_TYPE.EMAIL:
@@ -185,10 +141,6 @@ const validateForm = (type: string, value: string): ValidationError => {
       return validatePhone(value);
     case FORM_INPUT_TYPE.PIN:
       return validatePin(value);
-    case FORM_INPUT_TYPE.YEARS:
-      return validateYears(value);
-    case FORM_INPUT_TYPE.REGISTERATION_NUMBER:
-      return validateRegistrationNumber(value);
     default:
       return {value};
   }
