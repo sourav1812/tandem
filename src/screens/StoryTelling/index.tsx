@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unstable-nested-components */
 import {View, ImageBackground, FlatList, ScrollView} from 'react-native';
 import React, {useState, useCallback} from 'react';
 import {styles} from './style';
@@ -21,6 +22,8 @@ import {scale, verticalScale} from 'react-native-size-matters';
 import i18n from '@tandem/constants/lang/i18n';
 import navigateTo from '@tandem/navigation/navigate';
 import {MODE} from '@tandem/constants/mode';
+import Mic from '@tandem/assets/svg/BlueMic';
+import MuteMic from '@tandem/assets/svg/MuteMic';
 
 const StoryTelling = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -30,9 +33,10 @@ const StoryTelling = () => {
   const [readingTip, setReadingTip] = useState(true);
   const [state, setState] = useState<StateObject>({
     ratingModal: true,
+    toggleMic: false,
   });
 
-  const {ratingModal} = state;
+  const {ratingModal, toggleMic} = state;
 
   const updateState = (date: any) => {
     setState((previouState: any) => {
@@ -110,6 +114,33 @@ const StoryTelling = () => {
     updateState({ratingModal: !ratingModal});
   };
 
+  const headerButton = () => {
+    if (currentIndex + 1 < 5) {
+      switch (mode) {
+        case MODE.A:
+          return (
+            <RNButton
+              onlyIcon
+              icon={<Meter />}
+              onClick={() => renderReadingLevel()}
+            />
+          );
+
+        case MODE.B:
+          return (
+            <RNButton
+              onlyIcon
+              icon={toggleMic ? <MuteMic /> : <Mic />}
+              onClick={() => updateState({toggleMic: !toggleMic})}
+            />
+          );
+
+        case MODE.C:
+          return <RNButton onlyIcon icon={<Speaker />} onClick={() => {}} />;
+      }
+    }
+  };
+
   return (
     <RNScreenWrapper>
       <View style={styles.headingButton}>
@@ -125,17 +156,7 @@ const StoryTelling = () => {
             {i18n.t('SUMMARY')}
           </RNTextComponent>
         )}
-        <RNButton
-          onlyIcon
-          icon={
-            mode === MODE.B && currentIndex + 1 < 5 ? <Meter /> : <Speaker />
-          }
-          onClick={() => {
-            if (mode === MODE.B && currentIndex + 1 < 5) {
-              renderReadingLevel();
-            }
-          }}
-        />
+        {headerButton()}
       </View>
       <FlatList
         data={Array.from({length: 5}, (_, i) => {

@@ -145,7 +145,6 @@ const Home = () => {
             ]}>
             <BlueButon />
           </Pressable>
-
           <View
             style={{
               width: '100%',
