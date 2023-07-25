@@ -1,4 +1,4 @@
-import {ReactNode} from 'react';
+import React, {ReactNode} from 'react';
 import {StyleProp, ViewStyle, PressableProps, TextStyle} from 'react-native';
 
 export interface Props {

@@ -15,15 +15,16 @@ export const styles = StyleSheet.create({
   profilePic: {
     position: 'absolute',
     bottom: -verticalScale(26),
-    borderRadius: 100,
+    borderRadius: 200,
     borderWidth: 1,
     padding: 10,
     borderColor: themeColor.white,
-    backgroundColor: '#fff',
+    backgroundColor: themeColor.white,
     height: verticalScale(89),
     width: verticalScale(89),
     zIndex: 5,
     alignItems: 'center',
+    justifyContent: 'space-between',
   },
   content: {
     flex: 1,
@@ -31,7 +32,7 @@ export const styles = StyleSheet.create({
     marginBottom: verticalScale(20),
   },
   heading: {
-    fontSize: verticalScale(14),
+    fontSize: verticalScale(16),
     textAlign: 'center',
   },
   options: {
@@ -49,5 +50,13 @@ export const styles = StyleSheet.create({
   },
   optionsPortrait: {
     justifyContent: 'space-evenly',
+  },
+  imageContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  blueButton: {
+    position: 'absolute',
+    right: 24,
   },
 });

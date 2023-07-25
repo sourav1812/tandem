@@ -5,7 +5,7 @@ import Bookmark from '@tandem/assets/svg/Bookmark';
 import {styles} from './styles';
 import RNTextComponent from '../RNTextComponent';
 import {verticalScale} from 'react-native-size-matters';
-import i18n from '@tandem/constants/lang/i18n';
+import themeColor from '@tandem/theme/themeColor';
 
 const RNBookmarkComponent = ({
   props,
@@ -14,6 +14,9 @@ const RNBookmarkComponent = ({
   heading,
   subHeading,
   showIcon = true,
+  showSubheading = false,
+  emoji,
+  headingStyle,
 }: Props) => {
   return (
     <View
@@ -23,7 +26,7 @@ const RNBookmarkComponent = ({
         {
           ...(showIcon && {
             backgroundColor: borderIconColor,
-            paddingVertical: verticalScale(8),
+            paddingVertical: verticalScale(6),
           }),
         },
         {...(!showIcon && {justifyContent: 'center'})},
@@ -35,7 +38,10 @@ const RNBookmarkComponent = ({
           <View style={styles.icon}>
             <Bookmark fill={borderIconColor && borderIconColor} />
           </View>
-          <RNTextComponent style={styles.heading}>{heading}</RNTextComponent>
+          <RNTextComponent
+            style={[styles.heading, headingStyle && headingStyle]}>
+            {heading}
+          </RNTextComponent>
           <RNTextComponent
             style={[
               styles.subHeading,
@@ -47,16 +53,27 @@ const RNBookmarkComponent = ({
       ) : (
         <>
           <View style={styles.imgContainer}>
-            <Image
-              source={{
-                uri: 'https://www.pngkit.com/png/full/216-2163934_magicians-wand-emoji-magic-wand.png',
-              }}
-              style={styles.img}
-            />
+            {emoji && (
+              <RNTextComponent style={styles.img}>{emoji}</RNTextComponent>
+            )}
           </View>
-          <RNTextComponent numberOfLines={2} isSemiBold style={styles.text2}>
-            {i18n.t('WRITE_A_STORY')}
+          <RNTextComponent
+            numberOfLines={2}
+            isSemiBold
+            style={[
+              styles.text2,
+              {marginTop: verticalScale(6)},
+              headingStyle && headingStyle,
+            ]}>
+            {heading}
           </RNTextComponent>
+          {showSubheading && (
+            <RNTextComponent
+              numberOfLines={1}
+              style={[styles.subHeading, {color: themeColor.white}]}>
+              {subHeading}
+            </RNTextComponent>
+          )}
         </>
       )}
     </View>
