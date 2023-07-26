@@ -23,4 +23,5 @@ export enum SCREEN_NAME {
   CHANGE_PASSWORD = 'ChangePassword',
   ABOUT_APP = 'AboutApp',
   EditChildProfile = 'EditChildProfile',
+  REDEEM_VOUCHER = 'RedeemVoucher',
 }

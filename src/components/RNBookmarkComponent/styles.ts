@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
     maxHeight: 190,
     maxWidth: 190,
     borderRadius: 16,
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-around',
     alignItems: 'center',
   },
   icon: {
@@ -19,14 +19,12 @@ export const styles = StyleSheet.create({
     right: '10%',
   },
   heading: {
-    fontSize: 16,
+    fontSize: verticalScale(14),
     color: 'rgba(2, 4, 8, 0.6)',
     textAlign: 'center',
   },
   subHeading: {
-    fontSize: 14,
-    letterSpacing: 0,
-    marginTop: verticalScale(4),
+    fontSize: verticalScale(12),
     textAlign: 'center',
   },
   imgContainer: {
@@ -40,14 +38,12 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   img: {
-    height: verticalScale(28),
-    width: verticalScale(28),
+    fontSize: verticalScale(22),
   },
   text2: {
     fontSize: verticalScale(18),
     color: themeColor.white,
-    marginHorizontal: verticalScale(18),
+    marginHorizontal: verticalScale(8),
     textAlign: 'center',
-    letterSpacing: 0,
   },
 });

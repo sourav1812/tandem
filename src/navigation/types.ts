@@ -24,6 +24,7 @@ export type RootStackParamList = {
   People: undefined;
   AboutApp: undefined;
   EditChildProfile: undefined;
+  RedeemVoucher: undefined;
 };
 
 export type RootTabParamList = {

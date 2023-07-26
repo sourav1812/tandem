@@ -28,6 +28,7 @@ import ChangePassword from '@tandem/screens/ChangePassword';
 import People from '@tandem/screens/People';
 import AboutApp from '@tandem/screens/AboutApp';
 import EditChildProfile from '@tandem/screens/EditChildProfile';
+import RedeemVoucher from '@tandem/screens/RedeemVoucher';
 
 const AppNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -68,6 +69,10 @@ const AppNavigator = () => {
           />
         )}
         <Stack.Screen component={BottomTab} name={SCREEN_NAME.BOTTOM_TAB} />
+        <Stack.Screen
+          component={RedeemVoucher}
+          name={SCREEN_NAME.REDEEM_VOUCHER}
+        />
         <Stack.Screen
           component={GenerateStory}
           name={SCREEN_NAME.GENERATE_STORY}

@@ -13,6 +13,9 @@ import i18n from '@tandem/constants/lang/i18n';
 import navigateTo from '@tandem/navigation/navigate';
 import {ValidationError} from '@tandem/utils/validations';
 import {checkIfTablet} from '@tandem/hooks/isTabletHook';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import Button from '@tandem/assets/svg/BlueButton';
+
 
 const Bookshelf = () => {
   const isTablet = checkIfTablet();
@@ -97,9 +100,17 @@ const Bookshelf = () => {
   return (
     <RNScreenWrapper>
       <View style={styles.container}>
-        <RNTextComponent style={styles.bookshelfHeaderText} isSemiBold>
-          {i18n.t('BOOKSHELF')}
-        </RNTextComponent>
+        <View style={styles.headingView}>
+          <View style={styles.spaces} />
+          <RNTextComponent style={styles.bookshelfHeaderText} isSemiBold>
+            {i18n.t('BOOKSHELF')}
+          </RNTextComponent>
+          <Pressable
+            style={[styles.spaces, {alignItems: 'flex-end'}]}
+            onPress={() => navigateTo(SCREEN_NAME.ACCOUNT)}>
+            <Button style={styles.button} />
+          </Pressable>
+        </View>
         <RNTextInputWithLabel
           hint={'Search'}
           value={searchText}
