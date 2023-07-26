@@ -53,9 +53,11 @@ const TermsAndConditions = () => {
             {i18n.t('PLEASE_READ_THEM_CAREFULLY')}
           </RNTextComponent>
           <RNTextComponent style={styles.text}>
-            {i18n.t('USER_ELIGIBILITY')} {'\n\n'}
-            {i18n.t('USER_ELIGIBILITY')} {'\n\n'}
-            {i18n.t('USER_ELIGIBILITY')} {'\n\n'}
+            1. {i18n.t('USER_ELIGIBILITY')} {'\n\n'}
+            2. {i18n.t('USER_ELIGIBILITY')} {'\n\n'}
+            3. {i18n.t('USER_ELIGIBILITY')} {'\n\n'}
+            4. {i18n.t('USER_ELIGIBILITY')} {'\n\n'}
+            5. {i18n.t('USER_ELIGIBILITY')} {'\n\n'}
           </RNTextComponent>
           <RNCheckboxWithText onAccept={() => updateState({term1: !term1})} />
           <RNCheckboxWithText onAccept={() => updateState({term2: !term2})} />

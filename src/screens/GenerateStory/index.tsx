@@ -69,7 +69,7 @@ const GenerateStory = () => {
       case 1:
         return (
           <RNTextComponent isSemiBold style={styles.question}>
-            Who else{' '}
+            Who{' '}
             <RNTextComponent
               isSemiBold
               style={{...styles.question, color: 'rgba(10, 8, 4, 0.6)'}}>
