@@ -9,6 +9,9 @@ import RNTextComponent from '@tandem/components/RNTextComponent';
 import {Image, View} from 'react-native';
 import RNButton from '@tandem/components/RNButton';
 import navigateTo from '@tandem/navigation/navigate';
+import RNTextInputWithLabel from '@tandem/components/RNTextInputWithLabel';
+import {ValidationError} from '@tandem/utils/validations';
+import Paste from '@tandem/assets/svg/Paste';
 
 const RedeemVoucher = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -25,6 +28,8 @@ const RedeemVoucher = () => {
       return {...previouState, ...date};
     });
   };
+
+  const [voucher, setVoucher] = useState<ValidationError>('');
 
   return (
     <RNScreenWrapper style={styles.container}>
@@ -46,6 +51,16 @@ const RedeemVoucher = () => {
         <RNTextComponent style={styles.or}>or</RNTextComponent>
         <View style={styles.line} />
       </View>
+      <RNTextInputWithLabel
+        value={voucher}
+        updateText={setVoucher}
+        rightSideIcon
+        label={translation('ENTER_VOUCHER_CODE')}
+        containerStyle={styles.inputContainer}
+        rightSideIconProp={<Paste />}
+        inputViewStyle={styles.inputView}
+        inputStyle={{flex: 1}}
+      />
       <RNButton
         title={translation('ADD')}
         customStyle={styles.button}

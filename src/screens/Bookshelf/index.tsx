@@ -1,5 +1,5 @@
 import {View, Text, FlatList, Pressable} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import RNTextInputWithLabel from '@tandem/components/RNTextInputWithLabel';
@@ -11,12 +11,15 @@ import {scale, verticalScale} from 'react-native-size-matters';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import i18n from '@tandem/constants/lang/i18n';
 import navigateTo from '@tandem/navigation/navigate';
+import {ValidationError} from '@tandem/utils/validations';
+import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import Button from '@tandem/assets/svg/BlueButton';
 
-const Bookshelf = () => {
-  const isTablet = useAppSelector(state => state.deviceType.isTablet);
 
+const Bookshelf = () => {
+  const isTablet = checkIfTablet();
+  const [searchText, setText] = useState<ValidationError>({value: ''});
   const data = [
     {
       id: 0,
@@ -110,8 +113,8 @@ const Bookshelf = () => {
         </View>
         <RNTextInputWithLabel
           hint={'Search'}
-          value={''}
-          updateText={() => {}}
+          value={searchText}
+          updateText={setText}
           inputStyle={styles.searchBoxInputStyle}
           backgroundColor="#ffffff"
           containerStyle={[

@@ -3,7 +3,10 @@ import {scale, verticalScale} from 'react-native-size-matters';
 import themeColor from '@tandem/theme/themeColor';
 
 export const styles = StyleSheet.create({
-  container: {},
+  container: {
+    height: '100%',
+    width: '100%',
+  },
   heading: {
     fontSize: verticalScale(21.3),
     alignSelf: 'center',

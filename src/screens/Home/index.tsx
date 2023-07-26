@@ -35,8 +35,6 @@ const Home = () => {
     {color: themeColor.purple, title: i18n.t('I_CANT_DECIDE')},
     {color: themeColor.gold, title: i18n.t('LEARN_SOMETHING')},
     {color: themeColor.green, title: i18n.t('HAVE_FUN')},
-    {color: themeColor.gold, title: i18n.t('LEARN_SOMETHING')},
-    {color: themeColor.green, title: i18n.t('HAVE_FUN')},
   ];
 
   const modeA: {
@@ -84,9 +82,10 @@ const Home = () => {
     changeUser: false,
     userProfile:
       'https://static.vecteezy.com/system/resources/previews/016/461/449/non_2x/cute-giraffe-face-wild-animal-character-in-animated-cartoon-illustration-vector.jpg',
+    name: 'Lisa',
   });
 
-  const {changeUser, userProfile} = state;
+  const {changeUser, userProfile, name} = state;
 
   const updateState = (date: any) => {
     setState((previouState: any) => {
@@ -132,7 +131,7 @@ const Home = () => {
               marginTop:
                 !isTablet && portrait ? verticalScale(60) : verticalScale(20),
             }}>
-            {i18n.t('HELLO')}, Adam! 👋🏻
+            {i18n.t('HELLO')}, Ella!(Mum) 👋🏻
           </RNTextComponent>
           <Pressable
             onPress={() => navigateTo(SCREEN_NAME.ACCOUNT)}
@@ -200,6 +199,7 @@ const Home = () => {
                   updateState({
                     userProfile:
                       'https://static.vecteezy.com/system/resources/previews/016/461/449/non_2x/cute-giraffe-face-wild-animal-character-in-animated-cartoon-illustration-vector.jpg',
+                    name: 'Lisa',
                   });
                   closeDrawer();
                 }}>
@@ -221,6 +221,7 @@ const Home = () => {
                   updateState({
                     userProfile:
                       'https://static.vecteezy.com/system/resources/previews/017/063/592/non_2x/lion-face-cartoon-free-vector.jpg',
+                    name: 'Tim',
                   });
                   closeDrawer();
                 }}>
@@ -241,11 +242,12 @@ const Home = () => {
             <Pressable style={styles.profilePic} onPress={openDrawer}>
               <View
                 style={{
-                  height: verticalScale(69),
-                  width: verticalScale(69),
+                  height: verticalScale(89),
+                  width: verticalScale(89),
                   borderRadius: 100,
                   alignItems: 'center',
                   justifyContent: 'center',
+                  overflow: 'visible',
                 }}>
                 <Image
                   style={{
@@ -257,6 +259,9 @@ const Home = () => {
                     uri: userProfile,
                   }}
                 />
+                <RNTextComponent style={{marginTop: 5}} isSemiBold>
+                  {name}
+                </RNTextComponent>
               </View>
             </Pressable>
           )}
@@ -307,10 +312,20 @@ const Home = () => {
               : modeA.map((item, index) => (
                   <Pressable
                     onPress={() => {
-                      if (index === 0) {
-                        // navigateTo(SCREEN_NAME.GENERATE_STORY);
-                      } else if (index === 3) {
-                        navigateTo(SCREEN_NAME.REDEEM_VOUCHER);
+                      // if (index === 0) {
+                      //   // navigateTo(SCREEN_NAME.GENERATE_STORY);
+                      // } else if (index === 3) {
+                      //   navigateTo(SCREEN_NAME.REDEEM_VOUCHER);
+                      // }
+                      switch (index) {
+                        case 0:
+                          break;
+                        case 1:
+                          navigateTo(SCREEN_NAME.BOOKSHELF);
+                          break;
+                        case 3:
+                          navigateTo(SCREEN_NAME.REDEEM_VOUCHER);
+                          break;
                       }
                     }}>
                     <RNBookmarkComponent

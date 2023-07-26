@@ -7,23 +7,22 @@ import {Pressable, Switch, View} from 'react-native';
 import RNTextInputWithLabel from '@tandem/components/RNTextInputWithLabel';
 import {StateObject} from './interface';
 import RNTextComponent from '@tandem/components/RNTextComponent';
-import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 import {scale, verticalScale} from 'react-native-size-matters';
 import DownArrow from '@tandem/assets/svg/DownArrow';
 import themeColor from '@tandem/theme/themeColor';
 import RNButton from '@tandem/components/RNButton';
 import RNDeleteAccount from '@tandem/components/RNDeleteAccount';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
 
 const ProfileSettings = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const [state, setState] = useState<StateObject>({
-    name: '',
-    email: '',
     showModal: false,
   });
-
-  const {name, email, showModal} = state;
+  const [name, setName] = useState<ValidationError>({value: ''});
+  const [email, setEmail] = useState<ValidationError>({value: ''});
+  const {showModal} = state;
 
   const updateState = (date: any) => {
     setState((previouState: any) => {
@@ -51,7 +50,8 @@ const ProfileSettings = () => {
           hint={translation('NAME')}
           inputViewStyle={styles.inputBox}
           value={name}
-          updateText={e => updateState({name: e})}
+          validationType={FORM_INPUT_TYPE.NAME}
+          updateText={setName}
         />
         <RNTextInputWithLabel
           label={translation('YOUR_EMAIL')}
@@ -59,7 +59,8 @@ const ProfileSettings = () => {
           hint={translation('EMAIL')}
           inputViewStyle={styles.inputBox}
           value={email}
-          updateText={e => updateState({name: e})}
+          validationType={FORM_INPUT_TYPE.EMAIL}
+          updateText={setEmail}
         />
         <LanguageDropDown />
         <NotificationSwitch />

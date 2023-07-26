@@ -38,8 +38,7 @@ const Onboarding = () => {
         renderItem={renderBanner}
         pagingEnabled
         horizontal
-        decelerationRate={50}
-        onEndReachedThreshold={2}
+        decelerationRate={0.3}
         bounces={false}
         showsHorizontalScrollIndicator={false}
         onViewableItemsChanged={onViewableItemsChanged}

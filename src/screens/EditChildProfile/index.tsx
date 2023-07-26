@@ -12,16 +12,16 @@ import DownArrow from '@tandem/assets/svg/DownArrow';
 import RNButton from '@tandem/components/RNButton';
 import RNDeleteAccount from '@tandem/components/RNDeleteAccount';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
 
 const EditChildProfile = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const [state, setState] = useState<StateObject>({
-    name: '',
-    email: '',
     showModal: false,
   });
-
-  const {name, email, showModal} = state;
+  const [name, setName] = useState<ValidationError>({value: ''});
+  const [email, setEmail] = useState<ValidationError>({value: ''});
+  const {showModal} = state;
 
   const updateState = (date: any) => {
     setState((previouState: any) => {
@@ -50,7 +50,8 @@ const EditChildProfile = () => {
           hint={translation('NAME')}
           inputViewStyle={styles.inputBox}
           value={name}
-          updateText={e => updateState({name: e})}
+          validationType={FORM_INPUT_TYPE.NAME}
+          updateText={setName}
         />
         <RNTextInputWithLabel
           label={translation('DATE_OF_BIRTH')}
@@ -58,7 +59,8 @@ const EditChildProfile = () => {
           hint={'DOB'}
           inputViewStyle={styles.inputBox}
           value={email}
-          updateText={e => updateState({name: e})}
+          validationType={FORM_INPUT_TYPE.EMAIL}
+          updateText={setEmail}
         />
         <LanguageDropDown />
       </View>

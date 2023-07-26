@@ -48,7 +48,7 @@ const RNRoadmap = ({
         <Pressable
           style={styles.create}
           onPress={() => {
-            navigateTo(SCREEN_NAME.STORY_TELLING);
+            navigateTo(SCREEN_NAME.BOTTOM_TAB);
           }}>
           <Create
             mapIndex={questionIndex}

@@ -27,6 +27,7 @@ import MuteMic from '@tandem/assets/svg/MuteMic';
 
 const StoryTelling = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const mode = useAppSelector(state => state.mode.mode);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [renderModal, setRenderModal] = useState(false);
   const [readingLevel, setReadingLevel] = useState(false);
@@ -43,7 +44,6 @@ const StoryTelling = () => {
       return {...previouState, ...date};
     });
   };
-  const mode = useAppSelector(state => state.mode.mode);
   const renderStory = () => {
     return (
       <ImageBackground
@@ -127,6 +127,9 @@ const StoryTelling = () => {
           );
 
         case MODE.B:
+          return <RNButton onlyIcon icon={<Speaker />} onClick={() => {}} />;
+
+        case MODE.C:
           return (
             <RNButton
               onlyIcon
@@ -134,9 +137,6 @@ const StoryTelling = () => {
               onClick={() => updateState({toggleMic: !toggleMic})}
             />
           );
-
-        case MODE.C:
-          return <RNButton onlyIcon icon={<Speaker />} onClick={() => {}} />;
       }
     }
   };

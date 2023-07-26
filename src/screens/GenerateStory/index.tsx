@@ -1,7 +1,13 @@
 /* eslint-disable quotes */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable eqeqeq */
-import {View, ScrollView, ImageBackground} from 'react-native';
+import {
+  View,
+  ScrollView,
+  ImageBackground,
+  Image,
+  Pressable,
+} from 'react-native';
 import React, {useState} from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {styles} from './styles';
@@ -9,7 +15,13 @@ import RNTextComponent from '@tandem/components/RNTextComponent';
 import themeColor from '@tandem/theme/themeColor';
 import RNEmojiWithText from '@tandem/components/RNEmojiWithText';
 import RNButton from '@tandem/components/RNButton';
-import {place, audience, typeOfStory, attribute} from './interface';
+import {
+  place,
+  audience,
+  typeOfStory,
+  attribute,
+  illustration,
+} from './interface';
 import {StateObject} from './interface';
 import Camera from '@tandem/assets/svg/Camera';
 import LeftArrow from '@tandem/assets/svg/LeftArrow';
@@ -52,9 +64,10 @@ const GenerateStory = () => {
         colorCode: themeColor.red,
       },
     ],
+    addedIllustration: null,
   });
 
-  const {questionNumber} = state;
+  const {questionNumber, addedIllustration} = state;
 
   const updateState = (date: any) => {
     setState((previouState: any) => {
@@ -123,8 +136,19 @@ const GenerateStory = () => {
       case 9:
         return null;
       case 10:
-        return null;
+        return (
+          <RNTextComponent isSemiBold style={styles.question}>
+            What style of illustrations{' '}
+            <RNTextComponent
+              style={{...styles.question, color: 'rgba(10, 8, 4, 0.6)'}}
+              isSemiBold>
+              shall we use?
+            </RNTextComponent>{' '}
+          </RNTextComponent>
+        );
       case 11:
+        return null;
+      case 12:
         return null;
     }
   };
@@ -274,12 +298,39 @@ const GenerateStory = () => {
           />
         );
       case 10:
-        return <RNChooseColor />;
+        return (
+          <ScrollView
+            contentContainerStyle={[styles.scrollView]}
+            scrollEnabled
+            showsVerticalScrollIndicator={false}>
+            {illustration.map((value, index) => {
+              return (
+                <Pressable
+                  onPress={() => {
+                    updateState({addedIllustration: index});
+                  }}>
+                  <Image
+                    source={value.url}
+                    style={[
+                      styles.illustration,
+                      index === addedIllustration && {
+                        borderWidth: 3,
+                        borderColor: themeColor.themeBlue,
+                      },
+                    ]}
+                  />
+                </Pressable>
+              );
+            })}
+          </ScrollView>
+        );
       case 11:
+        return <RNChooseColor />;
+      case 12:
         return (
           <RNRoadmap
             nextQuestion={() => {
-              navigateTo(SCREEN_NAME.ACTIVITIES);
+              navigateTo(SCREEN_NAME.BOTTOM_TAB);
             }}
             questionIndex={questionNumber}
           />
@@ -291,7 +342,7 @@ const GenerateStory = () => {
     if (questionNumber <= 10) {
       updateState({questionNumber: questionNumber + 1});
     } else {
-      navigateTo(SCREEN_NAME.ACTIVITIES);
+      navigateTo(SCREEN_NAME.BOTTOM_TAB);
     }
   };
 
@@ -308,22 +359,27 @@ const GenerateStory = () => {
       case 1:
         return 1;
       case 2:
-        return 2;
+        return 1;
       case 4:
-        return 3;
+        return 2;
       case 6:
-        return 4;
+        return 3;
       case 8:
-        return 5;
+        return 4;
       case 10:
+        return 5;
+      case 11:
         return 6;
     }
   };
 
   const showHeader = () => {
     if (
-      (questionNumber % 2 == 0 || questionNumber == 1 || questionNumber == 2) &&
-      questionNumber != 0
+      ((questionNumber % 2 == 0 ||
+        questionNumber == 1 ||
+        questionNumber == 2) &&
+        questionNumber != 0) ||
+      questionNumber == 11
     ) {
       return (
         <>
@@ -381,6 +437,7 @@ const GenerateStory = () => {
       </View>
       {(questionNumber % 2 == 0 ||
         questionNumber == 2 ||
+        questionNumber == 11 ||
         questionNumber == 1) &&
         questionNumber != 0 && (
           <RNButton

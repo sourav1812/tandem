@@ -75,7 +75,7 @@ const SocialSignIn = () => {
               handleOnPress={() => {
                 navigateTo(SCREEN_NAME.SIGN_UP);
               }}>
-              {translation('SIGN_IN')}
+              {translation('SIGN_UP')}
             </RNTextComponent>
           </RNTextComponent>
         </View>

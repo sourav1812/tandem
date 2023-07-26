@@ -45,4 +45,12 @@ export const styles = StyleSheet.create({
     width: '100%',
     alignSelf: 'center',
   },
+  inputContainer: {
+    marginTop: verticalScale(15),
+  },
+  inputView: {
+    borderWidth: 1.5,
+    borderColor: themeColor.lightGray,
+    paddingRight: scale(13),
+  },
 });

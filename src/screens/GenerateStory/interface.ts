@@ -10,6 +10,7 @@ export interface colorPalette {
 export interface StateObject {
   questionNumber: number;
   colorPalette: colorPalette[];
+  addedIllustration: number | null;
 }
 
 interface placeType {
@@ -50,4 +51,12 @@ export const attribute: placeType[] = [
   {name: 'Book', icon: '📖', bgc: themeColor.lightGreen},
   {name: 'Dog', icon: '🐶', bgc: themeColor.pink},
   {name: 'Bird', icon: '🐣', bgc: themeColor.themeBlue},
+];
+
+export const illustration = [
+  {url: require('../../assets/png/onboarding1.png')},
+  {url: require('../../assets/png/onboarding2.png')},
+  {url: require('../../assets/png/onboarding3.png')},
+  {url: require('@tandem/assets/png/natureCamp.jpeg')},
+  {url: require('@tandem/assets/png/notSure.png')},
 ];

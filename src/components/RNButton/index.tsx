@@ -5,7 +5,6 @@ import themeColor from '@tandem/theme/themeColor';
 import RNTextComponent from '../RNTextComponent';
 import {Props} from './interface';
 import {verticalScale} from 'react-native-size-matters';
-import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 
 const RNButton = ({

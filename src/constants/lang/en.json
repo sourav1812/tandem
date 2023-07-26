@@ -10,7 +10,7 @@
   "NAME": "Name",
   "EMAIL": "Email",
   "PASSWORD": "Password",
-  "CONFIRM_PASSWORD": "Password",
+  "CONFIRM_PASSWORD": " Confirm Password",
   "SIGN_UP": "Sign Up",
   "OR_CONTINUE_WITH": "or continue with",
   "ALREADY_HAVE_AN_ACCOUNT": "Already have an account?",
@@ -38,7 +38,7 @@
   "WELCOME_TO_TANDEM": "Welcome to Tandem",
   "SPARK_YOUR_CHILD_CREATIVITY": "Spark Your Child's Creativity",
   "CREATE_MAGIC_WITH_AI": "Create Magic With AI",
-  "WITH_TANDEM_YOU_WILL_THE_POWER": "With Tandem, you'll be able to see the power of AI to bring your child's imagination to life",
+  "WITH_TANDEM_YOU_WILL_THE_POWER": "With Tandem, you'll be able to use the power of AI to bring your child's imagination to life",
   "YOUR_CHILD_CAN_CHOOSE_FROM_A_VARIETY": "Your child can choose from a variety of characters, settings, and objects to create their own unique story",
 
   "BOOKSHELF": "Bookshelf",
@@ -125,6 +125,22 @@
   "CHILD": "Child",
   "ADULT": "Adult",
   "SELECT_MODE": "Select Mode",
+  "validations": {
+    "email-required": "Email is required",
+    "email-no-spaces": "Email should not contain whitespaces",
+    "email-invalid": "Please enter a valid email",
+    "password-required": "Password is required",
+    "password-no-match": "Passwords do not match",
+    "password-no-spaces": "Password should not contain whitespaces",
+    "password-length": "Password length must be greater than 6",
+    "name-required": "This field cannot be empty",
+    "phone-required": "Phone number is required",
+    "phone-no-spaces": "Phone number must not contain whitespaces",
+    "phone-invalid": "Please enter a valid phone number",
+    "pin-required": "Pin is required",
+    "pin-no-spaces": "Pin must not contain whitespaces",
+    "pin-invalid": "Please enter a valid pin"
+  },
   "READING_TIME": "Reading Time",
   "NUMBER_OF_BOOKS": "Number of books",
   "TIME_CREATING": "Time creating",
@@ -133,5 +149,6 @@
   "PERSONALIZED_CHILD_DEVELOPMENT": "Personalized Child development insights",
   "SCAN_YOUR_QR_CODE": "Scar your QR Code",
   "ENTER_VOUCHER_CODE": "Enter voucher code",
-  "VOUCHER": "Voucher"
+  "VOUCHER": "Voucher",
+  "READ_TOGETHER": "Read Together"
 }

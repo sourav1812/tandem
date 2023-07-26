@@ -100,10 +100,12 @@ const People = ({}: PeopleScreenProps) => {
                 Ella
               </RNTextComponent>
             </View>
-            <RNAddComponent
-              customStyle={styles.addButton}
-              boxStyle={styles.addBox}
-            />
+            <Pressable onPress={() => navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN)}>
+              <RNAddComponent
+                customStyle={styles.addButton}
+                boxStyle={styles.addBox}
+              />
+            </Pressable>
           </View>
           <View style={styles.firstTab}>
             <ScrollView showsVerticalScrollIndicator={false}>
@@ -126,7 +128,10 @@ const People = ({}: PeopleScreenProps) => {
         <>
           <View style={styles.littlePeople}>
             <ScrollView contentContainerStyle={styles.scrollview}>
-              <View>
+              <Pressable
+                onPress={() => {
+                  navigateTo(SCREEN_NAME.EditChildProfile);
+                }}>
                 <View
                   style={[
                     styles.profile,
@@ -139,10 +144,10 @@ const People = ({}: PeopleScreenProps) => {
                 <RNTextComponent style={styles.name} isSemiBold>
                   Ella
                 </RNTextComponent>
-              </View>
+              </Pressable>
               <Pressable
                 onPress={() => {
-                  navigateTo(SCREEN_NAME.EditChildProfile);
+                  navigateTo(SCREEN_NAME.CREATE_CHILD_PROFILE);
                 }}>
                 <RNAddComponent
                   customStyle={styles.addButton}
