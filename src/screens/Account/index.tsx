@@ -2,7 +2,6 @@
 import React, {useState} from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {styles} from './styles';
-import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 import {View, Image, ScrollView, Pressable} from 'react-native';
 import Logout from '@tandem/assets/svg/Logout';
 import RNButton from '@tandem/components/RNButton';
@@ -225,7 +224,7 @@ const Account = () => {
             onPress={() => {
               if (playerList.length !== 0) {
                 buttonPress();
-                navigateTo(SCREEN_NAME.BOTTOM_TAB, {}, true);
+                navigateTo(SCREEN_NAME.BOTTOM_TAB);
               }
             }}>
             {playerList.map(item => {
@@ -250,7 +249,7 @@ const Account = () => {
         renderModal={toggleSignOut}
         nextClick={() => {
           toggleSignOut();
-          navigateTo(SCREEN_NAME.SELECT_LANGUAGE);
+          navigateTo(SCREEN_NAME.SELECT_LANGUAGE, {}, true);
         }}
       />
     </RNScreenWrapper>
