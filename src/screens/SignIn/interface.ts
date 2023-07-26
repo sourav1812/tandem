@@ -1,4 +1,6 @@
+import {ValidationError} from '@tandem/utils/validations';
+
 export interface StateObject {
-  email: string;
-  password: string;
+  email: ValidationError;
+  password: ValidationError;
 }

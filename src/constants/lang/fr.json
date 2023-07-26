@@ -75,5 +75,21 @@
   "USER_ELIGIBILITY": "Admissibilité de l'utilisateur : 1.1 L'application est destinée à être utilisée par des enfants âgés de 13 ans et moins. En utilisant l'application, vous déclarez que vous êtes un parent ou un tuteur légal et que vous avez le pouvoir de consentir à cet accord au nom de votre enfant. Si vous avez moins de 13 ans, vous ne pouvez utiliser l'application qu'avec le consentement et la supervision d'un parent ou d'un tuteur légal.",
   "I_AGREE_TO_THE_TERMS": "J'accepte les termes et conditions du contrat de licence utilisateur final.",
   "HAVE_FUN_MAKE_STORIES": "Amusez-vous, créez des histoires, lisez et riez ensemble. Construisez des cerveaux et des souvenirs heureux.",
-  "GET_STARTED": "Commencer"
+  "GET_STARTED": "Commencer",
+  "validations": {
+    "email-required": "Email is required",
+    "email-no-spaces": "Email should not contain whitespaces",
+    "email-invalid": "Please enter a valid email",
+    "password-required": "Password is required",
+    "password-no-match": "Passwords do not match",
+    "password-no-spaces": "Password should not contain whitespaces",
+    "password-length": "Password length must be greater than 6",
+    "name-required": "This field cannot be empty",
+    "phone-required": "Phone number is required",
+    "phone-no-spaces": "Phone number must not contain whitespaces",
+    "phone-invalid": "Please enter a valid phone number",
+    "pin-required": "Pin is required",
+    "pin-no-spaces": "Pin must not contain whitespaces",
+    "pin-invalid": "Please enter a valid pin"
+  }
 }

@@ -75,5 +75,21 @@
   "USER_ELIGIBILITY": "Geschiktheid gebruiker: 1.1 De app is bedoeld voor gebruik door kinderen van 13 jaar en jonger. Door de app te gebruiken, verklaart u dat u een ouder of wettelijke voogd bent en dat u bevoegd bent om namens deze overeenkomst in te stemmen van uw kind. Als u jonger bent dan 13 jaar, mag u de App alleen gebruiken met toestemming en toezicht van een ouder of wettelijke voogd.",
   "I_AGREE_TO_THE_TERMS": "Ik ga akkoord met de voorwaarden van de licentieovereenkomst voor eindgebruikers.",
   "HAVE_FUN_MAKE_STORIES": "Veel plezier, maak verhalen, lees en lach samen. Bouw hersenen en gelukkige herinneringen op.",
-  "GET_STARTED": "Aan de slag"
+  "GET_STARTED": "Aan de slag",
+  "validations": {
+    "email-required": "Email is required",
+    "email-no-spaces": "Email should not contain whitespaces",
+    "email-invalid": "Please enter a valid email",
+    "password-required": "Password is required",
+    "password-no-match": "Passwords do not match",
+    "password-no-spaces": "Password should not contain whitespaces",
+    "password-length": "Password length must be greater than 6",
+    "name-required": "This field cannot be empty",
+    "phone-required": "Phone number is required",
+    "phone-no-spaces": "Phone number must not contain whitespaces",
+    "phone-invalid": "Please enter a valid phone number",
+    "pin-required": "Pin is required",
+    "pin-no-spaces": "Pin must not contain whitespaces",
+    "pin-invalid": "Please enter a valid pin"
+  }
 }

@@ -1,15 +1,19 @@
+import {ValidationError} from '@tandem/utils/validations';
 import {TextInputProps, StyleProp, TextStyle, ViewStyle} from 'react-native';
 
 export interface Props {
   props?: TextInputProps;
   label?: string;
   hint?: string;
-  value: string;
-  updateText: (value: string) => void;
+  value: ValidationError;
+  updateText: React.Dispatch<React.SetStateAction<ValidationError>>;
   inputStyle?: StyleProp<TextStyle>;
   showIcon?: boolean;
   Icon?: any;
   backgroundColor?: string;
   containerStyle?: StyleProp<ViewStyle>;
   inputViewStyle?: StyleProp<ViewStyle>;
+  validationType?: string;
+  errorTextStyle?: StyleProp<TextStyle>;
+  rightSideIcon?: boolean;
 }

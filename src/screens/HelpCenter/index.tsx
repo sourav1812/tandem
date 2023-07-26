@@ -22,18 +22,18 @@ import Add from '@tandem/assets/svg/Add';
 import navigateTo from '@tandem/navigation/navigate';
 import {translation} from '@tandem/utils/methods';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
 
 const HelpCenter = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
 
   const [state, setState] = useState<StateObject>({
-    email: '',
-    name: '',
     firstTab: false,
-    message: '',
   });
-
-  const {email, name, firstTab, message} = state;
+  const [email, setEmail] = useState<ValidationError>({value: ''});
+  const [name, setName] = useState<ValidationError>({value: ''});
+  const [message, setMessage] = useState<ValidationError>({value: ''});
+  const {firstTab} = state;
 
   const updateState = (newState: any) => {
     setState((previouState: StateObject) => {
@@ -118,9 +118,8 @@ const HelpCenter = () => {
                     backgroundColor={themeColor.lightGray}
                     containerStyle={styles.input2}
                     value={name}
-                    updateText={e => {
-                      updateState({name: e});
-                    }}
+                    validationType={FORM_INPUT_TYPE.NAME}
+                    updateText={setName}
                     hint={i18n.t('ENTER_NAME')}
                     inputStyle={styles.inputText}
                   />
@@ -129,9 +128,8 @@ const HelpCenter = () => {
                     backgroundColor={themeColor.lightGray}
                     containerStyle={styles.input2}
                     value={email}
-                    updateText={e => {
-                      updateState({email: e});
-                    }}
+                    validationType={FORM_INPUT_TYPE.EMAIL}
+                    updateText={setEmail}
                     hint={i18n.t('ENTER_YOUR_EMAIL')}
                     inputStyle={styles.inputText}
                   />
@@ -140,9 +138,7 @@ const HelpCenter = () => {
                     backgroundColor={themeColor.lightGray}
                     containerStyle={styles.input2}
                     value={message}
-                    updateText={e => {
-                      updateState({message: e});
-                    }}
+                    updateText={setMessage}
                     hint={i18n.t('ENTER_MESSAGE')}
                     inputStyle={[styles.inputText, {width: '100%', flex: 0}]}
                     inputViewStyle={styles.inputView}
