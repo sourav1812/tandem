@@ -29,6 +29,7 @@ import People from '@tandem/screens/People';
 import AboutApp from '@tandem/screens/AboutApp';
 import EditChildProfile from '@tandem/screens/EditChildProfile';
 import RedeemVoucher from '@tandem/screens/RedeemVoucher';
+import {Platform} from 'react-native';
 
 const AppNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -36,68 +37,101 @@ const AppNavigator = () => {
 
   return (
     <NavigationContainer ref={navigationRef}>
-      <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+          orientation: 'portrait',
+          animation: Platform.OS === 'android' ? 'none' : 'default',
+        }}>
         <Stack.Screen
           component={SplashScreen}
           name={SCREEN_NAME.SPLASH_SCREEN}
         />
-        <Stack.Screen
-          component={SelectLanguage}
-          name={SCREEN_NAME.SELECT_LANGUAGE}
-        />
-        <Stack.Screen component={Onboarding} name={SCREEN_NAME.ONBOARDING} />
-        <Stack.Screen
-          component={SocialSignIn}
-          name={SCREEN_NAME.SOCIAL_SIGN_IN}
-        />
-        <Stack.Screen component={SignUp} name={SCREEN_NAME.SIGN_UP} />
-        <Stack.Screen component={SignIn} name={SCREEN_NAME.SIGN_IN} />
-        <Stack.Screen
-          component={TermsAndConditions}
-          name={SCREEN_NAME.TERMS_AND_CONDITIONS}
-        />
-        <Stack.Screen component={HelpCenter} name={SCREEN_NAME.HELP_CENTER} />
-        <Stack.Screen
-          component={CreateChildProfile}
-          name={SCREEN_NAME.CREATE_CHILD_PROFILE}
-        />
-        <Stack.Screen component={Account} name={SCREEN_NAME.ACCOUNT} />
-        {mode === MODE.B && (
-          <Stack.Screen
-            component={SelectPlayer}
-            name={SCREEN_NAME.SELECT_PLAYER}
-          />
-        )}
         <Stack.Screen component={BottomTab} name={SCREEN_NAME.BOTTOM_TAB} />
-        <Stack.Screen
-          component={RedeemVoucher}
-          name={SCREEN_NAME.REDEEM_VOUCHER}
-        />
-        <Stack.Screen
-          component={GenerateStory}
-          name={SCREEN_NAME.GENERATE_STORY}
-        />
-        <Stack.Screen
-          component={StoryTelling}
-          name={SCREEN_NAME.STORY_TELLING}
-        />
-        <Stack.Screen component={People} name={SCREEN_NAME.PEOPLE} />
-        <Stack.Screen component={Story} name={SCREEN_NAME.STORY} />
-        <Stack.Screen component={Activities} name={SCREEN_NAME.ACTIVITIES} />
-        <Stack.Screen component={Questions} name={SCREEN_NAME.QUESTIONS} />
-        <Stack.Screen
-          component={ProfileSettings}
-          name={SCREEN_NAME.PROFILE_SETTINGS}
-        />
-        <Stack.Screen
-          component={ChangePassword}
-          name={SCREEN_NAME.CHANGE_PASSWORD}
-        />
-        <Stack.Screen component={AboutApp} name={SCREEN_NAME.ABOUT_APP} />
-        <Stack.Screen
-          component={EditChildProfile}
-          name={SCREEN_NAME.EditChildProfile}
-        />
+        <Stack.Screen component={Account} name={SCREEN_NAME.ACCOUNT} />
+
+        {mode === MODE.A && (
+          <>
+            <Stack.Screen
+              component={SelectLanguage}
+              name={SCREEN_NAME.SELECT_LANGUAGE}
+            />
+            <Stack.Screen
+              component={Onboarding}
+              name={SCREEN_NAME.ONBOARDING}
+            />
+            <Stack.Screen
+              component={SocialSignIn}
+              name={SCREEN_NAME.SOCIAL_SIGN_IN}
+            />
+            <Stack.Screen component={SignUp} name={SCREEN_NAME.SIGN_UP} />
+            <Stack.Screen component={SignIn} name={SCREEN_NAME.SIGN_IN} />
+            <Stack.Screen
+              component={TermsAndConditions}
+              name={SCREEN_NAME.TERMS_AND_CONDITIONS}
+            />
+            <Stack.Screen
+              component={HelpCenter}
+              name={SCREEN_NAME.HELP_CENTER}
+            />
+            <Stack.Screen
+              component={CreateChildProfile}
+              name={SCREEN_NAME.CREATE_CHILD_PROFILE}
+            />
+            <Stack.Screen
+              component={RedeemVoucher}
+              name={SCREEN_NAME.REDEEM_VOUCHER}
+            />
+            <Stack.Screen
+              component={EditChildProfile}
+              name={SCREEN_NAME.EditChildProfile}
+            />
+            <Stack.Screen
+              component={ChangePassword}
+              name={SCREEN_NAME.CHANGE_PASSWORD}
+            />
+            <Stack.Screen component={People} name={SCREEN_NAME.PEOPLE} />
+            <Stack.Screen component={AboutApp} name={SCREEN_NAME.ABOUT_APP} />
+            <Stack.Screen
+              component={ProfileSettings}
+              name={SCREEN_NAME.PROFILE_SETTINGS}
+            />
+          </>
+        )}
+        {mode === MODE.B && (
+          <>
+            <Stack.Screen
+              component={GenerateStory}
+              name={SCREEN_NAME.GENERATE_STORY}
+            />
+            <Stack.Screen
+              component={SelectPlayer}
+              name={SCREEN_NAME.SELECT_PLAYER}
+            />
+            <Stack.Screen
+              component={StoryTelling}
+              name={SCREEN_NAME.STORY_TELLING}
+            />
+            <Stack.Screen component={Questions} name={SCREEN_NAME.QUESTIONS} />
+          </>
+        )}
+        {mode === MODE.C && (
+          <>
+            <Stack.Screen
+              component={GenerateStory}
+              name={SCREEN_NAME.GENERATE_STORY}
+            />
+            <Stack.Screen
+              component={StoryTelling}
+              name={SCREEN_NAME.STORY_TELLING}
+            />
+            <Stack.Screen component={Story} name={SCREEN_NAME.STORY} />
+            <Stack.Screen
+              component={Activities}
+              name={SCREEN_NAME.ACTIVITIES}
+            />
+          </>
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );

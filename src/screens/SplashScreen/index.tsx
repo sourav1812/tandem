@@ -23,6 +23,7 @@ const SplashScreen = () => {
     let isAndroidTablet = DeviceInfo.isTablet();
     let isTablet = isIpad || isAndroidTablet ? true : false;
     dispatch(changeDevice(isTablet));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
