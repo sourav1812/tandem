@@ -14,7 +14,7 @@ const SplashScreen = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      navigateTo(SCREEN_NAME.SELECT_LANGUAGE);
+      navigateTo(SCREEN_NAME.SELECT_LANGUAGE, {}, true);
     }, 2000);
   }, []);
 

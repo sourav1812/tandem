@@ -33,6 +33,31 @@ const AppNavigator = () => {
         <Stack.Screen component={BottomTab} name={SCREEN_NAME.BOTTOM_TAB} />
         <Stack.Screen component={Account} name={SCREEN_NAME.ACCOUNT} />
 
+        <Stack.Screen
+          getComponent={() => require('@tandem/screens/Story').default}
+          name={SCREEN_NAME.STORY}
+        />
+        <Stack.Screen
+          getComponent={() => require('@tandem/screens/SocialSignIn').default}
+          name={SCREEN_NAME.SOCIAL_SIGN_IN}
+        />
+        {(mode === MODE.B || mode === MODE.C) && (
+          <>
+            <Stack.Screen
+              getComponent={() =>
+                require('@tandem/screens/GenerateStory').default
+              }
+              name={SCREEN_NAME.GENERATE_STORY}
+            />
+            <Stack.Screen
+              getComponent={() =>
+                require('@tandem/screens/StoryTelling').default
+              }
+              name={SCREEN_NAME.STORY_TELLING}
+            />
+          </>
+        )}
+
         {mode === MODE.A && (
           <>
             <Stack.Screen
@@ -45,12 +70,7 @@ const AppNavigator = () => {
               getComponent={() => require('@tandem/screens/Onboarding').default}
               name={SCREEN_NAME.ONBOARDING}
             />
-            <Stack.Screen
-              getComponent={() =>
-                require('@tandem/screens/SocialSignIn').default
-              }
-              name={SCREEN_NAME.SOCIAL_SIGN_IN}
-            />
+
             <Stack.Screen
               getComponent={() => require('@tandem/screens/SignUp').default}
               name={SCREEN_NAME.SIGN_UP}
@@ -101,10 +121,6 @@ const AppNavigator = () => {
               getComponent={() => require('@tandem/screens/AboutApp').default}
               name={SCREEN_NAME.ABOUT_APP}
             />
-            <Stack.Screen
-              getComponent={() => require('@tandem/screens/Story').default}
-              name={SCREEN_NAME.STORY}
-            />
 
             <Stack.Screen
               getComponent={() =>
@@ -118,33 +134,11 @@ const AppNavigator = () => {
           <>
             <Stack.Screen
               getComponent={() =>
-                require('@tandem/screens/SelectLanguage').default
-              }
-              name={SCREEN_NAME.SELECT_LANGUAGE}
-            />
-            <Stack.Screen
-              getComponent={() =>
-                require('@tandem/screens/GenerateStory').default
-              }
-              name={SCREEN_NAME.GENERATE_STORY}
-            />
-            <Stack.Screen
-              getComponent={() =>
                 require('@tandem/screens/SelectPlayer').default
               }
               name={SCREEN_NAME.SELECT_PLAYER}
             />
-            <Stack.Screen
-              getComponent={() => require('@tandem/screens/Story').default}
-              name={SCREEN_NAME.STORY}
-            />
 
-            <Stack.Screen
-              getComponent={() =>
-                require('@tandem/screens/StoryTelling').default
-              }
-              name={SCREEN_NAME.STORY_TELLING}
-            />
             <Stack.Screen
               getComponent={() => require('@tandem/screens/Questions').default}
               name={SCREEN_NAME.QUESTIONS}
@@ -153,28 +147,6 @@ const AppNavigator = () => {
         )}
         {mode === MODE.C && (
           <>
-            <Stack.Screen
-              getComponent={() =>
-                require('@tandem/screens/SelectLanguage').default
-              }
-              name={SCREEN_NAME.SELECT_LANGUAGE}
-            />
-            <Stack.Screen
-              getComponent={() =>
-                require('@tandem/screens/GenerateStory').default
-              }
-              name={SCREEN_NAME.GENERATE_STORY}
-            />
-            <Stack.Screen
-              getComponent={() =>
-                require('@tandem/screens/StoryTelling').default
-              }
-              name={SCREEN_NAME.STORY_TELLING}
-            />
-            <Stack.Screen
-              getComponent={() => require('@tandem/screens/Story').default}
-              name={SCREEN_NAME.STORY}
-            />
             <Stack.Screen
               getComponent={() => require('@tandem/screens/Activities').default}
               name={SCREEN_NAME.ACTIVITIES}

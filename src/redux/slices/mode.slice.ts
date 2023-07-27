@@ -19,9 +19,10 @@ export const modeSlice = createSlice({
     changeMode: (state, action) => {
       state.mode = action.payload;
     },
+    resetModeInitialState: _state => initialState,
   },
 });
 
-export const {changeMode} = modeSlice.actions;
+export const {changeMode, resetModeInitialState} = modeSlice.actions;
 
 export default modeSlice.reducer;
