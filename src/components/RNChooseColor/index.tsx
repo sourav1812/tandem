@@ -82,7 +82,7 @@ const RNChooseColor = () => {
       <View style={styles.footer}>
         <AddColor />
         {Array.from({length: 3}, (_, i) => (
-          <EmptyPatch />
+          <EmptyPatch key={i} />
         ))}
       </View>
     </View>

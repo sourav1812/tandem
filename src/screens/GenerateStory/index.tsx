@@ -144,9 +144,10 @@ const GenerateStory = () => {
             contentContainerStyle={[styles.scrollView]}
             scrollEnabled
             showsVerticalScrollIndicator={false}>
-            {audience.map(value => {
+            {audience.map((value, index) => {
               return (
                 <RNEmojiWithText
+                  key={index}
                   heading={value.name}
                   customStyle={styles.optionsCustom}
                   icon={value.icon}
@@ -203,9 +204,10 @@ const GenerateStory = () => {
             contentContainerStyle={[styles.scrollView]}
             scrollEnabled
             showsVerticalScrollIndicator={false}>
-            {place.map(value => {
+            {place.map((value, index) => {
               return (
                 <RNEmojiWithText
+                  key={index}
                   heading={value.name}
                   customStyle={styles.optionsCustom}
                   icon={value.icon}
@@ -229,9 +231,10 @@ const GenerateStory = () => {
             contentContainerStyle={[styles.scrollView]}
             scrollEnabled
             showsVerticalScrollIndicator={false}>
-            {attribute.map(value => {
+            {attribute.map((value, index) => {
               return (
                 <RNEmojiWithText
+                  key={index}
                   heading={value.name}
                   customStyle={styles.optionsCustom}
                   icon={value.icon}
@@ -254,9 +257,10 @@ const GenerateStory = () => {
             contentContainerStyle={[styles.scrollView]}
             scrollEnabled
             showsVerticalScrollIndicator={false}>
-            {typeOfStory.map(value => {
+            {typeOfStory.map((value, index) => {
               return (
                 <RNEmojiWithText
+                  key={index}
                   heading={value.name}
                   customStyle={styles.optionsCustom}
                   icon={value.icon}
@@ -352,6 +356,7 @@ const GenerateStory = () => {
               const currentIndex = showIndexes();
               return (
                 <View
+                  key={index.index}
                   style={[
                     styles.indicator,
                     {
