@@ -5,15 +5,17 @@ import {
   Pressable,
   useWindowDimensions,
   ScrollView,
+  Animated,
+  Easing,
   LayoutAnimation,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {useOrientation} from '@tandem/hooks/useOrientation';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import themeColor from '@tandem/theme/themeColor';
-import {verticalScale} from 'react-native-size-matters';
+import {scale, verticalScale} from 'react-native-size-matters';
 import RNBookmarkComponent from '@tandem/components/RNBookmarkComponent';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import i18n from '@tandem/constants/lang/i18n';
@@ -94,266 +96,277 @@ const Home = () => {
   };
 
   const openDrawer = () => {
-    updateState({changeUser: true});
-    LayoutAnimation.configureNext({
-      duration: 200,
-      update: {type: 'easeInEaseOut'},
-    });
+    updateState({changeUser: !changeUser});
   };
 
-  const closeDrawer = () => {
-    updateState({changeUser: false});
-    LayoutAnimation.configureNext({
-      duration: 200,
-      update: {type: 'easeInEaseOut'},
-    });
-  };
-
+  const [heightOfBanner, setHeight] = useState({
+    value: 0,
+    fromLayout: false,
+  });
   return (
-    <RNScreenWrapper>
-      <View style={[styles.container]}>
+    <>
+      <Pressable
+        style={[
+          styles.profilePic,
+          {
+            top:
+              heightOfBanner.value - verticalScale(18) - verticalScale(89) / 2,
+            ...(changeUser && {
+              shadowColor: '#000',
+              shadowOffset: {
+                width: 0,
+                height: 1,
+              },
+              shadowOpacity: 0.32,
+              shadowRadius: 5.22,
+              elevation: 4,
+            }),
+          },
+        ]}
+        onPress={openDrawer}>
         <View
-          style={[
-            styles.header,
-            {
-              height: !portrait
-                ? verticalScale(115)
-                : isTablet
-                ? verticalScale(115)
-                : verticalScale(165),
-            },
-          ]}>
-          <RNTextComponent
-            isSemiBold
+          style={{
+            height: verticalScale(89),
+            width: verticalScale(89),
+            alignItems: 'center',
+            justifyContent: 'center',
+            overflow: 'visible',
+          }}>
+          <Image
             style={{
-              ...styles.heading,
-              color: themeColor.white,
-              marginTop:
-                !isTablet && portrait ? verticalScale(60) : verticalScale(20),
-            }}>
-            {i18n.t('HELLO')}, Ella!(Mum) 👋🏻
+              height: verticalScale(59),
+              width: verticalScale(59),
+              borderRadius: 100,
+            }}
+            source={{
+              uri: userProfile,
+            }}
+          />
+          <RNTextComponent
+            style={{
+              marginTop: 5,
+              position: 'absolute',
+              bottom: -verticalScale(10),
+              fontSize: verticalScale(18),
+            }}
+            isSemiBold>
+            {name}
           </RNTextComponent>
-          <Pressable
-            onPress={() => navigateTo(SCREEN_NAME.ACCOUNT)}
+        </View>
+        {changeUser && <ChangeChild userProfile={userProfile} name={name} />}
+      </Pressable>
+      <RNScreenWrapper>
+        <View style={[styles.container]}>
+          <View
+            onLayout={event => {
+              if (!heightOfBanner.fromLayout) {
+                setHeight({
+                  value: event.nativeEvent.layout.height,
+                  fromLayout: true,
+                });
+              }
+            }}
             style={[
-              styles.blueButton,
+              styles.header,
               {
-                top:
-                  !isTablet && portrait ? verticalScale(50) : verticalScale(17),
+                height: !portrait
+                  ? verticalScale(115)
+                  : isTablet
+                  ? verticalScale(115)
+                  : verticalScale(165),
               },
             ]}>
-            <BlueButon />
-          </Pressable>
-          <View
-            style={{
-              width: '100%',
-              backgroundColor: 'transparent',
-              height: verticalScale(23),
-              position: 'absolute',
-              bottom: -17,
-              justifyContent: 'space-between',
-              flexDirection: 'row',
-              zIndex: 10,
-            }}>
-            <View
+            <RNTextComponent
+              isSemiBold
               style={{
-                backgroundColor: themeColor.gold,
-                width: (+width - verticalScale(80)) / 2,
-                borderBottomRightRadius: 100,
-                borderTopRightRadius: 100,
-              }}
-            />
-            <View
-              style={{
-                backgroundColor: themeColor.gold,
-                width: (+width - verticalScale(80)) / 2,
-                borderBottomLeftRadius: 100,
-                borderTopLeftRadius: 100,
-              }}
-            />
-          </View>
-          {changeUser ? (
+                ...styles.heading,
+                color: themeColor.white,
+                marginTop:
+                  !isTablet && portrait ? verticalScale(60) : verticalScale(20),
+              }}>
+              {i18n.t('HELLO')}, Ella!(Mum) 👋🏻
+            </RNTextComponent>
             <Pressable
+              onPress={() => navigateTo(SCREEN_NAME.ACCOUNT)}
               style={[
-                styles.profilePic,
-                changeUser && {
-                  height: verticalScale(200),
-                  top: verticalScale(100),
-                  zIndex: 11,
-                  width: verticalScale(85),
-                  shadowColor: '#000',
-                  shadowOffset: {
-                    width: 0,
-                    height: 1,
-                  },
-                  shadowOpacity: 0.22,
-                  shadowRadius: 2.22,
-
-                  elevation: 3,
+                styles.blueButton,
+                {
+                  top:
+                    !isTablet && portrait
+                      ? verticalScale(50)
+                      : verticalScale(17),
                 },
-              ]}
-              onPress={closeDrawer}>
-              <Pressable
-                style={styles.imageContainer}
-                onPress={() => {
-                  updateState({
-                    userProfile:
-                      'https://static.vecteezy.com/system/resources/previews/016/461/449/non_2x/cute-giraffe-face-wild-animal-character-in-animated-cartoon-illustration-vector.jpg',
-                    name: 'Lisa',
-                  });
-                  closeDrawer();
-                }}>
-                <Image
-                  style={{
-                    height: verticalScale(59),
-                    width: verticalScale(59),
-                    borderRadius: 100,
-                  }}
-                  source={{
-                    uri: 'https://static.vecteezy.com/system/resources/previews/016/461/449/non_2x/cute-giraffe-face-wild-animal-character-in-animated-cartoon-illustration-vector.jpg',
-                  }}
-                />
-                <RNTextComponent>Lisa</RNTextComponent>
-              </Pressable>
-              <Pressable
-                style={styles.imageContainer}
-                onPress={() => {
-                  updateState({
-                    userProfile:
-                      'https://static.vecteezy.com/system/resources/previews/017/063/592/non_2x/lion-face-cartoon-free-vector.jpg',
-                    name: 'Tim',
-                  });
-                  closeDrawer();
-                }}>
-                <Image
-                  style={{
-                    height: verticalScale(59),
-                    width: verticalScale(59),
-                    borderRadius: 100,
-                  }}
-                  source={{
-                    uri: 'https://static.vecteezy.com/system/resources/previews/017/063/592/non_2x/lion-face-cartoon-free-vector.jpg',
-                  }}
-                />
-                <RNTextComponent>Tim</RNTextComponent>
-              </Pressable>
+              ]}>
+              <BlueButon />
             </Pressable>
-          ) : (
-            <Pressable style={styles.profilePic} onPress={openDrawer}>
+            <View
+              style={{
+                width: '100%',
+                backgroundColor: 'transparent',
+                height: verticalScale(23),
+                position: 'absolute',
+                bottom: -verticalScale(17),
+                justifyContent: 'space-between',
+                flexDirection: 'row',
+                zIndex: 50,
+              }}>
               <View
                 style={{
-                  height: verticalScale(89),
-                  width: verticalScale(89),
-                  borderRadius: 100,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  overflow: 'visible',
-                }}>
-                <Image
-                  style={{
-                    height: verticalScale(59),
-                    width: verticalScale(59),
-                    borderRadius: 100,
-                  }}
-                  source={{
-                    uri: userProfile,
-                  }}
-                />
-                <RNTextComponent style={{marginTop: 5}} isSemiBold>
-                  {name}
-                </RNTextComponent>
-              </View>
-            </Pressable>
-          )}
-        </View>
-        <ScrollView
-          style={styles.content}
-          contentContainerStyle={{paddingTop: verticalScale(40)}}
-          showsVerticalScrollIndicator={false}>
-          <RNTextComponent
-            isSemiBold
-            style={{
-              ...styles.heading,
-              ...(!portrait && styles.headingPortrait),
-              ...(isTablet && {fontSize: verticalScale(18)}),
-            }}>
-            {i18n.t('WHAT_SHALL_WE_DO_TODAY')}
-          </RNTextComponent>
-          <View
-            style={{
-              ...styles.options,
-              ...(!portrait && styles.optionsPortrait),
-              ...(isTablet && {paddingHorizontal: portrait ? 100 : 200}),
-            }}>
-            {mode === MODE.B || mode === MODE.C
-              ? modeBC.map((item, index) => (
-                  <Pressable
-                    key={index.toString()}
-                    onPress={() => {
-                      if (index === 0) {
-                        navigateTo(SCREEN_NAME.GENERATE_STORY);
-                      } else {
-                        // toggleModal();
-                      }
-                    }}>
-                    <RNBookmarkComponent
-                      customStyle={{
-                        marginTop: verticalScale(24),
-                        ...(!portrait && styles.cardPortrait),
-                      }}
-                      borderIconColor={item.color}
-                      showIcon={index === 0}
-                      showSubheading={index !== 0}
-                      heading={item.title}
-                      subHeading={i18n.t('COMING_SOON')}
-                      emoji="🪄"
-                    />
-                  </Pressable>
-                ))
-              : modeA.map((item, index) => (
-                  <Pressable
-                    key={index.toString()}
-                    onPress={() => {
-                      // if (index === 0) {
-                      //   // navigateTo(SCREEN_NAME.GENERATE_STORY);
-                      // } else if (index === 3) {
-                      //   navigateTo(SCREEN_NAME.REDEEM_VOUCHER);
-                      // }
-                      switch (index) {
-                        case 0:
-                          break;
-                        case 1:
-                          navigateTo(SCREEN_NAME.BOOKSHELF);
-                          break;
-                        case 3:
-                          navigateTo(SCREEN_NAME.REDEEM_VOUCHER);
-                          break;
-                      }
-                    }}>
-                    <RNBookmarkComponent
-                      customStyle={{
-                        marginTop: verticalScale(24),
-                        ...(!portrait && styles.cardPortrait),
-                      }}
-                      borderIconColor={item.color}
-                      showIcon={index <= 3}
-                      showSubheading={index !== 3}
-                      heading={item.title}
-                      subHeading={item.subHeading}
-                      emoji={item.emoji}
-                      headingStyle={
-                        index > 3
-                          ? {fontSize: verticalScale(12), marginVertical: 8}
-                          : null
-                      }
-                    />
-                  </Pressable>
-                ))}
+                  backgroundColor: themeColor.gold,
+                  width: (+width - verticalScale(80)) / 2,
+                  borderBottomRightRadius: 100,
+                  borderTopRightRadius: 100,
+                }}
+              />
+              <View
+                style={{
+                  backgroundColor: themeColor.gold,
+                  width: (+width - verticalScale(80)) / 2,
+                  borderBottomLeftRadius: 100,
+                  borderTopLeftRadius: 100,
+                }}
+              />
+            </View>
           </View>
-        </ScrollView>
-      </View>
-    </RNScreenWrapper>
+          <ScrollView
+            style={styles.content}
+            contentContainerStyle={{paddingTop: verticalScale(5)}}
+            showsVerticalScrollIndicator={false}>
+            <RNTextComponent
+              isSemiBold
+              style={{
+                ...styles.heading,
+                ...(!portrait && styles.headingPortrait),
+                ...(isTablet && {fontSize: verticalScale(18)}),
+              }}>
+              {i18n.t('WHAT_SHALL_WE_DO_TODAY')}
+            </RNTextComponent>
+            <View
+              style={{
+                ...styles.options,
+                ...(!portrait && styles.optionsPortrait),
+                ...(isTablet && {paddingHorizontal: portrait ? 100 : 200}),
+              }}>
+              {mode === MODE.B || mode === MODE.C
+                ? modeBC.map((item, index) => (
+                    <Pressable
+                      key={index.toString()}
+                      onPress={() => {
+                        if (index === 0) {
+                          navigateTo(SCREEN_NAME.GENERATE_STORY);
+                        } else {
+                          // toggleModal();
+                        }
+                      }}>
+                      <RNBookmarkComponent
+                        customStyle={{
+                          marginTop: verticalScale(24),
+                          marginHorizontal: scale(5),
+                          ...(!portrait && styles.cardPortrait),
+                        }}
+                        borderIconColor={item.color}
+                        showIcon={index === 0}
+                        showSubheading={index !== 0}
+                        heading={item.title}
+                        subHeading={i18n.t('COMING_SOON')}
+                        emoji="🪄"
+                      />
+                    </Pressable>
+                  ))
+                : modeA.map((item, index) => (
+                    <Pressable
+                      key={index.toString()}
+                      onPress={() => {
+                        // if (index === 0) {
+                        //   // navigateTo(SCREEN_NAME.GENERATE_STORY);
+                        // } else if (index === 3) {
+                        //   navigateTo(SCREEN_NAME.REDEEM_VOUCHER);
+                        // }
+                        switch (index) {
+                          case 0:
+                            break;
+                          case 1:
+                            navigateTo(SCREEN_NAME.BOOKSHELF);
+                            break;
+                          case 3:
+                            navigateTo(SCREEN_NAME.REDEEM_VOUCHER);
+                            break;
+                        }
+                      }}>
+                      <RNBookmarkComponent
+                        customStyle={{
+                          marginTop: verticalScale(24),
+                          ...(!portrait && styles.cardPortrait),
+                        }}
+                        borderIconColor={item.color}
+                        showIcon={index <= 3}
+                        showSubheading={index !== 3}
+                        heading={item.title}
+                        subHeading={item.subHeading}
+                        emoji={item.emoji}
+                        headingStyle={
+                          index > 3
+                            ? {fontSize: verticalScale(12), marginVertical: 8}
+                            : null
+                        }
+                      />
+                    </Pressable>
+                  ))}
+            </View>
+          </ScrollView>
+        </View>
+      </RNScreenWrapper>
+    </>
   );
 };
 
 export default Home;
+
+const ChangeChild = ({
+  userProfile,
+  name,
+}: {
+  userProfile: string;
+  name: string;
+}) => {
+  const translateRef = useRef(new Animated.Value(-30)).current;
+  React.useEffect(() => {
+    Animated.timing(translateRef, {
+      toValue: 0,
+      duration: 500,
+      useNativeDriver: true,
+      easing: Easing.out(Easing.exp),
+    }).start();
+  });
+  return (
+    <Animated.View
+      style={{
+        height: verticalScale(89),
+        width: verticalScale(89),
+        alignItems: 'center',
+        justifyContent: 'center',
+        overflow: 'visible',
+        marginTop: verticalScale(20),
+        marginBottom: verticalScale(15),
+        transform: [{translateY: translateRef}],
+      }}>
+      <Image
+        style={{
+          height: verticalScale(59),
+          width: verticalScale(59),
+          borderRadius: 100,
+        }}
+        source={{
+          uri: userProfile,
+        }}
+      />
+      <RNTextComponent
+        style={{
+          fontSize: verticalScale(18),
+        }}
+        isSemiBold>
+        {name}
+      </RNTextComponent>
+    </Animated.View>
+  );
+};
