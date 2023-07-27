@@ -127,7 +127,7 @@ const Account = () => {
             {childrenList.map((item, index) => {
               return (
                 <Pressable
-                  key={index}
+                  key={index.toString()}
                   onPress={() => {
                     addPlayer(item);
                   }}>
@@ -162,7 +162,7 @@ const Account = () => {
               if (item.type === 'child') {
                 return (
                   <Pressable
-                    key={index}
+                    key={index.toString()}
                     onPress={() => {
                       removePlayer(index);
                     }}>
@@ -172,7 +172,7 @@ const Account = () => {
               } else {
                 return (
                   <Pressable
-                    key={index}
+                    key={index.toString()}
                     onPress={() => {
                       removePlayer(index);
                     }}>
@@ -191,7 +191,7 @@ const Account = () => {
             {adultList.map((item, index) => {
               return (
                 <Pressable
-                  key={index}
+                  key={index.toString()}
                   onPress={() => {
                     addPlayer(item);
                   }}>
@@ -235,7 +235,7 @@ const Account = () => {
               if (item.type === 'child') {
                 return (
                   <Image
-                    key={index}
+                    key={index.toString()}
                     source={{
                       uri: 'https://thumbs.dreamstime.com/b/cute-giraffe-face-wild-animal-character-animated-cartoon-png-illustration-isolated-transparent-background-hand-drawn-png-264757481.jpg',
                     }}
@@ -243,7 +243,7 @@ const Account = () => {
                   />
                 );
               } else {
-                return <Lion key={index} height={32} width={32} />;
+                return <Lion key={index.toString()} height={32} width={32} />;
               }
             })}
           </Pressable>

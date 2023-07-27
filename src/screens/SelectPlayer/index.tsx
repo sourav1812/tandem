@@ -31,7 +31,7 @@ const SelectPlayer = () => {
           showsVerticalScrollIndicator={false}>
           {players.map((item, index) => (
             <Pressable
-              key={index}
+              key={index.toString()}
               style={[styles.players, {backgroundColor: item.color}]}
               onPress={() => {
                 navigateTo(SCREEN_NAME.BOOKSHELF);

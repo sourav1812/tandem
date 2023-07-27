@@ -26,7 +26,7 @@ const SelectLanguage = () => {
       {languages.map((item, index) => {
         return (
           <Pressable
-            key={index}
+            key={index.toString()}
             onPress={() => {
               i18n.locale = item.code;
               navigateTo(SCREEN_NAME.ONBOARDING);

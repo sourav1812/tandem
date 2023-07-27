@@ -61,7 +61,7 @@ const Onboarding = () => {
         <View style={styles.indicator}>
           {Array.from({length: 3}, (_, i) => (
             <View
-              key={i}
+              key={i.toString()}
               style={[
                 styles.inactive,
                 i === currentIndex && {

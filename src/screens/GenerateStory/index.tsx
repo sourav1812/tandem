@@ -147,7 +147,7 @@ const GenerateStory = () => {
             {audience.map((value, index) => {
               return (
                 <RNEmojiWithText
-                  key={index}
+                  key={index.toString()}
                   heading={value.name}
                   customStyle={styles.optionsCustom}
                   icon={value.icon}
@@ -207,7 +207,7 @@ const GenerateStory = () => {
             {place.map((value, index) => {
               return (
                 <RNEmojiWithText
-                  key={index}
+                  key={index.toString()}
                   heading={value.name}
                   customStyle={styles.optionsCustom}
                   icon={value.icon}
@@ -234,7 +234,7 @@ const GenerateStory = () => {
             {attribute.map((value, index) => {
               return (
                 <RNEmojiWithText
-                  key={index}
+                  key={index.toString()}
                   heading={value.name}
                   customStyle={styles.optionsCustom}
                   icon={value.icon}
@@ -260,7 +260,7 @@ const GenerateStory = () => {
             {typeOfStory.map((value, index) => {
               return (
                 <RNEmojiWithText
-                  key={index}
+                  key={index.toString()}
                   heading={value.name}
                   customStyle={styles.optionsCustom}
                   icon={value.icon}

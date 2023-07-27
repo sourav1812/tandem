@@ -27,7 +27,7 @@ const RNRatingModal = ({visible, renderModal, nextClick}: ratingModalProps) => {
         <View style={styles.content}>
           {ratingList.map((item, index) => {
             return (
-              <View key={index} style={styles.rateView}>
+              <View key={index.toString()} style={styles.rateView}>
                 <RNTextComponent style={styles.emoji}>
                   {item.name}
                 </RNTextComponent>
