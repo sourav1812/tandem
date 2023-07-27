@@ -24,15 +24,18 @@ import i18n from '@tandem/constants/lang/i18n';
 import navigateTo from '@tandem/navigation/navigate';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
-
-const height = Dimensions.get('screen').height;
-const width = Dimensions.get('screen').width;
+import {RootState} from '@tandem/redux/store';
 
 const SignIn = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
 
   const [email, setEmail] = useState<ValidationError>({value: ''});
   const [password, setPassword] = useState<ValidationError>({value: ''});
+  const portrait = useAppSelector(
+    (state: RootState) => state.orientation.isPortrait,
+  );
+  const height = Dimensions.get('screen').height;
+  const width = Dimensions.get('screen').width;
 
   return (
     <RNScreenWrapper style={{backgroundColor: themeColor.white, flex: 1}}>

@@ -1,7 +1,9 @@
-import {Pressable, Animated} from 'react-native';
+import {Pressable, Animated, Dimensions} from 'react-native';
 import React, {useEffect, useRef} from 'react';
 import {RNModalProps} from './interface';
 import {styles} from './styles';
+import {RootState} from '@tandem/redux/store';
+import {useSelector} from 'react-redux';
 
 const RNModal = ({
   visible = true,
@@ -10,6 +12,11 @@ const RNModal = ({
   customStyle,
 }: RNModalProps) => {
   const opacity = useRef(new Animated.Value(0)).current;
+  const portrait = useSelector(
+    (state: RootState) => state.orientation.isPortrait,
+  );
+  const height = Dimensions.get('screen').height;
+  const width = Dimensions.get('screen').width;
 
   useEffect(() => {
     if (visible) {
@@ -43,6 +50,10 @@ const RNModal = ({
         <Animated.View
           style={[
             styles.container,
+            {
+              height: height,
+              width: width,
+            },
             customStyle && customStyle,
             {opacity: opacity},
           ]}>

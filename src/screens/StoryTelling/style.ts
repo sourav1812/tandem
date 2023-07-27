@@ -1,14 +1,9 @@
-import {Dimensions, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {verticalScale} from 'react-native-size-matters';
 import themeColor from '@tandem/theme/themeColor';
 
-const height = Dimensions.get('screen').height;
-const width = Dimensions.get('screen').width;
-
 export const styles = StyleSheet.create({
   container: {
-    height: height,
-    width: width,
     justifyContent: 'flex-end',
   },
   headingButton: {

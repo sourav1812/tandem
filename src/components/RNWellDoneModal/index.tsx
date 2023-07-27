@@ -1,4 +1,4 @@
-import {View, Image} from 'react-native';
+import {View, Image, Dimensions} from 'react-native';
 import React from 'react';
 import {wellDoneModalProps} from './interface';
 import {styles} from './styles';
@@ -8,6 +8,7 @@ import RNButton from '../RNButton';
 import RNModal from '../RNModal';
 import i18n from '@tandem/constants/lang/i18n';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {RootState} from '@tandem/redux/store';
 
 const RNWellDoneModal = ({
   visible = true,
@@ -15,10 +16,15 @@ const RNWellDoneModal = ({
   nextClick,
 }: wellDoneModalProps) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const portrait = useAppSelector(
+    (state: RootState) => state.orientation.isPortrait,
+  );
+  const height = Dimensions.get('screen').height;
+
   return (
     <RNModal
       visible={visible}
-      customStyle={styles.modal}
+      customStyle={(styles.modal, {height: height})}
       renderModal={renderModal}>
       <View
         style={[

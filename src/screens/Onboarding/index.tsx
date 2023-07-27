@@ -1,5 +1,5 @@
 import React, {useCallback, useState} from 'react';
-import {ImageBackground, FlatList, View} from 'react-native';
+import {ImageBackground, FlatList, View, Dimensions} from 'react-native';
 import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {onboardingList} from './interface';
@@ -11,26 +11,44 @@ import themeColor from '@tandem/theme/themeColor';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {RootState} from '@tandem/redux/store';
 
 const Onboarding = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const isTablet = useAppSelector(
+    (state: RootState) => state.deviceType.isTablet,
+  );
+  const portrait = useAppSelector(
+    (state: RootState) => state.orientation.isPortrait,
+  );
+  const {height, width} = Dimensions.get('screen');
 
-  const renderBanner = ({item}: {item: any}) => {
-    return (
-      <ImageBackground
-        source={item.url}
-        resizeMode="cover"
-        style={styles.img}
-      />
-    );
-  };
+  const renderBanner = useCallback(
+    ({item}: {item: any}) => {
+      return (
+        <ImageBackground
+          source={item.url}
+          resizeMode="cover"
+          style={{
+            height: height,
+            width: width,
+          }}
+        />
+      );
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [portrait],
+  );
 
-  const onViewableItemsChanged = useCallback(({viewableItems}: any) => {
-    if (viewableItems.length > 0) {
-      setCurrentIndex(viewableItems[0].index);
-    }
-  }, []);
+  const onViewableItemsChanged = useCallback(
+    ({viewableItems}: any) => {
+      if (viewableItems.length > 0) {
+        setCurrentIndex(viewableItems[0].index);
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
 
   return (
     <RNScreenWrapper>
