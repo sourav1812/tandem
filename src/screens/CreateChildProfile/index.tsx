@@ -147,7 +147,7 @@ const CreateChildProfile = () => {
                 ]}
                 containerStyle={styles.containerBox}
                 value={date}
-                updateText={e => updateState({date: e})}
+                updateText={setDate}
                 hint={'dd/mm/yyyy'}
               />
             </View>
