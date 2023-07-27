@@ -1,5 +1,11 @@
 /* eslint-disable react/no-unstable-nested-components */
-import {View, ImageBackground, FlatList, ScrollView} from 'react-native';
+import {
+  View,
+  ImageBackground,
+  FlatList,
+  ScrollView,
+  Dimensions,
+} from 'react-native';
 import React, {useState, useCallback} from 'react';
 import {styles} from './style';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
@@ -24,6 +30,7 @@ import navigateTo from '@tandem/navigation/navigate';
 import {MODE} from '@tandem/constants/mode';
 import Mic from '@tandem/assets/svg/BlueMic';
 import MuteMic from '@tandem/assets/svg/MuteMic';
+import {RootState} from '@tandem/redux/store';
 
 const StoryTelling = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -36,7 +43,11 @@ const StoryTelling = () => {
     ratingModal: true,
     toggleMic: false,
   });
-
+  const portrait = useAppSelector(
+    (state: RootState) => state.orientation.isPortrait,
+  );
+  const height = Dimensions.get('screen').height;
+  const width = Dimensions.get('screen').width;
   const {ratingModal, toggleMic} = state;
 
   const updateState = (date: any) => {
@@ -47,7 +58,7 @@ const StoryTelling = () => {
   const renderStory = () => {
     return (
       <ImageBackground
-        style={styles.container}
+        style={(styles.container, {height: height, width: width})}
         source={require('../../assets/png/storyBackground.png')}>
         {currentIndex + 1 === 5 && (
           <View>

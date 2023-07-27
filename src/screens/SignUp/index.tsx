@@ -25,6 +25,7 @@ import i18n from '@tandem/constants/lang/i18n';
 import navigateTo from '@tandem/navigation/navigate';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
+import {RootState} from '@tandem/redux/store';
 
 const height = Dimensions.get('screen').height;
 const width = Dimensions.get('screen').width;
@@ -38,7 +39,9 @@ const SignUp = () => {
   const [confirmPassword, setConfirmPassword] = useState<ValidationError>({
     value: '',
   });
-
+  const portrait = useAppSelector(
+    (state: RootState) => state.orientation.isPortrait,
+  );
   return (
     <RNScreenWrapper style={{backgroundColor: themeColor.white}}>
       <KeyboardAvoidingView
