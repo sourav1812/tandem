@@ -14,9 +14,12 @@ import HomeIcon from '@tandem/assets/svg/Home';
 import BookmarkActive from '@tandem/assets/svg/BookmarkActive';
 import themeColor from '@tandem/theme/themeColor';
 import i18n from '@tandem/constants/lang/i18n';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {MODE} from '@tandem/constants/mode';
 
 const BottomTab = () => {
   const Tab = createBottomTabNavigator<RootTabParamList>();
+  const mode = useAppSelector(state => state.mode.mode);
 
   return (
     <Tab.Navigator
@@ -94,36 +97,38 @@ const BottomTab = () => {
           },
         }}
       />
-      <Tab.Screen
-        component={People}
-        name={SCREEN_NAME.PEOPLE}
-        options={{
-          tabBarIcon: ({focused}: any) => {
-            return (
-              <View
-                style={[
-                  styles.iconContainer,
-                  {
-                    ...(focused && {
-                      borderTopWidth: verticalScale(2),
-                      borderColor: themeColor.themeBlue,
-                    }),
-                  },
-                ]}>
-                <PeopleIcon focused={focused} />
-                <RNTextComponent
-                  isMedium
-                  style={{
-                    ...styles.title,
-                    ...(focused && {color: themeColor.themeBlue}),
-                  }}>
-                  {i18n.t('PEOPLE')}
-                </RNTextComponent>
-              </View>
-            );
-          },
-        }}
-      />
+      {mode === MODE.A && (
+        <Tab.Screen
+          component={People}
+          name={SCREEN_NAME.PEOPLE}
+          options={{
+            tabBarIcon: ({focused}: any) => {
+              return (
+                <View
+                  style={[
+                    styles.iconContainer,
+                    {
+                      ...(focused && {
+                        borderTopWidth: verticalScale(2),
+                        borderColor: themeColor.themeBlue,
+                      }),
+                    },
+                  ]}>
+                  <PeopleIcon focused={focused} />
+                  <RNTextComponent
+                    isMedium
+                    style={{
+                      ...styles.title,
+                      ...(focused && {color: themeColor.themeBlue}),
+                    }}>
+                    {i18n.t('PEOPLE')}
+                  </RNTextComponent>
+                </View>
+              );
+            },
+          }}
+        />
+      )}
     </Tab.Navigator>
   );
 };

@@ -288,6 +288,7 @@ const Home = () => {
             {mode === MODE.B || mode === MODE.C
               ? modeBC.map((item, index) => (
                   <Pressable
+                    key={index.toString()}
                     onPress={() => {
                       if (index === 0) {
                         navigateTo(SCREEN_NAME.GENERATE_STORY);
@@ -311,6 +312,7 @@ const Home = () => {
                 ))
               : modeA.map((item, index) => (
                   <Pressable
+                    key={index.toString()}
                     onPress={() => {
                       // if (index === 0) {
                       //   // navigateTo(SCREEN_NAME.GENERATE_STORY);

@@ -47,6 +47,7 @@ const RNReadingLevelModal = ({
           <View style={[styles.content]}>
             {indicators.map((item, index) => (
               <View
+                key={index.toString()}
                 style={[
                   styles.indicator,
                   {

@@ -21,7 +21,8 @@ const Onboarding = () => {
       <ImageBackground
         source={item.url}
         resizeMode="cover"
-        style={styles.img}></ImageBackground>
+        style={styles.img}
+      />
     );
   };
 
@@ -58,6 +59,7 @@ const Onboarding = () => {
         <View style={styles.indicator}>
           {Array.from({length: 3}, (_, i) => (
             <View
+              key={i.toString()}
               style={[
                 styles.inactive,
                 i === currentIndex && {

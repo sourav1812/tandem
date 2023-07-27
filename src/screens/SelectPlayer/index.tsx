@@ -29,8 +29,9 @@ const SelectPlayer = () => {
         <ScrollView
           contentContainerStyle={styles.scrollView}
           showsVerticalScrollIndicator={false}>
-          {players.map(item => (
+          {players.map((item, index) => (
             <Pressable
+              key={index.toString()}
               style={[styles.players, {backgroundColor: item.color}]}
               onPress={() => {
                 navigateTo(SCREEN_NAME.BOOKSHELF);
