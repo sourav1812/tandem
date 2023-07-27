@@ -2,7 +2,6 @@
 import React, {useState} from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {styles} from './styles';
-import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 import {View, Image, ScrollView, Pressable} from 'react-native';
 import Logout from '@tandem/assets/svg/Logout';
 import RNButton from '@tandem/components/RNButton';
@@ -125,9 +124,10 @@ const Account = () => {
             horizontal
             showsHorizontalScrollIndicator={false}
             decelerationRate={'normal'}>
-            {childrenList.map(item => {
+            {childrenList.map((item, index) => {
               return (
                 <Pressable
+                  key={index.toString()}
                   onPress={() => {
                     addPlayer(item);
                   }}>
@@ -162,6 +162,7 @@ const Account = () => {
               if (item.type === 'child') {
                 return (
                   <Pressable
+                    key={index.toString()}
                     onPress={() => {
                       removePlayer(index);
                     }}>
@@ -171,6 +172,7 @@ const Account = () => {
               } else {
                 return (
                   <Pressable
+                    key={index.toString()}
                     onPress={() => {
                       removePlayer(index);
                     }}>
@@ -186,9 +188,10 @@ const Account = () => {
             horizontal
             showsHorizontalScrollIndicator={false}
             decelerationRate={'normal'}>
-            {adultList.map(item => {
+            {adultList.map((item, index) => {
               return (
                 <Pressable
+                  key={index.toString()}
                   onPress={() => {
                     addPlayer(item);
                   }}>
@@ -228,10 +231,11 @@ const Account = () => {
                 navigateTo(SCREEN_NAME.BOTTOM_TAB, {}, true);
               }
             }}>
-            {playerList.map(item => {
+            {playerList.map((item, index) => {
               if (item.type === 'child') {
                 return (
                   <Image
+                    key={index.toString()}
                     source={{
                       uri: 'https://thumbs.dreamstime.com/b/cute-giraffe-face-wild-animal-character-animated-cartoon-png-illustration-isolated-transparent-background-hand-drawn-png-264757481.jpg',
                     }}
@@ -239,7 +243,7 @@ const Account = () => {
                   />
                 );
               } else {
-                return <Lion height={32} width={32} />;
+                return <Lion key={index.toString()} height={32} width={32} />;
               }
             })}
           </Pressable>
@@ -250,7 +254,7 @@ const Account = () => {
         renderModal={toggleSignOut}
         nextClick={() => {
           toggleSignOut();
-          navigateTo(SCREEN_NAME.SELECT_LANGUAGE);
+          navigateTo(SCREEN_NAME.SELECT_LANGUAGE, {}, true);
         }}
       />
     </RNScreenWrapper>

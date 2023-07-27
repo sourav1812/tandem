@@ -51,6 +51,7 @@ const RNChooseColor = () => {
         {colorPalette.map((item, index) => {
           return (
             <View
+              key={index.toString()}
               style={[
                 styles.colorPair,
                 {transform: [{rotate: `-${30 * index}deg`}]},
@@ -81,7 +82,7 @@ const RNChooseColor = () => {
       <View style={styles.footer}>
         <AddColor />
         {Array.from({length: 3}, (_, i) => (
-          <EmptyPatch />
+          <EmptyPatch key={i.toString()} />
         ))}
       </View>
     </View>
