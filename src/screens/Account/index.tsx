@@ -18,7 +18,10 @@ import navigateTo from '@tandem/navigation/navigate';
 import Lion from '@tandem/assets/svg/AnimatedLion';
 import {translation} from '@tandem/utils/methods';
 import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
-import {changeMode} from '@tandem/redux/slices/mode.slice';
+import {
+  changeMode,
+  resetModeInitialState,
+} from '@tandem/redux/slices/mode.slice';
 import {MODE} from '@tandem/constants/mode';
 import themeColor from '@tandem/theme/themeColor';
 
@@ -254,7 +257,8 @@ const Account = () => {
         renderModal={toggleSignOut}
         nextClick={() => {
           toggleSignOut();
-          navigateTo(SCREEN_NAME.SELECT_LANGUAGE, {}, true);
+          dispatch(resetModeInitialState());
+          navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN, {}, true);
         }}
       />
     </RNScreenWrapper>
