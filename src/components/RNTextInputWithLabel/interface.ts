@@ -1,4 +1,5 @@
 import {ValidationError} from '@tandem/utils/validations';
+import {ReactNode} from 'react';
 import {TextInputProps, StyleProp, TextStyle, ViewStyle} from 'react-native';
 
 export interface Props {
@@ -16,4 +17,5 @@ export interface Props {
   validationType?: string;
   errorTextStyle?: StyleProp<TextStyle>;
   rightSideIcon?: boolean;
+  rightSideIconProp?: ReactNode;
 }

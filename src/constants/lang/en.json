@@ -38,7 +38,7 @@
   "WELCOME_TO_TANDEM": "Welcome to Tandem",
   "SPARK_YOUR_CHILD_CREATIVITY": "Spark Your Child's Creativity",
   "CREATE_MAGIC_WITH_AI": "Create Magic With AI",
-  "WITH_TANDEM_YOU_WILL_THE_POWER": "With Tandem, you'll be able to see the power of AI to bring your child's imagination to life",
+  "WITH_TANDEM_YOU_WILL_THE_POWER": "With Tandem, you'll be able to use the power of AI to bring your child's imagination to life",
   "YOUR_CHILD_CAN_CHOOSE_FROM_A_VARIETY": "Your child can choose from a variety of characters, settings, and objects to create their own unique story",
 
   "BOOKSHELF": "Bookshelf",
@@ -149,5 +149,6 @@
   "PERSONALIZED_CHILD_DEVELOPMENT": "Personalized Child development insights",
   "SCAN_YOUR_QR_CODE": "Scar your QR Code",
   "ENTER_VOUCHER_CODE": "Enter voucher code",
-  "VOUCHER": "Voucher"
+  "VOUCHER": "Voucher",
+  "READ_TOGETHER": "Read Together"
 }

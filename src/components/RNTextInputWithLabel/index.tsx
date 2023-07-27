@@ -24,6 +24,7 @@ const RNTextInputWithLabel = ({
   validationType,
   errorTextStyle,
   rightSideIcon,
+  rightSideIconProp,
 }: Props) => {
   const [highlight, setHighlight] = useState(false);
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -77,13 +78,20 @@ const RNTextInputWithLabel = ({
               }
             }}
             value={value.value}
-            secureTextEntry={rightSideIcon && !showPassword}
+            secureTextEntry={
+              rightSideIcon && !showPassword && !rightSideIconProp
+            }
           />
-          {rightSideIcon && (
-            <Pressable onPress={togglePassword}>
-              {showPassword ? <Show /> : <Hide />}
-            </Pressable>
-          )}
+          {rightSideIcon &&
+            (rightSideIconProp ? (
+              <Pressable onPress={togglePassword}>
+                {rightSideIconProp}
+              </Pressable>
+            ) : (
+              <Pressable onPress={togglePassword}>
+                {showPassword ? <Show /> : <Hide />}
+              </Pressable>
+            ))}
         </View>
       </View>
       {value?.message && (

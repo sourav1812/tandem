@@ -49,7 +49,7 @@ const CreateChildProfile = () => {
       });
       updateState({questionIndex: questionIndex + 1, bulletinArray: indexArry});
     } else {
-      navigateTo(SCREEN_NAME.ACCOUNT);
+      navigateTo(SCREEN_NAME.BOTTOM_TAB, {}, true);
     }
   };
 
@@ -148,7 +148,7 @@ const CreateChildProfile = () => {
                 containerStyle={styles.containerBox}
                 value={date}
                 updateText={setDate}
-                hint={translation('ENTER_DATE_OF_BIRTH')}
+                hint={'dd/mm/yyyy'}
               />
             </View>
           </>

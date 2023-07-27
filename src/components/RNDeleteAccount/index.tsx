@@ -10,6 +10,7 @@ import {verticalScale} from 'react-native-size-matters';
 import en from '@tandem/constants/lang/en';
 import themeColor from '@tandem/theme/themeColor';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {translation} from '@tandem/utils/methods';
 
 const RNDeleteAccount = ({
   visible,
@@ -44,12 +45,12 @@ const RNDeleteAccount = ({
             onlyBorder
             buttonColor={themeColor.themeBlue}
             onClick={renderModal}
-            title={en.CANCEL}
+            title={translation('CANCEL')}
             customStyle={[styles.button2, isTablet && {maxWidth: 150}]}
           />
           <RNButton
             onClick={nextClick}
-            title={en.ACCEPT}
+            title={translation('DELETE')}
             customStyle={[
               styles.button2,
               {backgroundColor: themeColor.red, borderColor: themeColor.red},

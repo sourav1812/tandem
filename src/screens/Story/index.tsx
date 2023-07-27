@@ -11,9 +11,12 @@ import RNMenuModal from '@tandem/components/RNMenuModal';
 import navigateTo from '@tandem/navigation/navigate';
 import {verticalScale} from 'react-native-size-matters';
 import {translation} from '@tandem/utils/methods';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {MODE} from '@tandem/constants/mode';
 
 const Story = () => {
   const [visible, setVisible] = useState(false);
+  const mode = useAppSelector(state => state.mode.mode);
 
   const toggelMenuBar = () => {
     setVisible(!visible);
@@ -78,7 +81,11 @@ const Story = () => {
             </ScrollView>
           </View>
           <RNButton
-            title={translation('REREAD')}
+            title={
+              mode === MODE.B
+                ? translation('READ_TOGETHER')
+                : translation('REREAD')
+            }
             customStyle={styles.button}
             textStyle={{fontSize: verticalScale(14)}}
             onClick={() => {

@@ -28,7 +28,8 @@ const BottomTab = () => {
         tabBarShowLabel: false,
         tabBarStyle: styles.tabBar,
         tabBarLabelPosition: 'below-icon',
-      }}>
+      }}
+      initialRouteName={SCREEN_NAME.HOME}>
       <Tab.Screen
         component={Bookshelf}
         name={SCREEN_NAME.BOOKSHELF}

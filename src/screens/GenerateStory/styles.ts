@@ -140,4 +140,10 @@ export const styles = StyleSheet.create({
   buttonText: {
     fontSize: verticalScale(16),
   },
+  illustration: {
+    height: verticalScale(133),
+    width: verticalScale(133),
+    borderRadius: 16,
+    marginTop: verticalScale(18),
+  },
 });
