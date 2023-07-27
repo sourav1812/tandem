@@ -51,6 +51,7 @@ const RNChooseColor = () => {
         {colorPalette.map((item, index) => {
           return (
             <View
+              key={index}
               style={[
                 styles.colorPair,
                 {transform: [{rotate: `-${30 * index}deg`}]},

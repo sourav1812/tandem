@@ -42,7 +42,7 @@ const RNVoiceQuesiton = ({onClick}: VoiceQuestionProps) => {
             </RNTextComponent>
             {inputList.map((item, index) => {
               return (
-                <View style={styles.answerField}>
+                <View key={index} style={styles.answerField}>
                   <View style={styles.bullitin}>
                     <RNTextComponent style={styles.leftText} isMedium>
                       {index + 1}

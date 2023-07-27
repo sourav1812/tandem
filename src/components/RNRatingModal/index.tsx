@@ -25,9 +25,9 @@ const RNRatingModal = ({visible, renderModal, nextClick}: ratingModalProps) => {
           {i18n.t('AGREE_ON_A_RATING_FOR_THE_STORY')}:
         </RNTextComponent>
         <View style={styles.content}>
-          {ratingList.map(item => {
+          {ratingList.map((item, index) => {
             return (
-              <View style={styles.rateView}>
+              <View key={index} style={styles.rateView}>
                 <RNTextComponent style={styles.emoji}>
                   {item.name}
                 </RNTextComponent>

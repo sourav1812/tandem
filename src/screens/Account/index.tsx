@@ -124,9 +124,10 @@ const Account = () => {
             horizontal
             showsHorizontalScrollIndicator={false}
             decelerationRate={'normal'}>
-            {childrenList.map(item => {
+            {childrenList.map((item, index) => {
               return (
                 <Pressable
+                  key={index}
                   onPress={() => {
                     addPlayer(item);
                   }}>
@@ -161,6 +162,7 @@ const Account = () => {
               if (item.type === 'child') {
                 return (
                   <Pressable
+                    key={index}
                     onPress={() => {
                       removePlayer(index);
                     }}>
@@ -170,6 +172,7 @@ const Account = () => {
               } else {
                 return (
                   <Pressable
+                    key={index}
                     onPress={() => {
                       removePlayer(index);
                     }}>
@@ -185,9 +188,10 @@ const Account = () => {
             horizontal
             showsHorizontalScrollIndicator={false}
             decelerationRate={'normal'}>
-            {adultList.map(item => {
+            {adultList.map((item, index) => {
               return (
                 <Pressable
+                  key={index}
                   onPress={() => {
                     addPlayer(item);
                   }}>
@@ -224,13 +228,14 @@ const Account = () => {
             onPress={() => {
               if (playerList.length !== 0) {
                 buttonPress();
-                navigateTo(SCREEN_NAME.BOTTOM_TAB);
+                navigateTo(SCREEN_NAME.BOTTOM_TAB, {}, true);
               }
             }}>
-            {playerList.map(item => {
+            {playerList.map((item, index) => {
               if (item.type === 'child') {
                 return (
                   <Image
+                    key={index}
                     source={{
                       uri: 'https://thumbs.dreamstime.com/b/cute-giraffe-face-wild-animal-character-animated-cartoon-png-illustration-isolated-transparent-background-hand-drawn-png-264757481.jpg',
                     }}
@@ -238,7 +243,7 @@ const Account = () => {
                   />
                 );
               } else {
-                return <Lion height={32} width={32} />;
+                return <Lion key={index} height={32} width={32} />;
               }
             })}
           </Pressable>

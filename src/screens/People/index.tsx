@@ -107,8 +107,9 @@ const People = ({}: PeopleScreenProps) => {
           </View>
           <View style={styles.firstTab}>
             <ScrollView showsVerticalScrollIndicator={false}>
-              {menuArray.map(item => (
+              {menuArray.map((item, index) => (
                 <Pressable
+                  key={index}
                   onPress={() => item.navigate && navigateTo(item.navigate)}>
                   <RNMenuButton
                     title={item.name}

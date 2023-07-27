@@ -23,9 +23,10 @@ const SelectLanguage = () => {
       <RNTextComponent style={styles.info}>
         {en.YOU_CAN_CHANGE_IT}
       </RNTextComponent>
-      {languages.map(item => {
+      {languages.map((item, index) => {
         return (
           <Pressable
+            key={index}
             onPress={() => {
               i18n.locale = item.code;
               navigateTo(SCREEN_NAME.ONBOARDING);
