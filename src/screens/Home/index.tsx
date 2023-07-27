@@ -8,6 +8,8 @@ import {
   Animated,
   Easing,
   LayoutAnimation,
+  Platform,
+  StatusBar,
 } from 'react-native';
 import React, {useRef, useState} from 'react';
 import {styles} from './styles';
@@ -25,6 +27,7 @@ import {StateObject} from './interface';
 import {translation} from '@tandem/utils/methods';
 import {MODE} from '@tandem/constants/mode';
 import BlueButon from '@tandem/assets/svg/YellowButton';
+import Tooltip from 'react-native-walkthrough-tooltip';
 
 const Home = () => {
   const portrait = useOrientation().isPortrait;
@@ -85,9 +88,10 @@ const Home = () => {
     userProfile:
       'https://static.vecteezy.com/system/resources/previews/016/461/449/non_2x/cute-giraffe-face-wild-animal-character-in-animated-cartoon-illustration-vector.jpg',
     name: 'Lisa',
+    showTooltip: true,
   });
 
-  const {changeUser, userProfile, name} = state;
+  const {changeUser, userProfile, name, showTooltip} = state;
 
   const updateState = (date: any) => {
     setState((previouState: any) => {
@@ -197,7 +201,22 @@ const Home = () => {
                       : verticalScale(17),
                 },
               ]}>
-              <BlueButon />
+              <Tooltip
+                isVisible={showTooltip}
+                content={
+                  <RNTextComponent>
+                    {translation('SWITCH_MODE')}
+                  </RNTextComponent>
+                }
+                placement="bottom"
+                topAdjustment={
+                  Platform.OS === 'android'
+                    ? -(StatusBar.currentHeight || 0)
+                    : 0
+                }
+                onClose={() => updateState({showTooltip: false})}>
+                <BlueButon />
+              </Tooltip>
             </Pressable>
             <View
               style={{
