@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {verticalScale} from 'react-native-size-matters';
+import {scale, verticalScale} from 'react-native-size-matters';
 import themeColor from '../../theme/themeColor';
 
 export const styles = StyleSheet.create({
@@ -12,6 +12,7 @@ export const styles = StyleSheet.create({
     borderRadius: 16,
     justifyContent: 'space-around',
     alignItems: 'center',
+    marginHorizontal: scale(5),
   },
   icon: {
     position: 'absolute',

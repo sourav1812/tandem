@@ -12,11 +12,15 @@ import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
 import {ValidationError} from '@tandem/utils/validations';
 import {checkIfTablet} from '@tandem/hooks/isTabletHook';
-import Button from '@tandem/assets/svg/BlueButton';
 import {translation} from '@tandem/utils/methods';
+import BlueBotton from '@tandem/assets/svg/BlueButton';
+import BothButton from '@tandem/assets/svg/BothButton';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {MODE} from '@tandem/constants/mode';
 
 const Bookshelf = () => {
   const isTablet = checkIfTablet();
+  const mode = useAppSelector(state => state.mode.mode);
   const [searchText, setText] = useState<ValidationError>({value: ''});
   const data = [
     {
@@ -111,7 +115,11 @@ const Bookshelf = () => {
           <Pressable
             style={[styles.spaces, {alignItems: 'flex-end'}]}
             onPress={() => navigateTo(SCREEN_NAME.ACCOUNT)}>
-            <Button style={styles.button} />
+            {mode === MODE.B ? (
+              <BothButton style={styles.button} />
+            ) : (
+              <BlueBotton style={styles.button} />
+            )}
           </Pressable>
         </View>
         <RNTextInputWithLabel

@@ -156,6 +156,8 @@
   "ENTER_VOUCHER_CODE": "Enter voucher code",
   "VOUCHER": "Voucher",
   "READ_TOGETHER": "Read Together",
+  "QUESTIONS_ABOUT_THE_STORY": "Questions about the story",
+  "SWITCH_MODE": "Switch mode",
   "choose-color": {
     "what-colors": "What colors",
     "should-we-use": "should we use",
@@ -196,4 +198,5 @@
     "alright-text": "Alright, but what exactly do you do?",
     "as-a-creative-agency": "As a creative agency we work with you to develop solutions to address your brand needs. That includes various aspects of brand planning and strategy, marketing and design."
   }
+  
 }

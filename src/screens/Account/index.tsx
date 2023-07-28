@@ -17,10 +17,7 @@ import navigateTo from '@tandem/navigation/navigate';
 import Lion from '@tandem/assets/svg/AnimatedLion';
 import {translation} from '@tandem/utils/methods';
 import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
-import {
-  changeMode,
-  resetModeInitialState,
-} from '@tandem/redux/slices/mode.slice';
+import {changeMode} from '@tandem/redux/slices/mode.slice';
 import {MODE} from '@tandem/constants/mode';
 import themeColor from '@tandem/theme/themeColor';
 import {useSelector} from 'react-redux';
@@ -32,8 +29,14 @@ const Account = () => {
   // const mode = useAppSelector(state => state.mode.mode);
   const [state, setState] = useState<StateObject>({
     signoutModal: false,
-    childrenList: [{type: 'child'}, {type: 'child'}],
-    adultList: [{type: 'adult'}, {type: 'adult'}],
+    childrenList: [
+      {name: 'Tim', type: 'child'},
+      {name: 'Alisa', type: 'child'},
+    ],
+    adultList: [
+      {name: 'Mom', type: 'adult'},
+      {name: 'Dad', type: 'adult'},
+    ],
     playerList: [],
   });
   const portrait = useSelector(
@@ -145,6 +148,7 @@ const Account = () => {
                       height: portrait ? verticalScale(60) : verticalScale(40),
                       width: portrait ? verticalScale(60) : verticalScale(40),
                     }}
+                    data={item}
                   />
                 </Pressable>
               );
@@ -187,6 +191,7 @@ const Account = () => {
                           : verticalScale(40),
                         width: portrait ? verticalScale(60) : verticalScale(40),
                       }}
+                      data={item}
                     />
                   </Pressable>
                 );
@@ -202,6 +207,7 @@ const Account = () => {
                         portrait ? verticalScale(105) : verticalScale(52.5)
                       }
                       width={portrait ? verticalScale(90) : verticalScale(45)}
+                      data={item}
                     />
                   </Pressable>
                 );
@@ -224,11 +230,17 @@ const Account = () => {
                   <RNParentProfile
                     height={portrait ? verticalScale(105) : verticalScale(52.5)}
                     width={portrait ? verticalScale(90) : verticalScale(45)}
+                    data={item}
                   />
                 </Pressable>
               );
             })}
-            <Pressable style={styles.add} onPress={() => {}}>
+            <Pressable
+              style={styles.add}
+              onPress={() => {
+                dispatch(changeMode(MODE.A));
+                navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN, {}, true);
+              }}>
               <Add />
               <RNTextComponent
                 isMedium
@@ -288,8 +300,7 @@ const Account = () => {
         renderModal={toggleSignOut}
         nextClick={() => {
           toggleSignOut();
-          dispatch(resetModeInitialState());
-          navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN, {}, true);
+          navigateTo(SCREEN_NAME.SELECT_LANGUAGE, {}, true);
         }}
       />
     </RNScreenWrapper>

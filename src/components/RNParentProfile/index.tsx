@@ -3,14 +3,22 @@ import React from 'react';
 import {styles} from './styles';
 import RNTextComponent from '../RNTextComponent';
 import Lion from '../../assets/svg/AnimatedLion';
-import {translation} from '@tandem/utils/methods';
 
-const RNParentProfile = ({height, width}: {height: number; width: number}) => {
+import {ParentProfileProps} from './interface';
+const RNParentProfile = ({
+  height,
+  width,
+  data,
+}: {
+  height: number;
+  width: number;
+  data: ParentProfileProps;
+}) => {
   return (
     <View style={styles.container}>
       <Lion height={height} width={width} />
       <RNTextComponent style={styles.name} isMedium>
-        {translation('DAD')}
+        {data && data.name}
       </RNTextComponent>
     </View>
   );
