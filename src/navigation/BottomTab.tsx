@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     borderTopColor: 'transparent',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
-    height: verticalScale(75),
+    height: verticalScale(60),
   },
   iconContainer: {
     alignItems: 'center',
