@@ -43,7 +43,9 @@ export const styles = StyleSheet.create({
     paddingHorizontal: scale(5),
   },
   footer: {
+    alignSelf: 'center',
     height: verticalScale(64),
+    width: verticalScale(250),
     marginTop: verticalScale(30),
     borderRadius: 100,
     backgroundColor: themeColor.themeBlue,

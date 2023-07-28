@@ -10,7 +10,7 @@ const RNKidsProfile = ({style}: {style: StyleProp<ImageStyle>}) => {
         source={{
           uri: 'https://thumbs.dreamstime.com/b/cute-giraffe-face-wild-animal-character-animated-cartoon-png-illustration-isolated-transparent-background-hand-drawn-png-264757481.jpg',
         }}
-        style={(styles.profile, style)}
+        style={[styles.profile, style]}
       />
       <RNTextComponent style={styles.name} isMedium>
         Alisa

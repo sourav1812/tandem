@@ -128,8 +128,8 @@ const Account = () => {
         ]}>
         {i18n.t('WHO_IS_USING_THE_APP_NEXT')}
       </RNTextComponent>
-      <View style={[styles.content, isTablet && {marginHorizontal: 120}]}>
-        <View>
+      <View style={[styles.content]}>
+        <View style={{alignItems: 'center'}}>
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -210,7 +210,7 @@ const Account = () => {
             })}
           </ScrollView>
         </View>
-        <View>
+        <View style={{alignItems: 'center'}}>
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
