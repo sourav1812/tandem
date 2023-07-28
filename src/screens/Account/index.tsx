@@ -24,6 +24,8 @@ import {
 } from '@tandem/redux/slices/mode.slice';
 import {MODE} from '@tandem/constants/mode';
 import themeColor from '@tandem/theme/themeColor';
+import {useSelector} from 'react-redux';
+import {RootState} from '@tandem/redux/store';
 
 const Account = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -35,7 +37,9 @@ const Account = () => {
     adultList: [{type: 'adult'}, {type: 'adult'}],
     playerList: [],
   });
-
+  const portrait = useSelector(
+    (state: RootState) => state.orientation.isPortrait,
+  );
   const {signoutModal, childrenList, adultList, playerList} = state;
 
   const updateState = (date: any) => {
@@ -109,7 +113,9 @@ const Account = () => {
         <Image
           source={require('../../assets/png/logo.png')}
           resizeMode="contain"
-          style={styles.logo}
+          style={
+            (styles.logo, {marginRight: portrait ? scale(58) : scale(170)})
+          }
         />
         <RNButton onlyIcon icon={<Logout />} onClick={toggleSignOut} />
       </View>
@@ -117,6 +123,9 @@ const Account = () => {
         isSemiBold
         style={[
           styles.heading,
+          {
+            marginTop: portrait ? verticalScale(30) : 0,
+          },
           isTablet ? {fontSize: 24} : {fontSize: verticalScale(20)},
         ]}>
         {i18n.t('WHO_IS_USING_THE_APP_NEXT')}
@@ -134,7 +143,12 @@ const Account = () => {
                   onPress={() => {
                     addPlayer(item);
                   }}>
-                  <RNKidsProfile />
+                  <RNKidsProfile
+                    style={{
+                      height: portrait ? verticalScale(60) : verticalScale(40),
+                      width: portrait ? verticalScale(60) : verticalScale(40),
+                    }}
+                  />
                 </Pressable>
               );
             })}
@@ -169,7 +183,14 @@ const Account = () => {
                     onPress={() => {
                       removePlayer(index);
                     }}>
-                    <RNKidsProfile />
+                    <RNKidsProfile
+                      style={{
+                        height: portrait
+                          ? verticalScale(60)
+                          : verticalScale(40),
+                        width: portrait ? verticalScale(60) : verticalScale(40),
+                      }}
+                    />
                   </Pressable>
                 );
               } else {
@@ -179,7 +200,12 @@ const Account = () => {
                     onPress={() => {
                       removePlayer(index);
                     }}>
-                    <RNParentProfile />
+                    <RNParentProfile
+                      height={
+                        portrait ? verticalScale(105) : verticalScale(52.5)
+                      }
+                      width={portrait ? verticalScale(90) : verticalScale(45)}
+                    />
                   </Pressable>
                 );
               }
@@ -198,13 +224,21 @@ const Account = () => {
                   onPress={() => {
                     addPlayer(item);
                   }}>
-                  <RNParentProfile />
+                  <RNParentProfile
+                    height={portrait ? verticalScale(105) : verticalScale(52.5)}
+                    width={portrait ? verticalScale(90) : verticalScale(45)}
+                  />
                 </Pressable>
               );
             })}
             <Pressable style={styles.add} onPress={() => {}}>
               <Add />
-              <RNTextComponent isMedium style={styles.addText}>
+              <RNTextComponent
+                isMedium
+                style={
+                  (styles.addText,
+                  {marginTop: portrait ? verticalScale(42) : verticalScale(21)})
+                }>
                 {i18n.t('ADD')}
               </RNTextComponent>
             </Pressable>

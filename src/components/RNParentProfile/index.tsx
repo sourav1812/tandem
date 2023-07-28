@@ -3,12 +3,11 @@ import React from 'react';
 import {styles} from './styles';
 import RNTextComponent from '../RNTextComponent';
 import Lion from '../../assets/svg/AnimatedLion';
-import {verticalScale} from 'react-native-size-matters';
 
-const RNParentProfile = () => {
+const RNParentProfile = ({height, width}: {height: number; width: number}) => {
   return (
     <View style={styles.container}>
-      <Lion height={verticalScale(105)} width={verticalScale(90)} />
+      <Lion height={height} width={width} />
       <RNTextComponent style={styles.name} isMedium>
         Dad
       </RNTextComponent>

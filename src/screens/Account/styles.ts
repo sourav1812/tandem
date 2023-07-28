@@ -16,11 +16,9 @@ export const styles = StyleSheet.create({
   logo: {
     height: verticalScale(32),
     width: scale(120),
-    marginRight: scale(58),
   },
   heading: {
     alignSelf: 'center',
-    marginTop: verticalScale(30),
     textAlign: 'center',
   },
   content: {
