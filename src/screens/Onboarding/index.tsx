@@ -1,5 +1,5 @@
-import React, {useCallback, useState} from 'react';
-import {ImageBackground, FlatList, View, Dimensions} from 'react-native';
+import React, {useCallback, useRef, useState} from 'react';
+import {ImageBackground, FlatList, View} from 'react-native';
 import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {onboardingList} from './interface';
@@ -11,49 +11,45 @@ import themeColor from '@tandem/theme/themeColor';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
-import {RootState} from '@tandem/redux/store';
 
 const Onboarding = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const isTablet = useAppSelector(
-    (state: RootState) => state.deviceType.isTablet,
-  );
-  const portrait = useAppSelector(
-    (state: RootState) => state.orientation.isPortrait,
-  );
-  const {height, width} = Dimensions.get('screen');
+  const isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const flatlistRef = useRef(null);
 
-  const renderBanner = useCallback(
-    ({item}: {item: any}) => {
-      return (
-        <ImageBackground
-          source={item.url}
-          resizeMode="cover"
-          style={{
-            height: height,
-            width: width,
-          }}
-        />
-      );
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [portrait],
-  );
+  const renderBanner = useCallback(({item}: {item: any}) => {
+    return (
+      <ImageBackground
+        source={item.url}
+        resizeMode="cover"
+        style={styles.img}
+      />
+    );
+  }, []);
 
-  const onViewableItemsChanged = useCallback(
-    ({viewableItems}: any) => {
-      if (viewableItems.length > 0) {
-        setCurrentIndex(viewableItems[0].index);
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
+  const onViewableItemsChanged = useCallback(({viewableItems}: any) => {
+    if (viewableItems.length > 0) {
+      setCurrentIndex(viewableItems[0].index);
+    }
+  }, []);
+
+  const nextPage = () => {
+    if (currentIndex < 2) {
+      // setCurrentIndex(currentIndex + 1);
+      flatlistRef?.current?.scrollToIndex({
+        animated: true,
+        index: currentIndex + 1,
+      });
+    } else {
+      navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN);
+    }
+  };
 
   return (
     <RNScreenWrapper>
       <FlatList
         data={onboardingList}
+        ref={flatlistRef}
         renderItem={renderBanner}
         pagingEnabled
         horizontal
@@ -91,7 +87,7 @@ const Onboarding = () => {
         <RNButton
           title={translation('GET_STARTED')}
           onClick={() => {
-            navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN);
+            nextPage();
           }}
           customStyle={[
             styles.button,
