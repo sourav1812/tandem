@@ -19,7 +19,6 @@ import themeColor from '@tandem/theme/themeColor';
 import {verticalScale} from 'react-native-size-matters';
 import RNBookmarkComponent from '@tandem/components/RNBookmarkComponent';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
-import i18n from '@tandem/constants/lang/i18n';
 import navigateTo from '@tandem/navigation/navigate';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {StateObject} from './interface';
@@ -37,10 +36,10 @@ const Home = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const {width} = useWindowDimensions();
   const modeBC: {color: string; title: string}[] = [
-    {color: themeColor.purple, title: i18n.t('WRITE_A_STORY')},
-    {color: themeColor.purple, title: i18n.t('I_CANT_DECIDE')},
-    {color: themeColor.gold, title: i18n.t('LEARN_SOMETHING')},
-    {color: themeColor.green, title: i18n.t('HAVE_FUN')},
+    {color: themeColor.purple, title: translation('WRITE_A_STORY')},
+    {color: themeColor.purple, title: translation('I_CANT_DECIDE')},
+    {color: themeColor.gold, title: translation('LEARN_SOMETHING')},
+    {color: themeColor.green, title: translation('HAVE_FUN')},
   ];
 
   const modeA: {
@@ -69,17 +68,17 @@ const Home = () => {
     },
     {
       color: themeColor.lightGreen,
-      title: i18n.t('REDEEM_VOUCHER'),
+      title: translation('REDEEM_VOUCHER'),
       emoji: '🗒️',
     },
     {
       color: themeColor.gold,
-      title: i18n.t('CO_PARENT'),
+      title: translation('CO_PARENT'),
       subHeading: translation('COMING_SOON'),
     },
     {
       color: themeColor.green,
-      title: i18n.t('PERSONALIZED_CHILD_DEVELOPMENT'),
+      title: translation('PERSONALIZED_CHILD_DEVELOPMENT'),
       subHeading: translation('COMING_SOON'),
     },
   ];
@@ -189,7 +188,7 @@ const Home = () => {
                 marginTop:
                   !isTablet && portrait ? verticalScale(60) : verticalScale(20),
               }}>
-              {i18n.t('HELLO')}, Ella!{mode === MODE.A && 'Mum'} 👋🏻
+              {translation('HELLO')}, Ella!{mode === MODE.A && 'Mum'} 👋🏻
             </RNTextComponent>
             <Pressable
               onPress={() => navigateTo(SCREEN_NAME.ACCOUNT)}
@@ -273,7 +272,7 @@ const Home = () => {
                 ...(!portrait && styles.headingPortrait),
                 ...(isTablet && {fontSize: verticalScale(18)}),
               }}>
-              {i18n.t('WHAT_SHALL_WE_DO_TODAY')}
+              {translation('WHAT_SHALL_WE_DO_TODAY')}
             </RNTextComponent>
             <View
               style={{
@@ -301,7 +300,7 @@ const Home = () => {
                         showIcon={index === 0}
                         showSubheading={index !== 0}
                         heading={item.title}
-                        subHeading={i18n.t('COMING_SOON')}
+                        subHeading={translation('COMING_SOON')}
                         emoji="🪄"
                       />
                     </Pressable>

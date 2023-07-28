@@ -10,8 +10,8 @@ import Info from '../../assets/svg/Note';
 import Less from '../../assets/svg/Subtract';
 import More from '../../assets/svg/Plus';
 import themeColor from '../../theme/themeColor';
-import i18n from '@tandem/constants/lang/i18n';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {translation} from '@tandem/utils/methods';
 
 const RNReadingLevelModal = ({
   visible = true,
@@ -40,7 +40,7 @@ const RNReadingLevelModal = ({
         ]}>
         <Info style={styles.icon} />
         <RNTextComponent isSemiBold style={styles.heading}>
-          {i18n.t('ADJUST_THE_READING_LEVEL')}:
+          {translation('ADJUST_THE_READING_LEVEL')}:
         </RNTextComponent>
         <View style={styles.content}>
           <RNButton onlyIcon icon={<Less />} onClick={() => {}} />
@@ -61,7 +61,7 @@ const RNReadingLevelModal = ({
           <RNButton onlyIcon icon={<More />} onClick={() => {}} />
         </View>
         <RNButton
-          title={i18n.t('UPDATE')}
+          title={translation('UPDATE')}
           customStyle={styles.button}
           onClick={() => {}}
         />

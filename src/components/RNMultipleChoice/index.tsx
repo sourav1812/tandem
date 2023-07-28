@@ -7,8 +7,8 @@ import RNButton from '../RNButton';
 import {verticalScale} from 'react-native-size-matters';
 import RNEmojiWithText from '../RNEmojiWithText';
 import {multipleChoiceProps} from './interface';
-import i18n from '@tandem/constants/lang/i18n';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {translation} from '@tandem/utils/methods';
 
 const RNMultipleChoice = ({onNextPress}: multipleChoiceProps) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -21,7 +21,7 @@ const RNMultipleChoice = ({onNextPress}: multipleChoiceProps) => {
             <RNTextComponent style={styles.emoji}>🤔</RNTextComponent>
           </View>
           <RNTextComponent style={styles.heading} isSemiBold>
-            How many animals can you name that starts with the letter C?
+            {translation('multiple-choice.how-many-animals')}
           </RNTextComponent>
           <View style={[styles.options]}>
             <ScrollView
@@ -46,7 +46,7 @@ const RNMultipleChoice = ({onNextPress}: multipleChoiceProps) => {
           styles.footerButton,
           isTablet && {maxHeight: verticalScale(70)},
         ]}
-        title={i18n.t('NEXT')}
+        title={translation('NEXT')}
         onClick={onNextPress}
         textStyle={{fontSize: verticalScale(16)}}
       />

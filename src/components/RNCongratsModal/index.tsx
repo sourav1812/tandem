@@ -8,9 +8,9 @@ import {verticalScale} from 'react-native-size-matters';
 import themeColor from '@tandem/theme/themeColor';
 import RNButton from '@tandem/components/RNButton';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
-import i18n from '@tandem/constants/lang/i18n';
 import navigateTo from '@tandem/navigation/navigate';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {translation} from '@tandem/utils/methods';
 
 const RNCongratsModal = ({
   visible = false,
@@ -52,7 +52,7 @@ const RNCongratsModal = ({
             </RNTextComponent>
           </View>
           <RNTextComponent isSemiBold style={styles.heading}>
-            {i18n.t('CONGRATS')}!
+            {translation('CONGRATS')}!
           </RNTextComponent>
           <View style={styles.info}>
             <View style={styles.box}>
@@ -60,7 +60,7 @@ const RNCongratsModal = ({
                 100%
               </RNTextComponent>
               <RNTextComponent style={styles.stat}>
-                {i18n.t('ACCURACY')}
+                {translation('ACCURACY')}
               </RNTextComponent>
             </View>
             <View style={styles.box}>
@@ -68,7 +68,7 @@ const RNCongratsModal = ({
                 80
               </RNTextComponent>
               <RNTextComponent style={styles.stat} numberOfLines={1}>
-                {i18n.t('SPEED')}
+                {translation('SPEED')}
               </RNTextComponent>
             </View>
             <View style={styles.box}>
@@ -76,7 +76,7 @@ const RNCongratsModal = ({
                 6 min
               </RNTextComponent>
               <RNTextComponent style={styles.stat}>
-                {i18n.t('DURATION')}
+                {translation('DURATION')}
               </RNTextComponent>
             </View>
           </View>
@@ -87,17 +87,17 @@ const RNCongratsModal = ({
               styles.stat,
               {color: themeColor.black, textAlign: 'center'},
             ]}>
-            You have create and read your own story
+            {translation('congrats-modal.you-have-read-your-own-story')}
           </RNTextComponent>
           <RNButton
-            title={i18n.t('HOME')}
+            title={translation('HOME')}
             customStyle={styles.button}
             onClick={() => {
               navigateTo(SCREEN_NAME.BOTTOM_TAB);
             }}
           />
           <RNButton
-            title={i18n.t('SHARE')}
+            title={translation('SHARE')}
             customStyle={styles.button}
             onClick={() => {
               onShare();

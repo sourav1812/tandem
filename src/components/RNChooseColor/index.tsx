@@ -7,6 +7,7 @@ import ColorPatchUp from '@tandem/assets/svg/ColorPatch';
 import EmptyBox from '@tandem/assets/svg/EmptyColorBox';
 import AddColor from '@tandem/assets/svg/AddColor';
 import EmptyPatch from '@tandem/assets/svg/EmptyPatch';
+import {translation} from '@tandem/utils/methods';
 
 const RNChooseColor = () => {
   const [state, setState] = useState<StateObject>({
@@ -33,19 +34,19 @@ const RNChooseColor = () => {
   return (
     <View style={styles.container}>
       <RNTextComponent isSemiBold style={styles.question}>
-        What colors{' '}
+        {translation('choose-color.what-colors')}
         <RNTextComponent
           isSemiBold
           // eslint-disable-next-line react-native/no-inline-styles
           style={{...styles.question, color: 'rgba(10, 8, 4, 0.6)'}}>
-          should we use
+          {translation('choose-color.should-we-use')}
         </RNTextComponent>{' '}
         <RNTextComponent isSemiBold style={styles.question}>
-          in our story?
+          {translation('choose-color.in-our-story')}
         </RNTextComponent>{' '}
       </RNTextComponent>
       <RNTextComponent style={styles.subHeading}>
-        Select two colors to get a third
+        {translation('choose-color.select-two-colors')}
       </RNTextComponent>
       <View style={styles.colorView}>
         {colorPalette.map((item, index) => {

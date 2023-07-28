@@ -9,18 +9,15 @@ export const styles = StyleSheet.create({
   },
   header: {
     flexDirection: 'row',
-    justifyContent: 'flex-end',
     alignItems: 'center',
     marginTop: verticalScale(44),
   },
   logo: {
     height: verticalScale(32),
-    width: scale(120),
-    marginRight: scale(58),
+    width: '95%',
   },
   heading: {
     alignSelf: 'center',
-    marginTop: verticalScale(30),
     textAlign: 'center',
   },
   content: {
@@ -46,7 +43,9 @@ export const styles = StyleSheet.create({
     paddingHorizontal: scale(5),
   },
   footer: {
+    alignSelf: 'center',
     height: verticalScale(64),
+    width: verticalScale(250),
     marginTop: verticalScale(30),
     borderRadius: 100,
     backgroundColor: themeColor.themeBlue,

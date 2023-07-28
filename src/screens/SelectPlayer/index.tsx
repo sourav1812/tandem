@@ -5,12 +5,12 @@ import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import Back from '@tandem/assets/svg/Cross';
 import RNButton from '@tandem/components/RNButton';
 import RNTextComponent from '@tandem/components/RNTextComponent';
-import i18n from '@tandem/constants/lang/i18n';
 import themeColor from '@tandem/theme/themeColor';
 import {player} from './interface';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {translation} from '@tandem/utils/methods';
 
 const SelectPlayer = () => {
   const players: player[] = [
@@ -23,7 +23,7 @@ const SelectPlayer = () => {
     <RNScreenWrapper style={styles.container}>
       <RNButton icon={<Back />} onlyIcon onClick={() => navigateTo()} />
       <RNTextComponent isSemiBold style={styles.heading}>
-        {i18n.t('WHO_IS_GOING_TO')}
+        {translation('WHO_IS_GOING_TO')}
       </RNTextComponent>
       <View style={[styles.scrollViewParent, isTablet && {maxWidth: 500}]}>
         <ScrollView

@@ -13,7 +13,6 @@ import RNParentProfile from '@tandem/components/RNParentProfile';
 import RNSignoutModal from '@tandem/components/RNSignoutModal';
 import {adultProfile, childProfile, StateObject} from './interface';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
-import i18n from '@tandem/constants/lang/i18n';
 import navigateTo from '@tandem/navigation/navigate';
 import Lion from '@tandem/assets/svg/AnimatedLion';
 import {translation} from '@tandem/utils/methods';
@@ -21,6 +20,8 @@ import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
 import {changeMode} from '@tandem/redux/slices/mode.slice';
 import {MODE} from '@tandem/constants/mode';
 import themeColor from '@tandem/theme/themeColor';
+import {useSelector} from 'react-redux';
+import {RootState} from '@tandem/redux/store';
 
 const Account = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -38,7 +39,9 @@ const Account = () => {
     ],
     playerList: [],
   });
-
+  const portrait = useSelector(
+    (state: RootState) => state.orientation.isPortrait,
+  );
   const {signoutModal, childrenList, adultList, playerList} = state;
 
   const updateState = (date: any) => {
@@ -120,12 +123,15 @@ const Account = () => {
         isSemiBold
         style={[
           styles.heading,
+          {
+            marginTop: portrait ? verticalScale(30) : 0,
+          },
           isTablet ? {fontSize: 24} : {fontSize: verticalScale(20)},
         ]}>
-        {i18n.t('WHO_IS_USING_THE_APP_NEXT')}
+        {translation('WHO_IS_USING_THE_APP_NEXT')}
       </RNTextComponent>
-      <View style={[styles.content, isTablet && {marginHorizontal: 120}]}>
-        <View>
+      <View style={[styles.content]}>
+        <View style={{alignItems: 'center'}}>
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -137,7 +143,13 @@ const Account = () => {
                   onPress={() => {
                     addPlayer(item);
                   }}>
-                  <RNKidsProfile data={item} />
+                  <RNKidsProfile
+                    style={{
+                      height: portrait ? verticalScale(60) : verticalScale(40),
+                      width: portrait ? verticalScale(60) : verticalScale(40),
+                    }}
+                    data={item}
+                  />
                 </Pressable>
               );
             })}
@@ -150,7 +162,7 @@ const Account = () => {
               <RNTextComponent
                 isMedium
                 style={[styles.addText, {marginTop: verticalScale(20)}]}>
-                {i18n.t('ADD')}
+                {translation('ADD')}
               </RNTextComponent>
             </Pressable>
           </ScrollView>
@@ -172,7 +184,15 @@ const Account = () => {
                     onPress={() => {
                       removePlayer(index);
                     }}>
-                    <RNKidsProfile data={item} />
+                    <RNKidsProfile
+                      style={{
+                        height: portrait
+                          ? verticalScale(60)
+                          : verticalScale(40),
+                        width: portrait ? verticalScale(60) : verticalScale(40),
+                      }}
+                      data={item}
+                    />
                   </Pressable>
                 );
               } else {
@@ -182,14 +202,20 @@ const Account = () => {
                     onPress={() => {
                       removePlayer(index);
                     }}>
-                    <RNParentProfile data={item} />
+                    <RNParentProfile
+                      height={
+                        portrait ? verticalScale(105) : verticalScale(52.5)
+                      }
+                      width={portrait ? verticalScale(90) : verticalScale(45)}
+                      data={item}
+                    />
                   </Pressable>
                 );
               }
             })}
           </ScrollView>
         </View>
-        <View>
+        <View style={{alignItems: 'center'}}>
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -201,7 +227,11 @@ const Account = () => {
                   onPress={() => {
                     addPlayer(item);
                   }}>
-                  <RNParentProfile data={item} />
+                  <RNParentProfile
+                    height={portrait ? verticalScale(105) : verticalScale(52.5)}
+                    width={portrait ? verticalScale(90) : verticalScale(45)}
+                    data={item}
+                  />
                 </Pressable>
               );
             })}
@@ -212,8 +242,13 @@ const Account = () => {
                 navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN, {}, true);
               }}>
               <Add />
-              <RNTextComponent isMedium style={styles.addText}>
-                {i18n.t('ADD')}
+              <RNTextComponent
+                isMedium
+                style={
+                  (styles.addText,
+                  {marginTop: portrait ? verticalScale(42) : verticalScale(21)})
+                }>
+                {translation('ADD')}
               </RNTextComponent>
             </Pressable>
           </ScrollView>

@@ -6,8 +6,8 @@ import RNTextComponent from '../RNTextComponent';
 import RNModal from '../RNModal';
 import RNButton from '../RNButton';
 import {verticalScale} from 'react-native-size-matters';
-import i18n from '@tandem/constants/lang/i18n';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {translation} from '@tandem/utils/methods';
 
 const RNReadingTipsModal = ({
   visible,
@@ -26,16 +26,15 @@ const RNReadingTipsModal = ({
           isTablet && {width: verticalScale(270), alignSelf: 'center'},
         ]}>
         <RNTextComponent isSemiBold style={styles.heading}>
-          {i18n.t('READING_TIPS')}
+          {translation('READING_TIPS')}
         </RNTextComponent>
         <RNTextComponent style={styles.info}>
-          You're both doing great. Why don`t you also try to take turns reading,
-          or to ask each other questions about the story as you go along?
+          {translation('reading-tips.you-are-both')}
         </RNTextComponent>
         <RNButton
           customStyle={styles.button}
           onClick={nextClick}
-          title={i18n.t('WELL')}
+          title={translation('WELL')}
         />
       </View>
     </RNModal>

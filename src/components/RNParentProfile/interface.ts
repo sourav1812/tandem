@@ -1,3 +1,4 @@
-export interface ParentProfile {
-  data?: {name: string; type: string};
+export interface RNParentProfileProp {
+  name: string;
+  type: string;
 }

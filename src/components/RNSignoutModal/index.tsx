@@ -7,9 +7,9 @@ import RNTextComponent from '../RNTextComponent';
 import RNModal from '../RNModal';
 import RNButton from '../RNButton';
 import {verticalScale} from 'react-native-size-matters';
-import en from '@tandem/constants/lang/en';
 import themeColor from '@tandem/theme/themeColor';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {translation} from '@tandem/utils/methods';
 
 const RNSignoutModal = ({
   visible,
@@ -33,10 +33,10 @@ const RNSignoutModal = ({
           },
         ]}>
         <RNTextComponent isSemiBold style={styles.heading}>
-          {en.SIGN_OUT}
+          {translation('SIGN_OUT')}
         </RNTextComponent>
         <RNTextComponent style={styles.info}>
-          {en.IF_YOU_SIGN_OUT_OF_THIS_APP}
+          {translation('IF_YOU_SIGN_OUT_OF_THIS_APP')}
         </RNTextComponent>
         <View
           style={[styles.footerButton, isTablet && {paddingHorizontal: 40}]}>
@@ -44,12 +44,12 @@ const RNSignoutModal = ({
             onlyBorder
             buttonColor={themeColor.themeBlue}
             onClick={renderModal}
-            title={en.CANCEL}
+            title={translation('CANCEL')}
             customStyle={[styles.button2, isTablet && {maxWidth: 150}]}
           />
           <RNButton
             onClick={nextClick}
-            title={en.ACCEPT}
+            title={translation('ACCEPT')}
             customStyle={[styles.button2, isTablet && {maxWidth: 150}]}
           />
         </View>

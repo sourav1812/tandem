@@ -7,6 +7,7 @@ import RightArrow from '@tandem/assets/svg/RightArrow';
 import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 import {verticalScale} from 'react-native-size-matters';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {translation} from '@tandem/utils/methods';
 
 const ProgressIndicator = ({progress}: {progress: number}) => {
   const progressPercentage = `${progress * 10}%`;
@@ -63,7 +64,7 @@ const RNStoryCard = ({
                 isTablet && {width: '50%'},
               ]}>
               <RNTextComponent style={styles.newText} isSemiBold>
-                New
+                {translation('NEW')}
               </RNTextComponent>
             </View>
           )}
@@ -78,7 +79,7 @@ const RNStoryCard = ({
           </RNTextComponent>
           <RNTextComponent
             style={[styles.minReading, isTablet && {fontSize: 22}]}>
-            {`${10 - item.readingTime} min reading`}
+            {`${10 - item.readingTime} ${translation('MIN_READING')}`}
           </RNTextComponent>
           <ProgressIndicator progress={item.readingTime} />
         </View>

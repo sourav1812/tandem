@@ -16,7 +16,6 @@ import RNLogoHeader from '@tandem/components/RNLogoHeader';
 import RNTextInputWithLabel from '@tandem/components/RNTextInputWithLabel';
 import {StateObject} from './interface';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
-import i18n from '@tandem/constants/lang/i18n';
 import Subtract from '@tandem/assets/svg/Subtract';
 import Add from '@tandem/assets/svg/Add';
 import navigateTo from '@tandem/navigation/navigate';
@@ -62,13 +61,13 @@ const HelpCenter = () => {
           style={{height: '100%', width: '100%'}}
           showsVerticalScrollIndicator={false}>
           <RNLogoHeader
-            heading={i18n.t('HELP_CENTER')}
+            heading={translation('HELP_CENTER')}
             textHeading
             customStyle={styles.heading}
           />
           <View style={styles.customTab}>
             <RNButton
-              title={i18n.t('FAQ')}
+              title={translation('FAQ')}
               onlyBorder
               onClick={leftTab}
               customStyle={[
@@ -84,7 +83,7 @@ const HelpCenter = () => {
               ]}
             />
             <RNButton
-              title={i18n.t('CONTACT_US')}
+              title={translation('CONTACT_US')}
               onlyBorder
               onClick={rightTab}
               customStyle={[
@@ -112,35 +111,35 @@ const HelpCenter = () => {
                   <RNTextComponent
                     isSemiBold
                     style={[styles.subHeading, isTablet && {fontSize: 25}]}>
-                    {i18n.t('QUESTIONS_COMMENTS')}
+                    {translation('QUESTIONS_COMMENTS')}
                   </RNTextComponent>
                   <RNTextInputWithLabel
-                    label={i18n.t('NAME')}
+                    label={translation('NAME')}
                     backgroundColor={themeColor.lightGray}
                     containerStyle={styles.input2}
                     value={name}
                     validationType={FORM_INPUT_TYPE.NAME}
                     updateText={setName}
-                    hint={i18n.t('ENTER_NAME')}
+                    hint={translation('ENTER_NAME')}
                     inputStyle={styles.inputText}
                   />
                   <RNTextInputWithLabel
-                    label={i18n.t('EMAIL')}
+                    label={translation('EMAIL')}
                     backgroundColor={themeColor.lightGray}
                     containerStyle={styles.input2}
                     value={email}
                     validationType={FORM_INPUT_TYPE.EMAIL}
                     updateText={setEmail}
-                    hint={i18n.t('ENTER_YOUR_EMAIL')}
+                    hint={translation('ENTER_YOUR_EMAIL')}
                     inputStyle={styles.inputText}
                   />
                   <RNTextInputWithLabel
-                    label={i18n.t('MESSAGE')}
+                    label={translation('MESSAGE')}
                     backgroundColor={themeColor.lightGray}
                     containerStyle={styles.input2}
                     value={message}
                     updateText={setMessage}
-                    hint={i18n.t('ENTER_MESSAGE')}
+                    hint={translation('ENTER_MESSAGE')}
                     inputStyle={[styles.inputText, {width: '100%', flex: 0}]}
                     inputViewStyle={styles.inputView}
                   />
@@ -196,13 +195,11 @@ const ExpandDetails = () => {
         <RNTextComponent
           isSemiBold
           style={{fontSize: verticalScale(13), color: '#000'}}>
-          Alright, but what exactly do you do?
+          {translation('help-center.alright-text')}
         </RNTextComponent>
         {open && (
           <RNTextComponent style={styles.expandedText}>
-            As a creative agency we work with you to develop solutions to
-            address your brand needs. That includes various aspects of brand
-            planning and strategy, marketing and design.
+            {translation('help-center.as-a-creative-agency')}
           </RNTextComponent>
         )}
       </View>
