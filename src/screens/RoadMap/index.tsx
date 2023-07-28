@@ -42,19 +42,16 @@ const RNRoadmap = () => {
         <Pressable
           style={styles.create}
           onPress={() => {
-            navigateTo(SCREEN_NAME.BOTTOM_TAB);
+            navigateTo(SCREEN_NAME.STORY_TELLING);
           }}>
-          <Create
-            mapIndex={questionIndex}
-            props={{style: {right: isTablet ? scale(25) : scale(0)}}}
-          />
+          <Create mapIndex={questionIndex} />
         </Pressable>
         <Pressable
           onPress={() => {
             handleNavigate(6);
-          }}>
+          }}
+          style={styles.stylecolor}>
           <StyleColor
-            props={{style: styles.stylecolor}}
             fillColor={
               questionIndex > 5 ? themeColor.themeBlue : themeColor.lightGray
             }
@@ -66,12 +63,12 @@ const RNRoadmap = () => {
         <Pressable
           onPress={() => {
             handleNavigate(5);
+          }}
+          style={{
+            ...styles.whatHappens,
+            ...{left: isTablet ? scale(20) : scale(105)},
           }}>
           <WhatHappens
-            props={{
-              style: styles.whatHappens,
-              ...{left: isTablet ? scale(20) : scale(55)},
-            }}
             fillColor={
               questionIndex > 4 ? themeColor.lightGreen : themeColor.lightGray
             }
@@ -83,11 +80,9 @@ const RNRoadmap = () => {
         <Pressable
           onPress={() => {
             handleNavigate(4);
-          }}>
+          }}
+          style={styles.whatThing}>
           <WhatThing
-            props={{
-              style: styles.whatThing,
-            }}
             fillColor={
               questionIndex > 3 ? themeColor.gold : themeColor.lightGray
             }
@@ -99,12 +94,12 @@ const RNRoadmap = () => {
         <Pressable
           onPress={() => {
             handleNavigate(3);
+          }}
+          style={{
+            ...styles.where,
+            ...{left: isTablet ? scale(17) : scale(100)},
           }}>
           <Where
-            props={{
-              style: styles.where,
-              ...{left: isTablet ? scale(17) : scale(50)},
-            }}
             fillColor={
               questionIndex > 2 ? themeColor.green : themeColor.lightGray
             }
@@ -116,9 +111,9 @@ const RNRoadmap = () => {
         <Pressable
           onPress={() => {
             handleNavigate(2);
-          }}>
+          }}
+          style={styles.who}>
           <Who
-            props={{style: styles.who}}
             fillColor={questionIndex >= 1 ? '#9A00FF' : themeColor.lightGray}
             textColor={
               questionIndex >= 1 ? themeColor.white : themeColor.themeBlue

@@ -9,10 +9,10 @@ import Mic from '@tandem/assets/svg/Mic';
 import MicOn from '@tandem/assets/svg/MinOn';
 import {verticalScale} from 'react-native-size-matters';
 import {VoiceQuestionProps} from './interface';
+import i18n from '@tandem/constants/lang/i18n';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
-import {translation} from '@tandem/utils/methods';
 
-const RNVoiceQuesiton = ({onClick}: VoiceQuestionProps) => {
+const RNVoiceQuesiton = ({onClick, customStyle}: VoiceQuestionProps) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const [inputList, setInputList] = useState<inputListState[]>([{answer: ''}]);
   const [micStatus, setMicStatus] = useState(false);
@@ -28,7 +28,7 @@ const RNVoiceQuesiton = ({onClick}: VoiceQuestionProps) => {
 
   return (
     <>
-      <View style={styles.container}>
+      <View style={[styles.container, customStyle && customStyle]}>
         <View style={{maxHeight: verticalScale(425)}}>
           <ScrollView
             style={styles.voiceQuestion}
@@ -71,7 +71,7 @@ const RNVoiceQuesiton = ({onClick}: VoiceQuestionProps) => {
           styles.footerButton,
           isTablet && {maxHeight: verticalScale(70)},
         ]}
-        title={translation('I_DONT_KNOW')}
+        title={i18n.t('I_DONT_KNOW')}
         onClick={onClick}
         textStyle={{color: themeColor.black, fontSize: verticalScale(16)}}
       />

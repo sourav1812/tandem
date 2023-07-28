@@ -57,11 +57,11 @@ const GenerateStory = () => {
         return (
           <>
             <RNTextComponent isSemiBold style={styles.question}>
-              Who{' '}
+              {translation('WHO')}{' '}
               <RNTextComponent
                 isSemiBold
                 style={{...styles.question, color: 'rgba(10, 8, 4, 0.6)'}}>
-                is going to be in our story?{' '}
+                {translation('generate-story.is-in-story')}{' '}
               </RNTextComponent>{' '}
             </RNTextComponent>
             <RNChoiceQuestions data={audience} />
@@ -71,7 +71,7 @@ const GenerateStory = () => {
         return (
           <>
             <RNTextComponent isSemiBold style={styles.question}>
-              Do you want to be included in the story, Alisa?
+              {translation('generate-story.included-in-story')}
             </RNTextComponent>
             <View style={[styles.picView]}>
               <ImageBackground
@@ -113,9 +113,10 @@ const GenerateStory = () => {
             <RNTextComponent
               isSemiBold
               style={{...styles.question, color: 'rgba(10, 8, 4, 0.6)'}}>
-              Where shall we {`\n`}{' '}
+              {translation('generate-story.where-shall-we')}
+              {`\n`}{' '}
               <RNTextComponent isSemiBold style={styles.question}>
-                go in our story today?
+                {translation('generate-story.go-in-our-story')}
               </RNTextComponent>
             </RNTextComponent>
             <RNChoiceQuestions data={place} />
@@ -125,7 +126,7 @@ const GenerateStory = () => {
         return (
           <>
             <RNTextComponent isSemiBold style={styles.question}>
-              Shall we include any of these things in the story?{' '}
+              {translation('generate-story.include-things')}{' '}
             </RNTextComponent>
             <RNChoiceQuestions data={attribute} />
           </>
@@ -134,11 +135,11 @@ const GenerateStory = () => {
         return (
           <>
             <RNTextComponent isSemiBold style={styles.question}>
-              What sort of story{' '}
+              {translation('generate-story.what-sort-of')}{' '}
               <RNTextComponent
                 isSemiBold
                 style={{...styles.question, color: 'rgba(10, 8, 4, 0.6)'}}>
-                do you want to make today?
+                {translation('generate-story.do-you-want-today')}
               </RNTextComponent>{' '}
             </RNTextComponent>
             <RNChoiceQuestions data={typeOfStory} />
@@ -148,11 +149,11 @@ const GenerateStory = () => {
         return (
           <>
             <RNTextComponent isSemiBold style={styles.question}>
-              What style of illustrations{' '}
+              {translation('generate-story.what-style-illustration')}{' '}
               <RNTextComponent
                 style={{...styles.question, color: 'rgba(10, 8, 4, 0.6)'}}
                 isSemiBold>
-                shall we use?
+                {translation('generate-story.shall-we-use')}
               </RNTextComponent>{' '}
             </RNTextComponent>
             <ScrollView

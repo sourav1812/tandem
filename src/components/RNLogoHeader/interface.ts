@@ -1,3 +1,4 @@
+import {ReactNode} from 'react';
 import {StyleProp, TextStyle, ViewStyle} from 'react-native';
 
 export interface LogoHeaderProps {
@@ -5,4 +6,5 @@ export interface LogoHeaderProps {
   textHeading?: boolean;
   heading?: string;
   titleStyle?: StyleProp<TextStyle>;
+  rightIcon?: ReactNode;
 }
