@@ -17,7 +17,7 @@ const Onboarding = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const flatlistRef = useRef(null);
 
-  const renderBanner = ({item}: {item: any}) => {
+  const renderBanner = useCallback(({item}: {item: any}) => {
     return (
       <ImageBackground
         source={item.url}
@@ -25,7 +25,7 @@ const Onboarding = () => {
         style={styles.img}
       />
     );
-  };
+  }, []);
 
   const onViewableItemsChanged = useCallback(({viewableItems}: any) => {
     if (viewableItems.length > 0) {

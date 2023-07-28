@@ -1,3 +1,3 @@
 export interface ParentProfile {
-  data?: object;
+  data?: {name: string; type: string};
 }

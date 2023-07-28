@@ -159,8 +159,7 @@ const Home = () => {
         </View>
         {changeUser && <ChangeChild userProfile={userProfile} name={name} />}
       </Pressable>
-      <RNScreenWrapper
-        statusBarBgc={showTooltip ? 'rgba(35, 35, 35, 0.6)' : 'transparent'}>
+      <RNScreenWrapper statusBarBgc={showTooltip ? '#00000080' : 'transparent'}>
         <View style={[styles.container]}>
           <View
             onLayout={event => {
