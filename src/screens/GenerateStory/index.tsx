@@ -28,11 +28,11 @@ import LeftArrow from '@tandem/assets/svg/LeftArrow';
 import QuestionMark from '@tandem/assets/svg/QuestionMark';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import RNChooseColor from '@tandem/components/RNChooseColor';
-import i18n from '@tandem/constants/lang/i18n';
 import navigateTo from '@tandem/navigation/navigate';
 import RNRoadmap from '@tandem/components/RNRoadmap';
 import {scale, verticalScale} from 'react-native-size-matters';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {translation} from '@tandem/utils/methods';
 
 const GenerateStory = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -82,18 +82,18 @@ const GenerateStory = () => {
       case 1:
         return (
           <RNTextComponent isSemiBold style={styles.question}>
-            Who{' '}
+            {translation('WHO')}
             <RNTextComponent
               isSemiBold
               style={{...styles.question, color: 'rgba(10, 8, 4, 0.6)'}}>
-              is going to be in our story?{' '}
-            </RNTextComponent>{' '}
+              {translation('generate-story.is-in-story')}
+            </RNTextComponent>
           </RNTextComponent>
         );
       case 2:
         return (
           <RNTextComponent isSemiBold style={styles.question}>
-            Do you want to be included in the story, Alisa?
+            {translation('generate-story.included-in-story')}
           </RNTextComponent>
         );
       case 3:
@@ -103,9 +103,9 @@ const GenerateStory = () => {
           <RNTextComponent
             isSemiBold
             style={{...styles.question, color: 'rgba(10, 8, 4, 0.6)'}}>
-            Where shall we {`\n`}{' '}
+            {translation('generate-story.where-shall-we')} {`\n`}
             <RNTextComponent isSemiBold style={styles.question}>
-              go in our story today?
+              {translation('generate-story.go-in-our-story')}
             </RNTextComponent>
           </RNTextComponent>
         );
@@ -115,7 +115,7 @@ const GenerateStory = () => {
       case 6:
         return (
           <RNTextComponent isSemiBold style={styles.question}>
-            Shall we include any of these things in the story?{' '}
+            {translation('generate-story.include-things')}
           </RNTextComponent>
         );
 
@@ -124,11 +124,11 @@ const GenerateStory = () => {
       case 8:
         return (
           <RNTextComponent isSemiBold style={styles.question}>
-            What sort of story{' '}
+            {translation('generate-story.what-sort-of')}
             <RNTextComponent
               isSemiBold
               style={{...styles.question, color: 'rgba(10, 8, 4, 0.6)'}}>
-              do you want to make today?
+              {translation('generate-story.do-you-want-today')}
             </RNTextComponent>{' '}
           </RNTextComponent>
         );
@@ -138,11 +138,11 @@ const GenerateStory = () => {
       case 10:
         return (
           <RNTextComponent isSemiBold style={styles.question}>
-            What style of illustrations{' '}
+            {translation('generate-story.what-style-illustration')}
             <RNTextComponent
               style={{...styles.question, color: 'rgba(10, 8, 4, 0.6)'}}
               isSemiBold>
-              shall we use?
+              {translation('generate-story.shall-we-use"')}
             </RNTextComponent>{' '}
           </RNTextComponent>
         );
@@ -198,7 +198,7 @@ const GenerateStory = () => {
               />
             </ImageBackground>
             <RNTextComponent style={styles.yesOrNo} isMedium>
-              {i18n.t('YES')} or {i18n.t('NO')}?
+              {translation('YES')} or {translation('NO')}?
             </RNTextComponent>
             <View style={[styles.buttonView, isTablet && {width: scale(180)}]}>
               <RNButton
@@ -394,7 +394,7 @@ const GenerateStory = () => {
               icon={<LeftArrow />}
             />
             <RNTextComponent style={styles.heading} isSemiBold>
-              {i18n.t('GENERATE_STORY')}{' '}
+              {translation('GENERATE_STORY')}{' '}
               <RNTextComponent isSemiBold style={styles.questionNumber}>
                 {showIndexes()}/6
               </RNTextComponent>
@@ -450,7 +450,7 @@ const GenerateStory = () => {
               styles.footerButton,
               isTablet && {maxHeight: verticalScale(75)},
             ]}
-            title={i18n.t('SELECT')}
+            title={translation('SELECT')}
             onClick={nextQuestion}
             textStyle={styles.buttonText}
           />

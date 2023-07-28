@@ -9,10 +9,10 @@ import {ScrollView, View} from 'react-native';
 import RNCheckboxWithText from '@tandem/components/RNCheckboxWithText';
 import RNButton from '@tandem/components/RNButton';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
-import i18n from '@tandem/constants/lang/i18n';
 import navigateTo from '@tandem/navigation/navigate';
 import {StateObject} from './interface';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {translation} from '@tandem/utils/methods';
 
 const TermsAndConditions = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -32,12 +32,12 @@ const TermsAndConditions = () => {
   return (
     <RNScreenWrapper style={{backgroundColor: themeColor.white}}>
       <RNTextComponent style={styles.heading} isSemiBold>
-        {i18n.t('T_AND_C')}
+        {translation('T_AND_C')}
       </RNTextComponent>
       <RNTextComponent
         style={[styles.heading, {marginTop: verticalScale(12)}]}
         isSemiBold>
-        {i18n.t('WELCOME_TO_OUR_APP')}
+        {translation('WELCOME_TO_OUR_APP')}
       </RNTextComponent>
       <View style={styles.content}>
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -48,16 +48,16 @@ const TermsAndConditions = () => {
             ]}>
             {/* By using our app, you agree to our Terms of Use.{'\n'}
             Please read them carefully. */}
-            {i18n.t('BY_USING_OUR_APP_YOU_AGREE')}
+            {translation('BY_USING_OUR_APP_YOU_AGREE')}
             {'\n'}
-            {i18n.t('PLEASE_READ_THEM_CAREFULLY')}
+            {translation('PLEASE_READ_THEM_CAREFULLY')}
           </RNTextComponent>
           <RNTextComponent style={styles.text}>
-            1. {i18n.t('USER_ELIGIBILITY')} {'\n\n'}
-            2. {i18n.t('USER_ELIGIBILITY')} {'\n\n'}
-            3. {i18n.t('USER_ELIGIBILITY')} {'\n\n'}
-            4. {i18n.t('USER_ELIGIBILITY')} {'\n\n'}
-            5. {i18n.t('USER_ELIGIBILITY')} {'\n\n'}
+            1. {translation('USER_ELIGIBILITY')} {'\n\n'}
+            2. {translation('USER_ELIGIBILITY')} {'\n\n'}
+            3. {translation('USER_ELIGIBILITY')} {'\n\n'}
+            4. {translation('USER_ELIGIBILITY')} {'\n\n'}
+            5. {translation('USER_ELIGIBILITY')} {'\n\n'}
           </RNTextComponent>
           <RNCheckboxWithText onAccept={() => updateState({term1: !term1})} />
           <RNCheckboxWithText onAccept={() => updateState({term2: !term2})} />
@@ -71,14 +71,14 @@ const TermsAndConditions = () => {
             onClick={() => {
               navigateTo();
             }}
-            title={i18n.t('CANCEL')}
+            title={translation('CANCEL')}
             customStyle={styles.button}
           />
           <RNButton
             onClick={() => {
               navigateTo(SCREEN_NAME.HELP_CENTER);
             }}
-            title={i18n.t('ACCEPT')}
+            title={translation('ACCEPT')}
             customStyle={[
               styles.button,
               !term1 && !term2 && !term3

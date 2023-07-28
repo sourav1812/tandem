@@ -11,8 +11,8 @@ import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import RNVoiceQuesiton from '@tandem/components/RNVoiceQuesiton';
 import RNMultipleChoice from '@tandem/components/RNMultipleChoice';
 import RNWellDoneModal from '@tandem/components/RNWellDoneModal';
-import i18n from '@tandem/constants/lang/i18n';
 import navigateTo from '@tandem/navigation/navigate';
+import {translation} from '@tandem/utils/methods';
 
 const Activities = () => {
   // const heighWidth = useRef(new Animated.Value(120)).current;
@@ -70,7 +70,7 @@ const Activities = () => {
         <View style={styles.header}>
           <RNButton onlyIcon onClick={previousQuestion} icon={<LeftArrow />} />
           <RNTextComponent style={styles.heading} isSemiBold>
-            {i18n.t('GENERATE_STORY')}{' '}
+            {translation('GENERATE_STORY')}{' '}
           </RNTextComponent>
           <RNButton
             onlyIcon

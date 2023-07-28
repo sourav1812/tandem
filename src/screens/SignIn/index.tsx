@@ -20,11 +20,11 @@ import Apple from '@tandem/assets/svg/AppleLogo';
 import FB from '@tandem/assets/svg/FBlogo';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {verticalScale} from 'react-native-size-matters';
-import i18n from '@tandem/constants/lang/i18n';
 import navigateTo from '@tandem/navigation/navigate';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
 import {RootState} from '@tandem/redux/store';
+import {translation} from '@tandem/utils/methods';
 
 const SignIn = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -57,7 +57,7 @@ const SignIn = () => {
               resizeMode="stretch">
               <RNLogoHeader customStyle={styles.header} />
               <RNTextComponent style={styles.heading} isSemiBold>
-                {i18n.t('SIGN_IN')}
+                {translation('SIGN_IN')}
               </RNTextComponent>
               <View
                 style={[
@@ -65,32 +65,32 @@ const SignIn = () => {
                   isTablet && {paddingHorizontal: verticalScale(120)},
                 ]}>
                 <RNTextInputWithLabel
-                  label={i18n.t('EMAIL')}
+                  label={translation('EMAIL')}
                   backgroundColor={themeColor.lightGray}
                   containerStyle={styles.input2}
                   value={email}
                   validationType={FORM_INPUT_TYPE.EMAIL}
                   updateText={setEmail}
-                  hint={i18n.t('ENTER_YOUR_EMAIL')}
+                  hint={translation('ENTER_YOUR_EMAIL')}
                   inputStyle={styles.inputText}
                 />
                 <RNTextInputWithLabel
-                  label={i18n.t('PASSWORD')}
+                  label={translation('PASSWORD')}
                   // label={en.EMAIL}
                   backgroundColor={themeColor.lightGray}
                   containerStyle={styles.input2}
                   value={password}
                   updateText={setPassword}
                   validationType={FORM_INPUT_TYPE.PASSWORD}
-                  hint={i18n.t('ENTER_PASSWORD')}
+                  hint={translation('ENTER_PASSWORD')}
                   inputStyle={styles.inputText}
                   rightSideIcon={true}
                 />
                 <RNTextComponent style={styles.forgotPassword}>
-                  {i18n.t('FORGOT_PASSWORD')}
+                  {translation('FORGOT_PASSWORD')}
                 </RNTextComponent>
                 <RNButton
-                  title={i18n.t('SIGN_IN')}
+                  title={translation('SIGN_IN')}
                   customStyle={styles.button}
                   onClick={() => {
                     navigateTo(SCREEN_NAME.TERMS_AND_CONDITIONS);
@@ -100,7 +100,7 @@ const SignIn = () => {
                   <View style={styles.line} />
                   <RNTextComponent
                     style={[styles.text, isTablet && {fontSize: 14}]}>
-                    {i18n.t('OR_CONTINUE_WITH')}
+                    {translation('OR_CONTINUE_WITH')}
                   </RNTextComponent>
                   <View style={styles.line} />
                 </View>
@@ -130,12 +130,12 @@ const SignIn = () => {
                 </View>
                 <RNTextComponent
                   style={[styles.buttonText, isTablet && {fontSize: 22}]}>
-                  {i18n.t('ALREADY_HAVE_AN_ACCOUNT')}{' '}
+                  {translation('ALREADY_HAVE_AN_ACCOUNT')}{' '}
                   <RNTextComponent
                     isSemiBold
                     style={[styles.signup, isTablet && {fontSize: 22}]}
                     handleOnPress={() => navigateTo(SCREEN_NAME.SIGN_UP)}>
-                    {i18n.t('SIGN_UP')}
+                    {translation('SIGN_UP')}
                   </RNTextComponent>
                 </RNTextComponent>
               </View>
@@ -144,7 +144,7 @@ const SignIn = () => {
             <>
               <RNLogoHeader customStyle={styles.header} />
               <RNTextComponent style={styles.heading} isSemiBold>
-                {i18n.t('SIGN_IN')}
+                {translation('SIGN_IN')}
               </RNTextComponent>
               <View
                 style={[
@@ -152,32 +152,32 @@ const SignIn = () => {
                   isTablet && {paddingHorizontal: verticalScale(100)},
                 ]}>
                 <RNTextInputWithLabel
-                  label={i18n.t('EMAIL')}
+                  label={translation('EMAIL')}
                   backgroundColor={themeColor.lightGray}
                   containerStyle={styles.input2}
                   value={email}
                   validationType={FORM_INPUT_TYPE.EMAIL}
                   updateText={setEmail}
-                  hint={i18n.t('ENTER_YOUR_EMAIL')}
+                  hint={translation('ENTER_YOUR_EMAIL')}
                   inputStyle={styles.inputText}
                 />
                 <RNTextInputWithLabel
-                  label={i18n.t('PASSWORD')}
+                  label={translation('PASSWORD')}
                   // label={en.EMAIL}
                   backgroundColor={themeColor.lightGray}
                   containerStyle={styles.input2}
                   value={password}
                   updateText={setPassword}
                   validationType={FORM_INPUT_TYPE.PASSWORD}
-                  hint={i18n.t('ENTER_PASSWORD')}
+                  hint={translation('ENTER_PASSWORD')}
                   inputStyle={styles.inputText}
                   rightSideIcon={true}
                 />
                 <RNTextComponent style={styles.forgotPassword}>
-                  {i18n.t('FORGOT_PASSWORD')}
+                  {translation('FORGOT_PASSWORD')}
                 </RNTextComponent>
                 <RNButton
-                  title={i18n.t('SIGN_IN')}
+                  title={translation('SIGN_IN')}
                   customStyle={styles.button}
                   onClick={() => {
                     navigateTo(SCREEN_NAME.TERMS_AND_CONDITIONS);
@@ -187,7 +187,7 @@ const SignIn = () => {
                   <View style={styles.line} />
                   <RNTextComponent
                     style={[styles.text, isTablet && {fontSize: 14}]}>
-                    {i18n.t('OR_CONTINUE_WITH')}
+                    {translation('OR_CONTINUE_WITH')}
                   </RNTextComponent>
                   <View style={styles.line} />
                 </View>
@@ -217,12 +217,12 @@ const SignIn = () => {
                 </View>
                 <RNTextComponent
                   style={[styles.buttonText, isTablet && {fontSize: 22}]}>
-                  {i18n.t('ALREADY_HAVE_AN_ACCOUNT')}{' '}
+                  {translation('ALREADY_HAVE_AN_ACCOUNT')}{' '}
                   <RNTextComponent
                     isSemiBold
                     style={[styles.signup, isTablet && {fontSize: 22}]}
                     handleOnPress={() => navigateTo(SCREEN_NAME.SIGN_UP)}>
-                    {i18n.t('SIGN_UP')}
+                    {translation('SIGN_UP')}
                   </RNTextComponent>
                 </RNTextComponent>
               </View>

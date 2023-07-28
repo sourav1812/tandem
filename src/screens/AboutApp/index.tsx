@@ -5,6 +5,7 @@ import {Image, View} from 'react-native';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import RNLogoHeader from '@tandem/components/RNLogoHeader';
 import {verticalScale} from 'react-native-size-matters';
+import {translation} from '@tandem/utils/methods';
 
 const AboutApp = () => {
   return (
@@ -12,7 +13,7 @@ const AboutApp = () => {
       <RNLogoHeader
         customStyle={styles.header}
         textHeading
-        heading={'ABOUT_APP'}
+        heading={translation('ABOUT_APP')}
       />
       <View>
         <Image

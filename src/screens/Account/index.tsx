@@ -13,7 +13,6 @@ import RNParentProfile from '@tandem/components/RNParentProfile';
 import RNSignoutModal from '@tandem/components/RNSignoutModal';
 import {adultProfile, childProfile, StateObject} from './interface';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
-import i18n from '@tandem/constants/lang/i18n';
 import navigateTo from '@tandem/navigation/navigate';
 import Lion from '@tandem/assets/svg/AnimatedLion';
 import {translation} from '@tandem/utils/methods';
@@ -126,7 +125,7 @@ const Account = () => {
           },
           isTablet ? {fontSize: 24} : {fontSize: verticalScale(20)},
         ]}>
-        {i18n.t('WHO_IS_USING_THE_APP_NEXT')}
+        {translation('WHO_IS_USING_THE_APP_NEXT')}
       </RNTextComponent>
       <View style={[styles.content]}>
         <View style={{alignItems: 'center'}}>
@@ -159,7 +158,7 @@ const Account = () => {
               <RNTextComponent
                 isMedium
                 style={[styles.addText, {marginTop: verticalScale(20)}]}>
-                {i18n.t('ADD')}
+                {translation('ADD')}
               </RNTextComponent>
             </Pressable>
           </ScrollView>
@@ -237,7 +236,7 @@ const Account = () => {
                   (styles.addText,
                   {marginTop: portrait ? verticalScale(42) : verticalScale(21)})
                 }>
-                {i18n.t('ADD')}
+                {translation('ADD')}
               </RNTextComponent>
             </Pressable>
           </ScrollView>
