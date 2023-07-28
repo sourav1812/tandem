@@ -8,12 +8,10 @@ export interface colorPalette {
   colorCode: string;
 }
 export interface StateObject {
-  questionNumber: number;
-  colorPalette: colorPalette[];
   addedIllustration: number | null;
 }
 
-interface placeType {
+export interface placeType {
   name: string;
   icon: string;
   bgc: string;

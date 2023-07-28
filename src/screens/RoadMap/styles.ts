@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
   button: {
     marginTop: verticalScale(42),
     alignSelf: 'flex-end',
-    marginRight: 6,
+    marginRight: scale(20),
   },
   roadmap: {
     flex: 1,
