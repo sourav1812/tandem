@@ -1,4 +1,4 @@
-import {Pressable, View} from 'react-native';
+import {Alert, Pressable, View} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
 import YellowButton from '@tandem/assets/svg/YellowButton';
@@ -23,8 +23,10 @@ const RNRoadmap = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const questionIndex = useAppSelector(state => state.questions.index);
 
-  const navigate = (index: number) => {
-    dispatch(setQuestionIndex(index));
+  const handleNavigate = (index: number) => {
+    if (index >= questionIndex) {
+      dispatch(setQuestionIndex(index));
+    }
     navigateTo(SCREEN_NAME.GENERATE_STORY);
   };
 
@@ -49,42 +51,54 @@ const RNRoadmap = () => {
         </Pressable>
         <Pressable
           onPress={() => {
-            navigate(6);
+            handleNavigate(6);
           }}>
           <StyleColor
             props={{style: styles.stylecolor}}
-            fillColor={false ? themeColor.themeBlue : themeColor.lightGray}
-            textColor={false ? themeColor.white : themeColor.themeBlue}
+            fillColor={
+              questionIndex > 5 ? themeColor.themeBlue : themeColor.lightGray
+            }
+            textColor={
+              questionIndex > 5 ? themeColor.white : themeColor.themeBlue
+            }
           />
         </Pressable>
         <Pressable
           onPress={() => {
-            navigate(5);
+            handleNavigate(5);
           }}>
           <WhatHappens
             props={{
               style: styles.whatHappens,
               ...{left: isTablet ? scale(20) : scale(55)},
             }}
-            fillColor={false ? themeColor.lightGreen : themeColor.lightGray}
-            textColor={false ? themeColor.white : themeColor.themeBlue}
+            fillColor={
+              questionIndex > 4 ? themeColor.lightGreen : themeColor.lightGray
+            }
+            textColor={
+              questionIndex > 4 ? themeColor.white : themeColor.themeBlue
+            }
           />
         </Pressable>
         <Pressable
           onPress={() => {
-            navigate(4);
+            handleNavigate(4);
           }}>
           <WhatThing
             props={{
               style: styles.whatThing,
             }}
-            fillColor={false ? themeColor.gold : themeColor.lightGray}
-            textColor={false ? themeColor.white : themeColor.themeBlue}
+            fillColor={
+              questionIndex > 3 ? themeColor.gold : themeColor.lightGray
+            }
+            textColor={
+              questionIndex > 3 ? themeColor.white : themeColor.themeBlue
+            }
           />
         </Pressable>
         <Pressable
           onPress={() => {
-            navigate(3);
+            handleNavigate(3);
           }}>
           <Where
             props={{
@@ -92,29 +106,29 @@ const RNRoadmap = () => {
               ...{left: isTablet ? scale(17) : scale(50)},
             }}
             fillColor={
-              questionIndex === 2 ? themeColor.green : themeColor.lightGray
+              questionIndex > 2 ? themeColor.green : themeColor.lightGray
             }
             textColor={
-              questionIndex === 2 ? themeColor.white : themeColor.themeBlue
+              questionIndex > 2 ? themeColor.white : themeColor.themeBlue
             }
           />
         </Pressable>
         <Pressable
           onPress={() => {
-            navigate(2);
+            handleNavigate(2);
           }}>
           <Who
             props={{style: styles.who}}
-            fillColor={questionIndex <= 1 ? '#9A00FF' : themeColor.lightGray}
+            fillColor={questionIndex >= 1 ? '#9A00FF' : themeColor.lightGray}
             textColor={
-              questionIndex <= 1 ? themeColor.white : themeColor.themeBlue
+              questionIndex >= 1 ? themeColor.white : themeColor.themeBlue
             }
           />
         </Pressable>
         <Pressable
           style={[styles.start, isTablet && {left: scale(8)}]}
           onPress={() => {
-            navigate(1);
+            handleNavigate(0);
           }}>
           <RNTextComponent style={styles.startText} isSemiBold>
             {translation('START')}

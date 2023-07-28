@@ -5,7 +5,7 @@ interface DeviceState {
 }
 
 const initialState: DeviceState = {
-  index: 1,
+  index: 0,
 };
 
 export const questionsSlice = createSlice({

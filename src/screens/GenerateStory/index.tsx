@@ -39,7 +39,6 @@ const GenerateStory = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const questionIndex = useAppSelector(state => state.questions.index);
 
-  console.log(questionIndex, 'questionIndexquestionIndex');
   const [state, setState] = useState<StateObject>({
     addedIllustration: null,
   });
@@ -54,7 +53,7 @@ const GenerateStory = () => {
 
   const dynamicContent = () => {
     switch (questionIndex) {
-      case 1:
+      case 0:
         return (
           <>
             <RNTextComponent isSemiBold style={styles.question}>
@@ -68,7 +67,7 @@ const GenerateStory = () => {
             <RNChoiceQuestions data={audience} />
           </>
         );
-      case 2:
+      case 1:
         return (
           <>
             <RNTextComponent isSemiBold style={styles.question}>
@@ -108,7 +107,7 @@ const GenerateStory = () => {
             </View>
           </>
         );
-      case 3:
+      case 2:
         return (
           <>
             <RNTextComponent
@@ -122,7 +121,7 @@ const GenerateStory = () => {
             <RNChoiceQuestions data={place} />
           </>
         );
-      case 4:
+      case 3:
         return (
           <>
             <RNTextComponent isSemiBold style={styles.question}>
@@ -131,7 +130,7 @@ const GenerateStory = () => {
             <RNChoiceQuestions data={attribute} />
           </>
         );
-      case 5:
+      case 4:
         return (
           <>
             <RNTextComponent isSemiBold style={styles.question}>
@@ -145,7 +144,7 @@ const GenerateStory = () => {
             <RNChoiceQuestions data={typeOfStory} />
           </>
         );
-      case 6:
+      case 5:
         return (
           <>
             <RNTextComponent isSemiBold style={styles.question}>
@@ -182,7 +181,7 @@ const GenerateStory = () => {
             </ScrollView>
           </>
         );
-      case 7:
+      case 6:
         return <RNChooseColor />;
     }
   };
@@ -190,15 +189,17 @@ const GenerateStory = () => {
   const nextQuestion = () => {
     if (questionIndex < 7) {
       dispatch(setQuestionIndex(questionIndex + 1));
-      navigateTo(SCREEN_NAME.ROADMAP, {}, true);
+      if (questionIndex !== 0 && questionIndex !== 5) {
+        navigateTo(SCREEN_NAME.ROADMAP, {}, true);
+      }
     }
   };
 
   const previousQuestion = () => {
     if (questionIndex > 0) {
-      updateState({questionIndex: questionIndex - 1});
-    } else {
       navigateTo();
+    } else {
+      navigateTo(SCREEN_NAME.BOTTOM_TAB);
     }
   };
 
@@ -210,7 +211,7 @@ const GenerateStory = () => {
           <RNTextComponent style={styles.heading} isSemiBold>
             {i18n.t('GENERATE_STORY')}{' '}
             <RNTextComponent isSemiBold style={styles.questionNumber}>
-              1/6
+              {questionIndex + 1}/6
             </RNTextComponent>
           </RNTextComponent>
           <RNButton
@@ -223,7 +224,6 @@ const GenerateStory = () => {
           {Array.from({length: 6}, (_, index) => {
             return {index: index};
           }).map(index => {
-            const currentIndex = 1;
             return (
               <View
                 key={index.index}
@@ -232,7 +232,7 @@ const GenerateStory = () => {
                   {
                     ...{
                       backgroundColor:
-                        index.index < currentIndex
+                        index.index < questionIndex
                           ? themeColor.themeBlue
                           : 'rgba(66, 133, 246, 0.5)',
                     },
