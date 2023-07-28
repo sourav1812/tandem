@@ -51,7 +51,7 @@ const Story = () => {
               </View>
               <View style={styles.duration}>
                 <RNTextComponent style={styles.emoji} isSemiBold>
-                  New
+                  {translation('NEW')}
                 </RNTextComponent>
               </View>
             </View>

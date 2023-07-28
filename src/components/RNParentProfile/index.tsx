@@ -3,13 +3,20 @@ import React from 'react';
 import {styles} from './styles';
 import RNTextComponent from '../RNTextComponent';
 import Lion from '../../assets/svg/AnimatedLion';
-import {verticalScale} from 'react-native-size-matters';
-import {ParentProfileProps} from './interface';
+import {RNParentProfileProp} from './interface';
 
-const RNParentProfile = ({data}: ParentProfileProps) => {
+const RNParentProfile = ({
+  height,
+  width,
+  data,
+}: {
+  height: number;
+  width: number;
+  data: RNParentProfileProp;
+}) => {
   return (
     <View style={styles.container}>
-      <Lion height={verticalScale(105)} width={verticalScale(90)} />
+      <Lion height={height} width={width} />
       <RNTextComponent style={styles.name} isMedium>
         {data && data.name}
       </RNTextComponent>

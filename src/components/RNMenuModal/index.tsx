@@ -10,6 +10,7 @@ import Send from '../../assets/svg/Send';
 import Delete from '../../assets/svg/Delete';
 import themeColor from '../../theme/themeColor';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {translation} from '@tandem/utils/methods';
 
 const RNMenuModal = ({visible, renderModal}: menuModalProps) => {
   let isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -21,18 +22,20 @@ const RNMenuModal = ({visible, renderModal}: menuModalProps) => {
       <View
         style={[styles.container, isTablet && {maxWidth: verticalScale(270)}]}>
         <Pressable style={styles.menu}>
-          <RNTextComponent style={styles.text}>Share Pdf</RNTextComponent>
+          <RNTextComponent style={styles.text}>
+            {translation('menu-modal.share-pdf')}
+          </RNTextComponent>
           <Notes />
         </Pressable>
         <Pressable style={styles.menu}>
           <RNTextComponent style={styles.text}>
-            Invite to read on tandem
+            {translation('menu-modal.invite-to-read')}
           </RNTextComponent>
           <Send />
         </Pressable>
         <Pressable style={styles.menu}>
           <RNTextComponent style={[styles.text, {color: themeColor.red}]}>
-            Delete
+            {translation('DELETE')}
           </RNTextComponent>
           <Delete />
         </Pressable>

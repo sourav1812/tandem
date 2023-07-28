@@ -6,9 +6,9 @@ import RNTextComponent from '../RNTextComponent';
 import {verticalScale} from 'react-native-size-matters';
 import RNButton from '../RNButton';
 import RNModal from '../RNModal';
-import i18n from '@tandem/constants/lang/i18n';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {RootState} from '@tandem/redux/store';
+import {translation} from '@tandem/utils/methods';
 
 const RNWellDoneModal = ({
   visible = true,
@@ -36,7 +36,7 @@ const RNWellDoneModal = ({
           style={styles.tick}
         />
         <RNTextComponent isSemiBold style={styles.heading}>
-          {i18n.t('WELL_DONE')}
+          {translation('WELL_DONE')}
         </RNTextComponent>
         <RNTextComponent style={styles.info}>
           you named 2 animals beginning with the letter C!
@@ -44,7 +44,7 @@ const RNWellDoneModal = ({
         <RNButton
           customStyle={styles.button}
           onClick={nextClick}
-          title={i18n.t('NEXT')}
+          title={translation('NEXT')}
         />
       </View>
     </RNModal>

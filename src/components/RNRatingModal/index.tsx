@@ -6,8 +6,8 @@ import RNTextComponent from '../RNTextComponent';
 import {verticalScale} from 'react-native-size-matters';
 import RNButton from '../RNButton';
 import RNModal from '../RNModal';
-import i18n from '@tandem/constants/lang/i18n';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {translation} from '@tandem/utils/methods';
 
 const RNRatingModal = ({visible, renderModal, nextClick}: ratingModalProps) => {
   let isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -22,7 +22,7 @@ const RNRatingModal = ({visible, renderModal, nextClick}: ratingModalProps) => {
           isTablet && {width: verticalScale(270), alignSelf: 'center'},
         ]}>
         <RNTextComponent isSemiBold style={styles.heading}>
-          {i18n.t('AGREE_ON_A_RATING_FOR_THE_STORY')}:
+          {translation('AGREE_ON_A_RATING_FOR_THE_STORY')}:
         </RNTextComponent>
         <View style={styles.content}>
           {ratingList.map((item, index) => {
@@ -38,7 +38,7 @@ const RNRatingModal = ({visible, renderModal, nextClick}: ratingModalProps) => {
         <RNButton
           customStyle={styles.button}
           onClick={nextClick}
-          title={i18n.t('RATE')}
+          title={translation('RATE')}
         />
       </View>
     </RNModal>

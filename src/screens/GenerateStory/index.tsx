@@ -27,12 +27,12 @@ import LeftArrow from '@tandem/assets/svg/LeftArrow';
 import QuestionMark from '@tandem/assets/svg/QuestionMark';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import RNChooseColor from '@tandem/components/RNChooseColor';
-import i18n from '@tandem/constants/lang/i18n';
 import navigateTo from '@tandem/navigation/navigate';
 import {scale, verticalScale} from 'react-native-size-matters';
 import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
 import RNChoiceQuestions from '@tandem/components/RNChoiceQuestions';
 import {setQuestionIndex} from '@tandem/redux/slices/questions.slice';
+import {translation} from '@tandem/utils/methods';
 
 const GenerateStory = () => {
   const dispatch = useAppDispatch();
@@ -88,7 +88,7 @@ const GenerateStory = () => {
                 />
               </ImageBackground>
               <RNTextComponent style={styles.yesOrNo} isMedium>
-                {i18n.t('YES')} or {i18n.t('NO')}?
+                {translation('YES')} or {translation('NO')}?
               </RNTextComponent>
               <View
                 style={[styles.buttonView, isTablet && {width: scale(180)}]}>
@@ -209,7 +209,7 @@ const GenerateStory = () => {
         <View style={styles.header}>
           <RNButton onlyIcon onClick={previousQuestion} icon={<LeftArrow />} />
           <RNTextComponent style={styles.heading} isSemiBold>
-            {i18n.t('GENERATE_STORY')}{' '}
+            {translation('GENERATE_STORY')}{' '}
             <RNTextComponent isSemiBold style={styles.questionNumber}>
               {questionIndex + 1}/6
             </RNTextComponent>
@@ -249,7 +249,7 @@ const GenerateStory = () => {
           styles.footerButton,
           isTablet && {maxHeight: verticalScale(75)},
         ]}
-        title={i18n.t('SELECT')}
+        title={translation('SELECT')}
         onClick={nextQuestion}
         textStyle={styles.buttonText}
       />

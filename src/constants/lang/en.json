@@ -8,6 +8,9 @@
   "YOU_CAN_CHANGE_IT": "You can change it in the settings at any time",
   "CREATE_AN_ACCOUNT": "Create an account",
   "NAME": "Name",
+  "DAD": "Dad",
+  "MUM": "Mum",
+  "WHO": "Who",
   "EMAIL": "Email",
   "PASSWORD": "Password",
   "CONFIRM_PASSWORD": " Confirm Password",
@@ -85,6 +88,8 @@
   "ADD_ONE_OF_YOUR_CHILDREN": "Add one of your children to get started. Then you can add others and change settings",
   "BOY": "Boy",
   "GIRL": "Girl",
+  "NEW": "New",
+  "MIN_READING": "min reading",
   "PREFER_NOT_TO_SAY": "Prefer Not To Say",
   "ADD_CHILD_INFO": "Add child info",
   "COMPLETE_A_QUESTIONAIRE": "Complete a questionnaire to track your child's development",
@@ -152,5 +157,46 @@
   "VOUCHER": "Voucher",
   "READ_TOGETHER": "Read Together",
   "QUESTIONS_ABOUT_THE_STORY": "Questions about the story",
-  "SWITCH_MODE": "Switch mode"
+  "SWITCH_MODE": "Switch mode",
+  "choose-color": {
+    "what-colors": "What colors",
+    "should-we-use": "should we use",
+    "in-our-story": "in our story?",
+    "select-two-colors": "Select two colors to get a third"
+  },
+  "congrats-modal": {
+    "you-have-read-your-own-story": "You have create and read your own story"
+  },
+  "menu-modal": {
+    "share-pdf": "Share Pdf",
+    "invite-to-read": "Invite to read on tandem"
+  },
+  "multiple-choice": {
+    "how-many-animals": "How many animals can you name that starts with the letter C?"
+  },
+  "reading-tips": {
+    "you-are-both": "You're both doing great. Why don`t you also try to take turns reading,or to ask each other questions about the story as you go along?"
+  },
+  "bookshelf": {
+    "nothing-to-see-here": "Nothing to see here... yet!",
+    "why-dont-we-one": "Why don't we write a story",
+    "why-dont-we-two": "together now?",
+    "write-a-story": "Write a story"
+  },
+  "generate-story": {
+    "is-in-story": " is going to be in our story?",
+    "included-in-story": "Do you want to be included in the story, Alisa?",
+    "where-shall-we": "Where shall we ",
+    "go-in-our-story": "go in our story today?",
+    "include-things": "Shall we include any of these things in the story?",
+    "what-sort-of": "What sort of story",
+    "do-you-want-today": "do you want to make today?",
+    "what-style-illustration": "What style of illustrations",
+    "shall-we-use": "shall we use?"
+  },
+  "help-center": {
+    "alright-text": "Alright, but what exactly do you do?",
+    "as-a-creative-agency": "As a creative agency we work with you to develop solutions to address your brand needs. That includes various aspects of brand planning and strategy, marketing and design."
+  }
+  
 }

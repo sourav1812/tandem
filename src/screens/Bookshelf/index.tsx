@@ -9,10 +9,10 @@ import RNTextComponent from '@tandem/components/RNTextComponent';
 import RNStoryCard from '@tandem/components/RNStoryCard';
 import {scale, verticalScale} from 'react-native-size-matters';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
-import i18n from '@tandem/constants/lang/i18n';
 import navigateTo from '@tandem/navigation/navigate';
 import {ValidationError} from '@tandem/utils/validations';
 import {checkIfTablet} from '@tandem/hooks/isTabletHook';
+import {translation} from '@tandem/utils/methods';
 import BlueBotton from '@tandem/assets/svg/BlueButton';
 import BothButton from '@tandem/assets/svg/BothButton';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
@@ -62,12 +62,17 @@ const Bookshelf = () => {
           <Text style={styles.listEmptyComponentEmoji}>{'\u{1F614}'}</Text>
         </View>
         <RNTextComponent style={styles.nothingToSeeText}>
-          Nothing to see here... yet!
+          {translation('bookshelf.nothing-to-see-here')}
         </RNTextComponent>
         <RNTextComponent numberOfLines={2} style={styles.whyDontWriteStory}>
-          {"Why don't we write a story \n together now?"}
+          {`${translation('bookshelf.why-dont-we-one')} \n ${translation(
+            'bookshelf.why-dont-we-two',
+          )}together now?`}
         </RNTextComponent>
-        <RNButton title="Write a story" onClick={() => {}} />
+        <RNButton
+          title={translation('bookshelf.write-a-story')}
+          onClick={() => {}}
+        />
       </View>
     );
   }, []);
@@ -105,7 +110,7 @@ const Bookshelf = () => {
         <View style={styles.headingView}>
           <View style={styles.spaces} />
           <RNTextComponent style={styles.bookshelfHeaderText} isSemiBold>
-            {i18n.t('BOOKSHELF')}
+            {translation('BOOKSHELF')}
           </RNTextComponent>
           <Pressable
             style={[styles.spaces, {alignItems: 'flex-end'}]}
@@ -118,7 +123,7 @@ const Bookshelf = () => {
           </Pressable>
         </View>
         <RNTextInputWithLabel
-          hint={'Search'}
+          hint={translation('SEARCH')}
           value={searchText}
           updateText={setText}
           inputStyle={styles.searchBoxInputStyle}

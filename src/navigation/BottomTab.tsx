@@ -13,9 +13,9 @@ import PeopleIcon from '@tandem/assets/svg/People';
 import HomeIcon from '@tandem/assets/svg/Home';
 import BookmarkActive from '@tandem/assets/svg/BookmarkActive';
 import themeColor from '@tandem/theme/themeColor';
-import i18n from '@tandem/constants/lang/i18n';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {MODE} from '@tandem/constants/mode';
+import {translation} from '@tandem/utils/methods';
 
 const BottomTab = () => {
   const Tab = createBottomTabNavigator<RootTabParamList>();
@@ -58,7 +58,7 @@ const BottomTab = () => {
                       }),
                     },
                   ]}>
-                  {i18n.t('BOOKSHELF')}
+                  {translation('BOOKSHELF')}
                 </RNTextComponent>
               </View>
             );
@@ -90,7 +90,7 @@ const BottomTab = () => {
                       color: themeColor.themeBlue,
                     }),
                   }}>
-                  {i18n.t('HOME')}
+                  {translation('HOME')}
                 </RNTextComponent>
               </View>
             );
@@ -121,7 +121,7 @@ const BottomTab = () => {
                       ...styles.title,
                       ...(focused && {color: themeColor.themeBlue}),
                     }}>
-                    {i18n.t('PEOPLE')}
+                    {translation('PEOPLE')}
                   </RNTextComponent>
                 </View>
               );
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     borderTopColor: 'transparent',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
-    height: verticalScale(75),
+    height: verticalScale(60),
   },
   iconContainer: {
     alignItems: 'center',

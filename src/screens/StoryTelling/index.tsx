@@ -25,12 +25,12 @@ import RNReadingLevelModal from '@tandem/components/RNReadingLevelModal';
 import RNReadingTipsModal from '@tandem/components/RNReadingTipsModal';
 import RNRatingModal from '@tandem/components/RNRatingModal';
 import {scale, verticalScale} from 'react-native-size-matters';
-import i18n from '@tandem/constants/lang/i18n';
 import navigateTo from '@tandem/navigation/navigate';
 import {MODE} from '@tandem/constants/mode';
 import Mic from '@tandem/assets/svg/BlueMic';
 import MuteMic from '@tandem/assets/svg/MuteMic';
 import {RootState} from '@tandem/redux/store';
+import {translation} from '@tandem/utils/methods';
 
 const StoryTelling = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -92,7 +92,7 @@ const StoryTelling = () => {
               </ScrollView>
             </View>
             <RNButton
-              title={`${i18n.t('GREAT')}!`}
+              title={`${translation('GREAT')}!`}
               customStyle={[
                 styles.footerButton,
                 isTablet && {maxHeight: verticalScale(180)},
@@ -164,7 +164,7 @@ const StoryTelling = () => {
         />
         {currentIndex + 1 === 5 && (
           <RNTextComponent isSemiBold style={styles.summaryTitle}>
-            {i18n.t('SUMMARY')}
+            {translation('SUMMARY')}
           </RNTextComponent>
         )}
         {headerButton()}
