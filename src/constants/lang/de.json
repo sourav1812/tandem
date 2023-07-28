@@ -8,6 +8,9 @@
   "YOU_CAN_CHANGE_IT": "Du kannst es jederzeit in den Einstellungen ändern",
   "CREATE_AN_ACCOUNT": "Konto erstellen",
   "NAME": "Name",
+  "DAD": "Vater",
+  "MUM": "Mutter",
+  "WHO": "Wer",
   "EMAIL": "E-Mail",
   "PASSWORD": "Passwort",
   "CONFIRM_PASSWORD": "Passwort bestätigen",
@@ -85,6 +88,8 @@
   "ADD_ONE_OF_YOUR_CHILDREN": "Füge ein Kind hinzu, um zu beginnen. Danach kannst du weitere hinzufügen und Einstellungen ändern",
   "BOY": "Junge",
   "GIRL": "Mädchen",
+  "NEW": "Neu",
+  "MIN_READING": "min Lesezeit",
   "PREFER_NOT_TO_SAY": "Ich möchte nicht angeben",
   "ADD_CHILD_INFO": "Kind-Informationen hinzufügen",
   "COMPLETE_A_QUESTIONAIRE": "Fülle einen Fragebogen aus, um die Entwicklung deines Kindes zu verfolgen",
@@ -100,7 +105,7 @@
   "ABOUT_APP": "Über die App",
   "TERMS_OF_USE": "Nutzungsbedingungen",
   "PRIVACY_POLICY": "Datenschutzrichtlinie",
-  "PLEASE_READ_THEM_CAREFULLY": "Bitte lies sie sorgfältig durch.",
+  "PLEASE_READ_THEM_CAREFULLY": "Bitte lese sie sorgfältig durch.",
   "YOU_HAVE_CREATED_AND_READ_YOUR_OWN_STORY": "Du hast deine eigene Geschichte erstellt und gelesen.",
   "CONTINUE": "Weiter",
   "YOUR_NAME": "Dein Name",
@@ -127,28 +132,68 @@
   "SELECT_MODE": "Modus auswählen",
   "validations": {
     "email-required": "E-Mail ist erforderlich",
-    "email-no-spaces": "Die E-Mail sollte keine Leerzeichen enthalten",
+    "email-no-spaces": "E-Mail sollte keine Leerzeichen enthalten",
     "email-invalid": "Bitte gib eine gültige E-Mail-Adresse ein",
     "password-required": "Passwort ist erforderlich",
     "password-no-match": "Passwörter stimmen nicht überein",
-    "password-no-spaces": "Das Passwort sollte keine Leerzeichen enthalten",
-    "password-length": "Die Passwortlänge muss größer als 6 sein",
+    "password-no-spaces": "Passwort sollte keine Leerzeichen enthalten",
+    "password-length": "Passwortlänge muss größer als 6 sein",
     "name-required": "Dieses Feld darf nicht leer sein",
     "phone-required": "Telefonnummer ist erforderlich",
-    "phone-no-spaces": "Die Telefonnummer darf keine Leerzeichen enthalten",
+    "phone-no-spaces": "Telefonnummer darf keine Leerzeichen enthalten",
     "phone-invalid": "Bitte gib eine gültige Telefonnummer ein",
     "pin-required": "PIN ist erforderlich",
-    "pin-no-spaces": "Die PIN darf keine Leerzeichen enthalten",
+    "pin-no-spaces": "PIN darf keine Leerzeichen enthalten",
     "pin-invalid": "Bitte gib eine gültige PIN ein"
   },
   "READING_TIME": "Lesezeit",
   "NUMBER_OF_BOOKS": "Anzahl der Bücher",
-  "TIME_CREATING": "Zeit zum Erstellen",
+  "TIME_CREATING": "Erstellungszeit",
   "REDEEM_VOUCHER": "Gutschein einlösen",
   "CO_PARENT": "Co-Elternschaft: Urteilsfreie Erziehungstipps",
   "PERSONALIZED_CHILD_DEVELOPMENT": "Personalisierte Entwicklungseinblicke für Kinder",
   "SCAN_YOUR_QR_CODE": "Scanne deinen QR-Code",
-  "ENTER_VOUCHER_CODE": "Gutscheincode eingeben",
+  "ENTER_VOUCHER_CODE": "Gib den Gutscheincode ein",
   "VOUCHER": "Gutschein",
-  "READ_TOGETHER": "Zusammen lesen"
+  "READ_TOGETHER": "Gemeinsam lesen",
+  "choose-color": {
+    "what-colors": "Welche Farben",
+    "should-we-use": "sollen wir verwenden",
+    "in-our-story": "in unserer Geschichte?",
+    "select-two-colors": "Wähle zwei Farben aus, um eine dritte zu erhalten"
+  },
+  "congrats-modal": {
+    "you-have-read-your-own-story": "Du hast deine eigene Geschichte erstellt und gelesen"
+  },
+  "menu-modal": {
+    "share-pdf": "PDF teilen",
+    "invite-to-read": "Einladen zum Lesen auf Tandem"
+  },
+  "multiple-choice": {
+    "how-many-animals": "Wie viele Tiere kannst du nennen, die mit dem Buchstaben C beginnen?"
+  },
+  "reading-tips": {
+    "you-are-both": "Ihr macht beide großartig. Warum probiert ihr nicht auch abwechselnd zu lesen oder euch während des Lesens Fragen zur Geschichte zu stellen?"
+  },
+  "bookshelf": {
+    "nothing-to-see-here": "Hier gibt es noch nichts zu sehen...",
+    "why-dont-we-one": "Warum schreiben wir nicht eine Geschichte",
+    "why-dont-we-two": "zusammen jetzt?",
+    "write-a-story": "Eine Geschichte schreiben"
+  },
+  "generate-story": {
+    "is-in-story": " wird in unserer Geschichte sein?",
+    "included-in-story": "Möchtest du in der Geschichte enthalten sein, Alisa?",
+    "where-shall-we": "Wo sollen wir ",
+    "go-in-our-story": "in unserer Geschichte heute hingehen?",
+    "include-things": "Sollen wir einige dieser Dinge in die Geschichte aufnehmen?",
+    "what-sort-of": "Welche Art von Geschichte",
+    "do-you-want-today": "möchtest du heute machen?",
+    "what-style-illustration": "Welchen Stil von Illustrationen",
+    "shall-we-use": "sollen wir verwenden?"
+  },
+  "help-center": {
+    "alright-text": "In Ordnung, aber was genau machst du?",
+    "as-a-creative-agency": "Als kreative Agentur arbeiten wir mit Ihnen zusammen, um Lösungen für Ihre Markenanforderungen zu entwickeln. Das umfasst verschiedene Aspekte der Markenplanung und -strategie, des Marketings und Designs."
+  }
 }
