@@ -30,15 +30,14 @@ jobs:
 
       - name: Run Yarn Install
         run: |
-             cd ./packages/tandem-app/
              npm i -g corepack
              yarn install             
       - name: Build application
         run: |
-             cd ./packages/tandem-app/android
+             cd android
              ./gradlew assembleRelease             
       - name: Upload application
         uses: actions/upload-artifact@v2
         with:
           name: app
-          path: ./packages/app-mobile/android/app/build/outputs/apk/release/app-release.apk
+          path: android/app/build/outputs/apk/release/app-release.apk
