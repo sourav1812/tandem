@@ -7,7 +7,6 @@ import {
   ScrollView,
   Animated,
   Easing,
-  LayoutAnimation,
   Platform,
   StatusBar,
 } from 'react-native';
@@ -28,6 +27,7 @@ import {translation} from '@tandem/utils/methods';
 import {MODE} from '@tandem/constants/mode';
 import BlueButon from '@tandem/assets/svg/YellowButton';
 import Tooltip from 'react-native-walkthrough-tooltip';
+import BothButton from '@tandem/assets/svg/BothButton';
 
 const Home = () => {
   const portrait = useOrientation().isPortrait;
@@ -159,7 +159,8 @@ const Home = () => {
         </View>
         {changeUser && <ChangeChild userProfile={userProfile} name={name} />}
       </Pressable>
-      <RNScreenWrapper>
+      <RNScreenWrapper
+        statusBarBgc={showTooltip ? 'rgba(35, 35, 35, 0.6)' : 'transparent'}>
         <View style={[styles.container]}>
           <View
             onLayout={event => {
@@ -188,7 +189,7 @@ const Home = () => {
                 marginTop:
                   !isTablet && portrait ? verticalScale(60) : verticalScale(20),
               }}>
-              {i18n.t('HELLO')}, Ella!(Mum) 👋🏻
+              {i18n.t('HELLO')}, Ella!{mode === MODE.A && 'Mum'} 👋🏻
             </RNTextComponent>
             <Pressable
               onPress={() => navigateTo(SCREEN_NAME.ACCOUNT)}
@@ -215,7 +216,7 @@ const Home = () => {
                     : 0
                 }
                 onClose={() => updateState({showTooltip: false})}>
-                <BlueButon />
+                {mode === MODE.B ? <BothButton /> : <BlueButon />}
               </Tooltip>
             </Pressable>
             <View

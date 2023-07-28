@@ -18,10 +18,7 @@ import navigateTo from '@tandem/navigation/navigate';
 import Lion from '@tandem/assets/svg/AnimatedLion';
 import {translation} from '@tandem/utils/methods';
 import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
-import {
-  changeMode,
-  resetModeInitialState,
-} from '@tandem/redux/slices/mode.slice';
+import {changeMode} from '@tandem/redux/slices/mode.slice';
 import {MODE} from '@tandem/constants/mode';
 import themeColor from '@tandem/theme/themeColor';
 
@@ -31,8 +28,14 @@ const Account = () => {
   // const mode = useAppSelector(state => state.mode.mode);
   const [state, setState] = useState<StateObject>({
     signoutModal: false,
-    childrenList: [{type: 'child'}, {type: 'child'}],
-    adultList: [{type: 'adult'}, {type: 'adult'}],
+    childrenList: [
+      {name: 'Tim', type: 'child'},
+      {name: 'Alisa', type: 'child'},
+    ],
+    adultList: [
+      {name: 'Mom', type: 'adult'},
+      {name: 'Dad', type: 'adult'},
+    ],
     playerList: [],
   });
 
@@ -134,7 +137,7 @@ const Account = () => {
                   onPress={() => {
                     addPlayer(item);
                   }}>
-                  <RNKidsProfile />
+                  <RNKidsProfile data={item} />
                 </Pressable>
               );
             })}
@@ -169,7 +172,7 @@ const Account = () => {
                     onPress={() => {
                       removePlayer(index);
                     }}>
-                    <RNKidsProfile />
+                    <RNKidsProfile data={item} />
                   </Pressable>
                 );
               } else {
@@ -179,7 +182,7 @@ const Account = () => {
                     onPress={() => {
                       removePlayer(index);
                     }}>
-                    <RNParentProfile />
+                    <RNParentProfile data={item} />
                   </Pressable>
                 );
               }
@@ -198,11 +201,16 @@ const Account = () => {
                   onPress={() => {
                     addPlayer(item);
                   }}>
-                  <RNParentProfile />
+                  <RNParentProfile data={item} />
                 </Pressable>
               );
             })}
-            <Pressable style={styles.add} onPress={() => {}}>
+            <Pressable
+              style={styles.add}
+              onPress={() => {
+                dispatch(changeMode(MODE.A));
+                navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN, {}, true);
+              }}>
               <Add />
               <RNTextComponent isMedium style={styles.addText}>
                 {i18n.t('ADD')}
@@ -257,8 +265,7 @@ const Account = () => {
         renderModal={toggleSignOut}
         nextClick={() => {
           toggleSignOut();
-          dispatch(resetModeInitialState());
-          navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN, {}, true);
+          navigateTo(SCREEN_NAME.SELECT_LANGUAGE, {}, true);
         }}
       />
     </RNScreenWrapper>
