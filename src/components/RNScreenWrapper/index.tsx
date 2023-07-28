@@ -3,12 +3,16 @@ import React from 'react';
 import {Props} from './interface';
 import {styles} from './styles';
 
-const RNScreenWrapper = ({children, style}: Props) => {
+const RNScreenWrapper = ({
+  children,
+  style,
+  statusBarBgc = 'transparent',
+}: Props) => {
   return (
     <View style={[styles.container, style && style]}>
       <StatusBar
         translucent
-        backgroundColor={'transparent'}
+        backgroundColor={statusBarBgc}
         hidden={false}
         showHideTransition={'slide'}
       />

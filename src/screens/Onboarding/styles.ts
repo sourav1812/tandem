@@ -1,13 +1,19 @@
 import themeColor from '@tandem/theme/themeColor';
-import {StyleSheet} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
 import {scale, verticalScale} from 'react-native-size-matters';
+
+const height = Dimensions.get('screen').height;
+const width = Dimensions.get('screen').width;
 
 export const styles = StyleSheet.create({
   container: {
     height: '100%',
     width: `100%`,
   },
-
+  img: {
+    height: height,
+    width: width,
+  },
   footer: {
     position: 'absolute',
     bottom: 0,

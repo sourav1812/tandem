@@ -2,8 +2,9 @@ import {View, Image} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
 import RNTextComponent from '@tandem/components/RNTextComponent';
+import {KidsProfileProps} from './interface';
 
-const RNKidsProfile = () => {
+const RNKidsProfile = ({data}: KidsProfileProps) => {
   return (
     <View style={styles.container}>
       <Image
@@ -13,7 +14,7 @@ const RNKidsProfile = () => {
         style={styles.profile}
       />
       <RNTextComponent style={styles.name} isMedium>
-        Alisa
+        {data && data.name}
       </RNTextComponent>
     </View>
   );
