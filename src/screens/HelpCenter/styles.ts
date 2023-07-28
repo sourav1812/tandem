@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
     marginTop: verticalScale(50),
   },
   content: {
-    flex: 1,
+    height: verticalScale(450),
   },
   customTab: {
     flexDirection: 'row',

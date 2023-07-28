@@ -105,7 +105,8 @@ const HelpCenter = () => {
               contentContainerStyle={[
                 styles.scrollView,
                 isTablet && {paddingHorizontal: firstTab ? 160 : 50},
-              ]}>
+              ]}
+              showsVerticalScrollIndicator={false}>
               {firstTab ? (
                 <>
                   <RNTextComponent
