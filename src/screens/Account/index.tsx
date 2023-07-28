@@ -113,9 +113,7 @@ const Account = () => {
         <Image
           source={require('../../assets/png/logo.png')}
           resizeMode="contain"
-          style={
-            (styles.logo, {marginRight: portrait ? scale(58) : scale(170)})
-          }
+          style={styles.logo}
         />
         <RNButton onlyIcon icon={<Logout />} onClick={toggleSignOut} />
       </View>

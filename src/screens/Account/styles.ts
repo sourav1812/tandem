@@ -9,13 +9,12 @@ export const styles = StyleSheet.create({
   },
   header: {
     flexDirection: 'row',
-    justifyContent: 'flex-end',
     alignItems: 'center',
     marginTop: verticalScale(44),
   },
   logo: {
     height: verticalScale(32),
-    width: scale(120),
+    width: '95%',
   },
   heading: {
     alignSelf: 'center',
