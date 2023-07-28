@@ -1,4 +1,4 @@
-import {View, Image} from 'react-native';
+import {View} from 'react-native';
 import React from 'react';
 import {Props} from './interface';
 import Bookmark from '@tandem/assets/svg/Bookmark';

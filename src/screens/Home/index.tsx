@@ -16,7 +16,7 @@ import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {useOrientation} from '@tandem/hooks/useOrientation';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import themeColor from '@tandem/theme/themeColor';
-import {scale, verticalScale} from 'react-native-size-matters';
+import {verticalScale} from 'react-native-size-matters';
 import RNBookmarkComponent from '@tandem/components/RNBookmarkComponent';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import i18n from '@tandem/constants/lang/i18n';
@@ -27,6 +27,7 @@ import {translation} from '@tandem/utils/methods';
 import {MODE} from '@tandem/constants/mode';
 import BlueButon from '@tandem/assets/svg/YellowButton';
 import Tooltip from 'react-native-walkthrough-tooltip';
+import WavyArrow from '@tandem/assets/svg/WavyArrow';
 import BothButton from '@tandem/assets/svg/BothButton';
 
 const Home = () => {
@@ -204,10 +205,24 @@ const Home = () => {
               <Tooltip
                 isVisible={showTooltip}
                 content={
-                  <RNTextComponent>
-                    {translation('SWITCH_MODE')}
-                  </RNTextComponent>
+                  <>
+                    <WavyArrow size={160} rotation={30} />
+                    <RNTextComponent
+                      isBold
+                      style={{color: 'white', fontSize: verticalScale(20)}}>
+                      ToolTip Text Here
+                    </RNTextComponent>
+                  </>
                 }
+                backgroundColor="#000000CC"
+                disableShadow
+                contentStyle={{
+                  backgroundColor: 'transparent',
+                  width: 'auto',
+                  height: '100%',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
                 placement="bottom"
                 topAdjustment={
                   Platform.OS === 'android'
@@ -280,7 +295,6 @@ const Home = () => {
                       <RNBookmarkComponent
                         customStyle={{
                           marginTop: verticalScale(24),
-                          marginHorizontal: scale(5),
                           ...(!portrait && styles.cardPortrait),
                         }}
                         borderIconColor={item.color}
