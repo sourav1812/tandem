@@ -1,3 +1,4 @@
 export interface KidsProfileProps {
-  data?: {name: string; type: string};
+  name: string;
+  type: string;
 }

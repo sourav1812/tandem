@@ -3,8 +3,8 @@ import React from 'react';
 import {styles} from './styles';
 import RNTextComponent from '../RNTextComponent';
 import Lion from '../../assets/svg/AnimatedLion';
+import {RNParentProfileProp} from './interface';
 
-import {ParentProfileProps} from './interface';
 const RNParentProfile = ({
   height,
   width,
@@ -12,7 +12,7 @@ const RNParentProfile = ({
 }: {
   height: number;
   width: number;
-  data: ParentProfileProps;
+  data: RNParentProfileProp;
 }) => {
   return (
     <View style={styles.container}>
