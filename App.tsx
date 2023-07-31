@@ -15,7 +15,7 @@ const App: FC = () => {
     }
     const tooltip = getValueFromKey(TOOLTIP);
     if (!tooltip) {
-      storeKey(TOOLTIP, 1);
+      storeKey(TOOLTIP, [0]);
       console.log('key generated');
     }
   }, []);
