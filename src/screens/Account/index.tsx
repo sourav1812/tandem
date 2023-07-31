@@ -22,10 +22,15 @@ import {MODE} from '@tandem/constants/mode';
 import themeColor from '@tandem/theme/themeColor';
 import {useSelector} from 'react-redux';
 import {RootState} from '@tandem/redux/store';
+import RNTooltip from '@tandem/components/RNTooltip';
+import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
+import {TOOLTIP} from '@tandem/constants/LocalConstants';
 
 const Account = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const [openTooltip, setOpentTooltip] = useState(true);
   const dispatch = useAppDispatch();
+  const tooltipArray = getValueFromKey(TOOLTIP);
   // const mode = useAppSelector(state => state.mode.mode);
   const [state, setState] = useState<StateObject>({
     signoutModal: false,
@@ -43,7 +48,6 @@ const Account = () => {
     (state: RootState) => state.orientation.isPortrait,
   );
   const {signoutModal, childrenList, adultList, playerList} = state;
-
   const updateState = (date: any) => {
     setState((previouState: any) => {
       return {...previouState, ...date};
@@ -143,13 +147,40 @@ const Account = () => {
                   onPress={() => {
                     addPlayer(item);
                   }}>
-                  <RNKidsProfile
-                    style={{
-                      height: portrait ? verticalScale(60) : verticalScale(40),
-                      width: portrait ? verticalScale(60) : verticalScale(40),
-                    }}
-                    data={item}
-                  />
+                  {index === 0 ? (
+                    <RNTooltip
+                      text={'Here you can add your child.'}
+                      top={false}
+                      rotation={0}
+                      open={tooltipArray?.includes(1) ? false : openTooltip}
+                      setClose={() => {
+                        setOpentTooltip(false);
+                        tooltipArray.push(1);
+                        storeKey(TOOLTIP, tooltipArray);
+                      }}>
+                      <RNKidsProfile
+                        style={{
+                          height: portrait
+                            ? verticalScale(60)
+                            : verticalScale(40),
+                          width: portrait
+                            ? verticalScale(60)
+                            : verticalScale(40),
+                        }}
+                        data={item}
+                      />
+                    </RNTooltip>
+                  ) : (
+                    <RNKidsProfile
+                      style={{
+                        height: portrait
+                          ? verticalScale(60)
+                          : verticalScale(40),
+                        width: portrait ? verticalScale(60) : verticalScale(40),
+                      }}
+                      data={item}
+                    />
+                  )}
                 </Pressable>
               );
             })}

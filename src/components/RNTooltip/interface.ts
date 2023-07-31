@@ -2,7 +2,8 @@ import {ReactNode} from 'react';
 
 export interface TooltipProps {
   children: ReactNode;
-  count: number;
+  open: boolean;
+  setClose: () => void;
   text: string;
   top: boolean;
   rotation: number;

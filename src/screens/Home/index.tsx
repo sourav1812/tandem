@@ -7,8 +7,6 @@ import {
   ScrollView,
   Animated,
   Easing,
-  Platform,
-  StatusBar,
 } from 'react-native';
 import React, {useRef, useState} from 'react';
 import {styles} from './styles';
@@ -25,13 +23,19 @@ import {StateObject} from './interface';
 import {translation} from '@tandem/utils/methods';
 import {MODE} from '@tandem/constants/mode';
 import BlueButon from '@tandem/assets/svg/YellowButton';
-import Tooltip from 'react-native-walkthrough-tooltip';
-import WavyArrow from '@tandem/assets/svg/WavyArrow';
 import BothButton from '@tandem/assets/svg/BothButton';
+import RNTooltip from '@tandem/components/RNTooltip';
+import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
+import {TOOLTIP} from '@tandem/constants/LocalConstants';
 
 const Home = () => {
   const portrait = useOrientation().isPortrait;
   const mode = useAppSelector(state => state.mode.mode);
+  const [tooltipMode, setToolTipMode] = useState({
+    tooltipOne: true,
+    tooltipTwo: false,
+  });
+  const tooltipArray = getValueFromKey(TOOLTIP);
 
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const {width} = useWindowDimensions();
@@ -128,35 +132,51 @@ const Home = () => {
           },
         ]}
         onPress={openDrawer}>
-        <View
-          style={{
-            height: verticalScale(89),
-            width: verticalScale(89),
-            alignItems: 'center',
-            justifyContent: 'center',
-            overflow: 'visible',
-          }}>
-          <Image
+        <RNTooltip
+          open={tooltipArray?.includes(3) ? false : tooltipMode.tooltipTwo}
+          setClose={() => {
+            setToolTipMode({
+              tooltipOne: false,
+              tooltipTwo: false,
+            });
+            tooltipArray.push(3);
+            storeKey(TOOLTIP, tooltipArray);
+          }}
+          text="By clicking on the avatar, you can change the childs account"
+          top={false}
+          rotation={180}>
+          <View
             style={{
-              height: verticalScale(59),
-              width: verticalScale(59),
-              borderRadius: 100,
-            }}
-            source={{
-              uri: userProfile,
-            }}
-          />
-          <RNTextComponent
-            style={{
-              marginTop: 5,
-              position: 'absolute',
-              bottom: -verticalScale(10),
-              fontSize: verticalScale(18),
-            }}
-            isSemiBold>
-            {name}
-          </RNTextComponent>
-        </View>
+              height: verticalScale(89),
+              width: verticalScale(89),
+              alignItems: 'center',
+              justifyContent: 'center',
+              overflow: 'visible',
+            }}>
+            <Image
+              style={{
+                height: verticalScale(59),
+                width: verticalScale(59),
+                borderRadius: 100,
+              }}
+              source={{
+                uri: userProfile,
+              }}
+            />
+
+            <RNTextComponent
+              style={{
+                marginTop: 5,
+                position: 'absolute',
+                bottom: -verticalScale(10),
+                fontSize: verticalScale(18),
+              }}
+              isSemiBold>
+              {name}
+            </RNTextComponent>
+          </View>
+        </RNTooltip>
+
         {changeUser && <ChangeChild userProfile={userProfile} name={name} />}
       </Pressable>
       <RNScreenWrapper statusBarBgc={showTooltip ? '#000000CC' : 'transparent'}>
@@ -201,36 +221,23 @@ const Home = () => {
                       : verticalScale(17),
                 },
               ]}>
-              <Tooltip
-                isVisible={showTooltip}
-                content={
-                  <>
-                    <WavyArrow size={160} rotation={30} />
-                    <RNTextComponent
-                      isBold
-                      style={{color: 'white', fontSize: verticalScale(20)}}>
-                      ToolTip Text Here
-                    </RNTextComponent>
-                  </>
+              <RNTooltip
+                open={
+                  tooltipArray?.includes(2) ? false : tooltipMode.tooltipOne
                 }
-                backgroundColor="#000000CC"
-                disableShadow
-                contentStyle={{
-                  backgroundColor: 'transparent',
-                  width: 'auto',
-                  height: '100%',
-                  alignItems: 'center',
-                  justifyContent: 'center',
+                setClose={() => {
+                  setToolTipMode({
+                    tooltipOne: false,
+                    tooltipTwo: true,
+                  });
+                  tooltipArray.push(2);
+                  storeKey(TOOLTIP, tooltipArray);
                 }}
-                placement="bottom"
-                topAdjustment={
-                  Platform.OS === 'android'
-                    ? -(StatusBar.currentHeight || 0)
-                    : 0
-                }
-                onClose={() => updateState({showTooltip: false})}>
+                text={'switch mode'}
+                top={true}
+                rotation={0}>
                 {mode === MODE.B ? <BothButton /> : <BlueButon />}
-              </Tooltip>
+              </RNTooltip>
             </Pressable>
             <View
               style={{

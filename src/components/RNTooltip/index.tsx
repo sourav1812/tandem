@@ -1,21 +1,27 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
+import React from 'react';
 import Tooltip from 'react-native-walkthrough-tooltip';
 import {TooltipProps} from './interface';
 import WavyArrow from '@tandem/assets/svg/WavyArrow';
 import {verticalScale} from 'react-native-size-matters';
 import RNTextComponent from '../RNTextComponent';
 import {Platform, StatusBar, View} from 'react-native';
-import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
+import {getValueFromKey} from '@tandem/helpers/encryptedStorage';
 import {TOOLTIP} from '@tandem/constants/LocalConstants';
 
-const RNTooltip = ({children, count, text, top, rotation}: TooltipProps) => {
-  const countFromStorage = getValueFromKey(TOOLTIP);
-  const [open, setOpen] = useState(count === countFromStorage);
+const RNTooltip = ({
+  children,
+  open,
+  setClose,
+  text,
+  top,
+  rotation,
+}: TooltipProps) => {
+  const tooltipNumber = getValueFromKey(TOOLTIP);
 
   return (
     <Tooltip
-      isVisible={countFromStorage > 7 ? false : open}
+      isVisible={tooltipNumber < 7 ? open : false}
       content={
         <>
           {!top && <WavyArrow size={160} rotation={rotation} />}
@@ -43,10 +49,7 @@ const RNTooltip = ({children, count, text, top, rotation}: TooltipProps) => {
       topAdjustment={
         Platform.OS === 'android' ? -(StatusBar.currentHeight || 0) : 0
       }
-      onClose={() => {
-        storeKey(TOOLTIP, count + 1);
-        setOpen(false);
-      }}>
+      onClose={setClose}>
       {children}
     </Tooltip>
   );
