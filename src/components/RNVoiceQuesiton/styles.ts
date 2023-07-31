@@ -1,11 +1,10 @@
 import {StyleSheet} from 'react-native';
-import {scale, verticalScale} from 'react-native-size-matters';
+import {verticalScale} from 'react-native-size-matters';
 import themeColor from '@tandem/theme/themeColor';
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: scale(20),
   },
   voiceQuestion: {
     marginTop: verticalScale(24),
@@ -60,13 +59,6 @@ export const styles = StyleSheet.create({
     fontWeight: '500',
     paddingHorizontal: verticalScale(14),
   },
-  // buttonView : {
-  //     flexDirection : 'row',
-  //     alignItems : 'center',
-  //     width : scale(250),
-  //     justifyContent : 'space-between',
-  //     marginTop : verticalScale(16)
-  //   },
   footerButton: {
     borderRadius: 0,
     height: verticalScale(80),

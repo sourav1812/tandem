@@ -4,18 +4,21 @@ import RNModal from '../RNModal';
 import {styles} from './styles';
 import {congratsModalProps} from './interface';
 import RNTextComponent from '../RNTextComponent';
-import {verticalScale} from 'react-native-size-matters';
+import {scale, verticalScale} from 'react-native-size-matters';
 import themeColor from '@tandem/theme/themeColor';
 import RNButton from '@tandem/components/RNButton';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
-import navigateTo from '@tandem/navigation/navigate';
-import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import navigateTo, {navigationRef} from '@tandem/navigation/navigate';
+import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
 import {translation} from '@tandem/utils/methods';
+import {changeMode} from '@tandem/redux/slices/mode.slice';
+import {useNavigation} from '@react-navigation/native';
 
 const RNCongratsModal = ({
   visible = false,
   renderModal,
 }: congratsModalProps) => {
+  const navigation = useNavigation();
   let isTablet = useAppSelector(state => state.deviceType.isTablet);
 
   const onShare = async () => {
@@ -55,7 +58,7 @@ const RNCongratsModal = ({
             {translation('CONGRATS')}!
           </RNTextComponent>
           <View style={styles.info}>
-            <View style={styles.box}>
+            <View style={[styles.box, isTablet && {width: scale(60)}]}>
               <RNTextComponent style={styles.title} isSemiBold>
                 100%
               </RNTextComponent>
@@ -63,7 +66,7 @@ const RNCongratsModal = ({
                 {translation('ACCURACY')}
               </RNTextComponent>
             </View>
-            <View style={styles.box}>
+            <View style={[styles.box, isTablet && {width: scale(60)}]}>
               <RNTextComponent style={styles.title} isSemiBold>
                 80
               </RNTextComponent>
@@ -71,7 +74,7 @@ const RNCongratsModal = ({
                 {translation('SPEED')}
               </RNTextComponent>
             </View>
-            <View style={styles.box}>
+            <View style={[styles.box, isTablet && {width: scale(60)}]}>
               <RNTextComponent style={styles.title} isSemiBold>
                 6 min
               </RNTextComponent>
@@ -93,7 +96,7 @@ const RNCongratsModal = ({
             title={translation('HOME')}
             customStyle={styles.button}
             onClick={() => {
-              navigateTo(SCREEN_NAME.BOTTOM_TAB);
+              navigation.push(SCREEN_NAME.BOTTOM_TAB);
             }}
           />
           <RNButton

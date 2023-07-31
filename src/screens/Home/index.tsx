@@ -27,6 +27,7 @@ import BothButton from '@tandem/assets/svg/BothButton';
 import RNTooltip from '@tandem/components/RNTooltip';
 import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
 import {TOOLTIP} from '@tandem/constants/LocalConstants';
+import {useNavigation} from '@react-navigation/native';
 
 const Home = () => {
   const portrait = useOrientation().isPortrait;
@@ -36,6 +37,7 @@ const Home = () => {
     tooltipTwo: false,
   });
   const tooltipArray = getValueFromKey(TOOLTIP);
+  const navigation: any = useNavigation();
 
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const {width} = useWindowDimensions();
@@ -95,7 +97,7 @@ const Home = () => {
     showTooltip: true,
   });
 
-  const {changeUser, userProfile, name, showTooltip} = state;
+  const {changeUser, userProfile, name} = state;
 
   const updateState = (date: any) => {
     setState((previouState: any) => {
@@ -119,16 +121,17 @@ const Home = () => {
           {
             top:
               heightOfBanner.value - verticalScale(18) - verticalScale(89) / 2,
-            ...(changeUser && {
-              shadowColor: '#000',
-              shadowOffset: {
-                width: 0,
-                height: 1,
-              },
-              shadowOpacity: 0.32,
-              shadowRadius: 5.22,
-              elevation: 4,
-            }),
+            ...(changeUser &&
+              mode === MODE.A && {
+                shadowColor: '#000',
+                shadowOffset: {
+                  width: 0,
+                  height: 1,
+                },
+                shadowOpacity: 0.32,
+                shadowRadius: 5.22,
+                elevation: 4,
+              }),
           },
         ]}
         onPress={openDrawer}>
@@ -163,7 +166,6 @@ const Home = () => {
                 uri: userProfile,
               }}
             />
-
             <RNTextComponent
               style={{
                 marginTop: 5,
@@ -177,9 +179,11 @@ const Home = () => {
           </View>
         </RNTooltip>
 
-        {changeUser && <ChangeChild userProfile={userProfile} name={name} />}
+        {changeUser && mode === MODE.A && (
+          <ChangeChild userProfile={userProfile} name={name} />
+        )}
       </Pressable>
-      <RNScreenWrapper statusBarBgc={showTooltip ? '#000000CC' : 'transparent'}>
+      <RNScreenWrapper statusBarBgc={'transparent'}>
         <View style={[styles.container]}>
           <View
             onLayout={event => {
@@ -208,10 +212,10 @@ const Home = () => {
                 marginTop:
                   !isTablet && portrait ? verticalScale(60) : verticalScale(20),
               }}>
-              {translation('HELLO')}, Ella!{mode === MODE.A && 'Mum'} 👋🏻
+              {translation('HELLO')}, Ella!{mode === MODE.A && `(Mum)!`} 👋🏻
             </RNTextComponent>
             <Pressable
-              onPress={() => navigateTo(SCREEN_NAME.ACCOUNT)}
+              onPress={() => navigation.push(SCREEN_NAME.ACCOUNT)}
               style={[
                 styles.blueButton,
                 {
@@ -272,15 +276,17 @@ const Home = () => {
             style={styles.content}
             contentContainerStyle={{paddingTop: verticalScale(5)}}
             showsVerticalScrollIndicator={false}>
-            <RNTextComponent
-              isSemiBold
-              style={{
-                ...styles.heading,
-                ...(!portrait && styles.headingPortrait),
-                ...(isTablet && {fontSize: verticalScale(18)}),
-              }}>
-              {translation('WHAT_SHALL_WE_DO_TODAY')}
-            </RNTextComponent>
+            {mode !== MODE.A && (
+              <RNTextComponent
+                isSemiBold
+                style={{
+                  ...styles.heading,
+                  ...(!portrait && styles.headingPortrait),
+                  ...(isTablet && {fontSize: verticalScale(18)}),
+                }}>
+                {translation('WHAT_SHALL_WE_DO_TODAY')}
+              </RNTextComponent>
+            )}
             <View
               style={{
                 ...styles.options,
@@ -293,7 +299,7 @@ const Home = () => {
                       key={index.toString()}
                       onPress={() => {
                         if (index === 0) {
-                          navigateTo(SCREEN_NAME.GENERATE_STORY);
+                          navigateTo(SCREEN_NAME.ROADMAP);
                         } else {
                           // toggleModal();
                         }
@@ -401,7 +407,7 @@ const ChangeChild = ({
       />
       <RNTextComponent
         style={{
-          fontSize: verticalScale(18),
+          fontSize: verticalScale(16),
         }}
         isSemiBold>
         {name}

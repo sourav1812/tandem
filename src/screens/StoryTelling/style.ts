@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {verticalScale} from 'react-native-size-matters';
+import {scale, verticalScale} from 'react-native-size-matters';
 import themeColor from '@tandem/theme/themeColor';
 
 export const styles = StyleSheet.create({
@@ -66,5 +66,27 @@ export const styles = StyleSheet.create({
   summaryTitle: {
     fontSize: verticalScale(18),
     color: themeColor.white,
+    alignSelf: 'center',
+  },
+  questionView: {
+    flex: 1,
+    backgroundColor: themeColor.white,
+    position: 'absolute',
+    zIndex: 2,
+    height: '100%',
+    width: '100%',
+  },
+  headerTitle: {
+    width: '60%',
+    textAlign: 'center',
+  },
+  headerStyle: {
+    marginTop: verticalScale(32),
+    alignItems: 'center',
+    paddingHorizontal: scale(20),
+  },
+  multiplechoice: {
+    flex: 1,
+    zIndex: 20,
   },
 });

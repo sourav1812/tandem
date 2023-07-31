@@ -43,7 +43,10 @@ const RNWellDoneModal = ({
         </RNTextComponent>
         <RNButton
           customStyle={styles.button}
-          onClick={nextClick}
+          onClick={() => {
+            renderModal();
+            nextClick();
+          }}
           title={translation('NEXT')}
         />
       </View>

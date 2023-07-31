@@ -50,6 +50,10 @@ const AppNavigator = () => {
           getComponent={() => require('@tandem/screens/SocialSignIn').default}
           name={SCREEN_NAME.SOCIAL_SIGN_IN}
         />
+        <Stack.Screen
+          getComponent={() => require('@tandem/screens/StoryTelling').default}
+          name={SCREEN_NAME.STORY_TELLING}
+        />
         {(mode === MODE.B || mode === MODE.C) && (
           <>
             <Stack.Screen
@@ -59,10 +63,8 @@ const AppNavigator = () => {
               name={SCREEN_NAME.GENERATE_STORY}
             />
             <Stack.Screen
-              getComponent={() =>
-                require('@tandem/screens/StoryTelling').default
-              }
-              name={SCREEN_NAME.STORY_TELLING}
+              getComponent={() => require('@tandem/screens/RoadMap').default}
+              name={SCREEN_NAME.ROADMAP}
             />
           </>
         )}

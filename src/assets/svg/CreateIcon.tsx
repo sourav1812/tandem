@@ -15,7 +15,7 @@ const SvgComponent = ({
     height={verticalScale(155)}
     fill="none"
     {...props}>
-    {!!mapIndex && mapIndex === 11 && (
+    {mapIndex === 7 && (
       <>
         <Path
           fill="#9A00FF"

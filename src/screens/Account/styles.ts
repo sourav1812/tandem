@@ -11,6 +11,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: verticalScale(44),
+    paddingHorizontal: scale(21),
   },
   logo: {
     height: verticalScale(32),

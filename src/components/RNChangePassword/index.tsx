@@ -45,7 +45,7 @@ const RNChangePassword = ({visible, renderModal}: changePasswordModalProps) => {
         <RNButton
           customStyle={[styles.button, isTablet && {maxWidth: 350}]}
           title={translation('GO_TO_LOG_IN')}
-          onClick={() => navigateTo(SCREEN_NAME.SIGN_UP)}
+          onClick={() => navigateTo(SCREEN_NAME.SIGN_IN)}
         />
       </ImageBackground>
     </RNModal>

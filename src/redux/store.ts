@@ -2,12 +2,14 @@ import {configureStore} from '@reduxjs/toolkit';
 import modeSlice from './slices/mode.slice';
 import deviceTypeSlice from './slices/tablet.slice';
 import orientationSlice from './slices/orientation.slice';
+import questionsSlice from './slices/questions.slice';
 
 export const store = configureStore({
   reducer: {
     mode: modeSlice,
     deviceType: deviceTypeSlice,
     orientation: orientationSlice,
+    questions: questionsSlice,
   },
 });
 

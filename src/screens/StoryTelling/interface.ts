@@ -11,4 +11,6 @@ export const characterList: characterProps[] = [
 export interface StateObject {
   ratingModal: boolean;
   toggleMic: boolean;
+  showQuestion: boolean;
+  wellDoneModal: boolean;
 }

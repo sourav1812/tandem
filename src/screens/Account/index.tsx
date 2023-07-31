@@ -31,6 +31,7 @@ const Account = () => {
   const [openTooltip, setOpentTooltip] = useState(true);
   const dispatch = useAppDispatch();
   const tooltipArray = getValueFromKey(TOOLTIP);
+
   // const mode = useAppSelector(state => state.mode.mode);
   const [state, setState] = useState<StateObject>({
     signoutModal: false,
@@ -330,8 +331,8 @@ const Account = () => {
         visible={signoutModal}
         renderModal={toggleSignOut}
         nextClick={() => {
-          toggleSignOut();
-          navigateTo(SCREEN_NAME.SELECT_LANGUAGE, {}, true);
+          dispatch(changeMode(MODE.A));
+          navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN, {}, true);
         }}
       />
     </RNScreenWrapper>

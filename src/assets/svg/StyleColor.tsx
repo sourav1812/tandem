@@ -13,7 +13,7 @@ const SvgComponent = ({
   fillColor,
   textColor,
 }: {
-  props: SvgProps;
+  props?: SvgProps;
   fillColor?: string;
   textColor?: string;
 }) => (
