@@ -21,7 +21,7 @@ const RNTooltip = ({
 
   return (
     <Tooltip
-      isVisible={tooltipNumber < 7 ? open : false}
+      isVisible={tooltipNumber.length < 4 ? open : false}
       content={
         <>
           {!top && <WavyArrow size={160} rotation={rotation} />}
