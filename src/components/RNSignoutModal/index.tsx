@@ -49,7 +49,7 @@ const RNSignoutModal = ({
           />
           <RNButton
             onClick={nextClick}
-            title={translation('ACCEPT')}
+            title={translation('SIGN_OUT')}
             customStyle={[styles.button2, isTablet && {maxWidth: 150}]}
           />
         </View>

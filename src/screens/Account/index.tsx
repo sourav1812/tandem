@@ -2,7 +2,7 @@
 import React, {useState} from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {styles} from './styles';
-import {View, Image, ScrollView, Pressable} from 'react-native';
+import {View, Image, ScrollView, Pressable, Alert} from 'react-native';
 import Logout from '@tandem/assets/svg/Logout';
 import RNButton from '@tandem/components/RNButton';
 import RNTextComponent from '@tandem/components/RNTextComponent';
@@ -22,10 +22,12 @@ import {MODE} from '@tandem/constants/mode';
 import themeColor from '@tandem/theme/themeColor';
 import {useSelector} from 'react-redux';
 import {RootState} from '@tandem/redux/store';
+import {useNavigation} from '@react-navigation/native';
 
 const Account = () => {
-  const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const dispatch = useAppDispatch();
+  const navigation = useNavigation();
+  const isTablet = useAppSelector(state => state.deviceType.isTablet);
   // const mode = useAppSelector(state => state.mode.mode);
   const [state, setState] = useState<StateObject>({
     signoutModal: false,
@@ -299,8 +301,8 @@ const Account = () => {
         visible={signoutModal}
         renderModal={toggleSignOut}
         nextClick={() => {
-          toggleSignOut();
-          navigateTo(SCREEN_NAME.SELECT_LANGUAGE, {}, true);
+          dispatch(changeMode(MODE.A));
+          navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN, {}, true);
         }}
       />
     </RNScreenWrapper>

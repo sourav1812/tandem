@@ -22,9 +22,12 @@ import navigateTo from '@tandem/navigation/navigate';
 import {translation} from '@tandem/utils/methods';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
+import {useOrientation} from '@tandem/hooks/useOrientation';
+import {height} from '@tandem/helpers/dimensions';
 
 const HelpCenter = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const portrait = useOrientation().isPortrait;
 
   const [state, setState] = useState<StateObject>({
     firstTab: false,
@@ -99,7 +102,8 @@ const HelpCenter = () => {
               ]}
             />
           </View>
-          <View style={styles.content}>
+          <View
+            style={[styles.content, !portrait && {height: verticalScale(270)}]}>
             <ScrollView
               contentContainerStyle={[
                 styles.scrollView,
