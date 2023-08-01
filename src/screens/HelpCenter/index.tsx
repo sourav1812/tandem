@@ -22,12 +22,13 @@ import navigateTo from '@tandem/navigation/navigate';
 import {translation} from '@tandem/utils/methods';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
-import {useOrientation} from '@tandem/hooks/useOrientation';
-import {height} from '@tandem/helpers/dimensions';
+import {RootState} from '@tandem/redux/store';
 
 const HelpCenter = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
-  const portrait = useOrientation().isPortrait;
+  const portrait = useAppSelector(
+    (state: RootState) => state.orientation.isPortrait,
+  );
 
   const [state, setState] = useState<StateObject>({
     firstTab: false,
