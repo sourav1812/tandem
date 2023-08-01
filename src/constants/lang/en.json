@@ -197,6 +197,7 @@
   "help-center": {
     "alright-text": "Alright, but what exactly do you do?",
     "as-a-creative-agency": "As a creative agency we work with you to develop solutions to address your brand needs. That includes various aspects of brand planning and strategy, marketing and design."
-  }
-  
+  },
+  "ENTER_EMAIL_FOR_VERIFICATION": "Enter your email to get the verification code",
+  "GET_CODE": "Get a code"
 }

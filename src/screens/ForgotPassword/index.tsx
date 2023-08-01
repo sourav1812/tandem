@@ -4,7 +4,6 @@ import {
   ImageBackground,
   KeyboardAvoidingView,
   Platform,
-  Pressable,
   ScrollView,
   View,
 } from 'react-native';
@@ -27,7 +26,7 @@ import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
 import {RootState} from '@tandem/redux/store';
 import {translation} from '@tandem/utils/methods';
 
-const SignIn = () => {
+const ForgotPassword = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
 
   const [email, setEmail] = useState<ValidationError>({value: ''});
@@ -55,13 +54,23 @@ const SignIn = () => {
             style={styles.container}
             source={
               isTablet
-                ? require('@tandem/assets/png/authScreenBgc.png')
-                : require('@tandem/assets/png/signInMobileBgc.png')
+                ? require('@tandem/assets/png/forgotPasswordTabletBgc.png')
+                : require('@tandem/assets/png/forgotPasswordMobileBgc.png')
             }
             resizeMode="stretch">
             <RNLogoHeader customStyle={styles.header} />
             <RNTextComponent style={styles.heading} isSemiBold>
-              {translation('SIGN_IN')}
+              {translation('FORGOT_PASSWORD')}?
+            </RNTextComponent>
+            <RNTextComponent
+              style={[
+                styles.subHeading,
+                {
+                  fontSize: isTablet ? verticalScale(11) : verticalScale(13),
+                  marginTop: verticalScale(10),
+                },
+              ]}>
+              {translation('ENTER_EMAIL_FOR_VERIFICATION')}
             </RNTextComponent>
             <View
               style={[
@@ -78,74 +87,13 @@ const SignIn = () => {
                 hint={translation('ENTER_YOUR_EMAIL')}
                 inputStyle={styles.inputText}
               />
-              <RNTextInputWithLabel
-                label={translation('PASSWORD')}
-                // label={en.EMAIL}
-                backgroundColor={themeColor.lightGray}
-                containerStyle={styles.input2}
-                value={password}
-                updateText={setPassword}
-                validationType={FORM_INPUT_TYPE.PASSWORD}
-                hint={translation('ENTER_PASSWORD')}
-                inputStyle={styles.inputText}
-                rightSideIcon={true}
-              />
-              <Pressable
-                onPress={() => navigateTo(SCREEN_NAME.FORGOT_PASSWORD)}>
-                <RNTextComponent style={styles.forgotPassword}>
-                  {translation('FORGOT_PASSWORD')}
-                </RNTextComponent>
-              </Pressable>
-
               <RNButton
-                title={translation('SIGN_IN')}
+                title={translation('GET_CODE')}
                 customStyle={styles.button}
                 onClick={() => {
                   navigateTo(SCREEN_NAME.TERMS_AND_CONDITIONS);
                 }}
               />
-              <View style={styles.continueDesign}>
-                <View style={styles.line} />
-                <RNTextComponent
-                  style={[styles.text, isTablet && {fontSize: 14}]}>
-                  {translation('OR_CONTINUE_WITH')}
-                </RNTextComponent>
-                <View style={styles.line} />
-              </View>
-
-              <View style={styles.bottomOptions}>
-                <View
-                  style={[
-                    styles.option,
-                    isTablet && {paddingHorizontal: 36, paddingVertical: 17},
-                  ]}>
-                  <Google />
-                </View>
-                <View
-                  style={[
-                    styles.option,
-                    isTablet && {paddingHorizontal: 36, paddingVertical: 17},
-                  ]}>
-                  <FB />
-                </View>
-                <View
-                  style={[
-                    styles.option,
-                    isTablet && {paddingHorizontal: 36, paddingVertical: 17},
-                  ]}>
-                  <Apple />
-                </View>
-              </View>
-              <RNTextComponent
-                style={[styles.buttonText, isTablet && {fontSize: 22}]}>
-                {translation('ALREADY_HAVE_AN_ACCOUNT')}{' '}
-                <RNTextComponent
-                  isSemiBold
-                  style={[styles.signup, isTablet && {fontSize: 22}]}
-                  handleOnPress={() => navigateTo(SCREEN_NAME.SIGN_UP)}>
-                  {translation('SIGN_UP')}
-                </RNTextComponent>
-              </RNTextComponent>
             </View>
           </ImageBackground>
         </ScrollView>
@@ -154,4 +102,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default ForgotPassword;

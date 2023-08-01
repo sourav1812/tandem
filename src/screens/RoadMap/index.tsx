@@ -1,4 +1,4 @@
-import {Alert, Pressable, View} from 'react-native';
+import {Pressable, View} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
 import YellowButton from '@tandem/assets/svg/YellowButton';
