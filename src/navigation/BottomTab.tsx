@@ -16,17 +16,25 @@ import themeColor from '@tandem/theme/themeColor';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {MODE} from '@tandem/constants/mode';
 import {translation} from '@tandem/utils/methods';
+import {RootState} from '@tandem/redux/store';
 
 const BottomTab = () => {
   const Tab = createBottomTabNavigator<RootTabParamList>();
-  const mode = useAppSelector(state => state.mode.mode);
-
+  const mode = useAppSelector((state: RootState) => state.mode.mode);
+  const isTablet = useAppSelector(
+    (state: RootState) => state.deviceType.isTablet,
+  );
   return (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
-        tabBarStyle: styles.tabBar,
+        tabBarStyle: [
+          styles.tabBar,
+          {
+            height: isTablet ? verticalScale(60) : verticalScale(75),
+          },
+        ],
         tabBarLabelPosition: 'below-icon',
       }}
       initialRouteName={SCREEN_NAME.HOME}>
@@ -142,7 +150,6 @@ const styles = StyleSheet.create({
     borderTopColor: 'transparent',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
-    height: verticalScale(60),
   },
   iconContainer: {
     alignItems: 'center',

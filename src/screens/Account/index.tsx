@@ -116,13 +116,19 @@ const Account = () => {
 
   return (
     <RNScreenWrapper style={styles.container}>
-      <View style={styles.header}>
+      <View
+        style={[
+          styles.header,
+          {marginTop: portrait ? verticalScale(44) : verticalScale(20)},
+        ]}>
         <Image
           source={require('../../assets/png/logo.png')}
           resizeMode="contain"
           style={styles.logo}
         />
-        <RNButton onlyIcon icon={<Logout />} onClick={toggleSignOut} />
+        <View style={{zIndex: 1, marginLeft: scale(-30)}}>
+          <RNButton onlyIcon icon={<Logout />} onClick={toggleSignOut} />
+        </View>
       </View>
       <RNTextComponent
         isSemiBold
@@ -235,10 +241,8 @@ const Account = () => {
                       removePlayer(index);
                     }}>
                     <RNParentProfile
-                      height={
-                        portrait ? verticalScale(105) : verticalScale(52.5)
-                      }
-                      width={portrait ? verticalScale(90) : verticalScale(45)}
+                      height={portrait ? verticalScale(60) : verticalScale(40)}
+                      width={portrait ? verticalScale(60) : verticalScale(40)}
                       data={item}
                     />
                   </Pressable>
@@ -276,10 +280,10 @@ const Account = () => {
               <Add />
               <RNTextComponent
                 isMedium
-                style={
-                  (styles.addText,
-                  {marginTop: portrait ? verticalScale(42) : verticalScale(21)})
-                }>
+                style={[
+                  styles.addText,
+                  {marginTop: portrait ? verticalScale(42) : verticalScale(21)},
+                ]}>
                 {translation('ADD')}
               </RNTextComponent>
             </Pressable>
@@ -289,6 +293,9 @@ const Account = () => {
           style={[
             styles.footer,
             playerList.length === 0 && {backgroundColor: themeColor.lightGray},
+            {
+              marginTop: portrait ? verticalScale(30) : 'auto',
+            },
           ]}>
           <RNTextComponent
             isSemiBold
