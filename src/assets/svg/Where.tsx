@@ -5,16 +5,18 @@ const SvgComponent = ({
   props,
   fillColor,
   textColor,
+  scale = 1,
 }: {
   props?: SvgProps;
   fillColor?: string;
   textColor?: string;
+  scale?: number;
 }) => (
   <Svg
     // xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 196 135"
-    width={verticalScale(178)}
-    height={verticalScale(121)}
+    width={verticalScale(178) / scale}
+    height={verticalScale(121) / scale}
     fill="none"
     {...props}>
     <Path

@@ -16,7 +16,7 @@ import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {useOrientation} from '@tandem/hooks/useOrientation';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import themeColor from '@tandem/theme/themeColor';
-import {verticalScale} from 'react-native-size-matters';
+import {scale, verticalScale} from 'react-native-size-matters';
 import RNBookmarkComponent from '@tandem/components/RNBookmarkComponent';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
@@ -205,7 +205,11 @@ const Home = () => {
                 isVisible={showTooltip}
                 content={
                   <>
-                    <WavyArrow size={160} rotation={30} />
+                    <WavyArrow
+                      shift={scale(50)}
+                      size={verticalScale(80)}
+                      rotation={0}
+                    />
                     <RNTextComponent
                       isBold
                       style={{color: 'white', fontSize: verticalScale(20)}}>

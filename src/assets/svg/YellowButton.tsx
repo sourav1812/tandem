@@ -5,8 +5,8 @@ const SvgComponent = (props: SvgProps) => (
   <Svg
     // xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 40 40"
-    width={verticalScale(36)}
-    height={verticalScale(36)}
+    width={verticalScale(40)}
+    height={verticalScale(40)}
     fill="none"
     {...props}>
     <Rect width={40} height={40} fill="#F1F4F9" rx={12} />

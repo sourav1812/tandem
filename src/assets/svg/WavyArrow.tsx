@@ -1,10 +1,20 @@
 import * as React from 'react';
 import Svg, {G, Path, Defs, ClipPath} from 'react-native-svg';
 
-function SvgComponent({size, rotation}: {size: number; rotation: number}) {
+function SvgComponent({
+  size,
+  rotation,
+  shift,
+}: {
+  size: number;
+  rotation: number;
+  shift: number;
+}) {
   return (
     <Svg
-      style={{transform: [{rotate: rotation.toString() + 'deg'}]}}
+      style={{
+        transform: [{rotate: rotation.toString() + 'deg'}, {translateX: shift}],
+      }}
       width={size}
       height={size}
       viewBox="0 0 97 108"
