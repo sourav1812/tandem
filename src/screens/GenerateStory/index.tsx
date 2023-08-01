@@ -233,12 +233,10 @@ const GenerateStory = () => {
                 style={[
                   styles.indicator,
                   {
-                    ...{
-                      backgroundColor:
-                        index.index < indicatorIndex
-                          ? themeColor.themeBlue
-                          : 'rgba(66, 133, 246, 0.5)',
-                    },
+                    backgroundColor:
+                      index.index < indicatorIndex
+                        ? themeColor.themeBlue
+                        : 'rgba(66, 133, 246, 0.5)',
                   },
                 ]}
               />

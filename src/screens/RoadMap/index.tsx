@@ -106,10 +106,10 @@ const RNRoadmap = () => {
             onPress={() => {
               handleNavigate(4);
             }}
-            style={{
-              ...styles.whatHappens,
-              ...{left: isTablet ? scale(102) : scale(105)},
-            }}>
+            style={[
+              styles.whatHappens,
+              {left: isTablet ? scale(102) : scale(105)},
+            ]}>
             <WhatHappens
               fillColor={
                 questionIndex > 4 ? themeColor.lightGreen : themeColor.lightGray
@@ -140,10 +140,7 @@ const RNRoadmap = () => {
             onPress={() => {
               handleNavigate(2);
             }}
-            style={{
-              ...styles.where,
-              ...{left: isTablet ? scale(110) : scale(100)},
-            }}>
+            style={[styles.where, {left: isTablet ? scale(110) : scale(100)}]}>
             <Where
               fillColor={
                 questionIndex > 2 ? themeColor.green : themeColor.lightGray
