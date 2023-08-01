@@ -1,4 +1,4 @@
-import {Pressable} from 'react-native';
+import {Pressable, View} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
 import YellowButton from '@tandem/assets/svg/YellowButton';
@@ -13,14 +13,22 @@ import StyleColor from '@tandem/assets/svg/StyleColor';
 import Create from '@tandem/assets/svg/CreateIcon';
 import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
-
 import {scale} from 'react-native-size-matters';
-import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
+import {setQuestionIndex} from '@tandem/redux/slices/questions.slice';
 
 const RNRoadmap = () => {
-  // const [mapIndex, setMapIndex] = useState(0);
+  const dispatch = useAppDispatch();
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const questionIndex = useAppSelector(state => state.questions.index);
+
+  const handleNavigate = (index: number) => {
+    if (index >= questionIndex) {
+      dispatch(setQuestionIndex(index));
+    }
+    navigateTo(SCREEN_NAME.GENERATE_STORY);
+  };
 
   return (
     <RNScreenWrapper style={styles.container}>
@@ -30,62 +38,95 @@ const RNRoadmap = () => {
         }}>
         <YellowButton style={styles.button} />
       </Pressable>
-      <Pressable style={styles.roadmap} onPress={() => {}}>
-        {/* <RoadMap
-          props={{style: styles.roadmap, height: verticalScale(570)}}
-          index={questionIndex}
-        /> */}
+      <View style={styles.roadmap}>
         <Pressable
           style={styles.create}
           onPress={() => {
-            navigateTo(SCREEN_NAME.BOTTOM_TAB);
+            navigateTo(SCREEN_NAME.STORY_TELLING);
           }}>
-          <Create
-            mapIndex={2}
-            props={{style: {right: isTablet ? scale(25) : scale(0)}}}
+          <Create mapIndex={questionIndex} />
+        </Pressable>
+        <Pressable
+          onPress={() => {
+            handleNavigate(6);
+          }}
+          style={styles.stylecolor}>
+          <StyleColor
+            fillColor={
+              questionIndex > 5 ? themeColor.themeBlue : themeColor.lightGray
+            }
+            textColor={
+              questionIndex > 5 ? themeColor.white : themeColor.themeBlue
+            }
           />
         </Pressable>
-        <StyleColor
-          props={{style: styles.stylecolor}}
-          fillColor={2 >= 11 ? themeColor.themeBlue : themeColor.lightGray}
-          textColor={2 >= 11 ? themeColor.white : themeColor.themeBlue}
-        />
-        <WhatHappens
-          props={{
-            style: styles.whatHappens,
-            ...{left: isTablet ? scale(20) : scale(55)},
+        <Pressable
+          onPress={() => {
+            handleNavigate(5);
           }}
-          fillColor={false ? themeColor.lightGreen : themeColor.lightGray}
-          textColor={false ? themeColor.white : themeColor.themeBlue}
-        />
-        <WhatThing
-          props={{
-            style: styles.whatThing,
+          style={[
+            styles.whatHappens,
+            {left: isTablet ? scale(20) : scale(105)},
+          ]}>
+          <WhatHappens
+            fillColor={
+              questionIndex > 4 ? themeColor.lightGreen : themeColor.lightGray
+            }
+            textColor={
+              questionIndex > 4 ? themeColor.white : themeColor.themeBlue
+            }
+          />
+        </Pressable>
+        <Pressable
+          onPress={() => {
+            handleNavigate(4);
           }}
-          fillColor={false ? themeColor.gold : themeColor.lightGray}
-          textColor={false ? themeColor.white : themeColor.themeBlue}
-        />
-        <Where
-          props={{
-            style: styles.where,
-            ...{left: isTablet ? scale(17) : scale(50)},
+          style={styles.whatThing}>
+          <WhatThing
+            fillColor={
+              questionIndex > 3 ? themeColor.gold : themeColor.lightGray
+            }
+            textColor={
+              questionIndex > 3 ? themeColor.white : themeColor.themeBlue
+            }
+          />
+        </Pressable>
+        <Pressable
+          onPress={() => {
+            handleNavigate(3);
           }}
-          fillColor={false ? themeColor.green : themeColor.lightGray}
-          textColor={false ? themeColor.white : themeColor.themeBlue}
-        />
-        <Who
-          props={{style: styles.who}}
-          fillColor={false ? '#9A00FF' : themeColor.lightGray}
-          textColor={false ? themeColor.white : themeColor.themeBlue}
-        />
+          style={[styles.where, {left: isTablet ? scale(17) : scale(100)}]}>
+          <Where
+            fillColor={
+              questionIndex > 2 ? themeColor.green : themeColor.lightGray
+            }
+            textColor={
+              questionIndex > 2 ? themeColor.white : themeColor.themeBlue
+            }
+          />
+        </Pressable>
+        <Pressable
+          onPress={() => {
+            handleNavigate(2);
+          }}
+          style={styles.who}>
+          <Who
+            fillColor={questionIndex >= 1 ? '#9A00FF' : themeColor.lightGray}
+            textColor={
+              questionIndex >= 1 ? themeColor.white : themeColor.themeBlue
+            }
+          />
+        </Pressable>
         <Pressable
           style={[styles.start, isTablet && {left: scale(8)}]}
-          onPress={() => {}}>
+          onPress={() => {
+            handleNavigate(0);
+          }}>
           <RNTextComponent style={styles.startText} isSemiBold>
             {translation('START')}
           </RNTextComponent>
         </Pressable>
-      </Pressable>
+      </View>
     </RNScreenWrapper>
   );
 };

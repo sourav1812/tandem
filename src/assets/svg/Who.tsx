@@ -1,4 +1,3 @@
-import themeColor from '@tandem/theme/themeColor';
 import * as React from 'react';
 import {verticalScale} from 'react-native-size-matters';
 import Svg, {SvgProps, Path, Rect} from 'react-native-svg';
@@ -7,7 +6,7 @@ const SvgComponent = ({
   fillColor,
   textColor,
 }: {
-  props: SvgProps;
+  props?: SvgProps;
   fillColor?: string;
   textColor?: string;
 }) => (

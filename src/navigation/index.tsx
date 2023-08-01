@@ -64,6 +64,10 @@ const AppNavigator = () => {
               }
               name={SCREEN_NAME.STORY_TELLING}
             />
+            <Stack.Screen
+              getComponent={() => require('@tandem/screens/RoadMap').default}
+              name={SCREEN_NAME.ROADMAP}
+            />
           </>
         )}
 

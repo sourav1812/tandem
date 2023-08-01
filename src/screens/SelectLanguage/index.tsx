@@ -1,4 +1,4 @@
-import {Pressable} from 'react-native';
+import {Alert, Pressable} from 'react-native';
 import React from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import RNTextComponent from '@tandem/components/RNTextComponent';

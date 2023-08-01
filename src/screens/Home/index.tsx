@@ -286,7 +286,7 @@ const Home = () => {
                       key={index.toString()}
                       onPress={() => {
                         if (index === 0) {
-                          navigateTo(SCREEN_NAME.GENERATE_STORY);
+                          navigateTo(SCREEN_NAME.ROADMAP);
                         } else {
                           // toggleModal();
                         }

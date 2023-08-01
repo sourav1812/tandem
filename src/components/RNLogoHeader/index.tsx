@@ -12,6 +12,7 @@ const RNLogoHeader = ({
   textHeading,
   heading,
   titleStyle,
+  rightIcon,
 }: LogoHeaderProps) => {
   return (
     <View style={[styles.container, customStyle && customStyle]}>
@@ -37,7 +38,9 @@ const RNLogoHeader = ({
           {heading}
         </RNTextComponent>
       )}
-      <View style={styles.sides} />
+      <View style={[styles.sides, {alignItems: 'flex-end'}]}>
+        {rightIcon && rightIcon}
+      </View>
     </View>
   );
 };

@@ -6,7 +6,7 @@ import {
   ScrollView,
   Dimensions,
 } from 'react-native';
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useRef} from 'react';
 import {styles} from './style';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import RNButton from '@tandem/components/RNButton';
@@ -31,8 +31,15 @@ import Mic from '@tandem/assets/svg/BlueMic';
 import MuteMic from '@tandem/assets/svg/MuteMic';
 import {RootState} from '@tandem/redux/store';
 import {translation} from '@tandem/utils/methods';
+import RNLogoHeader from '@tandem/components/RNLogoHeader';
+import RNVoiceQuesiton from '@tandem/components/RNVoiceQuesiton';
+import QuestionMark from '@tandem/assets/svg/QuestionMark';
+import RNWellDoneModal from '@tandem/components/RNWellDoneModal';
+import RNMultipleChoice from '@tandem/components/RNMultipleChoice';
 
 const StoryTelling = () => {
+  const flatlistRef = useRef(null);
+
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const mode = useAppSelector(state => state.mode.mode);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -42,13 +49,15 @@ const StoryTelling = () => {
   const [state, setState] = useState<StateObject>({
     ratingModal: true,
     toggleMic: false,
+    showQuestion: false,
+    wellDoneModal: false,
   });
   const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
   const height = Dimensions.get('screen').height;
   const width = Dimensions.get('screen').width;
-  const {ratingModal, toggleMic} = state;
+  const {ratingModal, toggleMic, showQuestion, wellDoneModal} = state;
 
   const updateState = (date: any) => {
     setState((previouState: any) => {
@@ -58,7 +67,7 @@ const StoryTelling = () => {
   const renderStory = () => {
     return (
       <ImageBackground
-        style={(styles.container, {height: height, width: width})}
+        style={[styles.container, {height: height, width: width}]}
         source={require('../../assets/png/storyBackground.png')}>
         {currentIndex + 1 === 5 && (
           <View>
@@ -106,10 +115,22 @@ const StoryTelling = () => {
     );
   };
   const onViewableItemsChanged = useCallback(({viewableItems}: any) => {
+    console.log(viewableItems[0].index);
     if (viewableItems.length > 0) {
       setCurrentIndex(viewableItems[0].index);
     }
   }, []);
+
+  React.useEffect(() => {
+    switch (currentIndex) {
+      case 1:
+        updateState({showQuestion: true});
+        break;
+      case 2:
+        updateState({showQuestion: true});
+        break;
+    }
+  }, [currentIndex]);
 
   const toggleModal = () => {
     setRenderModal(!renderModal);
@@ -125,30 +146,66 @@ const StoryTelling = () => {
     updateState({ratingModal: !ratingModal});
   };
 
+  const renderWellDoneModal = () => {
+    updateState({wellDoneModal: !wellDoneModal});
+  };
+
   const headerButton = () => {
-    if (currentIndex + 1 < 5) {
-      switch (mode) {
-        case MODE.A:
-          return (
-            <RNButton
-              onlyIcon
-              icon={<Meter />}
-              onClick={() => renderReadingLevel()}
-            />
-          );
+    switch (mode) {
+      case MODE.A:
+        return (
+          <RNButton
+            onlyIcon
+            icon={<Meter />}
+            onClick={() => renderReadingLevel()}
+          />
+        );
 
-        case MODE.B:
-          return <RNButton onlyIcon icon={<Speaker />} onClick={() => {}} />;
+      case MODE.B:
+        return <RNButton onlyIcon icon={<Speaker />} onClick={() => {}} />;
 
-        case MODE.C:
-          return (
-            <RNButton
-              onlyIcon
-              icon={toggleMic ? <MuteMic /> : <Mic />}
-              onClick={() => updateState({toggleMic: !toggleMic})}
+      case MODE.C:
+        return (
+          <RNButton
+            onlyIcon
+            icon={toggleMic ? <MuteMic /> : <Mic />}
+            onClick={() => updateState({toggleMic: !toggleMic})}
+          />
+        );
+    }
+  };
+
+  const renderQuestions = () => {
+    switch (currentIndex) {
+      case 1:
+        return (
+          <View style={styles.questionView}>
+            <RNLogoHeader
+              heading={translation('QUESTIONS_ABOUT_THE_STORY')}
+              textHeading
+              titleStyle={styles.headerTitle}
+              customStyle={styles.headerStyle}
+              rightIcon={
+                <RNButton onlyIcon icon={<QuestionMark />} onClick={() => {}} />
+              }
             />
-          );
-      }
+            <RNVoiceQuesiton
+              // onClick={renderWellDoneModal}
+              onClick={() => {
+                updateState({showQuestion: false});
+              }}
+              customStyle={{paddingHorizontal: scale(20)}}
+            />
+          </View>
+        );
+      case 2:
+        return (
+          <RNMultipleChoice
+            onNextPress={() => {
+              navigateTo(SCREEN_NAME.STORY_TELLING);
+            }}
+          />
+        );
     }
   };
 
@@ -173,6 +230,7 @@ const StoryTelling = () => {
         data={Array.from({length: 5}, (_, i) => {
           return {index: i};
         })}
+        ref={flatlistRef}
         renderItem={renderStory}
         pagingEnabled
         horizontal
@@ -212,6 +270,7 @@ const StoryTelling = () => {
           </RNTextComponent>
         </ImageBackground>
       )}
+      {showQuestion && renderQuestions()}
       <RNCongratsModal visible={renderModal} renderModal={toggleModal} />
       <RNReadingLevelModal
         visible={readingLevel}
@@ -232,6 +291,19 @@ const StoryTelling = () => {
           nextClick={renderRatingModal}
         />
       )}
+      <RNWellDoneModal
+        visible={wellDoneModal}
+        renderModal={renderWellDoneModal}
+        nextClick={() => {
+          updateState({
+            showQuestion: false,
+          });
+          // flatlistRef?.current?.scrollToIndex({
+          //   animated: true,
+          //   index: currentIndex + 1,
+          // });
+        }}
+      />
     </RNScreenWrapper>
   );
 };
