@@ -35,6 +35,9 @@ import RNVoiceQuesiton from '@tandem/components/RNVoiceQuesiton';
 import QuestionMark from '@tandem/assets/svg/QuestionMark';
 import RNWellDoneModal from '@tandem/components/RNWellDoneModal';
 import RNMultipleChoice from '@tandem/components/RNMultipleChoice';
+import RNTooltip from '@tandem/components/RNTooltip';
+import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
+import {TOOLTIP} from '@tandem/constants/LocalConstants';
 
 const StoryTelling = () => {
   const flatlistRef = useRef(null);
@@ -44,13 +47,22 @@ const StoryTelling = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [renderModal, setRenderModal] = useState(false);
   const [readingLevel, setReadingLevel] = useState(false);
-  const [readingTip, setReadingTip] = useState(true);
   const [state, setState] = useState<StateObject>({
     ratingModal: true,
     toggleMic: false,
     showQuestion: false,
     wellDoneModal: false,
   });
+  const [tooltip, setTooltip] = useState({
+    tooltipOne: true,
+    tooltipTwo: false,
+    tooltipThree: false,
+    tooltipFour: false,
+    tooltipFive: false,
+    tooltipSix: false,
+    tooltipSeven: false,
+  });
+  const tooltipArray = getValueFromKey(TOOLTIP);
   const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
@@ -161,7 +173,20 @@ const StoryTelling = () => {
         );
 
       case MODE.B:
-        return <RNButton onlyIcon icon={<Speaker />} onClick={() => {}} />;
+        return (
+          <RNTooltip
+            open={tooltipArray.includes(8) ? false : tooltip.tooltipOne}
+            setClose={() => {
+              setTooltip({...tooltip, tooltipOne: false, tooltipTwo: true});
+              tooltipArray.push(8);
+              storeKey(TOOLTIP, tooltipArray);
+            }}
+            text={'Read aloud'}
+            top={false}
+            rotation={0}>
+            <RNButton onlyIcon icon={<Speaker />} onClick={() => {}} />
+          </RNTooltip>
+        );
 
       case MODE.C:
         return (
@@ -221,7 +246,20 @@ const StoryTelling = () => {
   };
 
   return (
-    <RNScreenWrapper>
+    <RNScreenWrapper
+      giveStatusColor={
+        tooltipArray.includes(8)
+          ? false
+          : tooltip.tooltipOne ||
+            tooltip.tooltipTwo ||
+            tooltip.tooltipThree ||
+            tooltip.tooltipFour ||
+            tooltip.tooltipFive ||
+            tooltip.tooltipSix ||
+            tooltip.tooltipSeven
+          ? true
+          : false
+      }>
       <View style={styles.headingButton}>
         <RNButton
           onlyIcon
