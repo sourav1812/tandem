@@ -1,4 +1,4 @@
-import {Alert, Pressable, View} from 'react-native';
+import {Pressable, View} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
 import YellowButton from '@tandem/assets/svg/YellowButton';
@@ -64,10 +64,10 @@ const RNRoadmap = () => {
           onPress={() => {
             handleNavigate(5);
           }}
-          style={{
-            ...styles.whatHappens,
-            ...{left: isTablet ? scale(20) : scale(105)},
-          }}>
+          style={[
+            styles.whatHappens,
+            {left: isTablet ? scale(20) : scale(105)},
+          ]}>
           <WhatHappens
             fillColor={
               questionIndex > 4 ? themeColor.lightGreen : themeColor.lightGray
@@ -95,10 +95,7 @@ const RNRoadmap = () => {
           onPress={() => {
             handleNavigate(3);
           }}
-          style={{
-            ...styles.where,
-            ...{left: isTablet ? scale(17) : scale(100)},
-          }}>
+          style={[styles.where, {left: isTablet ? scale(17) : scale(100)}]}>
           <Where
             fillColor={
               questionIndex > 2 ? themeColor.green : themeColor.lightGray
