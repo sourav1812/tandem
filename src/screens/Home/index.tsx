@@ -7,13 +7,10 @@ import {
   ScrollView,
   Animated,
   Easing,
-  Platform,
-  StatusBar,
 } from 'react-native';
 import React, {useRef, useState} from 'react';
 import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
-import {useOrientation} from '@tandem/hooks/useOrientation';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import themeColor from '@tandem/theme/themeColor';
 import {verticalScale} from 'react-native-size-matters';
@@ -25,13 +22,24 @@ import {StateObject} from './interface';
 import {translation} from '@tandem/utils/methods';
 import {MODE} from '@tandem/constants/mode';
 import BlueButon from '@tandem/assets/svg/YellowButton';
-import Tooltip from 'react-native-walkthrough-tooltip';
-import WavyArrow from '@tandem/assets/svg/WavyArrow';
 import BothButton from '@tandem/assets/svg/BothButton';
+import RNTooltip from '@tandem/components/RNTooltip';
+import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
+import {TOOLTIP} from '@tandem/constants/LocalConstants';
+import {useNavigation} from '@react-navigation/native';
+import {RootState} from '@tandem/redux/store';
 
 const Home = () => {
-  const portrait = useOrientation().isPortrait;
+  const portrait = useAppSelector(
+    (state: RootState) => state.orientation.isPortrait,
+  );
   const mode = useAppSelector(state => state.mode.mode);
+  const [tooltipMode, setToolTipMode] = useState({
+    tooltipOne: true,
+    tooltipTwo: false,
+  });
+  const tooltipArray = getValueFromKey(TOOLTIP);
+  const navigation: any = useNavigation();
 
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const {width} = useWindowDimensions();
@@ -91,7 +99,7 @@ const Home = () => {
     showTooltip: true,
   });
 
-  const {changeUser, userProfile, name, showTooltip} = state;
+  const {changeUser, userProfile, name} = state;
 
   const updateState = (date: any) => {
     setState((previouState: any) => {
@@ -115,51 +123,69 @@ const Home = () => {
           {
             top:
               heightOfBanner.value - verticalScale(18) - verticalScale(89) / 2,
-            ...(changeUser && {
-              shadowColor: '#000',
-              shadowOffset: {
-                width: 0,
-                height: 1,
-              },
-              shadowOpacity: 0.32,
-              shadowRadius: 5.22,
-              elevation: 4,
-            }),
+            ...(changeUser &&
+              mode === MODE.A && {
+                shadowColor: '#000',
+                shadowOffset: {
+                  width: 0,
+                  height: 1,
+                },
+                shadowOpacity: 0.32,
+                shadowRadius: 5.22,
+                elevation: 4,
+              }),
           },
         ]}
         onPress={openDrawer}>
-        <View
-          style={{
-            height: verticalScale(89),
-            width: verticalScale(89),
-            alignItems: 'center',
-            justifyContent: 'center',
-            overflow: 'visible',
-          }}>
-          <Image
+        <RNTooltip
+          open={tooltipArray?.includes(3) ? false : tooltipMode.tooltipTwo}
+          setClose={() => {
+            setToolTipMode({
+              tooltipOne: false,
+              tooltipTwo: false,
+            });
+            tooltipArray.push(3);
+            storeKey(TOOLTIP, tooltipArray);
+          }}
+          text="By clicking on the avatar, you can change the childs account"
+          top={false}
+          rotation={180}>
+          <View
             style={{
-              height: verticalScale(59),
-              width: verticalScale(59),
-              borderRadius: 100,
-            }}
-            source={{
-              uri: userProfile,
-            }}
-          />
-          <RNTextComponent
-            style={{
-              marginTop: 5,
-              position: 'absolute',
-              bottom: -verticalScale(10),
-              fontSize: verticalScale(18),
-            }}
-            isSemiBold>
-            {name}
-          </RNTextComponent>
-        </View>
-        {changeUser && <ChangeChild userProfile={userProfile} name={name} />}
+              height: verticalScale(89),
+              width: verticalScale(89),
+              alignItems: 'center',
+              justifyContent: 'center',
+              overflow: 'visible',
+            }}>
+            <Image
+              style={{
+                height: verticalScale(59),
+                width: verticalScale(59),
+                borderRadius: 100,
+              }}
+              source={{
+                uri: userProfile,
+              }}
+            />
+            <RNTextComponent
+              style={{
+                marginTop: 5,
+                position: 'absolute',
+                bottom: -verticalScale(10),
+                fontSize: verticalScale(18),
+              }}
+              isSemiBold>
+              {name}
+            </RNTextComponent>
+          </View>
+        </RNTooltip>
+
+        {changeUser && mode === MODE.A && (
+          <ChangeChild userProfile={userProfile} name={name} />
+        )}
       </Pressable>
-      <RNScreenWrapper statusBarBgc={showTooltip ? '#000000CC' : 'transparent'}>
+      <RNScreenWrapper statusBarBgc={'transparent'}>
         <View style={[styles.container]}>
           <View
             onLayout={event => {
@@ -188,10 +214,10 @@ const Home = () => {
                 marginTop:
                   !isTablet && portrait ? verticalScale(60) : verticalScale(20),
               }}>
-              {translation('HELLO')}, Ella!{mode === MODE.A && 'Mum'} 👋🏻
+              {translation('HELLO')}, Ella!{mode === MODE.A && `(Mum)!`} 👋🏻
             </RNTextComponent>
             <Pressable
-              onPress={() => navigateTo(SCREEN_NAME.ACCOUNT)}
+              onPress={() => navigation.push(SCREEN_NAME.ACCOUNT)}
               style={[
                 styles.blueButton,
                 {
@@ -201,36 +227,23 @@ const Home = () => {
                       : verticalScale(17),
                 },
               ]}>
-              <Tooltip
-                isVisible={showTooltip}
-                content={
-                  <>
-                    <WavyArrow size={160} rotation={30} />
-                    <RNTextComponent
-                      isBold
-                      style={{color: 'white', fontSize: verticalScale(20)}}>
-                      ToolTip Text Here
-                    </RNTextComponent>
-                  </>
+              <RNTooltip
+                open={
+                  tooltipArray?.includes(2) ? false : tooltipMode.tooltipOne
                 }
-                backgroundColor="#000000CC"
-                disableShadow
-                contentStyle={{
-                  backgroundColor: 'transparent',
-                  width: 'auto',
-                  height: '100%',
-                  alignItems: 'center',
-                  justifyContent: 'center',
+                setClose={() => {
+                  setToolTipMode({
+                    tooltipOne: false,
+                    tooltipTwo: true,
+                  });
+                  tooltipArray.push(2);
+                  storeKey(TOOLTIP, tooltipArray);
                 }}
-                placement="bottom"
-                topAdjustment={
-                  Platform.OS === 'android'
-                    ? -(StatusBar.currentHeight || 0)
-                    : 0
-                }
-                onClose={() => updateState({showTooltip: false})}>
+                text={'switch mode'}
+                top={true}
+                rotation={0}>
                 {mode === MODE.B ? <BothButton /> : <BlueButon />}
-              </Tooltip>
+              </RNTooltip>
             </Pressable>
             <View
               style={{
@@ -265,15 +278,17 @@ const Home = () => {
             style={styles.content}
             contentContainerStyle={{paddingTop: verticalScale(5)}}
             showsVerticalScrollIndicator={false}>
-            <RNTextComponent
-              isSemiBold
-              style={{
-                ...styles.heading,
-                ...(!portrait && styles.headingPortrait),
-                ...(isTablet && {fontSize: verticalScale(18)}),
-              }}>
-              {translation('WHAT_SHALL_WE_DO_TODAY')}
-            </RNTextComponent>
+            {mode !== MODE.A && (
+              <RNTextComponent
+                isSemiBold
+                style={{
+                  ...styles.heading,
+                  ...(!portrait && styles.headingPortrait),
+                  ...(isTablet && {fontSize: verticalScale(18)}),
+                }}>
+                {translation('WHAT_SHALL_WE_DO_TODAY')}
+              </RNTextComponent>
+            )}
             <View
               style={{
                 ...styles.options,
@@ -394,7 +409,7 @@ const ChangeChild = ({
       />
       <RNTextComponent
         style={{
-          fontSize: verticalScale(18),
+          fontSize: verticalScale(16),
         }}
         isSemiBold>
         {name}

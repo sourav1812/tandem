@@ -50,184 +50,99 @@ const SignIn = () => {
             height: height,
             width: width,
           }}>
-          {isTablet ? (
-            <ImageBackground
-              style={styles.container}
-              source={require('@tandem/assets/png/authScreenBgc.png')}
-              resizeMode="stretch">
-              <RNLogoHeader customStyle={styles.header} />
-              <RNTextComponent style={styles.heading} isSemiBold>
-                {translation('SIGN_IN')}
+          <ImageBackground
+            style={styles.container}
+            source={
+              isTablet
+                ? require('@tandem/assets/png/authScreenBgc.png')
+                : require('@tandem/assets/png/signInMobileBgc.png')
+            }
+            resizeMode="stretch">
+            <RNLogoHeader customStyle={styles.header} />
+            <RNTextComponent style={styles.heading} isSemiBold>
+              {translation('SIGN_IN')}
+            </RNTextComponent>
+            <View
+              style={[
+                styles.form,
+                isTablet && {paddingHorizontal: verticalScale(120)},
+              ]}>
+              <RNTextInputWithLabel
+                label={translation('EMAIL')}
+                backgroundColor={themeColor.lightGray}
+                containerStyle={styles.input2}
+                value={email}
+                validationType={FORM_INPUT_TYPE.EMAIL}
+                updateText={setEmail}
+                hint={translation('ENTER_YOUR_EMAIL')}
+                inputStyle={styles.inputText}
+              />
+              <RNTextInputWithLabel
+                label={translation('PASSWORD')}
+                // label={en.EMAIL}
+                backgroundColor={themeColor.lightGray}
+                containerStyle={styles.input2}
+                value={password}
+                updateText={setPassword}
+                validationType={FORM_INPUT_TYPE.PASSWORD}
+                hint={translation('ENTER_PASSWORD')}
+                inputStyle={styles.inputText}
+                rightSideIcon={true}
+              />
+              <RNTextComponent style={styles.forgotPassword}>
+                {translation('FORGOT_PASSWORD')}
               </RNTextComponent>
-              <View
-                style={[
-                  styles.form,
-                  isTablet && {paddingHorizontal: verticalScale(120)},
-                ]}>
-                <RNTextInputWithLabel
-                  label={translation('EMAIL')}
-                  backgroundColor={themeColor.lightGray}
-                  containerStyle={styles.input2}
-                  value={email}
-                  validationType={FORM_INPUT_TYPE.EMAIL}
-                  updateText={setEmail}
-                  hint={translation('ENTER_YOUR_EMAIL')}
-                  inputStyle={styles.inputText}
-                />
-                <RNTextInputWithLabel
-                  label={translation('PASSWORD')}
-                  // label={en.EMAIL}
-                  backgroundColor={themeColor.lightGray}
-                  containerStyle={styles.input2}
-                  value={password}
-                  updateText={setPassword}
-                  validationType={FORM_INPUT_TYPE.PASSWORD}
-                  hint={translation('ENTER_PASSWORD')}
-                  inputStyle={styles.inputText}
-                  rightSideIcon={true}
-                />
-                <RNTextComponent style={styles.forgotPassword}>
-                  {translation('FORGOT_PASSWORD')}
-                </RNTextComponent>
-                <RNButton
-                  title={translation('SIGN_IN')}
-                  customStyle={styles.button}
-                  onClick={() => {
-                    navigateTo(SCREEN_NAME.TERMS_AND_CONDITIONS);
-                  }}
-                />
-                <View style={styles.continueDesign}>
-                  <View style={styles.line} />
-                  <RNTextComponent
-                    style={[styles.text, isTablet && {fontSize: 14}]}>
-                    {translation('OR_CONTINUE_WITH')}
-                  </RNTextComponent>
-                  <View style={styles.line} />
-                </View>
-
-                <View style={styles.bottomOptions}>
-                  <View
-                    style={[
-                      styles.option,
-                      isTablet && {paddingHorizontal: 36, paddingVertical: 17},
-                    ]}>
-                    <Google />
-                  </View>
-                  <View
-                    style={[
-                      styles.option,
-                      isTablet && {paddingHorizontal: 36, paddingVertical: 17},
-                    ]}>
-                    <FB />
-                  </View>
-                  <View
-                    style={[
-                      styles.option,
-                      isTablet && {paddingHorizontal: 36, paddingVertical: 17},
-                    ]}>
-                    <Apple />
-                  </View>
-                </View>
+              <RNButton
+                title={translation('SIGN_IN')}
+                customStyle={styles.button}
+                onClick={() => {
+                  navigateTo(SCREEN_NAME.TERMS_AND_CONDITIONS);
+                }}
+              />
+              <View style={styles.continueDesign}>
+                <View style={styles.line} />
                 <RNTextComponent
-                  style={[styles.buttonText, isTablet && {fontSize: 22}]}>
-                  {translation('ALREADY_HAVE_AN_ACCOUNT')}{' '}
-                  <RNTextComponent
-                    isSemiBold
-                    style={[styles.signup, isTablet && {fontSize: 22}]}
-                    handleOnPress={() => navigateTo(SCREEN_NAME.SIGN_UP)}>
-                    {translation('SIGN_UP')}
-                  </RNTextComponent>
+                  style={[styles.text, isTablet && {fontSize: 14}]}>
+                  {translation('OR_CONTINUE_WITH')}
                 </RNTextComponent>
+                <View style={styles.line} />
               </View>
-            </ImageBackground>
-          ) : (
-            <>
-              <RNLogoHeader customStyle={styles.header} />
-              <RNTextComponent style={styles.heading} isSemiBold>
-                {translation('SIGN_IN')}
+
+              <View style={styles.bottomOptions}>
+                <View
+                  style={[
+                    styles.option,
+                    isTablet && {paddingHorizontal: 36, paddingVertical: 17},
+                  ]}>
+                  <Google />
+                </View>
+                <View
+                  style={[
+                    styles.option,
+                    isTablet && {paddingHorizontal: 36, paddingVertical: 17},
+                  ]}>
+                  <FB />
+                </View>
+                <View
+                  style={[
+                    styles.option,
+                    isTablet && {paddingHorizontal: 36, paddingVertical: 17},
+                  ]}>
+                  <Apple />
+                </View>
+              </View>
+              <RNTextComponent
+                style={[styles.buttonText, isTablet && {fontSize: 22}]}>
+                {translation('ALREADY_HAVE_AN_ACCOUNT')}{' '}
+                <RNTextComponent
+                  isSemiBold
+                  style={[styles.signup, isTablet && {fontSize: 22}]}
+                  handleOnPress={() => navigateTo(SCREEN_NAME.SIGN_UP)}>
+                  {translation('SIGN_UP')}
+                </RNTextComponent>
               </RNTextComponent>
-              <View
-                style={[
-                  styles.form,
-                  isTablet && {paddingHorizontal: verticalScale(100)},
-                ]}>
-                <RNTextInputWithLabel
-                  label={translation('EMAIL')}
-                  backgroundColor={themeColor.lightGray}
-                  containerStyle={styles.input2}
-                  value={email}
-                  validationType={FORM_INPUT_TYPE.EMAIL}
-                  updateText={setEmail}
-                  hint={translation('ENTER_YOUR_EMAIL')}
-                  inputStyle={styles.inputText}
-                />
-                <RNTextInputWithLabel
-                  label={translation('PASSWORD')}
-                  // label={en.EMAIL}
-                  backgroundColor={themeColor.lightGray}
-                  containerStyle={styles.input2}
-                  value={password}
-                  updateText={setPassword}
-                  validationType={FORM_INPUT_TYPE.PASSWORD}
-                  hint={translation('ENTER_PASSWORD')}
-                  inputStyle={styles.inputText}
-                  rightSideIcon={true}
-                />
-                <RNTextComponent style={styles.forgotPassword}>
-                  {translation('FORGOT_PASSWORD')}
-                </RNTextComponent>
-                <RNButton
-                  title={translation('SIGN_IN')}
-                  customStyle={styles.button}
-                  onClick={() => {
-                    navigateTo(SCREEN_NAME.TERMS_AND_CONDITIONS);
-                  }}
-                />
-                <View style={styles.continueDesign}>
-                  <View style={styles.line} />
-                  <RNTextComponent
-                    style={[styles.text, isTablet && {fontSize: 14}]}>
-                    {translation('OR_CONTINUE_WITH')}
-                  </RNTextComponent>
-                  <View style={styles.line} />
-                </View>
-
-                <View style={styles.bottomOptions}>
-                  <View
-                    style={[
-                      styles.option,
-                      isTablet && {paddingHorizontal: 36, paddingVertical: 17},
-                    ]}>
-                    <Google />
-                  </View>
-                  <View
-                    style={[
-                      styles.option,
-                      isTablet && {paddingHorizontal: 36, paddingVertical: 17},
-                    ]}>
-                    <FB />
-                  </View>
-                  <View
-                    style={[
-                      styles.option,
-                      isTablet && {paddingHorizontal: 36, paddingVertical: 17},
-                    ]}>
-                    <Apple />
-                  </View>
-                </View>
-                <RNTextComponent
-                  style={[styles.buttonText, isTablet && {fontSize: 22}]}>
-                  {translation('ALREADY_HAVE_AN_ACCOUNT')}{' '}
-                  <RNTextComponent
-                    isSemiBold
-                    style={[styles.signup, isTablet && {fontSize: 22}]}
-                    handleOnPress={() => navigateTo(SCREEN_NAME.SIGN_UP)}>
-                    {translation('SIGN_UP')}
-                  </RNTextComponent>
-                </RNTextComponent>
-              </View>
-            </>
-          )}
+            </View>
+          </ImageBackground>
         </ScrollView>
       </KeyboardAvoidingView>
     </RNScreenWrapper>

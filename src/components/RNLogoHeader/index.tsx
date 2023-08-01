@@ -13,6 +13,8 @@ const RNLogoHeader = ({
   heading,
   titleStyle,
   rightIcon,
+  onRightButtonPress,
+  customRight = false,
 }: LogoHeaderProps) => {
   return (
     <View style={[styles.container, customStyle && customStyle]}>
@@ -21,7 +23,11 @@ const RNLogoHeader = ({
           onlyIcon
           icon={<Back />}
           onClick={() => {
-            navigateTo();
+            if (customRight) {
+              onRightButtonPress();
+            } else {
+              navigateTo();
+            }
           }}
         />
       </View>

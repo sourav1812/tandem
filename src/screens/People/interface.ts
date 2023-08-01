@@ -16,7 +16,7 @@ export const menuArray = [
   {name: translation('ABOUT_APP'), navigate: SCREEN_NAME.ABOUT_APP},
   {
     name: translation('TERMS_OF_USE'),
-    navigate: SCREEN_NAME.TERMS_AND_CONDITIONS,
+    // navigate: SCREEN_NAME.TERMS_AND_CONDITIONS,
   },
   {name: translation('PRIVACY_POLICY')},
 ];

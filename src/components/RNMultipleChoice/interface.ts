@@ -1,4 +1,5 @@
 import themeColor from '@tandem/theme/themeColor';
+import {StyleProp, ViewStyle} from 'react-native';
 
 export interface inputListState {
   answer: string;
@@ -6,6 +7,7 @@ export interface inputListState {
 
 export interface multipleChoiceProps {
   onNextPress: () => void;
+  customStyle?: StyleProp<ViewStyle>;
 }
 
 interface placeType {

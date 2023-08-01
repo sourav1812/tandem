@@ -19,6 +19,8 @@ export const styles = StyleSheet.create({
     paddingBottom: verticalScale(20),
   },
   start: {
+    alignSelf: 'center',
+
     height: verticalScale(80),
     width: verticalScale(80),
     position: 'absolute',
@@ -26,7 +28,6 @@ export const styles = StyleSheet.create({
     backgroundColor: themeColor.purple,
     justifyContent: 'center',
     alignItems: 'center',
-    alignSelf: 'center',
     bottom: verticalScale(40),
   },
   startText: {
@@ -60,5 +61,15 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     bottom: verticalScale(516),
     left: scale(106),
+  },
+  header: {
+    position: 'absolute',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: scale(21),
+    width: '105%',
+    // backgroundColor: themeColor.gold,
+    top: verticalScale(42),
+    zIndex: 10,
   },
 });

@@ -49,7 +49,7 @@ export const styles = StyleSheet.create({
   },
   box: {
     alignItems: 'center',
-    // borderWidth: 1,
+
     // borderColor: themeColor.white,
     width: scale(90),
   },

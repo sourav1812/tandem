@@ -85,4 +85,8 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: scale(20),
   },
+  multiplechoice: {
+    flex: 1,
+    zIndex: 20,
+  },
 });

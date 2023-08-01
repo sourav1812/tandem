@@ -7,4 +7,6 @@ export interface LogoHeaderProps {
   heading?: string;
   titleStyle?: StyleProp<TextStyle>;
   rightIcon?: ReactNode;
+  onRightButtonPress?: () => void;
+  customRight?: boolean;
 }

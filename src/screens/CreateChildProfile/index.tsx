@@ -113,14 +113,14 @@ const CreateChildProfile = () => {
         return (
           <>
             <RNTextComponent isSemiBold style={styles.heading}>
-              {translation('LETS_START_WITH_YOUR_CHILD')}
+              {translation('ADD_CHILD_INFO')}
             </RNTextComponent>
             <RNTextComponent
               style={[
                 styles.content,
                 isTablet && {fontSize: 17.5, marginTop: 8},
               ]}>
-              {translation('ADD_ONE_OF_YOUR_CHILDREN')}
+              {translation('COMPLETE_A_QUESTIONAIRE')}
             </RNTextComponent>
             <View
               style={[
