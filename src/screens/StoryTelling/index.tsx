@@ -22,7 +22,6 @@ import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import Meter from '@tandem/assets/svg/Meter';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import RNReadingLevelModal from '@tandem/components/RNReadingLevelModal';
-import RNReadingTipsModal from '@tandem/components/RNReadingTipsModal';
 import RNRatingModal from '@tandem/components/RNRatingModal';
 import {scale, verticalScale} from 'react-native-size-matters';
 import navigateTo from '@tandem/navigation/navigate';
@@ -126,7 +125,7 @@ const StoryTelling = () => {
       case 1:
         updateState({showQuestion: true});
         break;
-      case 2:
+      case 3:
         updateState({showQuestion: true});
         break;
     }
@@ -138,9 +137,9 @@ const StoryTelling = () => {
   const renderReadingLevel = () => {
     setReadingLevel(!readingLevel);
   };
-  const renderTipLevel = () => {
-    setReadingTip(!readingTip);
-  };
+  // const renderTipLevel = () => {
+  //   setReadingTip(!readingTip);
+  // };
 
   const renderRatingModal = () => {
     updateState({ratingModal: !ratingModal});
@@ -198,13 +197,25 @@ const StoryTelling = () => {
             />
           </View>
         );
-      case 2:
+      case 3:
         return (
-          <RNMultipleChoice
-            onNextPress={() => {
-              navigateTo(SCREEN_NAME.STORY_TELLING);
-            }}
-          />
+          <View style={styles.questionView}>
+            <RNLogoHeader
+              heading={translation('QUESTIONS_ABOUT_THE_STORY')}
+              textHeading
+              titleStyle={styles.headerTitle}
+              customStyle={styles.headerStyle}
+              rightIcon={
+                <RNButton onlyIcon icon={<QuestionMark />} onClick={() => {}} />
+              }
+            />
+            <RNMultipleChoice
+              onNextPress={() => {
+                updateState({showQuestion: false});
+              }}
+              customStyle={styles.multiplechoice}
+            />
+          </View>
         );
     }
   };
@@ -277,13 +288,13 @@ const StoryTelling = () => {
         renderModal={renderReadingLevel}
         nextClick={renderReadingLevel}
       />
-      {currentIndex === 3 && (
+      {/* {currentIndex === 3 && (
         <RNReadingTipsModal
           visible={readingTip}
           renderModal={renderTipLevel}
           nextClick={renderTipLevel}
         />
-      )}
+      )} */}
       {currentIndex + 1 === 5 && mode === MODE.B && (
         <RNRatingModal
           visible={ratingModal}

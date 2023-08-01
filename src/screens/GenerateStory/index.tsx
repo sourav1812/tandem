@@ -39,6 +39,8 @@ const GenerateStory = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const questionIndex = useAppSelector(state => state.questions.index);
 
+  console.log(questionIndex, 'generate story');
+
   const [state, setState] = useState<StateObject>({
     addedIllustration: null,
   });
@@ -93,13 +95,13 @@ const GenerateStory = () => {
               <View
                 style={[styles.buttonView, isTablet && {width: scale(180)}]}>
                 <RNButton
-                  title="✕"
+                  title="✔"
                   customStyle={styles.buttonStyle}
                   onlyBorder
                   onClick={nextQuestion}
                 />
                 <RNButton
-                  title="✔"
+                  title="✕"
                   customStyle={styles.buttonStyle}
                   onClick={nextQuestion}
                 />
@@ -191,17 +193,16 @@ const GenerateStory = () => {
     if (questionIndex < 7) {
       dispatch(setQuestionIndex(questionIndex + 1));
       if (questionIndex !== 0 && questionIndex !== 5) {
-        navigateTo(SCREEN_NAME.ROADMAP, {}, true);
+        navigateTo(SCREEN_NAME.ROADMAP);
       }
     }
   };
 
   const previousQuestion = () => {
     if (questionIndex > 0) {
-      navigateTo();
-    } else {
-      navigateTo(SCREEN_NAME.BOTTOM_TAB);
+      dispatch(setQuestionIndex(questionIndex - 1));
     }
+    navigateTo();
   };
 
   return (
@@ -212,7 +213,7 @@ const GenerateStory = () => {
           <RNTextComponent style={styles.heading} isSemiBold>
             {translation('GENERATE_STORY')}{' '}
             <RNTextComponent isSemiBold style={styles.questionNumber}>
-              {questionIndex + 1}/6
+              {questionIndex === 0 ? 1 : questionIndex}/6
             </RNTextComponent>
           </RNTextComponent>
           <RNButton
@@ -225,6 +226,7 @@ const GenerateStory = () => {
           {Array.from({length: 6}, (_, index) => {
             return {index: index};
           }).map(index => {
+            const indicatorIndex = questionIndex === 0 ? 1 : questionIndex;
             return (
               <View
                 key={index.index}
@@ -232,7 +234,7 @@ const GenerateStory = () => {
                   styles.indicator,
                   {
                     backgroundColor:
-                      index.index < questionIndex
+                      index.index < indicatorIndex
                         ? themeColor.themeBlue
                         : 'rgba(66, 133, 246, 0.5)',
                   },

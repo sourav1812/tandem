@@ -43,7 +43,16 @@ export const styles = StyleSheet.create({
     position: 'absolute',
   },
   create: {
-    top: -verticalScale(80),
+    top: -verticalScale(1),
+    zIndex: 10,
+  },
+  header: {
+    position: 'absolute',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: verticalScale(20),
+    width: '100%',
+    top: verticalScale(42),
     zIndex: 10,
   },
 });

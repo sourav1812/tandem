@@ -13,12 +13,15 @@ import StyleColor from '@tandem/assets/svg/StyleColor';
 import Create from '@tandem/assets/svg/CreateIcon';
 import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
+import BackButton from '@tandem/assets/svg/LeftArrow';
 import {verticalScale} from 'react-native-size-matters';
 import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {setQuestionIndex} from '@tandem/redux/slices/questions.slice';
 import {useSelector} from 'react-redux';
 import {RootState} from '@tandem/redux/store';
+import RNButton from '@tandem/components/RNButton';
+import {useNavigation} from '@react-navigation/native';
 
 const RNRoadmap = () => {
   const dispatch = useAppDispatch();
@@ -36,21 +39,58 @@ const RNRoadmap = () => {
     (state: RootState) => state.orientation.isPortrait,
   );
   let scale = portrait ? 1 : 1.4;
+  const navigation = useNavigation();
+
+  React.useEffect(
+    () =>
+      navigation.addListener('beforeRemove', e => {
+        // if (questionIndex === 0) {
+        //   Alert.alert('');
+        //   navigation.push(SCREEN_NAME.BOTTOM_TAB);
+        // } else {
+        //   dispatch(setQuestionIndex(questionIndex - 1));
+        //   navigateTo(SCREEN_NAME.GENERATE_STORY);
+        // }
+        e.preventDefault();
+      }),
+    [navigation],
+  );
+
   const handleNavigate = (index: number) => {
-    if (index >= questionIndex) {
-      dispatch(setQuestionIndex(index));
-    }
+    console.log(index);
+    // if (index >= questionIndex) {
+    //   dispatch(setQuestionIndex(index));
+    // }
+    dispatch(setQuestionIndex(index));
+
     navigateTo(SCREEN_NAME.GENERATE_STORY);
   };
 
   return (
     <RNScreenWrapper style={styles.container}>
-      <Pressable
-        onPress={() => {
-          navigateTo(SCREEN_NAME.ACCOUNT);
-        }}>
-        <YellowButton style={styles.button} />
-      </Pressable>
+      <View style={styles.header}>
+        <RNButton
+          onlyIcon
+          icon={<BackButton />}
+          onClick={() => {
+            if (questionIndex === 0) {
+              // navigation.push(SCREEN_NAME.BOTTOM_TAB);
+              navigateTo(SCREEN_NAME.HOME);
+            } else {
+              dispatch(setQuestionIndex(questionIndex - 1));
+              setTimeout(() => {
+                navigateTo(SCREEN_NAME.GENERATE_STORY);
+              }, 100);
+            }
+          }}
+        />
+        <Pressable
+          onPress={() => {
+            navigateTo(SCREEN_NAME.ACCOUNT);
+          }}>
+          <YellowButton />
+        </Pressable>
+      </View>
       <View style={styles.roadmap}>
         <Pressable
           onLayout={event => {

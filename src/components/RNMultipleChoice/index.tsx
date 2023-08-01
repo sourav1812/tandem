@@ -10,12 +10,12 @@ import {multipleChoiceProps} from './interface';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {translation} from '@tandem/utils/methods';
 
-const RNMultipleChoice = ({onNextPress}: multipleChoiceProps) => {
+const RNMultipleChoice = ({onNextPress, customStyle}: multipleChoiceProps) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
 
   return (
     <>
-      <View style={styles.container}>
+      <View style={[styles.container, customStyle && customStyle]}>
         <View style={styles.voiceQuestion}>
           <View style={styles.emojiView}>
             <RNTextComponent style={styles.emoji}>🤔</RNTextComponent>

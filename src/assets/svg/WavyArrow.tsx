@@ -4,11 +4,11 @@ import Svg, {G, Path, Defs, ClipPath} from 'react-native-svg';
 function SvgComponent({
   size,
   rotation,
-  shift,
+  shift = 0,
 }: {
   size: number;
   rotation: number;
-  shift: number;
+  shift?: number;
 }) {
   return (
     <Svg

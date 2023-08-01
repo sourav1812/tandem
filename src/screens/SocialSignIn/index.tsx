@@ -20,7 +20,11 @@ const SocialSignIn = () => {
     <RNScreenWrapper>
       <ImageBackground
         style={styles.container}
-        source={require('@tandem/assets/png/signInBgc.png')}
+        source={
+          isTablet
+            ? require('@tandem/assets/png/authScreenBgc.png')
+            : require('@tandem/assets/png/signInBgc.png')
+        }
         resizeMode="stretch">
         <View style={[isTablet && {paddingHorizontal: scale(70)}]}>
           <Image
