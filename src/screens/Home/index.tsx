@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import {
   View,
   Image,
@@ -138,7 +137,7 @@ const Home = () => {
         ]}
         onPress={openDrawer}>
         <RNTooltip
-          open={tooltipArray?.includes(3) ? false : tooltipMode.tooltipTwo}
+          open={tooltipArray?.includes(4) ? false : tooltipMode.tooltipTwo}
           setClose={() => {
             setToolTipMode({
               tooltipOne: false,
@@ -149,7 +148,16 @@ const Home = () => {
           }}
           text="By clicking on the avatar, you can change the childs account"
           top={false}
-          rotation={180}>
+          rotation={180}
+          vectorSize={verticalScale(100)}
+          textContainerStyle={styles.tooltipTwo}
+          textStyle={[
+            {
+              textAlign: 'center',
+              fontSize: verticalScale(16),
+              marginTop: 10,
+            },
+          ]}>
           <View
             style={{
               height: verticalScale(89),
@@ -185,7 +193,12 @@ const Home = () => {
           <ChangeChild userProfile={userProfile} name={name} />
         )}
       </Pressable>
-      <RNScreenWrapper statusBarBgc={'transparent'}>
+      <RNScreenWrapper
+        statusBarBgc={
+          tooltipMode.tooltipOne || tooltipMode.tooltipTwo
+            ? '#000000CC'
+            : 'transparent'
+        }>
         <View style={[styles.container]}>
           <View
             onLayout={event => {
@@ -229,7 +242,7 @@ const Home = () => {
               ]}>
               <RNTooltip
                 open={
-                  tooltipArray?.includes(2) ? false : tooltipMode.tooltipOne
+                  tooltipArray?.includes(3) ? false : tooltipMode.tooltipOne
                 }
                 setClose={() => {
                   setToolTipMode({
@@ -240,8 +253,8 @@ const Home = () => {
                   storeKey(TOOLTIP, tooltipArray);
                 }}
                 text={'switch mode'}
-                top={true}
-                rotation={0}>
+                top={false}
+                rotation={30}>
                 {mode === MODE.B ? <BothButton /> : <BlueButon />}
               </RNTooltip>
             </Pressable>

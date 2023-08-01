@@ -29,7 +29,6 @@ export const styles = StyleSheet.create({
   add: {
     alignItems: 'center',
     paddingTop: verticalScale(26),
-    paddingHorizontal: scale(5),
   },
   addText: {
     marginTop: verticalScale(42),
