@@ -11,7 +11,6 @@ import {
 import React, {useRef, useState} from 'react';
 import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
-import {useOrientation} from '@tandem/hooks/useOrientation';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import themeColor from '@tandem/theme/themeColor';
 import {verticalScale} from 'react-native-size-matters';
@@ -28,9 +27,12 @@ import RNTooltip from '@tandem/components/RNTooltip';
 import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
 import {TOOLTIP} from '@tandem/constants/LocalConstants';
 import {useNavigation} from '@react-navigation/native';
+import {RootState} from '@tandem/redux/store';
 
 const Home = () => {
-  const portrait = useOrientation().isPortrait;
+  const portrait = useAppSelector(
+    (state: RootState) => state.orientation.isPortrait,
+  );
   const mode = useAppSelector(state => state.mode.mode);
   const [tooltipMode, setToolTipMode] = useState({
     tooltipOne: true,

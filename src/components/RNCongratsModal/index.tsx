@@ -8,17 +8,14 @@ import {scale, verticalScale} from 'react-native-size-matters';
 import themeColor from '@tandem/theme/themeColor';
 import RNButton from '@tandem/components/RNButton';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
-import navigateTo, {navigationRef} from '@tandem/navigation/navigate';
-import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {translation} from '@tandem/utils/methods';
-import {changeMode} from '@tandem/redux/slices/mode.slice';
-import {useNavigation} from '@react-navigation/native';
+import navigateTo from '@tandem/navigation/navigate';
 
 const RNCongratsModal = ({
   visible = false,
   renderModal,
 }: congratsModalProps) => {
-  const navigation = useNavigation();
   let isTablet = useAppSelector(state => state.deviceType.isTablet);
 
   const onShare = async () => {
@@ -96,7 +93,7 @@ const RNCongratsModal = ({
             title={translation('HOME')}
             customStyle={styles.button}
             onClick={() => {
-              navigation.push(SCREEN_NAME.BOTTOM_TAB);
+              navigateTo(SCREEN_NAME.HOME);
             }}
           />
           <RNButton
