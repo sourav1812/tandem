@@ -202,5 +202,6 @@
   "GET_CODE": "Get a code",
   "CHOOSE_FROM_THE_GIVE_OPTIONS": "Choose from the given options",
   "PRESS_THE_BUTTON": "Press the button",
-  "ADD_COLORS": "Add colors"
+  "ADD_COLORS": "Add colors",
+  "BY_CLICKING_CHANGE_CHILD_ACCOUNT": "By clicking on the avatar, you can change the childs account"
 }

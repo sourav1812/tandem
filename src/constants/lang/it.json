@@ -198,5 +198,11 @@
   "help-center": {
     "alright-text": "Va bene, ma cosa fai esattamente?",
     "as-a-creative-agency": "Come agenzia creativa, collaboriamo con te per sviluppare soluzioni per affrontare le esigenze del tuo brand. Questo include vari aspetti della pianificazione e strategia del brand, del marketing e del design."
-  }
+  },
+  "ENTER_EMAIL_FOR_VERIFICATION": "Inserisci la tua email per ottenere il codice di verifica",
+  "GET_CODE": "Ottieni un codice",
+  "CHOOSE_FROM_THE_GIVE_OPTIONS": "Scegli tra le opzioni date",
+  "PRESS_THE_BUTTON": "Premi il pulsante",
+  "ADD_COLORS": "Aggiungi colori",
+  "BY_CLICKING_CHANGE_CHILD_ACCOUNT": "Cliccando sull'avatar, puoi cambiare l'account del bambino"
 }
