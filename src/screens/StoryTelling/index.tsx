@@ -35,10 +35,13 @@ import RNVoiceQuesiton from '@tandem/components/RNVoiceQuesiton';
 import QuestionMark from '@tandem/assets/svg/QuestionMark';
 import RNWellDoneModal from '@tandem/components/RNWellDoneModal';
 import RNMultipleChoice from '@tandem/components/RNMultipleChoice';
+import {TOOLTIP} from '@tandem/constants/LocalConstants';
+import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
+import RNTooltip from '@tandem/components/RNTooltip';
 
 const StoryTelling = () => {
   const flatlistRef = useRef(null);
-
+  const tooltipArray = getValueFromKey(TOOLTIP);
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const mode = useAppSelector(state => state.mode.mode);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -50,13 +53,26 @@ const StoryTelling = () => {
     toggleMic: false,
     showQuestion: false,
     wellDoneModal: false,
+    tooltipOne: true,
+    tooltipTwo: false,
+    tooltipThree: false,
+    tooltipFour: false,
   });
   const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
   const height = Dimensions.get('screen').height;
   const width = Dimensions.get('screen').width;
-  const {ratingModal, toggleMic, showQuestion, wellDoneModal} = state;
+  const {
+    ratingModal,
+    toggleMic,
+    showQuestion,
+    wellDoneModal,
+    tooltipOne,
+    tooltipTwo,
+    tooltipThree,
+    tooltipFour,
+  } = state;
 
   const updateState = (date: any) => {
     setState((previouState: any) => {
@@ -150,28 +166,52 @@ const StoryTelling = () => {
   };
 
   const headerButton = () => {
-    switch (mode) {
-      case MODE.A:
-        return (
-          <RNButton
-            onlyIcon
-            icon={<Meter />}
-            onClick={() => renderReadingLevel()}
-          />
-        );
+    // switch (mode) {
+    //   case MODE.A:
+    //     return (
+    //       <RNButton
+    //         onlyIcon
+    //         icon={<Meter />}
+    //         onClick={() => renderReadingLevel()}
+    //       />
+    //     );
 
-      case MODE.B:
-        return <RNButton onlyIcon icon={<Speaker />} onClick={() => {}} />;
+    //   case MODE.B:
+    //     return <RNButton onlyIcon icon={<Speaker />} onClick={() => {}} />;
 
-      case MODE.C:
-        return (
-          <RNButton
-            onlyIcon
-            icon={toggleMic ? <MuteMic /> : <Mic />}
-            onClick={() => updateState({toggleMic: !toggleMic})}
-          />
-        );
-    }
+    //   case MODE.C:
+    //     return (
+    //       <RNButton
+    //         onlyIcon
+    //         icon={toggleMic ? <MuteMic /> : <Mic />}
+    //         onClick={() => updateState({toggleMic: !toggleMic})}
+    //       />
+    //     );
+    // }
+
+    return (
+      <RNTooltip
+        open={tooltipArray?.includes(8) ? false : tooltipOne}
+        setClose={() => {
+          updateState({tooltipOne: false, tooltipTwo: true});
+          tooltipArray.push(8);
+          storeKey(TOOLTIP, tooltipArray);
+        }}
+        text={translation('READ_ALOUD')}
+        top={false}
+        rotation={10}
+        vectorSize={verticalScale(100)}
+        textContainerStyle={styles.tooltipTwo}
+        textStyle={[
+          {
+            textAlign: 'center',
+            fontSize: verticalScale(16),
+            marginTop: 10,
+          },
+        ]}>
+        <RNButton onlyIcon icon={<Speaker />} onClick={() => {}} />
+      </RNTooltip>
+    );
   };
 
   const renderQuestions = () => {
@@ -180,7 +220,7 @@ const StoryTelling = () => {
         return (
           <View style={styles.questionView}>
             <RNLogoHeader
-              heading={translation('QUESTIONS_ABOUT_THE_STORY')}
+              heading={translation('READ_A_STORY')}
               textHeading
               titleStyle={styles.headerTitle}
               customStyle={styles.headerStyle}
@@ -194,6 +234,10 @@ const StoryTelling = () => {
                 updateState({showQuestion: false});
               }}
               customStyle={{paddingHorizontal: scale(20)}}
+              tooltipOneVisible={tooltipFour}
+              onTooltipOneClose={() => {
+                updateState({tooltipFour: false});
+              }}
             />
           </View>
         );
@@ -212,6 +256,8 @@ const StoryTelling = () => {
             <RNMultipleChoice
               onNextPress={() => {
                 updateState({showQuestion: false});
+                tooltipArray.push(12);
+                storeKey(TOOLTIP, tooltipArray);
               }}
               customStyle={styles.multiplechoice}
             />
@@ -221,15 +267,35 @@ const StoryTelling = () => {
   };
 
   return (
-    <RNScreenWrapper>
+    <RNScreenWrapper giveStatusColor={tooltipArray.includes(13) ? false : true}>
       <View style={styles.headingButton}>
-        <RNButton
-          onlyIcon
-          icon={<Close />}
-          onClick={() => {
-            navigateTo(SCREEN_NAME.BOOKSHELF);
+        <RNTooltip
+          open={tooltipArray?.includes(9) ? false : tooltipTwo}
+          setClose={() => {
+            updateState({tooltipTwo: false, tooltipThree: true});
+            tooltipArray.push(9);
+            storeKey(TOOLTIP, tooltipArray);
           }}
-        />
+          text={translation('EXIT')}
+          top={false}
+          rotation={-10}
+          vectorSize={verticalScale(100)}
+          textContainerStyle={styles.tooltipTwo}
+          textStyle={[
+            {
+              textAlign: 'center',
+              fontSize: verticalScale(16),
+              marginTop: 10,
+            },
+          ]}>
+          <RNButton
+            onlyIcon
+            icon={<Close />}
+            onClick={() => {
+              navigateTo(SCREEN_NAME.BOOKSHELF);
+            }}
+          />
+        </RNTooltip>
         {currentIndex + 1 === 5 && (
           <RNTextComponent isSemiBold style={styles.summaryTitle}>
             {translation('SUMMARY')}
@@ -254,32 +320,56 @@ const StoryTelling = () => {
         }}
         showsHorizontalScrollIndicator={false}
       />
-      {currentIndex + 1 != 5 && (
-        <ImageBackground
-          style={styles.storyContent}
-          blurRadius={20}
-          source={require('../../assets/png/blurBgc.png')}
-          imageStyle={[
-            styles.imageStyle,
-            isTablet && {
-              borderTopLeftRadius: verticalScale(8),
-              borderTopRightRadius: verticalScale(8),
+      {currentIndex + 1 !== 5 && (
+        <RNTooltip
+          open={tooltipArray?.includes(10) ? false : tooltipThree}
+          setClose={() => {
+            updateState({tooltipFour: true, tooltipThree: false});
+            tooltipArray.push(10);
+            storeKey(TOOLTIP, tooltipArray);
+          }}
+          text={translation('READ_A_STORY')}
+          top={true}
+          rotation={0}
+          vectorSize={verticalScale(100)}
+          textContainerStyle={styles.tooltipTwo}
+          mainStyle={{
+            marginTop: verticalScale(-200),
+            height: verticalScale(200),
+          }}
+          textStyle={[
+            {
+              textAlign: 'center',
+              fontSize: verticalScale(16),
+              marginTop: 10,
             },
           ]}>
-          <RNTextComponent style={styles.slideNo} isSemiBold>
-            1/{currentIndex + 1}
-          </RNTextComponent>
-          <RNTextComponent
-            style={[
-              styles.slideNo,
-              {color: themeColor.black, textAlign: 'center', zIndex: 3},
-            ]}
-            isSemiBold>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti
-            sunt quod culpa nulla praesentium accusantium voluptas sit esse,
-            quibusdam dasperisi!
-          </RNTextComponent>
-        </ImageBackground>
+          <ImageBackground
+            style={styles.storyContent}
+            blurRadius={20}
+            source={require('../../assets/png/blurBgc.png')}
+            imageStyle={[
+              styles.imageStyle,
+              isTablet && {
+                borderTopLeftRadius: verticalScale(8),
+                borderTopRightRadius: verticalScale(8),
+              },
+            ]}>
+            <RNTextComponent style={styles.slideNo} isSemiBold>
+              1/{currentIndex + 1}
+            </RNTextComponent>
+            <RNTextComponent
+              style={[
+                styles.slideNo,
+                {color: themeColor.black, textAlign: 'center', zIndex: 3},
+              ]}
+              isSemiBold>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti
+              sunt quod culpa nulla praesentium accusantium voluptas sit esse,
+              quibusdam dasperisi!
+            </RNTextComponent>
+          </ImageBackground>
+        </RNTooltip>
       )}
       {showQuestion && renderQuestions()}
       <RNCongratsModal visible={renderModal} renderModal={toggleModal} />

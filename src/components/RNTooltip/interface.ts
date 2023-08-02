@@ -11,4 +11,5 @@ export interface TooltipProps {
   textContainerStyle?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
   vectorSize?: number;
+  mainStyle?: StyleProp<ViewStyle>;
 }
