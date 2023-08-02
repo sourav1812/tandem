@@ -2,12 +2,17 @@
 import React from 'react';
 import Tooltip from 'react-native-walkthrough-tooltip';
 import {TooltipProps} from './interface';
-import WavyArrow from '@tandem/assets/svg/WavyArrow';
 import {verticalScale} from 'react-native-size-matters';
 import RNTextComponent from '../RNTextComponent';
 import {Platform, StatusBar, View} from 'react-native';
 import {getValueFromKey} from '@tandem/helpers/encryptedStorage';
 import {TOOLTIP} from '@tandem/constants/LocalConstants';
+import {
+  tooltipHelperBottom,
+  tooltipHelperTop,
+} from '@tandem/helpers/tooltipHelper';
+import RNArrowIconTop from '../RNArrowIconTop';
+import RNArrowIconBottom from '../RNArrowIconBottom';
 
 const RNTooltip = ({
   children,
@@ -15,19 +20,21 @@ const RNTooltip = ({
   setClose,
   text,
   top,
-  rotation,
   textContainerStyle,
   textStyle,
-  vectorSize = 100,
+  mainStyle,
+  dimensionObject,
 }: TooltipProps) => {
   const tooltipNumber = getValueFromKey(TOOLTIP);
+  const helperTop = tooltipHelperTop(dimensionObject);
+  const helperBottom = tooltipHelperBottom(dimensionObject);
 
   return (
     <Tooltip
       isVisible={tooltipNumber.length < 14 ? open : false}
       content={
         <>
-          {!top && <WavyArrow size={vectorSize} rotation={rotation} />}
+          {helperTop && <RNArrowIconTop type={helperTop} />}
           <View style={[textContainerStyle && textContainerStyle]}>
             <RNTextComponent
               isSemiBold
@@ -42,20 +49,22 @@ const RNTooltip = ({
               {text}
             </RNTextComponent>
           </View>
-
-          {top && <WavyArrow size={vectorSize} rotation={rotation} />}
+          {helperBottom && <RNArrowIconBottom type={helperBottom} />}
         </>
       }
       backgroundColor="#000000CC"
       disableShadow
-      contentStyle={{
-        backgroundColor: 'transparent',
-        width: 'auto',
-        height: '100%',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginTop: -10,
-      }}
+      contentStyle={[
+        {
+          backgroundColor: 'transparent',
+          width: 'auto',
+          height: '100%',
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginTop: -10,
+        },
+        mainStyle && mainStyle,
+      ]}
       placement={top ? 'top' : 'bottom'}
       topAdjustment={
         Platform.OS === 'android' ? -(StatusBar.currentHeight || 0) : 0

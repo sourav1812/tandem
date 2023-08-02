@@ -7,8 +7,8 @@ export interface TooltipProps {
   setClose: () => void;
   text: string;
   top: boolean;
-  rotation: number;
   textContainerStyle?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
-  vectorSize?: number;
+  mainStyle?: StyleProp<ViewStyle>;
+  dimensionObject: any;
 }

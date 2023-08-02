@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {styles} from './styles';
 import {View, Image, ScrollView, Pressable} from 'react-native';
@@ -48,6 +48,9 @@ const Account = () => {
     ],
     playerList: [],
   });
+  const refOne = useRef<any>(null);
+  const refTwo = useRef<any>(null);
+
   const portrait = useSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
@@ -57,7 +60,10 @@ const Account = () => {
       return {...previouState, ...date};
     });
   };
-
+  const [positionRefs, setPositionRefs] = React.useState({
+    0: {height: 0, width: 0, x: 0, y: 0},
+    1: {height: 0, width: 0, x: 0, y: 0},
+  });
   const toggleSignOut = () => {
     updateState({signoutModal: !signoutModal});
   };
@@ -176,8 +182,11 @@ const Account = () => {
             <RNTooltip
               text={'Here you can add your child.'}
               top={false}
-              rotation={10}
-              open={tooltipArray?.includes(1) ? false : openTooltip.tooltipOne}
+              open={
+                tooltipArray?.includes(1) || positionRefs[0].x === 0
+                  ? false
+                  : openTooltip.tooltipOne
+              }
               setClose={() => {
                 setOpentTooltip({
                   tooltipOne: false,
@@ -186,8 +195,27 @@ const Account = () => {
                 tooltipArray.push(1);
                 storeKey(TOOLTIP, tooltipArray);
               }}
-              vectorSize={160}>
+              dimensionObject={positionRefs[0]}>
               <Pressable
+                ref={refOne}
+                onLayout={() => {
+                  refOne?.current?.measure(
+                    (
+                      x: number,
+                      y: number,
+                      width: number,
+                      height: number,
+                      pageX: number,
+                      pageY: number,
+                    ) => {
+                      setPositionRefs(prev => ({
+                        ...prev,
+                        0: {height: width, width: height, x: pageX, y: pageY},
+                      }));
+                      console.log(pageX, pageY);
+                    },
+                  );
+                }}
                 style={[
                   styles.add2,
                   {
@@ -279,8 +307,11 @@ const Account = () => {
             <RNTooltip
               text={'Here you can add youself.'}
               top={true}
-              rotation={160}
-              open={tooltipArray?.includes(2) ? false : openTooltip.tooltipTwo}
+              open={
+                tooltipArray?.includes(2) || positionRefs[1].x === 0
+                  ? false
+                  : openTooltip.tooltipTwo
+              }
               setClose={() => {
                 setOpentTooltip({
                   tooltipOne: false,
@@ -289,8 +320,27 @@ const Account = () => {
                 tooltipArray.push(2);
                 storeKey(TOOLTIP, tooltipArray);
               }}
-              vectorSize={160}>
+              dimensionObject={positionRefs[1]}>
               <Pressable
+                ref={refTwo}
+                onLayout={() => {
+                  refTwo?.current?.measure(
+                    (
+                      x: number,
+                      y: number,
+                      width: number,
+                      height: number,
+                      pageX: number,
+                      pageY: number,
+                    ) => {
+                      setPositionRefs(prev => ({
+                        ...prev,
+                        1: {height: width, width: height, x: pageX, y: pageY},
+                      }));
+                      console.log(pageX, pageY);
+                    },
+                  );
+                }}
                 style={[
                   styles.add,
                   {
