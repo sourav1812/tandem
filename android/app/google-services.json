@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "395516850709",
+    "project_id": "tandem-001",
+    "storage_bucket": "tandem-001.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:395516850709:android:da62302a4df557ddac541c",
+        "android_client_info": {
+          "package_name": "com.playtandem"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "395516850709-81v3nd7ji8j279caaumpv46kidkqkapi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUTRkU06lxL2lKuhy7qbI-a80w4WuRDaM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "395516850709-81v3nd7ji8j279caaumpv46kidkqkapi.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "395516850709-nnjk4svrlppmi9mcu493gjqqjomj55sm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.playtandem"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
