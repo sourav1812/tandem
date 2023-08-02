@@ -147,7 +147,7 @@ const Home = () => {
             tooltipArray.push(3);
             storeKey(TOOLTIP, tooltipArray);
           }}
-          text="By clicking on the avatar, you can change the childs account"
+          text={translation('BY_CLICKING_CHANGE_CHILD_ACCOUNT')}
           top={false}
           rotation={180}
           vectorSize={verticalScale(100)}
