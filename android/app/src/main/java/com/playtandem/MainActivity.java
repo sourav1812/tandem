@@ -1,4 +1,4 @@
-package com.tandem;
+package com.playtandem;
 import android.os.Bundle;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

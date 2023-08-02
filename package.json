@@ -1,5 +1,5 @@
 {
-  "name": "Tandem",
+  "name": "tandem",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -11,6 +11,9 @@
   },
   "dependencies": {
     "@react-native-community/blur": "^4.3.2",
+    "@react-native-firebase/analytics": "^18.3.0",
+    "@react-native-firebase/app": "^18.3.0",
+    "@react-native-firebase/messaging": "^18.3.0",
     "@react-navigation/bottom-tabs": "^6.5.7",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/native-stack": "^6.9.12",
