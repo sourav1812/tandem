@@ -1,4 +1,4 @@
-import {Pressable, View} from 'react-native';
+import {LayoutAnimation, Pressable, View} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
 import YellowButton from '@tandem/assets/svg/YellowButton';
@@ -13,19 +13,33 @@ import StyleColor from '@tandem/assets/svg/StyleColor';
 import Create from '@tandem/assets/svg/CreateIcon';
 import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
-import {scale, verticalScale} from 'react-native-size-matters';
+import BackButton from '@tandem/assets/svg/LeftArrow';
+import {verticalScale} from 'react-native-size-matters';
 import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {setQuestionIndex} from '@tandem/redux/slices/questions.slice';
-import {useNavigation} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
+import {RootState} from '@tandem/redux/store';
 import RNButton from '@tandem/components/RNButton';
-import BackButton from '@tandem/assets/svg/LeftArrow';
+import {useNavigation} from '@react-navigation/native';
 
 const RNRoadmap = () => {
   const dispatch = useAppDispatch();
-  const navigation = useNavigation();
-  const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const questionIndex = useAppSelector(state => state.questions.index);
+  const [positionRefs, setPositionRefs] = React.useState({
+    0: {height: 0, width: 0, x: 0, y: 0},
+    1: {height: 0, width: 0, x: 0, y: 0},
+    2: {height: 0, width: 0, x: 0, y: 0},
+    3: {height: 0, width: 0, x: 0, y: 0},
+    4: {height: 0, width: 0, x: 0, y: 0},
+    5: {height: 0, width: 0, x: 0, y: 0},
+    6: {height: 0, width: 0, x: 0, y: 0},
+  });
+  const portrait = useSelector(
+    (state: RootState) => state.orientation.isPortrait,
+  );
+  let scale = portrait ? 1 : 1.4;
+  const navigation = useNavigation();
 
   React.useEffect(
     () =>
@@ -53,47 +67,72 @@ const RNRoadmap = () => {
   };
 
   return (
-    <>
-      <RNScreenWrapper style={styles.container}>
-        <View style={styles.header}>
-          <RNButton
-            onlyIcon
-            icon={<BackButton />}
-            onClick={() => {
-              if (questionIndex === 0) {
-                // navigation.push(SCREEN_NAME.BOTTOM_TAB);
-                navigateTo(SCREEN_NAME.HOME);
-              } else {
-                dispatch(setQuestionIndex(questionIndex - 1));
-                setTimeout(() => {
-                  navigateTo(SCREEN_NAME.GENERATE_STORY);
-                }, 100);
-              }
+    <RNScreenWrapper style={styles.container}>
+      <View style={styles.header}>
+        <RNButton
+          onlyIcon
+          icon={<BackButton />}
+          onClick={() => {
+            if (questionIndex === 0) {
+              // navigation.push(SCREEN_NAME.BOTTOM_TAB);
+              navigateTo(SCREEN_NAME.HOME);
+            } else {
+              dispatch(setQuestionIndex(questionIndex - 1));
+              setTimeout(() => {
+                navigateTo(SCREEN_NAME.GENERATE_STORY);
+              }, 100);
+            }
+          }}
+        />
+        <Pressable
+          onPress={() => {
+            navigateTo(SCREEN_NAME.ACCOUNT);
+          }}>
+          <YellowButton />
+        </Pressable>
+      </View>
+      <View style={styles.roadmap}>
+        <Pressable
+          onLayout={event => {
+            const layout = event.nativeEvent?.layout;
+            LayoutAnimation.configureNext(
+              LayoutAnimation.Presets.easeInEaseOut,
+            );
+            setPositionRefs(prev => ({
+              ...prev,
+              6: layout,
+            }));
+          }}
+          style={[styles.create, {left: verticalScale(35) / scale}]}
+          onPress={() => {
+            navigateTo(SCREEN_NAME.STORY_TELLING);
+          }}>
+          <Create scale={scale} mapIndex={questionIndex} />
+        </Pressable>
+        {positionRefs[6].y !== 0 && (
+          <Pressable
+            onLayout={event => {
+              const layout = event.nativeEvent?.layout;
+              LayoutAnimation.configureNext(
+                LayoutAnimation.Presets.easeInEaseOut,
+              );
+              setPositionRefs(prev => ({
+                ...prev,
+                5: layout,
+              }));
             }}
-          />
-          <Pressable
             onPress={() => {
-              navigateTo(SCREEN_NAME.ACCOUNT);
-            }}>
-            <YellowButton />
-          </Pressable>
-        </View>
-        <View style={styles.roadmap}>
-          <Pressable
-            style={styles.create}
-            onPress={() => {
-              if (questionIndex === 7) {
-                navigateTo(SCREEN_NAME.STORY_TELLING);
-              }
-            }}>
-            <Create mapIndex={questionIndex} />
-          </Pressable>
-          <Pressable
-            onPress={() => {
-              handleNavigate(5);
+              handleNavigate(6);
             }}
-            style={[styles.stylecolor, isTablet && {left: scale(48)}]}>
+            style={[
+              styles.stylecolor,
+              {
+                top: positionRefs[6].y + verticalScale(110) / scale,
+                left: positionRefs[6].x - verticalScale(83) / scale,
+              },
+            ]}>
             <StyleColor
+              scale={scale}
               fillColor={
                 questionIndex > 5 ? themeColor.themeBlue : themeColor.lightGray
               }
@@ -102,15 +141,31 @@ const RNRoadmap = () => {
               }
             />
           </Pressable>
+        )}
+        {positionRefs[5].y !== 0 && (
           <Pressable
+            onLayout={event => {
+              const layout = event.nativeEvent?.layout;
+              LayoutAnimation.configureNext(
+                LayoutAnimation.Presets.easeInEaseOut,
+              );
+              setPositionRefs(prev => ({
+                ...prev,
+                4: layout,
+              }));
+            }}
             onPress={() => {
-              handleNavigate(4);
+              handleNavigate(5);
             }}
             style={[
               styles.whatHappens,
-              {left: isTablet ? scale(102) : scale(105)},
+              {
+                top: positionRefs[5].y + verticalScale(71.6) / scale,
+                left: positionRefs[5].x + verticalScale(81) / scale,
+              },
             ]}>
             <WhatHappens
+              scale={scale}
               fillColor={
                 questionIndex > 4 ? themeColor.lightGreen : themeColor.lightGray
               }
@@ -119,15 +174,31 @@ const RNRoadmap = () => {
               }
             />
           </Pressable>
+        )}
+        {positionRefs[4].y !== 0 && (
           <Pressable
+            onLayout={event => {
+              const layout = event.nativeEvent?.layout;
+              LayoutAnimation.configureNext(
+                LayoutAnimation.Presets.easeInEaseOut,
+              );
+              setPositionRefs(prev => ({
+                ...prev,
+                3: layout,
+              }));
+            }}
             onPress={() => {
-              handleNavigate(3);
+              handleNavigate(4);
             }}
             style={[
               styles.whatThing,
-              isTablet && {left: scale(34), bottom: verticalScale(281)},
+              {
+                top: positionRefs[4].y + verticalScale(80) / scale,
+                left: positionRefs[4].x - verticalScale(102) / scale,
+              },
             ]}>
             <WhatThing
+              scale={scale}
               fillColor={
                 questionIndex > 3 ? themeColor.gold : themeColor.lightGray
               }
@@ -136,12 +207,31 @@ const RNRoadmap = () => {
               }
             />
           </Pressable>
+        )}
+        {positionRefs[3].y !== 0 && (
           <Pressable
-            onPress={() => {
-              handleNavigate(2);
+            onLayout={event => {
+              const layout = event.nativeEvent?.layout;
+              LayoutAnimation.configureNext(
+                LayoutAnimation.Presets.easeInEaseOut,
+              );
+              setPositionRefs(prev => ({
+                ...prev,
+                2: layout,
+              }));
             }}
-            style={[styles.where, {left: isTablet ? scale(110) : scale(100)}]}>
+            onPress={() => {
+              handleNavigate(3);
+            }}
+            style={[
+              styles.where,
+              {
+                top: positionRefs[3].y + verticalScale(96.5) / scale,
+                left: positionRefs[3].x + verticalScale(105) / scale,
+              },
+            ]}>
             <Where
+              scale={scale}
               fillColor={
                 questionIndex > 2 ? themeColor.green : themeColor.lightGray
               }
@@ -150,30 +240,71 @@ const RNRoadmap = () => {
               }
             />
           </Pressable>
+        )}
+        {positionRefs[2].y !== 0 && (
           <Pressable
-            onPress={() => {
-              handleNavigate(1);
+            onLayout={event => {
+              const layout = event.nativeEvent?.layout;
+              LayoutAnimation.configureNext(
+                LayoutAnimation.Presets.easeInEaseOut,
+              );
+              setPositionRefs(prev => ({
+                ...prev,
+                1: layout,
+              }));
             }}
-            style={[styles.who, isTablet && {left: scale(55)}]}>
+            onPress={() => {
+              handleNavigate(2);
+            }}
+            style={[
+              styles.who,
+              {
+                top: positionRefs[2].y + verticalScale(76.5) / scale,
+                left: positionRefs[2].x - verticalScale(81) / scale,
+              },
+            ]}>
             <Who
+              scale={scale}
               fillColor={questionIndex >= 1 ? '#9A00FF' : themeColor.lightGray}
               textColor={
                 questionIndex >= 1 ? themeColor.white : themeColor.themeBlue
               }
             />
           </Pressable>
+        )}
+        {positionRefs[1].y !== 0 && (
           <Pressable
-            style={[styles.start]}
+            onLayout={event => {
+              const layout = event.nativeEvent?.layout;
+              LayoutAnimation.configureNext(
+                LayoutAnimation.Presets.easeInEaseOut,
+              );
+              setPositionRefs(prev => ({
+                ...prev,
+                0: layout,
+              }));
+            }}
+            style={[
+              styles.start,
+              {
+                top: positionRefs[1].y + verticalScale(120) / scale,
+                left: positionRefs[1].x + verticalScale(105) / scale,
+                height: verticalScale(80) / scale,
+                width: verticalScale(80) / scale,
+              },
+            ]}
             onPress={() => {
               handleNavigate(0);
             }}>
-            <RNTextComponent style={styles.startText} isSemiBold>
+            <RNTextComponent
+              style={[styles.startText, {fontSize: verticalScale(14) / scale}]}
+              isSemiBold>
               {translation('START')}
             </RNTextComponent>
           </Pressable>
-        </View>
-      </RNScreenWrapper>
-    </>
+        )}
+      </View>
+    </RNScreenWrapper>
   );
 };
 

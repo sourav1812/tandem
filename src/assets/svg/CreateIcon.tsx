@@ -4,15 +4,17 @@ import Svg, {SvgProps, Path, Circle} from 'react-native-svg';
 const SvgComponent = ({
   props,
   mapIndex,
+  scale = 1,
 }: {
   props?: SvgProps;
   mapIndex?: number;
+  scale?: number;
 }) => (
   <Svg
     // xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 160 155"
-    width={verticalScale(160)}
-    height={verticalScale(155)}
+    width={verticalScale(160) / scale}
+    height={verticalScale(155) / scale}
     fill="none"
     {...props}>
     {mapIndex === 7 && (
