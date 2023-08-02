@@ -17,4 +17,14 @@ export const styles = StyleSheet.create({
     width: verticalScale(132),
     marginTop: verticalScale(20),
   },
+  tooltipContainer: {
+    width: scale(200),
+    height: 'auto',
+    marginTop: verticalScale(8),
+  },
+  tooltip: {
+    textAlign: 'center',
+    fontSize: verticalScale(16),
+    marginTop: 10,
+  },
 });

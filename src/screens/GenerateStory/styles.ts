@@ -146,4 +146,9 @@ export const styles = StyleSheet.create({
     borderRadius: 16,
     marginTop: verticalScale(18),
   },
+  tooltip: {
+    textAlign: 'center',
+    fontSize: verticalScale(16),
+    marginTop: 10,
+  },
 });

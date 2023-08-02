@@ -9,6 +9,10 @@ export interface colorPalette {
 }
 export interface StateObject {
   addedIllustration: number | null;
+  tooltipFirst: boolean;
+  tooltipSecond: boolean;
+  tooltipThird: boolean;
+  tooltipFourth: boolean;
 }
 
 export interface placeType {

@@ -1,10 +1,6 @@
-import {ImageSourcePropType} from 'react-native';
-
 export interface colorPaletteType {
-  color: string;
-  icon: ImageSourcePropType;
-  isSelected: boolean;
-  colorCode: string;
+  tooltipVisible: boolean;
+  onTooltipClose: () => void;
 }
 export interface StateObject {
   colorPalette: {firstColor: string; secondColor: string}[];

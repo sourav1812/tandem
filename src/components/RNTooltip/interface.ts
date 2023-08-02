@@ -1,4 +1,5 @@
 import {ReactNode} from 'react';
+import {StyleProp, TextStyle, ViewStyle} from 'react-native';
 
 export interface TooltipProps {
   children: ReactNode;
@@ -7,4 +8,7 @@ export interface TooltipProps {
   text: string;
   top: boolean;
   rotation: number;
+  textContainerStyle?: StyleProp<ViewStyle>;
+  textStyle?: StyleProp<TextStyle>;
+  vectorSize?: number;
 }

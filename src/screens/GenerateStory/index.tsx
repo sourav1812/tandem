@@ -33,25 +33,61 @@ import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
 import RNChoiceQuestions from '@tandem/components/RNChoiceQuestions';
 import {setQuestionIndex} from '@tandem/redux/slices/questions.slice';
 import {translation} from '@tandem/utils/methods';
+import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
+import {TOOLTIP} from '@tandem/constants/LocalConstants';
+import RNTooltip from '@tandem/components/RNTooltip';
 
 const GenerateStory = () => {
   const dispatch = useAppDispatch();
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const questionIndex = useAppSelector(state => state.questions.index);
 
-  console.log(questionIndex, 'generate story');
+  const tooltipArray = getValueFromKey(TOOLTIP);
 
   const [state, setState] = useState<StateObject>({
     addedIllustration: null,
+    tooltipFirst: false,
+    tooltipSecond: false,
+    tooltipThird: false,
+    tooltipFourth: false,
   });
 
-  const {addedIllustration} = state;
+  const {
+    addedIllustration,
+    tooltipFirst,
+    tooltipSecond,
+    tooltipThird,
+    tooltipFourth,
+  } = state;
 
   const updateState = (date: any) => {
     setState((previouState: any) => {
       return {...previouState, ...date};
     });
   };
+
+  const onCloseFirstTooltip = () => {
+    updateState({tooltipFirst: false, tooltipSecond: true});
+    tooltipArray.push(5);
+    storeKey(TOOLTIP, tooltipArray);
+  };
+
+  const onCloseThirdTooltip = () => {
+    updateState({tooltipThird: false});
+    tooltipArray.push(7);
+    storeKey(TOOLTIP, tooltipArray);
+  };
+
+  React.useEffect(() => {
+    console.log(questionIndex, 'questionIndexquestionIndex');
+    if (!tooltipArray.includes(5)) {
+      updateState({tooltipFirst: true});
+    }
+    if (questionIndex === 6) {
+      updateState({tooltipThird: true});
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [questionIndex]);
 
   const dynamicContent = () => {
     switch (questionIndex) {
@@ -66,7 +102,11 @@ const GenerateStory = () => {
                 {translation('generate-story.is-in-story')}{' '}
               </RNTextComponent>{' '}
             </RNTextComponent>
-            <RNChoiceQuestions data={audience} />
+            <RNChoiceQuestions
+              data={audience}
+              visibletoolTip={tooltipFirst}
+              onTooltipClose={onCloseFirstTooltip}
+            />
           </>
         );
       case 1:
@@ -185,7 +225,12 @@ const GenerateStory = () => {
           </>
         );
       case 6:
-        return <RNChooseColor />;
+        return (
+          <RNChooseColor
+            tooltipVisible={tooltipThird}
+            onTooltipClose={onCloseThirdTooltip}
+          />
+        );
     }
   };
 
@@ -206,7 +251,10 @@ const GenerateStory = () => {
   };
 
   return (
-    <RNScreenWrapper>
+    <RNScreenWrapper
+      giveStatusColor={
+        tooltipFirst || tooltipSecond || tooltipThird || tooltipFourth
+      }>
       <View style={styles.container}>
         <View style={styles.header}>
           <RNButton onlyIcon onClick={previousQuestion} icon={<LeftArrow />} />
@@ -245,15 +293,26 @@ const GenerateStory = () => {
         </View>
         {dynamicContent()}
       </View>
-      <RNButton
-        customStyle={[
-          styles.footerButton,
-          isTablet && {maxHeight: verticalScale(75)},
-        ]}
-        title={translation('SELECT')}
-        onClick={nextQuestion}
-        textStyle={styles.buttonText}
-      />
+      <RNTooltip
+        open={tooltipArray.includes(6) ? false : tooltipSecond}
+        setClose={() => {
+          tooltipArray.push(6);
+          updateState({tooltipSecond: false});
+        }}
+        top
+        rotation={0}
+        text={translation('PRESS_THE_BUTTON')}
+        textStyle={styles.tooltip}>
+        <RNButton
+          customStyle={[
+            styles.footerButton,
+            isTablet && {maxHeight: verticalScale(75)},
+          ]}
+          title={translation('SELECT')}
+          onClick={nextQuestion}
+          textStyle={styles.buttonText}
+        />
+      </RNTooltip>
     </RNScreenWrapper>
   );
 };

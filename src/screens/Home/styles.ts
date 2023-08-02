@@ -56,4 +56,8 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     right: 24,
   },
+  tooltipTwo: {
+    height: 'auto',
+    width: 'auto',
+  },
 });

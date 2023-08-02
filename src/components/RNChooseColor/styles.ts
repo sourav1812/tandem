@@ -44,4 +44,9 @@ export const styles = StyleSheet.create({
       {translateX: verticalScale(34)},
     ],
   },
+  tooltip: {
+    textAlign: 'center',
+    fontSize: verticalScale(16),
+    marginTop: 10,
+  },
 });
