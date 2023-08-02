@@ -25,4 +25,5 @@ export enum SCREEN_NAME {
   EditChildProfile = 'EditChildProfile',
   REDEEM_VOUCHER = 'RedeemVoucher',
   ROADMAP = 'RoadMap',
+  FORGOT_PASSWORD = 'ForgotPassword',
 }

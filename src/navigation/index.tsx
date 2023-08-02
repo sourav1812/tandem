@@ -92,6 +92,12 @@ const AppNavigator = () => {
             />
             <Stack.Screen
               getComponent={() =>
+                require('@tandem/screens/ForgotPassword').default
+              }
+              name={SCREEN_NAME.FORGOT_PASSWORD}
+            />
+            <Stack.Screen
+              getComponent={() =>
                 require('@tandem/screens/TermsAndConditions').default
               }
               name={SCREEN_NAME.TERMS_AND_CONDITIONS}

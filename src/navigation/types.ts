@@ -26,6 +26,7 @@ export type RootStackParamList = {
   EditChildProfile: undefined;
   RedeemVoucher: undefined;
   RoadMap: undefined;
+  ForgotPasswords: undefined;
 };
 
 export type RootTabParamList = {
