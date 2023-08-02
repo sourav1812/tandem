@@ -147,7 +147,7 @@ const Home = () => {
             tooltipArray.push(3);
             storeKey(TOOLTIP, tooltipArray);
           }}
-          text="By clicking on the avatar, you can change the childs account"
+          text={translation('BY_CLICKING_CHANGE_CHILD_ACCOUNT')}
           top={false}
           rotation={180}
           vectorSize={verticalScale(100)}
@@ -195,10 +195,9 @@ const Home = () => {
         )}
       </Pressable>
       <RNScreenWrapper
-        statusBarBgc={
-          tooltipMode.tooltipOne || tooltipMode.tooltipTwo
-            ? '#000000CC'
-            : 'transparent'
+        giveStatusColor={
+          !tooltipArray.includes(4) &&
+          (tooltipMode.tooltipOne || tooltipMode.tooltipTwo)
         }>
         <View style={[styles.container]}>
           <View

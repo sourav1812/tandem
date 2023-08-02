@@ -2,14 +2,19 @@ import {View, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
 import {styles} from './styles';
 import RNTextComponent from '../RNTextComponent';
-import {StateObject} from './interface';
+import {StateObject, colorPaletteType} from './interface';
 import ColorPatchUp from '@tandem/assets/svg/ColorPatch';
 import EmptyBox from '@tandem/assets/svg/EmptyColorBox';
 import AddColor from '@tandem/assets/svg/AddColor';
 import EmptyPatch from '@tandem/assets/svg/EmptyPatch';
 import {translation} from '@tandem/utils/methods';
+import RNTooltip from '../RNTooltip';
+import {TOOLTIP} from '@tandem/constants/LocalConstants';
+import {getValueFromKey} from '@tandem/helpers/encryptedStorage';
 
-const RNChooseColor = () => {
+const RNChooseColor = ({tooltipVisible, onTooltipClose}: colorPaletteType) => {
+  const tooltipArray = getValueFromKey(TOOLTIP);
+
   const [state, setState] = useState<StateObject>({
     colorPalette: [
       {firstColor: '#0633FD', secondColor: '#FEF902'},
@@ -81,7 +86,15 @@ const RNChooseColor = () => {
         </View>
       </View>
       <View style={styles.footer}>
-        <AddColor />
+        <RNTooltip
+          open={tooltipArray.includes(7) ? false : tooltipVisible}
+          setClose={onTooltipClose}
+          text={translation('ADD_COLORS')}
+          textStyle={styles.tooltip}
+          top
+          rotation={180}>
+          <AddColor />
+        </RNTooltip>
         {Array.from({length: 3}, (_, i) => (
           <EmptyPatch key={i.toString()} />
         ))}

@@ -18,7 +18,7 @@ const RNTooltip = ({
   rotation,
   textContainerStyle,
   textStyle,
-  vectorSize,
+  vectorSize = 100,
 }: TooltipProps) => {
   const tooltipNumber = getValueFromKey(TOOLTIP);
 
@@ -27,14 +27,10 @@ const RNTooltip = ({
       isVisible={tooltipNumber.length < 14 ? open : false}
       content={
         <>
-          {!top && <WavyArrow size={vectorSize || 160} rotation={rotation} />}
-          <View
-            style={[
-              {height: '50%', width: '80%'},
-              textContainerStyle && textContainerStyle,
-            ]}>
+          {!top && <WavyArrow size={vectorSize} rotation={rotation} />}
+          <View style={[textContainerStyle && textContainerStyle]}>
             <RNTextComponent
-              isBold
+              isSemiBold
               style={[
                 {
                   color: 'white',
@@ -47,7 +43,7 @@ const RNTooltip = ({
             </RNTextComponent>
           </View>
 
-          {top && <WavyArrow size={vectorSize || 160} rotation={rotation} />}
+          {top && <WavyArrow size={vectorSize} rotation={rotation} />}
         </>
       }
       backgroundColor="#000000CC"
@@ -58,6 +54,7 @@ const RNTooltip = ({
         height: '100%',
         alignItems: 'center',
         justifyContent: 'center',
+        marginTop: -10,
       }}
       placement={top ? 'top' : 'bottom'}
       topAdjustment={

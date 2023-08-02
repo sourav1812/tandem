@@ -1,5 +1,5 @@
 import {ReactNode} from 'react';
-import {StyleProp, ViewStyle, TextStyle} from 'react-native';
+import {StyleProp, TextStyle, ViewStyle} from 'react-native';
 
 export interface TooltipProps {
   children: ReactNode;

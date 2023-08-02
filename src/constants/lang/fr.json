@@ -196,5 +196,11 @@
   "help-center": {
     "alright-text": "D'accord, mais que faites-vous exactement ?",
     "as-a-creative-agency": "En tant qu'agence créative, nous travaillons avec vous pour développer des solutions pour répondre à vos besoins en matière de marque. Cela inclut divers aspects de la planification et de la stratégie de marque, du marketing et du design."
-  }
+  },
+  "ENTER_EMAIL_FOR_VERIFICATION": "Entrez votre adresse e-mail pour obtenir le code de vérification",
+  "GET_CODE": "Obtenir un code",
+  "CHOOSE_FROM_THE_GIVE_OPTIONS": "Choisissez parmi les options données",
+  "PRESS_THE_BUTTON": "Appuyez sur le bouton",
+  "ADD_COLORS": "Ajouter des couleurs",
+  "BY_CLICKING_CHANGE_CHILD_ACCOUNT": "En cliquant sur l'avatar, vous pouvez changer le compte de l'enfant"
 }
