@@ -19,6 +19,7 @@ const RNTooltip = ({
   textContainerStyle,
   textStyle,
   vectorSize = 100,
+  mainStyle,
 }: TooltipProps) => {
   const tooltipNumber = getValueFromKey(TOOLTIP);
 
@@ -48,14 +49,17 @@ const RNTooltip = ({
       }
       backgroundColor="#000000CC"
       disableShadow
-      contentStyle={{
-        backgroundColor: 'transparent',
-        width: 'auto',
-        height: '100%',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginTop: -10,
-      }}
+      contentStyle={[
+        {
+          backgroundColor: 'transparent',
+          width: 'auto',
+          height: '100%',
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginTop: -10,
+        },
+        mainStyle && mainStyle,
+      ]}
       placement={top ? 'top' : 'bottom'}
       topAdjustment={
         Platform.OS === 'android' ? -(StatusBar.currentHeight || 0) : 0

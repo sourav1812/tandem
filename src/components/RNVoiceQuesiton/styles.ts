@@ -5,6 +5,7 @@ import themeColor from '@tandem/theme/themeColor';
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'space-between',
   },
   voiceQuestion: {
     marginTop: verticalScale(24),
@@ -69,7 +70,16 @@ export const styles = StyleSheet.create({
   },
   icon: {
     alignSelf: 'center',
-    position: 'absolute',
-    bottom: '3%',
+    // position: 'absolute',
+    // bottom: '3%',
+    marginBottom: 20,
+  },
+  tooltipTwo: {
+    height: 'auto',
+    width: 'auto',
+  },
+  voiceView: {
+    height: verticalScale(350),
+    borderWidth: 1,
   },
 });

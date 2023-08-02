@@ -89,4 +89,8 @@ export const styles = StyleSheet.create({
     flex: 1,
     zIndex: 20,
   },
+  tooltipTwo: {
+    height: 'auto',
+    width: 'auto',
+  },
 });
