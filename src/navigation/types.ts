@@ -27,6 +27,10 @@ export type RootStackParamList = {
   RedeemVoucher: undefined;
   RoadMap: undefined;
   ForgotPasswords: undefined;
+  CheckEmail: undefined;
+  ForgotPassword: undefined;
+  OtpScreen: undefined;
+  CreatePassword: undefined;
 };
 
 export type RootTabParamList = {

@@ -26,4 +26,7 @@ export enum SCREEN_NAME {
   REDEEM_VOUCHER = 'RedeemVoucher',
   ROADMAP = 'RoadMap',
   FORGOT_PASSWORD = 'ForgotPassword',
+  CHECK_EMAIL = 'CheckEmail',
+  OTP_SCREEN = 'OtpScreen',
+  CREATE_PASSWORD = 'CreatePassword',
 }
