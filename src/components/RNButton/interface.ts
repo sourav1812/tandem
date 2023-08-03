@@ -1,5 +1,11 @@
-import React, {ReactNode} from 'react';
-import {StyleProp, ViewStyle, PressableProps, TextStyle} from 'react-native';
+import {ReactNode} from 'react';
+import {
+  StyleProp,
+  ViewStyle,
+  PressableProps,
+  TextStyle,
+  LayoutChangeEvent,
+} from 'react-native';
 
 export interface Props {
   props?: PressableProps;
@@ -15,4 +21,6 @@ export interface Props {
   icon?: ReactNode;
   textStyle?: StyleProp<TextStyle>;
   isDisabled?: boolean;
+  ref?: any;
+  onLayout?: ((event: LayoutChangeEvent) => void) | undefined;
 }

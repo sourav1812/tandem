@@ -40,7 +40,12 @@ const Home = () => {
   });
   const tooltipArray = getValueFromKey(TOOLTIP);
   const navigation: any = useNavigation();
-
+  const refOne = useRef<any>(null);
+  const refTwo = useRef<any>(null);
+  const [positionRefs, setPositionRefs] = React.useState({
+    0: {height: 0, width: 0, x: 0, y: 0},
+    1: {height: 0, width: 0, x: 0, y: 0},
+  });
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const {width} = useWindowDimensions();
   const modeBC: {color: string; title: string}[] = [
@@ -144,13 +149,10 @@ const Home = () => {
               tooltipOne: false,
               tooltipTwo: false,
             });
-            tooltipArray.push(3);
+            tooltipArray.push(4);
             storeKey(TOOLTIP, tooltipArray);
           }}
           text={translation('BY_CLICKING_CHANGE_CHILD_ACCOUNT')}
-          top={false}
-          rotation={180}
-          vectorSize={verticalScale(100)}
           textContainerStyle={styles.tooltipTwo}
           textStyle={[
             {
@@ -158,8 +160,27 @@ const Home = () => {
               fontSize: verticalScale(16),
               marginTop: 10,
             },
-          ]}>
+          ]}
+          dimensionObject={positionRefs[1]}>
           <View
+            ref={refTwo}
+            onLayout={() => {
+              refTwo?.current?.measure(
+                (
+                  x: number,
+                  y: number,
+                  width: number,
+                  height: number,
+                  pageX: number,
+                  pageY: number,
+                ) => {
+                  setPositionRefs(prev => ({
+                    ...prev,
+                    1: {height: width, width: height, x: pageX, y: pageY},
+                  }));
+                },
+              );
+            }}
             style={{
               height: verticalScale(89),
               width: verticalScale(89),
@@ -249,16 +270,87 @@ const Home = () => {
                     tooltipOne: false,
                     tooltipTwo: true,
                   });
-                  tooltipArray.push(2);
+                  tooltipArray.push(3);
                   storeKey(TOOLTIP, tooltipArray);
                 }}
                 text={'switch mode'}
-                top={false}
-                rotation={30}>
-                {mode === MODE.B ? <BothButton /> : <BlueButon />}
+                dimensionObject={positionRefs[0]}>
+                {mode === MODE.B ? (
+                  <View
+                    ref={refOne}
+                    onLayout={() => {
+                      refOne?.current?.measure(
+                        (
+                          x: number,
+                          y: number,
+                          width: number,
+                          height: number,
+                          pageX: number,
+                          pageY: number,
+                        ) => {
+                          setPositionRefs(prev => ({
+                            ...prev,
+                            0: {
+                              height: width,
+                              width: height,
+                              x: pageX,
+                              y: pageY,
+                            },
+                          }));
+                        },
+                      );
+                    }}>
+                    <BothButton />
+                  </View>
+                ) : (
+                  <View
+                    ref={refOne}
+                    onLayout={() => {
+                      refOne?.current?.measure(
+                        (
+                          x: number,
+                          y: number,
+                          width: number,
+                          height: number,
+                          pageX: number,
+                          pageY: number,
+                        ) => {
+                          setPositionRefs(prev => ({
+                            ...prev,
+                            0: {
+                              height: width,
+                              width: height,
+                              x: pageX,
+                              y: pageY,
+                            },
+                          }));
+                        },
+                      );
+                    }}>
+                    <BlueButon />
+                  </View>
+                )}
               </RNTooltip>
             </Pressable>
             <View
+              ref={refTwo}
+              onLayout={() => {
+                refOne?.current?.measure(
+                  (
+                    x: number,
+                    y: number,
+                    width: number,
+                    height: number,
+                    pageX: number,
+                    pageY: number,
+                  ) => {
+                    setPositionRefs(prev => ({
+                      ...prev,
+                      1: {height: width, width: height, x: pageX, y: pageY},
+                    }));
+                  },
+                );
+              }}
               style={{
                 width: '100%',
                 backgroundColor: 'transparent',

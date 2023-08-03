@@ -1,5 +1,5 @@
 import {View, TouchableOpacity} from 'react-native';
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {styles} from './styles';
 import RNTextComponent from '../RNTextComponent';
 import {StateObject, colorPaletteType} from './interface';
@@ -29,7 +29,10 @@ const RNChooseColor = ({tooltipVisible, onTooltipClose}: colorPaletteType) => {
   });
 
   const {colorPalette, color1, color2} = state;
-
+  const refOne = useRef<any>(null);
+  const [positionRefs, setPositionRefs] = React.useState({
+    0: {height: 0, width: 0, x: 0, y: 0},
+  });
   const updateState = (date: any) => {
     setState((previouState: any) => {
       return {...previouState, ...date};
@@ -91,9 +94,28 @@ const RNChooseColor = ({tooltipVisible, onTooltipClose}: colorPaletteType) => {
           setClose={onTooltipClose}
           text={translation('ADD_COLORS')}
           textStyle={styles.tooltip}
-          top
-          rotation={180}>
-          <AddColor />
+          dimensionObject={positionRefs[0]}>
+          <View
+            ref={refOne}
+            onLayout={() => {
+              refOne?.current?.measure(
+                (
+                  x: number,
+                  y: number,
+                  width: number,
+                  height: number,
+                  pageX: number,
+                  pageY: number,
+                ) => {
+                  setPositionRefs(prev => ({
+                    ...prev,
+                    0: {height: width, width: height, x: pageX, y: pageY},
+                  }));
+                },
+              );
+            }}>
+            <AddColor />
+          </View>
         </RNTooltip>
         {Array.from({length: 3}, (_, i) => (
           <EmptyPatch key={i.toString()} />

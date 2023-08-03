@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
   },
   logo: {
     height: verticalScale(32),
-    width: '95%',
+    width: '100%',
   },
   heading: {
     alignSelf: 'center',
@@ -29,7 +29,6 @@ export const styles = StyleSheet.create({
   add: {
     alignItems: 'center',
     paddingTop: verticalScale(26),
-    paddingHorizontal: scale(5),
   },
   addText: {
     marginTop: verticalScale(42),
@@ -47,7 +46,6 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
     height: verticalScale(64),
     width: verticalScale(250),
-    marginTop: verticalScale(30),
     borderRadius: 100,
     backgroundColor: themeColor.themeBlue,
     maxHeight: 64,

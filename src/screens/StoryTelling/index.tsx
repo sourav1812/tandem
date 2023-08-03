@@ -19,15 +19,12 @@ import {characterProps} from '@tandem/components/RNCharacterComponent/interface'
 import RNCongratsModal from '@tandem/components/RNCongratsModal';
 import themeColor from '@tandem/theme/themeColor';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
-import Meter from '@tandem/assets/svg/Meter';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import RNReadingLevelModal from '@tandem/components/RNReadingLevelModal';
 import RNRatingModal from '@tandem/components/RNRatingModal';
 import {scale, verticalScale} from 'react-native-size-matters';
 import navigateTo from '@tandem/navigation/navigate';
 import {MODE} from '@tandem/constants/mode';
-import Mic from '@tandem/assets/svg/BlueMic';
-import MuteMic from '@tandem/assets/svg/MuteMic';
 import {RootState} from '@tandem/redux/store';
 import {translation} from '@tandem/utils/methods';
 import RNLogoHeader from '@tandem/components/RNLogoHeader';
@@ -47,7 +44,6 @@ const StoryTelling = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [renderModal, setRenderModal] = useState(false);
   const [readingLevel, setReadingLevel] = useState(false);
-  const [readingTip, setReadingTip] = useState(true);
   const [state, setState] = useState<StateObject>({
     ratingModal: true,
     toggleMic: false,
@@ -58,14 +54,23 @@ const StoryTelling = () => {
     tooltipThree: false,
     tooltipFour: false,
   });
+
   const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
+  const refOne = useRef<any>(null);
+  const refTwo = useRef<any>(null);
+  const refThree = useRef<any>(null);
+
+  const [positionRefs, setPositionRefs] = React.useState({
+    0: {height: 0, width: 0, x: 0, y: 0},
+    1: {height: 0, width: 0, x: 0, y: 0},
+    2: {height: 0, width: 0, x: 0, y: 0},
+  });
   const height = Dimensions.get('screen').height;
   const width = Dimensions.get('screen').width;
   const {
     ratingModal,
-    toggleMic,
     showQuestion,
     wellDoneModal,
     tooltipOne,
@@ -198,9 +203,6 @@ const StoryTelling = () => {
           storeKey(TOOLTIP, tooltipArray);
         }}
         text={translation('READ_ALOUD')}
-        top={false}
-        rotation={10}
-        vectorSize={verticalScale(100)}
         textContainerStyle={styles.tooltipTwo}
         textStyle={[
           {
@@ -208,8 +210,29 @@ const StoryTelling = () => {
             fontSize: verticalScale(16),
             marginTop: 10,
           },
-        ]}>
-        <RNButton onlyIcon icon={<Speaker />} onClick={() => {}} />
+        ]}
+        dimensionObject={positionRefs[0]}>
+        <View
+          ref={refOne}
+          onLayout={() => {
+            refOne?.current?.measure(
+              (
+                x: number,
+                y: number,
+                width: number,
+                height: number,
+                pageX: number,
+                pageY: number,
+              ) => {
+                setPositionRefs(prev => ({
+                  ...prev,
+                  0: {height: width, width: height, x: pageX, y: pageY},
+                }));
+              },
+            );
+          }}>
+          <RNButton onlyIcon icon={<Speaker />} onClick={() => {}} />
+        </View>
       </RNTooltip>
     );
   };
@@ -277,9 +300,6 @@ const StoryTelling = () => {
             storeKey(TOOLTIP, tooltipArray);
           }}
           text={translation('EXIT')}
-          top={false}
-          rotation={-10}
-          vectorSize={verticalScale(100)}
           textContainerStyle={styles.tooltipTwo}
           textStyle={[
             {
@@ -287,8 +307,27 @@ const StoryTelling = () => {
               fontSize: verticalScale(16),
               marginTop: 10,
             },
-          ]}>
+          ]}
+          dimensionObject={positionRefs[1]}>
           <RNButton
+            ref={refTwo}
+            onLayout={() => {
+              refTwo?.current?.measure(
+                (
+                  x: number,
+                  y: number,
+                  width: number,
+                  height: number,
+                  pageX: number,
+                  pageY: number,
+                ) => {
+                  setPositionRefs(prev => ({
+                    ...prev,
+                    1: {height: width, width: height, x: pageX, y: pageY},
+                  }));
+                },
+              );
+            }}
             onlyIcon
             icon={<Close />}
             onClick={() => {
@@ -329,9 +368,6 @@ const StoryTelling = () => {
             storeKey(TOOLTIP, tooltipArray);
           }}
           text={translation('READ_A_STORY')}
-          top={true}
-          rotation={0}
-          vectorSize={verticalScale(100)}
           textContainerStyle={styles.tooltipTwo}
           mainStyle={{
             marginTop: verticalScale(-200),
@@ -343,32 +379,54 @@ const StoryTelling = () => {
               fontSize: verticalScale(16),
               marginTop: 10,
             },
-          ]}>
-          <ImageBackground
-            style={styles.storyContent}
-            blurRadius={20}
-            source={require('../../assets/png/blurBgc.png')}
-            imageStyle={[
-              styles.imageStyle,
-              isTablet && {
-                borderTopLeftRadius: verticalScale(8),
-                borderTopRightRadius: verticalScale(8),
-              },
-            ]}>
-            <RNTextComponent style={styles.slideNo} isSemiBold>
-              1/{currentIndex + 1}
-            </RNTextComponent>
-            <RNTextComponent
-              style={[
-                styles.slideNo,
-                {color: themeColor.black, textAlign: 'center', zIndex: 3},
-              ]}
-              isSemiBold>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti
-              sunt quod culpa nulla praesentium accusantium voluptas sit esse,
-              quibusdam dasperisi!
-            </RNTextComponent>
-          </ImageBackground>
+          ]}
+          dimensionObject={positionRefs[2]}>
+          <View
+            style={{width: '100%'}}
+            ref={refThree}
+            onLayout={() => {
+              refThree?.current?.measure(
+                (
+                  x: number,
+                  y: number,
+                  width: number,
+                  height: number,
+                  pageX: number,
+                  pageY: number,
+                ) => {
+                  setPositionRefs(prev => ({
+                    ...prev,
+                    2: {height: width, width: height, x: pageX, y: pageY},
+                  }));
+                },
+              );
+            }}>
+            <ImageBackground
+              style={styles.storyContent}
+              blurRadius={20}
+              source={require('../../assets/png/blurBgc.png')}
+              imageStyle={[
+                styles.imageStyle,
+                isTablet && {
+                  borderTopLeftRadius: verticalScale(8),
+                  borderTopRightRadius: verticalScale(8),
+                },
+              ]}>
+              <RNTextComponent style={styles.slideNo} isSemiBold>
+                1/{currentIndex + 1}
+              </RNTextComponent>
+              <RNTextComponent
+                style={[
+                  styles.slideNo,
+                  {color: themeColor.black, textAlign: 'center', zIndex: 3},
+                ]}
+                isSemiBold>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Corrupti sunt quod culpa nulla praesentium accusantium voluptas
+                sit esse, quibusdam dasperisi!
+              </RNTextComponent>
+            </ImageBackground>
+          </View>
         </RNTooltip>
       )}
       {showQuestion && renderQuestions()}

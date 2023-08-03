@@ -20,6 +20,8 @@ const RNButton = ({
   icon,
   textStyle,
   isDisabled = false,
+  ref,
+  onLayout,
 }: Props) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
 
@@ -27,6 +29,8 @@ const RNButton = ({
     <>
       {!onlyIcon ? (
         <Pressable
+          ref={ref && ref}
+          onLayout={onLayout && onLayout}
           style={[
             styles.container,
             {
@@ -59,6 +63,8 @@ const RNButton = ({
         </Pressable>
       ) : (
         <Pressable
+          ref={ref && ref}
+          onLayout={onLayout && onLayout}
           style={[
             styles.iconContainer,
             IconButtoncustomStyle && IconButtoncustomStyle,
