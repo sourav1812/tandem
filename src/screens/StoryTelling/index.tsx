@@ -212,7 +212,7 @@ const StoryTelling = () => {
           },
         ]}
         dimensionObject={positionRefs[0]}>
-        <RNButton
+        <View
           ref={refOne}
           onLayout={() => {
             refOne?.current?.measure(
@@ -230,11 +230,9 @@ const StoryTelling = () => {
                 }));
               },
             );
-          }}
-          onlyIcon
-          icon={<Speaker />}
-          onClick={() => {}}
-        />
+          }}>
+          <RNButton onlyIcon icon={<Speaker />} onClick={() => {}} />
+        </View>
       </RNTooltip>
     );
   };
@@ -384,6 +382,7 @@ const StoryTelling = () => {
           ]}
           dimensionObject={positionRefs[2]}>
           <View
+            style={{width: '100%'}}
             ref={refThree}
             onLayout={() => {
               refThree?.current?.measure(

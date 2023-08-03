@@ -305,7 +305,8 @@ const GenerateStory = () => {
         text={translation('PRESS_THE_BUTTON')}
         textStyle={styles.tooltip}
         dimensionObject={positionRefs[0]}>
-        <RNButton
+        <View
+          style={{width: '100%'}}
           ref={refOne}
           onLayout={() => {
             refOne?.current?.measure(
@@ -317,21 +318,25 @@ const GenerateStory = () => {
                 pageX: number,
                 pageY: number,
               ) => {
+                console.log('++++++++++++', pageX, pageY);
+
                 setPositionRefs(prev => ({
                   ...prev,
                   0: {height: width, width: height, x: pageX, y: pageY},
                 }));
               },
             );
-          }}
-          customStyle={[
-            styles.footerButton,
-            isTablet && {maxHeight: verticalScale(75)},
-          ]}
-          title={translation('SELECT')}
-          onClick={nextQuestion}
-          textStyle={styles.buttonText}
-        />
+          }}>
+          <RNButton
+            customStyle={[
+              styles.footerButton,
+              isTablet && {maxHeight: verticalScale(75)},
+            ]}
+            title={translation('SELECT')}
+            onClick={nextQuestion}
+            textStyle={styles.buttonText}
+          />
+        </View>
       </RNTooltip>
     </RNScreenWrapper>
   );

@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {View, TextInput, Pressable, ScrollView} from 'react-native';
 import React, {useRef, useState} from 'react';
 import {styles} from './styles';
@@ -178,7 +179,8 @@ const RNVoiceQuesiton = ({
           },
         ]}
         dimensionObject={positionRefs[2]}>
-        <RNButton
+        <View
+          style={{width: '100%'}}
           ref={refThree}
           onLayout={() => {
             refThree?.current?.measure(
@@ -196,15 +198,17 @@ const RNVoiceQuesiton = ({
                 }));
               },
             );
-          }}
-          customStyle={[
-            styles.footerButton,
-            isTablet && {maxHeight: verticalScale(70)},
-          ]}
-          title={translation('I_DONT_KNOW')}
-          onClick={onClick}
-          textStyle={{color: themeColor.black, fontSize: verticalScale(16)}}
-        />
+          }}>
+          <RNButton
+            customStyle={[
+              styles.footerButton,
+              isTablet && {maxHeight: verticalScale(70)},
+            ]}
+            title={translation('I_DONT_KNOW')}
+            onClick={onClick}
+            textStyle={{color: themeColor.black, fontSize: verticalScale(16)}}
+          />
+        </View>
       </RNTooltip>
     </>
   );
