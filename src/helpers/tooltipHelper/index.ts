@@ -6,17 +6,17 @@ const tooltipHelperTop = (positionRefs: {
   x: number;
   y: number;
 }) => {
-  const {width, height} = Dimensions.get('window');
-
-  if (positionRefs.x > width / 2 && positionRefs.y > height / 2) {
+  const {width, height} = Dimensions.get('screen');
+  console.log('width:', width, 'height:', height);
+  if (positionRefs.x > width / 2 && positionRefs.y < height / 2) {
     return 'NorthEast';
-  } else if (positionRefs.x < width / 2 && positionRefs.y > height / 2) {
-    return 'NorthWest';
   } else if (positionRefs.x < width / 2 && positionRefs.y < height / 2) {
+    return 'NorthWest';
+  } else if (positionRefs.x < width / 2 && positionRefs.y > height / 2) {
     return null;
-  } else if (positionRefs.x > width / 2 && positionRefs.y < height / 2) {
+  } else if (positionRefs.x > width / 2 && positionRefs.y > height / 2) {
     return null;
-  } else if (positionRefs.x === width / 2 && positionRefs.y > height / 2) {
+  } else if (positionRefs.x === width / 2 && positionRefs.y < height / 2) {
     return 'North';
   } else if (positionRefs.x < width / 2 && positionRefs.y === height / 2) {
     return 'West';
@@ -34,15 +34,15 @@ const tooltipHelperBottom = (positionRefs: {
 }) => {
   const {width, height} = Dimensions.get('window');
 
-  if (positionRefs.x > width / 2 && positionRefs.y > height / 2) {
-    return null;
-  } else if (positionRefs.x < width / 2 && positionRefs.y > height / 2) {
+  if (positionRefs.x > width / 2 && positionRefs.y < height / 2) {
     return null;
   } else if (positionRefs.x < width / 2 && positionRefs.y < height / 2) {
+    return null;
+  } else if (positionRefs.x < width / 2 && positionRefs.y > height / 2) {
     return 'SouthWest';
-  } else if (positionRefs.x > width / 2 && positionRefs.y < height / 2) {
+  } else if (positionRefs.x > width / 2 && positionRefs.y > height / 2) {
     return 'SouthEast';
-  } else if (positionRefs.x === width / 2 && positionRefs.y > height / 2) {
+  } else if (positionRefs.x === width / 2 && positionRefs.y < height / 2) {
     return null;
   } else if (positionRefs.x < width / 2 && positionRefs.y === height / 2) {
     return null;

@@ -8,7 +8,7 @@ import {
   Image,
   Pressable,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {styles} from './styles';
 import RNTextComponent from '@tandem/components/RNTextComponent';
@@ -43,7 +43,10 @@ const GenerateStory = () => {
   const questionIndex = useAppSelector(state => state.questions.index);
 
   const tooltipArray = getValueFromKey(TOOLTIP);
-
+  const refOne = useRef<any>(null);
+  const [positionRefs, setPositionRefs] = React.useState({
+    0: {height: 0, width: 0, x: 0, y: 0},
+  });
   const [state, setState] = useState<StateObject>({
     addedIllustration: null,
     tooltipFirst: false,
@@ -299,11 +302,28 @@ const GenerateStory = () => {
           tooltipArray.push(6);
           updateState({tooltipSecond: false});
         }}
-        top
-        rotation={0}
         text={translation('PRESS_THE_BUTTON')}
-        textStyle={styles.tooltip}>
+        textStyle={styles.tooltip}
+        dimensionObject={positionRefs[0]}>
         <RNButton
+          ref={refOne}
+          onLayout={() => {
+            refOne?.current?.measure(
+              (
+                x: number,
+                y: number,
+                width: number,
+                height: number,
+                pageX: number,
+                pageY: number,
+              ) => {
+                setPositionRefs(prev => ({
+                  ...prev,
+                  0: {height: width, width: height, x: pageX, y: pageY},
+                }));
+              },
+            );
+          }}
           customStyle={[
             styles.footerButton,
             isTablet && {maxHeight: verticalScale(75)},

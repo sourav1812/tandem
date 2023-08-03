@@ -12,11 +12,15 @@ const RNEmojiWithText = ({
   emoji,
   icon,
   bgcColor,
+  ref,
+  onLayout,
 }: Props) => {
   const [isSelected, setIsSelected] = useState(false);
 
   return (
     <Pressable
+      ref={ref && ref}
+      onLayout={onLayout && onLayout}
       style={[
         styles.container,
         customStyle && customStyle,

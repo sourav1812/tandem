@@ -1,5 +1,5 @@
 import {View, TextInput, Pressable, ScrollView} from 'react-native';
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {styles} from './styles';
 import RNTextComponent from '../RNTextComponent';
 import {inputListState} from './interface';
@@ -29,6 +29,15 @@ const RNVoiceQuesiton = ({
     tooltipTwo: false,
     tooltipThree: false,
   });
+  const refOne = useRef<any>(null);
+  const refTwo = useRef<any>(null);
+  const refThree = useRef<any>(null);
+
+  const [positionRefs, setPositionRefs] = React.useState({
+    0: {height: 0, width: 0, x: 0, y: 0},
+    1: {height: 0, width: 0, x: 0, y: 0},
+    2: {height: 0, width: 0, x: 0, y: 0},
+  });
 
   const toggleMic = () => {
     setMicStatus(!micStatus);
@@ -50,9 +59,6 @@ const RNVoiceQuesiton = ({
               setToolTipMode({tooltipTwo: true, tooltipThree: false});
             }}
             text={translation('YOU_CAN_WRITE_AN_ANIMAL')}
-            top={false}
-            rotation={-10}
-            vectorSize={verticalScale(100)}
             textContainerStyle={styles.tooltipTwo}
             textStyle={[
               {
@@ -60,8 +66,27 @@ const RNVoiceQuesiton = ({
                 fontSize: verticalScale(16),
                 marginTop: 10,
               },
-            ]}>
+            ]}
+            dimensionObject={positionRefs[0]}>
             <ScrollView
+              ref={refOne}
+              onLayout={() => {
+                refOne?.current?.measure(
+                  (
+                    x: number,
+                    y: number,
+                    width: number,
+                    height: number,
+                    pageX: number,
+                    pageY: number,
+                  ) => {
+                    setPositionRefs(prev => ({
+                      ...prev,
+                      0: {height: width, width: height, x: pageX, y: pageY},
+                    }));
+                  },
+                );
+              }}
               style={styles.voiceQuestion}
               showsVerticalScrollIndicator={false}
               contentContainerStyle={{paddingBottom: verticalScale(30)}}>
@@ -102,9 +127,6 @@ const RNVoiceQuesiton = ({
             storeKey(TOOLTIP, tooltipArray);
           }}
           text={translation('YOU_CAN_PRESS_AND_SAY_ANIMAL')}
-          top={true}
-          rotation={0}
-          vectorSize={verticalScale(100)}
           textContainerStyle={styles.tooltipTwo}
           textStyle={[
             {
@@ -112,8 +134,29 @@ const RNVoiceQuesiton = ({
               fontSize: verticalScale(16),
               marginTop: 10,
             },
-          ]}>
-          <Pressable onPress={toggleMic} style={styles.icon}>
+          ]}
+          dimensionObject={positionRefs[1]}>
+          <Pressable
+            ref={refTwo}
+            onLayout={() => {
+              refTwo?.current?.measure(
+                (
+                  x: number,
+                  y: number,
+                  width: number,
+                  height: number,
+                  pageX: number,
+                  pageY: number,
+                ) => {
+                  setPositionRefs(prev => ({
+                    ...prev,
+                    1: {height: width, width: height, x: pageX, y: pageY},
+                  }));
+                },
+              );
+            }}
+            onPress={toggleMic}
+            style={styles.icon}>
             {micStatus ? <MicOn /> : <Mic />}
           </Pressable>
         </RNTooltip>
@@ -126,9 +169,6 @@ const RNVoiceQuesiton = ({
           storeKey(TOOLTIP, tooltipArray);
         }}
         text={translation("IF_YOU_DON'T_KNOW_LET_HELP")}
-        top={true}
-        rotation={0}
-        vectorSize={verticalScale(100)}
         textContainerStyle={styles.tooltipTwo}
         textStyle={[
           {
@@ -136,8 +176,27 @@ const RNVoiceQuesiton = ({
             fontSize: verticalScale(16),
             marginTop: 10,
           },
-        ]}>
+        ]}
+        dimensionObject={positionRefs[2]}>
         <RNButton
+          ref={refThree}
+          onLayout={() => {
+            refThree?.current?.measure(
+              (
+                x: number,
+                y: number,
+                width: number,
+                height: number,
+                pageX: number,
+                pageY: number,
+              ) => {
+                setPositionRefs(prev => ({
+                  ...prev,
+                  2: {height: width, width: height, x: pageX, y: pageY},
+                }));
+              },
+            );
+          }}
           customStyle={[
             styles.footerButton,
             isTablet && {maxHeight: verticalScale(70)},

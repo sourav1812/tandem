@@ -6,7 +6,6 @@ export interface TooltipProps {
   open: boolean;
   setClose: () => void;
   text: string;
-  top: boolean;
   textContainerStyle?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
   mainStyle?: StyleProp<ViewStyle>;

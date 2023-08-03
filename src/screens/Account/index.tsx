@@ -48,8 +48,13 @@ const Account = () => {
     ],
     playerList: [],
   });
+
   const refOne = useRef<any>(null);
   const refTwo = useRef<any>(null);
+  const [positionRefs, setPositionRefs] = React.useState({
+    0: {height: 0, width: 0, x: 0, y: 0},
+    1: {height: 0, width: 0, x: 0, y: 0},
+  });
 
   const portrait = useSelector(
     (state: RootState) => state.orientation.isPortrait,
@@ -60,10 +65,7 @@ const Account = () => {
       return {...previouState, ...date};
     });
   };
-  const [positionRefs, setPositionRefs] = React.useState({
-    0: {height: 0, width: 0, x: 0, y: 0},
-    1: {height: 0, width: 0, x: 0, y: 0},
-  });
+
   const toggleSignOut = () => {
     updateState({signoutModal: !signoutModal});
   };
@@ -126,10 +128,8 @@ const Account = () => {
   return (
     <RNScreenWrapper
       style={styles.container}
-      statusBarBgc={
-        openTooltip.tooltipOne || openTooltip.tooltipTwo
-          ? '#000000CC'
-          : 'transparent'
+      giveStatusColor={
+        openTooltip.tooltipOne || openTooltip.tooltipTwo ? true : false
       }>
       <View
         style={[
@@ -181,7 +181,6 @@ const Account = () => {
             })}
             <RNTooltip
               text={'Here you can add your child.'}
-              top={false}
               open={
                 tooltipArray?.includes(1) || positionRefs[0].x === 0
                   ? false
@@ -212,7 +211,6 @@ const Account = () => {
                         ...prev,
                         0: {height: width, width: height, x: pageX, y: pageY},
                       }));
-                      console.log(pageX, pageY);
                     },
                   );
                 }}
@@ -306,7 +304,6 @@ const Account = () => {
             })}
             <RNTooltip
               text={'Here you can add youself.'}
-              top={true}
               open={
                 tooltipArray?.includes(2) || positionRefs[1].x === 0
                   ? false
@@ -337,7 +334,6 @@ const Account = () => {
                         ...prev,
                         1: {height: width, width: height, x: pageX, y: pageY},
                       }));
-                      console.log(pageX, pageY);
                     },
                   );
                 }}

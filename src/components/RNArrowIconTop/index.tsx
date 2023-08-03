@@ -5,6 +5,7 @@ import NorthWest from '@tandem/assets/svg/arrows/NorthWest';
 import West from '@tandem/assets/svg/arrows/West';
 
 const RNArrowIconTop = ({type}: {type: string}) => {
+  console.log(type);
   switch (type) {
     case 'North':
       return <North />;

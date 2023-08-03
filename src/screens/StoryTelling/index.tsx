@@ -58,6 +58,15 @@ const StoryTelling = () => {
   const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
+  const refOne = useRef<any>(null);
+  const refTwo = useRef<any>(null);
+  const refThree = useRef<any>(null);
+
+  const [positionRefs, setPositionRefs] = React.useState({
+    0: {height: 0, width: 0, x: 0, y: 0},
+    1: {height: 0, width: 0, x: 0, y: 0},
+    2: {height: 0, width: 0, x: 0, y: 0},
+  });
   const height = Dimensions.get('screen').height;
   const width = Dimensions.get('screen').width;
   const {
@@ -194,9 +203,6 @@ const StoryTelling = () => {
           storeKey(TOOLTIP, tooltipArray);
         }}
         text={translation('READ_ALOUD')}
-        top={false}
-        rotation={10}
-        vectorSize={verticalScale(100)}
         textContainerStyle={styles.tooltipTwo}
         textStyle={[
           {
@@ -204,8 +210,31 @@ const StoryTelling = () => {
             fontSize: verticalScale(16),
             marginTop: 10,
           },
-        ]}>
-        <RNButton onlyIcon icon={<Speaker />} onClick={() => {}} />
+        ]}
+        dimensionObject={positionRefs[0]}>
+        <RNButton
+          ref={refOne}
+          onLayout={() => {
+            refOne?.current?.measure(
+              (
+                x: number,
+                y: number,
+                width: number,
+                height: number,
+                pageX: number,
+                pageY: number,
+              ) => {
+                setPositionRefs(prev => ({
+                  ...prev,
+                  0: {height: width, width: height, x: pageX, y: pageY},
+                }));
+              },
+            );
+          }}
+          onlyIcon
+          icon={<Speaker />}
+          onClick={() => {}}
+        />
       </RNTooltip>
     );
   };
@@ -273,9 +302,6 @@ const StoryTelling = () => {
             storeKey(TOOLTIP, tooltipArray);
           }}
           text={translation('EXIT')}
-          top={false}
-          rotation={-10}
-          vectorSize={verticalScale(100)}
           textContainerStyle={styles.tooltipTwo}
           textStyle={[
             {
@@ -283,8 +309,27 @@ const StoryTelling = () => {
               fontSize: verticalScale(16),
               marginTop: 10,
             },
-          ]}>
+          ]}
+          dimensionObject={positionRefs[1]}>
           <RNButton
+            ref={refTwo}
+            onLayout={() => {
+              refTwo?.current?.measure(
+                (
+                  x: number,
+                  y: number,
+                  width: number,
+                  height: number,
+                  pageX: number,
+                  pageY: number,
+                ) => {
+                  setPositionRefs(prev => ({
+                    ...prev,
+                    1: {height: width, width: height, x: pageX, y: pageY},
+                  }));
+                },
+              );
+            }}
             onlyIcon
             icon={<Close />}
             onClick={() => {
@@ -325,9 +370,6 @@ const StoryTelling = () => {
             storeKey(TOOLTIP, tooltipArray);
           }}
           text={translation('READ_A_STORY')}
-          top={true}
-          rotation={0}
-          vectorSize={verticalScale(100)}
           textContainerStyle={styles.tooltipTwo}
           mainStyle={{
             marginTop: verticalScale(-200),
@@ -339,32 +381,53 @@ const StoryTelling = () => {
               fontSize: verticalScale(16),
               marginTop: 10,
             },
-          ]}>
-          <ImageBackground
-            style={styles.storyContent}
-            blurRadius={20}
-            source={require('../../assets/png/blurBgc.png')}
-            imageStyle={[
-              styles.imageStyle,
-              isTablet && {
-                borderTopLeftRadius: verticalScale(8),
-                borderTopRightRadius: verticalScale(8),
-              },
-            ]}>
-            <RNTextComponent style={styles.slideNo} isSemiBold>
-              1/{currentIndex + 1}
-            </RNTextComponent>
-            <RNTextComponent
-              style={[
-                styles.slideNo,
-                {color: themeColor.black, textAlign: 'center', zIndex: 3},
-              ]}
-              isSemiBold>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti
-              sunt quod culpa nulla praesentium accusantium voluptas sit esse,
-              quibusdam dasperisi!
-            </RNTextComponent>
-          </ImageBackground>
+          ]}
+          dimensionObject={positionRefs[2]}>
+          <View
+            ref={refThree}
+            onLayout={() => {
+              refThree?.current?.measure(
+                (
+                  x: number,
+                  y: number,
+                  width: number,
+                  height: number,
+                  pageX: number,
+                  pageY: number,
+                ) => {
+                  setPositionRefs(prev => ({
+                    ...prev,
+                    2: {height: width, width: height, x: pageX, y: pageY},
+                  }));
+                },
+              );
+            }}>
+            <ImageBackground
+              style={styles.storyContent}
+              blurRadius={20}
+              source={require('../../assets/png/blurBgc.png')}
+              imageStyle={[
+                styles.imageStyle,
+                isTablet && {
+                  borderTopLeftRadius: verticalScale(8),
+                  borderTopRightRadius: verticalScale(8),
+                },
+              ]}>
+              <RNTextComponent style={styles.slideNo} isSemiBold>
+                1/{currentIndex + 1}
+              </RNTextComponent>
+              <RNTextComponent
+                style={[
+                  styles.slideNo,
+                  {color: themeColor.black, textAlign: 'center', zIndex: 3},
+                ]}
+                isSemiBold>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Corrupti sunt quod culpa nulla praesentium accusantium voluptas
+                sit esse, quibusdam dasperisi!
+              </RNTextComponent>
+            </ImageBackground>
+          </View>
         </RNTooltip>
       )}
       {showQuestion && renderQuestions()}

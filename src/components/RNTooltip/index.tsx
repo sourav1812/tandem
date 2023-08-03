@@ -2,7 +2,7 @@
 import React from 'react';
 import Tooltip from 'react-native-walkthrough-tooltip';
 import {TooltipProps} from './interface';
-import {verticalScale} from 'react-native-size-matters';
+import {scale} from 'react-native-size-matters';
 import RNTextComponent from '../RNTextComponent';
 import {Platform, StatusBar, View} from 'react-native';
 import {getValueFromKey} from '@tandem/helpers/encryptedStorage';
@@ -19,7 +19,6 @@ const RNTooltip = ({
   open,
   setClose,
   text,
-  top,
   textContainerStyle,
   textStyle,
   mainStyle,
@@ -41,7 +40,7 @@ const RNTooltip = ({
               style={[
                 {
                   color: 'white',
-                  fontSize: verticalScale(20),
+                  fontSize: scale(20),
                   textAlign: 'center',
                 },
                 textStyle && textStyle,
@@ -57,7 +56,7 @@ const RNTooltip = ({
       contentStyle={[
         {
           backgroundColor: 'transparent',
-          width: 'auto',
+          width: '100%',
           height: '100%',
           alignItems: 'center',
           justifyContent: 'center',
@@ -65,7 +64,7 @@ const RNTooltip = ({
         },
         mainStyle && mainStyle,
       ]}
-      placement={top ? 'top' : 'bottom'}
+      placement={helperBottom ? 'top' : 'bottom'}
       topAdjustment={
         Platform.OS === 'android' ? -(StatusBar.currentHeight || 0) : 0
       }
