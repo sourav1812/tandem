@@ -23,12 +23,15 @@ import {translation} from '@tandem/utils/methods';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
 import {RootState} from '@tandem/redux/store';
+import {HelpCenterProps} from '@tandem/navigation/types';
 
-const HelpCenter = () => {
+const HelpCenter = ({route}: HelpCenterProps) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
+
+  const {fromPeople} = route.params;
 
   const [state, setState] = useState<StateObject>({
     firstTab: false,
@@ -160,7 +163,11 @@ const HelpCenter = () => {
         customStyle={styles.button}
         title={firstTab ? translation('SEND') : translation('CONTINUE')}
         onClick={() => {
-          navigateTo(SCREEN_NAME.ACCOUNT);
+          if (fromPeople) {
+            navigateTo();
+          } else {
+            navigateTo(SCREEN_NAME.ACCOUNT);
+          }
         }}
       />
     </RNScreenWrapper>

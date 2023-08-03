@@ -1,5 +1,5 @@
 import {ScrollView} from 'react-native';
-import React from 'react';
+import React, {useRef} from 'react';
 import {styles} from './styles';
 import RNEmojiWithText from '../RNEmojiWithText';
 import {multipleChoiceProps} from './interface';
@@ -15,7 +15,10 @@ const RNChoiceQuestions = ({
   onTooltipClose = () => {},
 }: multipleChoiceProps) => {
   const tooltipArray = getValueFromKey(TOOLTIP);
-
+  const refOne = useRef<any>(null);
+  const [positionRefs, setPositionRefs] = React.useState({
+    0: {height: 0, width: 0, x: 0, y: 0},
+  });
   return (
     <ScrollView
       contentContainerStyle={[styles.scrollView, customStyle && customStyle]}
@@ -28,11 +31,27 @@ const RNChoiceQuestions = ({
               open={tooltipArray.includes(5) ? false : visibletoolTip}
               setClose={onTooltipClose}
               text={translation('CHOOSE_FROM_THE_GIVE_OPTIONS')}
-              top={false}
-              rotation={160}
               textContainerStyle={styles.tooltipContainer}
-              textStyle={styles.tooltip}>
+              textStyle={styles.tooltip}
+              dimensionObject={positionRefs[0]}>
               <RNEmojiWithText
+                onLayout={() => {
+                  refOne?.current?.measure(
+                    (
+                      x: number,
+                      y: number,
+                      width: number,
+                      height: number,
+                      pageX: number,
+                      pageY: number,
+                    ) => {
+                      setPositionRefs(prev => ({
+                        ...prev,
+                        0: {height: width, width: height, x: pageX, y: pageY},
+                      }));
+                    },
+                  );
+                }}
                 key={index.toString()}
                 heading={value.name}
                 customStyle={styles.optionsCustom}

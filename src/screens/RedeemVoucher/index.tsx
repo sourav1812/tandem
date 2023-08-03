@@ -6,12 +6,22 @@ import {translation} from '@tandem/utils/methods';
 import {StateObject} from './interface';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import RNTextComponent from '@tandem/components/RNTextComponent';
-import {Image, View} from 'react-native';
+import {
+  Dimensions,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  View,
+} from 'react-native';
 import RNButton from '@tandem/components/RNButton';
-import navigateTo from '@tandem/navigation/navigate';
 import RNTextInputWithLabel from '@tandem/components/RNTextInputWithLabel';
 import {ValidationError} from '@tandem/utils/validations';
 import Paste from '@tandem/assets/svg/Paste';
+import navigateTo from '@tandem/navigation/navigate';
+
+const height = Dimensions.get('screen').height;
+const width = Dimensions.get('screen').width;
 
 const RedeemVoucher = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -33,39 +43,49 @@ const RedeemVoucher = () => {
 
   return (
     <RNScreenWrapper style={styles.container}>
-      <RNLogoHeader
-        textHeading
-        heading={translation('REDEEM_VOUCHER')}
-        titleStyle={styles.text}
-        customStyle={styles.heading}
-      />
-      <RNTextComponent isSemiBold style={styles.subHeading}>
-        {translation('SCAN_YOUR_QR_CODE')}
-      </RNTextComponent>
-      <Image
-        source={require('@tandem/assets/png/qrcode.png')}
-        style={styles.qr}
-      />
-      <View style={styles.seperation}>
-        <View style={styles.line} />
-        <RNTextComponent style={styles.or}>or</RNTextComponent>
-        <View style={styles.line} />
-      </View>
-      <RNTextInputWithLabel
-        value={voucher}
-        updateText={setVoucher}
-        rightSideIcon
-        label={translation('ENTER_VOUCHER_CODE')}
-        containerStyle={styles.inputContainer}
-        rightSideIconProp={<Paste />}
-        inputViewStyle={styles.inputView}
-        inputStyle={{flex: 1}}
-      />
-      <RNButton
-        title={translation('ADD')}
-        customStyle={styles.button}
-        // onClick={navigateTo()}
-      />
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={{height: '100%', width: '100%'}}>
+        <ScrollView
+          contentContainerStyle={{
+            height: height,
+          }}
+          showsVerticalScrollIndicator={false}>
+          <RNLogoHeader
+            textHeading
+            heading={translation('REDEEM_VOUCHER')}
+            titleStyle={styles.text}
+            customStyle={styles.heading}
+          />
+          <RNTextComponent isSemiBold style={styles.subHeading}>
+            {translation('SCAN_YOUR_QR_CODE')}
+          </RNTextComponent>
+          <Image
+            source={require('@tandem/assets/png/qrcode.png')}
+            style={styles.qr}
+          />
+          <View style={styles.seperation}>
+            <View style={styles.line} />
+            <RNTextComponent style={styles.or}>or</RNTextComponent>
+            <View style={styles.line} />
+          </View>
+          <RNTextInputWithLabel
+            value={voucher}
+            updateText={setVoucher}
+            rightSideIcon
+            label={translation('ENTER_VOUCHER_CODE')}
+            containerStyle={styles.inputContainer}
+            rightSideIconProp={<Paste />}
+            inputViewStyle={styles.inputView}
+            inputStyle={{flex: 1}}
+          />
+          <RNButton
+            title={translation('ADD')}
+            customStyle={styles.button}
+            onClick={() => navigateTo()}
+          />
+        </ScrollView>
+      </KeyboardAvoidingView>
     </RNScreenWrapper>
   );
 };

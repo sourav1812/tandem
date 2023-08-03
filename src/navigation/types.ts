@@ -13,7 +13,7 @@ export type RootStackParamList = {
   SignUp: undefined;
   SignIn: undefined;
   TermsAndConditions: undefined;
-  HelpCenter: undefined;
+  HelpCenter: {fromPeople: boolean} | undefined;
   Account: undefined;
   SplashScreen: undefined;
   Onboarding: undefined;

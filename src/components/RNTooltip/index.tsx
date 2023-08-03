@@ -2,40 +2,45 @@
 import React from 'react';
 import Tooltip from 'react-native-walkthrough-tooltip';
 import {TooltipProps} from './interface';
-import WavyArrow from '@tandem/assets/svg/WavyArrow';
-import {verticalScale} from 'react-native-size-matters';
+import {scale} from 'react-native-size-matters';
 import RNTextComponent from '../RNTextComponent';
 import {Platform, StatusBar, View} from 'react-native';
 import {getValueFromKey} from '@tandem/helpers/encryptedStorage';
 import {TOOLTIP} from '@tandem/constants/LocalConstants';
+import {
+  tooltipHelperBottom,
+  tooltipHelperTop,
+} from '@tandem/helpers/tooltipHelper';
+import RNArrowIconTop from '../RNArrowIconTop';
+import RNArrowIconBottom from '../RNArrowIconBottom';
 
 const RNTooltip = ({
   children,
   open,
   setClose,
   text,
-  top,
-  rotation,
   textContainerStyle,
   textStyle,
-  vectorSize = 100,
   mainStyle,
+  dimensionObject,
 }: TooltipProps) => {
   const tooltipNumber = getValueFromKey(TOOLTIP);
+  const helperTop = tooltipHelperTop(dimensionObject);
+  const helperBottom = tooltipHelperBottom(dimensionObject);
 
   return (
     <Tooltip
       isVisible={tooltipNumber.length < 14 ? open : false}
       content={
         <>
-          {!top && <WavyArrow size={vectorSize} rotation={rotation} />}
+          {helperTop && <RNArrowIconTop type={helperTop} />}
           <View style={[textContainerStyle && textContainerStyle]}>
             <RNTextComponent
               isSemiBold
               style={[
                 {
                   color: 'white',
-                  fontSize: verticalScale(20),
+                  fontSize: scale(20),
                   textAlign: 'center',
                 },
                 textStyle && textStyle,
@@ -43,8 +48,7 @@ const RNTooltip = ({
               {text}
             </RNTextComponent>
           </View>
-
-          {top && <WavyArrow size={vectorSize} rotation={rotation} />}
+          {helperBottom && <RNArrowIconBottom type={helperBottom} />}
         </>
       }
       backgroundColor="#000000CC"
@@ -52,7 +56,7 @@ const RNTooltip = ({
       contentStyle={[
         {
           backgroundColor: 'transparent',
-          width: 'auto',
+          width: '100%',
           height: '100%',
           alignItems: 'center',
           justifyContent: 'center',
@@ -60,7 +64,7 @@ const RNTooltip = ({
         },
         mainStyle && mainStyle,
       ]}
-      placement={top ? 'top' : 'bottom'}
+      placement={helperBottom ? 'top' : 'bottom'}
       topAdjustment={
         Platform.OS === 'android' ? -(StatusBar.currentHeight || 0) : 0
       }

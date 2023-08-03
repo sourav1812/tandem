@@ -28,10 +28,11 @@ const CreateChildProfile = () => {
       {index: 3, isSelected: false},
     ],
     questionIndex: 1,
+    other: false,
   });
   const [name, setName] = useState<ValidationError>({value: ''});
   const [date, setDate] = useState<ValidationError>({value: ''});
-  const {bulletinArray, questionIndex} = state;
+  const {bulletinArray, questionIndex, other} = state;
 
   const updateState = (date: any) => {
     setState((previouState: any) => {
@@ -103,9 +104,14 @@ const CreateChildProfile = () => {
             </View>
             <RNButton
               title={translation('PREFER_NOT_TO_SAY')}
-              onClick={() => {}}
+              onClick={() => {
+                updateState({other: !other});
+              }}
               onlyBorder
-              customStyle={styles.footerButton}
+              customStyle={
+                other ? styles.footerButtonOnSelect : styles.footerButton
+              }
+              textStyle={other && {color: themeColor.white}}
             />
           </>
         );

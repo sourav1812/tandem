@@ -56,6 +56,7 @@ const ChangePassword = () => {
           validationType={FORM_INPUT_TYPE.PASSWORD}
           hint={translation('PASSWORD')}
           inputStyle={styles.inputText}
+          inputViewStyle={styles.inputBox}
           rightSideIcon
         />
         <RNTextInputWithLabel
@@ -66,6 +67,7 @@ const ChangePassword = () => {
           validationType={FORM_INPUT_TYPE.PASSWORD}
           hint={translation('PASSWORD')}
           inputStyle={styles.inputText}
+          inputViewStyle={styles.inputBox}
           rightSideIcon
         />
         <RNTextInputWithLabel

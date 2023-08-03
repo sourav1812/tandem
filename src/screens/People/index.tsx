@@ -100,7 +100,7 @@ const People = ({}: PeopleScreenProps) => {
                 Ella
               </RNTextComponent>
             </View>
-            <Pressable onPress={() => navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN)}>
+            <Pressable onPress={() => {}}>
               <RNAddComponent
                 customStyle={styles.addButton}
                 boxStyle={styles.addBox}
@@ -112,7 +112,13 @@ const People = ({}: PeopleScreenProps) => {
               {menuArray.map((item, index) => (
                 <Pressable
                   key={index.toString()}
-                  onPress={() => item.navigate && navigateTo(item.navigate)}>
+                  onPress={() =>
+                    item.navigate &&
+                    navigateTo(
+                      item.navigate,
+                      item.param && {fromPeople: item.param},
+                    )
+                  }>
                   <RNMenuButton
                     title={item.name}
                     customStyle={[

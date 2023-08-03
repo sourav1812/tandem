@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {styles} from './styles';
 import {View, Image, ScrollView, Pressable} from 'react-native';
@@ -28,7 +28,10 @@ import {TOOLTIP} from '@tandem/constants/LocalConstants';
 
 const Account = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
-  const [openTooltip, setOpentTooltip] = useState(true);
+  const [openTooltip, setOpentTooltip] = useState({
+    tooltipOne: true,
+    tooltipTwo: false,
+  });
   const dispatch = useAppDispatch();
   const tooltipArray = getValueFromKey(TOOLTIP);
 
@@ -45,6 +48,14 @@ const Account = () => {
     ],
     playerList: [],
   });
+
+  const refOne = useRef<any>(null);
+  const refTwo = useRef<any>(null);
+  const [positionRefs, setPositionRefs] = React.useState({
+    0: {height: 0, width: 0, x: 0, y: 0},
+    1: {height: 0, width: 0, x: 0, y: 0},
+  });
+
   const portrait = useSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
@@ -115,14 +126,24 @@ const Account = () => {
   };
 
   return (
-    <RNScreenWrapper style={styles.container}>
-      <View style={styles.header}>
+    <RNScreenWrapper
+      style={styles.container}
+      giveStatusColor={
+        openTooltip.tooltipOne || openTooltip.tooltipTwo ? true : false
+      }>
+      <View
+        style={[
+          styles.header,
+          {marginTop: portrait ? verticalScale(44) : verticalScale(20)},
+        ]}>
         <Image
           source={require('../../assets/png/logo.png')}
           resizeMode="contain"
           style={styles.logo}
         />
-        <RNButton onlyIcon icon={<Logout />} onClick={toggleSignOut} />
+        <View style={{zIndex: 1, marginLeft: scale(-30)}}>
+          <RNButton onlyIcon icon={<Logout />} onClick={toggleSignOut} />
+        </View>
       </View>
       <RNTextComponent
         isSemiBold
@@ -148,55 +169,71 @@ const Account = () => {
                   onPress={() => {
                     addPlayer(item);
                   }}>
-                  {index === 0 ? (
-                    <RNTooltip
-                      text={'Here you can add your child.'}
-                      top={false}
-                      rotation={0}
-                      open={tooltipArray?.includes(1) ? false : openTooltip}
-                      setClose={() => {
-                        setOpentTooltip(false);
-                        tooltipArray.push(1);
-                        storeKey(TOOLTIP, tooltipArray);
-                      }}>
-                      <RNKidsProfile
-                        style={{
-                          height: portrait
-                            ? verticalScale(60)
-                            : verticalScale(40),
-                          width: portrait
-                            ? verticalScale(60)
-                            : verticalScale(40),
-                        }}
-                        data={item}
-                      />
-                    </RNTooltip>
-                  ) : (
-                    <RNKidsProfile
-                      style={{
-                        height: portrait
-                          ? verticalScale(60)
-                          : verticalScale(40),
-                        width: portrait ? verticalScale(60) : verticalScale(40),
-                      }}
-                      data={item}
-                    />
-                  )}
+                  <RNKidsProfile
+                    style={{
+                      height: portrait ? verticalScale(60) : verticalScale(40),
+                      width: portrait ? verticalScale(60) : verticalScale(40),
+                    }}
+                    data={item}
+                  />
                 </Pressable>
               );
             })}
-            <Pressable
-              style={styles.add2}
-              onPress={() => {
-                navigateTo(SCREEN_NAME.CREATE_CHILD_PROFILE);
-              }}>
-              <Add />
-              <RNTextComponent
-                isMedium
-                style={[styles.addText, {marginTop: verticalScale(20)}]}>
-                {translation('ADD')}
-              </RNTextComponent>
-            </Pressable>
+            <RNTooltip
+              text={'Here you can add your child.'}
+              open={
+                tooltipArray?.includes(1) || positionRefs[0].x === 0
+                  ? false
+                  : openTooltip.tooltipOne
+              }
+              setClose={() => {
+                setOpentTooltip({
+                  tooltipOne: false,
+                  tooltipTwo: true,
+                });
+                tooltipArray.push(1);
+                storeKey(TOOLTIP, tooltipArray);
+              }}
+              dimensionObject={positionRefs[0]}>
+              <Pressable
+                ref={refOne}
+                onLayout={() => {
+                  refOne?.current?.measure(
+                    (
+                      x: number,
+                      y: number,
+                      width: number,
+                      height: number,
+                      pageX: number,
+                      pageY: number,
+                    ) => {
+                      setPositionRefs(prev => ({
+                        ...prev,
+                        0: {height: width, width: height, x: pageX, y: pageY},
+                      }));
+                    },
+                  );
+                }}
+                style={[
+                  styles.add2,
+                  {
+                    height: portrait ? verticalScale(100) : verticalScale(60),
+                    width: portrait ? verticalScale(100) : verticalScale(60),
+                    borderRadius: 60,
+                    backgroundColor: 'white',
+                  },
+                ]}
+                onPress={() => {
+                  navigateTo(SCREEN_NAME.CREATE_CHILD_PROFILE);
+                }}>
+                <Add />
+                <RNTextComponent
+                  isMedium
+                  style={[styles.addText, {marginTop: verticalScale(20)}]}>
+                  {translation('ADD')}
+                </RNTextComponent>
+              </Pressable>
+            </RNTooltip>
           </ScrollView>
         </View>
         <View style={styles.body}>
@@ -235,10 +272,8 @@ const Account = () => {
                       removePlayer(index);
                     }}>
                     <RNParentProfile
-                      height={
-                        portrait ? verticalScale(105) : verticalScale(52.5)
-                      }
-                      width={portrait ? verticalScale(90) : verticalScale(45)}
+                      height={portrait ? verticalScale(80) : verticalScale(60)}
+                      width={portrait ? verticalScale(80) : verticalScale(60)}
                       data={item}
                     />
                   </Pressable>
@@ -267,28 +302,78 @@ const Account = () => {
                 </Pressable>
               );
             })}
-            <Pressable
-              style={styles.add}
-              onPress={() => {
-                dispatch(changeMode(MODE.A));
-                navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN, {}, true);
-              }}>
-              <Add />
-              <RNTextComponent
-                isMedium
-                style={
-                  (styles.addText,
-                  {marginTop: portrait ? verticalScale(42) : verticalScale(21)})
-                }>
-                {translation('ADD')}
-              </RNTextComponent>
-            </Pressable>
+            <RNTooltip
+              text={'Here you can add youself.'}
+              open={
+                tooltipArray?.includes(2) || positionRefs[1].x === 0
+                  ? false
+                  : openTooltip.tooltipTwo
+              }
+              setClose={() => {
+                setOpentTooltip({
+                  tooltipOne: false,
+                  tooltipTwo: false,
+                });
+                tooltipArray.push(2);
+                storeKey(TOOLTIP, tooltipArray);
+              }}
+              dimensionObject={positionRefs[1]}>
+              <Pressable
+                ref={refTwo}
+                onLayout={() => {
+                  refTwo?.current?.measure(
+                    (
+                      x: number,
+                      y: number,
+                      width: number,
+                      height: number,
+                      pageX: number,
+                      pageY: number,
+                    ) => {
+                      setPositionRefs(prev => ({
+                        ...prev,
+                        1: {height: width, width: height, x: pageX, y: pageY},
+                      }));
+                    },
+                  );
+                }}
+                style={[
+                  styles.add,
+                  {
+                    height: portrait ? verticalScale(100) : verticalScale(60),
+                    width: portrait ? verticalScale(100) : verticalScale(60),
+                    borderRadius: 60,
+                    backgroundColor: 'white',
+                  },
+                ]}
+                onPress={() => {
+                  dispatch(changeMode(MODE.A));
+                  navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN, {}, true);
+                }}>
+                <Add />
+                <RNTextComponent
+                  isMedium
+                  style={[
+                    styles.addText,
+                    {
+                      marginTop: portrait
+                        ? verticalScale(20)
+                        : verticalScale(21),
+                    },
+                  ]}>
+                  {translation('ADD')}
+                </RNTextComponent>
+              </Pressable>
+            </RNTooltip>
           </ScrollView>
         </View>
         <View
           style={[
             styles.footer,
             playerList.length === 0 && {backgroundColor: themeColor.lightGray},
+            {
+              marginTop: portrait ? verticalScale(30) : 'auto',
+            },
           ]}>
           <RNTextComponent
             isSemiBold

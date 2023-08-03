@@ -86,4 +86,10 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: verticalScale(12),
   },
+  footerButtonOnSelect: {
+    width: scale(160),
+    alignSelf: 'center',
+    marginTop: verticalScale(16),
+    backgroundColor: themeColor.themeBlue,
+  },
 });

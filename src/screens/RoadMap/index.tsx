@@ -1,4 +1,4 @@
-import {LayoutAnimation, Pressable, View} from 'react-native';
+import {LayoutAnimation, Platform, Pressable, View} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
 import YellowButton from '@tandem/assets/svg/YellowButton';
@@ -22,9 +22,11 @@ import {useSelector} from 'react-redux';
 import {RootState} from '@tandem/redux/store';
 import RNButton from '@tandem/components/RNButton';
 import {useNavigation} from '@react-navigation/native';
+import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 
 const RNRoadmap = () => {
   const dispatch = useAppDispatch();
+  const isTablet = checkIfTablet();
   const questionIndex = useAppSelector(state => state.questions.index);
   const [positionRefs, setPositionRefs] = React.useState({
     0: {height: 0, width: 0, x: 0, y: 0},
@@ -57,7 +59,6 @@ const RNRoadmap = () => {
   );
 
   const handleNavigate = (index: number) => {
-    console.log(index);
     // if (index >= questionIndex) {
     //   dispatch(setQuestionIndex(index));
     // }
@@ -91,7 +92,11 @@ const RNRoadmap = () => {
           <YellowButton />
         </Pressable>
       </View>
-      <View style={styles.roadmap}>
+      <View
+        style={[
+          styles.roadmap,
+          !isTablet && Platform.OS !== 'ios' && {paddingTop: verticalScale(40)},
+        ]}>
         <Pressable
           onLayout={event => {
             const layout = event.nativeEvent?.layout;
@@ -122,7 +127,7 @@ const RNRoadmap = () => {
               }));
             }}
             onPress={() => {
-              handleNavigate(6);
+              handleNavigate(5);
             }}
             style={[
               styles.stylecolor,
@@ -155,7 +160,7 @@ const RNRoadmap = () => {
               }));
             }}
             onPress={() => {
-              handleNavigate(5);
+              handleNavigate(4);
             }}
             style={[
               styles.whatHappens,
@@ -188,7 +193,7 @@ const RNRoadmap = () => {
               }));
             }}
             onPress={() => {
-              handleNavigate(4);
+              handleNavigate(3);
             }}
             style={[
               styles.whatThing,
@@ -221,7 +226,7 @@ const RNRoadmap = () => {
               }));
             }}
             onPress={() => {
-              handleNavigate(3);
+              handleNavigate(2);
             }}
             style={[
               styles.where,
@@ -254,7 +259,7 @@ const RNRoadmap = () => {
               }));
             }}
             onPress={() => {
-              handleNavigate(2);
+              handleNavigate(0);
             }}
             style={[
               styles.who,
