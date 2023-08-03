@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {
   Dimensions,
   KeyboardAvoidingView,
@@ -15,9 +16,10 @@ import RNButton from '@tandem/components/RNButton';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
-import {verticalScale} from 'react-native-size-matters';
+import {scale, verticalScale} from 'react-native-size-matters';
 import styles from './styles';
 import RNTimerText from '@tandem/components/RNTimerText';
+import OTPInputView from '@twotalltotems/react-native-otp-input';
 
 const OtpScreen = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -26,8 +28,11 @@ const OtpScreen = () => {
   const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
+  const [isCodeWrong, setCodeWrong] = useState(false);
+
   const height = Dimensions.get('screen').height;
   const width = Dimensions.get('screen').width;
+  const [otp, setOtp] = useState<string>('');
 
   return (
     <RNScreenWrapper style={{backgroundColor: themeColor.white, flex: 1}}>
@@ -72,6 +77,39 @@ const OtpScreen = () => {
                 </RNTextComponent>
               }
             </RNTextComponent>
+            <OTPInputView
+              style={{
+                width: '60%',
+                height: verticalScale(48),
+                marginVertical: verticalScale(40),
+              }}
+              pinCount={4}
+              code={otp}
+              onCodeChanged={setOtp}
+              codeInputFieldStyle={{
+                height: scale(40),
+                width: scale(40),
+                color: isCodeWrong ? '#FF0101' : '#020408',
+                borderRadius: scale(40),
+                fontSize: scale(20),
+                fontWeight: 'bold',
+                backgroundColor: '#F1F4F9',
+                borderColor: '#F1F4F9',
+              }}
+              codeInputHighlightStyle={{
+                backgroundColor: 'transparent',
+                borderColor: 'transparent',
+                color: isCodeWrong ? '#FF0101' : '#020408',
+                fontWeight: 'bold',
+                fontSize: scale(20),
+              }}
+              onCodeFilled={(code: any) => {
+                if (code.length === 4) {
+                  setCodeWrong(true);
+                  console.log(code);
+                }
+              }}
+            />
             <RNTextComponent
               style={[
                 styles.subHeading,
@@ -79,8 +117,9 @@ const OtpScreen = () => {
                   fontSize: isTablet ? verticalScale(11) : verticalScale(13),
                   marginTop: verticalScale(10),
                 },
+                isCodeWrong && {color: '#FF0101'},
               ]}>
-              Didn't get the code?
+              {!isCodeWrong ? `Didn't get the code?` : `This Code is wrong.`}
             </RNTextComponent>
             {!showButton && (
               <RNTextComponent

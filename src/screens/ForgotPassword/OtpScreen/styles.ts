@@ -26,6 +26,14 @@ const styles = StyleSheet.create({
     marginTop: verticalScale(21),
     height: verticalScale(50),
   },
+  codeInputFieldStyle: {
+    height: scale(20),
+    width: scale(20),
+    color: '#020408',
+    borderRadius: scale(20),
+    backgroundColor: '#F1F4F9',
+    borderColor: '#F1F4F9',
+  },
 });
 
 export default styles;

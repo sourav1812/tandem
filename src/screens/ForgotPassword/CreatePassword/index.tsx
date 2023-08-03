@@ -104,7 +104,7 @@ const CreatePassword = () => {
                 title={'Create password'}
                 customStyle={styles.button}
                 onClick={() => {
-                  navigateTo(SCREEN_NAME.CHECK_EMAIL);
+                  navigateTo(SCREEN_NAME.SIGN_IN);
                 }}
               />
             </View>
