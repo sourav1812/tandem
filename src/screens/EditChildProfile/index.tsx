@@ -53,15 +53,7 @@ const EditChildProfile = () => {
           validationType={FORM_INPUT_TYPE.NAME}
           updateText={setName}
         />
-        <RNTextInputWithLabel
-          label={translation('DATE_OF_BIRTH')}
-          containerStyle={styles.input}
-          hint={'DOB'}
-          inputViewStyle={styles.inputBox}
-          value={email}
-          validationType={FORM_INPUT_TYPE.EMAIL}
-          updateText={setEmail}
-        />
+        <LanguageDropDown />
         <LanguageDropDown />
       </View>
       <View
@@ -94,7 +86,7 @@ const EditChildProfile = () => {
 
 export default EditChildProfile;
 
-const LanguageDropDown = () => {
+const LanguageDropDown = (heading: string, text: string) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   return (
     <View>

@@ -2,7 +2,7 @@ import React, {useCallback, useRef, useState} from 'react';
 import {ImageBackground, FlatList, View} from 'react-native';
 import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
-import {onboardingList} from './interface';
+import {ONBOARDING} from './interface';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import {translation} from '@tandem/utils/methods';
 import RNButton from '@tandem/components/RNButton';
@@ -11,11 +11,39 @@ import themeColor from '@tandem/theme/themeColor';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {RootState} from '@tandem/redux/store';
 
 const Onboarding = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const portrait = useAppSelector(
+    (state: RootState) => state.orientation.isPortrait,
+  );
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const flatlistRef = useRef(null);
+
+  const onboardingList: ONBOARDING[] = [
+    {
+      id: 0,
+      description: translation('HAVE_FUN_MAKE_STORIES'),
+      url: portrait
+        ? require('../../assets/png/onboarding1.png')
+        : require('../../assets/png/onboardingLandscape1.png'),
+    },
+    {
+      id: 1,
+      description: translation('WITH_TANDEM_YOU_WILL_THE_POWER'),
+      url: portrait
+        ? require('../../assets/png/onboarding2.png')
+        : require('../../assets/png/onboardingLandscape2.png'),
+    },
+    {
+      id: 2,
+      description: translation('WITH_TANDEM_YOU_WILL_THE_POWER'),
+      url: portrait
+        ? require('../../assets/png/onboarding3.png')
+        : require('../../assets/png/onboardingLandscape3.png'),
+    },
+  ];
 
   const renderBanner = useCallback(({item}: {item: any}) => {
     return (
@@ -60,6 +88,7 @@ const Onboarding = () => {
         viewabilityConfig={{
           itemVisiblePercentThreshold: 2, // adjust threshold as needed
         }}
+        extraData={portrait}
       />
       <View style={[styles.footer, isTablet && {paddingHorizontal: scale(80)}]}>
         <RNTextComponent
