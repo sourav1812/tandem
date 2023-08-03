@@ -204,5 +204,12 @@
   "CHOOSE_FROM_THE_GIVE_OPTIONS": "Scegli tra le opzioni date",
   "PRESS_THE_BUTTON": "Premi il pulsante",
   "ADD_COLORS": "Aggiungi colori",
-  "BY_CLICKING_CHANGE_CHILD_ACCOUNT": "Cliccando sull'avatar, puoi cambiare l'account del bambino"
+  "BY_CLICKING_CHANGE_CHILD_ACCOUNT": "Cliccando sull'avatar, puoi cambiare l'account del bambino",
+  "READ_ALOUD": "Leggi ad alta voce",
+  "READ_A_STORY": "Leggi la storia",
+  "EXIT": "Esci",
+  "FLIP_PAGE": "Sfoglia la pagina",
+  "YOU_CAN_WRITE_AN_ANIMAL": "Puoi scrivere un animale",
+  "YOU_CAN_PRESS_AND_SAY_ANIMAL": "Puoi premere e dire un animale",
+  "IF_YOU_DON'T_KNOW_LET_HELP": "Se non lo sai, lascia che ti aiuti"
 }

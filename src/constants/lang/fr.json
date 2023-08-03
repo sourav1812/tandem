@@ -202,5 +202,12 @@
   "CHOOSE_FROM_THE_GIVE_OPTIONS": "Choisissez parmi les options données",
   "PRESS_THE_BUTTON": "Appuyez sur le bouton",
   "ADD_COLORS": "Ajouter des couleurs",
-  "BY_CLICKING_CHANGE_CHILD_ACCOUNT": "En cliquant sur l'avatar, vous pouvez changer le compte de l'enfant"
+  "BY_CLICKING_CHANGE_CHILD_ACCOUNT": "En cliquant sur l'avatar, vous pouvez changer le compte de l'enfant",
+  "READ_ALOUD": "Lire à voix haute",
+  "READ_A_STORY": "Lire l'histoire",
+  "EXIT": "Quitter",
+  "FLIP_PAGE": "Tourner la page",
+  "YOU_CAN_WRITE_AN_ANIMAL": "Vous pouvez écrire un animal",
+  "YOU_CAN_PRESS_AND_SAY_ANIMAL": "Vous pouvez appuyer et dire un animal",
+  "IF_YOU_DON'T_KNOW_LET_HELP": "Si vous ne savez pas, laissez-moi vous aider"
 }

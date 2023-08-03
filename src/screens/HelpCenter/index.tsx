@@ -154,8 +154,10 @@ const HelpCenter = () => {
               )}
             </ScrollView>
           </View>
+          <View style={{height: 200}} />
         </ScrollView>
       </KeyboardAvoidingView>
+
       <RNButton
         customStyle={styles.button}
         title={firstTab ? translation('SEND') : translation('CONTINUE')}
