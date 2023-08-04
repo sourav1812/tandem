@@ -19,6 +19,7 @@ import RNTextComponent from '@tandem/components/RNTextComponent';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
 import {verticalScale} from 'react-native-size-matters';
+import {translation} from '@tandem/utils/methods';
 
 const CheckEmail = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -58,7 +59,7 @@ const CheckEmail = () => {
               source={require('@tandem/assets/png/RunningBike.png')}
             />
             <RNTextComponent style={styles.heading} isSemiBold>
-              Check Email
+              {translation('check-email.check-email')}
             </RNTextComponent>
             <RNTextComponent
               style={[
@@ -68,7 +69,7 @@ const CheckEmail = () => {
                   marginTop: verticalScale(10),
                 },
               ]}>
-              We have sent you an email with a password reset code
+              {translation('check-email.we-have-sent-you-email')}
             </RNTextComponent>
             <RNButton
               title={'Account Page'}

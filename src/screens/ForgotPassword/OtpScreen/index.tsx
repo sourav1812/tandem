@@ -20,6 +20,7 @@ import {scale, verticalScale} from 'react-native-size-matters';
 import styles from './styles';
 import RNTimerText from '@tandem/components/RNTimerText';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
+import {translation} from '@tandem/utils/methods';
 
 const OtpScreen = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -50,7 +51,7 @@ const OtpScreen = () => {
           <RNLogoHeader customStyle={styles.header} />
           <View style={{justifyContent: 'center', alignItems: 'center'}}>
             <RNTextComponent style={styles.heading} isSemiBold>
-              Enter the code
+              {translation('otp-screen.enter-the-code')}
             </RNTextComponent>
             <RNTextComponent
               style={[
@@ -60,7 +61,7 @@ const OtpScreen = () => {
                   marginTop: verticalScale(10),
                 },
               ]}>
-              Please enter the 4 digit code sent to{' '}
+              {translation('otp-screen.enter-four-digit-code')}
               {
                 <RNTextComponent
                   style={[
@@ -119,7 +120,9 @@ const OtpScreen = () => {
                 },
                 isCodeWrong && {color: '#FF0101'},
               ]}>
-              {!isCodeWrong ? `Didn't get the code?` : `This Code is wrong.`}
+              {!isCodeWrong
+                ? translation('otp-screen.did-not-get-code')
+                : translation('otp-screen.this-code-is-invalid')}
             </RNTextComponent>
             {!showButton && (
               <RNTextComponent
@@ -130,13 +133,13 @@ const OtpScreen = () => {
                     marginTop: verticalScale(10),
                   },
                 ]}>
-                You can resend in
+                {translation('otp-screen.you-can-resend-in')}
                 {<RNTimerText setIsTimerFinished={setShowButton} />}
               </RNTextComponent>
             )}
             {showButton && (
               <RNButton
-                title={'Resend'}
+                title={translation('otp-screen.resend')}
                 customStyle={styles.button}
                 onClick={() => {
                   navigateTo(SCREEN_NAME.CREATE_PASSWORD);

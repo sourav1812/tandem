@@ -61,7 +61,7 @@ const CreatePassword = () => {
             resizeMode="stretch">
             <RNLogoHeader customStyle={styles.header} />
             <RNTextComponent style={styles.heading} isSemiBold>
-              {'Create Password'}
+              {translation('create-password.create-password')}
             </RNTextComponent>
             <RNTextComponent
               style={[
@@ -71,7 +71,7 @@ const CreatePassword = () => {
                   marginTop: verticalScale(10),
                 },
               ]}>
-              {'Create new password'}
+              {translation('create-password.create-new-password')}
             </RNTextComponent>
             <View
               style={[
@@ -79,7 +79,7 @@ const CreatePassword = () => {
                 isTablet && {paddingHorizontal: verticalScale(120)},
               ]}>
               <RNTextInputWithLabel
-                label={'Password'}
+                label={translation('PASSWORD')}
                 backgroundColor={themeColor.lightGray}
                 containerStyle={styles.input2}
                 value={password}
@@ -90,7 +90,7 @@ const CreatePassword = () => {
                 inputStyle={styles.inputText}
               />
               <RNTextInputWithLabel
-                label={'Confirm Password'}
+                label={translation('create-password.confirm-password')}
                 backgroundColor={themeColor.lightGray}
                 containerStyle={styles.input2}
                 value={confirmPassword}
@@ -101,7 +101,7 @@ const CreatePassword = () => {
                 inputStyle={styles.inputText}
               />
               <RNButton
-                title={'Create password'}
+                title={translation('create-password.confirm-password')}
                 customStyle={styles.button}
                 onClick={() => {
                   navigateTo(SCREEN_NAME.SIGN_IN);
