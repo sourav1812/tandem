@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import {
   Dimensions,
   ImageBackground,
@@ -8,29 +7,31 @@ import {
   View,
 } from 'react-native';
 import React, {useState} from 'react';
-import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
-import RNTextComponent from '@tandem/components/RNTextComponent';
-import {styles} from './styles';
-import themeColor from '@tandem/theme/themeColor';
-import RNButton from '@tandem/components/RNButton';
 import RNLogoHeader from '@tandem/components/RNLogoHeader';
-import RNTextInputWithLabel from '@tandem/components/RNTextInputWithLabel';
-import Google from '@tandem/assets/svg/GoogleLogo';
-import Apple from '@tandem/assets/svg/AppleLogo';
-import FB from '@tandem/assets/svg/FBlogo';
-import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
-import {verticalScale} from 'react-native-size-matters';
-import navigateTo from '@tandem/navigation/navigate';
+import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
+import themeColor from '@tandem/theme/themeColor';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
-import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
 import {RootState} from '@tandem/redux/store';
+import RNButton from '@tandem/components/RNButton';
+import RNTextComponent from '@tandem/components/RNTextComponent';
+import RNTextInputWithLabel from '@tandem/components/RNTextInputWithLabel';
+import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
+import navigateTo from '@tandem/navigation/navigate';
 import {translation} from '@tandem/utils/methods';
+import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
+import {verticalScale} from 'react-native-size-matters';
+import {styles} from './style';
 
-const ForgotPassword = () => {
+const CreatePassword = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
 
-  const [email, setEmail] = useState<ValidationError>({value: ''});
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [password, setPassword] = useState<ValidationError>({value: ''});
+  const [confirmPassword, setConfirmPassword] = useState<ValidationError>({
+    value: '',
+  });
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
@@ -60,7 +61,7 @@ const ForgotPassword = () => {
             resizeMode="stretch">
             <RNLogoHeader customStyle={styles.header} />
             <RNTextComponent style={styles.heading} isSemiBold>
-              {translation('FORGOT_PASSWORD')}?
+              {translation('create-password.create-password')}
             </RNTextComponent>
             <RNTextComponent
               style={[
@@ -70,7 +71,7 @@ const ForgotPassword = () => {
                   marginTop: verticalScale(10),
                 },
               ]}>
-              {translation('ENTER_EMAIL_FOR_VERIFICATION')}
+              {translation('create-password.create-new-password')}
             </RNTextComponent>
             <View
               style={[
@@ -78,20 +79,32 @@ const ForgotPassword = () => {
                 isTablet && {paddingHorizontal: verticalScale(120)},
               ]}>
               <RNTextInputWithLabel
-                label={translation('EMAIL')}
+                label={translation('PASSWORD')}
                 backgroundColor={themeColor.lightGray}
                 containerStyle={styles.input2}
-                value={email}
-                validationType={FORM_INPUT_TYPE.EMAIL}
-                updateText={setEmail}
-                hint={translation('ENTER_YOUR_EMAIL')}
+                value={password}
+                validationType={FORM_INPUT_TYPE.PASSWORD}
+                updateText={setPassword}
+                rightSideIcon
+                hint={translation('PASSWORD')}
+                inputStyle={styles.inputText}
+              />
+              <RNTextInputWithLabel
+                label={translation('create-password.confirm-password')}
+                backgroundColor={themeColor.lightGray}
+                containerStyle={styles.input2}
+                value={confirmPassword}
+                validationType={FORM_INPUT_TYPE.PASSWORD}
+                updateText={setConfirmPassword}
+                hint={translation('PASSWORD')}
+                rightSideIcon
                 inputStyle={styles.inputText}
               />
               <RNButton
-                title={translation('GET_CODE')}
+                title={translation('create-password.confirm-password')}
                 customStyle={styles.button}
                 onClick={() => {
-                  navigateTo(SCREEN_NAME.CHECK_EMAIL);
+                  navigateTo(SCREEN_NAME.SIGN_IN);
                 }}
               />
             </View>
@@ -102,4 +115,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default CreatePassword;

@@ -205,10 +205,27 @@
   "ADD_COLORS": "Add colors",
   "BY_CLICKING_CHANGE_CHILD_ACCOUNT": "By clicking on the avatar, you can change the childs account",
   "READ_ALOUD": "Read aloud",
-  "READ_A_STORY": "Read a story",
+  "READ_A_STORY": "Read the story",
   "EXIT": "Exit",
   "FLIP_PAGE": "Flip page",
   "YOU_CAN_WRITE_AN_ANIMAL": "You can write an animal",
   "YOU_CAN_PRESS_AND_SAY_ANIMAL": "You can press and say an animal",
-  "IF_YOU_DON'T_KNOW_LET_HELP": "If you don't know, let me help you"
+  "IF_YOU_DON'T_KNOW_LET_HELP": "If you don't know, let me help you",
+  "check-email": {
+    "check-email": "Check Email",
+    "we-have-sent-you-email": "We have sent you an email with a password reset code"
+  },
+  "create-password": {
+    "create-password": "Create Password",
+    "create-new-password": "Create new password",
+    "confirm-password": "Confirm Password"
+  },
+  "otp-screen": {
+    "enter-the-code": "Enter the code",
+    "enter-four-digit-code": "Please enter the 4 digit code sent to ",
+    "you-can-resend-in": "You can resend in",
+    "resend": "Resend",
+    "did-not-get-code": "Didn't get the code?",
+    "this-code-is-invalid": "This Code is wrong."
+  }
 }

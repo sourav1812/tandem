@@ -81,7 +81,24 @@ const AppNavigator = () => {
               getComponent={() => require('@tandem/screens/Onboarding').default}
               name={SCREEN_NAME.ONBOARDING}
             />
-
+            <Stack.Screen
+              getComponent={() =>
+                require('@tandem/screens/ForgotPassword/CheckEmail').default
+              }
+              name={SCREEN_NAME.CHECK_EMAIL}
+            />
+            <Stack.Screen
+              getComponent={() =>
+                require('@tandem/screens/ForgotPassword/OtpScreen').default
+              }
+              name={SCREEN_NAME.OTP_SCREEN}
+            />
+            <Stack.Screen
+              getComponent={() =>
+                require('@tandem/screens/ForgotPassword/CreatePassword').default
+              }
+              name={SCREEN_NAME.CREATE_PASSWORD}
+            />
             <Stack.Screen
               getComponent={() => require('@tandem/screens/SignUp').default}
               name={SCREEN_NAME.SIGN_UP}

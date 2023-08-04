@@ -202,5 +202,30 @@
   "CHOOSE_FROM_THE_GIVE_OPTIONS": "Choisissez parmi les options données",
   "PRESS_THE_BUTTON": "Appuyez sur le bouton",
   "ADD_COLORS": "Ajouter des couleurs",
-  "BY_CLICKING_CHANGE_CHILD_ACCOUNT": "En cliquant sur l'avatar, vous pouvez changer le compte de l'enfant"
+  "BY_CLICKING_CHANGE_CHILD_ACCOUNT": "En cliquant sur l'avatar, vous pouvez changer le compte de l'enfant",
+  "READ_ALOUD": "Lire à voix haute",
+  "READ_A_STORY": "Lire l'histoire",
+  "EXIT": "Quitter",
+  "FLIP_PAGE": "Tourner la page",
+  "YOU_CAN_WRITE_AN_ANIMAL": "Vous pouvez écrire un animal",
+  "YOU_CAN_PRESS_AND_SAY_ANIMAL": "Vous pouvez appuyer et dire un animal",
+  "IF_YOU_DON'T_KNOW_LET_HELP": "Si vous ne savez pas, laissez-moi vous aider",
+
+  "check-email": {
+    "check-email": "Vérifier l'e-mail",
+    "we-have-sent-you-email": "Nous vous avons envoyé un e-mail avec un code de réinitialisation de mot de passe"
+  },
+  "create-password": {
+    "create-password": "Créer un mot de passe",
+    "create-new-password": "Créer un nouveau mot de passe",
+    "confirm-password": "Confirmer le mot de passe"
+  },
+  "otp-screen": {
+    "enter-the-code": "Entrer le code",
+    "enter-four-digit-code": "Veuillez entrer le code à 4 chiffres envoyé à ",
+    "you-can-resend-in": "Vous pouvez renvoyer dans",
+    "resend": "Renvoyer",
+    "did-not-get-code": "Vous n'avez pas reçu le code?",
+    "this-code-is-invalid": "Ce code est incorrect."
+  }
 }

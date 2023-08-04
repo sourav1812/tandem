@@ -202,5 +202,30 @@
   "CHOOSE_FROM_THE_GIVE_OPTIONS": "Wählen Sie aus den angegebenen Optionen",
   "PRESS_THE_BUTTON": "Drücken Sie die Taste",
   "ADD_COLORS": "Farben hinzufügen",
-  "BY_CLICKING_CHANGE_CHILD_ACCOUNT": "Durch Klicken auf den Avatar können Sie das Kinderkonto ändern"
+  "BY_CLICKING_CHANGE_CHILD_ACCOUNT": "Durch Klicken auf den Avatar können Sie das Kinderkonto ändern",
+  "READ_ALOUD": "Laut vorlesen",
+  "READ_A_STORY": "Geschichte vorlesen",
+  "EXIT": "Beenden",
+  "FLIP_PAGE": "Seite umblättern",
+  "YOU_CAN_WRITE_AN_ANIMAL": "Sie können ein Tier schreiben",
+  "YOU_CAN_PRESS_AND_SAY_ANIMAL": "Sie können drücken und ein Tier sagen",
+  "IF_YOU_DON'T_KNOW_LET_HELP": "Wenn Sie nicht wissen, lassen Sie mich Ihnen helfen",
+
+  "check-email": {
+    "check-email": "E-Mail überprüfen",
+    "we-have-sent-you-email": "Wir haben Ihnen eine E-Mail mit einem Passwort zurücksetzen Code geschickt"
+  },
+  "create-password": {
+    "create-password": "Passwort erstellen",
+    "create-new-password": "Neues Passwort erstellen",
+    "confirm-password": "Passwort bestätigen"
+  },
+  "otp-screen": {
+    "enter-the-code": "Code eingeben",
+    "enter-four-digit-code": "Bitte geben Sie den 4-stelligen Code ein, der an ",
+    "you-can-resend-in": "Sie können erneut senden in",
+    "resend": "Erneut senden",
+    "did-not-get-code": "Code nicht erhalten?",
+    "this-code-is-invalid": "Dieser Code ist ungültig."
+  }
 }
