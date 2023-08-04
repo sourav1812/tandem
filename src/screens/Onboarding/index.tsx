@@ -26,22 +26,22 @@ const Onboarding = () => {
       id: 0,
       description: translation('HAVE_FUN_MAKE_STORIES'),
       url: portrait
-        ? require('../../assets/png/onboarding1.png')
-        : require('../../assets/png/onboardingLandscape1.png'),
+        ? require('@tandem/assets/png/onboarding1.png')
+        : require('@tandem/assets/png/onboardingLandscape1.png'),
     },
     {
       id: 1,
       description: translation('WITH_TANDEM_YOU_WILL_THE_POWER'),
       url: portrait
-        ? require('../../assets/png/onboarding2.png')
-        : require('../../assets/png/onboardingLandscape2.png'),
+        ? require('@tandem/assets/png/onboarding2.png')
+        : require('@tandem/assets/png/onboardingLandscape2.png'),
     },
     {
       id: 2,
       description: translation('WITH_TANDEM_YOU_WILL_THE_POWER'),
       url: portrait
-        ? require('../../assets/png/onboarding3.png')
-        : require('../../assets/png/onboardingLandscape3.png'),
+        ? require('@tandem/assets/png/onboarding3.png')
+        : require('@tandem/assets/png/onboardingLandscape3.png'),
     },
   ];
 
