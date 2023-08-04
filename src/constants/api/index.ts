@@ -1,2 +1,24 @@
+export enum ENVIRONMENT {
+  DEVELOPMENT = 'DEVELOPMENT',
+  PRODUCTION = 'PRODUCTION',
+}
+
+const ENV_VARS = {
+  [ENVIRONMENT.DEVELOPMENT]: {
+    API_URL: '', // * STAGING URL
+  },
+  [ENVIRONMENT.PRODUCTION]: {
+    API_URL: '', // * LIVE URL
+  },
+};
+
+// ! Select ENV from here
+export const SELECTED_ENVIRONMENT = ENVIRONMENT.DEVELOPMENT;
+
+// ! URLs
+export const BASE_URL = ENV_VARS[SELECTED_ENVIRONMENT].API_URL;
+
 export const PEXELS_API_KEY =
   'EX5cnNzfNvWCwgBYmgPwZzLAR7KX1CMnj1bDHJEHljQk2bEA2lh8oPc5';
+
+export enum API {}
