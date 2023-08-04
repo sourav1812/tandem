@@ -11,7 +11,11 @@ export const menuArray = [
     name: translation('PROFILE_SETTINGS'),
     navigate: SCREEN_NAME.PROFILE_SETTINGS,
   },
-  {name: translation('HELP_CENTER'), navigate: SCREEN_NAME.HELP_CENTER},
+  {
+    name: translation('HELP_CENTER'),
+    navigate: SCREEN_NAME.HELP_CENTER,
+    param: {fromPeople: true},
+  },
   {name: translation('CHANGE_PASSWORD'), navigate: SCREEN_NAME.CHANGE_PASSWORD},
   {name: translation('ABOUT_APP'), navigate: SCREEN_NAME.ABOUT_APP},
   {

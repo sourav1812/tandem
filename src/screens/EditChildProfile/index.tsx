@@ -5,7 +5,7 @@ import RNLogoHeader from '@tandem/components/RNLogoHeader';
 import {translation} from '@tandem/utils/methods';
 import {Image, Pressable, View} from 'react-native';
 import RNTextInputWithLabel from '@tandem/components/RNTextInputWithLabel';
-import {StateObject} from './interface';
+import {StateObject, languageDropDownProp} from './interface';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import {scale, verticalScale} from 'react-native-size-matters';
 import DownArrow from '@tandem/assets/svg/DownArrow';
@@ -13,6 +13,7 @@ import RNButton from '@tandem/components/RNButton';
 import RNDeleteAccount from '@tandem/components/RNDeleteAccount';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
+import dayjs from 'dayjs';
 
 const EditChildProfile = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -21,6 +22,7 @@ const EditChildProfile = () => {
   });
   const [name, setName] = useState<ValidationError>({value: ''});
   const [email, setEmail] = useState<ValidationError>({value: ''});
+  const [dob, setDob] = useState(dayjs().format('DD/MM/YYYY'));
   const {showModal} = state;
 
   const updateState = (date: any) => {
@@ -53,16 +55,11 @@ const EditChildProfile = () => {
           validationType={FORM_INPUT_TYPE.NAME}
           updateText={setName}
         />
-        <RNTextInputWithLabel
-          label={translation('DATE_OF_BIRTH')}
-          containerStyle={styles.input}
-          hint={'DOB'}
-          inputViewStyle={styles.inputBox}
-          value={email}
-          validationType={FORM_INPUT_TYPE.EMAIL}
-          updateText={setEmail}
+        <LanguageDropDown heading={translation('DATE_OF_BIRTH')} text={dob} />
+        <LanguageDropDown
+          text={translation('FEATURES')}
+          heading={translation('CHILD_FEATURES')}
         />
-        <LanguageDropDown />
       </View>
       <View
         style={[
@@ -94,7 +91,7 @@ const EditChildProfile = () => {
 
 export default EditChildProfile;
 
-const LanguageDropDown = () => {
+const LanguageDropDown = ({heading, text}: languageDropDownProp) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   return (
     <View>
@@ -103,7 +100,7 @@ const LanguageDropDown = () => {
           styles.dropdownBox,
           {fontSize: isTablet ? 16 : verticalScale(12)},
         ]}>
-        {translation('CHILD_FEATURES')}
+        {heading}
       </RNTextComponent>
       <Pressable
         style={[
@@ -111,7 +108,7 @@ const LanguageDropDown = () => {
           isTablet && {paddingVertical: verticalScale(10)},
         ]}>
         <RNTextComponent style={[isTablet && {fontSize: 18}]}>
-          {translation('FEATURES')}
+          {text}
         </RNTextComponent>
         <DownArrow />
       </Pressable>

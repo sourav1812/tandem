@@ -252,10 +252,10 @@ const StoryTelling = () => {
               }
             />
             <RNVoiceQuesiton
-              // onClick={renderWellDoneModal}
-              onClick={() => {
-                updateState({showQuestion: false});
-              }}
+              onClick={renderWellDoneModal}
+              // onClick={() => {
+              //   updateState({showQuestion: false});
+              // }}
               customStyle={{paddingHorizontal: scale(20)}}
               tooltipOneVisible={tooltipFour}
               onTooltipOneClose={() => {
@@ -413,7 +413,7 @@ const StoryTelling = () => {
                 },
               ]}>
               <RNTextComponent style={styles.slideNo} isSemiBold>
-                1/{currentIndex + 1}
+                {currentIndex + 1}/4
               </RNTextComponent>
               <RNTextComponent
                 style={[

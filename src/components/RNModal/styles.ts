@@ -8,6 +8,7 @@ export const styles = StyleSheet.create({
     left: 0,
     right: 0,
     backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    zIndex: 999,
   },
   offset: {
     flex: 1,
