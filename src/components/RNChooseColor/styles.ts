@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
     marginTop: verticalScale(14),
   },
   subHeading: {
-    fontSize: verticalScale(14),
+    fontSize: verticalScale(15),
     textAlign: 'center',
   },
   colorView: {

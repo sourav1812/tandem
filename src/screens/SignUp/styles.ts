@@ -4,7 +4,7 @@ import themeColor from '@tandem/theme/themeColor';
 
 export const styles = StyleSheet.create({
   container: {
-    height: '100%',
+    height: '110%',
     width: '100%',
   },
   heading: {

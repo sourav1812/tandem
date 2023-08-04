@@ -8,13 +8,14 @@ import RNButton from '../RNButton';
 import themeColor from '@tandem/theme/themeColor';
 import Mic from '@tandem/assets/svg/Mic';
 import MicOn from '@tandem/assets/svg/MinOn';
-import {verticalScale} from 'react-native-size-matters';
+import {scale, verticalScale} from 'react-native-size-matters';
 import {VoiceQuestionProps} from './interface';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {translation} from '@tandem/utils/methods';
 import RNTooltip from '../RNTooltip';
 import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
 import {TOOLTIP} from '@tandem/constants/LocalConstants';
+import {RootState} from '@tandem/redux/store';
 
 const RNVoiceQuesiton = ({
   onClick,
@@ -23,6 +24,9 @@ const RNVoiceQuesiton = ({
   onTooltipOneClose = () => {},
 }: VoiceQuestionProps) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const portrait = useAppSelector(
+    (state: RootState) => state.orientation.isPortrait,
+  );
   const tooltipArray = getValueFromKey(TOOLTIP);
   const [inputList, setInputList] = useState<inputListState[]>([{answer: ''}]);
   const [micStatus, setMicStatus] = useState(false);
@@ -51,8 +55,21 @@ const RNVoiceQuesiton = ({
 
   return (
     <>
-      <View style={[styles.container, customStyle && customStyle]}>
-        <View style={{maxHeight: verticalScale(425)}}>
+      <View
+        style={[
+          styles.container,
+          !portrait && {
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-evenly',
+          },
+          customStyle && customStyle,
+        ]}>
+        <View
+          style={[
+            {maxHeight: verticalScale(425)},
+            !portrait && {width: scale(320), marginBottom: verticalScale(25)},
+          ]}>
           <RNTooltip
             open={tooltipArray?.includes(12) ? false : tooltipOneVisible}
             setClose={() => {

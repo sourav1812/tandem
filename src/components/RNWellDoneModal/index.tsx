@@ -29,7 +29,11 @@ const RNWellDoneModal = ({
       <View
         style={[
           styles.container,
-          isTablet && {marginHorizontal: verticalScale(80)},
+          isTablet && {
+            marginHorizontal: !portrait
+              ? verticalScale(200)
+              : verticalScale(80),
+          },
         ]}>
         <Image
           source={require('../../assets/png/greenTick.png')}
