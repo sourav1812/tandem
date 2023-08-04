@@ -20,6 +20,7 @@ const TimerButton = ({
     }, 1000);
     if (timeLeft <= 0) {
       setIsTimerFinished(true);
+      clearTimeout(timer);
     }
     return () => clearTimeout(timer);
   }, [setIsTimerFinished, timeLeft]);
