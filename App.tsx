@@ -8,6 +8,11 @@ import {TOOLTIP} from '@tandem/constants/LocalConstants';
 import {PermissionsAndroid} from 'react-native';
 import {requestUserPermissionIOS} from '@tandem/functions/fcm';
 import messaging from '@react-native-firebase/messaging';
+import {PersistGate} from 'redux-persist/integration/react';
+import {persistStore} from 'redux-persist';
+
+const persistor = persistStore(store);
+
 const App: FC = () => {
   useEffect(() => {
     if (Platform.OS === 'android') {
@@ -33,7 +38,9 @@ const App: FC = () => {
 
   return (
     <Provider store={store}>
-      <AppNavigator />
+      <PersistGate loading={null} persistor={persistor}>
+        <AppNavigator />
+      </PersistGate>
     </Provider>
   );
 };

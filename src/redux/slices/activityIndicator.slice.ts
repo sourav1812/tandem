@@ -23,8 +23,10 @@ const activityIndicatorSlice = createSlice({
     buttonLoader: state => {
       state.isButtonEnabled = true;
     },
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    logoutFromRedux: state => {},
   },
 });
-export const {startLoader, stopLoader, buttonLoader} =
+export const {startLoader, stopLoader, buttonLoader, logoutFromRedux} =
   activityIndicatorSlice.actions;
 export default activityIndicatorSlice.reducer;
