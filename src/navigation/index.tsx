@@ -15,7 +15,6 @@ import {useOrientation} from '@tandem/hooks/useOrientation';
 import {changeOrientation} from '@tandem/redux/slices/orientation.slice';
 
 const AppNavigator = () => {
-  console.log('loader....', store.getState().activityIndicator.isEnabled);
   const Stack = createNativeStackNavigator<RootStackParamList>();
   const mode = useAppSelector((state: RootState) => state.mode.mode);
   const isTablet = useAppSelector(
