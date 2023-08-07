@@ -4,29 +4,35 @@ import deviceTypeSlice from './slices/tablet.slice';
 import orientationSlice from './slices/orientation.slice';
 import questionsSlice from './slices/questions.slice';
 import activityIndicatorSlice from './slices/activityIndicator.slice';
+import paramsReducer from './slices/paramsReducer';
 import {MMKV} from 'react-native-mmkv';
-import {Storage, persistReducer} from 'redux-persist';
+import {persistReducer, Storage} from 'redux-persist';
+import getResponseReducer from './slices/getResponseReducer';
+import languageReducer from './slices/languageReducer';
 
 export const storage = new MMKV();
 
-const appReducer = combineReducers({
+export const appReducer = combineReducers({
   mode: modeSlice,
   deviceType: deviceTypeSlice,
   orientation: orientationSlice,
   questions: questionsSlice,
   activityIndicator: activityIndicatorSlice,
+  params: paramsReducer,
+  getResponseReducer: getResponseReducer,
+  language: languageReducer,
 });
 
 export const reduxStorage: Storage = {
-  setItem: (key, value) => {
+  setItem: (key: string, value: string | number | boolean | Uint8Array) => {
     storage.set(key, value);
     return Promise.resolve(true);
   },
-  getItem: key => {
+  getItem: (key: string) => {
     const value = storage.getString(key);
     return Promise.resolve(value);
   },
-  removeItem: key => {
+  removeItem: (key: string) => {
     storage.delete(key);
     return Promise.resolve();
   },
@@ -38,7 +44,7 @@ const persistConfig = {
 };
 
 export const rootReducer = (state: any, action: AnyAction) => {
-  if (action.type === 'activityIndicator/logoutFromRedux') {
+  if (action.type === 'language/logoutFromRedux') {
     reduxStorage.removeItem('persist:root');
     storage.clearAll();
     return appReducer(undefined, action);

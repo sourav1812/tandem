@@ -11,9 +11,9 @@ import messaging from '@react-native-firebase/messaging';
 import {PersistGate} from 'redux-persist/integration/react';
 import {persistStore} from 'redux-persist';
 
-const App: FC = () => {
-  const persistor = persistStore(store);
+const persistor = persistStore(store);
 
+const App: FC = () => {
   useEffect(() => {
     if (Platform.OS === 'android') {
       PermissionsAndroid.request(
