@@ -69,22 +69,38 @@ const refreshAccessToken = async () => {
   }
 };
 
-// axiosInstance interceptor for handling token refresh
-axiosInstance.interceptors.response.use(undefined, async error => {
+const handleError = async (error: {
+  config: any;
+  response: {status: number};
+}) => {
   const originalRequest = error.config;
+  const {status} = error.response;
 
-  if (error?.response?.status === 401) {
+  if (status === 401) {
+    // Handle token refresh for 401 (Unauthorized) errors
     try {
-      // Wait for the token refresh to complete before resolving the request
       const token = await refreshAccessToken();
       originalRequest.headers.Authorization = `Bearer ${token}`;
-      return axiosInstance(originalRequest);
+      return await axiosInstance(originalRequest);
     } catch (error1) {
-      return Promise.reject(error1);
+      return await Promise.reject(error1);
     }
+  } else if (status === 404) {
+    // Handle 404 (Not Found) errors
+    // For example, you can throw a custom error or return a specific response
+    return await Promise.reject(new Error('Not Found'));
+  } else if (status >= 500) {
+    // Handle 5xx (Server Errors) errors
+    // For example, you can throw a custom error or return a specific response
+    return await Promise.reject(new Error('Server Error'));
   }
+  // ! Handle other status codes here
+  // For other status codes, return the error as is
   return Promise.reject(error);
-});
+};
+
+// axiosInstance interceptor for handling token refresh
+axiosInstance.interceptors.response.use(undefined, handleError);
 
 const executeRequest = async <T>(
   requestFunction: (
