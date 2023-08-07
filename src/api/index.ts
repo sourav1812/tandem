@@ -1,25 +1,28 @@
-import {BASE_URL} from '@tandem/constants/api';
-import axios from 'axios';
-import Api from './interface';
+import axios, {AxiosResponse} from 'axios';
+import NetInfo from '@react-native-community/netinfo';
 import {getStoredTokens, storeTokens} from '@tandem/functions/tokens';
-import {USER} from '@tandem/constants/enums';
-import {removeKey} from '@tandem/helpers/encryptedStorage';
+import Api from './interface';
 import {
   startLoader,
   stopLoader,
 } from '@tandem/redux/slices/activityIndicator.slice';
 import {store} from '@tandem/redux/store';
+import {BASE_URL} from '@tandem/constants/api';
+import {addParams, clearParams} from '@tandem/redux/slices/paramsReducer';
+import logout from '@tandem/functions/logout';
+import {addGetResponse} from '@tandem/redux/slices/getResponseReducer';
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
 });
 
-//Add the JWT token in the Authorization header
+// Add the JWT token in the Authorization header
 axiosInstance.interceptors.request.use(
   async config => {
     const {token} = getStoredTokens();
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
+      config.params = store.getState().params.object;
     }
     return config;
   },
@@ -28,193 +31,170 @@ axiosInstance.interceptors.request.use(
   },
 );
 
-//Create a queue to hold pending requests
+// Create a queue to hold pending requests
 const requestQueue: ((token: any) => void)[] = [];
-
-//Variable to track if token refresh is in progress
 let isRefreshing = false;
 
-// axiosInstance interceptor for handling token refresh
-axiosInstance.interceptors.response.use(
-  response => response,
-  async error => {
-    const originalRequest = error.config;
+const refreshAccessToken = async () => {
+  const {refreshToken} = getStoredTokens();
 
-    // Check if response status is 401 (Unauthorized)
-    if (error?.response?.status === 401) {
-      console.log('Refreshing Token ', requestQueue.length);
+  if (!isRefreshing) {
+    isRefreshing = true;
 
-      // Check if token refresh is already in progress
-      if (!isRefreshing) {
-        isRefreshing = true;
-
-        // Make the token refresh request
-        try {
-          const tokens = getStoredTokens();
-          if (!tokens.refreshToken) {
-            // logout();
-            return Promise.reject(error);
-          }
-          const response = await axios.post(BASE_URL + USER.REFRESH_TOKEN, {
-            refreshToken: tokens.refreshToken,
-          });
-          const {token, refreshToken} = response.data;
-          console.log('new refresh token', refreshToken);
-          // Update the tokens in your storage or context
-          // Replace 'token' and 'refreshToken' with your actual token values
-          // Resolve all the pending requests in the queue with the new tokens
-          storeTokens(token, refreshToken);
-          requestQueue.forEach(resolve => resolve(token));
-
-          // Clear the queue
-          requestQueue.length = 0;
-
-          // Set isRefreshing to false since token refresh is complete
-          isRefreshing = false;
-
-          // Retry the original request with the new access token
-          originalRequest.headers.Authorization = `Bearer ${token}`;
-          return await axiosInstance(originalRequest);
-        } catch (error_1) {
-          console.log('error in refresh token logic : ', error_1);
-          // Toast.show({
-          //   type: 'error',
-          //   text1: 'Your Session is expired. Please login to continue',
-          // });
-          removeKey(USER.REFRESH_TOKEN);
-          removeKey(USER.TOKEN);
-
-          // Handle token refresh error if necessary
-          // You might want to log the user out or redirect to a login page
-          throw error_1;
-        }
-      } else {
-        // Token refresh is already in progress, so add the request to the queue
-        return new Promise(resolve => {
-          console.log('In Refresh token loop', originalRequest.url);
-          requestQueue.push(token => {
-            // Retry the original request with the new access token
-            originalRequest.headers.Authorization = `Bearer ${token}`;
-            resolve(axiosInstance(originalRequest));
-          });
-        });
+    try {
+      if (!refreshToken) {
+        logout();
+        throw new Error('No refreshToken found');
       }
+
+      const response = await axios.post(BASE_URL + 'refresh token endpoint', {
+        refreshToken,
+      });
+      const {token, refreshToken: newRefreshToken} = response.data;
+      storeTokens(token, newRefreshToken);
+      requestQueue.forEach(resolve => resolve(token));
+      requestQueue.length = 0;
+      isRefreshing = false;
+      return token;
+    } catch (error) {
+      console.log('error in refresh token logic:', error);
+      logout();
+      throw error;
     }
+  } else {
+    // If another request is already refreshing the token, wait for it to complete
+    return new Promise<string>(resolve => {
+      requestQueue.push(token => resolve(token));
+    });
+  }
+};
 
-    //     // Return any other errors as-is
-    return Promise.reject(error);
-  },
-);
+const handleError = async (error: {
+  config: any;
+  response: {
+    status: number;
+    data: {message: string; possibleResolution: string | undefined};
+  };
+}) => {
+  const originalRequest = error.config;
+  const {status, data} = error.response;
+  console.log('error in intercerpt', {error: data});
+  if (status === 401) {
+    // Handle token refresh for 401 (Unauthorized) errors
+    try {
+      const token = await refreshAccessToken();
+      originalRequest.headers.Authorization = `Bearer ${token}`;
+      return await axiosInstance(originalRequest);
+    } catch (error1) {
+      return await Promise.reject(
+        new Error(originalRequest.url + ': Status: ' + status),
+      );
+    }
+  } else if (status >= 400) {
+    // Handle 404 (Not Found) errors
+    // For example, you can throw a custom error or return a specific response
+    //! Toast message here
+    return await Promise.reject(
+      new Error(originalRequest.url + ': Status: ' + status),
+    );
+  } else if (status >= 500) {
+    // Handle 5xx (Server Errors) errors
+    // For example, you can throw a custom error or return a specific response
+    // !Toast message here
+    return await Promise.reject(
+      new Error(originalRequest.url + ': Status: ' + status),
+    );
+  }
+  // ! Handle other status codes here
+  // For other status codes, return the error as is
+  return Promise.reject(error);
+};
 
-const get = async <T>(
+// axiosInstance interceptor for handling token refresh
+axiosInstance.interceptors.response.use(undefined, handleError);
+
+const executeRequest = async <T>(
+  requestFunction: (
+    path: string,
+    data?: any,
+  ) => Promise<AxiosResponse<Api & T, any>>,
   path: string,
-  params?: any,
-  noLoader: boolean = false,
-  allowRequestAnyway: boolean = false,
-): Promise<T> => {
-  //   let persistedState = store.getState().getResponseReducer[path];
-  //   const {isConnected} = await NetInfo.fetch();
+  data?: any,
+) => {
+  const {isConnected} = await NetInfo.fetch();
+  if (!isConnected) {
+    throw new Error('No Internet connection');
+  }
 
-  // if (!isConnected) {
-  //   if (!persistedState) {
-  //     throw new Error('No internet connection');
-  //   }
-  //   return persistedState;
-  // }
+  store.dispatch(startLoader());
+  store.dispatch(clearParams());
 
-  type ApiResponse = Api & T;
+  try {
+    const response: AxiosResponse<Api & T, any> = await requestFunction(
+      path,
+      data,
+    );
+    //! Toast message here to show completion of POST/PUT request
+    return response?.data;
+  } catch (error: any) {
+    console.log(error.message);
+  } finally {
+    store.dispatch(stopLoader());
+  }
+};
+
+const get = async <T>({
+  path,
+  params,
+  noLoader = false,
+}: {
+  path: string;
+  params?: any;
+  noLoader: boolean;
+  allowRequestAnyway: boolean;
+}): Promise<T> => {
+  let persistedState = store.getState().getResponseReducer[path];
+  const {isConnected} = await NetInfo.fetch();
+
+  if (!isConnected) {
+    if (!persistedState) {
+      throw new Error('No internet connection');
+    }
+    return persistedState;
+  }
   if (!noLoader) {
     store.dispatch(startLoader());
   }
-  // store.dispatch(addParams(params));
+  store.dispatch(addParams(params));
+
   try {
-    if (!allowRequestAnyway) {
-      store.dispatch(stopLoader());
-
-      const {token, refreshToken} = getStoredTokens();
-      if (!token && !refreshToken)
-        throw new Error('Your Session has expired. Please login to continue');
-
-      throw new Error('Get request cannot be fulfilled as User Not Verified');
+    const {token, refreshToken} = getStoredTokens();
+    if (!token && !refreshToken) {
+      throw new Error('Your Session has expired. Please login to continue');
     }
-
-    const response = await axiosInstance.get<ApiResponse>(path);
-    if (!noLoader) {
-      store.dispatch(stopLoader());
-    }
-    // if (!response?.data?.status) {
-    //   persistedState = store.getState().getResponseReducer[path];
-    //   if (!persistedState) {
-    //     throw new Error(response?.data?.message);
-    //   }
-    //   return persistedState;
-    // } else {
-    //   store.dispatch(addGetResponse({path, response: response?.data}));
+    const response = await axiosInstance.get<Api & T>(path);
+    store.dispatch(addGetResponse({path, response: response?.data}));
     return response?.data;
   } catch (error: any) {
-    // persistedState = store.getState().getResponseReducer[path];
+    persistedState = store.getState().getResponseReducer[path];
 
+    if (!persistedState) {
+      console.log(error.message);
+    }
+    return persistedState;
+  } finally {
     if (!noLoader) {
       store.dispatch(stopLoader());
     }
-    //     if (!persistedState) {
-    //       throw new Error(error.message);
-    //     }
-    //     return persistedState;
-    //   }
-    throw new Error(error.message);
   }
 };
-const post = async <T>(path: string, data: any): Promise<Api & T> => {
-  //   const {isConnected} = await NetInfo.fetch();
-  //   if (!isConnected) {
-  //     throw new Error(dontShowMessages ? '' : 'No Internet connection');
-  //   }
-  type ApiResponse = Api & T;
-  store.dispatch(startLoader());
 
-  try {
-    const response = await axios.post<ApiResponse>(BASE_URL + path, data);
-
-    if (!response?.data?.status) {
-      store.dispatch(stopLoader());
-
-      throw new Error(response?.data?.message);
-    } else {
-      store.dispatch(stopLoader());
-
-      return response?.data;
-    }
-  } catch (error: any) {
-    store.dispatch(stopLoader());
-
-    throw new Error(error.message);
-  }
+const post = async <T>({path, data}: {path: string; data: any}) => {
+  executeRequest<Api & T>(axiosInstance.post, BASE_URL + path, data);
 };
-const put = async <T>(path: string, data: any): Promise<Api & T> => {
-  //   const {isConnected} = await NetInfo.fetch();
-  //   if (!isConnected) {
-  //     throw new Error('No Internet connection');
-  //   }
-  type ApiResponse = Api & T;
-  store.dispatch(startLoader());
 
-  try {
-    const response = await axiosInstance.put<ApiResponse>(path, data);
-
-    if (!response?.data?.status) {
-      store.dispatch(stopLoader());
-      throw new Error(response?.data?.message);
-    } else {
-      store.dispatch(stopLoader());
-
-      return response?.data;
-    }
-  } catch (error: any) {
-    store.dispatch(stopLoader());
-
-    throw new Error(error.message);
-  }
+const put = async <T>({path, data}: {path: string; data: any}) => {
+  executeRequest<Api & T>(axiosInstance.put, path, data);
 };
 
 export {get, post, put};

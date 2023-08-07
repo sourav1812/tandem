@@ -1,12 +1,13 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useCallback, useRef, useState} from 'react';
-import {ImageBackground, FlatList, View} from 'react-native';
+import {FlatList, View, Image, Dimensions} from 'react-native';
 import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {ONBOARDING} from './interface';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import {translation} from '@tandem/utils/methods';
 import RNButton from '@tandem/components/RNButton';
-import {scale} from 'react-native-size-matters';
+import {scale, verticalScale} from 'react-native-size-matters';
 import themeColor from '@tandem/theme/themeColor';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
@@ -19,7 +20,7 @@ const Onboarding = () => {
     (state: RootState) => state.orientation.isPortrait,
   );
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
-  const flatlistRef = useRef(null);
+  const flatlistRef = useRef<FlatList>(null);
 
   const onboardingList: ONBOARDING[] = [
     {
@@ -44,22 +45,61 @@ const Onboarding = () => {
         : require('@tandem/assets/png/onboardingLandscape3.png'),
     },
   ];
+  const height = Dimensions.get('screen').height;
+  const width = Dimensions.get('screen').width;
+  const renderBanner = useCallback(
+    ({item}: {item: any}) => {
+      return (
+        <View
+          style={{
+            backgroundColor: themeColor.white,
+            height: height,
+            width: width,
+            alignItems: 'center',
+          }}>
+          <Image
+            style={[
+              styles.img,
+              {
+                height: height / 1.8,
+                width: width - scale(30),
+                marginTop: isTablet ? scale(20) : scale(50),
+              },
+            ]}
+            source={item.url}
+            resizeMode="stretch"
+          />
+          <RNTextComponent isSemiBold style={styles.heading}>
+            {translation('WELCOME_TO_TANDEM')}
+          </RNTextComponent>
+          <RNTextComponent
+            style={[
+              styles.content,
+              isTablet && {paddingHorizontal: scale(width / 10)},
+            ]}>
+            {item.description}
+          </RNTextComponent>
+        </View>
+        // <ImageBackground
+        //   source={item.url}
+        //   resizeMode="cover"
+        //   style={styles.img}
+        // />
+      );
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [portrait],
+  );
 
-  const renderBanner = useCallback(({item}: {item: any}) => {
-    return (
-      <ImageBackground
-        source={item.url}
-        resizeMode="cover"
-        style={styles.img}
-      />
-    );
-  }, []);
-
-  const onViewableItemsChanged = useCallback(({viewableItems}: any) => {
-    if (viewableItems.length > 0) {
-      setCurrentIndex(viewableItems[0].index);
-    }
-  }, []);
+  const onViewableItemsChanged = useCallback(
+    ({viewableItems}: any) => {
+      if (viewableItems.length > 0) {
+        setCurrentIndex(viewableItems[0].index);
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
 
   const nextPage = () => {
     if (currentIndex < 2) {
@@ -79,6 +119,7 @@ const Onboarding = () => {
         data={onboardingList}
         ref={flatlistRef}
         renderItem={renderBanner}
+        keyExtractor={item => item.id.toString()}
         pagingEnabled
         horizontal
         decelerationRate={0.3}
@@ -90,15 +131,12 @@ const Onboarding = () => {
         }}
         extraData={portrait}
       />
-      <View style={[styles.footer, isTablet && {paddingHorizontal: scale(80)}]}>
-        <RNTextComponent
-          isSemiBold
-          style={[styles.heading, isTablet && {fontSize: 30}]}>
-          {translation('WELCOME_TO_TANDEM')}
-        </RNTextComponent>
-        <RNTextComponent style={[styles.content, isTablet && {fontSize: 20}]}>
-          {onboardingList[currentIndex].description}
-        </RNTextComponent>
+      <View
+        style={[
+          styles.footer,
+          isTablet && {paddingHorizontal: scale(80)},
+          {bottom: portrait ? verticalScale(50) : 0},
+        ]}>
         <View style={styles.indicator}>
           {Array.from({length: 3}, (_, i) => (
             <View

@@ -1,9 +1,6 @@
 import themeColor from '@tandem/theme/themeColor';
-import {Dimensions, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {scale, verticalScale} from 'react-native-size-matters';
-
-const height = Dimensions.get('screen').height;
-const width = Dimensions.get('screen').width;
 
 export const styles = StyleSheet.create({
   container: {
@@ -11,24 +8,22 @@ export const styles = StyleSheet.create({
     width: `100%`,
   },
   img: {
-    height: height,
-    width: width,
+    padding: scale(10),
+    borderRadius: scale(16),
   },
   footer: {
     position: 'absolute',
-    bottom: 0,
     backgroundColor: themeColor.white,
     width: '100%',
     paddingHorizontal: scale(22),
-    paddingVertical: verticalScale(20),
-    borderTopLeftRadius: verticalScale(12),
-    borderTopRightRadius: verticalScale(12),
   },
   heading: {
-    fontSize: scale(22),
+    marginTop: verticalScale(20),
+    fontSize: 25,
     textAlign: 'center',
   },
   content: {
+    padding: scale(10),
     fontSize: verticalScale(13),
     textAlign: 'center',
   },
@@ -39,7 +34,6 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: verticalScale(16),
   },
   inactive: {
     height: verticalScale(6),
