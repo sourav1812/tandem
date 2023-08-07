@@ -8,6 +8,7 @@ import paramsReducer from './slices/paramsReducer';
 import {MMKV} from 'react-native-mmkv';
 import {persistReducer, Storage} from 'redux-persist';
 import getResponseReducer from './slices/getResponseReducer';
+import languageReducer from './slices/languageReducer';
 
 export const storage = new MMKV();
 
@@ -19,6 +20,7 @@ export const appReducer = combineReducers({
   activityIndicator: activityIndicatorSlice,
   params: paramsReducer,
   getResponseReducer: getResponseReducer,
+  language: languageReducer,
 });
 
 export const reduxStorage: Storage = {
