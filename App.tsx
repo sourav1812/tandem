@@ -33,6 +33,7 @@ const App: FC = () => {
     const unsubscribe = messaging().onMessage(async remoteMessage => {
       Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
     });
+
     return unsubscribe;
   }, []);
 
