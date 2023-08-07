@@ -10,7 +10,7 @@ import SplashScreen from '@tandem/screens/SplashScreen';
 import {navigationRef} from './navigate';
 import {MODE} from '@tandem/constants/mode';
 import {Platform} from 'react-native';
-import {RootState, store} from '@tandem/redux/store';
+import {RootState} from '@tandem/redux/store';
 import {useOrientation} from '@tandem/hooks/useOrientation';
 import {changeOrientation} from '@tandem/redux/slices/orientation.slice';
 
