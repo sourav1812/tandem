@@ -254,6 +254,7 @@ const GenerateStory = () => {
           <RNChooseColor
             tooltipVisible={tooltipThird}
             onTooltipClose={onCloseThirdTooltip}
+            customStyle={{paddingHorizontal: scale(16)}}
           />
         );
     }
@@ -281,40 +282,49 @@ const GenerateStory = () => {
         tooltipFirst || tooltipSecond || tooltipThird || tooltipFourth
       }>
       <View style={styles.container}>
-        <View style={styles.header}>
-          <RNButton onlyIcon onClick={previousQuestion} icon={<LeftArrow />} />
-          <RNTextComponent style={styles.heading} isSemiBold>
-            {translation('GENERATE_STORY')}{' '}
-            <RNTextComponent isSemiBold style={styles.questionNumber}>
-              {questionIndex === 0 ? 1 : questionIndex}/6
+        <View
+          style={{
+            paddingHorizontal: scale(20),
+          }}>
+          <View style={styles.header}>
+            <RNButton
+              onlyIcon
+              onClick={previousQuestion}
+              icon={<LeftArrow />}
+            />
+            <RNTextComponent style={styles.heading} isSemiBold>
+              {translation('GENERATE_STORY')}{' '}
+              <RNTextComponent isSemiBold style={styles.questionNumber}>
+                {questionIndex === 0 ? 1 : questionIndex}/6
+              </RNTextComponent>
             </RNTextComponent>
-          </RNTextComponent>
-          <RNButton
-            onlyIcon
-            onClick={previousQuestion}
-            icon={<QuestionMark />}
-          />
-        </View>
-        <View style={styles.progressBar}>
-          {Array.from({length: 6}, (_, index) => {
-            return {index: index};
-          }).map(index => {
-            const indicatorIndex = questionIndex === 0 ? 1 : questionIndex;
-            return (
-              <View
-                key={index.index}
-                style={[
-                  styles.indicator,
-                  {
-                    backgroundColor:
-                      index.index < indicatorIndex
-                        ? themeColor.themeBlue
-                        : 'rgba(66, 133, 246, 0.5)',
-                  },
-                ]}
-              />
-            );
-          })}
+            <RNButton
+              onlyIcon
+              onClick={previousQuestion}
+              icon={<QuestionMark />}
+            />
+          </View>
+          <View style={styles.progressBar}>
+            {Array.from({length: 6}, (_, index) => {
+              return {index: index};
+            }).map(index => {
+              const indicatorIndex = questionIndex === 0 ? 1 : questionIndex;
+              return (
+                <View
+                  key={index.index}
+                  style={[
+                    styles.indicator,
+                    {
+                      backgroundColor:
+                        index.index < indicatorIndex
+                          ? themeColor.themeBlue
+                          : 'rgba(66, 133, 246, 0.5)',
+                    },
+                  ]}
+                />
+              );
+            })}
+          </View>
         </View>
         {dynamicContent()}
       </View>

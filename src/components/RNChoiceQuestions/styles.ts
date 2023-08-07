@@ -9,13 +9,12 @@ export const styles = StyleSheet.create({
   scrollView: {
     flexWrap: 'wrap',
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    // alignSelf: 'center',
+    justifyContent: 'center',
   },
   optionsCustom: {
-    height: verticalScale(132),
-    width: verticalScale(132),
-    marginTop: verticalScale(20),
+    height: verticalScale(130),
+    width: verticalScale(130),
+    margin: scale(10),
   },
   tooltipContainer: {
     width: scale(200),
