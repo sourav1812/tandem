@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, {AxiosResponse} from 'axios';
 import NetInfo from '@react-native-community/netinfo';
 import {getStoredTokens, storeTokens} from '@tandem/functions/tokens';
 import Api from './interface';
@@ -31,77 +31,94 @@ axiosInstance.interceptors.request.use(
   },
 );
 
-//Create a queue to hold pending requests
+// Create a queue to hold pending requests
 const requestQueue: ((token: any) => void)[] = [];
-
-//Variable to track if token refresh is in progress
 let isRefreshing = false;
 
-const handleTokenRefresh = async (error: {
-  config: any;
-  response: {status: number};
-}) => {
-  const originalRequest = error.config;
+const refreshAccessToken = async () => {
+  const {refreshToken} = getStoredTokens();
 
-  // Check if response status is 401 (Unauthorized)
-  if (error?.response?.status === 401) {
-    const {refreshToken} = getStoredTokens();
+  if (!isRefreshing) {
+    isRefreshing = true;
 
-    // Check if token refresh is already in progress
-    if (!isRefreshing) {
-      isRefreshing = true;
-
-      // Make the token refresh request
-      try {
-        if (!refreshToken) {
-          logout();
-          return Promise.reject(error);
-        }
-
-        const response = await axios.post(BASE_URL + 'refresh token endpoint', {
-          refreshToken,
-        });
-        const {token, refreshToken: newRefreshToken} = response.data;
-        console.log('new refresh token', newRefreshToken);
-        // Update the tokens in your storage or context
-        // Replace 'token' and 'refreshToken' with your actual token values
-        // Resolve all the pending requests in the queue with the new tokens
-        storeTokens(token, newRefreshToken);
-        requestQueue.forEach(resolve => resolve(token));
-
-        // Clear the queue
-        requestQueue.length = 0;
-
-        // Set isRefreshing to false since token refresh is complete
-        isRefreshing = false;
-
-        // Retry the original request with the new access token
-        originalRequest.headers.Authorization = `Bearer ${token}`;
-        return await axiosInstance(originalRequest);
-      } catch (error1) {
-        console.log('error in refresh token logic:', error1);
+    try {
+      if (!refreshToken) {
         logout();
-        // Handle token refresh error if necessary
-        // You might want to log the user out or redirect to a login page
-        throw error1;
+        throw new Error('No refreshToken found');
       }
-    } else {
-      // Token refresh is already in progress, so add the request to the queue
-      return new Promise(resolve => {
-        console.log('In Refresh token loop', originalRequest.url);
-        requestQueue.push(token => {
-          // Retry the original request with the new access token
-          originalRequest.headers.Authorization = `Bearer ${token}`;
-          resolve(axiosInstance(originalRequest));
-        });
+
+      const response = await axios.post(BASE_URL + 'refresh token endpoint', {
+        refreshToken,
       });
+      const {token, refreshToken: newRefreshToken} = response.data;
+      storeTokens(token, newRefreshToken);
+      requestQueue.forEach(resolve => resolve(token));
+      requestQueue.length = 0;
+      isRefreshing = false;
+      return token;
+    } catch (error) {
+      console.log('error in refresh token logic:', error);
+      logout();
+      throw error;
     }
+  } else {
+    // If another request is already refreshing the token, wait for it to complete
+    return new Promise<string>(resolve => {
+      requestQueue.push(token => resolve(token));
+    });
   }
-  return Promise.reject(error);
 };
 
 // axiosInstance interceptor for handling token refresh
-axiosInstance.interceptors.response.use(undefined, handleTokenRefresh);
+axiosInstance.interceptors.response.use(undefined, async error => {
+  const originalRequest = error.config;
+
+  if (error?.response?.status === 401) {
+    try {
+      // Wait for the token refresh to complete before resolving the request
+      const token = await refreshAccessToken();
+      originalRequest.headers.Authorization = `Bearer ${token}`;
+      return axiosInstance(originalRequest);
+    } catch (error1) {
+      return Promise.reject(error1);
+    }
+  }
+  return Promise.reject(error);
+});
+
+const executeRequest = async <T>(
+  requestFunction: (
+    path: string,
+    data?: any,
+  ) => Promise<AxiosResponse<Api & T, any>>,
+  path: string,
+  data?: any,
+): Promise<Api & T> => {
+  const {isConnected} = await NetInfo.fetch();
+  if (!isConnected) {
+    throw new Error('No Internet connection');
+  }
+
+  store.dispatch(startLoader());
+  store.dispatch(clearParams());
+
+  try {
+    const response: AxiosResponse<Api & T, any> = await requestFunction(
+      path,
+      data,
+    );
+
+    if (!response?.data?.status) {
+      throw new Error(response?.data?.message);
+    } else {
+      return response?.data;
+    }
+  } catch (error: any) {
+    throw new Error(error.message);
+  } finally {
+    store.dispatch(stopLoader());
+  }
+};
 
 const get = async <T>({
   path,
@@ -124,21 +141,20 @@ const get = async <T>({
     return persistedState;
   }
 
-  type ApiResponse = Api & T;
   if (!noLoader) {
     store.dispatch(startLoader());
   }
   store.dispatch(addParams(params));
+
   try {
     if (!allowRequestAnyway) {
-      store.dispatch(stopLoader());
       const {token, refreshToken} = getStoredTokens();
       if (!token && !refreshToken) {
         throw new Error('Your Session has expired. Please login to continue');
       }
     }
 
-    const response = await axiosInstance.get<ApiResponse>(path);
+    const response = await axiosInstance.get<Api & T>(path);
     if (!noLoader) {
       store.dispatch(stopLoader());
     }
@@ -172,30 +188,7 @@ const post = async <T>({
   path: string;
   data: any;
 }): Promise<Api & T> => {
-  const {isConnected} = await NetInfo.fetch();
-  if (!isConnected) {
-    throw new Error('No Internet connection');
-  }
-  type ApiResponse = Api & T;
-  store.dispatch(startLoader());
-  store.dispatch(clearParams());
-  try {
-    const response = await axios.post<ApiResponse>(BASE_URL + path, data);
-
-    if (!response?.data?.status) {
-      store.dispatch(stopLoader());
-
-      throw new Error(response?.data?.message);
-    } else {
-      store.dispatch(stopLoader());
-
-      return response?.data;
-    }
-  } catch (error: any) {
-    store.dispatch(stopLoader());
-
-    throw new Error(error.message);
-  }
+  return executeRequest<Api & T>(axiosInstance.post, BASE_URL + path, data);
 };
 
 const put = async <T>({
@@ -205,30 +198,7 @@ const put = async <T>({
   path: string;
   data: any;
 }): Promise<Api & T> => {
-  const {isConnected} = await NetInfo.fetch();
-  if (!isConnected) {
-    throw new Error('No Internet connection');
-  }
-  type ApiResponse = Api & T;
-  store.dispatch(startLoader());
-  store.dispatch(clearParams());
-
-  try {
-    const response = await axiosInstance.put<ApiResponse>(path, data);
-
-    if (!response?.data?.status) {
-      store.dispatch(stopLoader());
-      throw new Error(response?.data?.message);
-    } else {
-      store.dispatch(stopLoader());
-
-      return response?.data;
-    }
-  } catch (error: any) {
-    store.dispatch(stopLoader());
-
-    throw new Error(error.message);
-  }
+  return executeRequest<Api & T>(axiosInstance.put, path, data);
 };
 
 export {get, post, put};
