@@ -10,11 +10,12 @@ import SplashScreen from '@tandem/screens/SplashScreen';
 import {navigationRef} from './navigate';
 import {MODE} from '@tandem/constants/mode';
 import {Platform} from 'react-native';
-import {RootState} from '@tandem/redux/store';
+import {RootState, store} from '@tandem/redux/store';
 import {useOrientation} from '@tandem/hooks/useOrientation';
 import {changeOrientation} from '@tandem/redux/slices/orientation.slice';
 
 const AppNavigator = () => {
+  console.log('loader....', store.getState().activityIndicator.isEnabled);
   const Stack = createNativeStackNavigator<RootStackParamList>();
   const mode = useAppSelector((state: RootState) => state.mode.mode);
   const isTablet = useAppSelector(
