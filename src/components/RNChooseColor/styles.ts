@@ -45,8 +45,7 @@ export const styles = StyleSheet.create({
     ],
   },
   tooltip: {
-    textAlign: 'center',
+    marginLeft: 60,
     fontSize: verticalScale(16),
-    marginTop: 10,
   },
 });

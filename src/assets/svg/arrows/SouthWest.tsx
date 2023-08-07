@@ -8,6 +8,7 @@ function SvgComponent(props: any) {
       height={115}
       viewBox="0 0 112 115"
       fill="none"
+      rotation={props.rotation}
       xmlns="http://www.w3.org/2000/svg"
       {...props}>
       <G clipPath="url(#clip0_1233_49406)">
