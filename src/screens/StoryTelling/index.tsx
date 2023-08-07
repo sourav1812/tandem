@@ -5,6 +5,7 @@ import {
   FlatList,
   ScrollView,
   Dimensions,
+  Alert,
 } from 'react-native';
 import React, {useState, useCallback, useRef} from 'react';
 import {styles} from './style';
@@ -91,7 +92,11 @@ const StoryTelling = () => {
         source={require('../../assets/png/storyBackground.png')}>
         {currentIndex + 1 === 5 && (
           <View>
-            <View style={styles.summary}>
+            <View
+              style={[
+                styles.summary,
+                {height: !portrait ? verticalScale(270) : verticalScale(400)},
+              ]}>
               <ScrollView showsVerticalScrollIndicator={false}>
                 <RNTextComponent style={styles.title} isSemiBold>
                   Magic Castle
@@ -135,7 +140,6 @@ const StoryTelling = () => {
     );
   };
   const onViewableItemsChanged = useCallback(({viewableItems}: any) => {
-    console.log(viewableItems[0].index);
     if (viewableItems.length > 0) {
       setCurrentIndex(viewableItems[0].index);
     }
@@ -282,7 +286,12 @@ const StoryTelling = () => {
                 tooltipArray.push(12);
                 storeKey(TOOLTIP, tooltipArray);
               }}
-              customStyle={styles.multiplechoice}
+              customStyle={[
+                styles.multiplechoice,
+                // !portrait && {
+                //   height: verticalScale(200),
+                // },
+              ]}
             />
           </View>
         );

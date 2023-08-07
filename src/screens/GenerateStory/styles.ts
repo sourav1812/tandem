@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: verticalScale(50),
+    marginTop: verticalScale(40),
   },
   heading: {
     fontSize: scale(18),
@@ -103,7 +103,8 @@ export const styles = StyleSheet.create({
   },
   addImage: {
     height: verticalScale(190),
-    width: scale(265),
+    width: verticalScale(190),
+    borderRadius: 200,
   },
   yesOrNo: {
     fontSize: verticalScale(20),
@@ -123,9 +124,12 @@ export const styles = StyleSheet.create({
   },
   camera: {
     position: 'absolute',
-    top: '6%',
-    right: '5%',
+    top: '8%',
+    right: '26%',
     zIndex: 3,
+    height: verticalScale(25),
+    width: scale(22),
+    borderRadius: 12,
   },
   img: {
     height: verticalScale(120),
@@ -141,8 +145,8 @@ export const styles = StyleSheet.create({
     fontSize: verticalScale(16),
   },
   illustration: {
-    height: verticalScale(133),
-    width: verticalScale(133),
+    height: verticalScale(126),
+    width: verticalScale(126),
     borderRadius: 16,
     marginTop: verticalScale(18),
   },
@@ -150,5 +154,11 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: verticalScale(16),
     marginTop: 10,
+  },
+  YesbuttonText: {
+    fontSize: verticalScale(20),
+  },
+  buttonContainer: {
+    alignItems: 'center',
   },
 });

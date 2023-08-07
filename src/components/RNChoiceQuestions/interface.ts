@@ -6,4 +6,5 @@ export interface multipleChoiceProps {
   customStyle?: StyleProp<ViewStyle>;
   visibletoolTip?: boolean;
   onTooltipClose?: () => void;
+  itemStyle?: StyleProp<ViewStyle>;
 }

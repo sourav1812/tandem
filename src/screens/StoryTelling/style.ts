@@ -33,7 +33,6 @@ export const styles = StyleSheet.create({
     marginHorizontal: verticalScale(12),
   },
   summary: {
-    height: verticalScale(400),
     backgroundColor: themeColor.white,
     borderTopLeftRadius: verticalScale(16),
     borderTopRightRadius: verticalScale(16),

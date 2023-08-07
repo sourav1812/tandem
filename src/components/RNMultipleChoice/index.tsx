@@ -9,14 +9,22 @@ import RNEmojiWithText from '../RNEmojiWithText';
 import {multipleChoiceProps} from './interface';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {translation} from '@tandem/utils/methods';
+import {RootState} from '@tandem/redux/store';
 
 const RNMultipleChoice = ({onNextPress, customStyle}: multipleChoiceProps) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const portrait = useAppSelector(
+    (state: RootState) => state.orientation.isPortrait,
+  );
 
   return (
     <>
       <View style={[styles.container, customStyle && customStyle]}>
-        <View style={styles.voiceQuestion}>
+        <View
+          style={[
+            styles.voiceQuestion,
+            !portrait && {height: verticalScale(280)},
+          ]}>
           <View style={styles.emojiView}>
             <RNTextComponent style={styles.emoji}>🤔</RNTextComponent>
           </View>

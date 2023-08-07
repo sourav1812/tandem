@@ -1,4 +1,4 @@
-import {Alert, Pressable} from 'react-native';
+import {Pressable, View} from 'react-native';
 import React from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import RNTextComponent from '@tandem/components/RNTextComponent';
@@ -12,9 +12,13 @@ import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import i18n from '@tandem/constants/lang/i18n';
 import navigateTo from '@tandem/navigation/navigate';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {RootState} from '@tandem/redux/store';
 
 const SelectLanguage = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const portrait = useAppSelector(
+    (state: RootState) => state.orientation.isPortrait,
+  );
   return (
     <RNScreenWrapper style={{backgroundColor: themeColor.white}}>
       <RNTextComponent style={styles.heading} isSemiBold>
@@ -23,25 +27,27 @@ const SelectLanguage = () => {
       <RNTextComponent style={styles.info}>
         {en.YOU_CAN_CHANGE_IT}
       </RNTextComponent>
-      {languages.map((item, index) => {
-        return (
-          <Pressable
-            key={index.toString()}
-            onPress={() => {
-              i18n.locale = item.code;
-              navigateTo(SCREEN_NAME.ONBOARDING);
-            }}>
-            <RNLanguageComponent
-              title={item.name}
-              flag={item.flag}
-              customStyle={{
-                marginTop: verticalScale(14),
-                marginHorizontal: isTablet ? scale(35) : verticalScale(14),
-              }}
-            />
-          </Pressable>
-        );
-      })}
+      <View style={[!portrait && {marginHorizontal: scale(100)}]}>
+        {languages.map((item, index) => {
+          return (
+            <Pressable
+              key={index.toString()}
+              onPress={() => {
+                i18n.locale = item.code;
+                navigateTo(SCREEN_NAME.ONBOARDING);
+              }}>
+              <RNLanguageComponent
+                title={item.name}
+                flag={item.flag}
+                customStyle={{
+                  marginTop: verticalScale(14),
+                  marginHorizontal: isTablet ? scale(35) : verticalScale(14),
+                }}
+              />
+            </Pressable>
+          );
+        })}
+      </View>
     </RNScreenWrapper>
   );
 };

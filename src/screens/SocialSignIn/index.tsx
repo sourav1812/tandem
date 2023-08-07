@@ -1,5 +1,5 @@
 import {ImageBackground, Image, View} from 'react-native';
-import React from 'react';
+import React, {version} from 'react';
 import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import RNTextComponent from '@tandem/components/RNTextComponent';
@@ -8,28 +8,37 @@ import Fb from '@tandem/assets/svg/FBlogo';
 import Google from '@tandem/assets/svg/GoogleLogo';
 import Apple from '@tandem/assets/svg/AppleLogo';
 import RNSocialButton from '@tandem/components/RNSocialButton';
-import {scale} from 'react-native-size-matters';
+import {scale, verticalScale} from 'react-native-size-matters';
 import RNButton from '@tandem/components/RNButton';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {RootState} from '@tandem/redux/store';
 
 const SocialSignIn = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const portrait = useAppSelector(
+    (state: RootState) => state.orientation.isPortrait,
+  );
   return (
     <RNScreenWrapper>
       <ImageBackground
         style={styles.container}
         source={
           isTablet
-            ? require('@tandem/assets/png/authScreenBgc.png')
-            : require('@tandem/assets/png/signInBgc.png')
+            ? !portrait
+              ? require('@tandem/assets/png/tabletWelcomeScreen.png')
+              : require('@tandem/assets/png/authScreenBgc.png')
+            : require('@tandem/assets/png/signInMobileBgc.png')
         }
         resizeMode="stretch">
-        <View style={[isTablet && {paddingHorizontal: scale(70)}]}>
+        <View
+          style={[
+            isTablet && {paddingHorizontal: !portrait ? scale(150) : scale(70)},
+          ]}>
           <Image
             source={require('../../assets/png/logo.png')}
-            style={styles.img}
+            style={[styles.img, !portrait && {marginTop: verticalScale(30)}]}
             resizeMode="contain"
           />
           <RNTextComponent isSemiBold style={styles.heading}>
