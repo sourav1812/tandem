@@ -36,10 +36,14 @@ import {translation} from '@tandem/utils/methods';
 import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
 import {TOOLTIP} from '@tandem/constants/LocalConstants';
 import RNTooltip from '@tandem/components/RNTooltip';
+import {RootState} from '@tandem/redux/store';
 
 const GenerateStory = () => {
   const dispatch = useAppDispatch();
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const portrait = useAppSelector(
+    (state: RootState) => state.orientation.isPortrait,
+  );
   const questionIndex = useAppSelector(state => state.questions.index);
 
   const tooltipArray = getValueFromKey(TOOLTIP);
@@ -97,13 +101,18 @@ const GenerateStory = () => {
       case 0:
         return (
           <>
-            <RNTextComponent isSemiBold style={styles.question}>
+            <RNTextComponent
+              isSemiBold
+              style={[
+                styles.question,
+                !portrait && {height: verticalScale(40)},
+              ]}>
               {translation('WHO')}{' '}
               <RNTextComponent
                 isSemiBold
                 style={{...styles.question, color: 'rgba(10, 8, 4, 0.6)'}}>
                 {translation('generate-story.is-in-story')}{' '}
-              </RNTextComponent>{' '}
+              </RNTextComponent>
             </RNTextComponent>
             <RNChoiceQuestions
               data={audience}
@@ -118,13 +127,22 @@ const GenerateStory = () => {
             <RNTextComponent isSemiBold style={styles.question}>
               {translation('generate-story.included-in-story')}
             </RNTextComponent>
-            <View style={[styles.picView]}>
+            <View
+              style={[
+                styles.picView,
+                !portrait && {
+                  flexDirection: 'row',
+                  justifyContent: 'space-evenly',
+                  alignItems: 'flex-start',
+                  marginTop: verticalScale(40),
+                },
+              ]}>
               <ImageBackground
                 source={{
                   uri: 'https://previews.123rf.com/images/daniel4606/daniel46061708/daniel4606170800232/84992720-cartoon-giraffe-face.jpg',
                 }}
                 style={styles.addImage}
-                imageStyle={{borderRadius: 16}}>
+                imageStyle={{borderRadius: 200}}>
                 <RNButton
                   onlyIcon
                   icon={<Camera height={18} width={20} />}
@@ -132,22 +150,26 @@ const GenerateStory = () => {
                   IconButtoncustomStyle={styles.camera}
                 />
               </ImageBackground>
-              <RNTextComponent style={styles.yesOrNo} isMedium>
-                {translation('YES')} or {translation('NO')}?
-              </RNTextComponent>
-              <View
-                style={[styles.buttonView, isTablet && {width: scale(180)}]}>
-                <RNButton
-                  title="✔"
-                  customStyle={styles.buttonStyle}
-                  onlyBorder
-                  onClick={nextQuestion}
-                />
-                <RNButton
-                  title="✕"
-                  customStyle={styles.buttonStyle}
-                  onClick={nextQuestion}
-                />
+              <View style={styles.buttonContainer}>
+                <RNTextComponent style={styles.yesOrNo} isMedium>
+                  {translation('YES')} or {translation('NO')}?
+                </RNTextComponent>
+                <View
+                  style={[styles.buttonView, isTablet && {width: scale(180)}]}>
+                  <RNButton
+                    title="✔"
+                    customStyle={styles.buttonStyle}
+                    onlyBorder
+                    onClick={nextQuestion}
+                    textStyle={styles.YesbuttonText}
+                  />
+                  <RNButton
+                    title="✕"
+                    customStyle={styles.buttonStyle}
+                    onClick={nextQuestion}
+                    textStyle={styles.YesbuttonText}
+                  />
+                </View>
               </View>
             </View>
           </>
@@ -327,15 +349,17 @@ const GenerateStory = () => {
               },
             );
           }}>
-          <RNButton
-            customStyle={[
-              styles.footerButton,
-              isTablet && {maxHeight: verticalScale(75)},
-            ]}
-            title={translation('SELECT')}
-            onClick={nextQuestion}
-            textStyle={styles.buttonText}
-          />
+          {questionIndex !== 1 && (
+            <RNButton
+              customStyle={[
+                styles.footerButton,
+                isTablet && {maxHeight: verticalScale(75)},
+              ]}
+              title={translation('SELECT')}
+              onClick={nextQuestion}
+              textStyle={styles.buttonText}
+            />
+          )}
         </View>
       </RNTooltip>
     </RNScreenWrapper>

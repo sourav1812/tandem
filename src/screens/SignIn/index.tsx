@@ -20,7 +20,7 @@ import Google from '@tandem/assets/svg/GoogleLogo';
 import Apple from '@tandem/assets/svg/AppleLogo';
 import FB from '@tandem/assets/svg/FBlogo';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
-import {verticalScale} from 'react-native-size-matters';
+import {scale, verticalScale} from 'react-native-size-matters';
 import navigateTo from '@tandem/navigation/navigate';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
@@ -55,7 +55,9 @@ const SignIn = () => {
             style={styles.container}
             source={
               isTablet
-                ? require('@tandem/assets/png/authScreenBgc.png')
+                ? !portrait
+                  ? require('@tandem/assets/png/tabletWelcomeScreen.png')
+                  : require('@tandem/assets/png/authScreenBgc.png')
                 : require('@tandem/assets/png/signInMobileBgc.png')
             }
             resizeMode="stretch">
@@ -66,7 +68,11 @@ const SignIn = () => {
             <View
               style={[
                 styles.form,
-                isTablet && {paddingHorizontal: verticalScale(120)},
+                isTablet && {
+                  paddingHorizontal: !portrait
+                    ? scale(160)
+                    : verticalScale(120),
+                },
               ]}>
               <RNTextInputWithLabel
                 label={translation('EMAIL')}

@@ -74,6 +74,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     backgroundColor: themeColor.themeBlue,
     borderWidth: 0,
+    zIndex: 40,
   },
   icon: {
     alignSelf: 'center',
@@ -88,7 +89,7 @@ export const styles = StyleSheet.create({
   },
   options: {
     height: verticalScale(280),
-    alignSelf: 'center',
+    // alignSelf: 'center',
   },
   scroll: {
     flexWrap: 'wrap',

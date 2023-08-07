@@ -12,6 +12,7 @@ const RNChoiceQuestions = ({
   data = [],
   customStyle,
   visibletoolTip = false,
+  itemStyle,
   onTooltipClose = () => {},
 }: multipleChoiceProps) => {
   const tooltipArray = getValueFromKey(TOOLTIP);
@@ -31,7 +32,10 @@ const RNChoiceQuestions = ({
               open={tooltipArray.includes(5) ? false : visibletoolTip}
               setClose={onTooltipClose}
               text={translation('CHOOSE_FROM_THE_GIVE_OPTIONS')}
-              textContainerStyle={styles.tooltipContainer}
+              textContainerStyle={[
+                styles.tooltipContainer,
+                itemStyle && itemStyle,
+              ]}
               textStyle={styles.tooltip}
               dimensionObject={positionRefs[0]}>
               <RNEmojiWithText
@@ -65,7 +69,7 @@ const RNChoiceQuestions = ({
             <RNEmojiWithText
               key={index.toString()}
               heading={value.name}
-              customStyle={styles.optionsCustom}
+              customStyle={[styles.optionsCustom, itemStyle && itemStyle]}
               icon={value.icon}
               bgcColor={value.bgc}
             />

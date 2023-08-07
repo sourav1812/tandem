@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
     flexWrap: 'wrap',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignSelf: 'center',
+    // alignSelf: 'center',
   },
   optionsCustom: {
     height: verticalScale(132),
