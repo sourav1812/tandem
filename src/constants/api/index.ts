@@ -5,7 +5,7 @@ export enum ENVIRONMENT {
 
 const ENV_VARS = {
   [ENVIRONMENT.DEVELOPMENT]: {
-    API_URL: '', // * STAGING URL
+    API_URL: 'http://192.168.1.59:5000/', // * STAGING URL
   },
   [ENVIRONMENT.PRODUCTION]: {
     API_URL: '', // * LIVE URL
@@ -21,4 +21,6 @@ export const BASE_URL = ENV_VARS[SELECTED_ENVIRONMENT].API_URL;
 export const PEXELS_API_KEY =
   'EX5cnNzfNvWCwgBYmgPwZzLAR7KX1CMnj1bDHJEHljQk2bEA2lh8oPc5';
 
-export enum API {}
+export enum API {
+  REGISTER_USER = 'user/register/v1',
+}

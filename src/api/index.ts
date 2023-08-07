@@ -69,22 +69,49 @@ const refreshAccessToken = async () => {
   }
 };
 
-// axiosInstance interceptor for handling token refresh
-axiosInstance.interceptors.response.use(undefined, async error => {
+const handleError = async (error: {
+  config: any;
+  response: {
+    status: number;
+    data: {message: string; possibleResolution: string | undefined};
+  };
+}) => {
   const originalRequest = error.config;
-
-  if (error?.response?.status === 401) {
+  const {status, data} = error.response;
+  console.log('error in intercerpt', {error: data});
+  if (status === 401) {
+    // Handle token refresh for 401 (Unauthorized) errors
     try {
-      // Wait for the token refresh to complete before resolving the request
       const token = await refreshAccessToken();
       originalRequest.headers.Authorization = `Bearer ${token}`;
-      return axiosInstance(originalRequest);
+      return await axiosInstance(originalRequest);
     } catch (error1) {
-      return Promise.reject(error1);
+      return await Promise.reject(
+        new Error(originalRequest.url + ': Status: ' + status),
+      );
     }
+  } else if (status >= 400) {
+    // Handle 404 (Not Found) errors
+    // For example, you can throw a custom error or return a specific response
+    //! Toast message here
+    return await Promise.reject(
+      new Error(originalRequest.url + ': Status: ' + status),
+    );
+  } else if (status >= 500) {
+    // Handle 5xx (Server Errors) errors
+    // For example, you can throw a custom error or return a specific response
+    // !Toast message here
+    return await Promise.reject(
+      new Error(originalRequest.url + ': Status: ' + status),
+    );
   }
+  // ! Handle other status codes here
+  // For other status codes, return the error as is
   return Promise.reject(error);
-});
+};
+
+// axiosInstance interceptor for handling token refresh
+axiosInstance.interceptors.response.use(undefined, handleError);
 
 const executeRequest = async <T>(
   requestFunction: (
@@ -93,7 +120,7 @@ const executeRequest = async <T>(
   ) => Promise<AxiosResponse<Api & T, any>>,
   path: string,
   data?: any,
-): Promise<Api & T> => {
+) => {
   const {isConnected} = await NetInfo.fetch();
   if (!isConnected) {
     throw new Error('No Internet connection');
@@ -107,14 +134,10 @@ const executeRequest = async <T>(
       path,
       data,
     );
-
-    if (!response?.data?.status) {
-      throw new Error(response?.data?.message);
-    } else {
-      return response?.data;
-    }
+    //! Toast message here to show completion of POST/PUT request
+    return response?.data;
   } catch (error: any) {
-    throw new Error(error.message);
+    console.log(error.message);
   } finally {
     store.dispatch(stopLoader());
   }
@@ -124,7 +147,6 @@ const get = async <T>({
   path,
   params,
   noLoader = false,
-  allowRequestAnyway = false,
 }: {
   path: string;
   params?: any;
@@ -140,65 +162,39 @@ const get = async <T>({
     }
     return persistedState;
   }
-
   if (!noLoader) {
     store.dispatch(startLoader());
   }
   store.dispatch(addParams(params));
 
   try {
-    if (!allowRequestAnyway) {
-      const {token, refreshToken} = getStoredTokens();
-      if (!token && !refreshToken) {
-        throw new Error('Your Session has expired. Please login to continue');
-      }
+    const {token, refreshToken} = getStoredTokens();
+    if (!token && !refreshToken) {
+      throw new Error('Your Session has expired. Please login to continue');
     }
-
     const response = await axiosInstance.get<Api & T>(path);
-    if (!noLoader) {
-      store.dispatch(stopLoader());
-    }
-    if (!response?.data?.status) {
-      persistedState = store.getState().getResponseReducer[path];
-      if (!persistedState) {
-        throw new Error(response?.data?.message);
-      }
-      return persistedState;
-    } else {
-      store.dispatch(addGetResponse({path, response: response?.data}));
-    }
+    store.dispatch(addGetResponse({path, response: response?.data}));
     return response?.data;
   } catch (error: any) {
     persistedState = store.getState().getResponseReducer[path];
 
+    if (!persistedState) {
+      console.log(error.message);
+    }
+    return persistedState;
+  } finally {
     if (!noLoader) {
       store.dispatch(stopLoader());
     }
-    if (!persistedState) {
-      throw new Error(error.message);
-    }
-    return persistedState;
   }
 };
 
-const post = async <T>({
-  path,
-  data,
-}: {
-  path: string;
-  data: any;
-}): Promise<Api & T> => {
-  return executeRequest<Api & T>(axiosInstance.post, BASE_URL + path, data);
+const post = async <T>({path, data}: {path: string; data: any}) => {
+  executeRequest<Api & T>(axiosInstance.post, BASE_URL + path, data);
 };
 
-const put = async <T>({
-  path,
-  data,
-}: {
-  path: string;
-  data: any;
-}): Promise<Api & T> => {
-  return executeRequest<Api & T>(axiosInstance.put, path, data);
+const put = async <T>({path, data}: {path: string; data: any}) => {
+  executeRequest<Api & T>(axiosInstance.put, path, data);
 };
 
 export {get, post, put};
