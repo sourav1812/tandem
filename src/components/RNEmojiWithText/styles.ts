@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
   },
   emoji: {
-    fontSize: verticalScale(38),
+    fontSize: verticalScale(45),
     fontFamily: 'Poppins-Bold',
   },
 });
