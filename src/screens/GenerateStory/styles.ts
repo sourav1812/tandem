@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: themeColor.white,
-    paddingHorizontal: scale(20),
+    // paddingHorizontal: scale(20),
   },
   header: {
     flexDirection: 'row',
@@ -37,12 +37,12 @@ export const styles = StyleSheet.create({
     fontSize: verticalScale(21),
     textAlign: 'center',
     marginTop: verticalScale(14),
+    paddingHorizontal: scale(20),
   },
   scrollView: {
     flexWrap: 'wrap',
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignSelf: 'center',
+    justifyContent: 'center',
   },
   optionsCustom: {
     height: verticalScale(132),
@@ -148,7 +148,7 @@ export const styles = StyleSheet.create({
     height: verticalScale(126),
     width: verticalScale(126),
     borderRadius: 16,
-    marginTop: verticalScale(18),
+    margin: scale(13),
   },
   tooltip: {
     textAlign: 'center',

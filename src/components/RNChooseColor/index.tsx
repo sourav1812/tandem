@@ -14,7 +14,11 @@ import {getValueFromKey} from '@tandem/helpers/encryptedStorage';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {RootState} from '@tandem/redux/store';
 
-const RNChooseColor = ({tooltipVisible, onTooltipClose}: colorPaletteType) => {
+const RNChooseColor = ({
+  tooltipVisible,
+  onTooltipClose,
+  customStyle,
+}: colorPaletteType) => {
   const tooltipArray = getValueFromKey(TOOLTIP);
   const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
@@ -45,7 +49,7 @@ const RNChooseColor = ({tooltipVisible, onTooltipClose}: colorPaletteType) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, customStyle && customStyle]}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <RNTextComponent isSemiBold style={styles.question}>
           {translation('choose-color.what-colors')}{' '}
