@@ -3,6 +3,7 @@ import modeSlice from './slices/mode.slice';
 import deviceTypeSlice from './slices/tablet.slice';
 import orientationSlice from './slices/orientation.slice';
 import questionsSlice from './slices/questions.slice';
+import activityIndicatorSlice from './slices/activityIndicator.slice';
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     deviceType: deviceTypeSlice,
     orientation: orientationSlice,
     questions: questionsSlice,
+    activityIndicator: activityIndicatorSlice,
   },
 });
 
