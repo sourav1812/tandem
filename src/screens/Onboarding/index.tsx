@@ -95,7 +95,6 @@ const Onboarding = () => {
     ({viewableItems}: any) => {
       if (viewableItems.length > 0) {
         setCurrentIndex(viewableItems[0].index);
-        console.log('+++++++++++', viewableItems[0].index);
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
