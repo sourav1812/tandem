@@ -62,6 +62,7 @@ const refreshAccessToken = async () => {
       throw error;
     }
   } else {
+    // If another request is already refreshing the token, wait for it to complete
     return new Promise<string>(resolve => {
       requestQueue.push(token => resolve(token));
     });
@@ -74,6 +75,7 @@ axiosInstance.interceptors.response.use(undefined, async error => {
 
   if (error?.response?.status === 401) {
     try {
+      // Wait for the token refresh to complete before resolving the request
       const token = await refreshAccessToken();
       originalRequest.headers.Authorization = `Bearer ${token}`;
       return axiosInstance(originalRequest);
