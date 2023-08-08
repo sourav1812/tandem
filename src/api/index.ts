@@ -82,6 +82,14 @@ const handleError = async (error: {
   if (status === 401) {
     // Handle token refresh for 401 (Unauthorized) errors
     try {
+      const {refreshToken} = getStoredTokens();
+      if (!refreshToken) {
+        // if 401 error is not due to token invaidation
+        //! Toast message here
+        return await Promise.reject(
+          new Error(originalRequest.url + ': Status: ' + status),
+        );
+      }
       const token = await refreshAccessToken();
       originalRequest.headers.Authorization = `Bearer ${token}`;
       return await axiosInstance(originalRequest);
@@ -135,6 +143,7 @@ const executeRequest = async <T>(
       data,
     );
     //! Toast message here to show completion of POST/PUT request
+    console.log('yay', response.data);
     return response?.data;
   } catch (error: any) {
     console.log(error.message);
@@ -190,11 +199,11 @@ const get = async <T>({
 };
 
 const post = async <T>({path, data}: {path: string; data: any}) => {
-  executeRequest<Api & T>(axiosInstance.post, BASE_URL + path, data);
+  return executeRequest<Api & T>(axiosInstance.post, BASE_URL + path, data);
 };
 
 const put = async <T>({path, data}: {path: string; data: any}) => {
-  executeRequest<Api & T>(axiosInstance.put, path, data);
+  return executeRequest<Api & T>(axiosInstance.put, path, data);
 };
 
 export {get, post, put};
