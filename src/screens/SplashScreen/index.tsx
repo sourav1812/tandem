@@ -8,13 +8,18 @@ import navigateTo from '@tandem/navigation/navigate';
 import DeviceInfo from 'react-native-device-info';
 import {changeDevice} from '@tandem/redux/slices/tablet.slice';
 import {useDispatch} from 'react-redux';
+import {getStoredTokens} from '@tandem/functions/tokens';
 
 const SplashScreen = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     setTimeout(() => {
-      navigateTo(SCREEN_NAME.SELECT_LANGUAGE, {}, true);
+      if (!getStoredTokens) {
+        navigateTo(SCREEN_NAME.SELECT_LANGUAGE, {}, true);
+      } else {
+        navigateTo(SCREEN_NAME.BOTTOM_TAB, {}, true);
+      }
     }, 2000);
   }, []);
 

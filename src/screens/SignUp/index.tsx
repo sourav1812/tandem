@@ -6,7 +6,6 @@ import {
   ScrollView,
   View,
   ImageBackground,
-  Dimensions,
 } from 'react-native';
 import React, {useState} from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
@@ -23,9 +22,13 @@ import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {verticalScale} from 'react-native-size-matters';
 import navigateTo from '@tandem/navigation/navigate';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
-import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
+import validateForm, {
+  FORM_INPUT_TYPE,
+  ValidationError,
+} from '@tandem/utils/validations';
 import {RootState} from '@tandem/redux/store';
 import {translation} from '@tandem/utils/methods';
+import registerUser from '@tandem/api/registerUser';
 
 const SignUp = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -39,6 +42,52 @@ const SignUp = () => {
   const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
+
+  const handleSignUpButton = async () => {
+    if (confirmPassword.value === password.value) {
+      if (
+        name.value === '' ||
+        email.value === '' ||
+        password.value === '' ||
+        confirmPassword.value === '' ||
+        name.message === '' ||
+        email.message === '' ||
+        password.message === '' ||
+        confirmPassword.message
+      ) {
+        setEmail(validateForm(FORM_INPUT_TYPE.EMAIL, ''));
+        setName(validateForm(FORM_INPUT_TYPE.NAME, ''));
+        setPassword(validateForm(FORM_INPUT_TYPE.PASSWORD, ''));
+        setConfirmPassword(validateForm(FORM_INPUT_TYPE.PASSWORD, ''));
+        return;
+      }
+      const signUpResponse = await registerUser({
+        email: email.value,
+        name: name.value,
+        password: password.value,
+      });
+
+      if (!signUpResponse) {
+        return;
+      }
+      Alert.alert('Message', 'You have successfuly registered.', [
+        {
+          text: 'OK',
+          onPress: () => {
+            navigateTo(SCREEN_NAME.SIGN_IN, {}, true);
+          },
+        },
+      ]);
+    } else {
+      Alert.alert('Message', 'Password does not match.', [
+        {
+          text: 'OK',
+          onPress: () => {},
+        },
+      ]);
+    }
+  };
+
   return (
     <RNScreenWrapper style={{backgroundColor: themeColor.white}}>
       <KeyboardAvoidingView
@@ -114,18 +163,7 @@ const SignUp = () => {
                   <RNButton
                     title={translation('SIGN_UP')}
                     customStyle={styles.button}
-                    onClick={() => {
-                      if (confirmPassword.value === password.value) {
-                        navigateTo(SCREEN_NAME.TERMS_AND_CONDITIONS);
-                      } else {
-                        Alert.alert('Message', 'Password does not match.', [
-                          {
-                            text: 'OK',
-                            onPress: () => {},
-                          },
-                        ]);
-                      }
-                    }}
+                    onClick={handleSignUpButton}
                   />
                   <View style={styles.continueDesign}>
                     <View style={styles.line} />
@@ -237,18 +275,7 @@ const SignUp = () => {
                   <RNButton
                     title={translation('SIGN_UP')}
                     customStyle={styles.button}
-                    onClick={() => {
-                      if (confirmPassword.value === password.value) {
-                        navigateTo(SCREEN_NAME.TERMS_AND_CONDITIONS);
-                      } else {
-                        Alert.alert('Message', 'Password does not match.', [
-                          {
-                            text: 'OK',
-                            onPress: () => {},
-                          },
-                        ]);
-                      }
-                    }}
+                    onClick={handleSignUpButton}
                   />
                   <View style={styles.continueDesign}>
                     <View style={styles.line} />

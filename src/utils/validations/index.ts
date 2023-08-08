@@ -62,7 +62,17 @@ const validatePassword = (value: string): ValidationError => {
       value,
     };
   }
-
+  if (
+    !/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(
+      value,
+    )
+  ) {
+    return {
+      message: translation('validations.password-length'),
+      type: FORM_INPUT_TYPE.PASSWORD,
+      value,
+    };
+  }
   return {value};
 };
 
