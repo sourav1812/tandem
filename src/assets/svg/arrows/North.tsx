@@ -7,6 +7,7 @@ function SvgComponent(props: any) {
       width={85}
       height={94}
       viewBox="0 0 85 94"
+      rotation={props.rotation}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}>

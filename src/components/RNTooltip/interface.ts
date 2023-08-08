@@ -10,4 +10,7 @@ export interface TooltipProps {
   textStyle?: StyleProp<TextStyle>;
   mainStyle?: StyleProp<ViewStyle>;
   dimensionObject: any;
+  top?: string;
+  bottom?: string;
+  rotation?: number;
 }

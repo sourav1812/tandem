@@ -22,7 +22,10 @@ const RNTooltip = ({
   textContainerStyle,
   textStyle,
   mainStyle,
+  top,
+  bottom,
   dimensionObject,
+  rotation,
 }: TooltipProps) => {
   const tooltipNumber = getValueFromKey(TOOLTIP);
   const helperTop = tooltipHelperTop(dimensionObject);
@@ -33,7 +36,9 @@ const RNTooltip = ({
       isVisible={tooltipNumber.length < 14 ? open : false}
       content={
         <>
-          {helperTop && <RNArrowIconTop type={helperTop} />}
+          {helperTop && (
+            <RNArrowIconTop rotation={rotation} type={top ? top : helperTop} />
+          )}
           <View style={[textContainerStyle && textContainerStyle]}>
             <RNTextComponent
               isSemiBold
@@ -48,7 +53,12 @@ const RNTooltip = ({
               {text}
             </RNTextComponent>
           </View>
-          {helperBottom && <RNArrowIconBottom type={helperBottom} />}
+          {helperBottom && (
+            <RNArrowIconBottom
+              rotation={rotation}
+              type={bottom ? bottom : helperBottom}
+            />
+          )}
         </>
       }
       backgroundColor="#000000CC"

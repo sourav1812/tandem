@@ -206,6 +206,7 @@ const StoryTelling = () => {
           tooltipArray.push(8);
           storeKey(TOOLTIP, tooltipArray);
         }}
+        rotation={10}
         text={translation('READ_ALOUD')}
         textContainerStyle={styles.tooltipTwo}
         textStyle={[
@@ -309,7 +310,10 @@ const StoryTelling = () => {
             storeKey(TOOLTIP, tooltipArray);
           }}
           text={translation('EXIT')}
-          textContainerStyle={styles.tooltipTwo}
+          textContainerStyle={[
+            styles.tooltipTwo,
+            {marginRight: 0, marginLeft: 24},
+          ]}
           textStyle={[
             {
               textAlign: 'center',
@@ -377,7 +381,8 @@ const StoryTelling = () => {
             storeKey(TOOLTIP, tooltipArray);
           }}
           text={translation('READ_A_STORY')}
-          textContainerStyle={styles.tooltipTwo}
+          textContainerStyle={[styles.tooltipTwo, {margin: 0, marginLeft: 20}]}
+          // bottom={'South'}
           mainStyle={{
             marginTop: verticalScale(-200),
             height: verticalScale(200),

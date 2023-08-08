@@ -4,21 +4,27 @@ import NorthEast from '@tandem/assets/svg/arrows/NorthEast';
 import NorthWest from '@tandem/assets/svg/arrows/NorthWest';
 import West from '@tandem/assets/svg/arrows/West';
 
-const RNArrowIconTop = ({type}: {type: string}) => {
+const RNArrowIconTop = ({
+  type,
+  rotation,
+}: {
+  type: string;
+  rotation?: number;
+}) => {
   console.log(type);
   switch (type) {
     case 'North':
-      return <North />;
+      return <North rotation={rotation} />;
     case 'East':
-      return <East />;
+      return <East rotation={rotation} />;
     case 'NorthEast':
-      return <NorthEast />;
+      return <NorthEast rotation={rotation} />;
 
     case 'NorthWest':
-      return <NorthWest />;
+      return <NorthWest rotation={rotation} />;
 
     case 'West':
-      return <West />;
+      return <West rotation={rotation} />;
   }
 };
 export default RNArrowIconTop;
