@@ -55,24 +55,35 @@ const validatePassword = (value: string): ValidationError => {
       value,
     };
   }
-  if (!/^\S{6,}$/.test(value)) {
+  if (!/^\S{8,}$/.test(value)) {
     return {
       message: translation('validations.password-length'),
       type: FORM_INPUT_TYPE.PASSWORD,
       value,
     };
   }
-  if (
-    !/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(
-      value,
-    )
-  ) {
+  if (!/[A-Za-z]/.test(value)) {
     return {
-      message: translation('validations.password-length'),
+      message: translation('validations.atleast-one-character'),
       type: FORM_INPUT_TYPE.PASSWORD,
       value,
     };
   }
+  if (!/\d/.test(value)) {
+    return {
+      message: translation('validations.atleast-one-digit'),
+      type: FORM_INPUT_TYPE.PASSWORD,
+      value,
+    };
+  }
+  if (!/[@$!%*#?&]/.test(value)) {
+    return {
+      message: translation('validations.contain-special-character'),
+      type: FORM_INPUT_TYPE.PASSWORD,
+      value,
+    };
+  }
+
   return {value};
 };
 

@@ -8,8 +8,8 @@ import {verticalScale} from 'react-native-size-matters';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {styles} from './style';
 import {useDispatch} from 'react-redux';
-import {closeAlertBox} from '@tandem/redux/slices/alertBox.slice';
 import {AlertBoxInterface} from './interface';
+import {clearAlertData} from '@tandem/redux/slices/alertBox.slice';
 
 const RNAlertBox = ({
   visible,
@@ -38,7 +38,7 @@ const RNAlertBox = ({
         </RNTextComponent>
         <RNTextComponent style={styles.info}>{message}</RNTextComponent>
         <RNButton
-          onClick={() => dispatch(closeAlertBox())}
+          onClick={() => dispatch(clearAlertData())}
           title={'OK'}
           customStyle={[styles.button2]}
         />

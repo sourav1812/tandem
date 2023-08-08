@@ -219,7 +219,7 @@ const AppNavigator = () => {
         </Stack.Navigator>
       </NavigationContainer>
       <RNAlertBox
-        visible={alertData?.isEnabled}
+        visible={alertData?.type ? true : false}
         type={alertData?.type}
         message={alertData?.message}
       />
