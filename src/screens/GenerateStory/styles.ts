@@ -4,8 +4,8 @@ import {scale, verticalScale} from 'react-native-size-matters';
 
 export const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: themeColor.white,
+    flex: 1,
     // paddingHorizontal: scale(20),
   },
   header: {
@@ -51,9 +51,7 @@ export const styles = StyleSheet.create({
   },
   footerButton: {
     borderRadius: 0,
-    height: verticalScale(80),
-    paddingTop: verticalScale(25),
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
   },
   subHeading: {
     fontSize: verticalScale(14),

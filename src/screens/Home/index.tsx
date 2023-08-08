@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import {
   View,
   Image,
@@ -47,7 +46,8 @@ const Home = () => {
     1: {height: 0, width: 0, x: 0, y: 0},
   });
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
-  const {width} = useWindowDimensions();
+  const widthDimention = useWindowDimensions().width;
+
   const modeBC: {color: string; title: string}[] = [
     {color: themeColor.purple, title: translation('WRITE_A_STORY')},
     {color: themeColor.purple, title: translation('I_CANT_DECIDE')},
@@ -154,13 +154,7 @@ const Home = () => {
           }}
           text={translation('BY_CLICKING_CHANGE_CHILD_ACCOUNT')}
           textContainerStyle={styles.tooltipTwo}
-          textStyle={[
-            {
-              textAlign: 'center',
-              fontSize: verticalScale(16),
-              marginTop: 10,
-            },
-          ]}
+          textStyle={styles.tooltipText}
           dimensionObject={positionRefs[1]}>
           <View
             ref={refTwo}
@@ -181,31 +175,14 @@ const Home = () => {
                 },
               );
             }}
-            style={{
-              height: verticalScale(89),
-              width: verticalScale(89),
-              alignItems: 'center',
-              justifyContent: 'center',
-              overflow: 'visible',
-            }}>
+            style={styles.tooltipUserWrapper}>
             <Image
-              style={{
-                height: verticalScale(59),
-                width: verticalScale(59),
-                borderRadius: 100,
-              }}
+              style={styles.tooltipUserImage}
               source={{
                 uri: userProfile,
               }}
             />
-            <RNTextComponent
-              style={{
-                marginTop: 5,
-                position: 'absolute',
-                bottom: -verticalScale(10),
-                fontSize: verticalScale(18),
-              }}
-              isSemiBold>
+            <RNTextComponent style={styles.tooltipUserName} isSemiBold>
               {name}
             </RNTextComponent>
           </View>
@@ -248,7 +225,7 @@ const Home = () => {
                 marginTop:
                   !isTablet && portrait ? verticalScale(60) : verticalScale(20),
               }}>
-              {translation('HELLO')}, Ella!{mode === MODE.A && `(Mum)!`} 👋🏻
+              {translation('HELLO')}, Ella!{mode === MODE.A && '(Mum)!'} 👋🏻
             </RNTextComponent>
             <Pressable
               onPress={() => navigation.push(SCREEN_NAME.ACCOUNT)}
@@ -351,31 +328,22 @@ const Home = () => {
                   },
                 );
               }}
-              style={{
-                width: '100%',
-                backgroundColor: 'transparent',
-                height: verticalScale(23),
-                position: 'absolute',
-                bottom: -verticalScale(17),
-                justifyContent: 'space-between',
-                flexDirection: 'row',
-                zIndex: 50,
-              }}>
+              style={styles.curveViewHeaderWrapper}>
               <View
-                style={{
-                  backgroundColor: themeColor.gold,
-                  width: (+width - verticalScale(80)) / 2,
-                  borderBottomRightRadius: 100,
-                  borderTopRightRadius: 100,
-                }}
+                style={[
+                  {
+                    width: (+widthDimention - verticalScale(80)) / 2,
+                  },
+                  styles.curvedViewHeaderLeft,
+                ]}
               />
               <View
-                style={{
-                  backgroundColor: themeColor.gold,
-                  width: (+width - verticalScale(80)) / 2,
-                  borderBottomLeftRadius: 100,
-                  borderTopLeftRadius: 100,
-                }}
+                style={[
+                  {
+                    width: (+widthDimention - verticalScale(80)) / 2,
+                  },
+                  styles.curvedViewHeaderRight,
+                ]}
               />
             </View>
           </View>
@@ -429,11 +397,6 @@ const Home = () => {
                     <Pressable
                       key={index.toString()}
                       onPress={() => {
-                        // if (index === 0) {
-                        //   // navigateTo(SCREEN_NAME.GENERATE_STORY);
-                        // } else if (index === 3) {
-                        //   navigateTo(SCREEN_NAME.REDEEM_VOUCHER);
-                        // }
                         switch (index) {
                           case 0:
                             break;
@@ -458,7 +421,10 @@ const Home = () => {
                         emoji={item.emoji}
                         headingStyle={
                           index > 3
-                            ? {fontSize: verticalScale(12), marginVertical: 8}
+                            ? {
+                                fontSize: verticalScale(12),
+                                marginVertical: verticalScale(8),
+                              }
                             : null
                         }
                       />
@@ -492,22 +458,14 @@ const ChangeChild = ({
   });
   return (
     <Animated.View
-      style={{
-        height: verticalScale(89),
-        width: verticalScale(89),
-        alignItems: 'center',
-        justifyContent: 'center',
-        overflow: 'visible',
-        marginTop: verticalScale(20),
-        marginBottom: verticalScale(15),
-        transform: [{translateY: translateRef}],
-      }}>
+      style={[
+        {
+          transform: [{translateY: translateRef}],
+        },
+        styles.changeChildWrapper,
+      ]}>
       <Image
-        style={{
-          height: verticalScale(59),
-          width: verticalScale(59),
-          borderRadius: 100,
-        }}
+        style={styles.changeChildImage}
         source={{
           uri: userProfile,
         }}

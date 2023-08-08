@@ -30,8 +30,9 @@ export const styles = StyleSheet.create({
   colorPatch: {
     marginRight: scale(33),
     marginTop: verticalScale(48),
-    resizeMode: 'contain',
     zIndex: 10,
+    position: 'absolute',
+    flexDirection: 'row',
   },
   footer: {
     flexDirection: 'row',
@@ -40,8 +41,8 @@ export const styles = StyleSheet.create({
   },
   secondColor: {
     transform: [
-      {translateY: -verticalScale(54)},
-      {translateX: verticalScale(34)},
+      {translateX: verticalScale(-14)},
+      {rotate: `${Math.random() * 180}deg`},
     ],
   },
   tooltip: {

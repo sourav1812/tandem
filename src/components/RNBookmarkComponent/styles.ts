@@ -13,11 +13,12 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     marginHorizontal: scale(5),
+    padding: verticalScale(2),
   },
   icon: {
     position: 'absolute',
-    top: '-2%',
-    right: '10%',
+    top: '-1%',
+    right: '11%',
   },
   heading: {
     fontSize: verticalScale(14),

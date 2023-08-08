@@ -86,7 +86,6 @@ const GenerateStory = () => {
   };
 
   React.useEffect(() => {
-    console.log(questionIndex, 'questionIndexquestionIndex');
     if (!tooltipArray.includes(5)) {
       updateState({tooltipFirst: true});
     }
@@ -351,8 +350,6 @@ const GenerateStory = () => {
                 pageX: number,
                 pageY: number,
               ) => {
-                console.log('++++++++++++', pageX, pageY);
-
                 setPositionRefs(prev => ({
                   ...prev,
                   0: {height: width, width: height, x: pageX, y: pageY},
@@ -362,10 +359,7 @@ const GenerateStory = () => {
           }}>
           {questionIndex !== 1 && (
             <RNButton
-              customStyle={[
-                styles.footerButton,
-                isTablet && {maxHeight: verticalScale(75)},
-              ]}
+              customStyle={[styles.footerButton, {height: verticalScale(70)}]}
               title={translation('SELECT')}
               onClick={nextQuestion}
               textStyle={styles.buttonText}
