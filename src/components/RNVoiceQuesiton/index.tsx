@@ -144,6 +144,7 @@ const RNVoiceQuesiton = ({
             tooltipArray.push(13);
             storeKey(TOOLTIP, tooltipArray);
           }}
+          bottom={'South'}
           text={translation('YOU_CAN_PRESS_AND_SAY_ANIMAL')}
           textContainerStyle={styles.tooltipTwo}
           textStyle={[
@@ -187,6 +188,7 @@ const RNVoiceQuesiton = ({
           storeKey(TOOLTIP, tooltipArray);
         }}
         text={translation("IF_YOU_DON'T_KNOW_LET_HELP")}
+        bottom={'South'}
         textContainerStyle={styles.tooltipTwo}
         textStyle={[
           {
