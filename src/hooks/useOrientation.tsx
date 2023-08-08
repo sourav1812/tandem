@@ -1,19 +1,15 @@
-import {useState, useEffect} from 'react';
+import {changeOrientation} from '@tandem/redux/slices/orientation.slice';
+import {store} from '@tandem/redux/store';
+import {useEffect} from 'react';
 import {Dimensions} from 'react-native';
 
 export const useOrientation = () => {
-  const [screenInfo, setScreenInfo] = useState<any>(Dimensions.get('screen'));
-
   useEffect(() => {
-    const onChange = (result: any) => {
-      setScreenInfo(result.screen);
-    };
-
     Dimensions.addEventListener('change', onChange);
   }, []);
+};
 
-  return {
-    ...screenInfo,
-    isPortrait: screenInfo.height > screenInfo.width,
-  };
+const onChange = (result: any) => {
+  const screenInfo = result.screen;
+  store.dispatch(changeOrientation(screenInfo.height > screenInfo.width));
 };

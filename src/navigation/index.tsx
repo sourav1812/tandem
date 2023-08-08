@@ -1,10 +1,10 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {RootStackParamList} from './types';
 import {SCREEN_NAME} from './ComponentName';
 import BottomTab from './BottomTab';
-import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import Account from '@tandem/screens/Account';
 import SplashScreen from '@tandem/screens/SplashScreen';
 import {navigationRef} from './navigate';
@@ -12,7 +12,6 @@ import {MODE} from '@tandem/constants/mode';
 import {Platform} from 'react-native';
 import {RootState} from '@tandem/redux/store';
 import {useOrientation} from '@tandem/hooks/useOrientation';
-import {changeOrientation} from '@tandem/redux/slices/orientation.slice';
 
 const AppNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -20,12 +19,7 @@ const AppNavigator = () => {
   const isTablet = useAppSelector(
     (state: RootState) => state.deviceType.isTablet,
   );
-  const dispatch = useAppDispatch();
-  const portrait = useOrientation().isPortrait;
-  useEffect(() => {
-    dispatch(changeOrientation(portrait ? true : false));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [portrait]);
+  useOrientation();
 
   return (
     <NavigationContainer ref={navigationRef}>
