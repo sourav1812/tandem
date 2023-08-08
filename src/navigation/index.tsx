@@ -7,7 +7,7 @@ import BottomTab from './BottomTab';
 import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
 import Account from '@tandem/screens/Account';
 import SplashScreen from '@tandem/screens/SplashScreen';
-import {navigationRef} from './navigate';
+import navigateTo, {navigationRef} from './navigate';
 import {MODE} from '@tandem/constants/mode';
 import {Platform} from 'react-native';
 import {RootState} from '@tandem/redux/store';
@@ -20,6 +20,7 @@ const AppNavigator = () => {
   const isTablet = useAppSelector(
     (state: RootState) => state.deviceType.isTablet,
   );
+  const token = useAppSelector((state: RootState) => state.tokenReducer.token);
   const dispatch = useAppDispatch();
   const portrait = useOrientation().isPortrait;
   useEffect(() => {
@@ -27,9 +28,21 @@ const AppNavigator = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [portrait]);
 
+  useEffect(() => {
+    setTimeout(() => {
+      if (token) {
+        navigateTo(SCREEN_NAME.SELECT_LANGUAGE, {}, true);
+      } else {
+        navigateTo(SCREEN_NAME.BOTTOM_TAB, {}, true);
+      }
+    }, 2000);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator
+        initialRouteName={SCREEN_NAME.SPLASH_SCREEN}
         screenOptions={{
           headerShown: false,
           orientation: isTablet ? 'default' : 'portrait',

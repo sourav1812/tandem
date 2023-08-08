@@ -9,6 +9,7 @@ import {MMKV} from 'react-native-mmkv';
 import {persistReducer, Storage} from 'redux-persist';
 import getResponseReducer from './slices/getResponseReducer';
 import languageReducer from './slices/languageReducer';
+import tokensSlice from './slices/tokens.slice';
 
 export const storage = new MMKV();
 
@@ -21,6 +22,7 @@ export const appReducer = combineReducers({
   params: paramsReducer,
   getResponseReducer: getResponseReducer,
   language: languageReducer,
+  tokenReducer: tokensSlice,
 });
 
 export const reduxStorage: Storage = {
