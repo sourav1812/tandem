@@ -334,6 +334,7 @@ const GenerateStory = () => {
           tooltipArray.push(6);
           updateState({tooltipSecond: false});
         }}
+        bottom={'South'}
         text={translation('PRESS_THE_BUTTON')}
         textStyle={styles.tooltip}
         dimensionObject={positionRefs[0]}>
