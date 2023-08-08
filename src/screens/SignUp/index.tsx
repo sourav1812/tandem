@@ -22,13 +22,11 @@ import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {verticalScale} from 'react-native-size-matters';
 import navigateTo from '@tandem/navigation/navigate';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
-import validateForm, {
-  FORM_INPUT_TYPE,
-  ValidationError,
-} from '@tandem/utils/validations';
+import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
 import {RootState} from '@tandem/redux/store';
 import {translation} from '@tandem/utils/methods';
 import registerUser from '@tandem/api/registerUser';
+import validationFunction from '@tandem/functions/validationFunction';
 
 const SignUp = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -44,23 +42,33 @@ const SignUp = () => {
   );
 
   const handleSignUpButton = async () => {
+    if (
+      !validationFunction([
+        {
+          state: email,
+          setState: setEmail,
+          typeOfValidation: FORM_INPUT_TYPE.EMAIL,
+        },
+        {
+          state: password,
+          setState: setPassword,
+          typeOfValidation: FORM_INPUT_TYPE.PASSWORD,
+        },
+        {
+          state: name,
+          setState: setName,
+          typeOfValidation: FORM_INPUT_TYPE.NAME,
+        },
+        {
+          state: confirmPassword,
+          setState: setConfirmPassword,
+          typeOfValidation: FORM_INPUT_TYPE.PASSWORD,
+        },
+      ])
+    ) {
+      return;
+    }
     if (confirmPassword.value === password.value) {
-      if (
-        name.value === '' ||
-        email.value === '' ||
-        password.value === '' ||
-        confirmPassword.value === '' ||
-        name.message === '' ||
-        email.message === '' ||
-        password.message === '' ||
-        confirmPassword.message
-      ) {
-        setEmail(validateForm(FORM_INPUT_TYPE.EMAIL, ''));
-        setName(validateForm(FORM_INPUT_TYPE.NAME, ''));
-        setPassword(validateForm(FORM_INPUT_TYPE.PASSWORD, ''));
-        setConfirmPassword(validateForm(FORM_INPUT_TYPE.PASSWORD, ''));
-        return;
-      }
       const signUpResponse = await registerUser({
         email: email.value,
         name: name.value,

@@ -23,13 +23,11 @@ import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {scale, verticalScale} from 'react-native-size-matters';
 import navigateTo from '@tandem/navigation/navigate';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
-import validateForm, {
-  FORM_INPUT_TYPE,
-  ValidationError,
-} from '@tandem/utils/validations';
+import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
 import {RootState} from '@tandem/redux/store';
 import {translation} from '@tandem/utils/methods';
 import loginUserWithEmail from '@tandem/api/loginUserWithEmail';
+import validationFunction from '@tandem/functions/validationFunction';
 
 const SignIn = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -43,16 +41,33 @@ const SignIn = () => {
   const width = Dimensions.get('screen').width;
 
   const signInButtonHandler = async () => {
+    // if (
+    //   email.value === '' ||
+    //   password.value === '' ||
+    //   email.message === '' ||
+    //   password.message === ''
+    // ) {
+    // setEmail(validateForm(FORM_INPUT_TYPE.EMAIL, ''));
+    //   setPassword(validateForm(FORM_INPUT_TYPE.PASSWORD, ''));
+    //   return;
+    // }
     if (
-      email.value === '' ||
-      password.value === '' ||
-      email.message === '' ||
-      password.message === ''
+      !validationFunction([
+        {
+          state: email,
+          setState: setEmail,
+          typeOfValidation: FORM_INPUT_TYPE.EMAIL,
+        },
+        {
+          state: password,
+          setState: setPassword,
+          typeOfValidation: FORM_INPUT_TYPE.PASSWORD,
+        },
+      ])
     ) {
-      setEmail(validateForm(FORM_INPUT_TYPE.EMAIL, ''));
-      setPassword(validateForm(FORM_INPUT_TYPE.PASSWORD, ''));
       return;
     }
+
     const response = await loginUserWithEmail({
       email: email.value,
       password: password.value,
