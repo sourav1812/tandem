@@ -1,10 +1,10 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {RootStackParamList} from './types';
 import {SCREEN_NAME} from './ComponentName';
 import BottomTab from './BottomTab';
-import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import Account from '@tandem/screens/Account';
 import SplashScreen from '@tandem/screens/SplashScreen';
 import navigateTo, {navigationRef} from './navigate';
@@ -12,7 +12,6 @@ import {MODE} from '@tandem/constants/mode';
 import {Platform} from 'react-native';
 import {RootState} from '@tandem/redux/store';
 import {useOrientation} from '@tandem/hooks/useOrientation';
-import {changeOrientation} from '@tandem/redux/slices/orientation.slice';
 import RNAlertBox from '@tandem/components/RNAlertBox';
 
 const AppNavigator = () => {
@@ -21,18 +20,13 @@ const AppNavigator = () => {
   const isTablet = useAppSelector(
     (state: RootState) => state.deviceType.isTablet,
   );
+  useOrientation();
   const alertData = useAppSelector(
     (state: RootState) => state.alertBoxReducer.data,
   );
   const token = useAppSelector((state: RootState) => state.tokenReducer.token);
-  const dispatch = useAppDispatch();
-  const portrait = useOrientation().isPortrait;
-  useEffect(() => {
-    dispatch(changeOrientation(portrait ? true : false));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [portrait]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     setTimeout(() => {
       if (!token) {
         navigateTo(SCREEN_NAME.SELECT_LANGUAGE, {}, true);

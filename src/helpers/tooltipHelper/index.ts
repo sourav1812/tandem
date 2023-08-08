@@ -7,7 +7,6 @@ const tooltipHelperTop = (positionRefs: {
   y: number;
 }) => {
   const {width, height} = Dimensions.get('screen');
-  console.log('width:', width, 'height:', height);
   if (positionRefs.x > width / 2 && positionRefs.y < height / 2) {
     return 'NorthEast';
   } else if (positionRefs.x < width / 2 && positionRefs.y < height / 2) {
@@ -33,7 +32,6 @@ const tooltipHelperBottom = (positionRefs: {
   y: number;
 }) => {
   const {width, height} = Dimensions.get('window');
-
   if (positionRefs.x > width / 2 && positionRefs.y < height / 2) {
     return null;
   } else if (positionRefs.x < width / 2 && positionRefs.y < height / 2) {

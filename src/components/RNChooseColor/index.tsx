@@ -1,5 +1,11 @@
-import {View, TouchableOpacity, ScrollView} from 'react-native';
-import React, {useRef, useState} from 'react';
+import {
+  View,
+  TouchableOpacity,
+  ScrollView,
+  Pressable,
+  LayoutAnimation,
+} from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
 import {styles} from './styles';
 import RNTextComponent from '../RNTextComponent';
 import {StateObject, colorPaletteType} from './interface';
@@ -11,8 +17,8 @@ import {translation} from '@tandem/utils/methods';
 import RNTooltip from '../RNTooltip';
 import {TOOLTIP} from '@tandem/constants/LocalConstants';
 import {getValueFromKey} from '@tandem/helpers/encryptedStorage';
-import {useAppSelector} from '@tandem/hooks/navigationHooks';
-import {RootState} from '@tandem/redux/store';
+import chroma from 'chroma-js';
+import {verticalScale} from 'react-native-size-matters';
 
 const RNChooseColor = ({
   tooltipVisible,
@@ -20,10 +26,7 @@ const RNChooseColor = ({
   customStyle,
 }: colorPaletteType) => {
   const tooltipArray = getValueFromKey(TOOLTIP);
-  const portrait = useAppSelector(
-    (state: RootState) => state.orientation.isPortrait,
-  );
-
+  const [palleteArray, setPalletArray] = React.useState<string[]>([]);
   const [state, setState] = useState<StateObject>({
     colorPalette: [
       {firstColor: '#0633FD', secondColor: '#FEF902'},
@@ -35,18 +38,43 @@ const RNChooseColor = ({
     ],
     color1: '',
     color2: '',
+    color3: '',
   });
+  const {colorPalette, color1, color2, color3} = state;
 
-  const {colorPalette, color1, color2} = state;
   const refOne = useRef<any>(null);
   const [positionRefs, setPositionRefs] = React.useState({
     0: {height: 0, width: 0, x: 0, y: 0},
   });
   const updateState = (date: any) => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setState((previouState: any) => {
       return {...previouState, ...date};
     });
   };
+
+  const handleColors = (colorInput: string) => {
+    if (!color1 && !color2) {
+      updateState({
+        color1: colorInput,
+        color3: colorInput,
+      });
+    } else if (!color1 && color2 && color2 !== colorInput) {
+      updateState({
+        color1: colorInput,
+      });
+    } else if (color1 !== colorInput) {
+      updateState({
+        color2: colorInput,
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (color1 && color2) {
+      updateState({color3: chroma.mix(color1, color2, 0.5, 'rgb').hex()});
+    }
+  }, [color1, color2]);
 
   return (
     <View style={[styles.container, customStyle && customStyle]}>
@@ -78,13 +106,13 @@ const RNChooseColor = ({
                   ]}>
                   <TouchableOpacity
                     onPress={() => {
-                      updateState({color1: item.firstColor});
+                      handleColors(item.firstColor);
                     }}>
                     <ColorPatchUp color={item.firstColor} />
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={() => {
-                      updateState({color2: item.secondColor});
+                      handleColors(item.secondColor);
                     }}>
                     <ColorPatchUp
                       color={item.secondColor}
@@ -95,8 +123,25 @@ const RNChooseColor = ({
               );
             })}
             <View style={styles.colorPatch}>
-              <EmptyBox color={color1} />
-              <EmptyBox props={{style: styles.secondColor}} color={color2} />
+              {color1 && (
+                <Pressable
+                  onPress={() => {
+                    updateState({color1: '', color3: color2});
+                  }}>
+                  <EmptyBox color={color1} />
+                </Pressable>
+              )}
+              {color2 && (
+                <Pressable
+                  onPress={() => {
+                    updateState({color2: '', color3: color1});
+                  }}>
+                  <EmptyBox
+                    props={{style: styles.secondColor}}
+                    color={color2}
+                  />
+                </Pressable>
+              )}
             </View>
           </View>
           <View style={styles.footer}>
@@ -125,11 +170,44 @@ const RNChooseColor = ({
                     },
                   );
                 }}>
-                <AddColor />
+                <Pressable
+                  onPress={() => {
+                    if (
+                      palleteArray.length < 4 &&
+                      !palleteArray.includes(color3) &&
+                      color3
+                    ) {
+                      setPalletArray(prev => [...prev, color3]);
+                      updateState({
+                        color3: '',
+                      });
+                    } else if (palleteArray.length === 4) {
+                      setPalletArray([]);
+                    }
+                  }}>
+                  {palleteArray.length < 4 ? (
+                    <AddColor fill={palleteArray.length < 4 ? color3 : ''} />
+                  ) : (
+                    <RNTextComponent
+                      isMedium
+                      style={[
+                        styles.subHeading,
+                        {marginTop: verticalScale(20)},
+                      ]}>
+                      {translation('CLEAR_ALL')}
+                    </RNTextComponent>
+                  )}
+                </Pressable>
               </View>
             </RNTooltip>
-            {Array.from({length: 3}, (_, i) => (
-              <EmptyPatch key={i.toString()} />
+            {palleteArray.map((color, i) => (
+              <Pressable
+                key={i.toString()}
+                onPress={() => {
+                  handleColors(color);
+                }}>
+                <EmptyPatch fill={color} />
+              </Pressable>
             ))}
           </View>
         </View>

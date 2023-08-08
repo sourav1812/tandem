@@ -1,11 +1,12 @@
 import * as React from 'react';
+import {verticalScale} from 'react-native-size-matters';
 import Svg, {SvgProps, Path} from 'react-native-svg';
 const SvgComponent = (props: SvgProps) => (
   <Svg
     // xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 27 31"
-    width={27}
-    height={31}
+    width={verticalScale(20)}
+    height={verticalScale(24)}
     {...props}>
     <Path
       fill={props.fill}

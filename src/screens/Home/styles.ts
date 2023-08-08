@@ -26,7 +26,6 @@ export const styles = StyleSheet.create({
   content: {
     flex: 1,
     paddingHorizontal: scale(20),
-    marginBottom: verticalScale(20),
   },
   heading: {
     fontSize: verticalScale(16),
@@ -59,5 +58,62 @@ export const styles = StyleSheet.create({
   tooltipTwo: {
     height: 'auto',
     width: 'auto',
+  },
+  tooltipText: {
+    textAlign: 'center',
+    fontSize: verticalScale(16),
+    marginTop: 10,
+  },
+  tooltipUserWrapper: {
+    height: verticalScale(89),
+    width: verticalScale(89),
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'visible',
+  },
+  tooltipUserImage: {
+    height: verticalScale(59),
+    width: verticalScale(59),
+    borderRadius: 100,
+  },
+  tooltipUserName: {
+    marginTop: 5,
+    position: 'absolute',
+    bottom: -verticalScale(10),
+    fontSize: verticalScale(18),
+  },
+  curveViewHeaderWrapper: {
+    width: '100%',
+    backgroundColor: 'transparent',
+    height: verticalScale(23),
+    position: 'absolute',
+    bottom: -verticalScale(17),
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    zIndex: 50,
+  },
+  curvedViewHeaderLeft: {
+    backgroundColor: themeColor.gold,
+    borderBottomRightRadius: 100,
+    borderTopRightRadius: 100,
+  },
+  curvedViewHeaderRight: {
+    backgroundColor: themeColor.gold,
+    borderBottomLeftRadius: 100,
+    borderTopLeftRadius: 100,
+  },
+  changeChildWrapper: {
+    height: verticalScale(89),
+    width: verticalScale(89),
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'visible',
+    marginTop: verticalScale(20),
+    marginBottom: verticalScale(15),
+  },
+  changeChildImage: {
+    height: verticalScale(59),
+    width: verticalScale(59),
+    borderRadius: 100,
   },
 });

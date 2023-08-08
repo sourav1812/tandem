@@ -95,7 +95,7 @@ const RNRoadmap = () => {
       <View
         style={[
           styles.roadmap,
-          !isTablet && Platform.OS !== 'ios' && {paddingTop: verticalScale(40)},
+          !isTablet && Platform.OS !== 'ios' && {paddingTop: 10},
         ]}>
         <Pressable
           onLayout={event => {
