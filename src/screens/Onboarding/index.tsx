@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useCallback, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {FlatList, View, Image, Dimensions} from 'react-native';
 import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
@@ -15,6 +15,8 @@ import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {RootState} from '@tandem/redux/store';
 
 const Onboarding = () => {
+  const [remountKey, setRemountKey] = useState(0);
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
@@ -47,6 +49,12 @@ const Onboarding = () => {
   ];
   const height = Dimensions.get('screen').height;
   const width = Dimensions.get('screen').width;
+
+  useEffect(() => {
+    handleRemount();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [portrait]);
+
   const renderBanner = useCallback(
     ({item}: {item: any}) => {
       return (
@@ -91,6 +99,10 @@ const Onboarding = () => {
     [portrait],
   );
 
+  const handleRemount = () => {
+    setRemountKey(remountKey + 1);
+  };
+
   const onViewableItemsChanged = useCallback(
     ({viewableItems}: any) => {
       if (viewableItems.length > 0) {
@@ -116,6 +128,7 @@ const Onboarding = () => {
   return (
     <RNScreenWrapper>
       <FlatList
+        key={remountKey}
         data={onboardingList}
         ref={flatlistRef}
         renderItem={renderBanner}

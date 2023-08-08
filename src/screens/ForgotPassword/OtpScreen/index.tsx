@@ -104,6 +104,7 @@ const OtpScreen = () => {
                 fontWeight: 'bold',
                 fontSize: scale(20),
               }}
+              autoFocusOnLoad={false}
               onCodeFilled={(code: any) => {
                 if (code.length === 4) {
                   setCodeWrong(true);
