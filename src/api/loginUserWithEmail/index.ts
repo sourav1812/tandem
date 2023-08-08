@@ -13,4 +13,5 @@ export default async ({email, password}: LoginUserWithEmail) => {
     return;
   }
   await loginFlow(response); // for every type of login we have to come to this function in the end
+  return response;
 };

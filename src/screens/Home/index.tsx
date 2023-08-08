@@ -194,7 +194,7 @@ const Home = () => {
       </Pressable>
       <RNScreenWrapper
         giveStatusColor={
-          !tooltipArray.includes(4) &&
+          !tooltipArray?.includes(4) &&
           (tooltipMode.tooltipOne || tooltipMode.tooltipTwo)
         }>
         <View style={[styles.container]}>

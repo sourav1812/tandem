@@ -33,7 +33,7 @@ const RNTooltip = ({
 
   return (
     <Tooltip
-      isVisible={tooltipNumber.length < 14 ? open : false}
+      isVisible={tooltipNumber?.length < 14 ? open : false}
       content={
         <>
           {helperTop && (
