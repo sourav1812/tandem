@@ -1,6 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
 import {
-  Alert,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -27,10 +26,12 @@ import {RootState} from '@tandem/redux/store';
 import {translation} from '@tandem/utils/methods';
 import registerUser from '@tandem/api/registerUser';
 import validationFunction from '@tandem/functions/validationFunction';
+import {useDispatch} from 'react-redux';
+import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
 
 const SignUp = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
-
+  const dispatch = useDispatch();
   const [name, setName] = useState<ValidationError>({value: ''});
   const [email, setEmail] = useState<ValidationError>({value: ''});
   const [password, setPassword] = useState<ValidationError>({value: ''});
@@ -78,21 +79,14 @@ const SignUp = () => {
       if (!signUpResponse) {
         return;
       }
-      Alert.alert('Message', 'You have successfuly registered.', [
-        {
-          text: 'OK',
-          onPress: () => {
-            navigateTo(SCREEN_NAME.SIGN_IN, {}, true);
-          },
-        },
-      ]);
     } else {
-      Alert.alert('Message', 'Password does not match.', [
-        {
-          text: 'OK',
-          onPress: () => {},
-        },
-      ]);
+      dispatch(
+        addAlertData({
+          isEnabled: true,
+          type: 'Alert',
+          message: 'Password does not match.',
+        }),
+      );
     }
   };
 

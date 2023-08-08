@@ -10,6 +10,7 @@ import {persistReducer, Storage} from 'redux-persist';
 import getResponseReducer from './slices/getResponseReducer';
 import languageReducer from './slices/languageReducer';
 import tokensSlice from './slices/tokens.slice';
+import alertBoxSlice from './slices/alertBox.slice';
 
 export const storage = new MMKV();
 
@@ -23,6 +24,7 @@ export const appReducer = combineReducers({
   getResponseReducer: getResponseReducer,
   language: languageReducer,
   tokenReducer: tokensSlice,
+  alertBoxReducer: alertBoxSlice,
 });
 
 export const reduxStorage: Storage = {
