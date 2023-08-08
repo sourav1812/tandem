@@ -30,7 +30,7 @@ const AppNavigator = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      if (token) {
+      if (!token) {
         navigateTo(SCREEN_NAME.SELECT_LANGUAGE, {}, true);
       } else {
         navigateTo(SCREEN_NAME.BOTTOM_TAB, {}, true);
