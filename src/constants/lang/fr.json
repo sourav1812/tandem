@@ -145,7 +145,10 @@
     "phone-invalid": "Veuillez entrer un numéro de téléphone valide",
     "pin-required": "Le code PIN est requis",
     "pin-no-spaces": "Le code PIN ne doit pas contenir d'espaces",
-    "pin-invalid": "Veuillez entrer un code PIN valide"
+    "pin-invalid": "Veuillez entrer un code PIN valide",
+    "atleast-one-character": "Au moins un caractère",
+    "atleast-one-digit": "Au moins un chiffre",
+    "contain-special-character": "Au moins un caractère spécial"
   },
   "READING_TIME": "Temps de lecture",
   "NUMBER_OF_BOOKS": "Nombre de livres",

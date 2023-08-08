@@ -145,7 +145,10 @@
     "phone-invalid": "Bitte gib eine gültige Telefonnummer ein",
     "pin-required": "PIN ist erforderlich",
     "pin-no-spaces": "PIN darf keine Leerzeichen enthalten",
-    "pin-invalid": "Bitte gib eine gültige PIN ein"
+    "pin-invalid": "Bitte gib eine gültige PIN ein",
+    "atleast-one-character": "Mindestens ein Zeichen",
+    "atleast-one-digit": "Mindestens eine Ziffer",
+    "contain-special-character": "Mindestens ein Sonderzeichen"
   },
   "READING_TIME": "Lesezeit",
   "NUMBER_OF_BOOKS": "Anzahl der Bücher",

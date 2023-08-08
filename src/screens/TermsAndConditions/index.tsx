@@ -76,7 +76,7 @@ const TermsAndConditions = () => {
           />
           <RNButton
             onClick={() => {
-              navigateTo(SCREEN_NAME.HELP_CENTER);
+              navigateTo(SCREEN_NAME.HELP_CENTER, {}, true);
             }}
             title={translation('ACCEPT')}
             customStyle={[

@@ -10,6 +10,7 @@ import {requestUserPermissionIOS} from '@tandem/functions/fcm';
 import messaging from '@react-native-firebase/messaging';
 import {PersistGate} from 'redux-persist/integration/react';
 import {persistStore} from 'redux-persist';
+import {clearAlertData} from '@tandem/redux/slices/alertBox.slice';
 
 const persistor = persistStore(store);
 
@@ -26,6 +27,7 @@ const App: FC = () => {
       requestUserPermissionIOS();
     }
     const tooltip = getValueFromKey(TOOLTIP);
+    store.dispatch(clearAlertData());
     if (!tooltip) {
       storeKey(TOOLTIP, [0]);
       console.log('key generated');

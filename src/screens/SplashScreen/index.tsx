@@ -3,20 +3,12 @@ import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {Image} from 'react-native';
 import RNTextComponent from '@tandem/components/RNTextComponent';
-import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
-import navigateTo from '@tandem/navigation/navigate';
 import DeviceInfo from 'react-native-device-info';
 import {changeDevice} from '@tandem/redux/slices/tablet.slice';
 import {useDispatch} from 'react-redux';
 
 const SplashScreen = () => {
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    setTimeout(() => {
-      navigateTo(SCREEN_NAME.SELECT_LANGUAGE, {}, true);
-    }, 2000);
-  }, []);
 
   useEffect(() => {
     let isIpad = DeviceInfo.getSystemName() === 'iPadOS' ? true : false;

@@ -1,12 +1,10 @@
 /* eslint-disable react-native/no-inline-styles */
 import {
-  Alert,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
   View,
   ImageBackground,
-  Dimensions,
 } from 'react-native';
 import React, {useState} from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
@@ -26,10 +24,14 @@ import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
 import {RootState} from '@tandem/redux/store';
 import {translation} from '@tandem/utils/methods';
+import registerUser from '@tandem/api/registerUser';
+import validationFunction from '@tandem/functions/validationFunction';
+import {useDispatch} from 'react-redux';
+import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
 
 const SignUp = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
-
+  const dispatch = useDispatch();
   const [name, setName] = useState<ValidationError>({value: ''});
   const [email, setEmail] = useState<ValidationError>({value: ''});
   const [password, setPassword] = useState<ValidationError>({value: ''});
@@ -39,6 +41,55 @@ const SignUp = () => {
   const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
+
+  const handleSignUpButton = async () => {
+    if (
+      !validationFunction([
+        {
+          state: email,
+          setState: setEmail,
+          typeOfValidation: FORM_INPUT_TYPE.EMAIL,
+        },
+        {
+          state: password,
+          setState: setPassword,
+          typeOfValidation: FORM_INPUT_TYPE.PASSWORD,
+        },
+        {
+          state: name,
+          setState: setName,
+          typeOfValidation: FORM_INPUT_TYPE.NAME,
+        },
+        {
+          state: confirmPassword,
+          setState: setConfirmPassword,
+          typeOfValidation: FORM_INPUT_TYPE.PASSWORD,
+        },
+      ])
+    ) {
+      return;
+    }
+    if (confirmPassword.value === password.value) {
+      const signUpResponse = await registerUser({
+        email: email.value,
+        name: name.value,
+        password: password.value,
+      });
+
+      if (!signUpResponse) {
+        return;
+      }
+    } else {
+      dispatch(
+        addAlertData({
+          isEnabled: true,
+          type: 'Alert',
+          message: 'Password does not match.',
+        }),
+      );
+    }
+  };
+
   return (
     <RNScreenWrapper style={{backgroundColor: themeColor.white}}>
       <KeyboardAvoidingView
@@ -114,18 +165,7 @@ const SignUp = () => {
                   <RNButton
                     title={translation('SIGN_UP')}
                     customStyle={styles.button}
-                    onClick={() => {
-                      if (confirmPassword.value === password.value) {
-                        navigateTo(SCREEN_NAME.TERMS_AND_CONDITIONS);
-                      } else {
-                        Alert.alert('Message', 'Password does not match.', [
-                          {
-                            text: 'OK',
-                            onPress: () => {},
-                          },
-                        ]);
-                      }
-                    }}
+                    onClick={handleSignUpButton}
                   />
                   <View style={styles.continueDesign}>
                     <View style={styles.line} />
@@ -237,18 +277,7 @@ const SignUp = () => {
                   <RNButton
                     title={translation('SIGN_UP')}
                     customStyle={styles.button}
-                    onClick={() => {
-                      if (confirmPassword.value === password.value) {
-                        navigateTo(SCREEN_NAME.TERMS_AND_CONDITIONS);
-                      } else {
-                        Alert.alert('Message', 'Password does not match.', [
-                          {
-                            text: 'OK',
-                            onPress: () => {},
-                          },
-                        ]);
-                      }
-                    }}
+                    onClick={handleSignUpButton}
                   />
                   <View style={styles.continueDesign}>
                     <View style={styles.line} />

@@ -26,6 +26,8 @@ import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
 import {RootState} from '@tandem/redux/store';
 import {translation} from '@tandem/utils/methods';
+import loginUserWithEmail from '@tandem/api/loginUserWithEmail';
+import validationFunction from '@tandem/functions/validationFunction';
 
 const SignIn = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -37,6 +39,45 @@ const SignIn = () => {
   );
   const height = Dimensions.get('screen').height;
   const width = Dimensions.get('screen').width;
+
+  const signInButtonHandler = async () => {
+    // if (
+    //   email.value === '' ||
+    //   password.value === '' ||
+    //   email.message === '' ||
+    //   password.message === ''
+    // ) {
+    // setEmail(validateForm(FORM_INPUT_TYPE.EMAIL, ''));
+    //   setPassword(validateForm(FORM_INPUT_TYPE.PASSWORD, ''));
+    //   return;
+    // }
+    if (
+      !validationFunction([
+        {
+          state: email,
+          setState: setEmail,
+          typeOfValidation: FORM_INPUT_TYPE.EMAIL,
+        },
+        {
+          state: password,
+          setState: setPassword,
+          typeOfValidation: FORM_INPUT_TYPE.PASSWORD,
+        },
+      ])
+    ) {
+      return;
+    }
+
+    const response = await loginUserWithEmail({
+      email: email.value,
+      password: password.value,
+    });
+
+    if (!response) {
+      return;
+    }
+    navigateTo(SCREEN_NAME.TERMS_AND_CONDITIONS);
+  };
 
   return (
     <RNScreenWrapper style={{backgroundColor: themeColor.white, flex: 1}}>
@@ -106,9 +147,7 @@ const SignIn = () => {
               <RNButton
                 title={translation('SIGN_IN')}
                 customStyle={styles.button}
-                onClick={() => {
-                  navigateTo(SCREEN_NAME.TERMS_AND_CONDITIONS);
-                }}
+                onClick={signInButtonHandler}
               />
               <View style={styles.continueDesign}>
                 <View style={styles.line} />

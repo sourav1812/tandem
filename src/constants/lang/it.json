@@ -147,7 +147,10 @@
     "phone-invalid": "Inserisci un numero di telefono valido",
     "pin-required": "Il PIN è obbligatorio",
     "pin-no-spaces": "Il PIN non può contenere spazi",
-    "pin-invalid": "Inserisci un PIN valido"
+    "pin-invalid": "Inserisci un PIN valido",
+    "atleast-one-character": "Almeno un carattere",
+    "atleast-one-digit": "Almeno una cifra",
+    "contain-special-character": "Almeno un carattere speciale"
   },
   "READING_TIME": "Tempo di Lettura",
   "NUMBER_OF_BOOKS": "Numero di Libri",
