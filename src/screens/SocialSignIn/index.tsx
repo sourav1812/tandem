@@ -1,5 +1,5 @@
 import {ImageBackground, Image, View} from 'react-native';
-import React, {version} from 'react';
+import React from 'react';
 import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import RNTextComponent from '@tandem/components/RNTextComponent';
@@ -14,12 +14,41 @@ import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {RootState} from '@tandem/redux/store';
+import google from '@tandem/functions/socialLogin/google';
 
 const SocialSignIn = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
+
+  const socialAuthFunctions = {
+    google,
+  };
+
+  const handleSocialLogin = async (type: 'apple' | 'google' | 'facebook') => {
+    try {
+      const socialObjectResponse: any = await socialAuthFunctions[type]();
+      if (!socialObjectResponse) {
+        return;
+      }
+      console.log(
+        socialObjectResponse,
+        'socialObjectResponsesocialObjectResponse',
+      );
+
+      // const forwardToSignup = await socialLogin(socialObjectLocal);
+      // if (forwardToSignup) {
+      //   navigation.push(routes.SOCIAL_SIGN_UP, {
+      //     socialObject: socialObjectLocal,
+      //     onlyPhoneNumber: true,
+      //   });
+      // }
+    } catch (error) {
+      // logout(true);
+    }
+  };
+
   return (
     <RNScreenWrapper>
       <ImageBackground
@@ -52,7 +81,9 @@ const SocialSignIn = () => {
           />
           <RNSocialButton
             icon={<Google />}
-            onClick={() => {}}
+            onClick={() => {
+              handleSocialLogin('google');
+            }}
             title={`${translation('CONTINUE_WITH')} Google`}
             customStyle={styles.button}
           />
