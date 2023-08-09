@@ -86,7 +86,7 @@ const GenerateStory = () => {
   };
 
   React.useEffect(() => {
-    if (!tooltipArray.includes(5)) {
+    if (!tooltipArray?.includes(5)) {
       updateState({tooltipFirst: true});
     }
     if (questionIndex === 6) {
@@ -328,7 +328,7 @@ const GenerateStory = () => {
         {dynamicContent()}
       </View>
       <RNTooltip
-        open={tooltipArray.includes(6) ? false : tooltipSecond}
+        open={tooltipArray?.includes(6) ? false : tooltipSecond}
         setClose={() => {
           tooltipArray.push(6);
           updateState({tooltipSecond: false});

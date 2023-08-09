@@ -146,7 +146,7 @@ const RNChooseColor = ({
           </View>
           <View style={styles.footer}>
             <RNTooltip
-              open={tooltipArray.includes(7) ? false : tooltipVisible}
+              open={tooltipArray?.includes(7) ? false : tooltipVisible}
               setClose={onTooltipClose}
               text={translation('ADD_COLORS')}
               textStyle={styles.tooltip}

@@ -56,7 +56,10 @@ const RNTextInputWithLabel = ({
         <View
           style={[
             styles.box,
-            highlight && {borderWidth: 1, borderColor: themeColor.themeBlue},
+            {
+              borderWidth: 1,
+              borderColor: highlight ? themeColor.themeBlue : 'transparent',
+            },
             {backgroundColor: backgroundColor ? backgroundColor : undefined},
             inputViewStyle && inputViewStyle,
           ]}>
@@ -96,9 +99,15 @@ const RNTextInputWithLabel = ({
             ))}
         </View>
       </View>
-      {value?.message && (
-        <Text style={[styles.errorText, errorTextStyle]}>{value.message}</Text>
-      )}
+
+      <Text
+        style={[
+          styles.errorText,
+          errorTextStyle,
+          {color: value?.message ? 'darkred' : 'transparent'},
+        ]}>
+        {value.message}
+      </Text>
     </>
   );
 };
@@ -110,7 +119,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   errorText: {
-    color: 'darkred',
     fontSize: verticalScale(10),
   },
   box: {
