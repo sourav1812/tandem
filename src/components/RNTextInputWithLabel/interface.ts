@@ -18,4 +18,5 @@ export interface Props {
   errorTextStyle?: StyleProp<TextStyle>;
   rightSideIcon?: boolean;
   rightSideIconProp?: ReactNode;
+  autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters' | undefined;
 }

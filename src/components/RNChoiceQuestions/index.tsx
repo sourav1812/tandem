@@ -29,7 +29,7 @@ const RNChoiceQuestions = ({
         if (index === 0) {
           return (
             <RNTooltip
-              open={tooltipArray.includes(5) ? false : visibletoolTip}
+              open={tooltipArray?.includes(5) ? false : visibletoolTip}
               setClose={onTooltipClose}
               text={translation('CHOOSE_FROM_THE_GIVE_OPTIONS')}
               textContainerStyle={[

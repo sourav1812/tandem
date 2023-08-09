@@ -5,7 +5,6 @@ import {
   FlatList,
   ScrollView,
   Dimensions,
-  Alert,
 } from 'react-native';
 import React, {useState, useCallback, useRef} from 'react';
 import {styles} from './style';
@@ -300,7 +299,8 @@ const StoryTelling = () => {
   };
 
   return (
-    <RNScreenWrapper giveStatusColor={tooltipArray.includes(13) ? false : true}>
+    <RNScreenWrapper
+      giveStatusColor={tooltipArray?.includes(13) ? false : true}>
       <View style={styles.headingButton}>
         <RNTooltip
           open={tooltipArray?.includes(9) ? false : tooltipTwo}

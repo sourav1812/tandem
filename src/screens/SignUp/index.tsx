@@ -79,10 +79,10 @@ const SignUp = () => {
       if (!signUpResponse) {
         return;
       }
+      navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN);
     } else {
       dispatch(
         addAlertData({
-          isEnabled: true,
           type: 'Alert',
           message: 'Password does not match.',
         }),
@@ -130,6 +130,7 @@ const SignUp = () => {
                     inputStyle={styles.inputText}
                   />
                   <RNTextInputWithLabel
+                    autoCapitalize="none"
                     label={translation('EMAIL')}
                     backgroundColor={themeColor.lightGray}
                     containerStyle={styles.input2}
@@ -140,6 +141,7 @@ const SignUp = () => {
                     inputStyle={styles.inputText}
                   />
                   <RNTextInputWithLabel
+                    autoCapitalize="none"
                     label={translation('PASSWORD')}
                     containerStyle={styles.input2}
                     value={password}
@@ -151,6 +153,7 @@ const SignUp = () => {
                     rightSideIcon
                   />
                   <RNTextInputWithLabel
+                    autoCapitalize="none"
                     label={translation('CONFIRM_PASSWORD')}
                     // label={en.EMAIL}
                     containerStyle={styles.input2}

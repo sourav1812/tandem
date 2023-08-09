@@ -10,7 +10,7 @@ export enum ENVIRONMENT {
 
 const ENV_VARS = {
   [ENVIRONMENT.DEVELOPMENT]: {
-    API_URL: 'http://192.168.1.59:5000/v1/', // * STAGING URL
+    API_URL: 'http://192.168.1.61:5000/v1/', // * STAGING URL
   },
   [ENVIRONMENT.PRODUCTION]: {
     API_URL: '', // * LIVE URL

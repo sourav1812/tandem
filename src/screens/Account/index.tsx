@@ -23,11 +23,7 @@ import themeColor from '@tandem/theme/themeColor';
 import {useSelector} from 'react-redux';
 import {RootState} from '@tandem/redux/store';
 import RNTooltip from '@tandem/components/RNTooltip';
-import {
-  clearStorage,
-  getValueFromKey,
-  storeKey,
-} from '@tandem/helpers/encryptedStorage';
+import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
 import {TOOLTIP} from '@tandem/constants/LocalConstants';
 
 const Account = () => {
@@ -421,7 +417,6 @@ const Account = () => {
         renderModal={toggleSignOut}
         nextClick={() => {
           dispatch(changeMode(MODE.A));
-          clearStorage();
           navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN, {}, true);
         }}
       />

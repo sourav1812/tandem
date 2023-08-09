@@ -116,6 +116,7 @@ const SignIn = () => {
                 },
               ]}>
               <RNTextInputWithLabel
+                autoCapitalize="none"
                 label={translation('EMAIL')}
                 backgroundColor={themeColor.lightGray}
                 containerStyle={styles.input2}
@@ -126,6 +127,7 @@ const SignIn = () => {
                 inputStyle={styles.inputText}
               />
               <RNTextInputWithLabel
+                autoCapitalize="none"
                 label={translation('PASSWORD')}
                 // label={en.EMAIL}
                 backgroundColor={themeColor.lightGray}
