@@ -83,7 +83,6 @@ const SignUp = () => {
     } else {
       dispatch(
         addAlertData({
-          isEnabled: true,
           type: 'Alert',
           message: 'Password does not match.',
         }),

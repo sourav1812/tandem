@@ -24,7 +24,14 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: verticalScale(14),
     marginHorizontal: verticalScale(25),
-    marginTop: 14,
+    marginTop: 10,
+  },
+  possibleResolution: {
+    textAlign: 'center',
+    fontSize: verticalScale(10),
+    marginHorizontal: verticalScale(25),
+    color: themeColor.green,
+    marginTop: 10,
   },
   button: {
     marginTop: verticalScale(14),
