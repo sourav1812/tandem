@@ -230,5 +230,27 @@
     "resend": "Erneut senden",
     "did-not-get-code": "Code nicht erhalten?",
     "this-code-is-invalid": "Dieser Code ist ungültig."
+  },
+  "privacy-policy": {
+    "initial-text": "Wir sind bestrebt, Ihre Privatsphäre zu schützen und Ihre persönlichen Informationen zu sichern. Diese Datenschutzbestimmungen erläutern, wie wir Informationen erfassen, verwenden und offenlegen, wenn Sie unsere Produkte und Dienstleistungen nutzen.",
+    "info-we-collect": "Erfasste Informationen",
+    "info-we-collect-value": "Wir erfassen personenbezogene Informationen wie Ihren Namen, Ihre E-Mail-Adresse und Ihre Telefonnummer, wenn Sie sich für unsere Dienstleistungen anmelden oder einen Kauf auf unserer Website tätigen. Wir können auch nicht-personenbezogene Informationen wie Ihren Gerätetyp, Ihre IP-Adresse und Ihr Browsing-Verhalten erfassen.",
+    "sharing-your-info": "Teilen Ihrer Informationen",
+    "sharing-your-info-value": "Wir verkaufen Ihre persönlichen Informationen nicht an Dritte. Wir können Ihre Informationen mit unseren vertrauenswürdigen Partnern teilen, die Dienstleistungen in unserem Auftrag erbringen, wie z.B. Zahlungsabwicklung oder Versand. Wir können Ihre Informationen auch teilen, wenn dies gesetzlich vorgeschrieben ist oder um unsere Rechte und unser Eigentum zu schützen.",
+    "how-we-use-info": "Verwendung Ihrer Informationen",
+    "how-we-use-info-value": "Wir verwenden Ihre persönlichen Informationen, um Ihnen unsere Produkte und Dienstleistungen anzubieten, um mit Ihnen über Promotionen und Angebote zu kommunizieren und um unsere Website und Dienstleistungen zu verbessern. Wir können Ihre Informationen auch für Analysezwecke und Marketingzwecke verwenden.",
+    "security": "Sicherheit",
+    "security-value": "Wir nehmen die Sicherheit Ihrer Informationen ernst und verwenden branchenübliche Maßnahmen, um sie vor unbefugtem Zugriff oder Offenlegung zu schützen."
+  },
+  "terms-of-use": {
+    "initial-text": "Diese Nutzungsbedingungen legen die Regeln und Vorschriften für die Nutzung unserer Produkte und Dienstleistungen fest. Durch die Nutzung unserer Website und Dienstleistungen akzeptieren und stimmen Sie diesen Nutzungsbedingungen zu. Wenn Sie diesen Nutzungsbedingungen nicht zustimmen, nutzen Sie bitte unsere Website oder Dienstleistungen nicht.",
+    "use-of-service": "Nutzung unserer Dienstleistungen",
+    "use-of-service-value": "Unsere Dienstleistungen sind nur für den persönlichen, nicht kommerziellen Gebrauch vorgesehen. Sie dürfen unsere Website oder Dienstleistungen nicht für illegale oder unbefugte Zwecke nutzen. Sie stimmen zu, alle geltenden Gesetze und Vorschriften bei der Nutzung unserer Website und Dienstleistungen einzuhalten.",
+    "intellectual": "Geistiges Eigentum",
+    "intellectual-value": "Alle Inhalte auf unserer Website, einschließlich Text, Bilder und Logos, sind Eigentum von [Markenname] und unterliegen dem Schutz durch Urheberrechtsgesetze. Sie dürfen keine Inhalte von unserer Website ohne unsere vorherige schriftliche Zustimmung verwenden.",
+    "limitation": "Haftungsbeschränkung",
+    "limitation-value": "Wir sind nicht verantwortlich für Schäden oder Verluste, die aus Ihrer Nutzung unserer Website oder Dienstleistungen resultieren. Wir haften nicht für indirekte, zufällige oder Folgeschäden.",
+    "changes-to-these-terms": "Änderungen dieser Bedingungen",
+    "changes-to-these-terms-value": "Diese Nutzungsbedingungen unterliegen den Gesetzen von [Land] und werden entsprechend ausgelegt. Alle aus diesen Bedingungen resultierenden Streitigkeiten unterliegen der Gerichtsbarkeit der Gerichte von [Land]."
   }
 }

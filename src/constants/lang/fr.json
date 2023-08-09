@@ -230,5 +230,28 @@
     "resend": "Renvoyer",
     "did-not-get-code": "Vous n'avez pas reçu le code?",
     "this-code-is-invalid": "Ce code est incorrect."
+  },
+
+  "privacy-policy": {
+    "initial-text": "Nous nous engageons à protéger votre vie privée et à sauvegarder vos informations personnelles. Cette Politique de confidentialité décrit comment nous recueillons, utilisons et divulguons des informations lorsque vous utilisez nos produits et services.",
+    "info-we-collect": "Informations que nous recueillons",
+    "info-we-collect-value": "Nous recueillons des informations personnelles telles que votre nom, votre adresse e-mail et votre numéro de téléphone lorsque vous vous inscrivez à nos services ou effectuez un achat sur notre site web. Nous pouvons également recueillir des informations non personnelles telles que le type de votre appareil, votre adresse IP et votre comportement de navigation.",
+    "sharing-your-info": "Partage de vos informations",
+    "sharing-your-info-value": "Nous ne vendons pas vos informations personnelles à des tiers. Nous pouvons partager vos informations avec nos partenaires de confiance qui fournissent des services en notre nom, tels que le traitement des paiements ou l'expédition. Nous pouvons également partager vos informations lorsque la loi l'exige ou pour protéger nos droits et notre propriété.",
+    "how-we-use-info": "Utilisation de vos informations",
+    "how-we-use-info-value": "Nous utilisons vos informations personnelles pour vous fournir nos produits et services, pour vous informer des promotions et des offres, et pour améliorer notre site web et nos services. Nous pouvons également utiliser vos informations à des fins d'analyse et de marketing.",
+    "security": "Sécurité",
+    "security-value": "Nous prenons la sécurité de vos informations au sérieux et utilisons des mesures conformes aux normes de l'industrie pour les protéger contre tout accès ou divulgation non autorisé."
+  },
+  "terms-of-use": {
+    "initial-text": "Ces Conditions d'utilisation définissent les règles et réglementations régissant l'utilisation de nos produits et services. En utilisant notre site web et nos services, vous acceptez d'être lié par ces Conditions d'utilisation. Si vous n'acceptez pas ces Conditions d'utilisation, veuillez ne pas utiliser notre site web ni nos services.",
+    "use-of-service": "Utilisation de nos services",
+    "use-of-service-value": "Nos services sont destinés à un usage personnel et non commercial uniquement. Vous ne pouvez pas utiliser notre site web ou nos services à des fins illégales ou non autorisées. Vous acceptez de respecter toutes les lois et réglementations applicables lors de l'utilisation de notre site web et de nos services.",
+    "intellectual": "Propriété intellectuelle",
+    "intellectual-value": "Tous les contenus de notre site web, y compris le texte, les images et les logos, sont la propriété de [Nom de la marque] et sont protégés par les lois sur le droit d'auteur. Vous ne pouvez pas utiliser de contenu de notre site web sans notre consentement écrit préalable.",
+    "limitation": "Limitation de responsabilité",
+    "limitation-value": "Nous ne sommes pas responsables des dommages ou pertes résultant de l'utilisation de notre site web ou de nos services. Nous ne sommes pas responsables des dommages indirects, accessoires ou consécutifs.",
+    "changes-to-these-terms": "Modifications de ces conditions",
+    "changes-to-these-terms-value": "Ces Conditions d'utilisation sont régies par les lois de [Pays]. Tout litige découlant de ces conditions sera soumis à la juridiction des tribunaux de [Pays]."
   }
 }

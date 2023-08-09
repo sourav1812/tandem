@@ -31,6 +31,8 @@ export type RootStackParamList = {
   ForgotPassword: undefined;
   OtpScreen: undefined;
   CreatePassword: undefined;
+  PrivacyPolicies: undefined;
+  TermsOfUse: undefined;
 };
 
 export type RootTabParamList = {

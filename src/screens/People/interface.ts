@@ -20,7 +20,10 @@ export const menuArray = [
   {name: translation('ABOUT_APP'), navigate: SCREEN_NAME.ABOUT_APP},
   {
     name: translation('TERMS_OF_USE'),
-    // navigate: SCREEN_NAME.TERMS_AND_CONDITIONS,
+    navigate: SCREEN_NAME.TERMS_OF_USE,
   },
-  {name: translation('PRIVACY_POLICY')},
+  {
+    name: translation('PRIVACY_POLICY'),
+    navigate: SCREEN_NAME.PRIVACY_POLICIES,
+  },
 ];

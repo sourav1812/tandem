@@ -232,5 +232,28 @@
     "resend": "Rinvia",
     "did-not-get-code": "Non hai ricevuto il codice?",
     "this-code-is-invalid": "Questo codice non è valido."
+  },
+
+  "privacy-policy": {
+    "initial-text": "Siamo impegnati a proteggere la tua privacy e a salvaguardare le tue informazioni personali. Questa Informativa sulla privacy illustra come raccogliamo, utilizziamo e divulgiamo le informazioni quando utilizzi i nostri prodotti e servizi.",
+    "info-we-collect": "Informazioni che raccogliamo",
+    "info-we-collect-value": "Raccogliamo informazioni personali come il tuo nome, l'indirizzo email e il numero di telefono quando ti registri per i nostri servizi o effettui un acquisto sul nostro sito web. Possiamo raccogliere anche informazioni non personali come il tipo di dispositivo, l'indirizzo IP e il comportamento di navigazione.",
+    "sharing-your-info": "Condivisione delle tue informazioni",
+    "sharing-your-info-value": "Non vendiamo le tue informazioni personali a terzi. Possiamo condividere le tue informazioni con i nostri partner fidati che forniscono servizi per nostro conto, come l'elaborazione dei pagamenti o la spedizione. Possiamo anche condividere le tue informazioni quando richiesto dalla legge o per proteggere i nostri diritti e la nostra proprietà.",
+    "how-we-use-info": "Come utilizziamo le tue informazioni",
+    "how-we-use-info-value": "Utilizziamo le tue informazioni personali per fornirti i nostri prodotti e servizi, per comunicare con te riguardo a promozioni e offerte e per migliorare il nostro sito web e i nostri servizi. Possiamo anche utilizzare le tue informazioni per scopi di analisi e marketing.",
+    "security": "Sicurezza",
+    "security-value": "Affrontiamo seriamente la sicurezza delle tue informazioni e utilizziamo misure conformi agli standard del settore per proteggerle dall'accesso o dalla divulgazione non autorizzati."
+  },
+  "terms-of-use": {
+    "initial-text": "Queste Condizioni d'uso delineano le regole e i regolamenti per l'utilizzo dei nostri prodotti e servizi. Utilizzando il nostro sito web e i nostri servizi, accetti di essere vincolato da queste Condizioni d'uso. Se non accetti queste Condizioni d'uso, ti preghiamo di non utilizzare il nostro sito web o i nostri servizi.",
+    "use-of-service": "Utilizzo dei nostri servizi",
+    "use-of-service-value": "I nostri servizi sono destinati esclusivamente a un uso personale e non commerciale. Non puoi utilizzare il nostro sito web o i nostri servizi per scopi illegali o non autorizzati. Accetti di rispettare tutte le leggi e i regolamenti applicabili durante l'utilizzo del nostro sito web e dei nostri servizi.",
+    "intellectual": "Proprietà intellettuale",
+    "intellectual-value": "Tutti i contenuti del nostro sito web, inclusi testo, immagini e loghi, sono di proprietà di [Nome del brand] e sono protetti dalle leggi sul copyright. Non puoi utilizzare alcun contenuto dal nostro sito web senza il nostro preventivo consenso scritto.",
+    "limitation": "Limitazione di responsabilità",
+    "limitation-value": "Non siamo responsabili per eventuali danni o perdite derivanti dall'utilizzo del nostro sito web o dei nostri servizi. Non siamo responsabili per danni indiretti, accidentali o consequenziali.",
+    "changes-to-these-terms": "Modifiche a queste condizioni",
+    "changes-to-these-terms-value": "Queste Condizioni d'uso sono regolate e interpretate in conformità alle leggi di [Paese]. Eventuali controversie derivanti da queste condizioni saranno sottoposte alla giurisdizione dei tribunali di [Paese]."
   }
 }

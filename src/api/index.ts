@@ -7,7 +7,7 @@ import {
   stopLoader,
 } from '@tandem/redux/slices/activityIndicator.slice';
 import {store} from '@tandem/redux/store';
-import {BASE_URL} from '@tandem/constants/api';
+import {API, BASE_URL} from '@tandem/constants/api';
 import {addParams, clearParams} from '@tandem/redux/slices/paramsReducer';
 import logout from '@tandem/functions/logout';
 import {addGetResponse} from '@tandem/redux/slices/getResponseReducer';
@@ -48,7 +48,7 @@ const refreshAccessToken = async () => {
         throw new Error('No refreshToken found');
       }
 
-      const response = await axios.post(BASE_URL + 'refresh token endpoint', {
+      const response = await axios.post(BASE_URL + API.REFRESH_TOKEN, {
         refreshToken,
       });
       const {token, refreshToken: newRefreshToken} = response.data;
