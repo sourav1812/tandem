@@ -231,7 +231,5 @@
     "resend": "Resend",
     "did-not-get-code": "Didn't get the code?",
     "this-code-is-invalid": "This Code is wrong."
-  },
-
-  "CLEAR_ALL": "Clear All"
+  }
 }

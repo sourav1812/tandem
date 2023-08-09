@@ -18,7 +18,8 @@ import RNTooltip from '../RNTooltip';
 import {TOOLTIP} from '@tandem/constants/LocalConstants';
 import {getValueFromKey} from '@tandem/helpers/encryptedStorage';
 import chroma from 'chroma-js';
-import {verticalScale} from 'react-native-size-matters';
+import RNButton from '../RNButton';
+import {scale} from 'react-native-size-matters';
 
 const RNChooseColor = ({
   tooltipVisible,
@@ -72,7 +73,7 @@ const RNChooseColor = ({
 
   useEffect(() => {
     if (color1 && color2) {
-      updateState({color3: chroma.mix(color1, color2, 0.5, 'rgb').hex()});
+      updateState({color3: chroma.mix(color1, color2, 0.5, 'hsv').hex()});
     }
   }, [color1, color2]);
 
@@ -170,34 +171,31 @@ const RNChooseColor = ({
                     },
                   );
                 }}>
-                <Pressable
-                  onPress={() => {
-                    if (
-                      palleteArray.length < 4 &&
-                      !palleteArray.includes(color3) &&
-                      color3
-                    ) {
-                      setPalletArray(prev => [...prev, color3]);
-                      updateState({
-                        color3: '',
-                      });
-                    } else if (palleteArray.length === 4) {
-                      setPalletArray([]);
-                    }
-                  }}>
-                  {palleteArray.length < 4 ? (
+                {palleteArray.length < 4 ? (
+                  <Pressable
+                    onPress={() => {
+                      if (
+                        palleteArray.length < 4 &&
+                        !palleteArray.includes(color3) &&
+                        color3
+                      ) {
+                        setPalletArray(prev => [...prev, color3]);
+                        updateState({
+                          color3: '',
+                        });
+                      }
+                    }}>
                     <AddColor fill={palleteArray.length < 4 ? color3 : ''} />
-                  ) : (
-                    <RNTextComponent
-                      isMedium
-                      style={[
-                        styles.subHeading,
-                        {marginTop: verticalScale(20)},
-                      ]}>
-                      {translation('CLEAR_ALL')}
-                    </RNTextComponent>
-                  )}
-                </Pressable>
+                  </Pressable>
+                ) : (
+                  <RNButton
+                    customStyle={{width: scale(50)}}
+                    onClick={() => {
+                      setPalletArray([]);
+                    }}
+                    title="X"
+                  />
+                )}
               </View>
             </RNTooltip>
             {palleteArray.map((color, i) => (
