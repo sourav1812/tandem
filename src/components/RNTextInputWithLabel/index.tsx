@@ -25,6 +25,7 @@ const RNTextInputWithLabel = ({
   errorTextStyle,
   rightSideIcon,
   rightSideIconProp,
+  autoCapitalize = undefined,
 }: Props) => {
   const [highlight, setHighlight] = useState(false);
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -61,6 +62,7 @@ const RNTextInputWithLabel = ({
           ]}>
           {Icon && Icon}
           <TextInput
+            autoCapitalize={autoCapitalize}
             style={[
               styles.textinput,
               isTablet && {paddingHorizontal: 12, paddingVertical: 16},
