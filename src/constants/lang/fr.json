@@ -138,7 +138,7 @@
     "password-required": "Le mot de passe est requis",
     "password-no-match": "Les mots de passe ne correspondent pas",
     "password-no-spaces": "Le mot de passe ne doit pas contenir d'espaces",
-    "password-length": "La longueur du mot de passe doit être supérieure à 6",
+    "password-length": "La longueur du mot de passe doit être supérieure à 9",
     "name-required": "Ce champ ne peut pas être vide",
     "phone-required": "Le numéro de téléphone est requis",
     "phone-no-spaces": "Le numéro de téléphone ne doit pas contenir d'espaces",
@@ -148,7 +148,8 @@
     "pin-invalid": "Veuillez entrer un code PIN valide",
     "atleast-one-character": "Au moins un caractère",
     "atleast-one-digit": "Au moins un chiffre",
-    "contain-special-character": "Au moins un caractère spécial"
+    "contain-special-character": "Au moins un caractère spécial",
+    "dot-not-allowed":"'.' n'est pas autorisé"
   },
   "READING_TIME": "Temps de lecture",
   "NUMBER_OF_BOOKS": "Nombre de livres",

@@ -22,4 +22,5 @@ export interface Props {
   multiline?: boolean;
   labelStyle?: StyleProp<TextStyle>;
   editable?: boolean;
+  errorText?: string;
 }

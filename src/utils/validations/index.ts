@@ -9,6 +9,7 @@ export interface ValidationError {
 export enum FORM_INPUT_TYPE {
   EMAIL = 'EMAIL',
   PASSWORD = 'PASSWORD',
+  CONFIRM_PASSWORD = 'CONFIRM_PASSWORD',
   NAME = 'NAME',
   PHONE = 'PHONE',
   PIN = 'PIN',
@@ -55,7 +56,7 @@ const validatePassword = (value: string): ValidationError => {
       value,
     };
   }
-  if (!/^\S{8,}$/.test(value)) {
+  if (!/^\S{9,}$/.test(value)) {
     return {
       message: translation('validations.password-length'),
       type: FORM_INPUT_TYPE.PASSWORD,
@@ -80,6 +81,24 @@ const validatePassword = (value: string): ValidationError => {
     return {
       message: translation('validations.contain-special-character'),
       type: FORM_INPUT_TYPE.PASSWORD,
+      value,
+    };
+  }
+  if (/[.]/.test(value)) {
+    return {
+      message: translation('validations.dot-not-allowed'),
+      type: FORM_INPUT_TYPE.PASSWORD,
+      value,
+    };
+  }
+  return {value};
+};
+
+const validateConfirmPassword = (value: string): ValidationError => {
+  if (!value) {
+    return {
+      message: translation('validations.password-required'),
+      type: FORM_INPUT_TYPE.CONFIRM_PASSWORD,
       value,
     };
   }
@@ -162,6 +181,8 @@ const validateForm = (type: string, value: string): ValidationError => {
       return validatePhone(value);
     case FORM_INPUT_TYPE.PIN:
       return validatePin(value);
+    case FORM_INPUT_TYPE.CONFIRM_PASSWORD:
+      return validateConfirmPassword(value);
     default:
       return {value};
   }

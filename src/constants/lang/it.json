@@ -140,7 +140,7 @@
     "password-required": "La password è obbligatoria",
     "password-no-match": "Le password non corrispondono",
     "password-no-spaces": "La password non può contenere spazi",
-    "password-length": "La lunghezza della password deve essere maggiore di 6 caratteri",
+    "password-length": "La lunghezza della password deve essere maggiore di 9 caratteri",
     "name-required": "Questo campo non può essere vuoto",
     "phone-required": "Il numero di telefono è obbligatorio",
     "phone-no-spaces": "Il numero di telefono non può contenere spazi",
@@ -150,7 +150,8 @@
     "pin-invalid": "Inserisci un PIN valido",
     "atleast-one-character": "Almeno un carattere",
     "atleast-one-digit": "Almeno una cifra",
-    "contain-special-character": "Almeno un carattere speciale"
+    "contain-special-character": "Almeno un carattere speciale",
+    "dot-not-allowed": "'.' non è permesso"
   },
   "READING_TIME": "Tempo di Lettura",
   "NUMBER_OF_BOOKS": "Numero di Libri",

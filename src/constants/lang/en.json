@@ -137,7 +137,7 @@
     "password-required": "Password is required",
     "password-no-match": "Passwords do not match",
     "password-no-spaces": "Password should not contain whitespaces",
-    "password-length": "Password length must be greater than 8",
+    "password-length": "Password length must be greater than 9",
     "name-required": "This field cannot be empty",
     "phone-required": "Phone number is required",
     "phone-no-spaces": "Phone number must not contain whitespaces",
@@ -147,7 +147,8 @@
     "pin-invalid": "Please enter a valid pin",
     "atleast-one-character": "At least one character",
     "atleast-one-digit": "At least one digit",
-    "contain-special-character": "At least one special character"
+    "contain-special-character": "At least one special character",
+    "dot-not-allowed": " . is not allowed"
   },
   "READING_TIME": "Reading Time",
   "NUMBER_OF_BOOKS": "Number of books",
