@@ -1,6 +1,7 @@
 export enum API {
-  REGISTER_USER = 'user/sign_up', //? POST
-  LOGIN_USER_WITH_EMAIL = 'user/sign_in', //? POST
+  REGISTER_USER = 'user/sign-up', //? POST
+  LOGIN_USER_WITH_EMAIL = 'user/sign-in', //? POST
+  REFRESH_TOKEN = 'user/refresh-access-token', //? POST
 }
 
 export enum ENVIRONMENT {

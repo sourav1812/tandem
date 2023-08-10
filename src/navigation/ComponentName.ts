@@ -29,4 +29,6 @@ export enum SCREEN_NAME {
   CHECK_EMAIL = 'CheckEmail',
   OTP_SCREEN = 'OtpScreen',
   CREATE_PASSWORD = 'CreatePassword',
+  TERMS_OF_USE = 'TermsOfUse',
+  PRIVACY_POLICIES = 'PrivacyPolicies',
 }
