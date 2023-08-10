@@ -217,8 +217,8 @@ const Account = () => {
                 style={[
                   styles.add2,
                   {
-                    height: portrait ? verticalScale(100) : verticalScale(60),
-                    width: portrait ? verticalScale(100) : verticalScale(60),
+                    height: portrait ? verticalScale(100) : verticalScale(80),
+                    width: portrait ? verticalScale(60) : verticalScale(80),
                     borderRadius: 60,
                     backgroundColor: 'white',
                   },
@@ -226,10 +226,17 @@ const Account = () => {
                 onPress={() => {
                   navigateTo(SCREEN_NAME.CREATE_CHILD_PROFILE);
                 }}>
-                <Add />
-                <RNTextComponent
-                  isMedium
-                  style={[styles.addText, {marginTop: verticalScale(20)}]}>
+                <View
+                  style={{
+                    height: portrait ? verticalScale(60) : verticalScale(40),
+                    width: portrait ? verticalScale(60) : verticalScale(40),
+                    borderRadius: 60,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <Add />
+                </View>
+                <RNTextComponent isMedium style={[styles.addText]}>
                   {translation('ADD')}
                 </RNTextComponent>
               </Pressable>
@@ -272,9 +279,10 @@ const Account = () => {
                       removePlayer(index);
                     }}>
                     <RNParentProfile
-                      height={portrait ? verticalScale(80) : verticalScale(60)}
-                      width={portrait ? verticalScale(80) : verticalScale(60)}
+                      height={portrait ? verticalScale(60) : verticalScale(40)}
+                      width={portrait ? verticalScale(60) : verticalScale(40)}
                       data={item}
+                      custumStyle={{marginTop: 5}}
                     />
                   </Pressable>
                 );
@@ -340,8 +348,8 @@ const Account = () => {
                 style={[
                   styles.add,
                   {
-                    height: portrait ? verticalScale(100) : verticalScale(60),
-                    width: portrait ? verticalScale(100) : verticalScale(60),
+                    height: portrait ? verticalScale(105) : verticalScale(52.5),
+                    width: portrait ? verticalScale(90) : verticalScale(45),
                     borderRadius: 60,
                     backgroundColor: 'white',
                   },
@@ -350,20 +358,25 @@ const Account = () => {
                   dispatch(changeMode(MODE.A));
                   navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN, {}, true);
                 }}>
-                <Add />
-                <RNTextComponent
-                  isMedium
-                  style={[
-                    styles.addText,
-                    {
-                      marginTop: portrait
-                        ? verticalScale(20)
-                        : verticalScale(21),
-                    },
-                  ]}>
-                  {translation('ADD')}
-                </RNTextComponent>
+                <View
+                  style={{
+                    height: portrait ? verticalScale(100) : verticalScale(52.5),
+                    width: portrait ? verticalScale(80) : verticalScale(45),
+                    borderRadius: 60,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <Add />
+                </View>
               </Pressable>
+              <RNTextComponent
+                isMedium
+                style={[
+                  styles.addText,
+                  {marginLeft: portrait ? scale(25) : verticalScale(10)},
+                ]}>
+                {translation('ADD')}
+              </RNTextComponent>
             </RNTooltip>
           </ScrollView>
         </View>

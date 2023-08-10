@@ -28,10 +28,10 @@ export const styles = StyleSheet.create({
   },
   add: {
     alignItems: 'center',
-    paddingTop: verticalScale(26),
   },
   addText: {
-    marginTop: verticalScale(42),
+    fontSize: verticalScale(14),
+    marginTop: verticalScale(8),
   },
   body: {
     flex: 1,
@@ -39,8 +39,6 @@ export const styles = StyleSheet.create({
   },
   add2: {
     alignItems: 'center',
-    paddingTop: verticalScale(14),
-    paddingHorizontal: scale(5),
   },
   footer: {
     alignSelf: 'center',
