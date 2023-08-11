@@ -92,4 +92,11 @@ export const styles = StyleSheet.create({
     marginTop: verticalScale(16),
     backgroundColor: themeColor.themeBlue,
   },
+  avatarImg: {
+    height: verticalScale(90),
+  },
+  date: {
+    backgroundColor: themeColor.lightGray,
+    height: verticalScale(55),
+  },
 });

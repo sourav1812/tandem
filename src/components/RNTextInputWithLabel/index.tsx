@@ -132,6 +132,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: verticalScale(8),
     paddingVertical: verticalScale(14),
     color: themeColor.black,
-    fontSize: verticalScale(11),
+    fontSize: verticalScale(14),
   },
 });

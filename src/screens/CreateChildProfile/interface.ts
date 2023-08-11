@@ -3,6 +3,7 @@ import Giraffe from '@tandem/assets/svg/Giraffe';
 import Elephant from '@tandem/assets/svg/Elephant';
 import Fox from '@tandem/assets/svg/Fox';
 import Rabbit from '@tandem/assets/svg/Rabbit';
+import Camera from '@tandem/assets/svg/Camera';
 
 export interface indicatorType {
   index: number;
@@ -12,17 +13,18 @@ export interface indicatorType {
 export interface childProfileStateObject {
   bulletinArray: indicatorType[];
   questionIndex: number;
-  other: boolean;
+  gender: string;
 }
 
 export interface avatar {
-  icon: any;
+  icon: string;
 }
 
 export const avatarArray: avatar[] = [
-  {icon: LionIcon},
-  {icon: Giraffe},
-  {icon: Elephant},
-  {icon: Fox},
-  {icon: Rabbit},
+  {icon: require('@tandem/assets/png/camera.png')},
+  {icon: require('@tandem/assets/png/lion.png')},
+  {icon: require('@tandem/assets/png/giraff.png')},
+  {icon: require('@tandem/assets/png/elephant.png')},
+  {icon: require('@tandem/assets/png/fox.png')},
+  {icon: require('@tandem/assets/png/rabit.png')},
 ];

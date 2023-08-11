@@ -14,9 +14,9 @@ const RNEmojiWithText = ({
   bgcColor,
   ref,
   onLayout,
+  onPress = () => {},
+  isSelected,
 }: Props) => {
-  const [isSelected, setIsSelected] = useState(false);
-
   return (
     <Pressable
       ref={ref && ref}
@@ -30,7 +30,7 @@ const RNEmojiWithText = ({
       ]}
       {...props}
       onPress={() => {
-        setIsSelected(!isSelected);
+        onPress();
       }}>
       <Text
         style={[
