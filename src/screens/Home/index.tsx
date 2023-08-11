@@ -12,7 +12,7 @@ import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import themeColor from '@tandem/theme/themeColor';
-import {verticalScale} from 'react-native-size-matters';
+import {scale, verticalScale} from 'react-native-size-matters';
 import RNBookmarkComponent from '@tandem/components/RNBookmarkComponent';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
@@ -349,7 +349,7 @@ const Home = () => {
           </View>
           <ScrollView
             style={styles.content}
-            contentContainerStyle={{paddingTop: verticalScale(5)}}
+            contentContainerStyle={{paddingVertical: verticalScale(5)}}
             showsVerticalScrollIndicator={false}>
             {mode !== MODE.A && (
               <RNTextComponent
@@ -366,7 +366,9 @@ const Home = () => {
               style={{
                 ...styles.options,
                 ...(!portrait && styles.optionsPortrait),
-                ...(isTablet && {paddingHorizontal: portrait ? 100 : 200}),
+                ...(isTablet && {
+                  paddingHorizontal: portrait ? scale(20) : scale(130),
+                }),
               }}>
               {mode === MODE.B || mode === MODE.C
                 ? modeBC.map((item, index) => (
@@ -410,7 +412,7 @@ const Home = () => {
                       }}>
                       <RNBookmarkComponent
                         customStyle={{
-                          marginTop: verticalScale(24),
+                          marginTop: verticalScale(10),
                           ...(!portrait && styles.cardPortrait),
                         }}
                         borderIconColor={item.color}

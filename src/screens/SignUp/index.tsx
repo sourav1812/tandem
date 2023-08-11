@@ -5,6 +5,7 @@ import {
   ScrollView,
   View,
   ImageBackground,
+  Dimensions,
 } from 'react-native';
 import React, {useState} from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
@@ -26,12 +27,9 @@ import {RootState} from '@tandem/redux/store';
 import {translation} from '@tandem/utils/methods';
 import registerUser from '@tandem/api/registerUser';
 import validationFunction from '@tandem/functions/validationFunction';
-import {useDispatch} from 'react-redux';
-import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
 
 const SignUp = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
-  const dispatch = useDispatch();
   const [name, setName] = useState<ValidationError>({value: ''});
   const [email, setEmail] = useState<ValidationError>({value: ''});
   const [password, setPassword] = useState<ValidationError>({value: ''});
@@ -41,6 +39,8 @@ const SignUp = () => {
   const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
+  const height = Dimensions.get('screen').height;
+  const width = Dimensions.get('screen').width;
 
   const handleSignUpButton = async () => {
     if (
@@ -63,7 +63,7 @@ const SignUp = () => {
         {
           state: confirmPassword,
           setState: setConfirmPassword,
-          typeOfValidation: FORM_INPUT_TYPE.PASSWORD,
+          typeOfValidation: FORM_INPUT_TYPE.CONFIRM_PASSWORD,
         },
       ])
     ) {
@@ -81,22 +81,29 @@ const SignUp = () => {
       }
       navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN);
     } else {
-      dispatch(
-        addAlertData({
-          type: 'Alert',
-          message: 'Password does not match.',
-        }),
-      );
+      setConfirmPassword(prev => ({
+        ...prev,
+        message: 'Your password do not match.',
+      }));
     }
   };
 
   return (
-    <RNScreenWrapper style={{backgroundColor: themeColor.white}}>
+    <RNScreenWrapper style={{backgroundColor: themeColor.white, flex: 1}}>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={{height: '100%', width: '100%'}}>
-        <View style={{flex: 1}}>
-          <ScrollView showsVerticalScrollIndicator={false}>
+        style={{
+          height: height,
+          width: width,
+        }}>
+        <ScrollView
+          bounces={false}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{
+            height: portrait ? height + 50 : undefined,
+            width: portrait ? width : undefined,
+          }}>
+          <>
             {isTablet ? (
               <ImageBackground
                 style={[styles.container]}
@@ -161,7 +168,8 @@ const SignUp = () => {
                     inputStyle={styles.inputText}
                     value={confirmPassword}
                     updateText={setConfirmPassword}
-                    validationType={FORM_INPUT_TYPE.PASSWORD}
+                    validationType={FORM_INPUT_TYPE.CONFIRM_PASSWORD}
+                    // errorText={errorText}
                     hint={translation('ENTER_PASSWORD')}
                     rightSideIcon
                   />
@@ -273,7 +281,8 @@ const SignUp = () => {
                     inputStyle={styles.inputText}
                     value={confirmPassword}
                     updateText={setConfirmPassword}
-                    validationType={FORM_INPUT_TYPE.PASSWORD}
+                    validationType={FORM_INPUT_TYPE.CONFIRM_PASSWORD}
+                    // errorText={errorText}
                     hint={translation('ENTER_PASSWORD')}
                     rightSideIcon
                   />
@@ -333,10 +342,11 @@ const SignUp = () => {
                     </RNTextComponent>
                   </RNTextComponent>
                 </View>
+                <View style={{height: 20}} />
               </>
             )}
-          </ScrollView>
-        </View>
+          </>
+        </ScrollView>
       </KeyboardAvoidingView>
     </RNScreenWrapper>
   );
