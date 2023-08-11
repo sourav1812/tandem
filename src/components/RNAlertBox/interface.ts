@@ -3,4 +3,5 @@ export interface AlertBoxInterface {
   renderModal?: any;
   type: string;
   message: string;
+  possibleResolution?: string;
 }

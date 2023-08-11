@@ -41,16 +41,6 @@ const SignIn = () => {
   const width = Dimensions.get('screen').width;
 
   const signInButtonHandler = async () => {
-    // if (
-    //   email.value === '' ||
-    //   password.value === '' ||
-    //   email.message === '' ||
-    //   password.message === ''
-    // ) {
-    // setEmail(validateForm(FORM_INPUT_TYPE.EMAIL, ''));
-    //   setPassword(validateForm(FORM_INPUT_TYPE.PASSWORD, ''));
-    //   return;
-    // }
     if (
       !validationFunction([
         {
@@ -61,7 +51,7 @@ const SignIn = () => {
         {
           state: password,
           setState: setPassword,
-          typeOfValidation: FORM_INPUT_TYPE.PASSWORD,
+          typeOfValidation: FORM_INPUT_TYPE.CONFIRM_PASSWORD,
         },
       ])
     ) {
@@ -116,6 +106,7 @@ const SignIn = () => {
                 },
               ]}>
               <RNTextInputWithLabel
+                autoCapitalize="none"
                 label={translation('EMAIL')}
                 backgroundColor={themeColor.lightGray}
                 containerStyle={styles.input2}
@@ -126,13 +117,14 @@ const SignIn = () => {
                 inputStyle={styles.inputText}
               />
               <RNTextInputWithLabel
+                autoCapitalize="none"
                 label={translation('PASSWORD')}
                 // label={en.EMAIL}
                 backgroundColor={themeColor.lightGray}
                 containerStyle={styles.input2}
                 value={password}
                 updateText={setPassword}
-                validationType={FORM_INPUT_TYPE.PASSWORD}
+                validationType={FORM_INPUT_TYPE.CONFIRM_PASSWORD}
                 hint={translation('ENTER_PASSWORD')}
                 inputStyle={styles.inputText}
                 rightSideIcon={true}

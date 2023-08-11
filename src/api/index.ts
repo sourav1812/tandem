@@ -7,10 +7,11 @@ import {
   stopLoader,
 } from '@tandem/redux/slices/activityIndicator.slice';
 import {store} from '@tandem/redux/store';
-import {BASE_URL} from '@tandem/constants/api';
+import {API, BASE_URL} from '@tandem/constants/api';
 import {addParams, clearParams} from '@tandem/redux/slices/paramsReducer';
 import logout from '@tandem/functions/logout';
 import {addGetResponse} from '@tandem/redux/slices/getResponseReducer';
+import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
@@ -47,7 +48,7 @@ const refreshAccessToken = async () => {
         throw new Error('No refreshToken found');
       }
 
-      const response = await axios.post(BASE_URL + 'refresh token endpoint', {
+      const response = await axios.post(BASE_URL + API.REFRESH_TOKEN, {
         refreshToken,
       });
       const {token, refreshToken: newRefreshToken} = response.data;
@@ -85,6 +86,13 @@ const handleError = async (error: {
       const {refreshToken} = getStoredTokens();
       if (!refreshToken) {
         // if 401 error is not due to token invaidation
+        store.dispatch(
+          addAlertData({
+            type: 'Alert',
+            message: data.message,
+            possibleResolution: data.possibleResolution,
+          }),
+        );
         //! Toast message here
         return await Promise.reject(
           new Error(originalRequest.url + ': Status: ' + status),
@@ -101,6 +109,13 @@ const handleError = async (error: {
   } else if (status >= 400) {
     // Handle 404 (Not Found) errors
     // For example, you can throw a custom error or return a specific response
+    store.dispatch(
+      addAlertData({
+        type: 'Alert',
+        message: data.message,
+        possibleResolution: data.possibleResolution,
+      }),
+    );
     //! Toast message here
     return await Promise.reject(
       new Error(originalRequest.url + ': Status: ' + status),
@@ -108,11 +123,25 @@ const handleError = async (error: {
   } else if (status >= 500) {
     // Handle 5xx (Server Errors) errors
     // For example, you can throw a custom error or return a specific response
+    store.dispatch(
+      addAlertData({
+        type: 'Alert',
+        message: data.message,
+        possibleResolution: data.possibleResolution,
+      }),
+    );
     // !Toast message here
     return await Promise.reject(
       new Error(originalRequest.url + ': Status: ' + status),
     );
   }
+  store.dispatch(
+    addAlertData({
+      type: 'Alert',
+      message: data.message,
+      possibleResolution: data.possibleResolution,
+    }),
+  );
   // ! Handle other status codes here
   // For other status codes, return the error as is
   return Promise.reject(error);
@@ -141,6 +170,12 @@ const executeRequest = async <T>(
     const response: AxiosResponse<Api & T, any> = await requestFunction(
       path,
       data,
+    );
+    store.dispatch(
+      addAlertData({
+        type: 'Message',
+        message: response.data.message,
+      }),
     );
     //! Toast message here to show completion of POST/PUT request
     console.log('yay', response.data);

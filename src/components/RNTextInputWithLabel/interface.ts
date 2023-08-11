@@ -7,7 +7,7 @@ export interface Props {
   label?: string;
   hint?: string;
   value: ValidationError;
-  updateText: React.Dispatch<React.SetStateAction<ValidationError>>;
+  updateText?: React.Dispatch<React.SetStateAction<ValidationError>>;
   inputStyle?: StyleProp<TextStyle>;
   showIcon?: boolean;
   Icon?: any;
@@ -18,4 +18,8 @@ export interface Props {
   errorTextStyle?: StyleProp<TextStyle>;
   rightSideIcon?: boolean;
   rightSideIconProp?: ReactNode;
+  autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters' | undefined;
+  multiline?: boolean;
+  labelStyle?: StyleProp<TextStyle>;
+  editable?: boolean;
 }

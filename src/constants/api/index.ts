@@ -1,6 +1,7 @@
 export enum API {
-  REGISTER_USER = 'user/sign_up', //? POST
-  LOGIN_USER_WITH_EMAIL = 'user/sign_in', //? POST
+  REGISTER_USER = 'user/sign-up', //? POST
+  LOGIN_USER_WITH_EMAIL = 'user/sign-in', //? POST
+  REFRESH_TOKEN = 'user/refresh-access-token', //? POST
 }
 
 export enum ENVIRONMENT {
@@ -10,7 +11,7 @@ export enum ENVIRONMENT {
 
 const ENV_VARS = {
   [ENVIRONMENT.DEVELOPMENT]: {
-    API_URL: 'http://192.168.1.59:5000/v1/', // * STAGING URL
+    API_URL: 'http://192.168.1.61:5000/v1/', // * STAGING URL
   },
   [ENVIRONMENT.PRODUCTION]: {
     API_URL: '', // * LIVE URL

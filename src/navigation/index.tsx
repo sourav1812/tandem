@@ -93,6 +93,18 @@ const AppNavigator = () => {
               />
               <Stack.Screen
                 getComponent={() =>
+                  require('@tandem/screens/TermsOfUse').default
+                }
+                name={SCREEN_NAME.TERMS_OF_USE}
+              />
+              <Stack.Screen
+                getComponent={() =>
+                  require('@tandem/screens/PrivacyPolicies').default
+                }
+                name={SCREEN_NAME.PRIVACY_POLICIES}
+              />
+              <Stack.Screen
+                getComponent={() =>
                   require('@tandem/screens/Onboarding').default
                 }
                 name={SCREEN_NAME.ONBOARDING}

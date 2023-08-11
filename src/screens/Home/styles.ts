@@ -38,8 +38,8 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   cardPortrait: {
-    height: verticalScale(120),
-    width: verticalScale(120),
+    height: verticalScale(140),
+    width: verticalScale(140),
   },
   headingPortrait: {
     // marginTop: verticalScale(0),

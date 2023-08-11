@@ -5,10 +5,10 @@ import themeColor from '../../theme/themeColor';
 export const styles = StyleSheet.create({
   container: {
     borderWidth: 1,
-    height: verticalScale(120),
-    width: verticalScale(120),
-    maxHeight: 190,
-    maxWidth: 190,
+    height: verticalScale(140),
+    width: verticalScale(140),
+    maxHeight: verticalScale(190),
+    maxWidth: verticalScale(190),
     borderRadius: 16,
     justifyContent: 'space-around',
     alignItems: 'center',
@@ -31,8 +31,8 @@ export const styles = StyleSheet.create({
   },
   imgContainer: {
     height: verticalScale(45),
-    maxWidth: 47,
-    maxHeight: 47,
+    maxWidth: verticalScale(45),
+    maxHeight: verticalScale(45),
     width: verticalScale(45),
     borderRadius: 72,
     backgroundColor: themeColor.white,
