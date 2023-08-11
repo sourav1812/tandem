@@ -11,6 +11,7 @@ const themeColor = {
   pink: '#FEA2BB',
   lightGray: '#F1F4F9',
   input: '#F8F9F9',
+  tooltipBgcColor: '#000000CC',
 };
 
 export default themeColor;

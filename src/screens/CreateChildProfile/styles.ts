@@ -99,4 +99,5 @@ export const styles = StyleSheet.create({
     backgroundColor: themeColor.lightGray,
     height: verticalScale(55),
   },
+  disabled: {backgroundColor: '#e9e9e9', borderColor: '#e9e9e9'},
 });

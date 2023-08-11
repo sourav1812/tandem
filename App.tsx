@@ -11,6 +11,7 @@ import messaging from '@react-native-firebase/messaging';
 import {PersistGate} from 'redux-persist/integration/react';
 import {persistStore} from 'redux-persist';
 import {clearAlertData} from '@tandem/redux/slices/alertBox.slice';
+import statusbar from '@tandem/functions/statusbar';
 
 const persistor = persistStore(store);
 
@@ -30,11 +31,13 @@ const App: FC = () => {
     store.dispatch(clearAlertData());
     if (!tooltip) {
       storeKey(TOOLTIP, [0]);
-      console.log('key generated');
     }
     const unsubscribe = messaging().onMessage(async remoteMessage => {
       Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
     });
+
+    statusbar();
+
     return unsubscribe;
   }, []);
 

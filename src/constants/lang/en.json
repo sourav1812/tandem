@@ -137,7 +137,7 @@
     "password-required": "Password is required",
     "password-no-match": "Passwords do not match",
     "password-no-spaces": "Password should not contain whitespaces",
-    "password-length": "Password length must be greater than 8",
+    "password-length": "Password length must be greater than 9",
     "name-required": "This field cannot be empty",
     "phone-required": "Phone number is required",
     "phone-no-spaces": "Phone number must not contain whitespaces",
@@ -147,7 +147,8 @@
     "pin-invalid": "Please enter a valid pin",
     "atleast-one-character": "At least one character",
     "atleast-one-digit": "At least one digit",
-    "contain-special-character": "At least one special character"
+    "contain-special-character": "At least one special character",
+    "dot-not-allowed": " . is not allowed"
   },
   "READING_TIME": "Reading Time",
   "NUMBER_OF_BOOKS": "Number of books",
@@ -231,5 +232,27 @@
     "resend": "Resend",
     "did-not-get-code": "Didn't get the code?",
     "this-code-is-invalid": "This Code is wrong."
+  },
+  "privacy-policy": {
+    "initial-text": "We are committed to protecting your privacy and safeguarding your personal information. This Privacy Policy outlines how we collect, use, and disclose information when you use our products and services.",
+    "info-we-collect": "Information we collect",
+    "info-we-collect-value": "We collect personal information such as your name, email address, and phone number when you sign up for our services or make a purchase on our website. We may also collect non-personal information such as your device type, IP address, and browsing behavior.",
+    "sharing-your-info": "Sharing your information",
+    "sharing-your-info-value": "We do not sell your personal information to third parties. We may share your information with our trusted partners who provide services on our behalf, such as payment processing or shipping. We may also share your information when required by law or to protect our rights and property.",
+    "how-we-use-info": "How we use your information",
+    "how-we-use-info-value": "We use your personal information to provide you with our products and services, to communicate with you about promotions and offers, and to improve our website and services. We may also use your information for analytics and marketing purposes.",
+    "security": "Security",
+    "security-value": "We take security of your information seriously and use industry-standard measures to protect it from anauthorized access or disclosure."
+  },
+  "terms-of-use": {
+    "initial-text": "These Terms and Conditions outline the rules and regulations for the use of our products and services. By using our website and services, you accept and agree to be bound by these Terms and Conditions. If you do not agree to these Terms and Conditions, please do not use our website or services.",
+    "use-of-service": "Use of our services",
+    "use-of-service-value": "Our services are intended for personal, non-commercial use only. You may not use our website or services for any illegal or unauthorized purpose. You agree to comply with all applicable laws and regulations when using our website and services.",
+    "intellectual": "Intellectual property",
+    "intellectual-value": "All content on our website, including text, images, and logos, is the property of [Brand Name] and is protected by copyright laws. You may not use any content from our website without our prior written consent.",
+    "limitation": "Limitation of liability",
+    "limitation-value": "We are not responsible for any damages or losses resulting from your use of our website or services. We are not liable for any indirect, incidental, or consequential damages.",
+    "Changes-to-these-terms": "Changes to these terms",
+    "Changes-to-these-terms-value": "These Terms and Conditions are governed by and construed in accordance with the laws of [Country]. Any disputes arising from these terms will be subject to the jurisdiction of the courts of [Country]."
   }
 }

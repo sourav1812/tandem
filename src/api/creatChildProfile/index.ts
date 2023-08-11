@@ -10,8 +10,14 @@ export const addNewChild = async ({
 }: CreateChildProfile) => {
   const response = await post({
     path: API.CREATE_CHILD_PROFILE,
-    data: {name, age, gender, avatar},
+    data: {
+      name,
+      age,
+      gender,
+      avatar,
+    },
   });
+  console.log(response, 'addNewChildaddNewChild');
   if (!response) {
     return;
   }

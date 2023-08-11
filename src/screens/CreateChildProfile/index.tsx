@@ -22,6 +22,8 @@ import DatePicker from 'react-native-date-picker';
 import {LanguageDropDown} from '@tandem/components/LanguageDropDown';
 import ImagePicker from 'react-native-image-crop-picker';
 import dayjs from 'dayjs';
+import {addNewChild} from '@tandem/api/creatChildProfile';
+import validationFunction from '@tandem/functions/validationFunction';
 
 const CreateChildProfile = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -47,7 +49,7 @@ const CreateChildProfile = () => {
     });
   };
 
-  const nextQuestion = () => {
+  const nextQuestion = async () => {
     if (questionIndex <= 2) {
       let indexArry: indicatorType[] = [...bulletinArray];
       bulletinArray.map((item, index) => {
@@ -57,7 +59,33 @@ const CreateChildProfile = () => {
       });
       updateState({questionIndex: questionIndex + 1, bulletinArray: indexArry});
     } else {
-      navigateTo(SCREEN_NAME.BOTTOM_TAB, {}, true);
+      if (
+        !validationFunction([
+          {
+            state: name,
+            setState: setName,
+            typeOfValidation: FORM_INPUT_TYPE.NAME,
+          },
+          {
+            state: dob,
+            setState: setDob,
+            typeOfValidation: FORM_INPUT_TYPE.DOB,
+          },
+        ])
+      ) {
+        return;
+      }
+      const response = await addNewChild({
+        name: 'mohan',
+        age: '32',
+        gender: 'male',
+        avatar: 'sjdfkljklfskl34349349895jksjdfksj',
+      });
+      if (response) {
+        setTimeout(() => {
+          navigateTo(SCREEN_NAME.BOTTOM_TAB, {}, true);
+        }, 300);
+      }
     }
   };
 
@@ -249,7 +277,7 @@ const CreateChildProfile = () => {
                           })
                             .then(response => {
                               setImageData(response);
-                              console.log(response.path);
+                              console.log(response);
                             })
                             .catch(err => {
                               console.log(err);
@@ -291,6 +319,7 @@ const CreateChildProfile = () => {
         <RNButton
           title={translation('NEXT')}
           onClick={nextQuestion}
+          customStyle={gender === '' && styles.disabled}
           textStyle={[styles.rightText, isTablet && {maxWidth: 310}]}
         />
       </View>

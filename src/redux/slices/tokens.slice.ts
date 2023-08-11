@@ -2,22 +2,24 @@ import {createSlice} from '@reduxjs/toolkit';
 import {USER} from '@tandem/constants/enums';
 
 interface TokenState {
-  [USER.TOKEN]: string;
-  [USER.REFRESH_TOKEN]: string;
+  token: string;
+  refreshToken: string;
 }
 
 const initialState: TokenState = {
-  [USER.TOKEN]: '',
-  [USER.REFRESH_TOKEN]: '',
+  token: '',
+  refreshToken: '',
 };
 
 export const tokenSlice = createSlice({
-  name: 'token',
+  name: 'manageToken',
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
     addToken: (state, action) => {
-      state.token = action.payload;
+      console.log(action.payload, 'payload');
+      state.token = action.payload.token;
+      state.refreshToken = action.payload.refreshToken;
     },
     removeToken: _state => initialState,
   },

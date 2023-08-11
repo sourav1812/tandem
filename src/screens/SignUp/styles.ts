@@ -4,13 +4,13 @@ import themeColor from '@tandem/theme/themeColor';
 
 export const styles = StyleSheet.create({
   container: {
-    height: '110%',
+    height: '100%',
     width: '100%',
   },
   heading: {
     fontSize: verticalScale(21.3),
     alignSelf: 'center',
-    marginTop: verticalScale(30),
+    marginVertical: verticalScale(10),
   },
   header: {
     flexDirection: 'row',
@@ -20,11 +20,10 @@ export const styles = StyleSheet.create({
   },
   input: {
     width: '100%',
-    marginTop: verticalScale(18),
   },
   input2: {
     width: '100%',
-    marginTop: verticalScale(12),
+    marginTop: verticalScale(5),
   },
   form: {
     paddingHorizontal: verticalScale(21),
