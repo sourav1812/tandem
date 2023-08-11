@@ -29,7 +29,6 @@ const RNTextInputWithLabel = ({
   multiline = undefined,
   labelStyle,
   editable = true,
-  errorText,
 }: Props) => {
   const [highlight, setHighlight] = useState(false);
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -115,9 +114,9 @@ const RNTextInputWithLabel = ({
         style={[
           styles.errorText,
           errorTextStyle,
-          {color: value?.message || errorText ? 'darkred' : 'transparent'},
+          {color: value?.message ? 'darkred' : 'transparent'},
         ]}>
-        {!value.value ? value.message : errorText ? errorText : value.message}
+        {value.message}
       </Text>
     </>
   );

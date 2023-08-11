@@ -7,7 +7,7 @@ import {
   ImageBackground,
   Dimensions,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import {styles} from './styles';
@@ -33,7 +33,6 @@ const SignUp = () => {
   const [name, setName] = useState<ValidationError>({value: ''});
   const [email, setEmail] = useState<ValidationError>({value: ''});
   const [password, setPassword] = useState<ValidationError>({value: ''});
-  const [errorText, setErrorText] = useState<string>();
   const [confirmPassword, setConfirmPassword] = useState<ValidationError>({
     value: '',
   });
@@ -42,10 +41,6 @@ const SignUp = () => {
   );
   const height = Dimensions.get('screen').height;
   const width = Dimensions.get('screen').width;
-
-  useEffect(() => {
-    setErrorText(undefined);
-  }, [confirmPassword, password]);
 
   const handleSignUpButton = async () => {
     if (
@@ -86,7 +81,10 @@ const SignUp = () => {
       }
       navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN);
     } else {
-      setErrorText('Your password is incorrect.');
+      setConfirmPassword(prev => ({
+        ...prev,
+        message: 'Your password do not match.',
+      }));
     }
   };
 
@@ -171,7 +169,7 @@ const SignUp = () => {
                     value={confirmPassword}
                     updateText={setConfirmPassword}
                     validationType={FORM_INPUT_TYPE.CONFIRM_PASSWORD}
-                    errorText={errorText}
+                    // errorText={errorText}
                     hint={translation('ENTER_PASSWORD')}
                     rightSideIcon
                   />
@@ -284,7 +282,7 @@ const SignUp = () => {
                     value={confirmPassword}
                     updateText={setConfirmPassword}
                     validationType={FORM_INPUT_TYPE.CONFIRM_PASSWORD}
-                    errorText={errorText}
+                    // errorText={errorText}
                     hint={translation('ENTER_PASSWORD')}
                     rightSideIcon
                   />
