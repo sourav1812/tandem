@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {scale, verticalScale} from 'react-native-size-matters';
+import {verticalScale} from 'react-native-size-matters';
 import themeColor from '@tandem/theme/themeColor';
 
 export const styles = StyleSheet.create({
@@ -25,7 +25,6 @@ export const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    paddingHorizontal: scale(20),
   },
   heading: {
     fontSize: verticalScale(16),
