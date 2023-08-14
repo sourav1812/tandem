@@ -91,6 +91,5 @@ export const styles = StyleSheet.create({
   tooltipTwo: {
     height: 'auto',
     width: 'auto',
-    marginRight: 50,
   },
 });

@@ -26,6 +26,8 @@ const RNTooltip = ({
   bottom,
   dimensionObject,
   rotation,
+  topViewStyle,
+  isTablet,
 }: TooltipProps) => {
   const tooltipNumber = getValueFromKey(TOOLTIP);
   const helperTop = tooltipHelperTop(dimensionObject);
@@ -33,11 +35,15 @@ const RNTooltip = ({
 
   return (
     <Tooltip
-      isVisible={tooltipNumber?.length < 14 ? open : false}
+      isVisible={tooltipNumber?.length < 15 ? open : false}
       content={
-        <>
+        <View style={[topViewStyle && topViewStyle]}>
           {helperTop && (
-            <RNArrowIconTop rotation={rotation} type={top ? top : helperTop} />
+            <RNArrowIconTop
+              rotation={rotation}
+              type={top ? top : helperTop}
+              isTablet={isTablet}
+            />
           )}
           <View style={[textContainerStyle && textContainerStyle]}>
             <RNTextComponent
@@ -45,7 +51,7 @@ const RNTooltip = ({
               style={[
                 {
                   color: 'white',
-                  fontSize: scale(20),
+                  fontSize: scale(18),
                   textAlign: 'center',
                 },
                 textStyle && textStyle,
@@ -57,9 +63,10 @@ const RNTooltip = ({
             <RNArrowIconBottom
               rotation={rotation}
               type={bottom ? bottom : helperBottom}
+              isTablet={isTablet}
             />
           )}
-        </>
+        </View>
       }
       backgroundColor="#000000CC"
       disableShadow
@@ -70,7 +77,6 @@ const RNTooltip = ({
           height: '100%',
           alignItems: 'center',
           justifyContent: 'center',
-          marginTop: -10,
         },
         mainStyle && mainStyle,
       ]}

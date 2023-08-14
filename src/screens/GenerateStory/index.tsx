@@ -48,8 +48,11 @@ const GenerateStory = () => {
 
   const tooltipArray = getValueFromKey(TOOLTIP);
   const refOne = useRef<any>(null);
+  const refTwo = useRef<any>(null);
+
   const [positionRefs, setPositionRefs] = React.useState({
     0: {height: 0, width: 0, x: 0, y: 0},
+    1: {height: 0, width: 0, x: 0, y: 0},
   });
   const [state, setState] = useState<StateObject>({
     addedIllustration: null,
@@ -57,6 +60,7 @@ const GenerateStory = () => {
     tooltipSecond: false,
     tooltipThird: false,
     tooltipFourth: false,
+    tooltipFifth: false,
   });
 
   const {
@@ -65,6 +69,7 @@ const GenerateStory = () => {
     tooltipSecond,
     tooltipThird,
     tooltipFourth,
+    tooltipFifth,
   } = state;
 
   const updateState = (date: any) => {
@@ -92,6 +97,9 @@ const GenerateStory = () => {
     if (questionIndex === 6) {
       updateState({tooltipThird: true});
     }
+    if (questionIndex === 1) {
+      updateState({tooltipFifth: true});
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [questionIndex]);
 
@@ -114,6 +122,7 @@ const GenerateStory = () => {
               </RNTextComponent>
             </RNTextComponent>
             <RNChoiceQuestions
+              isTablet={isTablet}
               data={audience}
               visibletoolTip={tooltipFirst}
               onTooltipClose={onCloseFirstTooltip}
@@ -149,27 +158,78 @@ const GenerateStory = () => {
                   IconButtoncustomStyle={styles.camera}
                 />
               </ImageBackground>
-              <View style={styles.buttonContainer}>
-                <RNTextComponent style={styles.yesOrNo} isMedium>
-                  {translation('YES')} or {translation('NO')}?
-                </RNTextComponent>
+              <RNTooltip
+                isTablet={isTablet}
+                topViewStyle={{
+                  alignItems: 'center',
+                }}
+                bottom={portrait ? 'South' : 'East'}
+                text={
+                  'Select yes/no \n if you want to select your \n character in the story'
+                }
+                open={tooltipArray?.includes(15) ? false : tooltipFifth}
+                setClose={() => {
+                  setState({
+                    ...state,
+                    tooltipFifth: false,
+                  });
+                  tooltipArray.push(15);
+                  storeKey(TOOLTIP, tooltipArray);
+                }}
+                dimensionObject={positionRefs[1]}>
                 <View
-                  style={[styles.buttonView, isTablet && {width: scale(180)}]}>
-                  <RNButton
-                    title="✔"
-                    customStyle={styles.buttonStyle}
-                    onlyBorder
-                    onClick={nextQuestion}
-                    textStyle={styles.YesbuttonText}
-                  />
-                  <RNButton
-                    title="✕"
-                    customStyle={styles.buttonStyle}
-                    onClick={nextQuestion}
-                    textStyle={styles.YesbuttonText}
-                  />
+                  ref={refTwo}
+                  onLayout={() => {
+                    refTwo?.current?.measure(
+                      (
+                        x: number,
+                        y: number,
+                        width: number,
+                        height: number,
+                        pageX: number,
+                        pageY: number,
+                      ) => {
+                        setPositionRefs(prev => ({
+                          ...prev,
+                          1: {height: width, width: height, x: pageX, y: pageY},
+                        }));
+                      },
+                    );
+                  }}
+                  style={[
+                    styles.buttonContainer,
+                    tooltipFifth && {
+                      backgroundColor: 'white',
+                      borderRadius: scale(20),
+                      height: portrait ? '53%' : '70%',
+                      width: '120%',
+                      marginBottom: verticalScale(130),
+                    },
+                  ]}>
+                  <RNTextComponent style={styles.yesOrNo} isMedium>
+                    {translation('YES')} or {translation('NO')}?
+                  </RNTextComponent>
+                  <View
+                    style={[
+                      styles.buttonView,
+                      isTablet && {width: scale(180)},
+                    ]}>
+                    <RNButton
+                      title="✔"
+                      customStyle={styles.buttonStyle}
+                      onlyBorder
+                      onClick={nextQuestion}
+                      textStyle={styles.YesbuttonText}
+                    />
+                    <RNButton
+                      title="✕"
+                      customStyle={styles.buttonStyle}
+                      onClick={nextQuestion}
+                      textStyle={styles.YesbuttonText}
+                    />
+                  </View>
                 </View>
-              </View>
+              </RNTooltip>
             </View>
           </>
         );
@@ -229,6 +289,7 @@ const GenerateStory = () => {
               {illustration.map((value, index) => {
                 return (
                   <Pressable
+                    key={index.toString()}
                     onPress={() => {
                       updateState({addedIllustration: index});
                     }}>
@@ -251,6 +312,7 @@ const GenerateStory = () => {
       case 6:
         return (
           <RNChooseColor
+            isTablet={isTablet}
             tooltipVisible={tooltipThird}
             onTooltipClose={onCloseThirdTooltip}
             customStyle={{paddingHorizontal: scale(16)}}
@@ -328,6 +390,10 @@ const GenerateStory = () => {
         {dynamicContent()}
       </View>
       <RNTooltip
+        isTablet={isTablet}
+        topViewStyle={{
+          alignItems: 'center',
+        }}
         open={tooltipArray?.includes(6) ? false : tooltipSecond}
         setClose={() => {
           tooltipArray.push(6);
@@ -338,7 +404,7 @@ const GenerateStory = () => {
         textStyle={styles.tooltip}
         dimensionObject={positionRefs[0]}>
         <View
-          style={{width: '100%'}}
+          style={{width: '100%', backgroundColor: 'pink'}}
           ref={refOne}
           onLayout={() => {
             refOne?.current?.measure(
@@ -359,7 +425,10 @@ const GenerateStory = () => {
           }}>
           {questionIndex !== 1 && (
             <RNButton
-              customStyle={[styles.footerButton, {height: verticalScale(70)}]}
+              customStyle={[
+                styles.footerButton,
+                {height: verticalScale(70), maxHeight: verticalScale(70)},
+              ]}
               title={translation('SELECT')}
               onClick={nextQuestion}
               textStyle={styles.buttonText}

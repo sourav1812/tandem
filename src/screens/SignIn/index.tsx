@@ -41,6 +41,8 @@ const SignIn = () => {
   const width = Dimensions.get('screen').width;
 
   const signInButtonHandler = async () => {
+    navigateTo(SCREEN_NAME.TERMS_AND_CONDITIONS);
+    return;
     if (
       !validationFunction([
         {

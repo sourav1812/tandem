@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/no-unstable-nested-components */
 import {
   View,
@@ -199,13 +200,16 @@ const StoryTelling = () => {
 
     return (
       <RNTooltip
+        isTablet={isTablet}
+        topViewStyle={{
+          alignItems: 'center',
+        }}
         open={tooltipArray?.includes(8) ? false : tooltipOne}
         setClose={() => {
           updateState({tooltipOne: false, tooltipTwo: true});
           tooltipArray.push(8);
           storeKey(TOOLTIP, tooltipArray);
         }}
-        rotation={10}
         text={translation('READ_ALOUD')}
         textContainerStyle={styles.tooltipTwo}
         textStyle={[
@@ -303,6 +307,10 @@ const StoryTelling = () => {
       giveStatusColor={tooltipArray?.includes(13) ? false : true}>
       <View style={styles.headingButton}>
         <RNTooltip
+          isTablet={isTablet}
+          topViewStyle={{
+            alignItems: 'center',
+          }}
           open={tooltipArray?.includes(9) ? false : tooltipTwo}
           setClose={() => {
             updateState({tooltipTwo: false, tooltipThree: true});
@@ -374,6 +382,9 @@ const StoryTelling = () => {
       />
       {currentIndex + 1 !== 5 && (
         <RNTooltip
+          isTablet={isTablet}
+          topViewStyle={{alignItems: 'center', marginTop: '30'}}
+          bottom="South"
           open={tooltipArray?.includes(10) ? false : tooltipThree}
           setClose={() => {
             updateState({tooltipFour: true, tooltipThree: false});

@@ -13,6 +13,7 @@ export interface StateObject {
   tooltipSecond: boolean;
   tooltipThird: boolean;
   tooltipFourth: boolean;
+  tooltipFifth: boolean;
 }
 
 export interface placeType {
