@@ -71,7 +71,9 @@ const CreateChildProfile = () => {
             setState: setDob,
             typeOfValidation: FORM_INPUT_TYPE.DOB,
           },
-        ])
+        ]) &&
+        avtarIndex === null &&
+        gender === ''
       ) {
         return;
       }
