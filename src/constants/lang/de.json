@@ -131,6 +131,10 @@
   "CHILD": "Kind",
   "ADULT": "Erwachsener",
   "SELECT_MODE": "Modus auswählen",
+  "ADD_CHILD": "Hier können Sie Ihr Kind hinzufügen.",
+  "ADD_YOURSELF": "Hier können Sie sich selbst hinzufügen.",
+  "YES_NO_SELECT": "Wählen Sie Ja/Nein \n wenn Sie Ihren Charakter in der Geschichte auswählen möchten.",
+
   "validations": {
     "email-required": "E-Mail ist erforderlich",
     "email-no-spaces": "E-Mail sollte keine Leerzeichen enthalten",

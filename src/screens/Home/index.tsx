@@ -256,7 +256,7 @@ const Home = () => {
                   tooltipArray.push(3);
                   storeKey(TOOLTIP, tooltipArray);
                 }}
-                text={'switch mode'}
+                text={translation('SWITCH_MODE')}
                 // textContainerStyle={{marginRight: isTablet ? scale(100) : 0}}
                 dimensionObject={positionRefs[0]}>
                 {mode === MODE.B ? (

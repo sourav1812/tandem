@@ -159,14 +159,16 @@ const GenerateStory = () => {
                 />
               </ImageBackground>
               <RNTooltip
+                placement={!portrait ? 'left' : undefined}
                 isTablet={isTablet}
                 topViewStyle={{
+                  height: !portrait ? scale(150) : undefined,
                   alignItems: 'center',
+                  marginRight: !portrait ? scale(50) : undefined,
                 }}
-                bottom={portrait ? 'South' : 'East'}
-                text={
-                  'Select yes/no \n if you want to select your \n character in the story'
-                }
+                bottom={portrait ? 'South' : undefined}
+                top={portrait ? undefined : 'SouthEast'}
+                text={translation('YES_NO_SELECT')}
                 open={tooltipArray?.includes(15) ? false : tooltipFifth}
                 setClose={() => {
                   setState({
@@ -203,7 +205,9 @@ const GenerateStory = () => {
                       borderRadius: scale(20),
                       height: portrait ? '53%' : '70%',
                       width: '120%',
-                      marginBottom: verticalScale(130),
+                      marginBottom: portrait
+                        ? verticalScale(130)
+                        : verticalScale(100),
                     },
                   ]}>
                   <RNTextComponent style={styles.yesOrNo} isMedium>

@@ -383,7 +383,7 @@ const StoryTelling = () => {
       {currentIndex + 1 !== 5 && (
         <RNTooltip
           isTablet={isTablet}
-          topViewStyle={{alignItems: 'center', marginTop: '30'}}
+          topViewStyle={{alignItems: 'center'}}
           bottom="South"
           open={tooltipArray?.includes(10) ? false : tooltipThree}
           setClose={() => {
@@ -393,9 +393,8 @@ const StoryTelling = () => {
           }}
           text={translation('READ_A_STORY')}
           textContainerStyle={[styles.tooltipTwo, {margin: 0, marginLeft: 20}]}
-          // bottom={'South'}
           mainStyle={{
-            marginTop: verticalScale(-200),
+            marginTop: verticalScale(-140),
             height: verticalScale(200),
           }}
           textStyle={[
@@ -407,7 +406,7 @@ const StoryTelling = () => {
           ]}
           dimensionObject={positionRefs[2]}>
           <View
-            style={{width: '100%'}}
+            style={{width: '100%', backgroundColor: 'black'}}
             ref={refThree}
             onLayout={() => {
               refThree?.current?.measure(

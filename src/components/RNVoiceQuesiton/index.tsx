@@ -72,7 +72,7 @@ const RNVoiceQuesiton = ({
           ]}>
           <RNTooltip
             isTablet={isTablet}
-            topViewStyle={{alignItems: 'center', marginTop: '30'}}
+            topViewStyle={{alignItems: 'center'}}
             open={tooltipArray?.includes(12) ? false : tooltipOneVisible}
             setClose={() => {
               onTooltipOneClose();
@@ -141,7 +141,7 @@ const RNVoiceQuesiton = ({
         </View>
         <RNTooltip
           isTablet={isTablet}
-          topViewStyle={{alignItems: 'center', marginTop: '30'}}
+          topViewStyle={{alignItems: 'center'}}
           open={tooltipArray?.includes(13) ? false : tooltipMode.tooltipTwo}
           setClose={() => {
             setToolTipMode({tooltipTwo: false, tooltipThree: true});
@@ -186,7 +186,7 @@ const RNVoiceQuesiton = ({
       </View>
       <RNTooltip
         isTablet={isTablet}
-        topViewStyle={{alignItems: 'center', marginTop: '30'}}
+        topViewStyle={{alignItems: 'center'}}
         open={tooltipArray?.includes(14) ? false : tooltipMode.tooltipThree}
         setClose={() => {
           setToolTipMode({tooltipTwo: false, tooltipThree: false});

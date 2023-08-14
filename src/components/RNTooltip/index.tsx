@@ -28,6 +28,7 @@ const RNTooltip = ({
   rotation,
   topViewStyle,
   isTablet,
+  placement,
 }: TooltipProps) => {
   const tooltipNumber = getValueFromKey(TOOLTIP);
   const helperTop = tooltipHelperTop(dimensionObject);
@@ -80,7 +81,7 @@ const RNTooltip = ({
         },
         mainStyle && mainStyle,
       ]}
-      placement={helperBottom ? 'top' : 'bottom'}
+      placement={placement ? placement : helperBottom ? 'top' : 'bottom'}
       topAdjustment={
         Platform.OS === 'android' ? -(StatusBar.currentHeight || 0) : 0
       }

@@ -130,6 +130,10 @@
   "CHILD": "Child",
   "ADULT": "Adult",
   "SELECT_MODE": "Select Mode",
+  "ADD_CHILD": "Here you can add your child.",
+  "ADD_YOURSELF": "Here you can add yourself.",
+  "YES_NO_SELECT": "Select Yes/No \n if you want to select your \n character in the story",
+
   "validations": {
     "email-required": "Email is required",
     "email-no-spaces": "Email should not contain whitespaces",

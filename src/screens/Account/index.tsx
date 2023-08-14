@@ -184,7 +184,7 @@ const Account = () => {
             <RNTooltip
               isTablet={isTablet}
               topViewStyle={{alignItems: 'center'}}
-              text={'Here you can add your child.'}
+              text={translation('ADD_CHILD')}
               open={
                 tooltipArray?.includes(1) || positionRefs[0].x === 0
                   ? false
@@ -321,7 +321,7 @@ const Account = () => {
                 width: width,
                 marginBottom: verticalScale(-20),
               }}
-              text={'Here you can add youself.'}
+              text={translation('ADD_YOURSELF')}
               open={
                 tooltipArray?.includes(2) || positionRefs[1].x === 0
                   ? false
