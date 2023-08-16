@@ -25,6 +25,7 @@ const RNChooseColor = ({
   tooltipVisible,
   onTooltipClose,
   customStyle,
+  isTablet,
 }: colorPaletteType) => {
   const tooltipArray = getValueFromKey(TOOLTIP);
   const [palleteArray, setPalletArray] = React.useState<string[]>([]);
@@ -136,6 +137,10 @@ const RNChooseColor = ({
           </View>
           <View style={styles.footer}>
             <RNTooltip
+              isTablet={isTablet}
+              topViewStyle={{
+                alignItems: 'center',
+              }}
               open={tooltipArray?.includes(7) ? false : tooltipVisible}
               setClose={onTooltipClose}
               text={translation('ADD_COLORS')}

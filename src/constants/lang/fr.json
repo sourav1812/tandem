@@ -131,6 +131,11 @@
   "CHILD": "Enfant",
   "ADULT": "Adulte",
   "SELECT_MODE": "Sélectionner le mode",
+
+  "ADD_CHILD": "Ajoutez votre enfant.",
+  "ADD_YOURSELF": "Ajoutez-vous.",
+  "YES_NO_SELECT": "Sélectionnez Oui/Non \n si vous souhaitez choisir \n votre personnage dans l'histoire",
+
   "validations": {
     "email-required": "L'adresse e-mail est requise",
     "email-no-spaces": "L'adresse e-mail ne doit pas contenir d'espaces",
@@ -149,7 +154,7 @@
     "atleast-one-character": "Au moins un caractère",
     "atleast-one-digit": "Au moins un chiffre",
     "contain-special-character": "Au moins un caractère spécial",
-    "dot-not-allowed":"'.' n'est pas autorisé"
+    "dot-not-allowed": "'.' n'est pas autorisé"
   },
   "READING_TIME": "Temps de lecture",
   "NUMBER_OF_BOOKS": "Nombre de livres",

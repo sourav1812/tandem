@@ -14,6 +14,7 @@ const RNChoiceQuestions = ({
   visibletoolTip = false,
   itemStyle,
   onTooltipClose = () => {},
+  isTablet,
 }: multipleChoiceProps) => {
   const tooltipArray = getValueFromKey(TOOLTIP);
   const refOne = useRef<any>(null);
@@ -29,6 +30,11 @@ const RNChoiceQuestions = ({
         if (index === 0) {
           return (
             <RNTooltip
+              key={index.toString()}
+              isTablet={isTablet}
+              topViewStyle={{
+                alignItems: 'center',
+              }}
               open={tooltipArray?.includes(5) ? false : visibletoolTip}
               setClose={onTooltipClose}
               text={translation('CHOOSE_FROM_THE_GIVE_OPTIONS')}
@@ -56,7 +62,6 @@ const RNChoiceQuestions = ({
                     },
                   );
                 }}
-                key={index.toString()}
                 heading={value.name}
                 customStyle={styles.optionsCustom}
                 icon={value.icon}

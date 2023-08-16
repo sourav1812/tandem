@@ -8,17 +8,18 @@ export const styles = StyleSheet.create({
     width: `100%`,
   },
   img: {
-    padding: scale(10),
     borderRadius: scale(16),
   },
   footer: {
-    position: 'absolute',
+    marginTop: verticalScale(-20),
     backgroundColor: themeColor.white,
-    width: '100%',
     paddingHorizontal: scale(22),
+    borderTopLeftRadius: scale(16),
+    borderTopRightRadius: scale(16),
+    paddingBottom: verticalScale(20),
   },
   heading: {
-    marginTop: verticalScale(20),
+    marginTop: verticalScale(30),
     fontSize: 25,
     textAlign: 'center',
   },

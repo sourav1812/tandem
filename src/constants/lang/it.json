@@ -133,6 +133,11 @@
   "CHILD": "Bambino",
   "ADULT": "Adulto",
   "SELECT_MODE": "Seleziona Modalità",
+
+  "ADD_CHILD": "Aggiungi tuo figlio.",
+  "ADD_YOURSELF": "Aggiungi te stesso.",
+  "YES_NO_SELECT": "Seleziona Sì/No \n se vuoi selezionare il \n tuo personaggio nella storia",
+
   "validations": {
     "email-required": "L'email è obbligatoria",
     "email-no-spaces": "L'email non può contenere spazi",
