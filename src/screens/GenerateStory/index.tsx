@@ -240,7 +240,13 @@ const GenerateStory = () => {
           <>
             <RNTextComponent
               isSemiBold
-              style={{...styles.question, color: 'rgba(10, 8, 4, 0.6)'}}>
+              style={[
+                styles.question,
+                {
+                  color: 'rgba(10, 8, 4, 0.6)',
+                  height: verticalScale(70),
+                },
+              ]}>
               {translation('generate-story.where-shall-we')}
               {'\n '}
               <RNTextComponent isSemiBold style={styles.question}>
@@ -253,7 +259,9 @@ const GenerateStory = () => {
       case 3:
         return (
           <>
-            <RNTextComponent isSemiBold style={styles.question}>
+            <RNTextComponent
+              isSemiBold
+              style={[styles.question, {height: verticalScale(70)}]}>
               {translation('generate-story.include-things')}{' '}
             </RNTextComponent>
             <RNChoiceQuestions data={attribute} />
@@ -276,7 +284,9 @@ const GenerateStory = () => {
       case 5:
         return (
           <>
-            <RNTextComponent isSemiBold style={styles.question}>
+            <RNTextComponent
+              isSemiBold
+              style={[styles.question, {height: verticalScale(70)}]}>
               {translation('generate-story.what-style-illustration')}{' '}
               <RNTextComponent
                 style={{...styles.question, color: 'rgba(10, 8, 4, 0.6)'}}

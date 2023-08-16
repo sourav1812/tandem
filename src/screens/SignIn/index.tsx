@@ -31,6 +31,9 @@ import validationFunction from '@tandem/functions/validationFunction';
 
 const SignIn = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const fcmData = useAppSelector(state => state.tokenReducer.fcmData);
+
+  console.log(fcmData, 'fcmDatafcmData');
 
   const [email, setEmail] = useState<ValidationError>({value: ''});
   const [password, setPassword] = useState<ValidationError>({value: ''});
@@ -61,6 +64,7 @@ const SignIn = () => {
     const response = await loginUserWithEmail({
       email: email.value,
       password: password.value,
+      ...fcmData,
     });
 
     if (!response) {
