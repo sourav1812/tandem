@@ -20,7 +20,7 @@ import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
 import DatePicker from 'react-native-date-picker';
 import {LanguageDropDown} from '@tandem/components/LanguageDropDown';
-import ImagePicker from 'react-native-image-crop-picker';
+import ImagePicker, {ImageOrVideo} from 'react-native-image-crop-picker';
 import dayjs from 'dayjs';
 import {addNewChild} from '@tandem/api/creatChildProfile';
 import validationFunction from '@tandem/functions/validationFunction';
@@ -39,8 +39,10 @@ const CreateChildProfile = () => {
   const {bulletinArray, questionIndex, gender} = state;
   const [name, setName] = useState<ValidationError>({value: ''});
   const [dateModal, setDateModal] = useState(false);
-  const [dob, setDob] = useState(new Date());
-  const [imageData, setImageData] = useState(null);
+  const [dob, setDob] = useState<ValidationError>({
+    value: new Date().toString(),
+  });
+  const [imageData, setImageData] = useState<ImageOrVideo | null>(null);
   const [avtarIndex, setavtarIndex] = useState<number | null>(null);
 
   const updateState = (date: any) => {
@@ -218,7 +220,7 @@ const CreateChildProfile = () => {
                 <LanguageDropDown
                   customStyle={styles.date}
                   heading={translation('DATE_OF_BIRTH')}
-                  text={dayjs(dob.toJSON()).format('DD/MM/YYYY')}
+                  text={dayjs(dob.value?.toString()).format('DD/MM/YYYY')}
                 />
               </Pressable>
             </View>
@@ -327,10 +329,10 @@ const CreateChildProfile = () => {
         modal
         mode={'date'}
         open={dateModal}
-        date={dob}
+        date={new Date(dob.value)}
         onConfirm={date => {
           setDateModal(false);
-          setDob(date);
+          setDob({value: date});
         }}
         onCancel={() => {
           setDateModal(false);
