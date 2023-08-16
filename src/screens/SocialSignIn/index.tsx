@@ -1,4 +1,4 @@
-import {ImageBackground, Image, View} from 'react-native';
+import {ImageBackground, Image, View, Alert} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
@@ -15,6 +15,7 @@ import navigateTo from '@tandem/navigation/navigate';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {RootState} from '@tandem/redux/store';
 import google from '@tandem/functions/socialLogin/google';
+import facebook from '@tandem/functions/socialLogin/facebook';
 
 const SocialSignIn = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -24,6 +25,7 @@ const SocialSignIn = () => {
 
   const socialAuthFunctions = {
     google,
+    facebook,
   };
 
   const handleSocialLogin = async (type: 'apple' | 'google' | 'facebook') => {
@@ -75,7 +77,9 @@ const SocialSignIn = () => {
           </RNTextComponent>
           <RNSocialButton
             icon={<Fb />}
-            onClick={() => {}}
+            onClick={() => {
+              handleSocialLogin('facebook');
+            }}
             title={`${translation('CONTINUE_WITH')} Facebook`}
             customStyle={styles.button}
           />

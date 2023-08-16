@@ -16,6 +16,7 @@
 		7C52BC6B0D664FF78BBA3BBA /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE1DDC4F7BB5444693DCA1F2 /* Poppins-SemiBold.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		A70C3B6311274FBB664E238A /* Pods_Tandem_TandemTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D881F35E0CA8EE8A4382347 /* Pods_Tandem_TandemTests.framework */; };
+		BD4437C52A8A660D0032E42E /* FIle.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4437C42A8A660D0032E42E /* FIle.swift */; };
 		BD5D4CE62A7A40D3005BA418 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BD5D4CE52A7A40D3005BA418 /* GoogleService-Info.plist */; };
 		F4B847CD0D4C416A82288A83 /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1B7C90A90DA54E32B2ED2AB6 /* Poppins-Regular.ttf */; };
 		F7D7137AC3994E9BAEF633C4 /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0A8F9F47C5EB44FBA7A998F6 /* Poppins-Medium.ttf */; };
@@ -47,6 +48,8 @@
 		70754DDCCEDBEC3198DE4129 /* Pods-Tandem-TandemTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tandem-TandemTests.debug.xcconfig"; path = "Target Support Files/Pods-Tandem-TandemTests/Pods-Tandem-TandemTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7D881F35E0CA8EE8A4382347 /* Pods_Tandem_TandemTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tandem_TandemTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Tandem/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		BD4437C32A8A660C0032E42E /* Tandem-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tandem-Bridging-Header.h"; sourceTree = "<group>"; };
+		BD4437C42A8A660D0032E42E /* FIle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FIle.swift; sourceTree = "<group>"; };
 		BD5D4CE52A7A40D3005BA418 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BD5D4CE72A7A46EF005BA418 /* Tandem.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Tandem.entitlements; path = Tandem/Tandem.entitlements; sourceTree = "<group>"; };
 		C3EC6829F73C35299B73BEFC /* Pods_Tandem.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tandem.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -104,6 +107,8 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				BD4437C42A8A660D0032E42E /* FIle.swift */,
+				BD4437C32A8A660C0032E42E /* Tandem-Bridging-Header.h */,
 			);
 			name = Tandem;
 			sourceTree = "<group>";
@@ -233,7 +238,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1430;
 					};
 				};
 			};
@@ -456,6 +461,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BD4437C52A8A660D0032E42E /* FIle.swift in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
@@ -476,6 +482,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 70754DDCCEDBEC3198DE4129 /* Pods-Tandem-TandemTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -504,6 +511,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2354DA0352AC377FD3FDF92D /* Pods-Tandem-TandemTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = TandemTests/Info.plist;
@@ -548,6 +556,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.playtandem;
 				PRODUCT_NAME = Tandem;
+				SWIFT_OBJC_BRIDGING_HEADER = "Tandem-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -577,6 +586,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.playtandem;
 				PRODUCT_NAME = Tandem;
+				SWIFT_OBJC_BRIDGING_HEADER = "Tandem-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
