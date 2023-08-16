@@ -11,6 +11,7 @@ import messaging from '@react-native-firebase/messaging';
 import {PersistGate} from 'redux-persist/integration/react';
 import {persistStore} from 'redux-persist';
 import {clearAlertData} from '@tandem/redux/slices/alertBox.slice';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import statusbar from '@tandem/functions/statusbar';
 
 const persistor = persistStore(store);
@@ -42,11 +43,13 @@ const App: FC = () => {
   }, []);
 
   return (
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <AppNavigator />
-      </PersistGate>
-    </Provider>
+    <GestureHandlerRootView style={{flex: 1}}>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <AppNavigator />
+        </PersistGate>
+      </Provider>
+    </GestureHandlerRootView>
   );
 };
 

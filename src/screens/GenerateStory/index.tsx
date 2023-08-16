@@ -1,6 +1,4 @@
-/* eslint-disable quotes */
 /* eslint-disable react-native/no-inline-styles */
-/* eslint-disable eqeqeq */
 import {
   View,
   ScrollView,
@@ -244,7 +242,7 @@ const GenerateStory = () => {
               isSemiBold
               style={{...styles.question, color: 'rgba(10, 8, 4, 0.6)'}}>
               {translation('generate-story.where-shall-we')}
-              {`\n`}{' '}
+              {'\n '}
               <RNTextComponent isSemiBold style={styles.question}>
                 {translation('generate-story.go-in-our-story')}
               </RNTextComponent>
