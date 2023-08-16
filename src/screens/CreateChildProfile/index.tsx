@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {Pressable, ScrollView, View} from 'react-native';
 import BlueButton from '@tandem/assets/svg/BlueButton';
@@ -16,7 +16,7 @@ import RNAvatarComponent from '@tandem/components/RNAvatarComponent';
 import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {verticalScale} from 'react-native-size-matters';
-import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
 import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
 import DatePicker from 'react-native-date-picker';
 import {LanguageDropDown} from '@tandem/components/LanguageDropDown';
@@ -24,9 +24,16 @@ import ImagePicker, {ImageOrVideo} from 'react-native-image-crop-picker';
 import dayjs from 'dayjs';
 import {addNewChild} from '@tandem/api/creatChildProfile';
 import validationFunction from '@tandem/functions/validationFunction';
+import {
+  resetChildData,
+  saveChildData,
+} from '@tandem/redux/slices/createChild.slice';
 
 const CreateChildProfile = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const childData = useAppSelector(state => state.createChild.childInfo);
+  console.log(childData, 'childDatachildData');
+  const dispatch = useAppDispatch();
   const [state, setState] = useState<childProfileStateObject>({
     bulletinArray: [
       {index: 1, isSelected: true},
@@ -50,6 +57,12 @@ const CreateChildProfile = () => {
       return {...previouState, ...date};
     });
   };
+
+  // useEffect(() => {
+  //   return () => {
+  //     dispatch(resetChildData());
+  //   };
+  // }, []);
 
   const nextQuestion = async () => {
     if (questionIndex <= 2) {
@@ -89,6 +102,15 @@ const CreateChildProfile = () => {
         }, 300);
       }
     }
+    dispatch(
+      saveChildData({
+        ...childData,
+        ...(name.value && {name: name.value}),
+        ...(dob.value && {dob: dob.value}),
+        ...(gender && {gender: gender}),
+        ...(avtarIndex && {avtarIndex: avtarIndex}),
+      }),
+    );
   };
 
   const previousQuestion = () => {
