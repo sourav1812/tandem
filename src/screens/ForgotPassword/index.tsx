@@ -15,9 +15,6 @@ import themeColor from '@tandem/theme/themeColor';
 import RNButton from '@tandem/components/RNButton';
 import RNLogoHeader from '@tandem/components/RNLogoHeader';
 import RNTextInputWithLabel from '@tandem/components/RNTextInputWithLabel';
-import Google from '@tandem/assets/svg/GoogleLogo';
-import Apple from '@tandem/assets/svg/AppleLogo';
-import FB from '@tandem/assets/svg/FBlogo';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {verticalScale} from 'react-native-size-matters';
 import navigateTo from '@tandem/navigation/navigate';
@@ -30,7 +27,6 @@ const ForgotPassword = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
 
   const [email, setEmail] = useState<ValidationError>({value: ''});
-  const [password, setPassword] = useState<ValidationError>({value: ''});
   const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
