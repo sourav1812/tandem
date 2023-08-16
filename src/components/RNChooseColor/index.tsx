@@ -10,7 +10,6 @@ import {styles} from './styles';
 import RNTextComponent from '../RNTextComponent';
 import {StateObject, colorPaletteType} from './interface';
 import ColorPatchUp from '@tandem/assets/svg/ColorPatch';
-import EmptyBox from '@tandem/assets/svg/EmptyColorBox';
 import AddColor from '@tandem/assets/svg/AddColor';
 import EmptyPatch from '@tandem/assets/svg/EmptyPatch';
 import {translation} from '@tandem/utils/methods';
@@ -19,7 +18,8 @@ import {TOOLTIP} from '@tandem/constants/LocalConstants';
 import {getValueFromKey} from '@tandem/helpers/encryptedStorage';
 import chroma from 'chroma-js';
 import RNButton from '../RNButton';
-import {scale} from 'react-native-size-matters';
+import {scale, verticalScale} from 'react-native-size-matters';
+import RNPaintBrush from '../RNPaintBrush';
 
 const RNChooseColor = ({
   tooltipVisible,
@@ -56,20 +56,24 @@ const RNChooseColor = ({
   };
 
   const handleColors = (colorInput: string) => {
-    if (!color1 && !color2) {
-      updateState({
-        color1: colorInput,
-        color3: colorInput,
-      });
-    } else if (!color1 && color2 && color2 !== colorInput) {
-      updateState({
-        color1: colorInput,
-      });
-    } else if (color1 !== colorInput) {
-      updateState({
-        color2: colorInput,
-      });
-    }
+    updateState({
+      color3: colorInput,
+    });
+    return;
+    // if (!color1 && !color2) {
+    //   updateState({
+    //     color1: colorInput,
+    //     color3: colorInput,
+    //   });
+    // } else if (!color1 && color2 && color2 !== colorInput) {
+    //   updateState({
+    //     color1: colorInput,
+    //   });
+    // } else if (color1 !== colorInput) {
+    //   updateState({
+    //     color2: colorInput,
+    //   });
+    // }
   };
 
   useEffect(() => {
@@ -125,25 +129,10 @@ const RNChooseColor = ({
               );
             })}
             <View style={styles.colorPatch}>
-              {color1 && (
-                <Pressable
-                  onPress={() => {
-                    updateState({color1: '', color3: color2});
-                  }}>
-                  <EmptyBox color={color1} />
-                </Pressable>
-              )}
-              {color2 && (
-                <Pressable
-                  onPress={() => {
-                    updateState({color2: '', color3: color1});
-                  }}>
-                  <EmptyBox
-                    props={{style: styles.secondColor}}
-                    color={color2}
-                  />
-                </Pressable>
-              )}
+              <RNPaintBrush
+                color={color3 || 'transparent'}
+                height={verticalScale(170)}
+              />
             </View>
           </View>
           <View style={styles.footer}>
