@@ -1,6 +1,7 @@
 export enum API {
   REGISTER_USER = 'user/sign-up', //? POST
   LOGIN_USER_WITH_EMAIL = 'user/sign-in', //? POST
+  CREATE_CHILD_PROFILE = 'create-child-profile',
   REFRESH_TOKEN = 'user/refresh-access-token', //? POST
 }
 

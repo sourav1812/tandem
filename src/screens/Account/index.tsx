@@ -75,7 +75,7 @@ const Account = () => {
   const addPlayer = (item: childProfile | adultProfile) => {
     if (
       item.type === 'child' &&
-      playerList.filter(item => item.type === 'child').length == 0
+      playerList.filter(item => item.type === 'child').length === 0
     ) {
       let playerArrar = [...playerList];
       playerArrar.push(item);
@@ -83,7 +83,7 @@ const Account = () => {
     }
     if (
       item.type === 'adult' &&
-      playerList.filter(item => item.type === 'adult').length == 0
+      playerList.filter(item => item.type === 'adult').length === 0
     ) {
       let playerArrar = [...playerList];
       playerArrar.push(item);
@@ -131,7 +131,10 @@ const Account = () => {
     <RNScreenWrapper
       style={styles.container}
       giveStatusColor={
-        openTooltip.tooltipOne || openTooltip.tooltipTwo ? true : false
+        (openTooltip.tooltipOne && !tooltipArray?.includes(1)) ||
+        (openTooltip.tooltipTwo && !tooltipArray?.includes(2))
+          ? true
+          : false
       }>
       <View
         style={[
@@ -182,14 +185,10 @@ const Account = () => {
               );
             })}
             <RNTooltip
+              open={tooltipArray?.includes(1) ? false : openTooltip.tooltipOne}
               isTablet={isTablet}
               topViewStyle={{alignItems: 'center'}}
               text={translation('ADD_CHILD')}
-              open={
-                tooltipArray?.includes(1) || positionRefs[0].x === 0
-                  ? false
-                  : openTooltip.tooltipOne
-              }
               setClose={() => {
                 setOpentTooltip({
                   tooltipOne: false,

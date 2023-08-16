@@ -1,7 +1,9 @@
-import {StyleProp, ViewStyle} from 'react-native';
+import {ImageStyle, StyleProp, ViewStyle} from 'react-native';
 
 export interface avatarComponentProps {
-  Icon: any;
+  icon: any;
   customStyle?: StyleProp<ViewStyle>;
   pressableDisable?: boolean;
+  onPress: () => void;
+  imgStyle?: StyleProp<ImageStyle>;
 }

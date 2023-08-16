@@ -344,7 +344,10 @@ const GenerateStory = () => {
   return (
     <RNScreenWrapper
       giveStatusColor={
-        tooltipFirst || tooltipSecond || tooltipThird || tooltipFourth
+        (tooltipFirst && !tooltipArray?.includes(5)) ||
+        (tooltipSecond && !tooltipArray?.includes(6)) ||
+        (tooltipThird && !tooltipArray?.includes(7)) ||
+        (tooltipFourth && !tooltipArray?.includes(8))
       }>
       <View style={styles.container}>
         <View

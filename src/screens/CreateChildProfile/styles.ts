@@ -92,4 +92,12 @@ export const styles = StyleSheet.create({
     marginTop: verticalScale(16),
     backgroundColor: themeColor.themeBlue,
   },
+  avatarImg: {
+    height: verticalScale(90),
+  },
+  date: {
+    backgroundColor: themeColor.lightGray,
+    height: verticalScale(55),
+  },
+  disabled: {backgroundColor: '#e9e9e9', borderColor: '#e9e9e9'},
 });

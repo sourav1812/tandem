@@ -13,7 +13,6 @@ const RNArrowIconTop = ({
   rotation?: number;
   isTablet?: boolean;
 }) => {
-  console.log(type);
   switch (type) {
     case 'North':
       return <North rotation={rotation} isTablet={isTablet} />;

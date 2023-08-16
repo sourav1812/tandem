@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {Pressable, ScrollView, View} from 'react-native';
@@ -12,12 +13,17 @@ import themeColor from '@tandem/theme/themeColor';
 import RNButton from '@tandem/components/RNButton';
 import RNTextInputWithLabel from '@tandem/components/RNTextInputWithLabel';
 import RNAvatarComponent from '@tandem/components/RNAvatarComponent';
-import Camera from '@tandem/assets/svg/Camera';
 import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {verticalScale} from 'react-native-size-matters';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
+import DatePicker from 'react-native-date-picker';
+import {LanguageDropDown} from '@tandem/components/LanguageDropDown';
+import ImagePicker from 'react-native-image-crop-picker';
+import dayjs from 'dayjs';
+import {addNewChild} from '@tandem/api/creatChildProfile';
+import validationFunction from '@tandem/functions/validationFunction';
 
 const CreateChildProfile = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -28,11 +34,14 @@ const CreateChildProfile = () => {
       {index: 3, isSelected: false},
     ],
     questionIndex: 1,
-    other: false,
+    gender: '',
   });
+  const {bulletinArray, questionIndex, gender} = state;
   const [name, setName] = useState<ValidationError>({value: ''});
-  const [date, setDate] = useState<ValidationError>({value: ''});
-  const {bulletinArray, questionIndex, other} = state;
+  const [dateModal, setDateModal] = useState(false);
+  const [dob, setDob] = useState(new Date());
+  const [imageData, setImageData] = useState(null);
+  const [avtarIndex, setavtarIndex] = useState<number | null>(null);
 
   const updateState = (date: any) => {
     setState((previouState: any) => {
@@ -40,7 +49,7 @@ const CreateChildProfile = () => {
     });
   };
 
-  const nextQuestion = () => {
+  const nextQuestion = async () => {
     if (questionIndex <= 2) {
       let indexArry: indicatorType[] = [...bulletinArray];
       bulletinArray.map((item, index) => {
@@ -50,7 +59,33 @@ const CreateChildProfile = () => {
       });
       updateState({questionIndex: questionIndex + 1, bulletinArray: indexArry});
     } else {
-      navigateTo(SCREEN_NAME.BOTTOM_TAB, {}, true);
+      if (
+        !validationFunction([
+          {
+            state: name,
+            setState: setName,
+            typeOfValidation: FORM_INPUT_TYPE.NAME,
+          },
+          {
+            state: dob,
+            setState: setDob,
+            typeOfValidation: FORM_INPUT_TYPE.DOB,
+          },
+        ])
+      ) {
+        return;
+      }
+      const response = await addNewChild({
+        name: 'mohan',
+        age: '32',
+        gender: 'male',
+        avatar: 'sjdfkljklfskl34349349895jksjdfksj',
+      });
+      if (response) {
+        setTimeout(() => {
+          navigateTo(SCREEN_NAME.BOTTOM_TAB, {}, true);
+        }, 300);
+      }
     }
   };
 
@@ -64,6 +99,24 @@ const CreateChildProfile = () => {
         }
       });
       updateState({questionIndex: questionIndex - 1});
+    }
+  };
+
+  const selectDate = () => {
+    setDateModal(true);
+  };
+
+  const selectGender = (type: string) => {
+    switch (type) {
+      case 'girl':
+        updateState({gender: 'girl'});
+        break;
+      case 'boy':
+        updateState({gender: 'boy'});
+        break;
+      case 'preferNotToSay':
+        updateState({gender: 'preferNotToSay'});
+        break;
     }
   };
 
@@ -87,6 +140,10 @@ const CreateChildProfile = () => {
                 icon={'👧'}
                 customStyle={styles.girl}
                 bgcColor={themeColor.purple}
+                onPress={() => {
+                  selectGender('girl');
+                }}
+                isSelected={gender === 'girl'}
               />
               <RNTextComponent style={styles.sex}>
                 {translation('GIRL')}
@@ -97,6 +154,10 @@ const CreateChildProfile = () => {
                 icon={'👦'}
                 customStyle={styles.boy}
                 bgcColor={themeColor.lightGreen}
+                onPress={() => {
+                  selectGender('boy');
+                }}
+                isSelected={gender === 'boy'}
               />
               <RNTextComponent style={styles.sex}>
                 {translation('BOY')}
@@ -105,13 +166,17 @@ const CreateChildProfile = () => {
             <RNButton
               title={translation('PREFER_NOT_TO_SAY')}
               onClick={() => {
-                updateState({other: !other});
+                selectGender('preferNotToSay');
               }}
               onlyBorder
               customStyle={
-                other ? styles.footerButtonOnSelect : styles.footerButton
+                gender === 'preferNotToSay'
+                  ? styles.footerButtonOnSelect
+                  : styles.footerButton
               }
-              textStyle={other && {color: themeColor.white}}
+              textStyle={
+                gender === 'preferNotToSay' && {color: themeColor.white}
+              }
             />
           </>
         );
@@ -145,17 +210,17 @@ const CreateChildProfile = () => {
                 updateText={setName}
                 hint={translation('ENTER_NAME')}
               />
-              <RNTextInputWithLabel
-                label={translation('DATE_OF_BIRTH')}
-                inputViewStyle={[
-                  styles.inputBox,
-                  isTablet && {borderRadius: 12, marginTop: 8},
-                ]}
-                containerStyle={styles.containerBox}
-                value={date}
-                updateText={setDate}
-                hint={'dd/mm/yyyy'}
-              />
+              <Pressable
+                onPress={() => {
+                  // Alert.alert('');
+                  selectDate();
+                }}>
+                <LanguageDropDown
+                  customStyle={styles.date}
+                  heading={translation('DATE_OF_BIRTH')}
+                  text={dayjs(dob.toJSON()).format('DD/MM/YYYY')}
+                />
+              </Pressable>
             </View>
           </>
         );
@@ -173,22 +238,53 @@ const CreateChildProfile = () => {
               <ScrollView
                 contentContainerStyle={styles.list}
                 showsVerticalScrollIndicator={false}>
-                <RNAvatarComponent
-                  Icon={{icon: Camera}}
-                  customStyle={[
-                    styles.avatar2,
-                    isTablet && {marginTop: verticalScale(24)},
-                  ]}
-                  pressableDisable
-                />
-                {avatarArray.map(item => {
+                {avatarArray.map((item, index) => {
                   return (
                     <RNAvatarComponent
-                      Icon={item}
+                      icon={
+                        imageData && index === 0
+                          ? {uri: imageData?.path}
+                          : item.icon
+                      }
                       customStyle={[
                         styles.avatar,
+                        index === 0 && {justifyContent: 'center'},
+                        index === 0 &&
+                          index === avtarIndex &&
+                          imageData && {
+                            borderWidth: 3,
+                            borderColor: themeColor.themeBlue,
+                          },
+                        index === avtarIndex &&
+                          index !== 0 && {
+                            backgroundColor: themeColor.themeBlue,
+                          },
                         isTablet && {marginTop: verticalScale(24)},
                       ]}
+                      imgStyle={
+                        index !== 0
+                          ? styles.avatarImg
+                          : imageData && {height: '100%', width: '100%'}
+                      }
+                      onPress={() => {
+                        if (index === 0) {
+                          ImagePicker.openPicker({
+                            width: 500,
+                            height: 500,
+                            cropping: true,
+                            includeBase64: true,
+                            loadingLabelText: 'Image',
+                          })
+                            .then(response => {
+                              setImageData(response);
+                              console.log(response);
+                            })
+                            .catch(err => {
+                              console.log(err);
+                            });
+                        }
+                        setavtarIndex(index);
+                      }}
                     />
                   );
                 })}
@@ -223,9 +319,23 @@ const CreateChildProfile = () => {
         <RNButton
           title={translation('NEXT')}
           onClick={nextQuestion}
+          customStyle={gender === '' && styles.disabled}
           textStyle={[styles.rightText, isTablet && {maxWidth: 310}]}
         />
       </View>
+      <DatePicker
+        modal
+        mode={'date'}
+        open={dateModal}
+        date={dob}
+        onConfirm={date => {
+          setDateModal(false);
+          setDob(date);
+        }}
+        onCancel={() => {
+          setDateModal(false);
+        }}
+      />
     </RNScreenWrapper>
   );
 };

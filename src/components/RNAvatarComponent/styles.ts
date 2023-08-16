@@ -6,11 +6,14 @@ export const styles = StyleSheet.create({
   container: {
     height: verticalScale(124),
     width: verticalScale(124),
-
     backgroundColor: themeColor.lightGray,
     borderRadius: 1000,
     alignItems: 'center',
     justifyContent: 'flex-end',
     overflow: 'hidden',
+  },
+  img: {
+    height: verticalScale(50),
+    width: verticalScale(120),
   },
 });

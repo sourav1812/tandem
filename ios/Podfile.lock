@@ -396,6 +396,8 @@ PODS:
     - glog
   - react-native-blur (4.3.2):
     - React-Core
+  - react-native-date-picker (4.2.13):
+    - React-Core
   - react-native-mmkv (2.10.1):
     - MMKV (>= 1.2.13)
     - React-Core
@@ -538,6 +540,7 @@ DEPENDENCIES:
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - "react-native-blur (from `../node_modules/@react-native-community/blur`)"
+  - react-native-date-picker (from `../node_modules/react-native-date-picker`)
   - react-native-mmkv (from `../node_modules/react-native-mmkv`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
@@ -625,6 +628,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/logger"
   react-native-blur:
     :path: "../node_modules/@react-native-community/blur"
+  react-native-date-picker:
+    :path: "../node_modules/react-native-date-picker"
   react-native-mmkv:
     :path: "../node_modules/react-native-mmkv"
   react-native-netinfo:
@@ -712,6 +717,7 @@ SPEC CHECKSUMS:
   React-jsinspector: c712f9e3bb9ba4122d6b82b4f906448b8a281580
   React-logger: 342f358b8decfbf8f272367f4eacf4b6154061be
   react-native-blur: cfdad7b3c01d725ab62a8a729f42ea463998afa2
+  react-native-date-picker: 04e866ba4e7857f83abd504ad42e787f0f02ae00
   react-native-mmkv: dea675cf9697ad35940f1687e98e133e1358ef9f
   react-native-netinfo: fefd4e98d75cbdd6e85fc530f7111a8afdf2b0c5
   react-native-safe-area-context: 9697629f7b2cda43cf52169bb7e0767d330648c2
@@ -739,4 +745,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 3324d55a6f186560e92e23454e0b63823cdda011
 
-COCOAPODS: 1.12.0
+COCOAPODS: 1.11.3

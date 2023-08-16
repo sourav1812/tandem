@@ -15,4 +15,6 @@ export interface Props {
   bgcColor: string;
   ref?: any;
   onLayout?: ((event: LayoutChangeEvent) => void) | undefined;
+  onPress: () => void;
+  isSelected: boolean;
 }
