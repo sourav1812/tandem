@@ -13,6 +13,7 @@ export enum FORM_INPUT_TYPE {
   NAME = 'NAME',
   PHONE = 'PHONE',
   PIN = 'PIN',
+  DOB = 'DOB',
 }
 
 const validateEmail = (value: string): ValidationError => {
@@ -169,6 +170,18 @@ const validatePin = (value: string): ValidationError => {
   return {value};
 };
 
+const validateDateOfBirth = (value: string): ValidationError => {
+  if (!value) {
+    return {
+      message: translation('validations.pin-required'),
+      type: FORM_INPUT_TYPE.DOB,
+      value,
+    };
+  } else {
+    return {value};
+  }
+};
+
 const validateForm = (type: string, value: string): ValidationError => {
   switch (type) {
     case FORM_INPUT_TYPE.EMAIL:
@@ -183,6 +196,8 @@ const validateForm = (type: string, value: string): ValidationError => {
       return validatePin(value);
     case FORM_INPUT_TYPE.CONFIRM_PASSWORD:
       return validateConfirmPassword(value);
+    case FORM_INPUT_TYPE.DOB:
+      return validateDateOfBirth(value);
     default:
       return {value};
   }

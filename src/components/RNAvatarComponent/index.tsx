@@ -1,29 +1,25 @@
-import {Pressable} from 'react-native';
-import React, {useState} from 'react';
+import {Pressable, Image} from 'react-native';
+import React from 'react';
 import {avatarComponentProps} from './interface';
 import {styles} from './styles';
-import {verticalScale} from 'react-native-size-matters';
-import themeColor from '@tandem/theme/themeColor';
 
 const RNAvatarComponent = ({
-  Icon,
+  icon,
   customStyle,
+  imgStyle,
   pressableDisable,
+  onPress,
 }: avatarComponentProps) => {
-  const [select, setSelect] = useState(false);
-
   return (
     <Pressable
-      style={[
-        styles.container,
-        select && {backgroundColor: themeColor.themeBlue},
-        customStyle && customStyle,
-      ]}
+      style={[styles.container, customStyle && customStyle]}
       disabled={pressableDisable}
-      onPress={() => {
-        setSelect(!select);
-      }}>
-      <Icon.icon height={verticalScale(95)} />
+      onPress={onPress}>
+      <Image
+        source={icon}
+        style={[styles.img, imgStyle && imgStyle]}
+        resizeMode="contain"
+      />
     </Pressable>
   );
 };

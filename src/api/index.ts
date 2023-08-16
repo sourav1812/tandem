@@ -51,12 +51,13 @@ const refreshAccessToken = async () => {
       const response = await axios.post(BASE_URL + API.REFRESH_TOKEN, {
         refreshToken,
       });
-      const {token, refreshToken: newRefreshToken} = response.data;
-      storeTokens(token, newRefreshToken);
-      requestQueue.forEach(resolve => resolve(token));
+      console.log(response, 'refresh token');
+      const {accessToken, refreshToken: newRefreshToken} = response.data;
+      storeTokens(accessToken, newRefreshToken);
+      requestQueue.forEach(resolve => resolve(accessToken));
       requestQueue.length = 0;
       isRefreshing = false;
-      return token;
+      return accessToken;
     } catch (error) {
       console.log('error in refresh token logic:', error);
       logout();
@@ -64,6 +65,7 @@ const refreshAccessToken = async () => {
     }
   } else {
     // If another request is already refreshing the token, wait for it to complete
+    console.log(requestQueue);
     return new Promise<string>(resolve => {
       requestQueue.push(token => resolve(token));
     });
@@ -171,6 +173,8 @@ const executeRequest = async <T>(
       path,
       data,
     );
+    console.log('yay', response.data);
+
     store.dispatch(
       addAlertData({
         type: 'Message',
@@ -178,7 +182,6 @@ const executeRequest = async <T>(
       }),
     );
     //! Toast message here to show completion of POST/PUT request
-    console.log('yay', response.data);
     return response?.data;
   } catch (error: any) {
     console.log(error.message);

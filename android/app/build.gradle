@@ -96,6 +96,7 @@ android {
 
     namespace "com.playtandem"
     defaultConfig {
+        vectorDrawables.useSupportLibrary = true
         applicationId "com.playtandem"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion

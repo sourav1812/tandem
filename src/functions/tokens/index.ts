@@ -1,12 +1,10 @@
-import {USER} from '@tandem/constants/enums';
 import {addToken} from '@tandem/redux/slices/tokens.slice';
 import {store} from '@tandem/redux/store';
 
 export const storeTokens = (token: string, refreshToken: string) => {
   try {
-    store.dispatch(
-      addToken({[USER.TOKEN]: token, [USER.REFRESH_TOKEN]: refreshToken}),
-    );
+    console.log('storetoken function', {token, refreshToken});
+    store.dispatch(addToken({token, refreshToken}));
   } catch (error) {
     throw new Error('Error storing tokens');
   }
@@ -14,8 +12,7 @@ export const storeTokens = (token: string, refreshToken: string) => {
 
 export const getStoredTokens = () => {
   try {
-    const {token, refreshToken} = store.getState().tokenReducer;
-    return {token, refreshToken};
+    return store.getState().tokenReducer;
   } catch (error) {
     throw new Error('Error getting stored tokens');
   }

@@ -13,6 +13,7 @@ import {Platform} from 'react-native';
 import {RootState} from '@tandem/redux/store';
 import {useOrientation} from '@tandem/hooks/useOrientation';
 import RNAlertBox from '@tandem/components/RNAlertBox';
+import {getStoredTokens} from '@tandem/functions/tokens';
 
 const AppNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();

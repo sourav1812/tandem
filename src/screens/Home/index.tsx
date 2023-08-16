@@ -26,7 +26,8 @@ import RNTooltip from '@tandem/components/RNTooltip';
 import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
 import {TOOLTIP} from '@tandem/constants/LocalConstants';
 import {useNavigation} from '@react-navigation/native';
-import {RootState} from '@tandem/redux/store';
+import {RootState, store} from '@tandem/redux/store';
+import {setQuestionIndex} from '@tandem/redux/slices/questions.slice';
 
 const Home = () => {
   const portrait = useAppSelector(
@@ -195,8 +196,10 @@ const Home = () => {
       </Pressable>
       <RNScreenWrapper
         giveStatusColor={
-          !tooltipArray?.includes(4) &&
-          (tooltipMode.tooltipOne || tooltipMode.tooltipTwo)
+          (tooltipMode.tooltipOne && !tooltipArray?.includes(3)) ||
+          (tooltipMode.tooltipTwo && !tooltipArray?.includes(4))
+            ? true
+            : false
         }>
         <View style={[styles.container]}>
           <View
@@ -385,6 +388,7 @@ const Home = () => {
                       key={index.toString()}
                       onPress={() => {
                         if (index === 0) {
+                          store.dispatch(setQuestionIndex(0));
                           navigateTo(SCREEN_NAME.ROADMAP);
                         } else {
                           // toggleModal();

@@ -63,7 +63,6 @@ const RNRoadmap = () => {
     //   dispatch(setQuestionIndex(index));
     // }
     dispatch(setQuestionIndex(index));
-
     navigateTo(SCREEN_NAME.GENERATE_STORY);
   };
 
@@ -74,15 +73,7 @@ const RNRoadmap = () => {
           onlyIcon
           icon={<BackButton />}
           onClick={() => {
-            if (questionIndex === 0) {
-              // navigation.push(SCREEN_NAME.BOTTOM_TAB);
-              navigateTo(SCREEN_NAME.HOME);
-            } else {
-              dispatch(setQuestionIndex(questionIndex - 1));
-              setTimeout(() => {
-                navigateTo(SCREEN_NAME.GENERATE_STORY);
-              }, 100);
-            }
+            navigateTo(SCREEN_NAME.HOME);
           }}
         />
         <Pressable
