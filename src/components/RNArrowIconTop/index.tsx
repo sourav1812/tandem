@@ -7,23 +7,25 @@ import West from '@tandem/assets/svg/arrows/West';
 const RNArrowIconTop = ({
   type,
   rotation,
+  isTablet,
 }: {
   type: string;
   rotation?: number;
+  isTablet?: boolean;
 }) => {
   switch (type) {
     case 'North':
-      return <North rotation={rotation} />;
+      return <North rotation={rotation} isTablet={isTablet} />;
     case 'East':
-      return <East rotation={rotation} />;
+      return <East rotation={rotation} isTablet={isTablet} />;
     case 'NorthEast':
-      return <NorthEast rotation={rotation} />;
+      return <NorthEast rotation={rotation} isTablet={isTablet} />;
 
     case 'NorthWest':
-      return <NorthWest rotation={rotation} />;
+      return <NorthWest rotation={rotation} isTablet={isTablet} />;
 
     case 'West':
-      return <West rotation={rotation} />;
+      return <West rotation={rotation} isTablet={isTablet} />;
   }
 };
 export default RNArrowIconTop;

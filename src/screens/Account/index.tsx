@@ -2,7 +2,7 @@
 import React, {useRef, useState} from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {styles} from './styles';
-import {View, Image, ScrollView, Pressable} from 'react-native';
+import {View, Image, ScrollView, Pressable, Dimensions} from 'react-native';
 import Logout from '@tandem/assets/svg/Logout';
 import RNButton from '@tandem/components/RNButton';
 import RNTextComponent from '@tandem/components/RNTextComponent';
@@ -32,6 +32,8 @@ const Account = () => {
     tooltipOne: true,
     tooltipTwo: false,
   });
+
+  const {width} = Dimensions.get('window');
   const dispatch = useAppDispatch();
   const tooltipArray = getValueFromKey(TOOLTIP);
 
@@ -183,8 +185,10 @@ const Account = () => {
               );
             })}
             <RNTooltip
-              text={'Here you can add your child.'}
               open={tooltipArray?.includes(1) ? false : openTooltip.tooltipOne}
+              isTablet={isTablet}
+              topViewStyle={{alignItems: 'center'}}
+              text={translation('ADD_CHILD')}
               setClose={() => {
                 setOpentTooltip({
                   tooltipOne: false,
@@ -310,7 +314,13 @@ const Account = () => {
               );
             })}
             <RNTooltip
-              text={'Here you can add youself.'}
+              isTablet={isTablet}
+              topViewStyle={{
+                alignItems: 'center',
+                width: width,
+                marginBottom: verticalScale(-20),
+              }}
+              text={translation('ADD_YOURSELF')}
               open={
                 tooltipArray?.includes(2) || positionRefs[1].x === 0
                   ? false
@@ -347,10 +357,12 @@ const Account = () => {
                 style={[
                   styles.add,
                   {
-                    height: portrait ? verticalScale(105) : verticalScale(52.5),
-                    width: portrait ? verticalScale(90) : verticalScale(45),
+                    height: portrait ? verticalScale(150) : verticalScale(80),
+                    width: portrait ? verticalScale(70) : verticalScale(45),
                     borderRadius: 60,
                     backgroundColor: 'white',
+                    alignItems: 'center',
+                    justifyContent: 'center',
                   },
                 ]}
                 onPress={() => {
@@ -359,23 +371,29 @@ const Account = () => {
                 }}>
                 <View
                   style={{
-                    height: portrait ? verticalScale(100) : verticalScale(52.5),
-                    width: portrait ? verticalScale(80) : verticalScale(45),
+                    height: portrait ? verticalScale(50) : verticalScale(30),
+                    width: portrait ? verticalScale(40) : verticalScale(25),
                     borderRadius: 60,
                     alignItems: 'center',
                     justifyContent: 'center',
+
+                    marginTop: portrait ? 0 : verticalScale(20),
                   }}>
                   <Add />
                 </View>
+                <RNTextComponent
+                  isMedium
+                  style={[
+                    styles.addText,
+                    {
+                      marginTop: portrait
+                        ? verticalScale(40)
+                        : verticalScale(10),
+                    },
+                  ]}>
+                  {translation('ADD')}
+                </RNTextComponent>
               </Pressable>
-              <RNTextComponent
-                isMedium
-                style={[
-                  styles.addText,
-                  {marginLeft: portrait ? scale(25) : verticalScale(10)},
-                ]}>
-                {translation('ADD')}
-              </RNTextComponent>
             </RNTooltip>
           </ScrollView>
         </View>

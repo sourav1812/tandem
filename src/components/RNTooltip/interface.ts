@@ -13,4 +13,7 @@ export interface TooltipProps {
   top?: string;
   bottom?: string;
   rotation?: number;
+  topViewStyle?: StyleProp<ViewStyle>;
+  isTablet?: boolean;
+  placement?: 'center' | 'left' | 'right' | 'bottom' | 'top' | undefined;
 }

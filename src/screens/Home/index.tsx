@@ -47,7 +47,6 @@ const Home = () => {
   });
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const widthDimention = useWindowDimensions().width;
-
   const modeBC: {color: string; title: string}[] = [
     {color: themeColor.purple, title: translation('WRITE_A_STORY')},
     {color: themeColor.purple, title: translation('I_CANT_DECIDE')},
@@ -143,6 +142,8 @@ const Home = () => {
         ]}
         onPress={openDrawer}>
         <RNTooltip
+          topViewStyle={{alignItems: 'center'}}
+          isTablet={isTablet}
           open={tooltipArray?.includes(4) ? false : tooltipMode.tooltipTwo}
           setClose={() => {
             setToolTipMode({
@@ -241,6 +242,11 @@ const Home = () => {
                 },
               ]}>
               <RNTooltip
+                isTablet={isTablet}
+                topViewStyle={{
+                  width: widthDimention / 2,
+                  alignItems: 'flex-end',
+                }}
                 open={
                   tooltipArray?.includes(3) ? false : tooltipMode.tooltipOne
                 }
@@ -252,7 +258,8 @@ const Home = () => {
                   tooltipArray.push(3);
                   storeKey(TOOLTIP, tooltipArray);
                 }}
-                text={'switch mode'}
+                text={translation('SWITCH_MODE')}
+                // textContainerStyle={{marginRight: isTablet ? scale(100) : 0}}
                 dimensionObject={positionRefs[0]}>
                 {mode === MODE.B ? (
                   <View
@@ -351,7 +358,9 @@ const Home = () => {
           </View>
           <ScrollView
             style={styles.content}
-            contentContainerStyle={{paddingVertical: verticalScale(5)}}
+            contentContainerStyle={{
+              paddingVertical: verticalScale(0),
+            }}
             showsVerticalScrollIndicator={false}>
             {mode !== MODE.A && (
               <RNTextComponent
