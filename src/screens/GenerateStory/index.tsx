@@ -164,6 +164,7 @@ const GenerateStory = () => {
                   alignItems: 'center',
                   marginRight: !portrait ? scale(50) : undefined,
                 }}
+                textStyle={{fontSize: !portrait ? scale(14) : scale(18)}}
                 bottom={portrait ? 'South' : undefined}
                 top={portrait ? undefined : 'SouthEast'}
                 text={translation('YES_NO_SELECT')}
