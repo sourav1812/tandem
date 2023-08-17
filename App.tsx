@@ -6,7 +6,6 @@ import {Alert, Platform, UIManager} from 'react-native';
 import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
 import {TOOLTIP} from '@tandem/constants/LocalConstants';
 import {PermissionsAndroid} from 'react-native';
-import {requestUserPermissionIOS} from '@tandem/functions/fcm';
 import messaging from '@react-native-firebase/messaging';
 import {PersistGate} from 'redux-persist/integration/react';
 import {persistStore} from 'redux-persist';
@@ -26,7 +25,7 @@ const App: FC = () => {
         UIManager.setLayoutAnimationEnabledExperimental(true);
       }
     } else if (Platform.OS === 'ios') {
-      requestUserPermissionIOS();
+      messaging().requestPermission();
     }
     const tooltip = getValueFromKey(TOOLTIP);
     store.dispatch(clearAlertData());
