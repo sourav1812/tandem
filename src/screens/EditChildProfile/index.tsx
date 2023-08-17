@@ -21,7 +21,6 @@ const EditChildProfile = () => {
     showModal: false,
   });
   const [name, setName] = useState<ValidationError>({value: ''});
-  const [email, setEmail] = useState<ValidationError>({value: ''});
   const [dob, setDob] = useState(dayjs().format('DD/MM/YYYY'));
   const {showModal} = state;
 
