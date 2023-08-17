@@ -25,6 +25,7 @@ import {RootState} from '@tandem/redux/store';
 import RNTooltip from '@tandem/components/RNTooltip';
 import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
 import {TOOLTIP} from '@tandem/constants/LocalConstants';
+import logout from '@tandem/functions/logout';
 
 const Account = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -447,6 +448,7 @@ const Account = () => {
         renderModal={toggleSignOut}
         nextClick={() => {
           dispatch(changeMode(MODE.A));
+          logout();
           navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN, {}, true);
         }}
       />

@@ -3,13 +3,11 @@ import {createSlice} from '@reduxjs/toolkit';
 interface TokenState {
   token: string;
   refreshToken: string;
-  fcmData: {fcmToken: string; deviceId: string; deviceType: string} | null;
 }
 
 const initialState: TokenState = {
   token: '',
   refreshToken: '',
-  fcmData: null,
 };
 
 export const tokenSlice = createSlice({
@@ -21,13 +19,9 @@ export const tokenSlice = createSlice({
       state.token = action.payload.token;
       state.refreshToken = action.payload.refreshToken;
     },
-    addFcmData: (state, action) => {
-      state.fcmData = action.payload;
-    },
     removeToken: _state => initialState,
   },
 });
 
-export const {addToken, removeToken, addFcmData} = tokenSlice.actions;
-
+export const {addToken, removeToken} = tokenSlice.actions;
 export default tokenSlice.reducer;

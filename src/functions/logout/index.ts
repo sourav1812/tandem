@@ -1,4 +1,7 @@
-import {startLoader} from '@tandem/redux/slices/activityIndicator.slice';
+import {
+  startLoader,
+  stopLoader,
+} from '@tandem/redux/slices/activityIndicator.slice';
 import {clearAlertData} from '@tandem/redux/slices/alertBox.slice';
 import {logoutFromRedux} from '@tandem/redux/slices/languageReducer';
 import {removeToken} from '@tandem/redux/slices/tokens.slice';
@@ -12,6 +15,8 @@ const logout = async () => {
     store.dispatch(clearAlertData());
   } catch (error) {
     console.log('error in logout');
+  } finally {
+    store.dispatch(stopLoader());
   }
 };
 

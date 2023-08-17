@@ -87,9 +87,10 @@ const CreateChildProfile = () => {
       ) {
         return;
       }
+      // TODO make it dynamic
       const response = await addNewChild({
         name: 'mohan',
-        age: '32',
+        age: '32', // ! pass in the whole date object
         gender: 'male',
         avatar: 'sjdfkljklfskl34349349895jksjdfksj',
       });
@@ -351,7 +352,7 @@ const CreateChildProfile = () => {
         date={new Date(dob.value)}
         onConfirm={date => {
           setDateModal(false);
-          setDob({value: date});
+          setDob({value: date.toISOString()});
         }}
         onCancel={() => {
           setDateModal(false);
