@@ -2,12 +2,19 @@ import {createSlice} from '@reduxjs/toolkit';
 
 // Define a type for the slice state
 interface ChildData {
-  childInfo: {name: string; age: string; gender: string; avatar: string} | {};
+  name: string;
+  age: string;
+  gender: string;
+  avatar: string;
+}
+
+interface ChildState {
+  childList: ChildData[];
 }
 
 // Define the initial state using that type
-const initialState: ChildData = {
-  childInfo: {},
+const initialState: ChildState = {
+  childList: [],
 };
 
 export const createChildSlice = createSlice({
@@ -16,10 +23,10 @@ export const createChildSlice = createSlice({
   initialState,
   reducers: {
     saveChildData: (state, action) => {
-      state.childInfo = action.payload;
+      state.childList = action.payload;
     },
     resetChildData: state => {
-      state.childInfo = {};
+      state.childList = [];
     },
   },
 });

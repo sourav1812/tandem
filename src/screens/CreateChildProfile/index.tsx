@@ -24,15 +24,12 @@ import ImagePicker, {ImageOrVideo} from 'react-native-image-crop-picker';
 import dayjs from 'dayjs';
 import {addNewChild} from '@tandem/api/creatChildProfile';
 import validationFunction from '@tandem/functions/validationFunction';
-import {
-  resetChildData,
-  saveChildData,
-} from '@tandem/redux/slices/createChild.slice';
+import {saveChildData} from '@tandem/redux/slices/createChild.slice';
 
 const CreateChildProfile = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
-  const childData = useAppSelector(state => state.createChild.childInfo);
-  console.log(childData, 'childDatachildData');
+  const childList = useAppSelector(state => state.createChild.childList);
+  console.log(childList, 'childDatachildData');
   const dispatch = useAppDispatch();
   const [state, setState] = useState<childProfileStateObject>({
     bulletinArray: [
@@ -96,21 +93,25 @@ const CreateChildProfile = () => {
         gender: 'male',
         avatar: 'sjdfkljklfskl34349349895jksjdfksj',
       });
+      console.log(response, 'responseresponse');
       if (response) {
+        dispatch(
+          saveChildData([
+            ...childList,
+            {
+              ...(response?.childId && {childId: response?.childId}),
+              ...(name.value && {name: name.value}),
+              ...(dob.value && {dob: dob.value}),
+              ...(gender && {gender: gender}),
+              ...(avtarIndex && {avtarIndex: avtarIndex}),
+            },
+          ]),
+        );
         setTimeout(() => {
           navigateTo(SCREEN_NAME.BOTTOM_TAB, {}, true);
         }, 300);
       }
     }
-    dispatch(
-      saveChildData({
-        ...childData,
-        ...(name.value && {name: name.value}),
-        ...(dob.value && {dob: dob.value}),
-        ...(gender && {gender: gender}),
-        ...(avtarIndex && {avtarIndex: avtarIndex}),
-      }),
-    );
   };
 
   const previousQuestion = () => {
