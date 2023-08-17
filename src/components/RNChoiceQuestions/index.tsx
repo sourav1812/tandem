@@ -2,11 +2,17 @@ import {ScrollView} from 'react-native';
 import React, {useRef} from 'react';
 import {styles} from './styles';
 import RNEmojiWithText from '../RNEmojiWithText';
-import {multipleChoiceProps} from './interface';
+import {MultipleChoiceProps} from './interface';
 import RNTooltip from '../RNTooltip';
 import {TOOLTIP} from '@tandem/constants/LocalConstants';
 import {getValueFromKey} from '@tandem/helpers/encryptedStorage';
 import {translation} from '@tandem/utils/methods';
+import {store} from '@tandem/redux/store';
+import {
+  clipStoryGenerationResponse,
+  pushStoryGenerationResponse,
+} from '@tandem/redux/slices/storyGeneration.slice';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 
 const RNChoiceQuestions = ({
   data = [],
@@ -15,12 +21,52 @@ const RNChoiceQuestions = ({
   itemStyle,
   onTooltipClose = () => {},
   isTablet,
-}: multipleChoiceProps) => {
+  type,
+  maxSelections = data.length,
+  index,
+  setDisabled,
+}: MultipleChoiceProps) => {
   const tooltipArray = getValueFromKey(TOOLTIP);
   const refOne = useRef<any>(null);
   const [positionRefs, setPositionRefs] = React.useState({
     0: {height: 0, width: 0, x: 0, y: 0},
   });
+  const [selected, setSelected] = React.useState<string[]>([]);
+  const questionIndex = useAppSelector(state => state.questions.index);
+  const valueRef = useRef<string[]>([]);
+
+  React.useEffect(() => {
+    valueRef.current = selected;
+
+    if (selected.length === 0) {
+      setDisabled(true);
+    } else {
+      setDisabled(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selected]);
+
+  React.useEffect(() => {
+    return () => {
+      if (valueRef.current.length > 0 && index === questionIndex) {
+        store.dispatch(
+          pushStoryGenerationResponse({type, response: valueRef.current}),
+        );
+      } else {
+        store.dispatch(clipStoryGenerationResponse(index));
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handlePress = (name: string) => {
+    if (selected.length < maxSelections && !selected.includes(name)) {
+      setSelected(prev => [...prev, name]);
+    } else {
+      setSelected(prev => prev.filter(oldName => oldName !== name));
+    }
+  };
+
   return (
     <ScrollView
       contentContainerStyle={[styles.scrollView, customStyle && customStyle]}
@@ -45,11 +91,11 @@ const RNChoiceQuestions = ({
               textStyle={styles.tooltip}
               dimensionObject={positionRefs[0]}>
               <RNEmojiWithText
+                isSelected={selected.includes(value.name)}
+                onPress={() => handlePress(value.name)}
                 onLayout={() => {
                   refOne?.current?.measure(
                     (
-                      x: number,
-                      y: number,
                       width: number,
                       height: number,
                       pageX: number,
@@ -72,6 +118,8 @@ const RNChoiceQuestions = ({
         } else {
           return (
             <RNEmojiWithText
+              isSelected={selected.includes(value.name)}
+              onPress={() => handlePress(value.name)}
               key={index.toString()}
               heading={value.name}
               customStyle={[styles.optionsCustom, itemStyle && itemStyle]}

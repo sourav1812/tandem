@@ -1,9 +1,8 @@
 import {createSlice} from '@reduxjs/toolkit';
 
 interface Response {
-  questionText: string;
-  questionId: number;
-  responseEntered: string[];
+  type: string;
+  response: string[] | boolean | string;
 }
 interface StoryState {
   responseArray: Response[];
@@ -37,6 +36,7 @@ export const {
   pushStoryGenerationResponse,
   popStoryGenerationResponse,
   clearStoryGenerationResponse,
+  clipStoryGenerationResponse,
 } = storyGeneration.actions;
 
 export default storyGeneration.reducer;
