@@ -81,20 +81,9 @@ const RNChooseColor = ({
     const newpaths = [...paths];
     if (palletArrRef.length >= 2 && newpaths.length > 2) {
       setTimeout(() => {
-        setActiveColor(
-          chroma
-            .mix(palletArrRef[palletArrRef.length - 1], palletArrRef[0], 0.5)
-            .hex(),
-        );
-      }, 2000);
-      const p = chroma.scale(palletArrRef);
-      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-      setPalletArray([
-        p(0).hex().toUpperCase(),
-        p(0.3).hex().toUpperCase(),
-        p(0.7).hex().toUpperCase(),
-        p(1).hex().toUpperCase(),
-      ]);
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+        setActiveColor(chroma.average(palleteArray).hex());
+      }, 1000);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeColor]);
@@ -222,8 +211,18 @@ const RNChooseColor = ({
                     },
                   );
                 }}>
-                {palleteArray.length < 2 ? (
-                  <AddColor fill={''} />
+                {palleteArray.length < 3 ? (
+                  <Pressable
+                    disabled={palleteArray.includes(activeColor)}
+                    onPress={() => {
+                      setPalletArray(prev => [...prev, activeColor]);
+                    }}>
+                    <AddColor
+                      fill={
+                        palleteArray.includes(activeColor) ? '' : activeColor
+                      }
+                    />
+                  </Pressable>
                 ) : (
                   <RNButton
                     customStyle={{width: scale(50), height: verticalScale(30)}}
