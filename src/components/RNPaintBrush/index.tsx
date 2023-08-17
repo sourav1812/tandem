@@ -43,6 +43,24 @@ export default ({
   const [paths, setPaths] = useState<IPath[]>([]);
   const [sizeOfBrush] = useState(verticalScale(30));
 
+  React.useEffect(() => {
+    if (color === 'transparent') return;
+    const newPaths = [...paths];
+    const lastPosRef = newPaths[newPaths.length - 1]?.segments;
+    if (!lastPosRef) return;
+    newPaths[paths.length] = {
+      segments: [],
+      color,
+      size: sizeOfBrush,
+    };
+    newPaths[paths.length].segments.push(
+      lastPosRef[lastPosRef.length - 1].replace('L', 'M'),
+    );
+    setPaths(newPaths);
+    setPathsParent(newPaths);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [color]);
+
   const restartPen = (
     g: GestureStateChangeEvent<PanGestureHandlerEventPayload>,
   ) => {
@@ -74,11 +92,8 @@ export default ({
     .onUpdate((g: GestureUpdateEvent<PanGestureHandlerEventPayload>) => {
       drawWithPaint(g);
     })
-    .onTouchesUp(() => {
-      const newPaths = [...paths];
-      setPaths(newPaths);
-    })
-    .minDistance(1);
+    .onTouchesUp(() => {})
+    .minDistance(0);
 
   React.useEffect(() => {
     if (clear) setPaths([]);
