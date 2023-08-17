@@ -3,7 +3,7 @@ import {translation} from '../methods';
 export interface ValidationError {
   message?: string;
   type?: string;
-  value: string | Date;
+  value: string;
 }
 
 export enum FORM_INPUT_TYPE {
@@ -170,7 +170,7 @@ const validatePin = (value: string): ValidationError => {
   return {value};
 };
 
-const validateDateOfBirth = (value: Date): ValidationError => {
+const validateDateOfBirth = (value: string): ValidationError => {
   if (!value) {
     return {
       message: translation('validations.pin-required'),

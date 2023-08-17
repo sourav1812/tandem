@@ -36,6 +36,7 @@ const RNTooltip = ({
 
   return (
     <Tooltip
+      allowChildInteraction={false}
       isVisible={tooltipNumber?.length < 15 ? open : false}
       content={
         <View style={[topViewStyle && topViewStyle]}>
