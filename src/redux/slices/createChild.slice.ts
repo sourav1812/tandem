@@ -23,10 +23,7 @@ export const createChildSlice = createSlice({
   initialState,
   reducers: {
     saveChildData: (state, action) => {
-      console.log(action.payload, 'saveChildData');
-      let localChildList = [...state.childList];
-      localChildList.push(action.payload);
-      state.childList = localChildList;
+      state.childList.push(action.payload);
     },
     resetChildData: state => {
       state.childList = [];
