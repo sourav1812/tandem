@@ -34,10 +34,16 @@ import {translation} from '@tandem/utils/methods';
 import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
 import {TOOLTIP} from '@tandem/constants/LocalConstants';
 import RNTooltip from '@tandem/components/RNTooltip';
-import {RootState} from '@tandem/redux/store';
+import {RootState, store} from '@tandem/redux/store';
+import {STORY_PARTS} from '@tandem/constants/enums';
+import {
+  clipStoryGenerationResponse,
+  pushStoryGenerationResponse,
+} from '@tandem/redux/slices/storyGeneration.slice';
 
 const GenerateStory = () => {
   const dispatch = useAppDispatch();
+
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
@@ -120,6 +126,9 @@ const GenerateStory = () => {
               </RNTextComponent>
             </RNTextComponent>
             <RNChoiceQuestions
+              type={STORY_PARTS.WHO}
+              index={0}
+              maxSelections={3}
               isTablet={isTablet}
               data={audience}
               visibletoolTip={tooltipFirst}
@@ -220,13 +229,29 @@ const GenerateStory = () => {
                       title="✔"
                       customStyle={styles.buttonStyle}
                       onlyBorder
-                      onClick={nextQuestion}
+                      onClick={() => {
+                        store.dispatch(
+                          pushStoryGenerationResponse({
+                            type: STORY_PARTS.INCLUSION,
+                            response: true,
+                          }),
+                        );
+                        nextQuestion();
+                      }}
                       textStyle={styles.YesbuttonText}
                     />
                     <RNButton
                       title="✕"
                       customStyle={styles.buttonStyle}
-                      onClick={nextQuestion}
+                      onClick={() => {
+                        store.dispatch(
+                          pushStoryGenerationResponse({
+                            type: STORY_PARTS.INCLUSION,
+                            response: false,
+                          }),
+                        );
+                        nextQuestion();
+                      }}
                       textStyle={styles.YesbuttonText}
                     />
                   </View>
@@ -247,7 +272,12 @@ const GenerateStory = () => {
                 {translation('generate-story.go-in-our-story')}
               </RNTextComponent>
             </RNTextComponent>
-            <RNChoiceQuestions data={place} />
+            <RNChoiceQuestions
+              type={STORY_PARTS.WHERE}
+              index={2}
+              maxSelections={2}
+              data={place}
+            />
           </>
         );
       case 3:
@@ -256,7 +286,12 @@ const GenerateStory = () => {
             <RNTextComponent isSemiBold style={styles.question}>
               {translation('generate-story.include-things')}{' '}
             </RNTextComponent>
-            <RNChoiceQuestions data={attribute} />
+            <RNChoiceQuestions
+              type={STORY_PARTS.WHAT_THINGS}
+              index={3}
+              maxSelections={2}
+              data={attribute}
+            />
           </>
         );
       case 4:
@@ -270,7 +305,12 @@ const GenerateStory = () => {
                 {translation('generate-story.do-you-want-today')}
               </RNTextComponent>{' '}
             </RNTextComponent>
-            <RNChoiceQuestions data={typeOfStory} />
+            <RNChoiceQuestions
+              type={STORY_PARTS.WHAT_HAPPENS}
+              index={4}
+              maxSelections={3}
+              data={typeOfStory}
+            />
           </>
         );
       case 5:
@@ -325,6 +365,16 @@ const GenerateStory = () => {
 
   const nextQuestion = () => {
     if (questionIndex < 7) {
+      if (questionIndex === 5 && addedIllustration) {
+        store.dispatch(clipStoryGenerationResponse(5));
+        store.dispatch(
+          pushStoryGenerationResponse({
+            type: STORY_PARTS.STYLES,
+            response: addedIllustration,
+          }),
+        );
+      }
+
       dispatch(setQuestionIndex(questionIndex + 1));
       if (questionIndex !== 0 && questionIndex !== 5) {
         navigateTo(SCREEN_NAME.ROADMAP);

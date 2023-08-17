@@ -23,6 +23,8 @@ import {RootState} from '@tandem/redux/store';
 import RNButton from '@tandem/components/RNButton';
 import {useNavigation} from '@react-navigation/native';
 import {checkIfTablet} from '@tandem/hooks/isTabletHook';
+import {clipStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration.slice';
+import generateStory from '@tandem/api/generateStory';
 
 const RNRoadmap = () => {
   const dispatch = useAppDispatch();
@@ -37,6 +39,10 @@ const RNRoadmap = () => {
     5: {height: 0, width: 0, x: 0, y: 0},
     6: {height: 0, width: 0, x: 0, y: 0},
   });
+  const storyGenerationArray = useAppSelector(
+    (state: RootState) => state.storyGeneration.responseArray,
+  );
+
   const portrait = useSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
@@ -46,22 +52,18 @@ const RNRoadmap = () => {
   React.useEffect(
     () =>
       navigation.addListener('beforeRemove', e => {
-        // if (questionIndex === 0) {
-        //   Alert.alert('');
-        //   navigation.push(SCREEN_NAME.BOTTOM_TAB);
-        // } else {
-        //   dispatch(setQuestionIndex(questionIndex - 1));
-        //   navigateTo(SCREEN_NAME.GENERATE_STORY);
-        // }
         e.preventDefault();
       }),
     [navigation],
   );
 
   const handleNavigate = (index: number) => {
-    // if (index >= questionIndex) {
-    //   dispatch(setQuestionIndex(index));
-    // }
+    if (index > questionIndex) {
+      return;
+    }
+    if (storyGenerationArray.length > index) {
+      dispatch(clipStoryGenerationResponse(index));
+    }
     dispatch(setQuestionIndex(index));
     navigateTo(SCREEN_NAME.GENERATE_STORY);
   };
@@ -99,9 +101,23 @@ const RNRoadmap = () => {
               6: layout,
             }));
           }}
-          style={[styles.create, {left: verticalScale(35) / scale}]}
-          onPress={() => {
-            navigateTo(SCREEN_NAME.STORY_TELLING);
+          style={[
+            styles.create,
+            {
+              left: verticalScale(35) / scale,
+            },
+          ]}
+          onPress={async () => {
+            if (questionIndex !== 7) return;
+            try {
+              await generateStory({
+                childId: '1', // TODO provide childId of selected child
+                storyPromptData: storyGenerationArray,
+              });
+              navigateTo(SCREEN_NAME.HOME);
+            } catch (error) {
+              console.log('error generating story', error);
+            }
           }}>
           <Create scale={scale} mapIndex={questionIndex} />
         </Pressable>
@@ -130,10 +146,10 @@ const RNRoadmap = () => {
             <StyleColor
               scale={scale}
               fillColor={
-                questionIndex > 5 ? themeColor.themeBlue : themeColor.lightGray
+                questionIndex > 4 ? themeColor.themeBlue : themeColor.lightGray
               }
               textColor={
-                questionIndex > 5 ? themeColor.white : themeColor.themeBlue
+                questionIndex > 4 ? themeColor.white : themeColor.themeBlue
               }
             />
           </Pressable>
@@ -163,10 +179,10 @@ const RNRoadmap = () => {
             <WhatHappens
               scale={scale}
               fillColor={
-                questionIndex > 4 ? themeColor.lightGreen : themeColor.lightGray
+                questionIndex > 3 ? themeColor.lightGreen : themeColor.lightGray
               }
               textColor={
-                questionIndex > 4 ? themeColor.white : themeColor.themeBlue
+                questionIndex > 3 ? themeColor.white : themeColor.themeBlue
               }
             />
           </Pressable>
@@ -196,10 +212,10 @@ const RNRoadmap = () => {
             <WhatThing
               scale={scale}
               fillColor={
-                questionIndex > 3 ? themeColor.gold : themeColor.lightGray
+                questionIndex > 2 ? themeColor.gold : themeColor.lightGray
               }
               textColor={
-                questionIndex > 3 ? themeColor.white : themeColor.themeBlue
+                questionIndex > 2 ? themeColor.white : themeColor.themeBlue
               }
             />
           </Pressable>
@@ -229,10 +245,10 @@ const RNRoadmap = () => {
             <Where
               scale={scale}
               fillColor={
-                questionIndex > 2 ? themeColor.green : themeColor.lightGray
+                questionIndex > 1 ? themeColor.green : themeColor.lightGray
               }
               textColor={
-                questionIndex > 2 ? themeColor.white : themeColor.themeBlue
+                questionIndex > 1 ? themeColor.white : themeColor.themeBlue
               }
             />
           </Pressable>
@@ -261,9 +277,9 @@ const RNRoadmap = () => {
             ]}>
             <Who
               scale={scale}
-              fillColor={questionIndex >= 1 ? '#9A00FF' : themeColor.lightGray}
+              fillColor={questionIndex >= 0 ? '#9A00FF' : themeColor.lightGray}
               textColor={
-                questionIndex >= 1 ? themeColor.white : themeColor.themeBlue
+                questionIndex >= 0 ? themeColor.white : themeColor.themeBlue
               }
             />
           </Pressable>

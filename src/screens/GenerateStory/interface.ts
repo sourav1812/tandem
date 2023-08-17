@@ -16,13 +16,13 @@ export interface StateObject {
   tooltipFifth: boolean;
 }
 
-export interface placeType {
+export interface PlaceType {
   name: string;
   icon: string;
   bgc: string;
 }
 
-export const place: placeType[] = [
+export const place: PlaceType[] = [
   {name: 'Home', icon: '🏠', bgc: themeColor.themeBlue},
   {name: 'City', icon: '🏙️', bgc: themeColor.gold},
   {name: 'Jungle', icon: '🌴', bgc: themeColor.lightGreen},
@@ -31,7 +31,7 @@ export const place: placeType[] = [
   {name: 'Camp', icon: '⛺', bgc: themeColor.gold},
 ];
 
-export const audience: placeType[] = [
+export const audience: PlaceType[] = [
   {name: 'Domestic animals', icon: '🐱', bgc: themeColor.themeBlue},
   {name: 'Peoples', icon: '👦🏽', bgc: themeColor.gold},
   {name: 'Farm animals', icon: '🐮', bgc: themeColor.lightGreen},
@@ -40,20 +40,18 @@ export const audience: placeType[] = [
   {name: 'Scientists', icon: '👨‍🔬', bgc: themeColor.gold},
 ];
 
-export const typeOfStory: placeType[] = [
+export const typeOfStory: PlaceType[] = [
   {name: 'Fairy tale', icon: '✨', bgc: themeColor.pink},
   {name: 'Adventure', icon: '🏄', bgc: themeColor.themeBlue},
   {name: 'Silly/Comedy', icon: '🤣', bgc: themeColor.gold},
   {name: "I don't know", icon: '☹️', bgc: themeColor.lightGreen},
 ];
 
-export const attribute: placeType[] = [
+export const attribute: PlaceType[] = [
   {name: 'Dog', icon: '🐶', bgc: themeColor.pink},
   {name: 'Bird', icon: '🐣', bgc: themeColor.themeBlue},
   {name: 'Milk', icon: '🥛', bgc: themeColor.gold},
   {name: 'Book', icon: '📖', bgc: themeColor.lightGreen},
-  {name: 'Dog', icon: '🐶', bgc: themeColor.pink},
-  {name: 'Bird', icon: '🐣', bgc: themeColor.themeBlue},
 ];
 
 export const illustration = [

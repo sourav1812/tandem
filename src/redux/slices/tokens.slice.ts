@@ -1,5 +1,4 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {USER} from '@tandem/constants/enums';
 
 interface TokenState {
   token: string;
@@ -17,7 +16,6 @@ export const tokenSlice = createSlice({
   initialState,
   reducers: {
     addToken: (state, action) => {
-      console.log(action.payload, 'payload');
       state.token = action.payload.token;
       state.refreshToken = action.payload.refreshToken;
     },

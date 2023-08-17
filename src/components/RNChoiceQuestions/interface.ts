@@ -1,11 +1,14 @@
 import {StyleProp, ViewStyle} from 'react-native';
-import {placeType} from '@tandem/screens/GenerateStory/interface';
+import {PlaceType} from '@tandem/screens/GenerateStory/interface';
 
-export interface multipleChoiceProps {
-  data: placeType[];
+export interface MultipleChoiceProps {
+  data: PlaceType[];
   customStyle?: StyleProp<ViewStyle>;
   visibletoolTip?: boolean;
   onTooltipClose?: () => void;
   itemStyle?: StyleProp<ViewStyle>;
   isTablet?: boolean;
+  type?: string;
+  maxSelections?: number;
+  index?: number;
 }

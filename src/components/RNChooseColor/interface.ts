@@ -8,7 +8,4 @@ export interface colorPaletteType {
 }
 export interface StateObject {
   colorPalette: {firstColor: string; secondColor: string}[];
-  color1: string;
-  color2: string;
-  color3: string;
 }

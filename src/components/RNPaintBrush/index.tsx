@@ -29,7 +29,17 @@ const source = frag`
     return mix(image.eval(xy),TRANSPARENT,0.5);
   }`;
 
-export default ({height, color}: {height: number; color: string}) => {
+export default ({
+  height,
+  color,
+  setPathsParent,
+  clear,
+}: {
+  height: number;
+  color: string;
+  setPathsParent: React.Dispatch<React.SetStateAction<IPath[]>>;
+  clear: boolean;
+}) => {
   const [paths, setPaths] = useState<IPath[]>([]);
   const [sizeOfBrush] = useState(verticalScale(30));
 
@@ -45,6 +55,7 @@ export default ({height, color}: {height: number; color: string}) => {
     };
     newPaths[paths.length].segments.push(`M ${g.x} ${g.y}`);
     setPaths(newPaths);
+    setPathsParent(newPaths);
   };
   const drawWithPaint = (
     g: GestureUpdateEvent<PanGestureHandlerEventPayload>,
@@ -69,9 +80,9 @@ export default ({height, color}: {height: number; color: string}) => {
     })
     .minDistance(1);
 
-  // const clearCanvas = () => {
-  //   setPaths([]);
-  // };
+  React.useEffect(() => {
+    if (clear) setPaths([]);
+  }, [clear]);
 
   return (
     <View style={[styles.paintWrapper, {height, width: height}]}>
