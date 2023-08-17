@@ -3,6 +3,7 @@ import {
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 import {SocialResponse} from './interface';
+import {socialLogin} from '@tandem/api/socialAuth';
 
 export const getCurrentUserInfo = async () => {
   try {

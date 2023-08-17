@@ -16,6 +16,7 @@ import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {RootState} from '@tandem/redux/store';
 import google from '@tandem/functions/socialLogin/google';
 import facebook from '@tandem/functions/socialLogin/facebook';
+import {socialLogin} from '@tandem/api/socialAuth';
 
 const SocialSignIn = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -38,6 +39,18 @@ const SocialSignIn = () => {
         socialObjectResponse,
         'socialObjectResponsesocialObjectResponse',
       );
+      try {
+        const socialLoginReponse = await socialLogin({
+          name: `${socialObjectResponse.firstName}${' '}${
+            socialObjectResponse.lastName
+          }`,
+          token: socialObjectResponse.idToken,
+          profilePicture: socialObjectResponse.image,
+          email: socialObjectResponse.email,
+          type: type,
+        });
+        console.log(socialLoginReponse, 'socialLoginReponse');
+      } catch (error) {}
 
       // const forwardToSignup = await socialLogin(socialObjectLocal);
       // if (forwardToSignup) {
