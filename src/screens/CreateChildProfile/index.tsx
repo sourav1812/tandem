@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {Pressable, ScrollView, View} from 'react-native';
 import BlueButton from '@tandem/assets/svg/BlueButton';
@@ -93,19 +93,15 @@ const CreateChildProfile = () => {
         gender: 'male',
         avatar: 'sjdfkljklfskl34349349895jksjdfksj',
       });
-      console.log(response, 'responseresponse');
       if (response) {
         dispatch(
-          saveChildData([
-            ...childList,
-            {
-              ...(response?.childId && {childId: response?.childId}),
-              ...(name.value && {name: name.value}),
-              ...(dob.value && {dob: dob.value}),
-              ...(gender && {gender: gender}),
-              ...(avtarIndex && {avtarIndex: avtarIndex}),
-            },
-          ]),
+          saveChildData({
+            childId: response?.childId,
+            name: name.value,
+            dob: dob.value,
+            gender: gender,
+            avtarIndex: avtarIndex,
+          }),
         );
         setTimeout(() => {
           navigateTo(SCREEN_NAME.BOTTOM_TAB, {}, true);
