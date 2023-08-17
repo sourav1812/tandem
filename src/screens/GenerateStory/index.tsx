@@ -34,16 +34,22 @@ import {translation} from '@tandem/utils/methods';
 import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
 import {TOOLTIP} from '@tandem/constants/LocalConstants';
 import RNTooltip from '@tandem/components/RNTooltip';
-import {RootState} from '@tandem/redux/store';
+import {RootState, store} from '@tandem/redux/store';
+import {STORY_PARTS} from '@tandem/constants/enums';
+import {
+  clipStoryGenerationResponse,
+  pushStoryGenerationResponse,
+} from '@tandem/redux/slices/storyGeneration.slice';
 
 const GenerateStory = () => {
   const dispatch = useAppDispatch();
+
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
   const questionIndex = useAppSelector(state => state.questions.index);
-
+  const [disabled, setDisabled] = React.useState(true);
   const tooltipArray = getValueFromKey(TOOLTIP);
   const refOne = useRef<any>(null);
   const refTwo = useRef<any>(null);
@@ -89,6 +95,7 @@ const GenerateStory = () => {
   };
 
   React.useEffect(() => {
+    setDisabled(true);
     if (!tooltipArray?.includes(5)) {
       updateState({tooltipFirst: true});
     }
@@ -120,6 +127,10 @@ const GenerateStory = () => {
               </RNTextComponent>
             </RNTextComponent>
             <RNChoiceQuestions
+              setDisabled={setDisabled}
+              type={STORY_PARTS.WHO}
+              index={0}
+              maxSelections={3}
               isTablet={isTablet}
               data={audience}
               visibletoolTip={tooltipFirst}
@@ -221,13 +232,29 @@ const GenerateStory = () => {
                       title="✔"
                       customStyle={styles.buttonStyle}
                       onlyBorder
-                      onClick={nextQuestion}
+                      onClick={() => {
+                        store.dispatch(
+                          pushStoryGenerationResponse({
+                            type: STORY_PARTS.INCLUSION,
+                            response: true,
+                          }),
+                        );
+                        nextQuestion();
+                      }}
                       textStyle={styles.YesbuttonText}
                     />
                     <RNButton
                       title="✕"
                       customStyle={styles.buttonStyle}
-                      onClick={nextQuestion}
+                      onClick={() => {
+                        store.dispatch(
+                          pushStoryGenerationResponse({
+                            type: STORY_PARTS.INCLUSION,
+                            response: false,
+                          }),
+                        );
+                        nextQuestion();
+                      }}
                       textStyle={styles.YesbuttonText}
                     />
                   </View>
@@ -254,7 +281,13 @@ const GenerateStory = () => {
                 {translation('generate-story.go-in-our-story')}
               </RNTextComponent>
             </RNTextComponent>
-            <RNChoiceQuestions data={place} />
+            <RNChoiceQuestions
+              setDisabled={setDisabled}
+              type={STORY_PARTS.WHERE}
+              index={2}
+              maxSelections={2}
+              data={place}
+            />
           </>
         );
       case 3:
@@ -265,7 +298,13 @@ const GenerateStory = () => {
               style={[styles.question, {height: verticalScale(70)}]}>
               {translation('generate-story.include-things')}{' '}
             </RNTextComponent>
-            <RNChoiceQuestions data={attribute} />
+            <RNChoiceQuestions
+              setDisabled={setDisabled}
+              type={STORY_PARTS.WHAT_THINGS}
+              index={3}
+              maxSelections={2}
+              data={attribute}
+            />
           </>
         );
       case 4:
@@ -279,7 +318,13 @@ const GenerateStory = () => {
                 {translation('generate-story.do-you-want-today')}
               </RNTextComponent>{' '}
             </RNTextComponent>
-            <RNChoiceQuestions data={typeOfStory} />
+            <RNChoiceQuestions
+              setDisabled={setDisabled}
+              type={STORY_PARTS.WHAT_HAPPENS}
+              index={4}
+              maxSelections={3}
+              data={typeOfStory}
+            />
           </>
         );
       case 5:
@@ -305,6 +350,7 @@ const GenerateStory = () => {
                     key={index.toString()}
                     onPress={() => {
                       updateState({addedIllustration: index});
+                      setDisabled(false);
                     }}>
                     <Image
                       source={value.url}
@@ -325,6 +371,7 @@ const GenerateStory = () => {
       case 6:
         return (
           <RNChooseColor
+            setDisabled={setDisabled}
             isTablet={isTablet}
             tooltipVisible={tooltipThird}
             onTooltipClose={onCloseThirdTooltip}
@@ -336,6 +383,16 @@ const GenerateStory = () => {
 
   const nextQuestion = () => {
     if (questionIndex < 7) {
+      if (questionIndex === 5 && addedIllustration) {
+        store.dispatch(clipStoryGenerationResponse(5));
+        store.dispatch(
+          pushStoryGenerationResponse({
+            type: STORY_PARTS.STYLES,
+            response: addedIllustration,
+          }),
+        );
+      }
+
       dispatch(setQuestionIndex(questionIndex + 1));
       if (questionIndex !== 0 && questionIndex !== 5) {
         navigateTo(SCREEN_NAME.ROADMAP);
@@ -441,6 +498,7 @@ const GenerateStory = () => {
           }}>
           {questionIndex !== 1 && (
             <RNButton
+              isDisabled={disabled}
               customStyle={[
                 styles.footerButton,
                 {height: verticalScale(70), maxHeight: verticalScale(70)},

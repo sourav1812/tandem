@@ -82,9 +82,7 @@ export default RNButton;
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
     borderWidth: 1,
-    // maxHeight: 52,
     height: verticalScale(48),
     borderRadius: 14,
     justifyContent: 'center',

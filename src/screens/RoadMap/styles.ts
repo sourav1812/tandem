@@ -23,28 +23,40 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
+    zIndex: 1,
   },
   startText: {
     color: themeColor.white,
   },
   who: {
     position: 'absolute',
+    borderRadius: 1000,
+    zIndex: 2,
   },
   where: {
     position: 'absolute',
+    borderRadius: 1000,
+    zIndex: 3,
   },
   whatThing: {
     position: 'absolute',
+    borderRadius: 1000,
+    zIndex: 4,
   },
   whatHappens: {
     position: 'absolute',
+    borderRadius: 1000,
+    zIndex: 5,
   },
   stylecolor: {
     position: 'absolute',
+    borderRadius: 1000,
+    zIndex: 6,
   },
   create: {
     top: -verticalScale(1),
     zIndex: 10,
+    borderRadius: 1000,
   },
   header: {
     position: 'absolute',

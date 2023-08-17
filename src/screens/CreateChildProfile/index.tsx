@@ -16,7 +16,7 @@ import RNAvatarComponent from '@tandem/components/RNAvatarComponent';
 import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {verticalScale} from 'react-native-size-matters';
-import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
 import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
 import DatePicker from 'react-native-date-picker';
 import {LanguageDropDown} from '@tandem/components/LanguageDropDown';
@@ -24,9 +24,13 @@ import ImagePicker, {ImageOrVideo} from 'react-native-image-crop-picker';
 import dayjs from 'dayjs';
 import {addNewChild} from '@tandem/api/creatChildProfile';
 import validationFunction from '@tandem/functions/validationFunction';
+import {saveChildData} from '@tandem/redux/slices/createChild.slice';
 
 const CreateChildProfile = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const childList = useAppSelector(state => state.createChild.childList);
+  console.log(childList, 'childDatachildData');
+  const dispatch = useAppDispatch();
   const [state, setState] = useState<childProfileStateObject>({
     bulletinArray: [
       {index: 1, isSelected: true},
@@ -50,6 +54,12 @@ const CreateChildProfile = () => {
       return {...previouState, ...date};
     });
   };
+
+  // useEffect(() => {
+  //   return () => {
+  //     dispatch(resetChildData());
+  //   };
+  // }, []);
 
   const nextQuestion = async () => {
     if (questionIndex <= 2) {
@@ -84,6 +94,15 @@ const CreateChildProfile = () => {
         avatar: 'sjdfkljklfskl34349349895jksjdfksj',
       });
       if (response) {
+        dispatch(
+          saveChildData({
+            childId: response?.childId,
+            name: name.value,
+            dob: dob.value,
+            gender: gender,
+            avtarIndex: avtarIndex,
+          }),
+        );
         setTimeout(() => {
           navigateTo(SCREEN_NAME.BOTTOM_TAB, {}, true);
         }, 300);
