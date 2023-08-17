@@ -24,6 +24,7 @@ const RNChoiceQuestions = ({
   type,
   maxSelections = data.length,
   index,
+  setDisabled,
 }: MultipleChoiceProps) => {
   const tooltipArray = getValueFromKey(TOOLTIP);
   const refOne = useRef<any>(null);
@@ -36,6 +37,13 @@ const RNChoiceQuestions = ({
 
   React.useEffect(() => {
     valueRef.current = selected;
+
+    if (selected.length === 0) {
+      setDisabled(true);
+    } else {
+      setDisabled(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selected]);
 
   React.useEffect(() => {

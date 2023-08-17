@@ -49,7 +49,7 @@ const GenerateStory = () => {
     (state: RootState) => state.orientation.isPortrait,
   );
   const questionIndex = useAppSelector(state => state.questions.index);
-
+  const [disabled, setDisabled] = React.useState(true);
   const tooltipArray = getValueFromKey(TOOLTIP);
   const refOne = useRef<any>(null);
   const refTwo = useRef<any>(null);
@@ -95,6 +95,7 @@ const GenerateStory = () => {
   };
 
   React.useEffect(() => {
+    setDisabled(true);
     if (!tooltipArray?.includes(5)) {
       updateState({tooltipFirst: true});
     }
@@ -126,6 +127,7 @@ const GenerateStory = () => {
               </RNTextComponent>
             </RNTextComponent>
             <RNChoiceQuestions
+              setDisabled={setDisabled}
               type={STORY_PARTS.WHO}
               index={0}
               maxSelections={3}
@@ -279,6 +281,7 @@ const GenerateStory = () => {
               </RNTextComponent>
             </RNTextComponent>
             <RNChoiceQuestions
+              setDisabled={setDisabled}
               type={STORY_PARTS.WHERE}
               index={2}
               maxSelections={2}
@@ -295,6 +298,7 @@ const GenerateStory = () => {
               {translation('generate-story.include-things')}{' '}
             </RNTextComponent>
             <RNChoiceQuestions
+              setDisabled={setDisabled}
               type={STORY_PARTS.WHAT_THINGS}
               index={3}
               maxSelections={2}
@@ -314,6 +318,7 @@ const GenerateStory = () => {
               </RNTextComponent>{' '}
             </RNTextComponent>
             <RNChoiceQuestions
+              setDisabled={setDisabled}
               type={STORY_PARTS.WHAT_HAPPENS}
               index={4}
               maxSelections={3}
@@ -344,6 +349,7 @@ const GenerateStory = () => {
                     key={index.toString()}
                     onPress={() => {
                       updateState({addedIllustration: index});
+                      setDisabled(false);
                     }}>
                     <Image
                       source={value.url}
@@ -364,6 +370,7 @@ const GenerateStory = () => {
       case 6:
         return (
           <RNChooseColor
+            setDisabled={setDisabled}
             isTablet={isTablet}
             tooltipVisible={tooltipThird}
             onTooltipClose={onCloseThirdTooltip}
@@ -490,6 +497,7 @@ const GenerateStory = () => {
           }}>
           {questionIndex !== 1 && (
             <RNButton
+              isDisabled={disabled}
               customStyle={[
                 styles.footerButton,
                 {height: verticalScale(70), maxHeight: verticalScale(70)},

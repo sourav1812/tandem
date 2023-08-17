@@ -8,7 +8,7 @@ import {
 import React, {useRef} from 'react';
 import {styles} from './styles';
 import RNTextComponent from '../RNTextComponent';
-import {colorPaletteType} from './interface';
+import {ColorPaletteType} from './interface';
 import ColorPatchUp from '@tandem/assets/svg/ColorPatch';
 import AddColor from '@tandem/assets/svg/AddColor';
 import EmptyPatch from '@tandem/assets/svg/EmptyPatch';
@@ -38,7 +38,8 @@ const RNChooseColor = ({
   onTooltipClose,
   customStyle,
   isTablet,
-}: colorPaletteType) => {
+  setDisabled,
+}: ColorPaletteType) => {
   const tooltipArray = getValueFromKey(TOOLTIP);
   const [palleteArray, setPalletArray] = React.useState<string[]>([]);
   const [finalColor, setFinalColor] = React.useState<string>('');
@@ -74,6 +75,15 @@ const RNChooseColor = ({
       }
     };
   }, []);
+
+  React.useEffect(() => {
+    if (finalColor) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [finalColor]);
 
   React.useEffect(() => {
     const palletArrRef = [...palleteArray];
@@ -229,6 +239,7 @@ const RNChooseColor = ({
                     onClick={() => {
                       setPalletArray([]);
                       setActiveColor('');
+                      setFinalColor('');
                       setClear(true);
                       setTimeout(() => {
                         setClear(false);
