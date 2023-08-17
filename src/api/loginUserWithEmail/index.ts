@@ -4,10 +4,15 @@ import {API} from '@tandem/constants/api';
 import loginFlow from '@tandem/functions/loginFlow';
 import {LoginResponse} from '@tandem/functions/loginFlow/interface';
 
-export default async ({email, password}: LoginUserWithEmail) => {
+export default async ({
+  email,
+  password,
+  deviceId,
+  deviceType,
+}: LoginUserWithEmail) => {
   const response = await post<LoginResponse>({
     path: API.LOGIN_USER_WITH_EMAIL,
-    data: {email, password},
+    data: {email, password, deviceId, deviceType},
   });
   if (!response) {
     return;

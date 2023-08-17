@@ -16,17 +16,21 @@ import RNAvatarComponent from '@tandem/components/RNAvatarComponent';
 import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {verticalScale} from 'react-native-size-matters';
-import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
 import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
 import DatePicker from 'react-native-date-picker';
 import {LanguageDropDown} from '@tandem/components/LanguageDropDown';
-import ImagePicker from 'react-native-image-crop-picker';
+import ImagePicker, {ImageOrVideo} from 'react-native-image-crop-picker';
 import dayjs from 'dayjs';
 import {addNewChild} from '@tandem/api/creatChildProfile';
 import validationFunction from '@tandem/functions/validationFunction';
+import {saveChildData} from '@tandem/redux/slices/createChild.slice';
 
 const CreateChildProfile = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const childList = useAppSelector(state => state.createChild.childList);
+  console.log(childList, 'childDatachildData');
+  const dispatch = useAppDispatch();
   const [state, setState] = useState<childProfileStateObject>({
     bulletinArray: [
       {index: 1, isSelected: true},
@@ -39,8 +43,10 @@ const CreateChildProfile = () => {
   const {bulletinArray, questionIndex, gender} = state;
   const [name, setName] = useState<ValidationError>({value: ''});
   const [dateModal, setDateModal] = useState(false);
-  const [dob, setDob] = useState(new Date());
-  const [imageData, setImageData] = useState(null);
+  const [dob, setDob] = useState<ValidationError>({
+    value: new Date().toString(),
+  });
+  const [imageData, setImageData] = useState<ImageOrVideo | null>(null);
   const [avtarIndex, setavtarIndex] = useState<number | null>(null);
 
   const updateState = (date: any) => {
@@ -48,6 +54,12 @@ const CreateChildProfile = () => {
       return {...previouState, ...date};
     });
   };
+
+  // useEffect(() => {
+  //   return () => {
+  //     dispatch(resetChildData());
+  //   };
+  // }, []);
 
   const nextQuestion = async () => {
     if (questionIndex <= 2) {
@@ -82,6 +94,15 @@ const CreateChildProfile = () => {
         avatar: 'sjdfkljklfskl34349349895jksjdfksj',
       });
       if (response) {
+        dispatch(
+          saveChildData({
+            childId: response?.childId,
+            name: name.value,
+            dob: dob.value,
+            gender: gender,
+            avtarIndex: avtarIndex,
+          }),
+        );
         setTimeout(() => {
           navigateTo(SCREEN_NAME.BOTTOM_TAB, {}, true);
         }, 300);
@@ -218,7 +239,7 @@ const CreateChildProfile = () => {
                 <LanguageDropDown
                   customStyle={styles.date}
                   heading={translation('DATE_OF_BIRTH')}
-                  text={dayjs(dob.toJSON()).format('DD/MM/YYYY')}
+                  text={dayjs(dob.value?.toString()).format('DD/MM/YYYY')}
                 />
               </Pressable>
             </View>
@@ -327,10 +348,10 @@ const CreateChildProfile = () => {
         modal
         mode={'date'}
         open={dateModal}
-        date={dob}
+        date={new Date(dob.value)}
         onConfirm={date => {
           setDateModal(false);
-          setDob(date);
+          setDob({value: date});
         }}
         onCancel={() => {
           setDateModal(false);
