@@ -173,7 +173,7 @@ const validatePin = (value: string): ValidationError => {
 const validateDateOfBirth = (value: string): ValidationError => {
   if (!value) {
     return {
-      message: translation('validations.name-required'),
+      message: translation('validations.dob-required'),
       type: FORM_INPUT_TYPE.DOB,
       value,
     };

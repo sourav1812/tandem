@@ -150,6 +150,7 @@
     "phone-required": "Il numero di telefono è obbligatorio",
     "phone-no-spaces": "Il numero di telefono non può contenere spazi",
     "phone-invalid": "Inserisci un numero di telefono valido",
+    "dob-required": "Data di nascita richiesta",
     "pin-required": "Il PIN è obbligatorio",
     "pin-no-spaces": "Il PIN non può contenere spazi",
     "pin-invalid": "Inserisci un PIN valido",

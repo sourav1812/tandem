@@ -148,6 +148,7 @@
     "phone-no-spaces": "Telefonnummer darf keine Leerzeichen enthalten",
     "phone-invalid": "Bitte gib eine gültige Telefonnummer ein",
     "pin-required": "PIN ist erforderlich",
+    "dob-required": "Geburtsdatum erforderlich",
     "pin-no-spaces": "PIN darf keine Leerzeichen enthalten",
     "pin-invalid": "Bitte gib eine gültige PIN ein",
     "atleast-one-character": "Mindestens ein Zeichen",
