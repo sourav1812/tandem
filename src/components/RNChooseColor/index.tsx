@@ -83,7 +83,7 @@ const RNChooseColor = ({
       setTimeout(() => {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
         setActiveColor(chroma.average(palleteArray).hex());
-      }, 1000);
+      }, 2000);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeColor]);

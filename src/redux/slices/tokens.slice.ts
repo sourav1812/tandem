@@ -22,7 +22,6 @@ export const tokenSlice = createSlice({
       state.refreshToken = action.payload.refreshToken;
     },
     addFcmData: (state, action) => {
-      console.log(action.payload, 'fcmToken data');
       state.fcmData = action.payload;
     },
     removeToken: _state => initialState,
