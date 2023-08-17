@@ -379,7 +379,7 @@ const Home = () => {
                 ...styles.options,
                 ...(!portrait && styles.optionsPortrait),
                 ...(isTablet && {
-                  paddingHorizontal: portrait ? scale(20) : scale(130),
+                  paddingHorizontal: portrait ? scale(20) : scale(100),
                 }),
               }}>
               {mode === MODE.B || mode === MODE.C
