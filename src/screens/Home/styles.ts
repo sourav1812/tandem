@@ -10,7 +10,6 @@ export const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     justifyContent: 'center',
-    backgroundColor: themeColor.gold,
     marginBottom: verticalScale(40),
   },
   profilePic: {
@@ -93,12 +92,10 @@ export const styles = StyleSheet.create({
     zIndex: 50,
   },
   curvedViewHeaderLeft: {
-    backgroundColor: themeColor.gold,
     borderBottomRightRadius: 100,
     borderTopRightRadius: 100,
   },
   curvedViewHeaderRight: {
-    backgroundColor: themeColor.gold,
     borderBottomLeftRadius: 100,
     borderTopLeftRadius: 100,
   },

@@ -18,6 +18,18 @@ interface placeType {
   bgc: string;
 }
 
+export interface BooksData {
+  id: string;
+  headerTitle: string;
+  time: string;
+  image: any;
+  readingTime: number;
+  isNew: boolean;
+  emogi: string;
+  week: string;
+  teaser: string;
+}
+
 export const place: placeType[] = [
   {name: 'Home', icon: '🏠', bgc: themeColor.themeBlue},
   {name: 'City', icon: '🏙️', bgc: themeColor.gold},

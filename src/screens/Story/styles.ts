@@ -8,13 +8,16 @@ export const styles = StyleSheet.create({
   },
   poster: {
     height: '48%',
+    width: '100%',
   },
   scrollView: {
-    flexGrow: 1,
     width: '100%',
+    maxHeight: '60%',
+    minHeight: '40%',
     borderTopLeftRadius: verticalScale(16),
     borderTopRightRadius: verticalScale(16),
-    marginTop: -verticalScale(20),
+    marginTop: 'auto',
+    marginBottom: verticalScale(60),
     backgroundColor: themeColor.white,
   },
   midContent: {
@@ -36,6 +39,10 @@ export const styles = StyleSheet.create({
     backgroundColor: themeColor.lightGray,
   },
   emoji: {
+    fontSize: verticalScale(40),
+    color: themeColor.white,
+  },
+  new: {
     fontSize: verticalScale(20),
     color: themeColor.white,
   },
@@ -48,12 +55,14 @@ export const styles = StyleSheet.create({
   scrollContainer: {
     paddingVertical: verticalScale(35),
     paddingHorizontal: verticalScale(18),
+    paddingBottom: verticalScale(30),
   },
   dateTime: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   date: {
+    marginLeft: scale(10),
     fontSize: verticalScale(12),
   },
   heading: {
