@@ -24,10 +24,15 @@ import ImagePicker, {Image} from 'react-native-image-crop-picker';
 import dayjs from 'dayjs';
 import {addNewChild} from '@tandem/api/creatChildProfile';
 import validationFunction from '@tandem/functions/validationFunction';
-import {saveChildData} from '@tandem/redux/slices/createChild.slice';
+import {
+  saveChildData,
+  saveCurrentChild,
+} from '@tandem/redux/slices/createChild.slice';
 
 const CreateChildProfile = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const childList = useAppSelector(state => state.createChild.childList);
+
   const dispatch = useAppDispatch();
   const [state, setState] = useState<ChildProfileStateObject>({
     bulletinArray: [
@@ -46,6 +51,8 @@ const CreateChildProfile = () => {
   });
   const [imageData, setImageData] = useState<Image | null>(null);
   const [avtarIndex, setavtarIndex] = useState<number | null>(null);
+
+  console.log(childList, 'childListchildListEEE111');
 
   const updateState = (date: any) => {
     setState((previouState: any) => {
@@ -81,16 +88,6 @@ const CreateChildProfile = () => {
       }
       // TODO make it dynamic
 
-      console.log(
-        {
-          name: name.value,
-          dob: dob.value, // ! pass in the whole date object
-          gender: gender,
-          avatar: avtarIndex === 0 ? imageData?.data : avtarIndex?.toString(),
-        },
-        'sdfghgfds',
-      );
-
       const response = await addNewChild({
         name: name.value,
         dob: dob.value, // ! pass in the whole date object
@@ -98,6 +95,21 @@ const CreateChildProfile = () => {
         avatar: avtarIndex === 0 ? imageData?.data : avtarIndex?.toString(),
       });
       if (response) {
+        console.log(childList, 'createchild current child');
+        if (childList.length === 0) {
+          console.log('inside check');
+          dispatch(
+            saveCurrentChild({
+              childId: response?.childId,
+              name: name.value,
+              dob: dob.value,
+              gender: gender,
+              avtarIndex: avtarIndex,
+              type: 'child',
+              ...(imageData?.path && {imageUrl: imageData.path}),
+            }),
+          );
+        }
         dispatch(
           saveChildData({
             childId: response?.childId,
@@ -319,7 +331,6 @@ const CreateChildProfile = () => {
                           })
                             .then(response => {
                               setImageData(response);
-                              console.log(response);
                             })
                             .catch(err => {
                               console.log(err);

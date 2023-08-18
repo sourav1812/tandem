@@ -6,7 +6,6 @@ import {
   ScrollView,
   Animated,
   Easing,
-  Alert,
 } from 'react-native';
 import React, {useRef, useState} from 'react';
 import {styles} from './styles';
@@ -122,6 +121,7 @@ const Home = () => {
   const openDrawer = () => {
     updateState({changeUser: !changeUser});
   };
+  console.log(currentChild, 'home current child');
 
   React.useEffect(() => {
     const tempPseudoList: ChildData[] = [];
@@ -146,17 +146,17 @@ const Home = () => {
           {
             top:
               heightOfBanner.value - verticalScale(18) - verticalScale(89) / 2,
-            ...(changeUser &&
-              mode === MODE.A && {
-                shadowColor: '#000',
-                shadowOffset: {
-                  width: 0,
-                  height: 1,
-                },
-                shadowOpacity: 0.32,
-                shadowRadius: 5.22,
-                elevation: 4,
-              }),
+            // ...(changeUser &&
+            //   mode === MODE.A && {
+            //     shadowColor: '#000',
+            //     shadowOffset: {
+            //       width: 0,
+            //       height: 1,
+            //     },
+            //     shadowOpacity: 0.32,
+            //     shadowRadius: 5.22,
+            //     elevation: 4,
+            //   }),
           },
         ]}
         onPress={() => {
@@ -209,11 +209,10 @@ const Home = () => {
               }
             />
             <RNTextComponent style={styles.tooltipUserName} isSemiBold>
-              {currentChild?.name}
+              {currentChild?.name?.split(' ')[0]}
             </RNTextComponent>
           </View>
         </RNTooltip>
-
         {changeUser &&
           mode === MODE.A &&
           pseudoList.map(item => {

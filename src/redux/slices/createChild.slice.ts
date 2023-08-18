@@ -44,7 +44,12 @@ export const createChildSlice = createSlice({
   initialState,
   reducers: {
     saveChildData: (state, action) => {
-      state.childList.push(action.payload);
+      // state.childList.push(action.payload);
+      if (Array.isArray(action.payload)) {
+        state.childList = action.payload;
+      } else {
+        state.childList.push(action.payload);
+      }
     },
     saveCurrentChild: (state, action) => {
       state.currentChild = action.payload;

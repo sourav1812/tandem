@@ -80,7 +80,7 @@ export const styles = StyleSheet.create({
     marginTop: 5,
     position: 'absolute',
     bottom: -verticalScale(10),
-    fontSize: verticalScale(18),
+    fontSize: verticalScale(16),
   },
   curveViewHeaderWrapper: {
     width: '100%',
