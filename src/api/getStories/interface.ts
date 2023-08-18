@@ -1,6 +1,6 @@
 import {STORIES_RESPONSE} from '@tandem/constants/enums';
 
-export default interface StoryResponse {
+export default interface Book {
   [STORIES_RESPONSE.BOOK_COVER]?: string;
   [STORIES_RESPONSE.BOOK_ID]: string;
   [STORIES_RESPONSE.CHILD_ID]: string;

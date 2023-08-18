@@ -13,6 +13,7 @@ import tokensSlice from './slices/tokens.slice';
 import alertBoxSlice from './slices/alertBox.slice';
 import storyGeneration from './slices/storyGeneration.slice';
 import createChildSlice from './slices/createChild.slice';
+import bookShelf from './slices/bookShelf.slice';
 
 export const storage = new MMKV();
 
@@ -29,6 +30,7 @@ export const appReducer = combineReducers({
   alertBoxReducer: alertBoxSlice,
   createChild: createChildSlice,
   storyGeneration,
+  bookShelf,
 });
 
 export const reduxStorage: Storage = {

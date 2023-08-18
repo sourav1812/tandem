@@ -23,7 +23,7 @@ export const storyGeneration = createSlice({
     },
     // empty story gen reducer
     clearStoryGenerationResponse: state => {
-      state.responseArray.pop();
+      state.responseArray = [];
     },
     // remove a particular number of responses
     clipStoryGenerationResponse: (state, action) => {
