@@ -11,7 +11,7 @@ import RNKidsProfile from '@tandem/components/RNKidsProfile';
 import Add from '@tandem/assets/svg/Add';
 import RNParentProfile from '@tandem/components/RNParentProfile';
 import RNSignoutModal from '@tandem/components/RNSignoutModal';
-import {AdultProfile, StateObject} from './interface';
+import {StateObject} from './interface';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
 import Lion from '@tandem/assets/svg/AnimatedLion';
@@ -76,10 +76,11 @@ const Account = () => {
     updateState({signoutModal: !signoutModal});
   };
 
-  const addPlayer = (item: ChildData | AdultProfile) => {
+  const addPlayer = (item: ChildData) => {
+    console.log(item?.childId, 'important');
     if (
-      item.type === 'child' &&
-      playerList.filter(item => item.type === 'child').length === 0
+      item?.childId &&
+      playerList.filter(items => items?.childId).length === 0
     ) {
       let playerArrar = [...playerList];
       playerArrar.push(item);
@@ -94,6 +95,8 @@ const Account = () => {
       updateState({playerList: playerArrar});
     }
   };
+
+  console.log(playerList, 'playerListplayerList2345');
 
   const removePlayer = (index: number) => {
     const playerArry = [...playerList];
@@ -273,7 +276,7 @@ const Account = () => {
             showsHorizontalScrollIndicator={false}
             decelerationRate={'normal'}>
             {playerList.map((item, index) => {
-              if (item.type === 'child') {
+              if (item?.childId) {
                 return (
                   <Pressable
                     key={index.toString()}
@@ -420,7 +423,10 @@ const Account = () => {
         <View
           style={[
             styles.footer,
-            playerList.length === 0 && {backgroundColor: themeColor.lightGray},
+            playerList.length === 0 &&
+              childList.length === 0 && {
+                backgroundColor: themeColor.lightGray,
+              },
             {
               marginTop: portrait ? verticalScale(30) : 'auto',
             },
@@ -429,9 +435,10 @@ const Account = () => {
             isSemiBold
             style={[
               styles.text,
-              playerList.length === 0 && {
-                color: themeColor.themeBlue,
-              },
+              playerList.length === 0 &&
+                childList.length === 0 && {
+                  color: themeColor.themeBlue,
+                },
             ]}>
             {' '}
             {buttonHeading()}{' '}
@@ -443,9 +450,10 @@ const Account = () => {
                 buttonPress();
                 navigateTo(SCREEN_NAME.BOTTOM_TAB, {}, true);
               }
-            }}>
+            }}
+            disabled={childList.length !== 0 && playerList.length !== 0}>
             {playerList.map((item, index) => {
-              if (item.type === 'child') {
+              if (item.childId) {
                 return (
                   <Image
                     key={index.toString()}
