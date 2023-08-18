@@ -10,7 +10,6 @@ const getStories = async () => {
     noLoader: true,
     allowRequestAnyway: false,
   });
-
   if (!response) {
     return;
   }

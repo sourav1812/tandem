@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {View, Text, FlatList, Pressable} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {styles} from './styles';
@@ -21,13 +22,15 @@ import getStories from '@tandem/api/getStories';
 import {useSelector} from 'react-redux';
 import {RootState} from '@tandem/redux/store';
 import themeColor from '@tandem/theme/themeColor';
+import {BooksData} from './interface';
 
 const Bookshelf = () => {
   const isTablet = checkIfTablet();
   const mode = useAppSelector(state => state.mode.mode);
   const [searchText, setText] = useState<ValidationError>({value: ''});
   const books = useSelector((state: RootState) => state.bookShelf.books);
-  const data = books?.map((book, index) => {
+  console.log(books);
+  const data: BooksData[] = books?.map((book, index) => {
     const isThisWeek =
       ((new Date().getTime() - new Date(book.createdAt).getTime()) * 1.157) /
         100000000 <
@@ -39,8 +42,9 @@ const Bookshelf = () => {
       image: book.thumbnail || require('../../assets/png/imageOne.png'),
       readingTime: Math.ceil(book.story.split(' ').length / 250) || 10, //  ! avg reading speed is 200 to 300 wpm so we are calculating time in miniutes to read the whole story
       isNew: isThisWeek, // ! langauge support?
-      emogi: ':heart_eyes:',
+      emogi: '\u{1F60D}',
       week: isThisWeek ? 'This Week' : 'Last Week', // ! need langauge support
+      teaser: book.teaser,
     };
   });
 
@@ -74,7 +78,7 @@ const Bookshelf = () => {
       </View>
     );
   }, []);
-  const renderItem = React.useCallback(({item}: any) => {
+  const renderItem = React.useCallback(({item}: {item: BooksData}) => {
     return (
       <>
         <View style={[{marginHorizontal: isTablet ? verticalScale(30) : 0}]}>
@@ -88,7 +92,7 @@ const Bookshelf = () => {
           )}
           <Pressable
             onPress={() => {
-              navigateTo(SCREEN_NAME.STORY);
+              navigateTo(SCREEN_NAME.STORY, {routeData: item});
             }}>
             <RNStoryCard item={item} />
           </Pressable>

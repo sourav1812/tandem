@@ -1,13 +1,13 @@
 /* eslint-disable react-native/no-inline-styles */
-import {View, Image, ImageSourcePropType, Text} from 'react-native';
+import {View, Image, Text} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
 import RNTextComponent from '../RNTextComponent';
 import RightArrow from '@tandem/assets/svg/RightArrow';
-import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 import {verticalScale} from 'react-native-size-matters';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {translation} from '@tandem/utils/methods';
+import {BooksData} from '@tandem/screens/Bookshelf/interface';
 
 const ProgressIndicator = ({progress}: {progress: number}) => {
   const progressPercentage = `${progress * 10}%`;
@@ -25,20 +25,7 @@ const ProgressIndicator = ({progress}: {progress: number}) => {
     </View>
   );
 };
-const RNStoryCard = ({
-  item,
-}: {
-  item: {
-    id: number;
-    headerTitle: string;
-    time: string;
-    image: ImageSourcePropType;
-    readingTime: number;
-    isNew: boolean;
-    emogi: string;
-    week: string;
-  };
-}) => {
+const RNStoryCard = ({item}: {item: BooksData}) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
 
   return (

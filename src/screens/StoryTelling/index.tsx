@@ -36,6 +36,10 @@ import RNMultipleChoice from '@tandem/components/RNMultipleChoice';
 import {TOOLTIP} from '@tandem/constants/LocalConstants';
 import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
 import RNTooltip from '@tandem/components/RNTooltip';
+import {useRoute} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
+import Book from '@tandem/api/getStories/interface';
+import {STORIES_RESPONSE} from '@tandem/constants/enums';
 
 const StoryTelling = () => {
   const flatlistRef = useRef(null);
@@ -43,8 +47,19 @@ const StoryTelling = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const mode = useAppSelector(state => state.mode.mode);
   const [currentIndex, setCurrentIndex] = useState(0);
+
   const [renderModal, setRenderModal] = useState(false);
   const [readingLevel, setReadingLevel] = useState(false);
+  const routes: any = useRoute();
+  const routesData = routes?.params;
+  const books = useSelector((state: RootState) => state.bookShelf.books);
+  const renderData = books.filter(
+    (item: Book) => item?.bookId === routesData.id,
+  )[0];
+  const [storyText, setStoryText] = useState('');
+
+  const totalpages = renderData?.pages?.length;
+
   const [state, setState] = useState<StateObject>({
     ratingModal: true,
     toggleMic: false,
@@ -90,7 +105,7 @@ const StoryTelling = () => {
       <ImageBackground
         style={[styles.container, {height: height, width: width}]}
         source={require('../../assets/png/storyBackground.png')}>
-        {currentIndex + 1 === 5 && (
+        {currentIndex === totalpages && (
           <View>
             <View
               style={[
@@ -141,8 +156,24 @@ const StoryTelling = () => {
   };
   const onViewableItemsChanged = useCallback(({viewableItems}: any) => {
     if (viewableItems.length > 0) {
-      setCurrentIndex(viewableItems[0].index);
+      setCurrentIndex(
+        renderData?.pages?.[viewableItems[0].index][
+          STORIES_RESPONSE.PAGE_NUMBER
+        ],
+      );
+      console.log(
+        renderData?.pages?.[viewableItems[0].index][
+          STORIES_RESPONSE.STORY_TEXT
+        ],
+      );
+
+      setStoryText(
+        renderData?.pages?.[viewableItems[0].index][
+          STORIES_RESPONSE.STORY_TEXT
+        ],
+      );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   React.useEffect(() => {
@@ -247,7 +278,7 @@ const StoryTelling = () => {
 
   const renderQuestions = () => {
     switch (currentIndex) {
-      case 1:
+      case 2:
         return (
           <View style={styles.questionView}>
             <RNLogoHeader
@@ -356,7 +387,7 @@ const StoryTelling = () => {
             }}
           />
         </RNTooltip>
-        {currentIndex + 1 === 5 && (
+        {currentIndex === totalpages && (
           <RNTextComponent isSemiBold style={styles.summaryTitle}>
             {translation('SUMMARY')}
           </RNTextComponent>
@@ -364,7 +395,7 @@ const StoryTelling = () => {
         {headerButton()}
       </View>
       <FlatList
-        data={Array.from({length: 5}, (_, i) => {
+        data={Array.from({length: totalpages}, (_, i) => {
           return {index: i};
         })}
         ref={flatlistRef}
@@ -380,7 +411,7 @@ const StoryTelling = () => {
         }}
         showsHorizontalScrollIndicator={false}
       />
-      {currentIndex + 1 !== 5 && (
+      {currentIndex !== totalpages && (
         <RNTooltip
           isTablet={isTablet}
           topViewStyle={{alignItems: 'center'}}
@@ -437,7 +468,7 @@ const StoryTelling = () => {
                 },
               ]}>
               <RNTextComponent style={styles.slideNo} isSemiBold>
-                {currentIndex + 1}/4
+                {currentIndex}/{totalpages - 1}
               </RNTextComponent>
               <RNTextComponent
                 style={[
@@ -445,9 +476,7 @@ const StoryTelling = () => {
                   {color: themeColor.black, textAlign: 'center', zIndex: 3},
                 ]}
                 isSemiBold>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Corrupti sunt quod culpa nulla praesentium accusantium voluptas
-                sit esse, quibusdam dasperisi!
+                {storyText}
               </RNTextComponent>
             </ImageBackground>
           </View>
@@ -467,7 +496,7 @@ const StoryTelling = () => {
           nextClick={renderTipLevel}
         />
       )} */}
-      {currentIndex + 1 === 5 && mode === MODE.B && (
+      {currentIndex === totalpages && mode === MODE.B && (
         <RNRatingModal
           visible={ratingModal}
           renderModal={renderRatingModal}
