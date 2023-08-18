@@ -1,5 +1,5 @@
 import {View, Text, FlatList, Pressable} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import RNTextInputWithLabel from '@tandem/components/RNTextInputWithLabel';
@@ -17,6 +17,7 @@ import BlueBotton from '@tandem/assets/svg/BlueButton';
 import BothButton from '@tandem/assets/svg/BothButton';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {MODE} from '@tandem/constants/mode';
+import getStories from '@tandem/api/getStories';
 
 const Bookshelf = () => {
   const isTablet = checkIfTablet();
@@ -54,7 +55,15 @@ const Bookshelf = () => {
       week: '',
     },
   ];
-
+  useEffect(() => {
+    (async () => {
+      try {
+        getStories();
+      } catch (e) {
+        console.log(e);
+      }
+    })();
+  }, []);
   const listEmptyComponent = React.useCallback(() => {
     return (
       <View style={styles.listEmptyComponentContainer}>
@@ -136,6 +145,7 @@ const Bookshelf = () => {
         />
         <View style={styles.bottomViewContainer}>
           <FlatList
+            bounces={false}
             style={styles.flatListContatiner}
             contentContainerStyle={[styles.flatListContentContainer]}
             data={data}
@@ -143,6 +153,9 @@ const Bookshelf = () => {
             ListEmptyComponent={listEmptyComponent}
             showsVerticalScrollIndicator={false}
             ItemSeparatorComponent={seperateComponent}
+            ListFooterComponent={() => {
+              return <View style={{height: '5%'}} />;
+            }}
           />
         </View>
       </View>
