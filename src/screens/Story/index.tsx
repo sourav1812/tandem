@@ -13,11 +13,14 @@ import {verticalScale} from 'react-native-size-matters';
 import {translation} from '@tandem/utils/methods';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {MODE} from '@tandem/constants/mode';
+import {useRoute} from '@react-navigation/native';
+import {BooksData} from '../Bookshelf/interface';
 
 const Story = () => {
   const [visible, setVisible] = useState(false);
   const mode = useAppSelector(state => state.mode.mode);
-
+  const route: any = useRoute();
+  const routeData: BooksData = route?.params?.routeData;
   const toggelMenuBar = () => {
     setVisible(!visible);
   };
@@ -38,45 +41,40 @@ const Story = () => {
         </View>
 
         <View style={styles.container}>
-          <Image
-            style={styles.poster}
-            source={{
-              uri: 'https://i.pinimg.com/originals/92/bc/57/92bc5785532102412df54f1623bf0c02.jpg',
-            }}
-          />
+          <Image style={styles.poster} source={routeData?.image} />
           <View style={styles.scrollView}>
             <View style={styles.midContent}>
               <View style={styles.rating}>
-                <RNTextComponent style={styles.emoji}>😍</RNTextComponent>
-              </View>
-              <View style={styles.duration}>
-                <RNTextComponent style={styles.emoji} isSemiBold>
-                  {translation('NEW')}
+                <RNTextComponent style={styles.emoji}>
+                  {routeData.emogi}
                 </RNTextComponent>
               </View>
+              {routeData.isNew && (
+                <View style={styles.duration}>
+                  <RNTextComponent style={styles.new} isSemiBold>
+                    {translation('NEW')}
+                  </RNTextComponent>
+                </View>
+              )}
             </View>
             <ScrollView
+              bounces
               contentContainerStyle={styles.scrollContainer}
               showsVerticalScrollIndicator={false}>
               <View style={styles.dateTime}>
                 <RNTextComponent style={styles.date}>
-                  14.08.2023
+                  {routeData.time}
                 </RNTextComponent>
                 <RNTextComponent
                   style={[styles.date, {color: 'rgba(0, 0, 0, 0.6)'}]}>
-                  {'     '}2 min reading
+                  {`${routeData.readingTime} min reading`}
                 </RNTextComponent>
               </View>
               <RNTextComponent isSemiBold style={styles.heading}>
-                Lola and her friends
+                {routeData.headerTitle}
               </RNTextComponent>
               <RNTextComponent style={styles.story}>
-                A silly parrot, an adventurous iguana, and a young girl called
-                Lola. Make the story about them going on an adventure, and
-                finding new friends".{'\n'}
-                {'\n'}
-                Once upon a time, in a vibrant, lush rainforest full of colorful
-                flowers and the sweetest fruits.
+                {routeData.teaser}
               </RNTextComponent>
             </ScrollView>
           </View>
@@ -89,7 +87,7 @@ const Story = () => {
             customStyle={styles.button}
             textStyle={{fontSize: verticalScale(14)}}
             onClick={() => {
-              navigateTo(SCREEN_NAME.STORY_TELLING);
+              navigateTo(SCREEN_NAME.STORY_TELLING, {id: routeData.id});
             }}
           />
         </View>
