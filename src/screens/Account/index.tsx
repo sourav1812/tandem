@@ -423,7 +423,10 @@ const Account = () => {
         <View
           style={[
             styles.footer,
-            playerList.length === 0 && {backgroundColor: themeColor.lightGray},
+            playerList.length === 0 &&
+              childList.length === 0 && {
+                backgroundColor: themeColor.lightGray,
+              },
             {
               marginTop: portrait ? verticalScale(30) : 'auto',
             },
@@ -432,9 +435,10 @@ const Account = () => {
             isSemiBold
             style={[
               styles.text,
-              playerList.length === 0 && {
-                color: themeColor.themeBlue,
-              },
+              playerList.length === 0 &&
+                childList.length === 0 && {
+                  color: themeColor.themeBlue,
+                },
             ]}>
             {' '}
             {buttonHeading()}{' '}
@@ -446,7 +450,8 @@ const Account = () => {
                 buttonPress();
                 navigateTo(SCREEN_NAME.BOTTOM_TAB, {}, true);
               }
-            }}>
+            }}
+            disabled={childList.length !== 0 && playerList.length !== 0}>
             {playerList.map((item, index) => {
               if (item.childId) {
                 return (
