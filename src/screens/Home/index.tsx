@@ -6,6 +6,7 @@ import {
   ScrollView,
   Animated,
   Easing,
+  Alert,
 } from 'react-native';
 import React, {useRef, useState} from 'react';
 import {styles} from './styles';
@@ -29,9 +30,10 @@ import {useNavigation} from '@react-navigation/native';
 import {RootState, store} from '@tandem/redux/store';
 import {setQuestionIndex} from '@tandem/redux/slices/questions.slice';
 import {avatarArray} from '../CreateChildProfile/interface';
-import {childProfile} from '../Account/interface';
-import {saveCurrentChild} from '@tandem/redux/slices/createChild.slice';
-import {ChildData} from '@tandem/redux/slices/createChild.slice';
+import {
+  ChildData,
+  saveCurrentChild,
+} from '@tandem/redux/slices/createChild.slice';
 
 const Home = () => {
   const portrait = useAppSelector(
@@ -39,6 +41,7 @@ const Home = () => {
   );
   const mode = useAppSelector(state => state.mode.mode);
   const currentChild = useAppSelector(state => state.createChild.currentChild);
+  const childList = useAppSelector(state => state.createChild.childList);
 
   const [tooltipMode, setToolTipMode] = useState({
     tooltipOne: true,
@@ -105,9 +108,10 @@ const Home = () => {
   const [state, setState] = useState<StateObject>({
     changeUser: false,
     showTooltip: true,
+    pseudoList: [],
   });
 
-  const {changeUser} = state;
+  const {changeUser, pseudoList} = state;
 
   const updateState = (date: any) => {
     setState((previouState: any) => {
@@ -118,6 +122,17 @@ const Home = () => {
   const openDrawer = () => {
     updateState({changeUser: !changeUser});
   };
+
+  React.useEffect(() => {
+    const tempPseudoList: ChildData[] = [];
+    childList.forEach(item => {
+      if (item?.childId !== currentChild?.childId) {
+        tempPseudoList.push(item);
+      }
+    });
+    updateState({pseudoList: tempPseudoList});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentChild?.childId]);
 
   const [heightOfBanner, setHeight] = useState({
     value: 0,
@@ -144,7 +159,9 @@ const Home = () => {
               }),
           },
         ]}
-        onPress={openDrawer}>
+        onPress={() => {
+          openDrawer();
+        }}>
         <RNTooltip
           topViewStyle={{alignItems: 'center'}}
           isTablet={isTablet}
@@ -196,11 +213,18 @@ const Home = () => {
             </RNTextComponent>
           </View>
         </RNTooltip>
-        {/* 
-        {changeUser && mode === MODE.A && (
-          <ChangeChild userProfile={userProfile} name={name} />
-        )} */}
-        {changeUser && mode === MODE.A && <ChangeChild />}
+
+        {changeUser &&
+          mode === MODE.A &&
+          pseudoList.map(item => (
+            <ChangeChild
+              userProfile={item}
+              name={item.name}
+              toggleDrawer={() => {
+                updateState({changeUser: !changeUser});
+              }}
+            />
+          ))}
       </Pressable>
       <RNScreenWrapper
         giveStatusColor={
@@ -463,11 +487,17 @@ const Home = () => {
 
 export default Home;
 
-const ChangeChild = () => {
+const ChangeChild = ({
+  userProfile,
+  name,
+  toggleDrawer,
+}: {
+  userProfile: ChildData;
+  name: string;
+  toggleDrawer?: () => void | undefined;
+}) => {
   const dispatch = useAppDispatch();
   const translateRef = useRef(new Animated.Value(-30)).current;
-  const childList = useAppSelector(state => state.createChild.childList);
-  const currentChild = useAppSelector(state => state.createChild.currentChild);
   React.useEffect(() => {
     Animated.timing(translateRef, {
       toValue: 0,
@@ -476,49 +506,39 @@ const ChangeChild = () => {
       easing: Easing.out(Easing.exp),
     }).start();
   });
-  const pseudoList: childProfile[] = [];
-  childList.map(item => {
-    if (item?.childId !== currentChild?.childId) {
-      return pseudoList.push(item);
-    }
-  });
-
   return (
-    <>
-      {pseudoList.map((item: ChildData) => {
-        return (
-          <Animated.View
-            style={[
-              {
-                transform: [{translateY: translateRef}],
-              },
-              styles.changeChildWrapper,
-            ]}>
-            <Pressable
-              onPress={() => {
-                dispatch(saveCurrentChild(item));
-              }}>
-              <Image
-                style={styles.changeChildImage}
-                source={
-                  item?.imageUrl
-                    ? {
-                        uri: item?.imageUrl,
-                      }
-                    : avatarArray[item?.avtarIndex].icon
+    <Animated.View
+      style={[
+        {
+          transform: [{translateY: translateRef}],
+        },
+        styles.changeChildWrapper,
+      ]}>
+      <Pressable
+        onPress={() => {
+          dispatch(saveCurrentChild(userProfile));
+          toggleDrawer();
+        }}
+        style={{alignItems: 'center'}}>
+        <Image
+          style={styles.changeChildImage}
+          source={
+            userProfile?.imageUrl
+              ? {
+                  uri: userProfile?.imageUrl,
                 }
-              />
-            </Pressable>
-            <RNTextComponent
-              style={{
-                fontSize: verticalScale(16),
-              }}
-              isSemiBold>
-              {item.name}
-            </RNTextComponent>
-          </Animated.View>
-        );
-      })}
-    </>
+              : avatarArray[userProfile?.avtarIndex].icon
+          }
+        />
+
+        <RNTextComponent
+          style={{
+            fontSize: verticalScale(16),
+          }}
+          isSemiBold>
+          {name}
+        </RNTextComponent>
+      </Pressable>
+    </Animated.View>
   );
 };

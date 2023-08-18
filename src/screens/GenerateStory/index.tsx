@@ -34,7 +34,7 @@ import {translation} from '@tandem/utils/methods';
 import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
 import {TOOLTIP} from '@tandem/constants/LocalConstants';
 import RNTooltip from '@tandem/components/RNTooltip';
-import {RootState} from '@tandem/redux/store';
+import {RootState, store} from '@tandem/redux/store';
 import {avatarArray} from '../CreateChildProfile/interface';
 import {STORY_PARTS} from '@tandem/constants/enums';
 import {

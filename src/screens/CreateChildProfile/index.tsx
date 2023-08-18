@@ -5,7 +5,7 @@ import {Pressable, ScrollView, View} from 'react-native';
 import BlueButton from '@tandem/assets/svg/BlueButton';
 import {styles} from './styles';
 import RNNumericBulletin from '@tandem/components/RNNumericBulletin';
-import {avatarArray, childProfileStateObject, indicatorType} from './interface';
+import {avatarArray, ChildProfileStateObject, indicatorType} from './interface';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import {translation} from '@tandem/utils/methods';
 import RNEmojiWithText from '@tandem/components/RNEmojiWithText';
@@ -20,7 +20,7 @@ import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
 import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
 import DatePicker from 'react-native-date-picker';
 import {LanguageDropDown} from '@tandem/components/LanguageDropDown';
-import ImagePicker, {ImageOrVideo} from 'react-native-image-crop-picker';
+import ImagePicker, {Image} from 'react-native-image-crop-picker';
 import dayjs from 'dayjs';
 import {addNewChild} from '@tandem/api/creatChildProfile';
 import validationFunction from '@tandem/functions/validationFunction';
@@ -29,7 +29,7 @@ import {saveChildData} from '@tandem/redux/slices/createChild.slice';
 const CreateChildProfile = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const dispatch = useAppDispatch();
-  const [state, setState] = useState<childProfileStateObject>({
+  const [state, setState] = useState<ChildProfileStateObject>({
     bulletinArray: [
       {index: 1, isSelected: true},
       {index: 2, isSelected: false},
@@ -44,7 +44,7 @@ const CreateChildProfile = () => {
   const [dob, setDob] = useState<ValidationError>({
     value: new Date().toString(),
   });
-  const [imageData, setImageData] = useState<ImageOrVideo | null>(null);
+  const [imageData, setImageData] = useState<Image | null>(null);
   const [avtarIndex, setavtarIndex] = useState<number | null>(null);
 
   const updateState = (date: any) => {
@@ -80,11 +80,22 @@ const CreateChildProfile = () => {
         return;
       }
       // TODO make it dynamic
+
+      console.log(
+        {
+          name: name.value,
+          dob: dob.value, // ! pass in the whole date object
+          gender: gender,
+          avatar: avtarIndex === 0 ? imageData?.data : avtarIndex?.toString(),
+        },
+        'sdfghgfds',
+      );
+
       const response = await addNewChild({
-        name: 'mohan',
-        age: '32', // ! pass in the whole date object
-        gender: 'male',
-        avatar: 'sjdfkljklfskl34349349895jksjdfksj',
+        name: name.value,
+        dob: dob.value, // ! pass in the whole date object
+        gender: gender,
+        avatar: avtarIndex === 0 ? imageData?.data : avtarIndex?.toString(),
       });
       if (response) {
         dispatch(
@@ -299,11 +310,12 @@ const CreateChildProfile = () => {
                       onPress={() => {
                         if (index === 0) {
                           ImagePicker.openPicker({
-                            width: 500,
-                            height: 500,
+                            width: 300,
+                            height: 300,
                             cropping: true,
                             includeBase64: true,
                             loadingLabelText: 'Image',
+                            mediaType: 'photo',
                           })
                             .then(response => {
                               setImageData(response);

@@ -11,7 +11,7 @@ import RNKidsProfile from '@tandem/components/RNKidsProfile';
 import Add from '@tandem/assets/svg/Add';
 import RNParentProfile from '@tandem/components/RNParentProfile';
 import RNSignoutModal from '@tandem/components/RNSignoutModal';
-import {adultProfile, childProfile, StateObject} from './interface';
+import {AdultProfile, StateObject} from './interface';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
 import Lion from '@tandem/assets/svg/AnimatedLion';
@@ -27,6 +27,7 @@ import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
 import {TOOLTIP} from '@tandem/constants/LocalConstants';
 import {avatarArray} from '../CreateChildProfile/interface';
 import {
+  ChildData,
   saveCurrentAdult,
   saveCurrentChild,
 } from '@tandem/redux/slices/createChild.slice';
@@ -75,7 +76,7 @@ const Account = () => {
     updateState({signoutModal: !signoutModal});
   };
 
-  const addPlayer = (item: childProfile | adultProfile) => {
+  const addPlayer = (item: ChildData | AdultProfile) => {
     if (
       item.type === 'child' &&
       playerList.filter(item => item.type === 'child').length === 0
@@ -191,7 +192,7 @@ const Account = () => {
                       borderRadius: 8,
                     }}
                     data={item}
-                    imageIndex={item.avtarIndex}
+                    imageIndex={item.imageUrl ? -1 : item.avtarIndex}
                   />
                 </Pressable>
               );
@@ -285,7 +286,7 @@ const Account = () => {
                         borderRadius: 8,
                       }}
                       data={item}
-                      imageIndex={item.avtarIndex}
+                      imageIndex={item.imageUrl ? -1 : item.avtarIndex}
                     />
                   </Pressable>
                 );
@@ -441,7 +442,6 @@ const Account = () => {
             }}>
             {playerList.map((item, index) => {
               if (item.type === 'child') {
-                console.log(item, 'dsfgdsf');
                 return (
                   <Image
                     key={index.toString()}

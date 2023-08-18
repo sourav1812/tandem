@@ -19,16 +19,14 @@ const RNKidsProfile = ({
     <View style={styles.container}>
       <Image
         source={
-          data.imageUrl
-            ? {
-                uri: data.imageUrl,
-              }
-            : avatarArray[imageIndex].icon
+          avatarArray[imageIndex]?.icon || {
+            uri: data.imageUrl,
+          }
         }
         style={[styles.profile, style]}
       />
       <RNTextComponent style={styles.name} isMedium>
-        {data && data.name}
+        {data && data?.name}
       </RNTextComponent>
     </View>
   );

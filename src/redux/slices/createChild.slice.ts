@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {adultProfile} from '@tandem/screens/Account/interface';
+import {AdultProfile} from '@tandem/screens/Account/interface';
 
 // Define a type for the slice state
 export interface ChildData {
@@ -8,7 +8,7 @@ export interface ChildData {
   gender: string;
   avatar: string;
   childId: string;
-  avtarIndex: number | string;
+  avtarIndex: number;
   type: string;
   imageUrl?: string;
 }
@@ -16,14 +16,26 @@ export interface ChildData {
 interface ChildState {
   childList: ChildData[];
   currentChild: ChildData;
-  currentAdult: adultProfile;
+  currentAdult: AdultProfile;
 }
 
 // Define the initial state using that type
 const initialState: ChildState = {
   childList: [],
-  currentChild: {},
-  currentAdult: {},
+  currentChild: {
+    name: '',
+    age: '',
+    gender: '',
+    avatar: '',
+    childId: '',
+    avtarIndex: -1,
+    type: '',
+    imageUrl: '',
+  },
+  currentAdult: {
+    type: 'adult',
+    name: '',
+  },
 };
 
 export const createChildSlice = createSlice({

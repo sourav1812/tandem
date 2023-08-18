@@ -4,7 +4,7 @@ import {CreateChildProfile} from './interface';
 
 export const addNewChild = async ({
   name,
-  age,
+  dob,
   gender,
   avatar,
 }: CreateChildProfile) => {
@@ -12,7 +12,7 @@ export const addNewChild = async ({
     path: API.CREATE_CHILD_PROFILE,
     data: {
       name,
-      age,
+      dob,
       gender,
       avatar,
     },
