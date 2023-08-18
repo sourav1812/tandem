@@ -35,6 +35,7 @@ import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
 import {TOOLTIP} from '@tandem/constants/LocalConstants';
 import RNTooltip from '@tandem/components/RNTooltip';
 import {RootState, store} from '@tandem/redux/store';
+import {avatarArray} from '../CreateChildProfile/interface';
 import {STORY_PARTS} from '@tandem/constants/enums';
 import {
   clipStoryGenerationResponse,
@@ -45,6 +46,8 @@ const GenerateStory = () => {
   const dispatch = useAppDispatch();
 
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const currentChild = useAppSelector(state => state.createChild.currentChild);
+
   const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
@@ -142,7 +145,8 @@ const GenerateStory = () => {
         return (
           <>
             <RNTextComponent isSemiBold style={styles.question}>
-              {translation('generate-story.included-in-story')}
+              {translation('generate-story.included-in-story')}{' '}
+              {currentChild.name}?
             </RNTextComponent>
             <View
               style={[
@@ -155,9 +159,13 @@ const GenerateStory = () => {
                 },
               ]}>
               <ImageBackground
-                source={{
-                  uri: 'https://previews.123rf.com/images/daniel4606/daniel46061708/daniel4606170800232/84992720-cartoon-giraffe-face.jpg',
-                }}
+                source={
+                  currentChild.imageUrl
+                    ? {
+                        uri: currentChild.imageUrl,
+                      }
+                    : avatarArray[currentChild.avtarIndex].icon
+                }
                 style={styles.addImage}
                 imageStyle={{borderRadius: 200}}>
                 <RNButton

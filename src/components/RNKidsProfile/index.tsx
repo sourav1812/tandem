@@ -3,24 +3,30 @@ import React from 'react';
 import {styles} from './styles';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import {KidsProfileProps} from './interface';
+import {avatarArray} from '@tandem/screens/CreateChildProfile/interface';
 
 const RNKidsProfile = ({
   style,
   data,
+  imageIndex,
 }: {
   style: StyleProp<ImageStyle>;
   data: KidsProfileProps;
+  imageIndex: number;
 }) => {
+  console.log(data, 'imageIndeximageIndex');
   return (
     <View style={styles.container}>
       <Image
-        source={{
-          uri: 'https://thumbs.dreamstime.com/b/cute-giraffe-face-wild-animal-character-animated-cartoon-png-illustration-isolated-transparent-background-hand-drawn-png-264757481.jpg',
-        }}
+        source={
+          avatarArray[imageIndex]?.icon || {
+            uri: data.imageUrl,
+          }
+        }
         style={[styles.profile, style]}
       />
       <RNTextComponent style={styles.name} isMedium>
-        {data && data.name}
+        {data && data?.name}
       </RNTextComponent>
     </View>
   );

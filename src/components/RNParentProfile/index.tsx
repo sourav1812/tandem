@@ -20,7 +20,7 @@ const RNParentProfile = ({
     <View style={styles.container}>
       <Lion height={height} width={width} />
       <RNTextComponent style={[styles.name, custumStyle]} isMedium>
-        {data && data.name}
+        {data && data?.name}
       </RNTextComponent>
     </View>
   );

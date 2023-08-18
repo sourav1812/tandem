@@ -1,6 +1,6 @@
 export interface CreateChildProfile {
-  age?: string;
+  dob?: string;
   name?: string;
   gender?: string;
-  avatar?: string;
+  avatar?: string | number | null;
 }

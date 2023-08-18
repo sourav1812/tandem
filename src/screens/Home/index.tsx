@@ -6,6 +6,7 @@ import {
   ScrollView,
   Animated,
   Easing,
+  Alert,
 } from 'react-native';
 import React, {useRef, useState} from 'react';
 import {styles} from './styles';
@@ -16,7 +17,7 @@ import {scale, verticalScale} from 'react-native-size-matters';
 import RNBookmarkComponent from '@tandem/components/RNBookmarkComponent';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
-import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
 import {StateObject} from './interface';
 import {translation} from '@tandem/utils/methods';
 import {MODE} from '@tandem/constants/mode';
@@ -28,12 +29,20 @@ import {TOOLTIP} from '@tandem/constants/LocalConstants';
 import {useNavigation} from '@react-navigation/native';
 import {RootState, store} from '@tandem/redux/store';
 import {setQuestionIndex} from '@tandem/redux/slices/questions.slice';
+import {avatarArray} from '../CreateChildProfile/interface';
+import {
+  ChildData,
+  saveCurrentChild,
+} from '@tandem/redux/slices/createChild.slice';
 
 const Home = () => {
   const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
   const mode = useAppSelector(state => state.mode.mode);
+  const currentChild = useAppSelector(state => state.createChild.currentChild);
+  const childList = useAppSelector(state => state.createChild.childList);
+
   const [tooltipMode, setToolTipMode] = useState({
     tooltipOne: true,
     tooltipTwo: false,
@@ -98,13 +107,11 @@ const Home = () => {
 
   const [state, setState] = useState<StateObject>({
     changeUser: false,
-    userProfile:
-      'https://static.vecteezy.com/system/resources/previews/016/461/449/non_2x/cute-giraffe-face-wild-animal-character-in-animated-cartoon-illustration-vector.jpg',
-    name: 'Lisa',
     showTooltip: true,
+    pseudoList: [],
   });
 
-  const {changeUser, userProfile, name} = state;
+  const {changeUser, pseudoList} = state;
 
   const updateState = (date: any) => {
     setState((previouState: any) => {
@@ -115,6 +122,17 @@ const Home = () => {
   const openDrawer = () => {
     updateState({changeUser: !changeUser});
   };
+
+  React.useEffect(() => {
+    const tempPseudoList: ChildData[] = [];
+    childList.forEach(item => {
+      if (item?.childId !== currentChild?.childId) {
+        tempPseudoList.push(item);
+      }
+    });
+    updateState({pseudoList: tempPseudoList});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentChild?.childId]);
 
   const [heightOfBanner, setHeight] = useState({
     value: 0,
@@ -141,7 +159,9 @@ const Home = () => {
               }),
           },
         ]}
-        onPress={openDrawer}>
+        onPress={() => {
+          openDrawer();
+        }}>
         <RNTooltip
           topViewStyle={{alignItems: 'center'}}
           isTablet={isTablet}
@@ -180,19 +200,35 @@ const Home = () => {
             style={styles.tooltipUserWrapper}>
             <Image
               style={styles.tooltipUserImage}
-              source={{
-                uri: userProfile,
-              }}
+              source={
+                currentChild?.imageUrl
+                  ? {
+                      uri: currentChild?.imageUrl,
+                    }
+                  : avatarArray[currentChild.avtarIndex]?.icon
+              }
             />
             <RNTextComponent style={styles.tooltipUserName} isSemiBold>
-              {name}
+              {currentChild?.name}
             </RNTextComponent>
           </View>
         </RNTooltip>
 
-        {changeUser && mode === MODE.A && (
-          <ChangeChild userProfile={userProfile} name={name} />
-        )}
+        {changeUser &&
+          mode === MODE.A &&
+          pseudoList.map(item => {
+            if (item.childId && item.childId != '') {
+              return (
+                <ChangeChild
+                  userProfile={item}
+                  name={item.name}
+                  toggleDrawer={() => {
+                    updateState({changeUser: !changeUser});
+                  }}
+                />
+              );
+            }
+          })}
       </Pressable>
       <RNScreenWrapper
         giveStatusColor={
@@ -476,10 +512,13 @@ export default Home;
 const ChangeChild = ({
   userProfile,
   name,
+  toggleDrawer,
 }: {
-  userProfile: string;
+  userProfile: ChildData;
   name: string;
+  toggleDrawer?: () => void | undefined;
 }) => {
+  const dispatch = useAppDispatch();
   const translateRef = useRef(new Animated.Value(-30)).current;
   React.useEffect(() => {
     Animated.timing(translateRef, {
@@ -497,19 +536,31 @@ const ChangeChild = ({
         },
         styles.changeChildWrapper,
       ]}>
-      <Image
-        style={styles.changeChildImage}
-        source={{
-          uri: userProfile,
+      <Pressable
+        onPress={() => {
+          dispatch(saveCurrentChild(userProfile));
+          toggleDrawer();
         }}
-      />
-      <RNTextComponent
-        style={{
-          fontSize: verticalScale(16),
-        }}
-        isSemiBold>
-        {name}
-      </RNTextComponent>
+        style={{alignItems: 'center'}}>
+        <Image
+          style={styles.changeChildImage}
+          source={
+            userProfile?.imageUrl
+              ? {
+                  uri: userProfile?.imageUrl,
+                }
+              : avatarArray[userProfile?.avtarIndex].icon
+          }
+        />
+
+        <RNTextComponent
+          style={{
+            fontSize: verticalScale(16),
+          }}
+          isSemiBold>
+          {name}
+        </RNTextComponent>
+      </Pressable>
     </Animated.View>
   );
 };

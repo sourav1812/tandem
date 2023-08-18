@@ -11,7 +11,7 @@ import RNKidsProfile from '@tandem/components/RNKidsProfile';
 import Add from '@tandem/assets/svg/Add';
 import RNParentProfile from '@tandem/components/RNParentProfile';
 import RNSignoutModal from '@tandem/components/RNSignoutModal';
-import {adultProfile, childProfile, StateObject} from './interface';
+import {AdultProfile, StateObject} from './interface';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
 import Lion from '@tandem/assets/svg/AnimatedLion';
@@ -25,10 +25,17 @@ import {RootState} from '@tandem/redux/store';
 import RNTooltip from '@tandem/components/RNTooltip';
 import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
 import {TOOLTIP} from '@tandem/constants/LocalConstants';
+import {avatarArray} from '../CreateChildProfile/interface';
+import {
+  ChildData,
+  saveCurrentAdult,
+  saveCurrentChild,
+} from '@tandem/redux/slices/createChild.slice';
 import logout from '@tandem/functions/logout';
 
 const Account = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const childList = useAppSelector(state => state.createChild.childList);
   const [openTooltip, setOpentTooltip] = useState({
     tooltipOne: true,
     tooltipTwo: false,
@@ -41,10 +48,6 @@ const Account = () => {
   // const mode = useAppSelector(state => state.mode.mode);
   const [state, setState] = useState<StateObject>({
     signoutModal: false,
-    childrenList: [
-      {name: 'Tim', type: 'child'},
-      {name: 'Alisa', type: 'child'},
-    ],
     adultList: [
       {name: 'Mom', type: 'adult'},
       {name: 'Dad', type: 'adult'},
@@ -62,7 +65,7 @@ const Account = () => {
   const portrait = useSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
-  const {signoutModal, childrenList, adultList, playerList} = state;
+  const {signoutModal, adultList, playerList} = state;
   const updateState = (date: any) => {
     setState((previouState: any) => {
       return {...previouState, ...date};
@@ -73,7 +76,7 @@ const Account = () => {
     updateState({signoutModal: !signoutModal});
   };
 
-  const addPlayer = (item: childProfile | adultProfile) => {
+  const addPlayer = (item: ChildData | AdultProfile) => {
     if (
       item.type === 'child' &&
       playerList.filter(item => item.type === 'child').length === 0
@@ -114,15 +117,21 @@ const Account = () => {
   };
 
   const buttonPress = () => {
+    const currentAdult = playerList.filter(item => item.type === 'adult')[0];
+    const currentChild = playerList.filter(item => item.type === 'child')[0];
     if (
       playerList.filter(item => item.type === 'child').length > 0 &&
       playerList.filter(item => item.type === 'adult').length > 0
     ) {
       dispatch(changeMode(MODE.B));
+      dispatch(saveCurrentAdult(currentAdult));
+      dispatch(saveCurrentChild(currentChild));
     } else if (playerList.filter(item => item.type === 'child').length > 0) {
       dispatch(changeMode(MODE.C));
+      dispatch(saveCurrentChild(currentChild));
     } else if (playerList.filter(item => item.type === 'adult').length > 0) {
       dispatch(changeMode(MODE.A));
+      dispatch(saveCurrentAdult(currentAdult));
     } else {
       return '';
     }
@@ -168,22 +177,29 @@ const Account = () => {
             horizontal
             showsHorizontalScrollIndicator={false}
             decelerationRate={'normal'}>
-            {childrenList.map((item, index) => {
-              return (
-                <Pressable
-                  key={index.toString()}
-                  onPress={() => {
-                    addPlayer(item);
-                  }}>
-                  <RNKidsProfile
-                    style={{
-                      height: portrait ? verticalScale(60) : verticalScale(40),
-                      width: portrait ? verticalScale(60) : verticalScale(40),
-                    }}
-                    data={item}
-                  />
-                </Pressable>
-              );
+            {childList.map((item, index) => {
+              if (item.childId !== '' && item.childId) {
+                return (
+                  <Pressable
+                    key={index.toString()}
+                    style={{marginRight: 20}}
+                    onPress={() => {
+                      addPlayer(item);
+                    }}>
+                    <RNKidsProfile
+                      style={{
+                        height: portrait
+                          ? verticalScale(60)
+                          : verticalScale(40),
+                        width: portrait ? verticalScale(60) : verticalScale(40),
+                        borderRadius: 8,
+                      }}
+                      data={item}
+                      imageIndex={item.imageUrl ? -1 : item.avtarIndex}
+                    />
+                  </Pressable>
+                );
+              }
             })}
             <RNTooltip
               open={tooltipArray?.includes(1) ? false : openTooltip.tooltipOne}
@@ -270,8 +286,11 @@ const Account = () => {
                           ? verticalScale(60)
                           : verticalScale(40),
                         width: portrait ? verticalScale(60) : verticalScale(40),
+                        marginRight: 12,
+                        borderRadius: 8,
                       }}
                       data={item}
+                      imageIndex={item.imageUrl ? -1 : item.avtarIndex}
                     />
                   </Pressable>
                 );
@@ -430,9 +449,13 @@ const Account = () => {
                 return (
                   <Image
                     key={index.toString()}
-                    source={{
-                      uri: 'https://thumbs.dreamstime.com/b/cute-giraffe-face-wild-animal-character-animated-cartoon-png-illustration-isolated-transparent-background-hand-drawn-png-264757481.jpg',
-                    }}
+                    source={
+                      item?.imageUrl
+                        ? {
+                            uri: item?.imageUrl,
+                          }
+                        : avatarArray[item.avtarIndex].icon
+                    }
                     style={styles.profile}
                   />
                 );

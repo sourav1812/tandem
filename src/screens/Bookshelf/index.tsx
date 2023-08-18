@@ -57,6 +57,7 @@ const Bookshelf = () => {
       }
     })();
   }, []);
+
   const listEmptyComponent = React.useCallback(() => {
     return (
       <View style={styles.listEmptyComponentContainer}>
