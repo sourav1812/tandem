@@ -1,7 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 
 // Define a type for the slice state
-interface ChildData {
+export interface ChildData {
   name: string;
   age: string;
   gender: string;
