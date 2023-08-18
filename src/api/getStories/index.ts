@@ -1,16 +1,21 @@
 import {API} from '@tandem/constants/api';
 import {get} from '@tandem/api/index';
-import StoryResponse from './interface';
+import Book from './interface';
+import {addNewBook} from '@tandem/redux/slices/bookShelf.slice';
+import {store} from '@tandem/redux/store';
+
 const getStories = async () => {
-  const response = await get<StoryResponse>({
+  const response = await get<Book>({
     path: API.STORIES,
     noLoader: true,
     allowRequestAnyway: false,
   });
-  console.log('story data', response.story);
+
   if (!response) {
     return;
   }
+  // storing the book in redux
+  store.dispatch(addNewBook(response));
   return response;
 };
 

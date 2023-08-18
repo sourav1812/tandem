@@ -18,43 +18,31 @@ import BothButton from '@tandem/assets/svg/BothButton';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {MODE} from '@tandem/constants/mode';
 import getStories from '@tandem/api/getStories';
+import {useSelector} from 'react-redux';
+import {RootState} from '@tandem/redux/store';
 
 const Bookshelf = () => {
   const isTablet = checkIfTablet();
   const mode = useAppSelector(state => state.mode.mode);
   const [searchText, setText] = useState<ValidationError>({value: ''});
-  const data = [
-    {
-      id: 0,
-      headerTitle: 'Story of the best of friends. ',
-      time: '14.08.2023',
-      image: require('../../assets/png/imageOne.png'),
-      readingTime: 7,
-      isNew: true,
+  const books = useSelector((state: RootState) => state.bookShelf.books);
+  const data = books?.map((book, index) => {
+    const isThisWeek =
+      ((new Date().getTime() - new Date(book.createdAt).getTime()) * 1.157) /
+        100000000 <
+      7; // ! are checking if the book is screated within a week
+    return {
+      id: book.bookId,
+      headerTitle: book.title || `Mock Story ${index + 1}`,
+      time: new Date(book.createdAt).toDateString() || 'Some Date',
+      image: book.thumbnail || require('../../assets/png/imageOne.png'),
+      readingTime: Math.ceil(book.story.split(' ').length / 250) || 10, //  ! avg reading speed is 200 to 300 wpm so we are calculating time in miniutes to read the whole story
+      isNew: isThisWeek, // ! langauge support?
       emogi: ':heart_eyes:',
-      week: 'This Week',
-    },
-    {
-      id: 1,
-      headerTitle: 'Story of Wonderland. ',
-      time: '04.08.2023',
-      image: require('../../assets/png/imageTwo.png'),
-      readingTime: 3,
-      isNew: false,
-      emogi: ':heart_eyes:',
-      week: 'Last Week',
-    },
-    {
-      id: 2,
-      headerTitle: 'Story of a little girl Lily. ',
-      time: '05.08.2023',
-      image: require('../../assets/png/imageThree.png'),
-      readingTime: 9,
-      isNew: false,
-      emogi: ':heart_eyes:',
-      week: '',
-    },
-  ];
+      week: isThisWeek ? 'This Week' : 'Last Week', // ! need langauge support
+    };
+  });
+
   useEffect(() => {
     (async () => {
       try {
