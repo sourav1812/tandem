@@ -17,12 +17,12 @@ const ENV_VARS = {
     API_URL: 'https://tandem.geeky.dev/v1/', // * STAGING URL
   },
   [ENVIRONMENT.PRODUCTION]: {
-    API_URL: '', // * LIVE URL
+    API_URL: 'https://tandem.geeky.dev/v1/', // * LIVE URL
   },
 };
 
 // ! Select ENV from here
-export const SELECTED_ENVIRONMENT = ENVIRONMENT.DEVELOPMENT;
+export const SELECTED_ENVIRONMENT = ENVIRONMENT.PRODUCTION;
 // ! URLs
 export const BASE_URL = ENV_VARS[SELECTED_ENVIRONMENT].API_URL;
 
