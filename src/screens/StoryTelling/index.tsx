@@ -38,7 +38,7 @@ import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
 import RNTooltip from '@tandem/components/RNTooltip';
 import {useRoute} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
-import Book from '@tandem/api/getStories/interface';
+import Book, {Page} from '@tandem/api/getStories/interface';
 import {STORIES_RESPONSE} from '@tandem/constants/enums';
 
 const StoryTelling = () => {
@@ -100,11 +100,11 @@ const StoryTelling = () => {
       return {...previouState, ...date};
     });
   };
-  const renderStory = () => {
+  const renderStory = ({item}: {item: Page}) => {
     return (
       <ImageBackground
         style={[styles.container, {height: height, width: width}]}
-        source={require('../../assets/png/storyBackground.png')}>
+        source={{uri: item?.illustration_url}}>
         {currentIndex === totalpages && (
           <View>
             <View
@@ -390,9 +390,7 @@ const StoryTelling = () => {
         {headerButton()}
       </View>
       <FlatList
-        data={Array.from({length: totalpages}, (_, i) => {
-          return {index: i};
-        })}
+        data={renderData?.pages}
         ref={flatlistRef}
         renderItem={renderStory}
         pagingEnabled
