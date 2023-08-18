@@ -30,6 +30,7 @@ import {
   saveCurrentAdult,
   saveCurrentChild,
 } from '@tandem/redux/slices/createChild.slice';
+import logout from '@tandem/functions/logout';
 
 const Account = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -466,6 +467,7 @@ const Account = () => {
         renderModal={toggleSignOut}
         nextClick={() => {
           dispatch(changeMode(MODE.A));
+          logout();
           navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN, {}, true);
         }}
       />

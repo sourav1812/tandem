@@ -30,7 +30,6 @@ import validationFunction from '@tandem/functions/validationFunction';
 
 const SignUp = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
-  const fcmData = useAppSelector(state => state.tokenReducer.fcmData);
   const [name, setName] = useState<ValidationError>({value: ''});
   const [email, setEmail] = useState<ValidationError>({value: ''});
   const [password, setPassword] = useState<ValidationError>({value: ''});
@@ -75,7 +74,6 @@ const SignUp = () => {
         email: email.value,
         name: name.value,
         password: password.value,
-        ...fcmData,
       });
 
       if (!signUpResponse) {

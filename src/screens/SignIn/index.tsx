@@ -28,13 +28,10 @@ import {RootState} from '@tandem/redux/store';
 import {translation} from '@tandem/utils/methods';
 import loginUserWithEmail from '@tandem/api/loginUserWithEmail';
 import validationFunction from '@tandem/functions/validationFunction';
+import fcm from '@tandem/functions/fcm';
 
 const SignIn = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
-  const fcmData = useAppSelector(state => state.tokenReducer.fcmData);
-
-  console.log(fcmData, 'fcmDatafcmData');
-
   const [email, setEmail] = useState<ValidationError>({value: ''});
   const [password, setPassword] = useState<ValidationError>({value: ''});
   const portrait = useAppSelector(
@@ -60,7 +57,10 @@ const SignIn = () => {
     ) {
       return;
     }
-
+    const fcmData = await fcm();
+    if (!fcmData) {
+      return;
+    }
     const response = await loginUserWithEmail({
       email: email.value,
       password: password.value,

@@ -3,6 +3,8 @@ export enum API {
   LOGIN_USER_WITH_EMAIL = 'user/sign-in', //? POST
   CREATE_CHILD_PROFILE = 'create-child-profile', //? POST
   REFRESH_TOKEN = 'user/refresh-access-token', //? POST
+  GENERATE_STORY = 'create-story', //? POST
+  STORIES = 'stories', //? GET
 }
 
 export enum ENVIRONMENT {

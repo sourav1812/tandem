@@ -63,7 +63,7 @@ export const styles = StyleSheet.create({
     marginBottom: verticalScale(8),
   },
   headingView: {
-    marginTop: verticalScale(60),
+    marginTop: verticalScale(20),
     marginBottom: verticalScale(14),
     flexDirection: 'row',
     alignItems: 'center',

@@ -29,9 +29,37 @@ const source = frag`
     return mix(image.eval(xy),TRANSPARENT,0.5);
   }`;
 
-export default ({height, color}: {height: number; color: string}) => {
+export default ({
+  height,
+  color,
+  setPathsParent,
+  clear,
+}: {
+  height: number;
+  color: string;
+  setPathsParent: React.Dispatch<React.SetStateAction<IPath[]>>;
+  clear: boolean;
+}) => {
   const [paths, setPaths] = useState<IPath[]>([]);
   const [sizeOfBrush] = useState(verticalScale(30));
+
+  React.useEffect(() => {
+    if (color === 'transparent') return;
+    const newPaths = [...paths];
+    const lastPosRef = newPaths[newPaths.length - 1]?.segments;
+    if (!lastPosRef) return;
+    newPaths[paths.length] = {
+      segments: [],
+      color,
+      size: sizeOfBrush,
+    };
+    newPaths[paths.length].segments.push(
+      lastPosRef[lastPosRef.length - 1].replace('L', 'M'),
+    );
+    setPaths(newPaths);
+    setPathsParent(newPaths);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [color]);
 
   const restartPen = (
     g: GestureStateChangeEvent<PanGestureHandlerEventPayload>,
@@ -45,6 +73,7 @@ export default ({height, color}: {height: number; color: string}) => {
     };
     newPaths[paths.length].segments.push(`M ${g.x} ${g.y}`);
     setPaths(newPaths);
+    setPathsParent(newPaths);
   };
   const drawWithPaint = (
     g: GestureUpdateEvent<PanGestureHandlerEventPayload>,
@@ -63,15 +92,12 @@ export default ({height, color}: {height: number; color: string}) => {
     .onUpdate((g: GestureUpdateEvent<PanGestureHandlerEventPayload>) => {
       drawWithPaint(g);
     })
-    .onTouchesUp(() => {
-      const newPaths = [...paths];
-      setPaths(newPaths);
-    })
-    .minDistance(1);
+    .onTouchesUp(() => {})
+    .minDistance(0);
 
-  // const clearCanvas = () => {
-  //   setPaths([]);
-  // };
+  React.useEffect(() => {
+    if (clear) setPaths([]);
+  }, [clear]);
 
   return (
     <View style={[styles.paintWrapper, {height, width: height}]}>

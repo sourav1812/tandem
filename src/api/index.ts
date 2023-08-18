@@ -51,7 +51,6 @@ const refreshAccessToken = async () => {
       const response = await axios.post(BASE_URL + API.REFRESH_TOKEN, {
         refreshToken,
       });
-      console.log(response, 'refresh token');
       const {accessToken, refreshToken: newRefreshToken} = response.data;
       storeTokens(accessToken, newRefreshToken);
       requestQueue.forEach(resolve => resolve(accessToken));
@@ -65,7 +64,6 @@ const refreshAccessToken = async () => {
     }
   } else {
     // If another request is already refreshing the token, wait for it to complete
-    console.log(requestQueue);
     return new Promise<string>(resolve => {
       requestQueue.push(token => resolve(token));
     });
@@ -173,14 +171,14 @@ const executeRequest = async <T>(
       path,
       data,
     );
-    console.log('yay', response.data);
-
-    store.dispatch(
-      addAlertData({
-        type: 'Message',
-        message: response.data.message,
-      }),
-    );
+    if (response.data.message) {
+      store.dispatch(
+        addAlertData({
+          type: 'Message',
+          message: response.data.message,
+        }),
+      );
+    }
     //! Toast message here to show completion of POST/PUT request
     return response?.data;
   } catch (error: any) {
@@ -219,14 +217,14 @@ const get = async <T>({
     if (!token && !refreshToken) {
       throw new Error('Your Session has expired. Please login to continue');
     }
-    const response = await axiosInstance.get<Api & T>(path);
+    const response = await axiosInstance.get<Api & T>(BASE_URL + path);
     store.dispatch(addGetResponse({path, response: response?.data}));
     return response?.data;
   } catch (error: any) {
     persistedState = store.getState().getResponseReducer[path];
 
     if (!persistedState) {
-      console.log(error.message);
+      console.log('Persisted state in get req not found', error.message);
     }
     return persistedState;
   } finally {

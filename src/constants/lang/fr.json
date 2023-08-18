@@ -148,6 +148,7 @@
     "phone-required": "Le numéro de téléphone est requis",
     "phone-no-spaces": "Le numéro de téléphone ne doit pas contenir d'espaces",
     "phone-invalid": "Veuillez entrer un numéro de téléphone valide",
+    "dob-required": "Date de naissance requise",
     "pin-required": "Le code PIN est requis",
     "pin-no-spaces": "Le code PIN ne doit pas contenir d'espaces",
     "pin-invalid": "Veuillez entrer un code PIN valide",
