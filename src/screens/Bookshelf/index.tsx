@@ -20,6 +20,7 @@ import {MODE} from '@tandem/constants/mode';
 import getStories from '@tandem/api/getStories';
 import {useSelector} from 'react-redux';
 import {RootState} from '@tandem/redux/store';
+import themeColor from '@tandem/theme/themeColor';
 
 const Bookshelf = () => {
   const isTablet = checkIfTablet();
@@ -103,7 +104,18 @@ const Bookshelf = () => {
 
   return (
     <RNScreenWrapper>
-      <View style={styles.container}>
+      <View
+        style={[
+          styles.container,
+          {
+            backgroundColor:
+              mode === MODE.A
+                ? themeColor.themeBlue
+                : mode === MODE.B
+                ? themeColor.lightGreen
+                : themeColor.gold,
+          },
+        ]}>
         <View style={styles.headingView}>
           <View style={styles.spaces} />
           <RNTextComponent style={styles.bookshelfHeaderText} isSemiBold>

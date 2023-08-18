@@ -219,6 +219,12 @@ const Home = () => {
                   : isTablet
                   ? verticalScale(115)
                   : verticalScale(165),
+                backgroundColor:
+                  mode === MODE.A
+                    ? themeColor.themeBlue
+                    : mode === MODE.B
+                    ? themeColor.lightGreen
+                    : themeColor.gold,
               },
             ]}>
             <RNTextComponent
@@ -343,6 +349,12 @@ const Home = () => {
                 style={[
                   {
                     width: (+widthDimention - verticalScale(80)) / 2,
+                    backgroundColor:
+                      mode === MODE.A
+                        ? themeColor.themeBlue
+                        : mode === MODE.B
+                        ? themeColor.lightGreen
+                        : themeColor.gold,
                   },
                   styles.curvedViewHeaderLeft,
                 ]}
@@ -351,6 +363,12 @@ const Home = () => {
                 style={[
                   {
                     width: (+widthDimention - verticalScale(80)) / 2,
+                    backgroundColor:
+                      mode === MODE.A
+                        ? themeColor.themeBlue
+                        : mode === MODE.B
+                        ? themeColor.lightGreen
+                        : themeColor.gold,
                   },
                   styles.curvedViewHeaderRight,
                 ]}
