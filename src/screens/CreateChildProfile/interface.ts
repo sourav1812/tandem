@@ -1,23 +1,23 @@
-import LionIcon from '@tandem/assets/svg/AnimatedLion';
-import Giraffe from '@tandem/assets/svg/Giraffe';
-import Elephant from '@tandem/assets/svg/Elephant';
-import Fox from '@tandem/assets/svg/Fox';
-import Rabbit from '@tandem/assets/svg/Rabbit';
-import Camera from '@tandem/assets/svg/Camera';
+// import LionIcon from '@tandem/assets/svg/AnimatedLion';
+// import Giraffe from '@tandem/assets/svg/Giraffe';
+// import Elephant from '@tandem/assets/svg/Elephant';
+// import Fox from '@tandem/assets/svg/Fox';
+// import Rabbit from '@tandem/assets/svg/Rabbit';
+// import Camera from '@tandem/assets/svg/Camera';
 
 export interface indicatorType {
   index: number;
   isSelected: boolean;
 }
 
-export interface childProfileStateObject {
+export interface ChildProfileStateObject {
   bulletinArray: indicatorType[];
   questionIndex: number;
   gender: string;
 }
 
 export interface avatar {
-  icon: string;
+  icon: any;
 }
 
 export const avatarArray: avatar[] = [

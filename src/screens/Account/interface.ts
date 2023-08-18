@@ -1,16 +1,17 @@
-export interface childProfile {
-  type: string;
+import {ChildData} from '@tandem/redux/slices/createChild.slice';
+
+export interface ChildProfile {
+  type: 'child';
   name: string;
 }
 
-export interface adultProfile {
-  type: string;
+export interface AdultProfile {
+  type: 'adult';
   name: string;
 }
 
 export interface StateObject {
   signoutModal: boolean;
-  childrenList: childProfile[];
-  adultList: adultProfile[];
-  playerList: childProfile[] | adultProfile[];
+  adultList: AdultProfile[];
+  playerList: (ChildData | AdultProfile)[];
 }
