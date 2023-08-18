@@ -14,7 +14,7 @@ const RNKidsProfile = ({
   data: KidsProfileProps;
   imageIndex: number;
 }) => {
-  console.log(data, 'imageIndeximageIndex');
+  console.log(data, 'imageIndeximageIndexasasass');
   return (
     <View style={styles.container}>
       <Image
