@@ -21,7 +21,6 @@ const Story = () => {
   const mode = useAppSelector(state => state.mode.mode);
   const route: any = useRoute();
   const routeData: BooksData = route?.params?.routeData;
-  console.log(routeData);
   const toggelMenuBar = () => {
     setVisible(!visible);
   };

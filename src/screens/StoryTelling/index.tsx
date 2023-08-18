@@ -161,11 +161,6 @@ const StoryTelling = () => {
           STORIES_RESPONSE.PAGE_NUMBER
         ],
       );
-      console.log(
-        renderData?.pages?.[viewableItems[0].index][
-          STORIES_RESPONSE.STORY_TEXT
-        ],
-      );
 
       setStoryText(
         renderData?.pages?.[viewableItems[0].index][

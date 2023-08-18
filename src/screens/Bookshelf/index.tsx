@@ -29,7 +29,6 @@ const Bookshelf = () => {
   const mode = useAppSelector(state => state.mode.mode);
   const [searchText, setText] = useState<ValidationError>({value: ''});
   const books = useSelector((state: RootState) => state.bookShelf.books);
-  console.log(books);
   const data: BooksData[] = books?.map((book, index) => {
     const isThisWeek =
       ((new Date().getTime() - new Date(book.createdAt).getTime()) * 1.157) /
