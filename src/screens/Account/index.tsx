@@ -25,9 +25,15 @@ import {RootState} from '@tandem/redux/store';
 import RNTooltip from '@tandem/components/RNTooltip';
 import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
 import {TOOLTIP} from '@tandem/constants/LocalConstants';
+import {avatarArray} from '../CreateChildProfile/interface';
+import {
+  saveCurrentAdult,
+  saveCurrentChild,
+} from '@tandem/redux/slices/createChild.slice';
 
 const Account = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const childList = useAppSelector(state => state.createChild.childList);
   const [openTooltip, setOpentTooltip] = useState({
     tooltipOne: true,
     tooltipTwo: false,
@@ -40,10 +46,6 @@ const Account = () => {
   // const mode = useAppSelector(state => state.mode.mode);
   const [state, setState] = useState<StateObject>({
     signoutModal: false,
-    childrenList: [
-      {name: 'Tim', type: 'child'},
-      {name: 'Alisa', type: 'child'},
-    ],
     adultList: [
       {name: 'Mom', type: 'adult'},
       {name: 'Dad', type: 'adult'},
@@ -61,7 +63,7 @@ const Account = () => {
   const portrait = useSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
-  const {signoutModal, childrenList, adultList, playerList} = state;
+  const {signoutModal, adultList, playerList} = state;
   const updateState = (date: any) => {
     setState((previouState: any) => {
       return {...previouState, ...date};
@@ -113,15 +115,21 @@ const Account = () => {
   };
 
   const buttonPress = () => {
+    const currentAdult = playerList.filter(item => item.type === 'adult')[0];
+    const currentChild = playerList.filter(item => item.type === 'child')[0];
     if (
       playerList.filter(item => item.type === 'child').length > 0 &&
       playerList.filter(item => item.type === 'adult').length > 0
     ) {
       dispatch(changeMode(MODE.B));
+      dispatch(saveCurrentAdult(currentAdult));
+      dispatch(saveCurrentChild(currentChild));
     } else if (playerList.filter(item => item.type === 'child').length > 0) {
       dispatch(changeMode(MODE.C));
+      dispatch(saveCurrentChild(currentChild));
     } else if (playerList.filter(item => item.type === 'adult').length > 0) {
       dispatch(changeMode(MODE.A));
+      dispatch(saveCurrentAdult(currentAdult));
     } else {
       return '';
     }
@@ -167,10 +175,11 @@ const Account = () => {
             horizontal
             showsHorizontalScrollIndicator={false}
             decelerationRate={'normal'}>
-            {childrenList.map((item, index) => {
+            {childList.map((item, index) => {
               return (
                 <Pressable
                   key={index.toString()}
+                  style={{marginRight: 20}}
                   onPress={() => {
                     addPlayer(item);
                   }}>
@@ -178,8 +187,10 @@ const Account = () => {
                     style={{
                       height: portrait ? verticalScale(60) : verticalScale(40),
                       width: portrait ? verticalScale(60) : verticalScale(40),
+                      borderRadius: 8,
                     }}
                     data={item}
+                    imageIndex={item.avtarIndex}
                   />
                 </Pressable>
               );
@@ -269,8 +280,11 @@ const Account = () => {
                           ? verticalScale(60)
                           : verticalScale(40),
                         width: portrait ? verticalScale(60) : verticalScale(40),
+                        marginRight: 12,
+                        borderRadius: 8,
                       }}
                       data={item}
+                      imageIndex={item.avtarIndex}
                     />
                   </Pressable>
                 );
@@ -426,12 +440,17 @@ const Account = () => {
             }}>
             {playerList.map((item, index) => {
               if (item.type === 'child') {
+                console.log(item, 'dsfgdsf');
                 return (
                   <Image
                     key={index.toString()}
-                    source={{
-                      uri: 'https://thumbs.dreamstime.com/b/cute-giraffe-face-wild-animal-character-animated-cartoon-png-illustration-isolated-transparent-background-hand-drawn-png-264757481.jpg',
-                    }}
+                    source={
+                      item?.imageUrl
+                        ? {
+                            uri: item?.imageUrl,
+                          }
+                        : avatarArray[item.avtarIndex].icon
+                    }
                     style={styles.profile}
                   />
                 );

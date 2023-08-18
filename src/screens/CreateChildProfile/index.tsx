@@ -28,8 +28,6 @@ import {saveChildData} from '@tandem/redux/slices/createChild.slice';
 
 const CreateChildProfile = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
-  const childList = useAppSelector(state => state.createChild.childList);
-  console.log(childList, 'childDatachildData');
   const dispatch = useAppDispatch();
   const [state, setState] = useState<childProfileStateObject>({
     bulletinArray: [
@@ -54,12 +52,6 @@ const CreateChildProfile = () => {
       return {...previouState, ...date};
     });
   };
-
-  // useEffect(() => {
-  //   return () => {
-  //     dispatch(resetChildData());
-  //   };
-  // }, []);
 
   const nextQuestion = async () => {
     if (questionIndex <= 2) {
@@ -101,6 +93,8 @@ const CreateChildProfile = () => {
             dob: dob.value,
             gender: gender,
             avtarIndex: avtarIndex,
+            type: 'child',
+            ...(imageData?.path && {imageUrl: imageData.path}),
           }),
         );
         setTimeout(() => {
@@ -120,6 +114,8 @@ const CreateChildProfile = () => {
         }
       });
       updateState({questionIndex: questionIndex - 1});
+    } else {
+      navigateTo();
     }
   };
 
@@ -138,6 +134,18 @@ const CreateChildProfile = () => {
       case 'preferNotToSay':
         updateState({gender: 'preferNotToSay'});
         break;
+    }
+  };
+
+  const disableButton = () => {
+    if (gender === '') {
+      return false;
+    } else if (questionIndex === 2 && name.value === '') {
+      return false;
+    } else if (avtarIndex === null && questionIndex === 3) {
+      return false;
+    } else {
+      return true;
     }
   };
 
@@ -340,8 +348,9 @@ const CreateChildProfile = () => {
         <RNButton
           title={translation('NEXT')}
           onClick={nextQuestion}
-          customStyle={gender === '' && styles.disabled}
+          customStyle={!disableButton() && styles.disabled}
           textStyle={[styles.rightText, isTablet && {maxWidth: 310}]}
+          isDisabled={!disableButton()}
         />
       </View>
       <DatePicker

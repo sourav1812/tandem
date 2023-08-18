@@ -78,7 +78,9 @@ export const styles = StyleSheet.create({
     marginLeft: 20,
   },
   profile: {
-    height: 30,
-    width: 30,
+    height: 25,
+    width: 25,
+    marginLeft: 4,
+    borderRadius: 2,
   },
 });

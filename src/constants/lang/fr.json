@@ -193,7 +193,7 @@
   },
   "generate-story": {
     "is-in-story": " va être dans notre histoire ?",
-    "included-in-story": "Veux-tu être inclus(e) dans l'histoire, Alisa ?",
+    "included-in-story": "Veux-tu être inclus(e) dans l'histoire,",
     "where-shall-we": "Où devrions-nous ",
     "go-in-our-story": "aller dans notre histoire aujourd'hui ?",
     "include-things": "Devrions-nous inclure certaines de ces choses dans l'histoire ?",

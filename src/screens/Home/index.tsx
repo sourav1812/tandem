@@ -16,7 +16,7 @@ import {scale, verticalScale} from 'react-native-size-matters';
 import RNBookmarkComponent from '@tandem/components/RNBookmarkComponent';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
-import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
 import {StateObject} from './interface';
 import {translation} from '@tandem/utils/methods';
 import {MODE} from '@tandem/constants/mode';
@@ -28,12 +28,18 @@ import {TOOLTIP} from '@tandem/constants/LocalConstants';
 import {useNavigation} from '@react-navigation/native';
 import {RootState, store} from '@tandem/redux/store';
 import {setQuestionIndex} from '@tandem/redux/slices/questions.slice';
+import {avatarArray} from '../CreateChildProfile/interface';
+import {childProfile} from '../Account/interface';
+import {saveCurrentChild} from '@tandem/redux/slices/createChild.slice';
+import {ChildData} from '@tandem/redux/slices/createChild.slice';
 
 const Home = () => {
   const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
   const mode = useAppSelector(state => state.mode.mode);
+  const currentChild = useAppSelector(state => state.createChild.currentChild);
+
   const [tooltipMode, setToolTipMode] = useState({
     tooltipOne: true,
     tooltipTwo: false,
@@ -98,13 +104,10 @@ const Home = () => {
 
   const [state, setState] = useState<StateObject>({
     changeUser: false,
-    userProfile:
-      'https://static.vecteezy.com/system/resources/previews/016/461/449/non_2x/cute-giraffe-face-wild-animal-character-in-animated-cartoon-illustration-vector.jpg',
-    name: 'Lisa',
     showTooltip: true,
   });
 
-  const {changeUser, userProfile, name} = state;
+  const {changeUser} = state;
 
   const updateState = (date: any) => {
     setState((previouState: any) => {
@@ -180,19 +183,24 @@ const Home = () => {
             style={styles.tooltipUserWrapper}>
             <Image
               style={styles.tooltipUserImage}
-              source={{
-                uri: userProfile,
-              }}
+              source={
+                currentChild?.imageUrl
+                  ? {
+                      uri: currentChild?.imageUrl,
+                    }
+                  : avatarArray[currentChild.avtarIndex]?.icon
+              }
             />
             <RNTextComponent style={styles.tooltipUserName} isSemiBold>
-              {name}
+              {currentChild?.name}
             </RNTextComponent>
           </View>
         </RNTooltip>
-
+        {/* 
         {changeUser && mode === MODE.A && (
           <ChangeChild userProfile={userProfile} name={name} />
-        )}
+        )} */}
+        {changeUser && mode === MODE.A && <ChangeChild />}
       </Pressable>
       <RNScreenWrapper
         giveStatusColor={
@@ -455,14 +463,11 @@ const Home = () => {
 
 export default Home;
 
-const ChangeChild = ({
-  userProfile,
-  name,
-}: {
-  userProfile: string;
-  name: string;
-}) => {
+const ChangeChild = () => {
+  const dispatch = useAppDispatch();
   const translateRef = useRef(new Animated.Value(-30)).current;
+  const childList = useAppSelector(state => state.createChild.childList);
+  const currentChild = useAppSelector(state => state.createChild.currentChild);
   React.useEffect(() => {
     Animated.timing(translateRef, {
       toValue: 0,
@@ -471,27 +476,49 @@ const ChangeChild = ({
       easing: Easing.out(Easing.exp),
     }).start();
   });
+  const pseudoList: childProfile[] = [];
+  childList.map(item => {
+    if (item?.childId !== currentChild?.childId) {
+      return pseudoList.push(item);
+    }
+  });
+
   return (
-    <Animated.View
-      style={[
-        {
-          transform: [{translateY: translateRef}],
-        },
-        styles.changeChildWrapper,
-      ]}>
-      <Image
-        style={styles.changeChildImage}
-        source={{
-          uri: userProfile,
-        }}
-      />
-      <RNTextComponent
-        style={{
-          fontSize: verticalScale(16),
-        }}
-        isSemiBold>
-        {name}
-      </RNTextComponent>
-    </Animated.View>
+    <>
+      {pseudoList.map((item: ChildData) => {
+        return (
+          <Animated.View
+            style={[
+              {
+                transform: [{translateY: translateRef}],
+              },
+              styles.changeChildWrapper,
+            ]}>
+            <Pressable
+              onPress={() => {
+                dispatch(saveCurrentChild(item));
+              }}>
+              <Image
+                style={styles.changeChildImage}
+                source={
+                  item?.imageUrl
+                    ? {
+                        uri: item?.imageUrl,
+                      }
+                    : avatarArray[item?.avtarIndex].icon
+                }
+              />
+            </Pressable>
+            <RNTextComponent
+              style={{
+                fontSize: verticalScale(16),
+              }}
+              isSemiBold>
+              {item.name}
+            </RNTextComponent>
+          </Animated.View>
+        );
+      })}
+    </>
   );
 };

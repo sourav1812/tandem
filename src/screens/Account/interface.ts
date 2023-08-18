@@ -1,3 +1,5 @@
+import {ChildData} from '@tandem/redux/slices/createChild.slice';
+
 export interface childProfile {
   type: string;
   name: string;
@@ -10,7 +12,6 @@ export interface adultProfile {
 
 export interface StateObject {
   signoutModal: boolean;
-  childrenList: childProfile[];
   adultList: adultProfile[];
-  playerList: childProfile[] | adultProfile[];
+  playerList: (ChildData | adultProfile)[];
 }
