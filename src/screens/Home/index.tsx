@@ -6,7 +6,6 @@ import {
   ScrollView,
   Animated,
   Easing,
-  Alert,
 } from 'react-native';
 import React, {useRef, useState} from 'react';
 import {styles} from './styles';
@@ -222,9 +221,8 @@ const Home = () => {
                 <ChangeChild
                   userProfile={item}
                   name={item.name}
-                  toggleDrawer={() => {
-                    updateState({changeUser: !changeUser});
-                  }}
+                  changeUser={changeUser}
+                  toggleDrawer={updateState}
                 />
               );
             }
@@ -512,11 +510,13 @@ export default Home;
 const ChangeChild = ({
   userProfile,
   name,
+  changeUser,
   toggleDrawer,
 }: {
   userProfile: ChildData;
   name: string;
-  toggleDrawer?: () => void | undefined;
+  changeUser: boolean;
+  toggleDrawer: (date: any) => void;
 }) => {
   const dispatch = useAppDispatch();
   const translateRef = useRef(new Animated.Value(-30)).current;
@@ -539,7 +539,7 @@ const ChangeChild = ({
       <Pressable
         onPress={() => {
           dispatch(saveCurrentChild(userProfile));
-          toggleDrawer();
+          toggleDrawer({changeUser: !changeUser});
         }}
         style={{alignItems: 'center'}}>
         <Image

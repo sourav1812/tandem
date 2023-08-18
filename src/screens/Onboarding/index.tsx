@@ -127,7 +127,7 @@ const Onboarding = () => {
         <RNTextComponent
           style={[
             styles.content,
-            {height: !portrait ? verticalScale(60) : verticalScale(80)},
+            {height: !portrait ? verticalScale(80) : verticalScale(120)},
           ]}>
           {onboardingList[currentIndex].description}
         </RNTextComponent>
