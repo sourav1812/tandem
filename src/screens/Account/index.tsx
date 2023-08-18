@@ -178,24 +178,28 @@ const Account = () => {
             showsHorizontalScrollIndicator={false}
             decelerationRate={'normal'}>
             {childList.map((item, index) => {
-              return (
-                <Pressable
-                  key={index.toString()}
-                  style={{marginRight: 20}}
-                  onPress={() => {
-                    addPlayer(item);
-                  }}>
-                  <RNKidsProfile
-                    style={{
-                      height: portrait ? verticalScale(60) : verticalScale(40),
-                      width: portrait ? verticalScale(60) : verticalScale(40),
-                      borderRadius: 8,
-                    }}
-                    data={item}
-                    imageIndex={item.imageUrl ? -1 : item.avtarIndex}
-                  />
-                </Pressable>
-              );
+              if (item.childId !== '' && item.childId) {
+                return (
+                  <Pressable
+                    key={index.toString()}
+                    style={{marginRight: 20}}
+                    onPress={() => {
+                      addPlayer(item);
+                    }}>
+                    <RNKidsProfile
+                      style={{
+                        height: portrait
+                          ? verticalScale(60)
+                          : verticalScale(40),
+                        width: portrait ? verticalScale(60) : verticalScale(40),
+                        borderRadius: 8,
+                      }}
+                      data={item}
+                      imageIndex={item.imageUrl ? -1 : item.avtarIndex}
+                    />
+                  </Pressable>
+                );
+              }
             })}
             <RNTooltip
               open={tooltipArray?.includes(1) ? false : openTooltip.tooltipOne}

@@ -216,15 +216,19 @@ const Home = () => {
 
         {changeUser &&
           mode === MODE.A &&
-          pseudoList.map(item => (
-            <ChangeChild
-              userProfile={item}
-              name={item.name}
-              toggleDrawer={() => {
-                updateState({changeUser: !changeUser});
-              }}
-            />
-          ))}
+          pseudoList.map(item => {
+            if (item.childId && item.childId != '') {
+              return (
+                <ChangeChild
+                  userProfile={item}
+                  name={item.name}
+                  toggleDrawer={() => {
+                    updateState({changeUser: !changeUser});
+                  }}
+                />
+              );
+            }
+          })}
       </Pressable>
       <RNScreenWrapper
         giveStatusColor={
