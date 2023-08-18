@@ -2,5 +2,7 @@ import {ChildData} from '@tandem/redux/slices/createChild.slice';
 export interface LoginResponse {
   accessToken: string;
   refreshToken: string;
-  children: ChildData[];
+  userInfo: {
+    children: ChildData[];
+  };
 }
