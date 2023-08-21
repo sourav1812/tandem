@@ -77,6 +77,7 @@ const Account = () => {
   };
 
   const addPlayer = (item: ChildData | AdultProfile) => {
+    console.log(item, 'AdultProfileAdultProfile');
     if (
       item.type === 'child' &&
       item?.childId &&

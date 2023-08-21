@@ -1,6 +1,8 @@
 import {post} from '@tandem/api';
 import {API} from '@tandem/constants/api';
 import {CreateChildProfile} from './interface';
+import navigateTo from '@tandem/navigation/navigate';
+import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 
 export const addNewChild = async ({
   name,
@@ -16,8 +18,10 @@ export const addNewChild = async ({
       gender,
       avatar,
     },
+    onSuccess: () => {
+      navigateTo(SCREEN_NAME.BOTTOM_TAB, {}, true);
+    },
   });
-  console.log(response, 'addNewChildaddNewChild');
   if (!response) {
     return;
   }

@@ -19,6 +19,7 @@ const RNAlertBox = ({
   possibleResolution,
 }: AlertBoxInterface) => {
   let isTablet = useAppSelector(state => state.deviceType.isTablet);
+  let {onSuccess} = useAppSelector(state => state.alertBoxReducer.data);
   const dispatch = useDispatch();
   return (
     <RNModal
@@ -44,7 +45,10 @@ const RNAlertBox = ({
           </RNTextComponent>
         )}
         <RNButton
-          onClick={() => dispatch(clearAlertData())}
+          onClick={() => {
+            onSuccess();
+            dispatch(clearAlertData());
+          }}
           title={'OK'}
           customStyle={[styles.button2]}
         />
