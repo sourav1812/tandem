@@ -3,6 +3,7 @@ import NetInfo from '@react-native-community/netinfo';
 import {getStoredTokens, storeTokens} from '@tandem/functions/tokens';
 import Api from './interface';
 import {
+  buttonLoader,
   startLoader,
   stopLoader,
 } from '@tandem/redux/slices/activityIndicator.slice';
@@ -164,6 +165,7 @@ const executeRequest = async <T>(
   }
 
   store.dispatch(startLoader());
+  store.dispatch(buttonLoader());
   store.dispatch(clearParams());
 
   try {

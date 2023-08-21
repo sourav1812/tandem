@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {Pressable, StyleSheet} from 'react-native';
+import {ActivityIndicator, Pressable, StyleSheet} from 'react-native';
 import React from 'react';
 import themeColor from '@tandem/theme/themeColor';
 import RNTextComponent from '../RNTextComponent';
@@ -24,7 +24,10 @@ const RNButton = ({
   onLayout,
 }: Props) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
-
+  const isButtonDisabled = useAppSelector(
+    state => state.activityIndicator.isButtonDisabled,
+  );
+  const disabled = isDisabled || isButtonDisabled;
   return (
     <>
       {!onlyIcon ? (
@@ -44,22 +47,34 @@ const RNButton = ({
             isTablet && {maxHeight: 55},
             customStyle && customStyle,
           ]}
-          disabled={isDisabled}
+          disabled={disabled}
           {...props}
           onPress={onClick}>
-          <RNTextComponent
-            isSemiBold
-            style={[
-              {
-                textAlign: 'center',
-                fontSize: isTablet ? 16 : verticalScale(14),
-                color: themeColor.white,
-                ...(onlyBorder && {color: buttonColor || themeColor.themeBlue}),
-              },
-              textStyle && textStyle,
-            ]}>
-            {title}
-          </RNTextComponent>
+          {disabled ? (
+            <ActivityIndicator
+              color={
+                onlyBorder
+                  ? buttonColor || themeColor.themeBlue
+                  : themeColor.white
+              }
+            />
+          ) : (
+            <RNTextComponent
+              isSemiBold
+              style={[
+                {
+                  textAlign: 'center',
+                  fontSize: isTablet ? 16 : verticalScale(14),
+                  color: themeColor.white,
+                  ...(onlyBorder && {
+                    color: buttonColor || themeColor.themeBlue,
+                  }),
+                },
+                textStyle && textStyle,
+              ]}>
+              {title}
+            </RNTextComponent>
+          )}
         </Pressable>
       ) : (
         <Pressable
@@ -71,7 +86,17 @@ const RNButton = ({
           ]}
           {...props}
           onPress={onClick}>
-          {icon}
+          {disabled ? (
+            <ActivityIndicator
+              color={
+                onlyBorder
+                  ? buttonColor || themeColor.themeBlue
+                  : themeColor.white
+              }
+            />
+          ) : (
+            icon
+          )}
         </Pressable>
       )}
     </>
