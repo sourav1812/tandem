@@ -10,9 +10,5 @@ export const storeTokens = (token: string, refreshToken: string) => {
 };
 
 export const getStoredTokens = () => {
-  try {
-    return store.getState().tokenReducer;
-  } catch (error) {
-    throw new Error('Error getting stored tokens');
-  }
+  return store.getState().tokenReducer;
 };

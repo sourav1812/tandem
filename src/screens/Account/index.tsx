@@ -478,9 +478,7 @@ const Account = () => {
         visible={signoutModal}
         renderModal={toggleSignOut}
         nextClick={() => {
-          dispatch(changeMode(MODE.A));
           logout();
-          navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN, {}, true);
         }}
       />
     </RNScreenWrapper>
