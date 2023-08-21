@@ -95,9 +95,7 @@ const CreateChildProfile = () => {
         avatar: avtarIndex === 0 ? imageData?.data : avtarIndex?.toString(),
       });
       if (response) {
-        console.log(childList, 'createchild current child');
         if (childList.length === 0) {
-          console.log('inside check');
           dispatch(
             saveCurrentChild({
               childId: response?.childId,
@@ -121,9 +119,6 @@ const CreateChildProfile = () => {
             ...(imageData?.path && {imageUrl: imageData.path}),
           }),
         );
-        setTimeout(() => {
-          navigateTo(SCREEN_NAME.BOTTOM_TAB, {}, true);
-        }, 300);
       }
     }
   };

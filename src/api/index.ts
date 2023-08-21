@@ -158,6 +158,7 @@ const executeRequest = async <T>(
   ) => Promise<AxiosResponse<Api & T, any>>,
   path: string,
   data?: any,
+  onSuccess?: () => void,
 ) => {
   const {isConnected} = await NetInfo.fetch();
   if (!isConnected) {
@@ -178,6 +179,7 @@ const executeRequest = async <T>(
         addAlertData({
           type: 'Message',
           message: response.data.message,
+          onSuccess: onSuccess,
         }),
       );
     }
@@ -236,12 +238,33 @@ const get = async <T>({
   }
 };
 
-const post = async <T>({path, data}: {path: string; data: any}) => {
-  return executeRequest<Api & T>(axiosInstance.post, BASE_URL + path, data);
+const post = async <T>({
+  path,
+  data,
+  onSuccess = () => {},
+}: {
+  path: string;
+  data: any;
+  onSuccess?: () => void;
+}) => {
+  return executeRequest<Api & T>(
+    axiosInstance.post,
+    BASE_URL + path,
+    data,
+    onSuccess,
+  );
 };
 
-const put = async <T>({path, data}: {path: string; data: any}) => {
-  return executeRequest<Api & T>(axiosInstance.put, path, data);
+const put = async <T>({
+  path,
+  data,
+  onSuccess = () => {},
+}: {
+  path: string;
+  data: any;
+  onSuccess: () => void;
+}) => {
+  return executeRequest<Api & T>(axiosInstance.put, path, data, onSuccess);
 };
 
 export {get, post, put};

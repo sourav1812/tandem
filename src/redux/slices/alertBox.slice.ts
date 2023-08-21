@@ -1,11 +1,11 @@
 import {createSlice} from '@reduxjs/toolkit';
 
 interface InitialState {
-  data: {type: string; message: string};
+  data: {type: string; message: string; onSuccess: () => void};
 }
 
 const initialState: InitialState = {
-  data: {type: '', message: ''},
+  data: {type: '', message: '', onSuccess: () => {}},
 };
 
 const alertBoxSlice = createSlice({
