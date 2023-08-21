@@ -27,7 +27,15 @@ const RNButton = ({
   const isButtonDisabled = useAppSelector(
     state => state.activityIndicator.isButtonDisabled,
   );
+  const [pressed, setPressed] = React.useState(false);
   const disabled = isDisabled || isButtonDisabled;
+
+  const handlePress = async () => {
+    setPressed(true);
+    await onClick();
+    setPressed(false);
+  };
+
   return (
     <>
       {!onlyIcon ? (
@@ -49,9 +57,10 @@ const RNButton = ({
           ]}
           disabled={disabled}
           {...props}
-          onPress={onClick}>
-          {isButtonDisabled ? (
+          onPress={handlePress}>
+          {isButtonDisabled && pressed ? (
             <ActivityIndicator
+              style={{marginHorizontal: 15}}
               color={
                 onlyBorder
                   ? buttonColor || themeColor.themeBlue
@@ -85,8 +94,8 @@ const RNButton = ({
             IconButtoncustomStyle && IconButtoncustomStyle,
           ]}
           {...props}
-          onPress={onClick}>
-          {isButtonDisabled ? (
+          onPress={handlePress}>
+          {isButtonDisabled && pressed ? (
             <ActivityIndicator
               color={
                 onlyBorder
