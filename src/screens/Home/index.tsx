@@ -40,6 +40,7 @@ const Home = () => {
   );
   const mode = useAppSelector(state => state.mode.mode);
   const currentChild = useAppSelector(state => state.createChild.currentChild);
+  const currentAdult = useAppSelector(state => state.createChild.currentAdult);
   const childList = useAppSelector(state => state.createChild.childList);
 
   const [tooltipMode, setToolTipMode] = useState({
@@ -121,7 +122,6 @@ const Home = () => {
   const openDrawer = () => {
     updateState({changeUser: !changeUser});
   };
-  console.log(currentChild, 'home current child');
 
   React.useEffect(() => {
     const tempPseudoList: ChildData[] = [];
@@ -146,17 +146,6 @@ const Home = () => {
           {
             top:
               heightOfBanner.value - verticalScale(18) - verticalScale(89) / 2,
-            // ...(changeUser &&
-            //   mode === MODE.A && {
-            //     shadowColor: '#000',
-            //     shadowOffset: {
-            //       width: 0,
-            //       height: 1,
-            //     },
-            //     shadowOpacity: 0.32,
-            //     shadowRadius: 5.22,
-            //     elevation: 4,
-            //   }),
           },
         ]}
         onPress={() => {
@@ -183,8 +172,6 @@ const Home = () => {
             onLayout={() => {
               refTwo?.current?.measure(
                 (
-                  x: number,
-                  y: number,
                   width: number,
                   height: number,
                   pageX: number,
@@ -216,7 +203,7 @@ const Home = () => {
         {changeUser &&
           mode === MODE.A &&
           pseudoList.map(item => {
-            if (item.childId && item.childId != '') {
+            if (item.childId && item.childId !== '') {
               return (
                 <ChangeChild
                   userProfile={item}
@@ -269,7 +256,8 @@ const Home = () => {
                 marginTop:
                   !isTablet && portrait ? verticalScale(60) : verticalScale(20),
               }}>
-              {translation('HELLO')}, Ella!{mode === MODE.A && '(Mum)!'} 👋🏻
+              {translation('HELLO')}, {currentChild.name || 'Ella'}!
+              {mode === MODE.A && `(${currentAdult.name})!`} 👋🏻
             </RNTextComponent>
             <Pressable
               onPress={() => navigation.push(SCREEN_NAME.ACCOUNT)}
@@ -308,8 +296,6 @@ const Home = () => {
                     onLayout={() => {
                       refOne?.current?.measure(
                         (
-                          x: number,
-                          y: number,
                           width: number,
                           height: number,
                           pageX: number,
@@ -335,8 +321,6 @@ const Home = () => {
                     onLayout={() => {
                       refOne?.current?.measure(
                         (
-                          x: number,
-                          y: number,
                           width: number,
                           height: number,
                           pageX: number,
@@ -364,8 +348,6 @@ const Home = () => {
               onLayout={() => {
                 refOne?.current?.measure(
                   (
-                    x: number,
-                    y: number,
                     width: number,
                     height: number,
                     pageX: number,

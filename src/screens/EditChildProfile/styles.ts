@@ -57,7 +57,6 @@ export const styles = StyleSheet.create({
     width: verticalScale(77),
     marginTop: verticalScale(22),
     // marginBottom: verticalScale(13),
-    backgroundColor: themeColor.gold,
     borderRadius: 1000,
     alignSelf: 'center',
   },

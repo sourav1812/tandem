@@ -49,7 +49,7 @@ const Account = () => {
   const [state, setState] = useState<StateObject>({
     signoutModal: false,
     adultList: [
-      {name: 'Mom', type: 'adult'},
+      {name: 'Mum', type: 'adult'},
       {name: 'Dad', type: 'adult'},
     ],
     playerList: [],
@@ -479,9 +479,7 @@ const Account = () => {
         visible={signoutModal}
         renderModal={toggleSignOut}
         nextClick={() => {
-          dispatch(changeMode(MODE.A));
           logout();
-          navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN, {}, true);
         }}
       />
     </RNScreenWrapper>
