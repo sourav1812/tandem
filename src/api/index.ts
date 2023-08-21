@@ -154,7 +154,6 @@ const executeRequest = async <T>(
   requestFunction: (
     path: string,
     data?: any,
-    onSuccess?: () => void,
   ) => Promise<AxiosResponse<Api & T, any>>,
   path: string,
   data?: any,
@@ -254,8 +253,16 @@ const post = async <T>({
   );
 };
 
-const put = async <T>({path, data}: {path: string; data: any}) => {
-  return executeRequest<Api & T>(axiosInstance.put, path, data);
+const put = async <T>({
+  path,
+  data,
+  onSuccess = () => {},
+}: {
+  path: string;
+  data: any;
+  onSuccess: () => void;
+}) => {
+  return executeRequest<Api & T>(axiosInstance.put, path, data, onSuccess);
 };
 
 export {get, post, put};
