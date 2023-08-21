@@ -50,7 +50,7 @@ const RNButton = ({
           disabled={disabled}
           {...props}
           onPress={onClick}>
-          {disabled ? (
+          {isButtonDisabled ? (
             <ActivityIndicator
               color={
                 onlyBorder
@@ -86,7 +86,7 @@ const RNButton = ({
           ]}
           {...props}
           onPress={onClick}>
-          {disabled ? (
+          {isButtonDisabled ? (
             <ActivityIndicator
               color={
                 onlyBorder
