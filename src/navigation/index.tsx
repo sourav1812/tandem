@@ -7,12 +7,13 @@ import BottomTab from './BottomTab';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import Account from '@tandem/screens/Account';
 import SplashScreen from '@tandem/screens/SplashScreen';
-import navigateTo, {navigationRef} from './navigate';
+import {navigationRef} from './navigate';
 import {MODE} from '@tandem/constants/mode';
 import {Platform} from 'react-native';
 import {RootState} from '@tandem/redux/store';
 import {useOrientation} from '@tandem/hooks/useOrientation';
 import RNAlertBox from '@tandem/components/RNAlertBox';
+import resumeAppState from '@tandem/functions/resumeAppState';
 
 const AppNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -24,17 +25,9 @@ const AppNavigator = () => {
   const alertData = useAppSelector(
     (state: RootState) => state.alertBoxReducer.data,
   );
-  const token = useAppSelector((state: RootState) => state.tokenReducer.token);
 
   React.useEffect(() => {
-    setTimeout(() => {
-      if (!token) {
-        navigateTo(SCREEN_NAME.SELECT_LANGUAGE, {}, true);
-      } else {
-        navigateTo(SCREEN_NAME.BOTTOM_TAB, {}, true);
-      }
-    }, 2000);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    resumeAppState();
   }, []);
 
   return (
