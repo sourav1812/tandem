@@ -205,7 +205,7 @@ const Home = () => {
                   ? {
                       uri: currentChild?.imageUrl,
                     }
-                  : avatarArray[currentChild.avtarIndex]?.icon
+                  : avatarArray[currentChild?.avtarIndex]?.icon
               }
             />
             <RNTextComponent style={styles.tooltipUserName} isSemiBold>

@@ -11,7 +11,7 @@ import RNKidsProfile from '@tandem/components/RNKidsProfile';
 import Add from '@tandem/assets/svg/Add';
 import RNParentProfile from '@tandem/components/RNParentProfile';
 import RNSignoutModal from '@tandem/components/RNSignoutModal';
-import {StateObject} from './interface';
+import {AdultProfile, StateObject} from './interface';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
 import Lion from '@tandem/assets/svg/AnimatedLion';
@@ -63,7 +63,7 @@ const Account = () => {
   });
 
   const portrait = useSelector(
-    (state: RootState) => state.orientation.isPortrait,
+    (state1: RootState) => state1.orientation.isPortrait,
   );
   const {signoutModal, adultList, playerList} = state;
   const updateState = (date: any) => {
@@ -76,11 +76,11 @@ const Account = () => {
     updateState({signoutModal: !signoutModal});
   };
 
-  const addPlayer = (item: ChildData) => {
-    console.log(item?.childId, 'important');
+  const addPlayer = (item: ChildData | AdultProfile) => {
     if (
+      item.type === 'child' &&
       item?.childId &&
-      playerList.filter(items => items?.childId).length === 0
+      playerList.filter(v => v?.type === 'child' && item.childId).length === 0
     ) {
       let playerArrar = [...playerList];
       playerArrar.push(item);
@@ -88,7 +88,7 @@ const Account = () => {
     }
     if (
       item.type === 'adult' &&
-      playerList.filter(item => item.type === 'adult').length === 0
+      playerList.filter(v => v.type === 'adult').length === 0
     ) {
       let playerArrar = [...playerList];
       playerArrar.push(item);
@@ -276,7 +276,7 @@ const Account = () => {
             showsHorizontalScrollIndicator={false}
             decelerationRate={'normal'}>
             {playerList.map((item, index) => {
-              if (item?.childId) {
+              if (item.type === 'child' && item?.childId) {
                 return (
                   <Pressable
                     key={index.toString()}
@@ -451,9 +451,9 @@ const Account = () => {
                 navigateTo(SCREEN_NAME.BOTTOM_TAB, {}, true);
               }
             }}
-            disabled={childList.length !== 0 && playerList.length !== 0}>
+            disabled={childList.length === 0 || playerList.length === 0}>
             {playerList.map((item, index) => {
-              if (item.childId) {
+              if (item.type === 'child' && item.childId) {
                 return (
                   <Image
                     key={index.toString()}

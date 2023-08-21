@@ -1,11 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
-/* eslint-disable react/no-unstable-nested-components */
 import {
   View,
   ImageBackground,
   FlatList,
   ScrollView,
   Dimensions,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useState, useCallback, useRef} from 'react';
 import {styles} from './style';
@@ -38,7 +38,7 @@ import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
 import RNTooltip from '@tandem/components/RNTooltip';
 import {useRoute} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
-import Book from '@tandem/api/getStories/interface';
+import Book, {Page} from '@tandem/api/getStories/interface';
 import {STORIES_RESPONSE} from '@tandem/constants/enums';
 
 const StoryTelling = () => {
@@ -100,60 +100,73 @@ const StoryTelling = () => {
       return {...previouState, ...date};
     });
   };
-  const renderStory = () => {
-    return (
-      <ImageBackground
-        style={[styles.container, {height: height, width: width}]}
-        source={require('../../assets/png/storyBackground.png')}>
-        {currentIndex === totalpages && (
-          <View>
-            <View
-              style={[
-                styles.summary,
-                {height: !portrait ? verticalScale(270) : verticalScale(400)},
-              ]}>
-              <ScrollView showsVerticalScrollIndicator={false}>
-                <RNTextComponent style={styles.title} isSemiBold>
-                  Magic Castle
-                </RNTextComponent>
-                <RNTextComponent style={styles.mainCharacter} isSemiBold>
-                  The main Characters
-                </RNTextComponent>
-                <View style={styles.characterList}>
-                  {characterList.map((item: characterProps) => {
-                    return (
-                      <RNCharacterComponent
-                        characterName={item.characterName}
-                        url={item.url}
-                        customStyle={styles.boxStyle}
-                      />
-                    );
-                  })}
-                </View>
-                <RNTextComponent style={styles.content}>
-                  Fascinating children's book that recounts the exciting
-                  adventure of three friends, Tim, Lena, and Max. Together they
-                  go in search of the lost treasure, about which legends and
-                  tales are told. During their journey, the children encounter
-                  mysterious conspiracies, solve puzzles, and overcome dangers
-                  to reach their.
-                </RNTextComponent>
-              </ScrollView>
+
+  const [loading, setLoading] = React.useState(true);
+
+  const renderStory = React.useCallback(
+    ({item}: {item: Page}) => {
+      return (
+        <ImageBackground
+          onLoadStart={() => {
+            setLoading(true);
+          }}
+          onLoad={() => {
+            setLoading(false);
+          }}
+          style={[styles.container, {height: height, width: width}]}
+          source={{uri: item?.illustration_url}}>
+          {currentIndex === totalpages && (
+            <View>
+              <View
+                style={[
+                  styles.summary,
+                  {height: !portrait ? verticalScale(270) : verticalScale(400)},
+                ]}>
+                <ScrollView showsVerticalScrollIndicator={false}>
+                  <RNTextComponent style={styles.title} isSemiBold>
+                    Magic Castle
+                  </RNTextComponent>
+                  <RNTextComponent style={styles.mainCharacter} isSemiBold>
+                    The main Characters
+                  </RNTextComponent>
+                  <View style={styles.characterList}>
+                    {characterList.map((item: characterProps) => {
+                      return (
+                        <RNCharacterComponent
+                          characterName={item.characterName}
+                          url={item.url}
+                          customStyle={styles.boxStyle}
+                        />
+                      );
+                    })}
+                  </View>
+                  <RNTextComponent style={styles.content}>
+                    Fascinating children's book that recounts the exciting
+                    adventure of three friends, Tim, Lena, and Max. Together
+                    they go in search of the lost treasure, about which legends
+                    and tales are told. During their journey, the children
+                    encounter mysterious conspiracies, solve puzzles, and
+                    overcome dangers to reach their.
+                  </RNTextComponent>
+                </ScrollView>
+              </View>
+              <RNButton
+                title={`${translation('GREAT')}!`}
+                customStyle={[
+                  styles.footerButton,
+                  isTablet && {maxHeight: verticalScale(180)},
+                ]}
+                textStyle={isTablet && {fontSize: scale(12)}}
+                onClick={toggleModal}
+              />
             </View>
-            <RNButton
-              title={`${translation('GREAT')}!`}
-              customStyle={[
-                styles.footerButton,
-                isTablet && {maxHeight: verticalScale(180)},
-              ]}
-              textStyle={isTablet && {fontSize: scale(12)}}
-              onClick={toggleModal}
-            />
-          </View>
-        )}
-      </ImageBackground>
-    );
-  };
+          )}
+        </ImageBackground>
+      );
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [currentIndex, isTablet, portrait],
+  );
   const onViewableItemsChanged = useCallback(({viewableItems}: any) => {
     if (viewableItems.length > 0) {
       setCurrentIndex(
@@ -171,16 +184,16 @@ const StoryTelling = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  React.useEffect(() => {
-    switch (currentIndex) {
-      case 1:
-        updateState({showQuestion: true});
-        break;
-      case 3:
-        updateState({showQuestion: true});
-        break;
-    }
-  }, [currentIndex]);
+  // React.useEffect(() => {
+  //   switch (currentIndex) {
+  //     case 1:
+  //       updateState({showQuestion: true});
+  //       break;
+  //     case 3:
+  //       updateState({showQuestion: true});
+  //       break;
+  //   }
+  // }, [currentIndex]);
 
   const toggleModal = () => {
     setRenderModal(!renderModal);
@@ -331,6 +344,18 @@ const StoryTelling = () => {
   return (
     <RNScreenWrapper
       giveStatusColor={tooltipArray?.includes(13) ? false : true}>
+      {loading && (
+        <View
+          style={{
+            width: '100%',
+            height: '100%',
+            position: 'absolute',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <ActivityIndicator color={'blue'} />
+        </View>
+      )}
       <View style={styles.headingButton}>
         <RNTooltip
           isTablet={isTablet}
@@ -390,9 +415,7 @@ const StoryTelling = () => {
         {headerButton()}
       </View>
       <FlatList
-        data={Array.from({length: totalpages}, (_, i) => {
-          return {index: i};
-        })}
+        data={renderData?.pages}
         ref={flatlistRef}
         renderItem={renderStory}
         pagingEnabled

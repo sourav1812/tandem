@@ -330,7 +330,7 @@ const GenerateStory = () => {
               setDisabled={setDisabled}
               type={STORY_PARTS.WHAT_HAPPENS}
               index={4}
-              maxSelections={3}
+              maxSelections={1}
               data={typeOfStory}
             />
           </>
