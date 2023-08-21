@@ -22,7 +22,6 @@ export const styles = StyleSheet.create({
     borderRadius: 0,
   },
   profile: {
-    backgroundColor: themeColor.lightGreen,
     height: verticalScale(84),
     width: verticalScale(84),
     borderRadius: 1000,

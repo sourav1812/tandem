@@ -49,7 +49,7 @@ const Account = () => {
   const [state, setState] = useState<StateObject>({
     signoutModal: false,
     adultList: [
-      {name: 'Mom', type: 'adult'},
+      {name: 'Mum', type: 'adult'},
       {name: 'Dad', type: 'adult'},
     ],
     playerList: [],

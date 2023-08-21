@@ -14,14 +14,23 @@ import RNDeleteAccount from '@tandem/components/RNDeleteAccount';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
 import dayjs from 'dayjs';
+import {RootState} from '@tandem/redux/store';
+import {avatarArray} from '../CreateChildProfile/interface';
 
 const EditChildProfile = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const [state, setState] = useState<StateObject>({
     showModal: false,
   });
-  const [name, setName] = useState<ValidationError>({value: ''});
-  const [dob, setDob] = useState(dayjs().format('DD/MM/YYYY'));
+  const currentChild = useAppSelector(
+    (state1: RootState) => state1.createChild.currentChild,
+  );
+  const [name, setName] = useState<ValidationError>({
+    value: currentChild.name || '',
+  });
+  const [dob, setDob] = useState(
+    new Date(currentChild.dob).toDateString() || dayjs().format('DD/MM/YYYY'),
+  );
   const {showModal} = state;
 
   const updateState = (date: any) => {
@@ -38,11 +47,20 @@ const EditChildProfile = () => {
     <RNScreenWrapper style={styles.container}>
       <RNLogoHeader
         textHeading
-        heading={'Alisa'}
+        heading={name.value}
         titleStyle={styles.text}
         customStyle={styles.heading}
       />
-      <Image style={styles.profile} />
+      <Image
+        source={
+          currentChild?.imageUrl
+            ? {
+                uri: currentChild?.imageUrl,
+              }
+            : avatarArray[currentChild?.avtarIndex].icon
+        }
+        style={styles.profile}
+      />
       <View
         style={[styles.content, isTablet && {paddingHorizontal: scale(65)}]}>
         <RNTextInputWithLabel

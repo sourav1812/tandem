@@ -40,6 +40,7 @@ const Home = () => {
   );
   const mode = useAppSelector(state => state.mode.mode);
   const currentChild = useAppSelector(state => state.createChild.currentChild);
+  const currentAdult = useAppSelector(state => state.createChild.currentAdult);
   const childList = useAppSelector(state => state.createChild.childList);
 
   const [tooltipMode, setToolTipMode] = useState({
@@ -255,7 +256,8 @@ const Home = () => {
                 marginTop:
                   !isTablet && portrait ? verticalScale(60) : verticalScale(20),
               }}>
-              {translation('HELLO')}, Ella!{mode === MODE.A && '(Mum)!'} 👋🏻
+              {translation('HELLO')}, {currentChild.name || 'Ella'}!
+              {mode === MODE.A && `(${currentAdult.name})!`} 👋🏻
             </RNTextComponent>
             <Pressable
               onPress={() => navigation.push(SCREEN_NAME.ACCOUNT)}

@@ -4,7 +4,7 @@ import {AdultProfile} from '@tandem/screens/Account/interface';
 // Define a type for the slice state
 export interface ChildData {
   name: string;
-  age: string;
+  dob: string;
   gender: string;
   avatar: string;
   childId: string;
@@ -24,7 +24,7 @@ const initialState: ChildState = {
   childList: [],
   currentChild: {
     name: '',
-    age: '',
+    dob: '',
     gender: '',
     avatar: '',
     childId: '',
