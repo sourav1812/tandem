@@ -8,5 +8,9 @@ export default async (loginResponse: LoginResponse) => {
   //! other logic related to navigation flow , modes ,family here
 
   // ! Store user data from login response as well
-  store.dispatch(saveChildData(loginResponse.userInfo.children));
+  store.dispatch(
+    saveChildData(
+      loginResponse.userInfo.children.map(child => ({...child, type: 'child'})),
+    ),
+  );
 };

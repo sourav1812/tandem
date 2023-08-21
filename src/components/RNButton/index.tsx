@@ -31,6 +31,7 @@ const RNButton = ({
   const disabled = isDisabled || isButtonDisabled;
 
   const handlePress = async () => {
+    if (pressed) return;
     setPressed(true);
     await onClick();
     setPressed(false);
