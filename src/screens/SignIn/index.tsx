@@ -57,14 +57,14 @@ const SignIn = () => {
     ) {
       return;
     }
-    const fcmData = await fcm();
-    if (!fcmData) {
-      return;
-    }
+    // const fcmData = await fcm();
+    // if (!fcmData) {
+    //   return;
+    // }
     const response = await loginUserWithEmail({
       email: email.value,
       password: password.value,
-      ...fcmData,
+      // ...fcmData,
     });
 
     if (!response) {
