@@ -18,7 +18,7 @@ export type RootStackParamList = {
   SplashScreen: undefined;
   Onboarding: undefined;
   SocialSignIn: undefined;
-  CreateChildProfile: undefined;
+  CreateChildProfile: {fromAddAdult: boolean} | undefined;
   ProfileSettings: undefined;
   ChangePassword: undefined;
   People: undefined;

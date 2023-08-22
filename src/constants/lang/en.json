@@ -259,5 +259,8 @@
     "limitation-value": "We are not responsible for any damages or losses resulting from your use of our website or services. We are not liable for any indirect, incidental, or consequential damages.",
     "Changes-to-these-terms": "Changes to these terms",
     "Changes-to-these-terms-value": "These Terms and Conditions are governed by and construed in accordance with the laws of [Country]. Any disputes arising from these terms will be subject to the jurisdiction of the courts of [Country]."
-  }
+  },
+  "YOUR_RELATIONSHIP": "Your relationship/role",
+  "WHICH_OF_THESE_BEST_DESCRIBE": "Which of these best describes your relationship with the children you you're goint to use TANDEM with?",
+  "YOUR_DOB": "Your date of birth"
 }
