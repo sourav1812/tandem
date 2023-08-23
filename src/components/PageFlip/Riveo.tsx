@@ -217,15 +217,5 @@ const textArray = [
 ];
 
 export const Riveo = () => {
-  const [activeIndex, setActiveIndex] = React.useState(0);
-  return (
-    <Project
-      setActiveIndex={setActiveIndex}
-      text1={textArray[activeIndex].text}
-      text2={textArray[activeIndex + 1].text}
-      pic1={textArray[activeIndex].img}
-      pic2={textArray[activeIndex + 1].img}
-      activeIndex={activeIndex}
-    />
-  );
+  return <Project textArray={textArray.reverse()} />;
 };

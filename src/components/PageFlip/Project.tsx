@@ -18,7 +18,6 @@ import {
   rrect,
   rect,
   SkFont,
-  SkImage,
   SkRRect,
 } from '@shopify/react-native-skia';
 import {Dimensions, PixelRatio} from 'react-native';
@@ -27,19 +26,17 @@ import {pageCurl} from './pageCurl';
 import {verticalScale} from 'react-native-size-matters';
 
 interface ProjectProps {
-  text1: string;
-  text2: string;
-  pic1: any;
-  pic2: any;
-  setActiveIndex: React.Dispatch<React.SetStateAction<number>>;
-  activeIndex: number;
+  textArray: {
+    text: string;
+    img: any;
+  }[];
 }
 interface RenderSceneProps {
-  image: SkImage | null;
-  showBackdrop: boolean;
+  image: any;
   roundedRect: SkRRect;
   sentences: string[];
   font: SkFont | null;
+  mount?: boolean;
 }
 
 const {width: wWidth, height: hHeight} = Dimensions.get('screen');
@@ -83,40 +80,26 @@ const getRoundRect = (length: number) => {
   );
 };
 
-export const Project = ({
-  text1,
-  text2,
-  pic1,
-  pic2,
-  setActiveIndex,
-}: ProjectProps) => {
+export const Project = ({textArray}: ProjectProps) => {
   const font = useFont(
     require('@tandem/assets/fonts/Poppins-SemiBold.ttf'),
     fontSize,
   );
 
-  const image1 = useImage(pic1);
-  const image2 = useImage(pic2);
-
   const origin = useValue(wWidth);
   const pointer = useValue(wWidth);
 
-  const [showBackdrop, setShowBackdrop] = React.useState(false);
-  const [sentences1, setSentences1] = React.useState<string[]>([]);
-  const [sentences2, setSentences2] = React.useState<string[]>([]);
-
-  const roundedRect1 = getRoundRect(sentences1.length);
-  const roundedRect2 = getRoundRect(sentences2.length);
+  const [activeIndex, setActiveIndex] = React.useState(textArray.length - 1);
+  const [show, setShow] = React.useState(true);
 
   React.useEffect(() => {
-    setSentences1(processSentences(text1));
-    setSentences2(processSentences(text2));
-
-    if (!showBackdrop) {
-      setShowBackdrop(true);
+    if (!show) {
+      pointer.current = wWidth;
+      setActiveIndex(prev => (prev > 1 ? prev - 1 : 1));
+      setShow(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [text1]);
+  }, [show]);
 
   const onTouch = useTouchHandler({
     onStart: ({x}) => {
@@ -134,10 +117,8 @@ export const Project = ({
       });
       if (turnpage) {
         setTimeout(() => {
-          // TODO : DO SOMETHING ABOUT ASYNC BETWEEN THESE 2 UPDATES
-          setActiveIndex(prev => prev + 1);
-          pointer.current = wWidth;
-        }, 1000);
+          setShow(false);
+        }, 800);
       }
     },
   });
@@ -165,10 +146,11 @@ export const Project = ({
       }}
       onTouch={onTouch}>
       <RenderScene
-        image={image2}
-        roundedRect={roundedRect2}
-        sentences={sentences2}
-        showBackdrop={showBackdrop}
+        image={textArray[activeIndex - 1].img}
+        roundedRect={getRoundRect(
+          processSentences(textArray[activeIndex - 1].text).length,
+        )}
+        sentences={processSentences(textArray[activeIndex - 1].text)}
         font={font}
       />
       <Group transform={[{scale: 1 / pd}]}>
@@ -179,13 +161,23 @@ export const Project = ({
             </Paint>
           }
           transform={[{scale: pd}]}>
-          <RenderScene
-            image={image1}
-            roundedRect={roundedRect1}
-            sentences={sentences1}
-            showBackdrop={showBackdrop}
-            font={font}
-          />
+          {textArray.map((obj, index) => {
+            const sentence = processSentences(obj.text);
+            return (
+              <RenderScene
+                mount={
+                  show
+                    ? index === activeIndex || index === activeIndex - 1
+                    : index === activeIndex - 1
+                }
+                key={index.toString()}
+                image={obj.img}
+                roundedRect={getRoundRect(sentence.length)}
+                sentences={sentence}
+                font={font}
+              />
+            );
+          })}
         </Group>
       </Group>
     </Canvas>
@@ -194,14 +186,26 @@ export const Project = ({
 
 const RenderScene = ({
   image,
-  showBackdrop,
+  mount = true,
   roundedRect,
   sentences,
   font,
 }: RenderSceneProps) => {
+  const imageRef = useImage(image);
+
+  const [showBackdrop, setShowBackdrop] = React.useState(false);
+  React.useEffect(() => {
+    if (!showBackdrop) {
+      setShowBackdrop(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  if (!mount) {
+    return null;
+  }
   return (
     <Group>
-      <Image image={image} rect={outer} fit="cover" />
+      <Image image={imageRef} rect={outer} fit="cover" />
       {showBackdrop && (
         <BackdropBlur blur={8} clip={roundedRect}>
           <Fill color="rgba(255, 255, 255, 0.438)" />
