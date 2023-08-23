@@ -41,8 +41,8 @@ const StoryTelling = () => {
   const routesData = routes?.params;
   const books = useSelector((state: RootState) => state.bookShelf.books);
   const book = books.filter((item: Book) => item?.bookId === routesData.id)[0];
-  const totalPages = book.pages.length;
-  const [currentIndex, setActiveIndex] = React.useState(totalPages - 1);
+  const totalPages = book.pages.length - 1;
+  const [currentIndex, setActiveIndex] = React.useState(totalPages);
   const [state, setState] = useState<StateObject>({
     ratingModal: true,
     toggleMic: false,
@@ -90,6 +90,15 @@ const StoryTelling = () => {
   //       break;
   //   }
   // }, [currentIndex]);
+
+  React.useEffect(() => {
+    if (currentIndex === 0) {
+      setTimeout(() => {
+        toggleModal();
+      }, 4000);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentIndex]);
 
   const toggleModal = () => {
     setRenderModal(!renderModal);
@@ -365,7 +374,7 @@ const StoryTelling = () => {
           nextClick={renderTipLevel}
         />
       )} */}
-      {currentIndex === totalPages && mode === MODE.B && (
+      {currentIndex === 0 && mode === MODE.B && (
         <RNRatingModal
           visible={ratingModal}
           renderModal={renderRatingModal}
