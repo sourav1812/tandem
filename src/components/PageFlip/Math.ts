@@ -1,5 +1,5 @@
-import type { Vector } from "@shopify/react-native-skia";
-import { dist, vec } from "@shopify/react-native-skia";
+import type {Vector} from '@shopify/react-native-skia';
+import {dist, vec} from '@shopify/react-native-skia';
 
 export const getPointAtLength = (length: number, from: Vector, to: Vector) => {
   const angle = Math.atan2(to.y - from.y, to.x - from.x);
@@ -23,5 +23,5 @@ export const distToLine = (p: Vector, v: Vector, w: Vector) => {
   }
   let t = ((p.x - v.x) * (w.x - v.x) + (p.y - v.y) * (w.y - v.y)) / l2;
   t = Math.max(0, Math.min(1, t));
-  return dist(p, { x: v.x + t * (w.x - v.x), y: v.y + t * (w.y - v.y) });
+  return dist(p, {x: v.x + t * (w.x - v.x), y: v.y + t * (w.y - v.y)});
 };

@@ -1,4 +1,4 @@
-import { glsl } from "./Tags";
+import {glsl} from './Tags';
 
 export const Core = glsl`
 const float PI = ${Math.PI};
