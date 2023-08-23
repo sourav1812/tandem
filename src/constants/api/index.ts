@@ -5,6 +5,8 @@ export enum API {
   REFRESH_TOKEN = 'user/refresh-access-token', //? POST
   GENERATE_STORY = 'create-story', //? POST
   STORIES = 'stories', //? GET
+  LOGOUT = 'user/log-out', //? POST
+  USER_PROFILE = 'user/user-profile', //? GET
 }
 
 export enum ENVIRONMENT {
@@ -14,7 +16,7 @@ export enum ENVIRONMENT {
 
 const ENV_VARS = {
   [ENVIRONMENT.DEVELOPMENT]: {
-    API_URL: 'https://tandem.geeky.dev/v1/', // * STAGING URL
+    API_URL: 'http://192.168.1.61:5000/v1/', // * STAGING URL
   },
   [ENVIRONMENT.PRODUCTION]: {
     API_URL: 'https://tandem.geeky.dev/v1/', // * LIVE URL
@@ -22,7 +24,7 @@ const ENV_VARS = {
 };
 
 // ! Select ENV from here
-export const SELECTED_ENVIRONMENT = ENVIRONMENT.PRODUCTION;
+export const SELECTED_ENVIRONMENT = ENVIRONMENT.DEVELOPMENT;
 // ! URLs
 export const BASE_URL = ENV_VARS[SELECTED_ENVIRONMENT].API_URL;
 

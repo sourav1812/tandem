@@ -3,6 +3,7 @@ import navigateTo from '@tandem/navigation/navigate';
 import {getStoredTokens} from '../tokens';
 import {getValueFromKey} from '@tandem/helpers/encryptedStorage';
 import {TERMS_ACCEPTED} from '@tandem/constants/LocalConstants';
+import userProfile from '@tandem/api/userProfile';
 
 export default async () => {
   const {token, refreshToken} = getStoredTokens();
@@ -12,6 +13,8 @@ export default async () => {
     if (!token && !refreshToken) {
       navigateTo(SCREEN_NAME.SELECT_LANGUAGE, {}, true);
       return;
+    } else {
+      userProfile();
     }
     if (!termsAccepted) {
       navigateTo(SCREEN_NAME.TERMS_AND_CONDITIONS, {}, true);

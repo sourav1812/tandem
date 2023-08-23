@@ -31,7 +31,7 @@ import {
   saveCurrentAdult,
   saveCurrentChild,
 } from '@tandem/redux/slices/createChild.slice';
-import logout from '@tandem/functions/logout';
+import logout from '@tandem/api/logout';
 
 const Account = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
