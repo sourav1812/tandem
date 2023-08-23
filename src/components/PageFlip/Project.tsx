@@ -99,7 +99,7 @@ export const Project = ({textArray}: ProjectProps) => {
   React.useEffect(() => {
     if (!show) {
       pointer.current = wWidth;
-      setActiveIndex(prev => (prev > 1 ? prev - 1 : 1));
+      setActiveIndex(prev => (prev > 0 ? prev - 1 : 0));
       setShow(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -156,16 +156,18 @@ export const Project = ({textArray}: ProjectProps) => {
         height: outer.height,
       }}
       onTouch={disbaleTouch ? undefined : onTouch}>
-      <RenderScene
-        page={activeIndex}
-        total={textArray.length}
-        image={textArray[activeIndex - 1].img}
-        roundedRect={getRoundRect(
-          processSentences(textArray[activeIndex - 1].text).length,
-        )}
-        sentences={processSentences(textArray[activeIndex - 1].text)}
-        font={font}
-      />
+      {activeIndex - 1 >= 0 && (
+        <RenderScene
+          page={activeIndex}
+          total={textArray.length}
+          image={textArray[activeIndex - 1].img}
+          roundedRect={getRoundRect(
+            processSentences(textArray[activeIndex - 1].text).length,
+          )}
+          sentences={processSentences(textArray[activeIndex - 1].text)}
+          font={font}
+        />
+      )}
       <Group transform={[{scale: 1 / pd}]}>
         <Group
           layer={
@@ -264,7 +266,7 @@ const Progressbar = ({
       <RoundedRect
         x={verticalScale(20)}
         y={hHeight - padding - fontSize * length}
-        width={(wWidth - verticalScale(40)) * ((total - page) / total)}
+        width={(wWidth - verticalScale(40)) * ((total + 1 - page) / total)}
         height={verticalScale(12)}
         r={10}
         color="#4285F6"

@@ -1,4 +1,4 @@
-import {verticalScale} from 'react-native-size-matters';
+import {scale} from 'react-native-size-matters';
 import {Core, frag} from './ShaderLib';
 
 export const pageCurl = frag`
@@ -9,7 +9,7 @@ uniform vec4 container;
 uniform float cornerRadius;
 uniform vec2 resolution;
 
-const float r = ${verticalScale(400)};
+const float r = ${scale(400)};
 const float scaleFactor = 0.2;
 
 ${Core}
