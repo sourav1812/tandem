@@ -27,7 +27,7 @@ const AppNavigator = () => {
   );
 
   React.useEffect(() => {
-    // resumeAppState();
+    resumeAppState();
   }, []);
 
   return (

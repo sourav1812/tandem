@@ -6,7 +6,6 @@ import RNTextComponent from '@tandem/components/RNTextComponent';
 import DeviceInfo from 'react-native-device-info';
 import {changeDevice} from '@tandem/redux/slices/tablet.slice';
 import {useDispatch} from 'react-redux';
-import {PageFlip} from '@tandem/components/PageFlip';
 
 const SplashScreen = () => {
   const dispatch = useDispatch();
@@ -19,7 +18,6 @@ const SplashScreen = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return <PageFlip />;
   return (
     <RNScreenWrapper style={styles.container}>
       <Image
