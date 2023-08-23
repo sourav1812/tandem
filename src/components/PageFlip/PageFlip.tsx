@@ -216,6 +216,6 @@ const textArray = [
   {text: 'nulla pariatur?', img: imageSrc1},
 ];
 
-export const Riveo = () => {
+export const PageFlip = () => {
   return <Project textArray={textArray.reverse()} />;
 };

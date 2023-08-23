@@ -1,1 +1,1 @@
-export * from './Riveo';
+export * from './PageFlip';
