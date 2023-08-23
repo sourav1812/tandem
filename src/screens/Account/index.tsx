@@ -77,7 +77,6 @@ const Account = () => {
   };
 
   const addPlayer = (item: ChildData | AdultProfile) => {
-    console.log(item, 'AdultProfileAdultProfile');
     if (
       item.type === 'child' &&
       item?.childId &&
@@ -96,8 +95,6 @@ const Account = () => {
       updateState({playerList: playerArrar});
     }
   };
-
-  console.log(playerList, 'playerListplayerList2345');
 
   const removePlayer = (index: number) => {
     const playerArry = [...playerList];
@@ -206,7 +203,13 @@ const Account = () => {
               }
             })}
             <RNTooltip
-              open={tooltipArray?.includes(1) ? false : openTooltip.tooltipOne}
+              open={
+                tooltipArray?.includes(1)
+                  ? false
+                  : childList.length !== 0
+                  ? false
+                  : openTooltip.tooltipOne
+              }
               isTablet={isTablet}
               topViewStyle={{alignItems: 'center'}}
               text={translation('ADD_CHILD')}

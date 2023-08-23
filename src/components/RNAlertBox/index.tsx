@@ -46,7 +46,9 @@ const RNAlertBox = ({
         )}
         <RNButton
           onClick={() => {
-            onSuccess();
+            if (onSuccess) {
+              onSuccess();
+            }
             dispatch(clearAlertData());
           }}
           title={'OK'}
