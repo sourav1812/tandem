@@ -19,6 +19,7 @@ import {
   rect,
   SkFont,
   SkRRect,
+  RoundedRect,
 } from '@shopify/react-native-skia';
 import {Dimensions, PixelRatio} from 'react-native';
 import React from 'react';
@@ -37,6 +38,8 @@ interface RenderSceneProps {
   sentences: string[];
   font: SkFont | null;
   mount?: boolean;
+  page: number;
+  total: number;
 }
 
 const {width: wWidth, height: hHeight} = Dimensions.get('screen');
@@ -74,7 +77,7 @@ const processSentences = (text: string) => {
 
 const getRoundRect = (length: number) => {
   return rrect(
-    rect(0, hHeight - padding - fontSize * length, wWidth, hHeight),
+    rect(0, hHeight - 1.5 * padding - fontSize * length, wWidth, hHeight),
     20,
     20,
   );
@@ -91,6 +94,7 @@ export const Project = ({textArray}: ProjectProps) => {
 
   const [activeIndex, setActiveIndex] = React.useState(textArray.length - 1);
   const [show, setShow] = React.useState(true);
+  const [disbaleTouch, setDisbaleTouch] = React.useState(false);
 
   React.useEffect(() => {
     if (!show) {
@@ -101,6 +105,23 @@ export const Project = ({textArray}: ProjectProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [show]);
 
+  const turnPage = (x: number) => {
+    const turnpage = x < 100;
+    runTiming(pointer, turnpage ? -wWidth : wWidth, {
+      duration: 1000,
+      easing: Easing.in(Easing.sin),
+    });
+    if (turnpage) {
+      setDisbaleTouch(true);
+      setTimeout(() => {
+        setShow(false);
+        setTimeout(() => {
+          setDisbaleTouch(false);
+        }, 100);
+      }, 1000);
+    }
+  };
+
   const onTouch = useTouchHandler({
     onStart: ({x}) => {
       origin.current = x;
@@ -109,17 +130,7 @@ export const Project = ({textArray}: ProjectProps) => {
       pointer.current = x;
     },
     onEnd: ({x}) => {
-      // ! conditional if we intend to go to next page the animation should be of page disappearing
-      const turnpage = x < 100;
-      runTiming(pointer, turnpage ? -wWidth : wWidth, {
-        duration: 1000,
-        easing: Easing.in(Easing.sin),
-      });
-      if (turnpage) {
-        setTimeout(() => {
-          setShow(false);
-        }, 800);
-      }
+      turnPage(x);
     },
   });
 
@@ -144,8 +155,10 @@ export const Project = ({textArray}: ProjectProps) => {
         width: outer.width,
         height: outer.height,
       }}
-      onTouch={onTouch}>
+      onTouch={disbaleTouch ? undefined : onTouch}>
       <RenderScene
+        page={activeIndex}
+        total={textArray.length}
         image={textArray[activeIndex - 1].img}
         roundedRect={getRoundRect(
           processSentences(textArray[activeIndex - 1].text).length,
@@ -165,6 +178,8 @@ export const Project = ({textArray}: ProjectProps) => {
             const sentence = processSentences(obj.text);
             return (
               <RenderScene
+                page={index + 1}
+                total={textArray.length}
                 mount={
                   show
                     ? index === activeIndex || index === activeIndex - 1
@@ -190,6 +205,8 @@ const RenderScene = ({
   roundedRect,
   sentences,
   font,
+  page,
+  total,
 }: RenderSceneProps) => {
   const imageRef = useImage(image);
 
@@ -211,6 +228,7 @@ const RenderScene = ({
           <Fill color="rgba(255, 255, 255, 0.438)" />
         </BackdropBlur>
       )}
+      <Progressbar page={page} total={total} length={sentences.length} />
       {sentences.map((sentence, index) => (
         <Text
           key={index.toString()}
@@ -220,6 +238,37 @@ const RenderScene = ({
           font={font}
         />
       ))}
+    </Group>
+  );
+};
+
+const Progressbar = ({
+  page,
+  total,
+  length,
+}: {
+  page: number;
+  total: number;
+  length: number;
+}) => {
+  return (
+    <Group>
+      <RoundedRect
+        x={verticalScale(20)}
+        y={hHeight - padding - fontSize * length}
+        width={wWidth - verticalScale(40)}
+        height={verticalScale(12)}
+        r={10}
+        color="white"
+      />
+      <RoundedRect
+        x={verticalScale(20)}
+        y={hHeight - padding - fontSize * length}
+        width={(wWidth - verticalScale(40)) * ((total - page) / total)}
+        height={verticalScale(12)}
+        r={10}
+        color="#4285F6"
+      />
     </Group>
   );
 };
