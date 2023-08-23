@@ -39,7 +39,7 @@ const Bookshelf = () => {
       headerTitle: book.title || `Mock Story ${index + 1}`,
       time: new Date(book.createdAt).toDateString() || 'Some Date',
       image: book.thumbnail || require('../../assets/png/imageOne.png'),
-      readingTime: Math.ceil(book.story.split(' ').length / 250) || 10, //  ! avg reading speed is 200 to 300 wpm so we are calculating time in miniutes to read the whole story
+      readingTime: Math.ceil(book.story.split(' ').length / 100) || 10, //  ! avg reading speed is 200 to 300 wpm so we are calculating time in miniutes to read the whole story. using 100 wpm for children
       isNew: isThisWeek, // ! langauge support?
       emogi: '\u{1F60D}',
       week: isThisWeek ? 'This Week' : 'Last Week', // ! need langauge support
