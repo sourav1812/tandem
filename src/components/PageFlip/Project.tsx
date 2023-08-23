@@ -31,6 +31,8 @@ interface ProjectProps {
     text: string;
     img: any;
   }[];
+  activeIndex: number;
+  setActiveIndex: React.Dispatch<React.SetStateAction<number>>;
 }
 interface RenderSceneProps {
   image: any;
@@ -83,7 +85,11 @@ const getRoundRect = (length: number) => {
   );
 };
 
-export const Project = ({textArray}: ProjectProps) => {
+export const Project = ({
+  textArray,
+  activeIndex,
+  setActiveIndex,
+}: ProjectProps) => {
   const font = useFont(
     require('@tandem/assets/fonts/Poppins-SemiBold.ttf'),
     fontSize,
@@ -92,7 +98,6 @@ export const Project = ({textArray}: ProjectProps) => {
   const origin = useValue(wWidth);
   const pointer = useValue(wWidth);
 
-  const [activeIndex, setActiveIndex] = React.useState(textArray.length - 1);
   const [show, setShow] = React.useState(true);
   const [disbaleTouch, setDisbaleTouch] = React.useState(false);
 
