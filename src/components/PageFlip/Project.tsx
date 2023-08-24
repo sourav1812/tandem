@@ -144,23 +144,17 @@ export const Project = ({
     return {
       pointer: pointer.current * pd,
       origin: origin.current * pd,
-      resolution: [outer.width * pd, outer.height * pd],
-      container: [
-        outer.x,
-        outer.y,
-        outer.x + outer.width,
-        outer.y + outer.height,
-      ].map(v => v * pd),
+      resolution: [wWidth * pd, hHeight * pd],
+      container: [0, 0, wWidth, hHeight].map(v => v * pd),
       cornerRadius: cornerRadius * pd,
     };
-  }, [pointer, origin]);
+  }, [pointer, origin, hHeight]);
 
   return (
     <Canvas
       style={{
-        width: outer.width,
-        height: outer.height,
-        backgroundColor: 'black',
+        width: wWidth,
+        height: hHeight,
       }}
       onTouch={disbaleTouch ? undefined : onTouch}>
       {activeIndex - 1 >= 0 && (
