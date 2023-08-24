@@ -32,7 +32,7 @@ const Bookshelf = () => {
   const data: BooksData[] = books?.map((book, index) => {
     const isThisWeek =
       ((new Date().getTime() - new Date(book.createdAt).getTime()) * 1.157) /
-        100000000 <
+        10_00_00_000 <
       7; // ! are checking if the book is screated within a week
     return {
       id: book.bookId,
