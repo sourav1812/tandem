@@ -1,12 +1,12 @@
 export enum API {
   REGISTER_USER = 'user/sign-up', //? POST
   LOGIN_USER_WITH_EMAIL = 'user/sign-in', //? POST
-  CREATE_CHILD_PROFILE = 'create-child-profile', //? POST
+  CREATE_CHILD_PROFILE = 'children', //? POST
   REFRESH_TOKEN = 'user/refresh-access-token', //? POST
-  GENERATE_STORY = 'create-story', //? POST
+  GENERATE_STORY = 'stories', //? POST
   STORIES = 'stories', //? GET
   LOGOUT = 'user/log-out', //? POST
-  USER_PROFILE = 'user/user-profile', //? GET
+  USER_PROFILE = 'user/profile', //? GET
 }
 
 export enum ENVIRONMENT {
@@ -24,7 +24,7 @@ const ENV_VARS = {
 };
 
 // ! Select ENV from here
-export const SELECTED_ENVIRONMENT = ENVIRONMENT.PRODUCTION;
+export const SELECTED_ENVIRONMENT = ENVIRONMENT.DEVELOPMENT;
 // ! URLs
 export const BASE_URL = ENV_VARS[SELECTED_ENVIRONMENT].API_URL;
 

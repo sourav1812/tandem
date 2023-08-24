@@ -14,7 +14,6 @@ const ProgressIndicator = ({progress}: {progress: number}) => {
   return (
     <View style={styles.progressIndicatorTop}>
       <View
-        // eslint-disable-next-line react-native/no-inline-styles
         style={{
           height: '100%',
           width: progressPercentage,
@@ -66,7 +65,7 @@ const RNStoryCard = ({item}: {item: BooksData}) => {
           </RNTextComponent>
           <RNTextComponent
             style={[styles.minReading, isTablet && {fontSize: 22}]}>
-            {`${10 - item.readingTime} ${translation('MIN_READING')}`}
+            {`${item.readingTime} ${translation('MIN_READING')}`}
           </RNTextComponent>
           <ProgressIndicator progress={item.readingTime} />
         </View>

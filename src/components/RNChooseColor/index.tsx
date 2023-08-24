@@ -90,9 +90,9 @@ const RNChooseColor = ({
     if (palletArrRef.length === 4) return;
     const newpaths = [...paths];
     if (palletArrRef.length >= 2 && newpaths.length > 2) {
+      const avgColor = chroma.average(palleteArray).hex();
       setTimeout(() => {
-        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-        setActiveColor(chroma.average(palleteArray).hex());
+        setActiveColor(chroma.average([avgColor, activeColor]).hex());
       }, 2000);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

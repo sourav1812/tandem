@@ -1,24 +1,14 @@
 /* eslint-disable react-native/no-inline-styles */
-import {
-  View,
-  ImageBackground,
-  FlatList,
-  ScrollView,
-  Dimensions,
-  ActivityIndicator,
-} from 'react-native';
-import React, {useState, useCallback, useRef} from 'react';
+import {View} from 'react-native';
+import React, {useState, useRef} from 'react';
 import {styles} from './style';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import RNButton from '@tandem/components/RNButton';
 import Close from '@tandem/assets/svg/Cross';
 import Speaker from '@tandem/assets/svg/VolumeDown';
 import RNTextComponent from '@tandem/components/RNTextComponent';
-import RNCharacterComponent from '@tandem/components/RNCharacterComponent';
-import {characterList, StateObject} from './interface';
-import {characterProps} from '@tandem/components/RNCharacterComponent/interface';
+import {StateObject} from './interface';
 import RNCongratsModal from '@tandem/components/RNCongratsModal';
-import themeColor from '@tandem/theme/themeColor';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import RNReadingLevelModal from '@tandem/components/RNReadingLevelModal';
@@ -38,28 +28,21 @@ import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
 import RNTooltip from '@tandem/components/RNTooltip';
 import {useRoute} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
-import Book, {Page} from '@tandem/api/getStories/interface';
-import {STORIES_RESPONSE} from '@tandem/constants/enums';
+import Book from '@tandem/api/getStories/interface';
+import {PageFlip} from '@tandem/components/PageFlip';
 
 const StoryTelling = () => {
-  const flatlistRef = useRef(null);
   const tooltipArray = getValueFromKey(TOOLTIP);
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const mode = useAppSelector(state => state.mode.mode);
-  const [currentIndex, setCurrentIndex] = useState(0);
-
   const [renderModal, setRenderModal] = useState(false);
   const [readingLevel, setReadingLevel] = useState(false);
   const routes: any = useRoute();
   const routesData = routes?.params;
   const books = useSelector((state: RootState) => state.bookShelf.books);
-  const renderData = books.filter(
-    (item: Book) => item?.bookId === routesData.id,
-  )[0];
-  const [storyText, setStoryText] = useState('');
-
-  const totalpages = renderData?.pages?.length;
-
+  const book = books.filter((item: Book) => item?.bookId === routesData.id)[0];
+  const totalPages = book.pages.length - 1;
+  const [currentIndex, setActiveIndex] = React.useState(totalPages);
   const [state, setState] = useState<StateObject>({
     ratingModal: true,
     toggleMic: false,
@@ -71,9 +54,6 @@ const StoryTelling = () => {
     tooltipFour: false,
   });
 
-  const portrait = useAppSelector(
-    (state: RootState) => state.orientation.isPortrait,
-  );
   const refOne = useRef<any>(null);
   const refTwo = useRef<any>(null);
   const refThree = useRef<any>(null);
@@ -83,8 +63,7 @@ const StoryTelling = () => {
     1: {height: 0, width: 0, x: 0, y: 0},
     2: {height: 0, width: 0, x: 0, y: 0},
   });
-  const height = Dimensions.get('screen').height;
-  const width = Dimensions.get('screen').width;
+
   const {
     ratingModal,
     showQuestion,
@@ -101,89 +80,6 @@ const StoryTelling = () => {
     });
   };
 
-  const [loading, setLoading] = React.useState(true);
-
-  const renderStory = React.useCallback(
-    ({item}: {item: Page}) => {
-      return (
-        <ImageBackground
-          onLoadStart={() => {
-            setLoading(true);
-          }}
-          onLoad={() => {
-            setLoading(false);
-          }}
-          style={[styles.container, {height: height, width: width}]}
-          source={{uri: item?.illustration_url}}>
-          {currentIndex === totalpages && (
-            <View>
-              <View
-                style={[
-                  styles.summary,
-                  {height: !portrait ? verticalScale(270) : verticalScale(400)},
-                ]}>
-                <ScrollView showsVerticalScrollIndicator={false}>
-                  <RNTextComponent style={styles.title} isSemiBold>
-                    Magic Castle
-                  </RNTextComponent>
-                  <RNTextComponent style={styles.mainCharacter} isSemiBold>
-                    The main Characters
-                  </RNTextComponent>
-                  <View style={styles.characterList}>
-                    {characterList.map((item: characterProps) => {
-                      return (
-                        <RNCharacterComponent
-                          characterName={item.characterName}
-                          url={item.url}
-                          customStyle={styles.boxStyle}
-                        />
-                      );
-                    })}
-                  </View>
-                  <RNTextComponent style={styles.content}>
-                    Fascinating children's book that recounts the exciting
-                    adventure of three friends, Tim, Lena, and Max. Together
-                    they go in search of the lost treasure, about which legends
-                    and tales are told. During their journey, the children
-                    encounter mysterious conspiracies, solve puzzles, and
-                    overcome dangers to reach their.
-                  </RNTextComponent>
-                </ScrollView>
-              </View>
-              <RNButton
-                title={`${translation('GREAT')}!`}
-                customStyle={[
-                  styles.footerButton,
-                  isTablet && {maxHeight: verticalScale(180)},
-                ]}
-                textStyle={isTablet && {fontSize: scale(12)}}
-                onClick={toggleModal}
-              />
-            </View>
-          )}
-        </ImageBackground>
-      );
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [currentIndex, isTablet, portrait],
-  );
-  const onViewableItemsChanged = useCallback(({viewableItems}: any) => {
-    if (viewableItems.length > 0) {
-      setCurrentIndex(
-        renderData?.pages?.[viewableItems[0].index][
-          STORIES_RESPONSE.PAGE_NUMBER
-        ],
-      );
-
-      setStoryText(
-        renderData?.pages?.[viewableItems[0].index][
-          STORIES_RESPONSE.STORY_TEXT
-        ],
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   // React.useEffect(() => {
   //   switch (currentIndex) {
   //     case 1:
@@ -194,6 +90,15 @@ const StoryTelling = () => {
   //       break;
   //   }
   // }, [currentIndex]);
+
+  React.useEffect(() => {
+    if (currentIndex === 0) {
+      setTimeout(() => {
+        toggleModal();
+      }, 4000);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentIndex]);
 
   const toggleModal = () => {
     setRenderModal(!renderModal);
@@ -344,18 +249,6 @@ const StoryTelling = () => {
   return (
     <RNScreenWrapper
       giveStatusColor={tooltipArray?.includes(13) ? false : true}>
-      {loading && (
-        <View
-          style={{
-            width: '100%',
-            height: '100%',
-            position: 'absolute',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <ActivityIndicator color={'blue'} />
-        </View>
-      )}
       <View style={styles.headingButton}>
         <RNTooltip
           isTablet={isTablet}
@@ -407,29 +300,19 @@ const StoryTelling = () => {
             }}
           />
         </RNTooltip>
-        {currentIndex === totalpages && (
+        {currentIndex === totalPages && (
           <RNTextComponent isSemiBold style={styles.summaryTitle}>
             {translation('SUMMARY')}
           </RNTextComponent>
         )}
         {headerButton()}
       </View>
-      <FlatList
-        data={renderData?.pages}
-        ref={flatlistRef}
-        renderItem={renderStory}
-        pagingEnabled
-        horizontal
-        decelerationRate={50}
-        onEndReachedThreshold={2}
-        bounces={false}
-        onViewableItemsChanged={onViewableItemsChanged}
-        viewabilityConfig={{
-          itemVisiblePercentThreshold: 2, // adjust threshold as needed
-        }}
-        showsHorizontalScrollIndicator={false}
+      <PageFlip
+        book={book}
+        activeIndex={currentIndex}
+        setActiveIndex={setActiveIndex}
       />
-      {currentIndex !== totalpages && (
+      {currentIndex !== totalPages && (
         <RNTooltip
           isTablet={isTablet}
           topViewStyle={{alignItems: 'center'}}
@@ -473,31 +356,8 @@ const StoryTelling = () => {
                   }));
                 },
               );
-            }}>
-            <ImageBackground
-              style={styles.storyContent}
-              blurRadius={20}
-              source={require('../../assets/png/blurBgc.png')}
-              imageStyle={[
-                styles.imageStyle,
-                isTablet && {
-                  borderTopLeftRadius: verticalScale(8),
-                  borderTopRightRadius: verticalScale(8),
-                },
-              ]}>
-              <RNTextComponent style={styles.slideNo} isSemiBold>
-                {currentIndex}/{totalpages - 1}
-              </RNTextComponent>
-              <RNTextComponent
-                style={[
-                  styles.slideNo,
-                  {color: themeColor.black, textAlign: 'center', zIndex: 3},
-                ]}
-                isSemiBold>
-                {storyText}
-              </RNTextComponent>
-            </ImageBackground>
-          </View>
+            }}
+          />
         </RNTooltip>
       )}
       {showQuestion && renderQuestions()}
@@ -514,7 +374,7 @@ const StoryTelling = () => {
           nextClick={renderTipLevel}
         />
       )} */}
-      {currentIndex === totalpages && mode === MODE.B && (
+      {currentIndex === 0 && mode === MODE.B && (
         <RNRatingModal
           visible={ratingModal}
           renderModal={renderRatingModal}

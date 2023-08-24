@@ -12,9 +12,15 @@ import {logoutFromRedux} from '@tandem/redux/slices/languageReducer';
 import {changeMode} from '@tandem/redux/slices/mode.slice';
 import {removeToken} from '@tandem/redux/slices/tokens.slice';
 import {store} from '@tandem/redux/store';
+import logoutApi from '@tandem/api/logoutApi';
 
 const logout = async () => {
   try {
+    const response = await logoutApi();
+    if (!response) {
+      return;
+    }
+    console.log(response, 'logout api testing');
     store.dispatch(startLoader());
     store.dispatch(removeToken);
     store.dispatch(logoutFromRedux());
