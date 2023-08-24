@@ -20,8 +20,9 @@ import {
   SkFont,
   SkRRect,
   RoundedRect,
+  SkRect,
 } from '@shopify/react-native-skia';
-import {Dimensions, PixelRatio} from 'react-native';
+import {PixelRatio, useWindowDimensions} from 'react-native';
 import React from 'react';
 import {pageCurl} from './pageCurl';
 import {verticalScale} from 'react-native-size-matters';
@@ -42,17 +43,16 @@ interface RenderSceneProps {
   mount?: boolean;
   page: number;
   total: number;
+  outer: SkRect;
 }
 
-const {width: wWidth, height: hHeight} = Dimensions.get('screen');
 const pd = PixelRatio.get();
-const outer = Skia.XYWHRect(0, 0, wWidth, hHeight);
 const cornerRadius = 0;
 const padding = verticalScale(50);
 const fontSize = verticalScale(16);
-const numberOfChars = Math.floor((wWidth * 1.5) / fontSize);
 
-const processSentences = (text: string) => {
+const processSentences = (text: string, wWidth: number) => {
+  const numberOfChars = Math.floor((wWidth * 1.5) / fontSize);
   let maxCharsReached = 0;
   let wordsArray: string[] = [];
   const sentenceArray: string[] = [];
@@ -77,7 +77,7 @@ const processSentences = (text: string) => {
   return sentenceArray.reverse();
 };
 
-const getRoundRect = (length: number) => {
+const getRoundRect = (length: number, wWidth: number, hHeight: number) => {
   return rrect(
     rect(0, hHeight - 1.5 * padding - fontSize * length, wWidth, hHeight),
     20,
@@ -90,6 +90,9 @@ export const Project = ({
   activeIndex,
   setActiveIndex,
 }: ProjectProps) => {
+  const {width: wWidth, height: hHeight} = useWindowDimensions();
+  const outer = Skia.XYWHRect(0, 0, wWidth, hHeight);
+
   const font = useFont(
     require('@tandem/assets/fonts/Poppins-SemiBold.ttf'),
     fontSize,
@@ -162,13 +165,16 @@ export const Project = ({
       onTouch={disbaleTouch ? undefined : onTouch}>
       {activeIndex - 1 >= 0 && (
         <RenderScene
+          outer={outer}
           page={activeIndex}
           total={textArray.length}
           image={textArray[activeIndex - 1].img}
           roundedRect={getRoundRect(
-            processSentences(textArray[activeIndex - 1].text).length,
+            processSentences(textArray[activeIndex - 1].text, wWidth).length,
+            wWidth,
+            hHeight,
           )}
-          sentences={processSentences(textArray[activeIndex - 1].text)}
+          sentences={processSentences(textArray[activeIndex - 1].text, wWidth)}
           font={font}
         />
       )}
@@ -181,9 +187,10 @@ export const Project = ({
           }
           transform={[{scale: pd}]}>
           {textArray.map((obj, index) => {
-            const sentence = processSentences(obj.text);
+            const sentence = processSentences(obj.text, wWidth);
             return (
               <RenderScene
+                outer={outer}
                 page={index + 1}
                 total={textArray.length}
                 mount={
@@ -193,7 +200,7 @@ export const Project = ({
                 }
                 key={index.toString()}
                 image={obj.img}
-                roundedRect={getRoundRect(sentence.length)}
+                roundedRect={getRoundRect(sentence.length, wWidth, hHeight)}
                 sentences={sentence}
                 font={font}
               />
@@ -213,10 +220,12 @@ const RenderScene = ({
   font,
   page,
   total,
+  outer,
 }: RenderSceneProps) => {
   const imageRef = useImage(image);
-
+  const {width: wWidth, height: hHeight} = useWindowDimensions();
   const [showBackdrop, setShowBackdrop] = React.useState(false);
+  const numberOfChars = Math.floor((wWidth * 1.5) / fontSize);
   React.useEffect(() => {
     if (!showBackdrop) {
       setShowBackdrop(true);
@@ -257,6 +266,7 @@ const Progressbar = ({
   total: number;
   length: number;
 }) => {
+  const {width: wWidth, height: hHeight} = useWindowDimensions();
   return (
     <Group>
       <RoundedRect

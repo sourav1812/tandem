@@ -41,7 +41,7 @@ const StoryTelling = () => {
   const routesData = routes?.params;
   const books = useSelector((state: RootState) => state.bookShelf.books);
   const book = books.filter((item: Book) => item?.bookId === routesData.id)[0];
-  const totalPages = book.pages.length - 1;
+  const totalPages = book?.pages?.length - 1;
   const [currentIndex, setActiveIndex] = React.useState(totalPages);
   const [state, setState] = useState<StateObject>({
     ratingModal: true,
