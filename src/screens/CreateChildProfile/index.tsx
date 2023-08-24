@@ -28,11 +28,12 @@ import {
   saveChildData,
   saveCurrentChild,
 } from '@tandem/redux/slices/createChild.slice';
+import {CreateChildProfileProps} from '@tandem/navigation/types';
 
-const CreateChildProfile = () => {
+const CreateChildProfile = ({route}: CreateChildProfileProps) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const childList = useAppSelector(state => state.createChild.childList);
-
+  const {fromAddAdult} = route.params;
   const dispatch = useAppDispatch();
   const [state, setState] = useState<ChildProfileStateObject>({
     bulletinArray: [
@@ -51,8 +52,6 @@ const CreateChildProfile = () => {
   });
   const [imageData, setImageData] = useState<Image | null>(null);
   const [avtarIndex, setavtarIndex] = useState<number | null>(null);
-
-  console.log(childList, 'childListchildListEEE111');
 
   const updateState = (date: any) => {
     setState((previouState: any) => {
@@ -156,7 +155,7 @@ const CreateChildProfile = () => {
     }
   };
 
-  const disableButton = () => {
+  const disableButtonForChilForm = () => {
     if (gender === '') {
       return false;
     } else if (questionIndex === 2 && name.value === '') {
@@ -167,8 +166,11 @@ const CreateChildProfile = () => {
       return true;
     }
   };
+  const disableButtonForAdultForm = () => {
+    return true;
+  };
 
-  const form = () => {
+  const childForm = () => {
     switch (questionIndex) {
       case 1:
         return (
@@ -260,7 +262,134 @@ const CreateChildProfile = () => {
               />
               <Pressable
                 onPress={() => {
-                  // Alert.alert('');
+                  selectDate();
+                }}>
+                <LanguageDropDown
+                  customStyle={styles.date}
+                  heading={translation('DATE_OF_BIRTH')}
+                  text={dayjs(dob.value?.toString()).format('DD/MM/YYYY')}
+                />
+              </Pressable>
+            </View>
+          </>
+        );
+      case 3:
+        return (
+          <>
+            <RNTextComponent isSemiBold style={styles.heading}>
+              {translation('SELECT_AN_AVATAR')}
+            </RNTextComponent>
+            <RNTextComponent
+              style={[styles.content, isTablet && {fontSize: 18}]}>
+              {translation('YOU_CAN_CHANGE_IT_AFTER')}
+            </RNTextComponent>
+            <View style={styles.avatarBox}>
+              <ScrollView
+                contentContainerStyle={styles.list}
+                showsVerticalScrollIndicator={false}>
+                {avatarArray.map((item, index) => {
+                  return (
+                    <RNAvatarComponent
+                      icon={
+                        imageData && index === 0
+                          ? {uri: imageData?.path}
+                          : item.icon
+                      }
+                      customStyle={[
+                        styles.avatar,
+                        index === 0 && {justifyContent: 'center'},
+                        index === 0 &&
+                          index === avtarIndex &&
+                          imageData && {
+                            borderWidth: 3,
+                            borderColor: themeColor.themeBlue,
+                          },
+                        index === avtarIndex &&
+                          index !== 0 && {
+                            backgroundColor: themeColor.themeBlue,
+                          },
+                        isTablet && {marginTop: verticalScale(24)},
+                      ]}
+                      imgStyle={
+                        index !== 0
+                          ? styles.avatarImg
+                          : imageData && {height: '100%', width: '100%'}
+                      }
+                      onPress={() => {
+                        if (index === 0) {
+                          ImagePicker.openPicker({
+                            width: 300,
+                            height: 300,
+                            cropping: true,
+                            includeBase64: true,
+                            loadingLabelText: 'Image',
+                            mediaType: 'photo',
+                          })
+                            .then(response => {
+                              setImageData(response);
+                            })
+                            .catch(err => {
+                              console.log(err);
+                            });
+                        }
+                        setavtarIndex(index);
+                      }}
+                    />
+                  );
+                })}
+              </ScrollView>
+            </View>
+          </>
+        );
+    }
+  };
+
+  const adultForm = () => {
+    switch (questionIndex) {
+      case 1:
+        return (
+          <>
+            <RNTextComponent isSemiBold style={styles.heading}>
+              {translation('YOUR_RELATIONSHIP')}
+            </RNTextComponent>
+            <RNTextComponent
+              style={[
+                styles.content,
+                isTablet && {fontSize: 17.5, marginTop: 8},
+              ]}>
+              {translation('WHICH_OF_THESE_BEST_DESCRIBE')}
+            </RNTextComponent>
+            <View
+              style={[
+                styles.inputField,
+                isTablet && {width: 400, alignSelf: 'center'},
+              ]}>
+              <Pressable
+                onPress={() => {
+                  // selectDate();
+                }}>
+                <LanguageDropDown
+                  customStyle={styles.date}
+                  heading={translation('SELECT')}
+                  text={translation('MUM')}
+                />
+              </Pressable>
+            </View>
+          </>
+        );
+      case 2:
+        return (
+          <>
+            <RNTextComponent isSemiBold style={styles.heading}>
+              {translation('YOUR_DOB')}
+            </RNTextComponent>
+            <View
+              style={[
+                styles.inputField,
+                isTablet && {width: 400, alignSelf: 'center'},
+              ]}>
+              <Pressable
+                onPress={() => {
                   selectDate();
                 }}>
                 <LanguageDropDown
@@ -356,7 +485,7 @@ const CreateChildProfile = () => {
           <RNNumericBulletin selected={item.isSelected} heading={item.index} />
         ))}
       </View>
-      {form()}
+      {fromAddAdult ? adultForm() : childForm()}
       <View style={[styles.bottomButtons, isTablet && {width: 430}]}>
         <RNButton
           title={'<'}
@@ -367,9 +496,17 @@ const CreateChildProfile = () => {
         <RNButton
           title={translation('NEXT')}
           onClick={nextQuestion}
-          customStyle={!disableButton() && styles.disabled}
+          customStyle={
+            !fromAddAdult
+              ? !disableButtonForChilForm() && styles.disabled
+              : !disableButtonForAdultForm() && styles.disabled
+          }
           textStyle={[styles.rightText, isTablet && {maxWidth: 310}]}
-          isDisabled={!disableButton()}
+          isDisabled={
+            !fromAddAdult
+              ? !disableButtonForChilForm()
+              : !disableButtonForAdultForm()
+          }
         />
       </View>
       <DatePicker

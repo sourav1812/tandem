@@ -13,6 +13,7 @@ import {addParams, clearParams} from '@tandem/redux/slices/paramsReducer';
 import logout from '@tandem/functions/logout';
 import {addGetResponse} from '@tandem/redux/slices/getResponseReducer';
 import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
+import i18n from '@tandem/constants/lang/i18n';
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
@@ -25,6 +26,7 @@ axiosInstance.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
       config.params = store.getState().params.object;
+      config.headers['Accept-Language'] = i18n.locale;
     }
     return config;
   },

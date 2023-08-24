@@ -142,7 +142,9 @@ const Account = () => {
     <RNScreenWrapper
       style={styles.container}
       giveStatusColor={
-        (openTooltip.tooltipOne && !tooltipArray?.includes(1)) ||
+        (openTooltip.tooltipOne &&
+          !tooltipArray?.includes(1) &&
+          childList.length === 0) ||
         (openTooltip.tooltipTwo && !tooltipArray?.includes(2))
           ? true
           : false
@@ -393,8 +395,9 @@ const Account = () => {
                   },
                 ]}
                 onPress={() => {
-                  dispatch(changeMode(MODE.A));
-                  navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN, {}, true);
+                  navigateTo(SCREEN_NAME.CREATE_CHILD_PROFILE, {
+                    fromAddAdult: true,
+                  });
                 }}>
                 <View
                   style={{
