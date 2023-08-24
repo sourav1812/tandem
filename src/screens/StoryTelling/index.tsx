@@ -274,7 +274,7 @@ const StoryTelling = () => {
             },
           ]}
           dimensionObject={positionRefs[1]}>
-          <RNButton
+          <View
             ref={refTwo}
             onLayout={() => {
               refTwo?.current?.measure(
@@ -292,13 +292,15 @@ const StoryTelling = () => {
                   }));
                 },
               );
-            }}
-            onlyIcon
-            icon={<Close />}
-            onClick={() => {
-              navigateTo(SCREEN_NAME.BOOKSHELF);
-            }}
-          />
+            }}>
+            <RNButton
+              onlyIcon
+              icon={<Close />}
+              onClick={() => {
+                navigateTo(SCREEN_NAME.BOOKSHELF);
+              }}
+            />
+          </View>
         </RNTooltip>
         {currentIndex === totalPages && (
           <RNTextComponent isSemiBold style={styles.summaryTitle}>

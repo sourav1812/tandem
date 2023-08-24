@@ -106,6 +106,7 @@ export const Project = ({
       pointer.current = wWidth;
       setActiveIndex(prev => (prev > 0 ? prev - 1 : 0));
       setShow(true);
+      setDisbaleTouch(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [show]);
@@ -120,9 +121,6 @@ export const Project = ({
       setDisbaleTouch(true);
       setTimeout(() => {
         setShow(false);
-        setTimeout(() => {
-          setDisbaleTouch(false);
-        }, 100);
       }, 1000);
     }
   };
@@ -159,6 +157,7 @@ export const Project = ({
       style={{
         width: outer.width,
         height: outer.height,
+        backgroundColor: 'black',
       }}
       onTouch={disbaleTouch ? undefined : onTouch}>
       {activeIndex - 1 >= 0 && (
