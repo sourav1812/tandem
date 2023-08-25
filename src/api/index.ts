@@ -63,7 +63,6 @@ const refreshAccessToken = async () => {
     } catch (error) {
       console.log('error in refresh token logic:', error);
       logout();
-      throw error;
     }
   } else {
     // If another request is already refreshing the token, wait for it to complete
@@ -189,6 +188,7 @@ const executeRequest = async <T>(
     return response?.data;
   } catch (error: any) {
     console.log(error.message);
+    throw new Error('Error in this path: ' + path + ': ' + error.message);
   } finally {
     store.dispatch(stopLoader());
   }

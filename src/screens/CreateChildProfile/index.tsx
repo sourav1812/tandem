@@ -20,7 +20,6 @@ import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
 import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
 import DatePicker from 'react-native-date-picker';
 import {LanguageDropDown} from '@tandem/components/LanguageDropDown';
-import ImagePicker, {Image} from 'react-native-image-crop-picker';
 import dayjs from 'dayjs';
 import {addNewChild} from '@tandem/api/creatChildProfile';
 import validationFunction from '@tandem/functions/validationFunction';
@@ -33,7 +32,7 @@ import {CreateChildProfileProps} from '@tandem/navigation/types';
 const CreateChildProfile = ({route}: CreateChildProfileProps) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const childList = useAppSelector(state => state.createChild.childList);
-  const {fromAddAdult} = route.params;
+  const fromAddAdult = route.params?.fromAddAdult;
   const dispatch = useAppDispatch();
   const [state, setState] = useState<ChildProfileStateObject>({
     bulletinArray: [
@@ -50,7 +49,6 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
   const [dob, setDob] = useState<ValidationError>({
     value: new Date().toString(),
   });
-  const [imageData, setImageData] = useState<Image | null>(null);
   const [avatar, setAvatar] = useState<string | null>(null);
   const [imageIndex, setImageIndex] = useState<number | null>(null);
 
@@ -92,7 +90,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
         name: name.value,
         dob: dob.value, // ! pass in the whole date object
         gender: gender,
-        avatar: imageIndex === 0 ? imageData?.data : avatar,
+        avatar,
       });
       if (response) {
         if (childList.length === 0) {
@@ -104,7 +102,6 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
               gender: gender,
               avatar: avatar,
               type: 'child',
-              ...(imageData?.path && {imageUrl: imageData.path}),
             }),
           );
         }
@@ -116,7 +113,6 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
             gender: gender,
             avatar: avatar,
             type: 'child',
-            ...(imageData?.path && {imageUrl: imageData.path}),
           }),
         );
       }
@@ -291,47 +287,34 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
                 {avatarArray.map((item, index) => {
                   return (
                     <RNAvatarComponent
-                      icon={
-                        imageData && index === 0
-                          ? {uri: imageData?.path}
-                          : {uri: item.icon}
-                      }
+                      icon={item.icon}
                       customStyle={[
                         styles.avatar,
                         index === 0 && {justifyContent: 'center'},
-                        index === 0 &&
-                          index === imageIndex &&
-                          imageData && {
-                            borderWidth: 3,
-                            borderColor: themeColor.themeBlue,
-                          },
                         index === imageIndex &&
                           index !== 0 && {
                             backgroundColor: themeColor.themeBlue,
                           },
                         isTablet && {marginTop: verticalScale(24)},
                       ]}
-                      imgStyle={
-                        index !== 0
-                          ? styles.avatarImg
-                          : imageData && {height: '100%', width: '100%'}
-                      }
+                      imgStyle={styles.avatarImg}
                       onPress={() => {
                         if (index === 0) {
-                          ImagePicker.openPicker({
-                            width: 300,
-                            height: 300,
-                            cropping: true,
-                            includeBase64: true,
-                            loadingLabelText: 'Image',
-                            mediaType: 'photo',
-                          })
-                            .then(response => {
-                              setImageData(response);
-                            })
-                            .catch(err => {
-                              console.log(err);
-                            });
+                          return;
+                          // ImagePicker.openPicker({
+                          //   width: 300,
+                          //   height: 300,
+                          //   cropping: true,
+                          //   includeBase64: true,
+                          //   loadingLabelText: 'Image',
+                          //   mediaType: 'photo',
+                          // })
+                          //   .then(response => {
+                          //     setImageData(response);
+                          //   })
+                          //   .catch(err => {
+                          //     console.log(err);
+                          //   });
                         }
                         setAvatar(item.icon);
                         setImageIndex(index);
@@ -420,48 +403,36 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
                 {avatarArray.map((item, index) => {
                   return (
                     <RNAvatarComponent
-                      icon={
-                        imageData && index === 0
-                          ? {uri: imageData?.path}
-                          : item.icon
-                      }
+                      icon={item.icon}
                       customStyle={[
                         styles.avatar,
                         index === 0 && {justifyContent: 'center'},
-                        index === 0 &&
-                          index === imageIndex &&
-                          imageData && {
-                            borderWidth: 3,
-                            borderColor: themeColor.themeBlue,
-                          },
+
                         index === imageIndex &&
                           index !== 0 && {
                             backgroundColor: themeColor.themeBlue,
                           },
                         isTablet && {marginTop: verticalScale(24)},
                       ]}
-                      imgStyle={
-                        index !== 0
-                          ? styles.avatarImg
-                          : imageData && {height: '100%', width: '100%'}
-                      }
+                      imgStyle={styles.avatarImg}
                       onPress={() => {
                         if (index === 0) {
-                          ImagePicker.openPicker({
-                            width: 300,
-                            height: 300,
-                            cropping: true,
-                            includeBase64: true,
-                            loadingLabelText: 'Image',
-                            mediaType: 'photo',
-                          })
-                            .then(response => {
-                              setImageData(response);
-                              console.log(response, 'sdfghjrfdsresponse');
-                            })
-                            .catch(err => {
-                              console.log(err);
-                            });
+                          return;
+                          // ImagePicker.openPicker({
+                          //   width: 300,
+                          //   height: 300,
+                          //   cropping: true,
+                          //   includeBase64: true,
+                          //   loadingLabelText: 'Image',
+                          //   mediaType: 'photo',
+                          // })
+                          //   .then(response => {
+                          //     setImageData(response);
+                          //     console.log(response, 'sdfghjrfdsresponse');
+                          //   })
+                          //   .catch(err => {
+                          //     console.log(err);
+                          //   });
                         }
                         setAvatar(item.icon);
                         setImageIndex(index);

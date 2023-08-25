@@ -16,23 +16,16 @@ import logoutApi from '@tandem/api/logoutApi';
 
 const logout = async () => {
   try {
-    const response = await logoutApi();
-    if (!response) {
-      return;
-    }
-    console.log(response, 'logout api testing');
     store.dispatch(startLoader());
-    store.dispatch(removeToken);
-    store.dispatch(logoutFromRedux());
-    store.dispatch(clearAlertData());
-    removeKey(TERMS_ACCEPTED);
-    store.dispatch(changeMode(MODE.A));
-    navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN, {}, true);
-  } catch (error) {
-    console.log('error in logout');
-  } finally {
-    store.dispatch(stopLoader());
-  }
+    await logoutApi();
+  } catch (error) {}
+  store.dispatch(removeToken);
+  store.dispatch(logoutFromRedux());
+  store.dispatch(clearAlertData());
+  removeKey(TERMS_ACCEPTED);
+  store.dispatch(changeMode(MODE.A));
+  navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN, {}, true);
+  store.dispatch(stopLoader());
 };
 
 export default logout;

@@ -2,7 +2,7 @@ import {Pressable, View} from 'react-native';
 import React from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import RNTextComponent from '@tandem/components/RNTextComponent';
-import en from '@tandem/constants/lang/en';
+import en from '@tandem/constants/lang/en.json';
 import {styles} from './styles';
 import RNLanguageComponent from '@tandem/components/RNLanguageComponent';
 import themeColor from '@tandem/theme/themeColor';

@@ -57,20 +57,19 @@ const SignIn = () => {
     ) {
       return;
     }
-    const fcmData = await fcm();
-    if (!fcmData) {
-      return;
+    try {
+      const {deviceId, deviceType, fcmToken} = await fcm();
+      await loginUserWithEmail({
+        email: email.value,
+        password: password.value,
+        deviceId,
+        deviceType,
+        fcmToken,
+      });
+      navigateTo(SCREEN_NAME.TERMS_AND_CONDITIONS);
+    } catch (error: any) {
+      console.log('error in login api', error.message);
     }
-    const response = await loginUserWithEmail({
-      email: email.value,
-      password: password.value,
-      ...fcmData,
-    });
-
-    if (!response) {
-      return;
-    }
-    navigateTo(SCREEN_NAME.TERMS_AND_CONDITIONS);
   };
 
   return (
