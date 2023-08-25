@@ -22,6 +22,7 @@ export const styles = StyleSheet.create({
   },
   searchBoxContainerStyle: {
     alignSelf: 'center',
+    width: '90%',
   },
   searchBoxInputStyle: {
     width: '85%',

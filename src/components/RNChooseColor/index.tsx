@@ -33,6 +33,7 @@ interface IPath {
   size: number;
 }
 
+const tooltipArray = getValueFromKey(TOOLTIP);
 const RNChooseColor = ({
   tooltipVisible,
   onTooltipClose,
@@ -40,11 +41,11 @@ const RNChooseColor = ({
   isTablet,
   setDisabled,
 }: ColorPaletteType) => {
-  const tooltipArray = getValueFromKey(TOOLTIP);
   const [palleteArray, setPalletArray] = React.useState<string[]>([]);
   const [finalColor, setFinalColor] = React.useState<string>('');
   const [activeColor, setActiveColor] = React.useState<string>('');
   const [clear, setClear] = React.useState<boolean>(false);
+  const [usedColor, setUsedColor] = React.useState<string[]>([]);
   const colorPalette = [
     {firstColor: '#0633FD', secondColor: '#FEF902'},
     {firstColor: '#0998FF', secondColor: '#FF9409'},
@@ -59,6 +60,19 @@ const RNChooseColor = ({
   });
   const [paths, setPaths] = React.useState<IPath[]>([]);
   const valueRef = useRef<string>('');
+
+  const handleReset = () => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    setPalletArray([]);
+    setActiveColor('');
+    setFinalColor('');
+    setUsedColor([]);
+    setClear(true);
+    setTimeout(() => {
+      setClear(false);
+    }, 100);
+    valueRef.current = '';
+  };
 
   React.useEffect(() => {
     return () => {
@@ -86,17 +100,17 @@ const RNChooseColor = ({
   }, [finalColor]);
 
   React.useEffect(() => {
-    const palletArrRef = [...palleteArray];
-    if (palletArrRef.length === 4) return;
-    const newpaths = [...paths];
-    if (palletArrRef.length >= 2 && newpaths.length > 2) {
-      const avgColor = chroma.average(palleteArray).hex();
+    if (usedColor.length < 2) {
+      return;
+    }
+    const avgColor = chroma.average(usedColor).hex();
+    if (activeColor !== avgColor && paths.length > 0) {
       setTimeout(() => {
-        setActiveColor(chroma.average([avgColor, activeColor]).hex());
+        setActiveColor(avgColor);
       }, 2000);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeColor]);
+  }, [paths.length, usedColor]);
 
   return (
     <View style={[styles.container, customStyle && customStyle]}>
@@ -128,22 +142,23 @@ const RNChooseColor = ({
                   ]}>
                   <TouchableOpacity
                     disabled={
-                      palleteArray.length >= 2 &&
-                      !palleteArray.includes(item.firstColor)
+                      palleteArray.length >= 4 ||
+                      (usedColor.length >= 2 &&
+                        !usedColor.includes(item.firstColor))
                     }
                     onPress={() => {
                       setActiveColor(item.firstColor);
-                      if (!palleteArray.includes(item.firstColor)) {
-                        LayoutAnimation.configureNext(
-                          LayoutAnimation.Presets.easeInEaseOut,
-                        );
-                        setPalletArray(prev => [...prev, item.firstColor]);
+                      if (
+                        usedColor.length < 2 &&
+                        !usedColor.includes(item.firstColor)
+                      ) {
+                        setUsedColor(prev => [...prev, item.firstColor]);
                       }
                     }}>
                     <ColorPatchUp
                       color={
-                        palleteArray.length >= 2
-                          ? palleteArray.includes(item.firstColor)
+                        usedColor.length >= 2
+                          ? usedColor.includes(item.firstColor)
                             ? item.firstColor
                             : chroma
                                 .mix(item.firstColor, 'grey', 0.8, 'rgb')
@@ -154,22 +169,23 @@ const RNChooseColor = ({
                   </TouchableOpacity>
                   <TouchableOpacity
                     disabled={
-                      palleteArray.length >= 2 &&
-                      !palleteArray.includes(item.secondColor)
+                      palleteArray.length >= 4 ||
+                      (usedColor.length >= 2 &&
+                        !usedColor.includes(item.secondColor))
                     }
                     onPress={() => {
                       setActiveColor(item.secondColor);
-                      if (!palleteArray.includes(item.secondColor)) {
-                        LayoutAnimation.configureNext(
-                          LayoutAnimation.Presets.easeInEaseOut,
-                        );
-                        setPalletArray(prev => [...prev, item.secondColor]);
+                      if (
+                        usedColor.length < 2 &&
+                        !usedColor.includes(item.secondColor)
+                      ) {
+                        setUsedColor(prev => [...prev, item.secondColor]);
                       }
                     }}>
                     <ColorPatchUp
                       color={
-                        palleteArray.length >= 2
-                          ? palleteArray.includes(item.secondColor)
+                        usedColor.length >= 2
+                          ? usedColor.includes(item.secondColor)
                             ? item.secondColor
                             : chroma
                                 .mix(item.secondColor, 'grey', 0.8, 'rgb')
@@ -184,6 +200,7 @@ const RNChooseColor = ({
             })}
             <View style={styles.colorPatch}>
               <RNPaintBrush
+                usedColor={usedColor}
                 clear={clear}
                 setPathsParent={setPaths}
                 color={activeColor || 'transparent'}
@@ -221,56 +238,50 @@ const RNChooseColor = ({
                     },
                   );
                 }}>
-                {palleteArray.length < 3 ? (
+                {palleteArray.length < 4 ? (
                   <Pressable
                     disabled={palleteArray.includes(activeColor)}
                     onPress={() => {
-                      setPalletArray(prev => [...prev, activeColor]);
-                    }}>
-                    <AddColor
-                      fill={
-                        palleteArray.includes(activeColor) ? '' : activeColor
-                      }
-                    />
-                  </Pressable>
-                ) : (
-                  <RNButton
-                    customStyle={{width: scale(50), height: verticalScale(30)}}
-                    onClick={() => {
-                      setPalletArray([]);
+                      LayoutAnimation.configureNext(
+                        LayoutAnimation.Presets.easeInEaseOut,
+                      );
+                      setPalletArray(prev =>
+                        prev.length < 4 ? [...prev, activeColor] : prev,
+                      );
                       setActiveColor('');
-                      setFinalColor('');
+                      setUsedColor([]);
                       setClear(true);
                       setTimeout(() => {
                         setClear(false);
                       }, 100);
-                      LayoutAnimation.configureNext(
-                        LayoutAnimation.Presets.easeInEaseOut,
-                      );
-                      valueRef.current = '';
-                    }}
+                    }}>
+                    <AddColor fill={activeColor} />
+                  </Pressable>
+                ) : (
+                  <RNButton
+                    customStyle={{width: scale(50), height: verticalScale(30)}}
+                    onClick={handleReset}
                     title="X"
                   />
                 )}
               </View>
             </RNTooltip>
-            {palleteArray.map((color, i) => (
+            {[0, 1, 2, 3].map(val => (
               <Pressable
-                key={i.toString()}
                 onPress={() => {
-                  setFinalColor(color);
-                  LayoutAnimation.configureNext(
-                    LayoutAnimation.Presets.easeInEaseOut,
-                  );
-                  setActiveColor(color);
-                  valueRef.current = color;
-                }}>
-                <EmptyPatch selected={finalColor === color} fill={color} />
+                  if (palleteArray[val]) {
+                    setFinalColor(palleteArray[val]);
+                  }
+                }}
+                key={val.toString()}>
+                <EmptyPatch
+                  selected={finalColor === palleteArray[val]}
+                  fill={palleteArray[val] || undefined}
+                />
               </Pressable>
             ))}
           </View>
         </View>
-        <View style={{height: 40}} />
       </ScrollView>
     </View>
   );

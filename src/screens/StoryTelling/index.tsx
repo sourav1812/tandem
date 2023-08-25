@@ -41,7 +41,7 @@ const StoryTelling = () => {
   const routesData = routes?.params;
   const books = useSelector((state: RootState) => state.bookShelf.books);
   const book = books.filter((item: Book) => item?.bookId === routesData.id)[0];
-  const totalPages = book.pages.length - 1;
+  const totalPages = book?.pages?.length - 1;
   const [currentIndex, setActiveIndex] = React.useState(totalPages);
   const [state, setState] = useState<StateObject>({
     ratingModal: true,
@@ -274,7 +274,7 @@ const StoryTelling = () => {
             },
           ]}
           dimensionObject={positionRefs[1]}>
-          <RNButton
+          <View
             ref={refTwo}
             onLayout={() => {
               refTwo?.current?.measure(
@@ -292,13 +292,15 @@ const StoryTelling = () => {
                   }));
                 },
               );
-            }}
-            onlyIcon
-            icon={<Close />}
-            onClick={() => {
-              navigateTo(SCREEN_NAME.BOOKSHELF);
-            }}
-          />
+            }}>
+            <RNButton
+              onlyIcon
+              icon={<Close />}
+              onClick={() => {
+                navigateTo(SCREEN_NAME.BOOKSHELF);
+              }}
+            />
+          </View>
         </RNTooltip>
         {currentIndex === totalPages && (
           <RNTextComponent isSemiBold style={styles.summaryTitle}>

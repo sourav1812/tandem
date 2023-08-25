@@ -9,6 +9,7 @@ import {
 } from 'react-native-gesture-handler';
 import {
   Canvas,
+  Circle,
   DisplacementMap,
   Path,
   RuntimeShader,
@@ -34,17 +35,22 @@ export default ({
   color,
   setPathsParent,
   clear,
+  usedColor,
 }: {
   height: number;
   color: string;
   setPathsParent: React.Dispatch<React.SetStateAction<IPath[]>>;
   clear: boolean;
+  usedColor: string[];
 }) => {
   const [paths, setPaths] = useState<IPath[]>([]);
   const [sizeOfBrush] = useState(verticalScale(30));
-
+  const [allowMixing, setAllowMixing] = useState(false);
+  const [randomCircles, setrandomCircles] = useState<{r: number; c: number}[]>(
+    [],
+  );
   React.useEffect(() => {
-    if (color === 'transparent') return;
+    if (color === 'transparent' || !allowMixing) return;
     const newPaths = [...paths];
     const lastPosRef = newPaths[newPaths.length - 1]?.segments;
     if (!lastPosRef) return;
@@ -59,7 +65,24 @@ export default ({
     setPaths(newPaths);
     setPathsParent(newPaths);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [color]);
+  }, [color, allowMixing]);
+
+  React.useEffect(() => {
+    if (usedColor.length !== 0) {
+      return;
+    }
+    const random1 = Math.floor((Math.random() + 1) * 4);
+    const random2 = Math.floor((Math.random() + 1) * 3);
+    const r1 = verticalScale(random1 * 10);
+    const r2 = verticalScale(random2 * 10);
+    const c1 = height / (Math.random() + 1.6);
+    const c2 = height / (Math.random() + 1.6);
+    setrandomCircles([
+      {r: r1, c: c1},
+      {r: r2, c: c2},
+    ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [usedColor.length]);
 
   const restartPen = (
     g: GestureStateChangeEvent<PanGestureHandlerEventPayload>,
@@ -91,8 +114,15 @@ export default ({
     .onStart(restartPen)
     .onUpdate((g: GestureUpdateEvent<PanGestureHandlerEventPayload>) => {
       drawWithPaint(g);
+      if (!allowMixing) {
+        setAllowMixing(true);
+      }
     })
-    .onTouchesUp(() => {})
+    .onTouchesUp(() => {
+      if (allowMixing) {
+        setAllowMixing(false);
+      }
+    })
     .minDistance(0);
 
   React.useEffect(() => {
@@ -112,6 +142,15 @@ export default ({
               strokeCap="round"
               strokeJoin="round"
               color={p.color}
+            />
+          ))}
+          {usedColor.map((colorRef, index) => (
+            <Circle
+              key={index.toString()}
+              cx={randomCircles[index].c}
+              cy={randomCircles[index].c}
+              r={randomCircles[index].r}
+              color={colorRef}
             />
           ))}
           <DisplacementMap channelX="g" channelY="a" scale={20}>
