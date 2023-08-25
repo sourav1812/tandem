@@ -11,7 +11,7 @@ const RNKidsProfile = ({
 }: {
   style: StyleProp<ImageStyle>;
   data: KidsProfileProps;
-  imageUrl: any;
+  imageUrl: string;
 }) => {
   return (
     <View style={styles.container}>
