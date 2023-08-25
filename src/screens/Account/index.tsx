@@ -197,7 +197,7 @@ const Account = () => {
                         borderRadius: 8,
                       }}
                       data={item}
-                      imageUrl={{uri: item.avatar}}
+                      avatar={item.avatar}
                     />
                   </Pressable>
                 );
@@ -298,7 +298,7 @@ const Account = () => {
                         borderRadius: 8,
                       }}
                       data={item}
-                      imageUrl={{uri: item.avatar}}
+                      avatar={item.avatar}
                     />
                   </Pressable>
                 );
@@ -477,9 +477,7 @@ const Account = () => {
       <RNSignoutModal
         visible={signoutModal}
         renderModal={toggleSignOut}
-        nextClick={() => {
-          logout();
-        }}
+        nextClick={logout}
       />
     </RNScreenWrapper>
   );

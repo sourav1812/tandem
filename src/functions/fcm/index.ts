@@ -7,21 +7,14 @@ import {
 } from 'react-native-device-info';
 
 export default async () => {
+  const deviceId =
+    Platform.OS === 'ios' ? await getUniqueId() : await getAndroidId();
+  const deviceManufacturer = await getManufacturer();
+  const deviceType = `${Platform.OS}-${deviceManufacturer}`;
   try {
     const fcmToken = await messaging().getToken();
-    if (fcmToken) {
-      const deviceId =
-        Platform.OS === 'ios' ? await getUniqueId() : await getAndroidId();
-      const deviceManufacturer = await getManufacturer();
-      const data = {
-        deviceType: `${Platform.OS}-${deviceManufacturer}`,
-        deviceId,
-        fcmToken,
-      };
-      return data;
-    }
-    return null;
+    return {deviceId, deviceType, fcmToken};
   } catch (error: any) {
-    return null;
+    return {deviceId, deviceType, fcmToken: null};
   }
 };

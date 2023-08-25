@@ -16,7 +16,6 @@ const validationFunction = (valueObject: ValueObject[]) => {
       array.push(true);
     }
   });
-  console.log(array);
   if (array.includes(false)) {
     return false;
   } else {

@@ -7,15 +7,15 @@ import {KidsProfileProps} from './interface';
 const RNKidsProfile = ({
   style,
   data,
-  imageUrl,
+  avatar,
 }: {
   style: StyleProp<ImageStyle>;
   data: KidsProfileProps;
-  imageUrl: string;
+  avatar: string;
 }) => {
   return (
     <View style={styles.container}>
-      <Image source={imageUrl} style={[styles.profile, style]} />
+      <Image source={{uri: avatar}} style={[styles.profile, style]} />
       <RNTextComponent style={styles.name} isMedium>
         {data && data?.name}
       </RNTextComponent>

@@ -6,7 +6,7 @@ import {saveUserData} from '@tandem/redux/slices/userData.slice';
 
 export default async (loginResponse: LoginResponse) => {
   storeTokens(loginResponse.accessToken, loginResponse.refreshToken);
-  //! other logic related to navigation flow , modes ,family here
+  // ! other logic related to navigation flow , modes ,family here
 
   // ! Store user data from login response as well
   store.dispatch(
@@ -14,6 +14,7 @@ export default async (loginResponse: LoginResponse) => {
       loginResponse.userInfo.children.map(child => ({...child, type: 'child'})),
     ),
   );
+  // ! we will have to decide where we should keep children
   store.dispatch(
     saveUserData({
       ...loginResponse.userInfo,
