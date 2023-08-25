@@ -198,7 +198,7 @@ const Account = () => {
                         borderRadius: 8,
                       }}
                       data={item}
-                      imageIndex={item.imageUrl ? -1 : item.avtarIndex}
+                      imageIndex={item.imageUrl ? -1 : item.avatar}
                     />
                   </Pressable>
                 );
@@ -299,7 +299,7 @@ const Account = () => {
                         borderRadius: 8,
                       }}
                       data={item}
-                      imageIndex={item.imageUrl ? -1 : item.avtarIndex}
+                      imageIndex={item.imageUrl ? -1 : item.avatar}
                     />
                   </Pressable>
                 );
@@ -469,7 +469,7 @@ const Account = () => {
                         ? {
                             uri: item?.imageUrl,
                           }
-                        : avatarArray[item.avtarIndex].icon
+                        : avatarArray[item.avatar].icon
                     }
                     style={styles.profile}
                   />

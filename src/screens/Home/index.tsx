@@ -42,7 +42,6 @@ const Home = () => {
   const currentChild = useAppSelector(state => state.createChild.currentChild);
   const currentAdult = useAppSelector(state => state.createChild.currentAdult);
   const childList = useAppSelector(state => state.createChild.childList);
-  const userdata = useAppSelector(state => state.userData.userDataObject);
 
   const [tooltipMode, setToolTipMode] = useState({
     tooltipOne: true,
@@ -193,7 +192,7 @@ const Home = () => {
                   ? {
                       uri: currentChild?.imageUrl,
                     }
-                  : avatarArray[currentChild?.avtarIndex]?.icon
+                  : avatarArray[currentChild?.avatar]?.icon
               }
             />
             <RNTextComponent style={styles.tooltipUserName} isSemiBold>
@@ -532,7 +531,7 @@ const ChangeChild = ({
               ? {
                   uri: userProfile?.imageUrl,
                 }
-              : avatarArray[userProfile?.avtarIndex].icon
+              : avatarArray[userProfile?.avatar].icon
           }
         />
 

@@ -164,7 +164,7 @@ const GenerateStory = () => {
                     ? {
                         uri: currentChild.imageUrl,
                       }
-                    : avatarArray[currentChild.avtarIndex].icon
+                    : avatarArray[currentChild.avatar].icon
                 }
                 style={styles.addImage}
                 imageStyle={{borderRadius: 200}}>
