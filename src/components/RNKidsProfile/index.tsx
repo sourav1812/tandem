@@ -3,27 +3,19 @@ import React from 'react';
 import {styles} from './styles';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import {KidsProfileProps} from './interface';
-import {avatarArray} from '@tandem/screens/CreateChildProfile/interface';
 
 const RNKidsProfile = ({
   style,
   data,
-  imageIndex,
+  imageUrl,
 }: {
   style: StyleProp<ImageStyle>;
   data: KidsProfileProps;
-  imageIndex: number;
+  imageUrl: any;
 }) => {
   return (
     <View style={styles.container}>
-      <Image
-        source={
-          avatarArray[imageIndex]?.icon || {
-            uri: data.imageUrl,
-          }
-        }
-        style={[styles.profile, style]}
-      />
+      <Image source={imageUrl} style={[styles.profile, style]} />
       <RNTextComponent style={styles.name} isMedium>
         {data && data?.name}
       </RNTextComponent>

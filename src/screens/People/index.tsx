@@ -104,7 +104,7 @@ const People = ({}: PeopleScreenProps) => {
           <View style={styles.bigpeople}>
             <View>
               <Image
-                source={avatarArray[1].icon}
+                source={{uri: avatarArray[1].icon}}
                 style={[
                   styles.profile,
                   isTablet && {
@@ -157,13 +157,9 @@ const People = ({}: PeopleScreenProps) => {
                   navigateTo(SCREEN_NAME.EditChildProfile);
                 }}>
                 <Image
-                  source={
-                    currentChild?.imageUrl
-                      ? {
-                          uri: currentChild?.imageUrl,
-                        }
-                      : avatarArray[currentChild?.avatar].icon
-                  }
+                  source={{
+                    uri: currentChild?.avatar,
+                  }}
                   style={[
                     styles.profile,
                     isTablet && {

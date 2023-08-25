@@ -51,7 +51,8 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
     value: new Date().toString(),
   });
   const [imageData, setImageData] = useState<Image | null>(null);
-  const [avatar, setAvatar] = useState<number | null>(null);
+  const [avatar, setAvatar] = useState<string | null>(null);
+  const [imageIndex, setImageIndex] = useState<number | null>(null);
 
   const updateState = (date: any) => {
     setState((previouState: any) => {
@@ -60,7 +61,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
   };
 
   const nextQuestion = async () => {
-    if (questionIndex <= 2) {
+    if (questionIndex <= 2 && imageIndex !== 0) {
       let indexArry: indicatorType[] = [...bulletinArray];
       bulletinArray.map((item, index) => {
         if (questionIndex + 1 > index) {
@@ -91,7 +92,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
         name: name.value,
         dob: dob.value, // ! pass in the whole date object
         gender: gender,
-        avatar: avatar === 0 ? imageData?.data : avatar?.toString(),
+        avatar: imageIndex === 0 ? imageData?.data : avatar,
       });
       if (response) {
         if (childList.length === 0) {
@@ -160,7 +161,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
       return false;
     } else if (questionIndex === 2 && name.value === '') {
       return false;
-    } else if (avatar === null && questionIndex === 3) {
+    } else if (imageIndex === null && questionIndex === 3) {
       return false;
     } else {
       return true;
@@ -293,18 +294,18 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
                       icon={
                         imageData && index === 0
                           ? {uri: imageData?.path}
-                          : item.icon
+                          : {uri: item.icon}
                       }
                       customStyle={[
                         styles.avatar,
                         index === 0 && {justifyContent: 'center'},
                         index === 0 &&
-                          index === avatar &&
+                          index === imageIndex &&
                           imageData && {
                             borderWidth: 3,
                             borderColor: themeColor.themeBlue,
                           },
-                        index === avatar &&
+                        index === imageIndex &&
                           index !== 0 && {
                             backgroundColor: themeColor.themeBlue,
                           },
@@ -332,7 +333,8 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
                               console.log(err);
                             });
                         }
-                        setAvatar(index);
+                        setAvatar(item.icon);
+                        setImageIndex(index);
                       }}
                     />
                   );
@@ -427,12 +429,12 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
                         styles.avatar,
                         index === 0 && {justifyContent: 'center'},
                         index === 0 &&
-                          index === avatar &&
+                          index === imageIndex &&
                           imageData && {
                             borderWidth: 3,
                             borderColor: themeColor.themeBlue,
                           },
-                        index === avatar &&
+                        index === imageIndex &&
                           index !== 0 && {
                             backgroundColor: themeColor.themeBlue,
                           },
@@ -455,12 +457,14 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
                           })
                             .then(response => {
                               setImageData(response);
+                              console.log(response, 'sdfghjrfdsresponse');
                             })
                             .catch(err => {
                               console.log(err);
                             });
                         }
-                        setAvatar(index);
+                        setAvatar(item.icon);
+                        setImageIndex(index);
                       }}
                     />
                   );

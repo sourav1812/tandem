@@ -6,7 +6,7 @@ export interface ChildData {
   name: string;
   dob: string;
   gender: string;
-  avatar: number;
+  avatar: string;
   childId: string;
   type: string;
   imageUrl?: string;
@@ -25,7 +25,7 @@ const initialState: ChildState = {
     name: '',
     dob: '',
     gender: '',
-    avatar: -1,
+    avatar: '',
     childId: '',
     type: '',
     imageUrl: '',
