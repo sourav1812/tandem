@@ -5,6 +5,8 @@
 // import Rabbit from '@tandem/assets/svg/Rabbit';
 // import Camera from '@tandem/assets/svg/Camera';
 
+import {BASE_URL_FOR_IMAGES} from '@tandem/constants/api';
+
 export interface indicatorType {
   index: number;
   isSelected: boolean;
@@ -21,10 +23,10 @@ export interface avatar {
 }
 
 export const avatarArray: avatar[] = [
-  {icon: require('@tandem/assets/png/camera.png')},
-  {icon: require('@tandem/assets/png/lion.png')},
-  {icon: require('@tandem/assets/png/giraff.png')},
-  {icon: require('@tandem/assets/png/elephant.png')},
-  {icon: require('@tandem/assets/png/fox.png')},
-  {icon: require('@tandem/assets/png/rabit.png')},
+  {icon: BASE_URL_FOR_IMAGES + 'camera.png'},
+  {icon: BASE_URL_FOR_IMAGES + 'lion.png'},
+  {icon: BASE_URL_FOR_IMAGES + 'giraff.png'},
+  {icon: BASE_URL_FOR_IMAGES + 'elephant.png'},
+  {icon: BASE_URL_FOR_IMAGES + 'fox.png'},
+  {icon: BASE_URL_FOR_IMAGES + 'rabit.png'},
 ];

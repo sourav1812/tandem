@@ -15,7 +15,6 @@ import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
 import dayjs from 'dayjs';
 import {RootState} from '@tandem/redux/store';
-import {avatarArray} from '../CreateChildProfile/interface';
 
 const EditChildProfile = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -52,13 +51,9 @@ const EditChildProfile = () => {
         customStyle={styles.heading}
       />
       <Image
-        source={
-          currentChild?.imageUrl
-            ? {
-                uri: currentChild?.imageUrl,
-              }
-            : avatarArray[currentChild?.avtarIndex].icon
-        }
+        source={{
+          uri: currentChild?.avatar,
+        }}
         style={styles.profile}
       />
       <View

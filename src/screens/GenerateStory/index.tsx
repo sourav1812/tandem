@@ -159,13 +159,9 @@ const GenerateStory = () => {
                 },
               ]}>
               <ImageBackground
-                source={
-                  currentChild.imageUrl
-                    ? {
-                        uri: currentChild.imageUrl,
-                      }
-                    : avatarArray[currentChild.avtarIndex].icon
-                }
+                source={{
+                  uri: currentChild.avatar,
+                }}
                 style={styles.addImage}
                 imageStyle={{borderRadius: 200}}>
                 <RNButton

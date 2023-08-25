@@ -28,7 +28,6 @@ import {TOOLTIP} from '@tandem/constants/LocalConstants';
 import {useNavigation} from '@react-navigation/native';
 import {RootState, store} from '@tandem/redux/store';
 import {setQuestionIndex} from '@tandem/redux/slices/questions.slice';
-import {avatarArray} from '../CreateChildProfile/interface';
 import {
   ChildData,
   saveCurrentChild,
@@ -42,7 +41,6 @@ const Home = () => {
   const currentChild = useAppSelector(state => state.createChild.currentChild);
   const currentAdult = useAppSelector(state => state.createChild.currentAdult);
   const childList = useAppSelector(state => state.createChild.childList);
-  const userdata = useAppSelector(state => state.userData.userDataObject);
 
   const [tooltipMode, setToolTipMode] = useState({
     tooltipOne: true,
@@ -188,13 +186,9 @@ const Home = () => {
             style={styles.tooltipUserWrapper}>
             <Image
               style={styles.tooltipUserImage}
-              source={
-                currentChild?.imageUrl
-                  ? {
-                      uri: currentChild?.imageUrl,
-                    }
-                  : avatarArray[currentChild?.avtarIndex]?.icon
-              }
+              source={{
+                uri: currentChild?.avatar,
+              }}
             />
             <RNTextComponent style={styles.tooltipUserName} isSemiBold>
               {currentChild?.name?.split(' ')[0]}
@@ -527,15 +521,8 @@ const ChangeChild = ({
         style={{alignItems: 'center'}}>
         <Image
           style={styles.changeChildImage}
-          source={
-            userProfile?.imageUrl
-              ? {
-                  uri: userProfile?.imageUrl,
-                }
-              : avatarArray[userProfile?.avtarIndex].icon
-          }
+          source={{uri: userProfile?.avatar}}
         />
-
         <RNTextComponent
           style={{
             fontSize: verticalScale(16),

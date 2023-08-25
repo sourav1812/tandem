@@ -25,7 +25,6 @@ import {RootState} from '@tandem/redux/store';
 import RNTooltip from '@tandem/components/RNTooltip';
 import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
 import {TOOLTIP} from '@tandem/constants/LocalConstants';
-import {avatarArray} from '../CreateChildProfile/interface';
 import {
   ChildData,
   saveCurrentAdult,
@@ -198,7 +197,7 @@ const Account = () => {
                         borderRadius: 8,
                       }}
                       data={item}
-                      imageIndex={item.imageUrl ? -1 : item.avtarIndex}
+                      imageUrl={{uri: item.avatar}}
                     />
                   </Pressable>
                 );
@@ -299,7 +298,7 @@ const Account = () => {
                         borderRadius: 8,
                       }}
                       data={item}
-                      imageIndex={item.imageUrl ? -1 : item.avtarIndex}
+                      imageUrl={{uri: item.avatar}}
                     />
                   </Pressable>
                 );
@@ -311,8 +310,8 @@ const Account = () => {
                       removePlayer(index);
                     }}>
                     <RNParentProfile
-                      height={portrait ? verticalScale(60) : verticalScale(40)}
-                      width={portrait ? verticalScale(60) : verticalScale(40)}
+                      height={portrait ? verticalScale(82) : verticalScale(40)}
+                      width={portrait ? verticalScale(82) : verticalScale(40)}
                       data={item}
                       custumStyle={{marginTop: 5}}
                     />
@@ -464,13 +463,7 @@ const Account = () => {
                 return (
                   <Image
                     key={index.toString()}
-                    source={
-                      item?.imageUrl
-                        ? {
-                            uri: item?.imageUrl,
-                          }
-                        : avatarArray[item.avtarIndex].icon
-                    }
+                    source={{uri: item.avatar}}
                     style={styles.profile}
                   />
                 );
