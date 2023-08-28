@@ -288,6 +288,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
                 {avatarArray.map((item, index) => {
                   return (
                     <RNAvatarComponent
+                      key={index.toString()}
                       icon={item.icon}
                       customStyle={[
                         styles.avatar,
@@ -297,23 +298,23 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
                       ]}
                       imgStyle={styles.avatarImg}
                       onPress={() => {
-                        if (index === 0) {
-                          return;
-                          // ImagePicker.openPicker({
-                          //   width: 300,
-                          //   height: 300,
-                          //   cropping: true,
-                          //   includeBase64: true,
-                          //   loadingLabelText: 'Image',
-                          //   mediaType: 'photo',
-                          // })
-                          //   .then(response => {
-                          //     setImageData(response);
-                          //   })
-                          //   .catch(err => {
-                          //     console.log(err);
-                          //   });
-                        }
+                        // if (index === 0) {
+                        //   return;
+                        // ImagePicker.openPicker({
+                        //   width: 300,
+                        //   height: 300,
+                        //   cropping: true,
+                        //   includeBase64: true,
+                        //   loadingLabelText: 'Image',
+                        //   mediaType: 'photo',
+                        // })
+                        //   .then(response => {
+                        //     setImageData(response);
+                        //   })
+                        //   .catch(err => {
+                        //     console.log(err);
+                        //   });
+                        // }
                         setAvatar(item.icon);
                       }}
                     />
