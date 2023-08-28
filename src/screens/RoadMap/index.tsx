@@ -80,7 +80,7 @@ const RNRoadmap = () => {
         />
         <Pressable
           onPress={() => {
-            navigateTo(SCREEN_NAME.ACCOUNT);
+            navigateTo(SCREEN_NAME.CONGRATULATION);
           }}>
           <YellowButton />
         </Pressable>

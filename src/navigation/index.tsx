@@ -68,6 +68,12 @@ const AppNavigator = () => {
                 name={SCREEN_NAME.GENERATE_STORY}
               />
               <Stack.Screen
+                getComponent={() =>
+                  require('@tandem/screens/Congratulation').default
+                }
+                name={SCREEN_NAME.CONGRATULATION}
+              />
+              <Stack.Screen
                 getComponent={() => require('@tandem/screens/RoadMap').default}
                 name={SCREEN_NAME.ROADMAP}
               />
