@@ -13,6 +13,7 @@ import {changeMode} from '@tandem/redux/slices/mode.slice';
 import {removeToken} from '@tandem/redux/slices/tokens.slice';
 import {store} from '@tandem/redux/store';
 import logoutApi from '@tandem/api/logoutApi';
+import {firebase} from '@react-native-firebase/messaging';
 
 const logout = async ({api = true}: {api?: boolean}) => {
   try {
@@ -25,6 +26,7 @@ const logout = async ({api = true}: {api?: boolean}) => {
   store.dispatch(logoutFromRedux());
   store.dispatch(clearAlertData());
   removeKey(TERMS_ACCEPTED);
+  firebase.messaging().deleteToken();
   store.dispatch(changeMode(MODE.A));
   navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN, {}, true);
   store.dispatch(stopLoader());

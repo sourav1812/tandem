@@ -28,6 +28,7 @@ export interface Page {
   [STORIES_RESPONSE.PAGE_NUMBER]: number;
   [STORIES_RESPONSE.SELECTED_ILLUSTRATION]: string | null;
   [STORIES_RESPONSE.STORY_TEXT]: string;
+  image?: string;
 }
 
 export interface Prompt {

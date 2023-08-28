@@ -27,9 +27,17 @@ export const bookShelf = createSlice({
     clearbookShelf: state => {
       state.books = [];
     },
+    setImageForPage: (state, action) => {
+      const {bookIndex, pageIndex, image} = action.payload;
+      if (bookIndex === -1) {
+        return;
+      }
+      state.books[bookIndex].pages[pageIndex].image = image;
+    },
   },
 });
 
-export const {addNewBook, removeLatestBook, clearbookShelf} = bookShelf.actions;
+export const {addNewBook, removeLatestBook, clearbookShelf, setImageForPage} =
+  bookShelf.actions;
 
 export default bookShelf.reducer;

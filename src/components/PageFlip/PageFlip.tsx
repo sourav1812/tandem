@@ -13,7 +13,7 @@ export const PageFlip = ({
 }) => {
   const textArray = book.pages.map(page => ({
     text: page.story_text,
-    img: page.illustration_url,
+    img: page.image,
   }));
   return (
     <Project

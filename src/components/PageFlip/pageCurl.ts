@@ -9,7 +9,7 @@ uniform vec4 container;
 uniform float cornerRadius;
 uniform vec2 resolution;
 
-const float r = ${scale(400)};
+const float r = ${scale(150)};
 const float scaleFactor = 0.2;
 
 ${Core}
