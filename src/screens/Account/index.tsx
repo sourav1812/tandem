@@ -477,7 +477,7 @@ const Account = () => {
       <RNSignoutModal
         visible={signoutModal}
         renderModal={toggleSignOut}
-        nextClick={logout}
+        nextClick={() => logout({})}
       />
     </RNScreenWrapper>
   );

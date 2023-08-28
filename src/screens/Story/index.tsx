@@ -16,14 +16,59 @@ import {MODE} from '@tandem/constants/mode';
 import {useRoute} from '@react-navigation/native';
 import {BooksData} from '../Bookshelf/interface';
 
+import {store} from '@tandem/redux/store';
+import {setImageForPage} from '@tandem/redux/slices/bookShelf.slice';
+import RNFetchBlob from 'rn-fetch-blob';
+import themeColor from '@tandem/theme/themeColor';
+
 const Story = () => {
   const [visible, setVisible] = useState(false);
+  const [progress, setProgress] = useState({val: 0, len: 0});
+  const [redirect, setRedirect] = useState(false);
   const mode = useAppSelector(state => state.mode.mode);
   const route: any = useRoute();
   const routeData: BooksData = route?.params?.routeData;
   const toggelMenuBar = () => {
     setVisible(!visible);
   };
+  const {val, len} = progress;
+  const shouldRedirect = () => {
+    if (val && len) {
+      if (val === len) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  React.useEffect(() => {
+    setRedirect(shouldRedirect());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [val]);
+
+  React.useEffect(() => {
+    // routeData.id
+    const books = store.getState().bookShelf.books;
+    const bookIndex = books.findIndex(book => book.bookId === routeData.id);
+    const book = books[bookIndex];
+    setProgress(prev => ({...prev, len: book.pages.length}));
+    book.pages.forEach((page, pageIndex) => {
+      if (!page.image) {
+        RNFetchBlob.config({})
+          .fetch('GET', page.illustration_url, {})
+          .then(res => {
+            store.dispatch(
+              setImageForPage({
+                bookIndex,
+                pageIndex,
+                image: 'data:image/png;base64,' + res.base64(),
+              }),
+            );
+            setProgress(prev => ({...prev, val: prev.val + 1}));
+          });
+      }
+    });
+  }, [routeData.id]);
 
   return (
     <>
@@ -79,12 +124,19 @@ const Story = () => {
             </ScrollView>
           </View>
           <RNButton
+            isDisabled={!redirect}
             title={
               mode === MODE.B
                 ? translation('READ_TOGETHER')
                 : translation('REREAD')
             }
-            customStyle={styles.button}
+            customStyle={[
+              styles.button,
+              {
+                backgroundColor: redirect ? themeColor.themeBlue : 'red',
+                borderColor: redirect ? themeColor.themeBlue : 'red',
+              },
+            ]}
             textStyle={{fontSize: verticalScale(14)}}
             onClick={() => {
               navigateTo(SCREEN_NAME.STORY_TELLING, {id: routeData.id});

@@ -47,7 +47,7 @@ const refreshAccessToken = async () => {
 
     try {
       if (!refreshToken) {
-        logout();
+        logout({api: false});
         throw new Error('No refreshToken found');
       }
 
@@ -62,7 +62,7 @@ const refreshAccessToken = async () => {
       return accessToken;
     } catch (error) {
       console.log('error in refresh token logic:', error);
-      logout();
+      logout({api: false});
     }
   } else {
     // If another request is already refreshing the token, wait for it to complete

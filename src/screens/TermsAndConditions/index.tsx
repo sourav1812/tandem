@@ -72,7 +72,7 @@ const TermsAndConditions = () => {
             onlyBorder
             buttonColor={themeColor.themeBlue}
             onClick={() => {
-              logout();
+              logout({});
             }}
             title={translation('CANCEL')}
             customStyle={styles.button}
