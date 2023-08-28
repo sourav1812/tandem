@@ -14,7 +14,5 @@ export interface avatar {
 }
 
 export const avatarArray: avatar[] = [...new Array(29).keys()].map(key => ({
-  icon: `https://raw.githubusercontent.com/SahilSharma-GeekyBones/Assets/main/tandem/avatar${
-    key + 1
-  }.png`,
+  icon: `https://tandem.geeky.dev/v1/static/images/avatar${key + 1}.png`,
 }));

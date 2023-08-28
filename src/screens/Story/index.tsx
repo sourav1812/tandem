@@ -15,7 +15,6 @@ import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {MODE} from '@tandem/constants/mode';
 import {useRoute} from '@react-navigation/native';
 import {BooksData} from '../Bookshelf/interface';
-
 import {store} from '@tandem/redux/store';
 import {setImageForPage} from '@tandem/redux/slices/bookShelf.slice';
 import RNFetchBlob from 'rn-fetch-blob';
