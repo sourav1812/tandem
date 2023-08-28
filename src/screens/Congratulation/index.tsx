@@ -18,7 +18,7 @@ const Congratulation = () => {
       <Image
         style={styles.img}
         source={{
-          uri: 'https://png.pngtree.com/png-vector/20220826/ourmid/pngtree-gold-congratulations-lettering-graduate-sticker-with-confetti-transparent-background-png-image_6109456.png',
+          uri: 'https://media.istockphoto.com/id/960999328/vector/congratulations-card-with-light-rays.jpg?s=612x612&w=0&k=20&c=MO46WkFcvAbRU-S1nZUz_Rko2d8XJtp-fgBk4fmgn-E=',
         }}
         resizeMode="contain"
       />

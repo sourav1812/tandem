@@ -19,7 +19,7 @@ export const addNewChild = async ({
       avatar,
     },
     onSuccess: () => {
-      navigateTo(SCREEN_NAME.BOTTOM_TAB, {}, true);
+      navigateTo(SCREEN_NAME.ACCOUNT);
     },
   });
   if (!response) {
