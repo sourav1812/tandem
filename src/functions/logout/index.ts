@@ -14,10 +14,12 @@ import {removeToken} from '@tandem/redux/slices/tokens.slice';
 import {store} from '@tandem/redux/store';
 import logoutApi from '@tandem/api/logoutApi';
 
-const logout = async () => {
+const logout = async ({api = true}: {api?: boolean}) => {
   try {
     store.dispatch(startLoader());
-    await logoutApi();
+    if (api) {
+      await logoutApi();
+    }
   } catch (error) {}
   store.dispatch(removeToken);
   store.dispatch(logoutFromRedux());
