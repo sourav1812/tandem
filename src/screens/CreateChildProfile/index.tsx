@@ -15,7 +15,6 @@ import RNTextInputWithLabel from '@tandem/components/RNTextInputWithLabel';
 import RNAvatarComponent from '@tandem/components/RNAvatarComponent';
 import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
-import {verticalScale} from 'react-native-size-matters';
 import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
 import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
 import DatePicker from 'react-native-date-picker';
@@ -50,7 +49,6 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
     value: new Date().toString(),
   });
   const [avatar, setAvatar] = useState<string | null>(null);
-  const [imageIndex, setImageIndex] = useState<number | null>(null);
 
   const updateState = (date: any) => {
     setState((previouState: any) => {
@@ -59,7 +57,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
   };
 
   const nextQuestion = async () => {
-    if (questionIndex <= 2 && imageIndex !== 0) {
+    if (questionIndex <= 2 && avatar === null) {
       let indexArry: indicatorType[] = [...bulletinArray];
       bulletinArray.map((item, index) => {
         if (questionIndex + 1 > index) {
@@ -153,16 +151,19 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
   };
 
   const disableButtonForChilForm = () => {
-    if (gender === '') {
+    if (questionIndex === 1 && !gender) {
       return false;
-    } else if (questionIndex === 2 && name.value === '') {
-      return false;
-    } else if (imageIndex === null && questionIndex === 3) {
-      return false;
-    } else {
-      return true;
     }
+    if (questionIndex === 2 && !name.value) {
+      return false;
+    }
+    if (avatar === null && questionIndex === 3) {
+      return false;
+    }
+
+    return true;
   };
+
   const disableButtonForAdultForm = () => {
     return true;
   };
@@ -290,12 +291,9 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
                       icon={item.icon}
                       customStyle={[
                         styles.avatar,
-                        index === 0 && {justifyContent: 'center'},
-                        index === imageIndex &&
-                          index !== 0 && {
-                            backgroundColor: themeColor.themeBlue,
-                          },
-                        isTablet && {marginTop: verticalScale(24)},
+                        avatar === item.icon && {
+                          backgroundColor: themeColor.themeBlue,
+                        },
                       ]}
                       imgStyle={styles.avatarImg}
                       onPress={() => {
@@ -317,7 +315,6 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
                           //   });
                         }
                         setAvatar(item.icon);
-                        setImageIndex(index);
                       }}
                     />
                   );
@@ -406,13 +403,9 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
                       icon={item.icon}
                       customStyle={[
                         styles.avatar,
-                        index === 0 && {justifyContent: 'center'},
-
-                        index === imageIndex &&
-                          index !== 0 && {
-                            backgroundColor: themeColor.themeBlue,
-                          },
-                        isTablet && {marginTop: verticalScale(24)},
+                        avatar === item.icon && {
+                          backgroundColor: themeColor.themeBlue,
+                        },
                       ]}
                       imgStyle={styles.avatarImg}
                       onPress={() => {
@@ -435,7 +428,6 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
                           //   });
                         }
                         setAvatar(item.icon);
-                        setImageIndex(index);
                       }}
                     />
                   );

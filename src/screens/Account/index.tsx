@@ -194,7 +194,7 @@ const Account = () => {
                           ? verticalScale(60)
                           : verticalScale(40),
                         width: portrait ? verticalScale(60) : verticalScale(40),
-                        borderRadius: 8,
+                        borderRadius: 100,
                       }}
                       data={item}
                       avatar={item.avatar}
@@ -295,7 +295,7 @@ const Account = () => {
                           : verticalScale(40),
                         width: portrait ? verticalScale(60) : verticalScale(40),
                         marginRight: 12,
-                        borderRadius: 8,
+                        borderRadius: 100,
                       }}
                       data={item}
                       avatar={item.avatar}

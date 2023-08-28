@@ -80,6 +80,8 @@ export const styles = StyleSheet.create({
   },
   avatar: {
     marginTop: verticalScale(12),
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   avatar2: {
     justifyContent: 'center',
@@ -93,7 +95,8 @@ export const styles = StyleSheet.create({
     backgroundColor: themeColor.themeBlue,
   },
   avatarImg: {
-    height: verticalScale(90),
+    height: verticalScale(120),
+    borderRadius: 100,
   },
   date: {
     backgroundColor: themeColor.lightGray,
