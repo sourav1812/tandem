@@ -80,7 +80,7 @@ const TermsAndConditions = () => {
           <RNButton
             onClick={() => {
               storeKey(TERMS_ACCEPTED, TERMS_ACCEPTED);
-              navigateTo(SCREEN_NAME.HELP_CENTER, {}, true);
+              navigateTo(SCREEN_NAME.HELP_CENTER);
             }}
             title={translation('ACCEPT')}
             customStyle={[

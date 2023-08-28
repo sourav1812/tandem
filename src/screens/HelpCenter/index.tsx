@@ -168,7 +168,7 @@ const HelpCenter = ({route}: HelpCenterProps) => {
           if (fromPeople) {
             navigateTo();
           } else {
-            navigateTo(SCREEN_NAME.ACCOUNT);
+            navigateTo(SCREEN_NAME.ACCOUNT, {}, true);
           }
         }}
       />
