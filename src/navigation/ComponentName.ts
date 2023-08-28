@@ -31,4 +31,5 @@ export enum SCREEN_NAME {
   CREATE_PASSWORD = 'CreatePassword',
   TERMS_OF_USE = 'TermsOfUse',
   PRIVACY_POLICIES = 'PrivacyPolicies',
+  CONGRATULATION = 'Congratulation',
 }

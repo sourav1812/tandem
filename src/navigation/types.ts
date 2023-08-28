@@ -33,6 +33,7 @@ export type RootStackParamList = {
   CreatePassword: undefined;
   PrivacyPolicies: undefined;
   TermsOfUse: undefined;
+  Congratulation: undefined;
 };
 
 export type RootTabParamList = {

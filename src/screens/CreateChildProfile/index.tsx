@@ -91,18 +91,17 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
         avatar,
       });
       if (response) {
-        if (childList.length === 0) {
-          dispatch(
-            saveCurrentChild({
-              childId: response?.childId,
-              name: name.value,
-              dob: dob.value,
-              gender: gender,
-              avatar: avatar,
-              type: 'child',
-            }),
-          );
-        }
+        dispatch(
+          saveCurrentChild({
+            childId: response?.childId,
+            name: name.value,
+            dob: dob.value,
+            gender: gender,
+            avatar: avatar,
+            type: 'child',
+          }),
+        );
+
         dispatch(
           saveChildData({
             childId: response?.childId,
