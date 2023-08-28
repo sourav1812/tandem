@@ -26,8 +26,8 @@ axiosInstance.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
       config.params = store.getState().params.object;
-      config.headers['Accept-Language'] = i18n.locale;
     }
+    config.headers['Accept-Language'] = i18n.locale;
     return config;
   },
   error => {
