@@ -52,4 +52,7 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: verticalScale(24),
   },
+  dropDownButton: {
+    height: verticalScale(55),
+  },
 });
