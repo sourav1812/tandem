@@ -30,7 +30,6 @@ import {CreateChildProfileProps} from '@tandem/navigation/types';
 
 const CreateChildProfile = ({route}: CreateChildProfileProps) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
-  const childList = useAppSelector(state => state.createChild.childList);
   const fromAddAdult = route.params?.fromAddAdult;
   const dispatch = useAppDispatch();
   const [state, setState] = useState<ChildProfileStateObject>({

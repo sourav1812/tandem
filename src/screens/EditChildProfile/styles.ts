@@ -56,8 +56,12 @@ export const styles = StyleSheet.create({
     height: verticalScale(77),
     width: verticalScale(77),
     marginTop: verticalScale(22),
-    // marginBottom: verticalScale(13),
+
     borderRadius: 1000,
     alignSelf: 'center',
+  },
+  date: {
+    backgroundColor: themeColor.lightGray,
+    height: verticalScale(55),
   },
 });

@@ -9,13 +9,15 @@ import {verticalScale} from 'react-native-size-matters';
 interface languageDropDownProp {
   heading: string;
   text: string;
-  customStyle: StyleProp<ViewStyle>;
+  customStyle?: StyleProp<ViewStyle>;
+  showIcon?: boolean;
 }
 
 export const LanguageDropDown = ({
   heading,
   text,
   customStyle,
+  showIcon = true,
 }: languageDropDownProp) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   return (
@@ -36,7 +38,7 @@ export const LanguageDropDown = ({
         <RNTextComponent style={[isTablet && {fontSize: 18}]}>
           {text}
         </RNTextComponent>
-        <DownArrow />
+        {showIcon && <DownArrow />}
       </View>
     </View>
   );
