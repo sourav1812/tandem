@@ -116,7 +116,7 @@ const RNRoadmap = () => {
               if (questionIndex !== 7) return;
               try {
                 await generateStory({
-                  childId: currentChild.childId, // TODO provide childId of selected child
+                  childId: currentChild.childId,
                   storyPromptData: storyGenerationArray,
                 });
               } catch (error) {

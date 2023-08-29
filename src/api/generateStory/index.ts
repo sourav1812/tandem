@@ -5,8 +5,9 @@ import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
 
 export default async ({childId, storyPromptData}: GenerateStoryData) => {
+  console.log(API.GENERATE_STORY + `/${childId}`, storyPromptData);
   const response = await post({
-    path: API.GENERATE_STORY + `/:${childId}`,
+    path: API.GENERATE_STORY + `/${childId}`,
     data: {
       storyPromptData,
     },
