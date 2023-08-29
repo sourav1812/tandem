@@ -269,4 +269,16 @@ const put = async <T>({
   return executeRequest<Api & T>(axiosInstance.put, path, data, onSuccess);
 };
 
-export {get, post, put};
+const patch = async <T>({
+  path,
+  data,
+  onSuccess = () => {},
+}: {
+  path: string;
+  data: any;
+  onSuccess: () => void;
+}) => {
+  return executeRequest<Api & T>(axiosInstance.patch, path, data, onSuccess);
+};
+
+export {get, post, put, patch};
