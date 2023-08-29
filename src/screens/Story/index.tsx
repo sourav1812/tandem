@@ -23,7 +23,7 @@ import themeColor from '@tandem/theme/themeColor';
 const Story = () => {
   const [visible, setVisible] = useState(false);
   const [progress, setProgress] = useState({val: 0, len: 0});
-  const [redirect, setRedirect] = useState(false);
+  const [redirect, setRedirect] = useState(true);
   const mode = useAppSelector(state => state.mode.mode);
   const route: any = useRoute();
   const routeData: BooksData = route?.params?.routeData;
@@ -40,34 +40,34 @@ const Story = () => {
     return false;
   };
 
-  React.useEffect(() => {
-    setRedirect(shouldRedirect());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [val]);
+  // React.useEffect(() => {
+  //   setRedirect(shouldRedirect());
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [val]);
 
-  React.useEffect(() => {
-    // routeData.id
-    const books = store.getState().bookShelf.books;
-    const bookIndex = books.findIndex(book => book.bookId === routeData.id);
-    const book = books[bookIndex];
-    setProgress(prev => ({...prev, len: book.pages.length}));
-    book.pages.forEach((page, pageIndex) => {
-      if (!page.image) {
-        RNFetchBlob.config({})
-          .fetch('GET', page.illustration_url, {})
-          .then(res => {
-            store.dispatch(
-              setImageForPage({
-                bookIndex,
-                pageIndex,
-                image: 'data:image/png;base64,' + res.base64(),
-              }),
-            );
-            setProgress(prev => ({...prev, val: prev.val + 1}));
-          });
-      }
-    });
-  }, [routeData.id]);
+  // React.useEffect(() => {
+  //   // routeData.id
+  //   const books = store.getState().bookShelf.books;
+  //   const bookIndex = books.findIndex(book => book.bookId === routeData.id);
+  //   const book = books[bookIndex];
+  //   setProgress(prev => ({...prev, len: book.pages.length}));
+  //   book.pages.forEach((page, pageIndex) => {
+  //     if (!page.image) {
+  //       RNFetchBlob.config({})
+  //         .fetch('GET', page.illustration_url, {})
+  //         .then(res => {
+  //           store.dispatch(
+  //             setImageForPage({
+  //               bookIndex,
+  //               pageIndex,
+  //               image: 'data:image/png;base64,' + res.base64(),
+  //             }),
+  //           );
+  //           setProgress(prev => ({...prev, val: prev.val + 1}));
+  //         });
+  //     }
+  //   });
+  // }, [routeData.id]);
 
   return (
     <>
