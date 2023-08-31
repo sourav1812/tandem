@@ -20,15 +20,20 @@ export interface PlaceType {
   name: string;
   icon: string;
   bgc: string;
+  img?: SVGElement;
 }
 
-export const place: PlaceType[] = [
-  {name: 'Home', icon: '🏠', bgc: themeColor.themeBlue},
-  {name: 'City', icon: '🏙️', bgc: themeColor.gold},
-  {name: 'Jungle', icon: '🌴', bgc: themeColor.lightGreen},
-  {name: 'Farm', icon: '🐮', bgc: themeColor.pink},
-  {name: 'Hill', icon: '⛰️', bgc: themeColor.themeBlue},
-  {name: 'Camp', icon: '⛺', bgc: themeColor.gold},
+export interface OnlyImageType {
+  name: string;
+  url: any;
+}
+
+export const place: OnlyImageType[] = [
+  {name: 'At home', url: require('../../assets/png/onboarding1.png')},
+  {name: 'Big sailing boat', url: require('../../assets/png/onboarding2.png')},
+  {name: 'Camping in tents', url: require('../../assets/png/onboarding3.png')},
+  {name: 'City', url: require('@tandem/assets/png/natureCamp.jpeg')},
+  {name: 'Dark forest', url: require('@tandem/assets/png/notSure.png')},
 ];
 
 export const audience: PlaceType[] = [
