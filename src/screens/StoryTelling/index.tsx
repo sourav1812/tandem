@@ -79,7 +79,6 @@ const StoryTelling = () => {
       return {...previouState, ...date};
     });
   };
-
   // React.useEffect(() => {
   //   switch (currentIndex) {
   //     case 1:
@@ -247,8 +246,7 @@ const StoryTelling = () => {
   };
 
   return (
-    <RNScreenWrapper
-      giveStatusColor={tooltipArray?.includes(13) ? false : true}>
+    <RNScreenWrapper giveStatusColor={false}>
       <View style={styles.headingButton}>
         <RNTooltip
           isTablet={isTablet}
