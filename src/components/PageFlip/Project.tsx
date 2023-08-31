@@ -22,8 +22,8 @@ import {
   RoundedRect,
   SkRect,
 } from '@shopify/react-native-skia';
-import {PixelRatio, useWindowDimensions} from 'react-native';
-import React from 'react';
+import {PixelRatio, StatusBar, useWindowDimensions} from 'react-native';
+import React, {useState} from 'react';
 import {pageCurl} from './pageCurl';
 import {verticalScale} from 'react-native-size-matters';
 
@@ -43,6 +43,7 @@ interface RenderSceneProps {
   mount?: boolean;
   page: number;
   total: number;
+  hHeight: number;
   outer: SkRect;
 }
 
@@ -90,7 +91,15 @@ export const Project = ({
   activeIndex,
   setActiveIndex,
 }: ProjectProps) => {
-  const {width: wWidth, height: hHeight} = useWindowDimensions();
+  const {width: wWidth, height: heightRef} = useWindowDimensions();
+  const [hHeight, setHeight] = useState(
+    heightRef + (StatusBar.currentHeight || 0),
+  );
+
+  React.useEffect(() => {
+    setHeight(heightRef + (StatusBar.currentHeight || 0));
+  }, [heightRef]);
+
   const outer = Skia.XYWHRect(0, 0, wWidth, hHeight);
 
   const font = useFont(
@@ -159,6 +168,7 @@ export const Project = ({
       onTouch={disbaleTouch ? undefined : onTouch}>
       {activeIndex - 1 >= 0 && (
         <RenderScene
+          hHeight={hHeight}
           outer={outer}
           page={activeIndex}
           total={textArray.length}
@@ -184,6 +194,7 @@ export const Project = ({
             const sentence = processSentences(obj.text, wWidth);
             return (
               <RenderScene
+                hHeight={hHeight}
                 outer={outer}
                 page={index + 1}
                 total={textArray.length}
@@ -215,9 +226,10 @@ const RenderScene = ({
   page,
   total,
   outer,
+  hHeight,
 }: RenderSceneProps) => {
   const imageRef = useImage(image);
-  const {width: wWidth, height: hHeight} = useWindowDimensions();
+  const {width: wWidth} = useWindowDimensions();
   const [showBackdrop, setShowBackdrop] = React.useState(false);
   const numberOfChars = Math.floor((wWidth * 1.5) / fontSize);
   React.useEffect(() => {
@@ -237,7 +249,12 @@ const RenderScene = ({
           <Fill color="rgba(255, 255, 255, 0.438)" />
         </BackdropBlur>
       )}
-      <Progressbar page={page} total={total} length={sentences.length} />
+      <Progressbar
+        hHeight={hHeight}
+        page={page}
+        total={total}
+        length={sentences.length}
+      />
       {sentences.map((sentence, index) => (
         <Text
           key={index.toString()}
@@ -255,12 +272,14 @@ const Progressbar = ({
   page,
   total,
   length,
+  hHeight,
 }: {
   page: number;
   total: number;
   length: number;
+  hHeight: number;
 }) => {
-  const {width: wWidth, height: hHeight} = useWindowDimensions();
+  const {width: wWidth} = useWindowDimensions();
   return (
     <Group>
       <RoundedRect

@@ -40,34 +40,40 @@ const Story = () => {
     return false;
   };
 
-  // React.useEffect(() => {
-  //   setRedirect(shouldRedirect());
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [val]);
+  React.useEffect(() => {
+    setRedirect(shouldRedirect());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [val]);
 
-  // React.useEffect(() => {
-  //   // routeData.id
-  //   const books = store.getState().bookShelf.books;
-  //   const bookIndex = books.findIndex(book => book.bookId === routeData.id);
-  //   const book = books[bookIndex];
-  //   setProgress(prev => ({...prev, len: book.pages.length}));
-  //   book.pages.forEach((page, pageIndex) => {
-  //     if (!page.image) {
-  //       RNFetchBlob.config({})
-  //         .fetch('GET', page.illustration_url, {})
-  //         .then(res => {
-  //           store.dispatch(
-  //             setImageForPage({
-  //               bookIndex,
-  //               pageIndex,
-  //               image: 'data:image/png;base64,' + res.base64(),
-  //             }),
-  //           );
-  //           setProgress(prev => ({...prev, val: prev.val + 1}));
-  //         });
-  //     }
-  //   });
-  // }, [routeData.id]);
+  React.useEffect(() => {
+    // routeData.id
+    const books = store.getState().bookShelf.books;
+    const bookIndex = books.findIndex(book => book.bookId === routeData.id);
+    const book = books[bookIndex];
+    const doWeHaveImage = book.pages.every(obj => obj.image);
+    if (doWeHaveImage) {
+      setRedirect(true);
+      return;
+    }
+    setProgress(prev => ({...prev, len: book.pages.length}));
+    book.pages.forEach((page, pageIndex) => {
+      if (!page.image) {
+        RNFetchBlob.config({fileCache: true})
+          .fetch('GET', page.illustration_url, {})
+          .then(res => {
+            store.dispatch(
+              setImageForPage({
+                bookIndex,
+                pageIndex,
+                image: 'file://' + res.path(),
+              }),
+            );
+            setProgress(prev => ({...prev, val: prev.val + 1}));
+          });
+      }
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
