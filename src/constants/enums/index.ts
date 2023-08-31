@@ -8,13 +8,13 @@ export enum USER {
 }
 
 export enum STORY_PARTS {
-  WHO = 'who',
-  INCLUSION = 'childIncludedInStory',
-  WHERE = 'where',
-  WHAT_THINGS = 'whatThings',
-  WHAT_HAPPENS = 'whatHappens',
-  STYLES = 'styles',
-  COLOR = 'color',
+  WHO = 'characters',
+  INCLUSION = 'childInStory',
+  WHERE = 'location',
+  WHAT_THINGS = 'plotElements',
+  WHAT_HAPPENS = 'genre',
+  STYLES = 'illustrationStyle',
+  COLOR = 'illustrationColors',
 }
 
 export enum STORIES_RESPONSE {
