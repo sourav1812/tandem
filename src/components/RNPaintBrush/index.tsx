@@ -133,6 +133,15 @@ export default ({
     <View style={[styles.paintWrapper, {height, width: height}]}>
       <GestureDetector gesture={pan}>
         <Canvas style={{height, width: height}}>
+          {usedColor.map((colorRef, index) => (
+            <Circle
+              key={index.toString()}
+              cx={randomCircles[index].c}
+              cy={randomCircles[index].c}
+              r={randomCircles[index].r}
+              color={colorRef}
+            />
+          ))}
           {paths.map((p, index) => (
             <Path
               key={index}
@@ -142,15 +151,6 @@ export default ({
               strokeCap="round"
               strokeJoin="round"
               color={p.color}
-            />
-          ))}
-          {usedColor.map((colorRef, index) => (
-            <Circle
-              key={index.toString()}
-              cx={randomCircles[index].c}
-              cy={randomCircles[index].c}
-              r={randomCircles[index].r}
-              color={colorRef}
             />
           ))}
           <DisplacementMap channelX="g" channelY="a" scale={20}>

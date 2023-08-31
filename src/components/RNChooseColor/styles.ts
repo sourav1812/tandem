@@ -16,7 +16,7 @@ export const styles = StyleSheet.create({
   },
   colorView: {
     alignItems: 'center',
-    width: '100%',
+    minWidth: '50%',
     height: verticalScale(250),
     justifyContent: 'center',
     marginTop: verticalScale(35),
@@ -39,6 +39,8 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginTop: verticalScale(36),
+    flexWrap: 'wrap',
+    flex: 1,
   },
   secondColor: {
     transform: [
