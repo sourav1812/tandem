@@ -18,7 +18,6 @@ import {BooksData} from '../Bookshelf/interface';
 import {store} from '@tandem/redux/store';
 import {setImageForPage} from '@tandem/redux/slices/bookShelf.slice';
 import RNFetchBlob from 'rn-fetch-blob';
-import themeColor from '@tandem/theme/themeColor';
 
 const Story = () => {
   const [visible, setVisible] = useState(false);
@@ -135,13 +134,8 @@ const Story = () => {
                 ? translation('READ_TOGETHER')
                 : translation('REREAD')
             }
-            customStyle={[
-              styles.button,
-              {
-                backgroundColor: redirect ? themeColor.themeBlue : 'red',
-                borderColor: redirect ? themeColor.themeBlue : 'red',
-              },
-            ]}
+            loadPercentage={redirect ? undefined : (val * 100) / (len || 1)}
+            customStyle={[styles.button]}
             textStyle={{fontSize: verticalScale(14)}}
             onClick={() => {
               navigateTo(SCREEN_NAME.STORY_TELLING, {id: routeData.id});

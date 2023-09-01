@@ -12,13 +12,15 @@ import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import i18n from '@tandem/constants/lang/i18n';
 import navigateTo from '@tandem/navigation/navigate';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
-import {RootState} from '@tandem/redux/store';
+import {RootState, store} from '@tandem/redux/store';
+import {setLocale} from '@tandem/redux/slices/languageReducer';
 
-const SelectLanguage = () => {
+const SelectLanguage = ({route}: {route?: {params?: {goBack?: boolean}}}) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
+  const [lan, setLang] = React.useState(i18n.locale);
   return (
     <RNScreenWrapper style={{backgroundColor: themeColor.white}}>
       <RNTextComponent style={styles.heading} isSemiBold>
@@ -33,8 +35,16 @@ const SelectLanguage = () => {
             <Pressable
               key={index.toString()}
               onPress={() => {
+                setLang(item.code);
                 i18n.locale = item.code;
-                navigateTo(SCREEN_NAME.ONBOARDING);
+                store.dispatch(setLocale(item.code));
+                setTimeout(() => {
+                  if (route?.params?.goBack) {
+                    navigateTo(SCREEN_NAME.BOTTOM_TAB, {}, true);
+                    return;
+                  }
+                  navigateTo(SCREEN_NAME.ONBOARDING);
+                }, 200);
               }}>
               <RNLanguageComponent
                 title={item.name}
@@ -42,6 +52,9 @@ const SelectLanguage = () => {
                 customStyle={{
                   marginTop: verticalScale(14),
                   marginHorizontal: isTablet ? scale(35) : verticalScale(14),
+                  ...(lan === item.code && {
+                    backgroundColor: themeColor.themeBlue,
+                  }),
                 }}
               />
             </Pressable>

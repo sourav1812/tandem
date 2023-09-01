@@ -9,8 +9,8 @@ const langualSlice = createSlice({
   name: 'language',
   initialState,
   reducers: {
-    setLocale: state => {
-      state.locale = 'en';
+    setLocale: (state, action) => {
+      state.locale = action.payload;
     },
     setKeyboardVisible: (state, action) => {
       state.keyboardVisible = action.payload;

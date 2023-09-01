@@ -3,7 +3,10 @@ import {StyleSheet} from 'react-native';
 import {verticalScale} from 'react-native-size-matters';
 
 export const styles = StyleSheet.create({
-  dropdownBox: {marginBottom: 4, marginTop: verticalScale(14)},
+  dropdownBox: {
+    marginBottom: 4,
+    marginTop: verticalScale(14),
+  },
   label: {
     fontSize: verticalScale(13),
   },

@@ -23,4 +23,5 @@ export interface Props {
   isDisabled?: boolean;
   ref?: any;
   onLayout?: ((event: LayoutChangeEvent) => void) | undefined;
+  loadPercentage?: number;
 }

@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {ActivityIndicator, Pressable, StyleSheet} from 'react-native';
+import {ActivityIndicator, Pressable, StyleSheet, View} from 'react-native';
 import React from 'react';
 import themeColor from '@tandem/theme/themeColor';
 import RNTextComponent from '../RNTextComponent';
@@ -21,6 +21,7 @@ const RNButton = ({
   textStyle,
   isDisabled = false,
   ref,
+  loadPercentage,
   onLayout,
 }: Props) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -31,7 +32,9 @@ const RNButton = ({
   const disabled = isDisabled || isButtonDisabled;
 
   const handlePress = async () => {
-    if (pressed) return;
+    if (pressed) {
+      return;
+    }
     setPressed(true);
     await onClick();
     setPressed(false);
@@ -84,6 +87,18 @@ const RNButton = ({
               ]}>
               {title}
             </RNTextComponent>
+          )}
+          {loadPercentage !== undefined && (
+            <View
+              style={{
+                width: `${100 - loadPercentage}%`,
+                height: '100%',
+                backgroundColor: '#00000088',
+                zIndex: -1,
+                position: 'absolute',
+                alignSelf: 'flex-end',
+              }}
+            />
           )}
         </Pressable>
       ) : (
