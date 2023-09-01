@@ -1,4 +1,6 @@
 export interface RNParentProfileProp {
-  name: string;
+  role: string;
   type: string;
+  avatar: string;
+  profileId: string;
 }

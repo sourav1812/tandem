@@ -11,10 +11,9 @@ import RNKidsProfile from '@tandem/components/RNKidsProfile';
 import Add from '@tandem/assets/svg/Add';
 import RNParentProfile from '@tandem/components/RNParentProfile';
 import RNSignoutModal from '@tandem/components/RNSignoutModal';
-import {AdultProfile, StateObject} from './interface';
+import {StateObject} from './interface';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
-import Lion from '@tandem/assets/svg/AnimatedLion';
 import {translation} from '@tandem/utils/methods';
 import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
 import {changeMode} from '@tandem/redux/slices/mode.slice';
@@ -26,6 +25,7 @@ import RNTooltip from '@tandem/components/RNTooltip';
 import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
 import {TOOLTIP} from '@tandem/constants/LocalConstants';
 import {
+  AdultData,
   ChildData,
   saveCurrentAdult,
   saveCurrentChild,
@@ -35,6 +35,7 @@ import logout from '@tandem/functions/logout';
 const Account = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const childList = useAppSelector(state => state.createChild.childList);
+  const adultList = useAppSelector(state => state.createChild.adultList);
   const [openTooltip, setOpentTooltip] = useState({
     tooltipOne: true,
     tooltipTwo: false,
@@ -47,10 +48,6 @@ const Account = () => {
   // const mode = useAppSelector(state => state.mode.mode);
   const [state, setState] = useState<StateObject>({
     signoutModal: false,
-    adultList: [
-      {name: 'Mum', type: 'adult'},
-      {name: 'Dad', type: 'adult'},
-    ],
     playerList: [],
   });
 
@@ -64,7 +61,7 @@ const Account = () => {
   const portrait = useSelector(
     (state1: RootState) => state1.orientation.isPortrait,
   );
-  const {signoutModal, adultList, playerList} = state;
+  const {signoutModal, playerList} = state;
   const updateState = (date: any) => {
     setState((previouState: any) => {
       return {...previouState, ...date};
@@ -75,7 +72,7 @@ const Account = () => {
     updateState({signoutModal: !signoutModal});
   };
 
-  const addPlayer = (item: ChildData | AdultProfile) => {
+  const addPlayer = (item: ChildData | AdultData) => {
     if (
       item.type === 'child' &&
       item?.childId &&
@@ -310,10 +307,15 @@ const Account = () => {
                       removePlayer(index);
                     }}>
                     <RNParentProfile
-                      height={portrait ? verticalScale(82) : verticalScale(40)}
-                      width={portrait ? verticalScale(82) : verticalScale(40)}
                       data={item}
-                      custumStyle={{marginTop: 5}}
+                      avatar={item.avatar}
+                      custumStyle={{
+                        height: portrait
+                          ? verticalScale(85)
+                          : verticalScale(65),
+                        width: portrait ? verticalScale(85) : verticalScale(65),
+                        marginRight: 12,
+                      }}
                     />
                   </Pressable>
                 );
@@ -333,11 +335,7 @@ const Account = () => {
                   onPress={() => {
                     addPlayer(item);
                   }}>
-                  <RNParentProfile
-                    height={portrait ? verticalScale(105) : verticalScale(52.5)}
-                    width={portrait ? verticalScale(90) : verticalScale(45)}
-                    data={item}
-                  />
+                  <RNParentProfile data={item} avatar={item.avatar} />
                 </Pressable>
               );
             })}
@@ -459,7 +457,7 @@ const Account = () => {
             }}
             disabled={childList.length === 0 || playerList.length === 0}>
             {playerList.map((item, index) => {
-              if (item.type === 'child' && item.childId) {
+              if (item.type === 'child') {
                 return (
                   <Image
                     key={index.toString()}
@@ -468,7 +466,13 @@ const Account = () => {
                   />
                 );
               } else {
-                return <Lion key={index.toString()} height={32} width={32} />;
+                return (
+                  <Image
+                    key={index.toString()}
+                    source={{uri: item.avatar}}
+                    style={[styles.profile, {height: 40, width: 40}]}
+                  />
+                );
               }
             })}
           </Pressable>

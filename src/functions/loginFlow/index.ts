@@ -1,7 +1,10 @@
 import {store} from '@tandem/redux/store';
 import {storeTokens} from '../tokens';
 import {LoginResponse} from './interface';
-import {saveChildData} from '@tandem/redux/slices/createChild.slice';
+import {
+  saveAdultData,
+  saveChildData,
+} from '@tandem/redux/slices/createChild.slice';
 import {saveUserData} from '@tandem/redux/slices/userData.slice';
 
 export default async (loginResponse: LoginResponse) => {
@@ -14,6 +17,15 @@ export default async (loginResponse: LoginResponse) => {
       loginResponse.userInfo.children.map(child => ({...child, type: 'child'})),
     ),
   );
+
+  store.dispatch(
+    saveAdultData(
+      loginResponse.userInfo.adults.map(adult => ({
+        ...adult,
+        type: 'adult',
+      })),
+    ),
+  );
   // ! we will have to decide where we should keep children
   store.dispatch(
     saveUserData({
@@ -21,6 +33,10 @@ export default async (loginResponse: LoginResponse) => {
       children: loginResponse.userInfo.children.map(child => ({
         ...child,
         type: 'child',
+      })),
+      adults: loginResponse.userInfo.adults.map(adult => ({
+        ...adult,
+        type: 'adult',
       })),
     }),
   );

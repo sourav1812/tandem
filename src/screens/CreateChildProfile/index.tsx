@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
-import {Pressable, ScrollView, View} from 'react-native';
+import {Alert, Pressable, ScrollView, View} from 'react-native';
 import BlueButton from '@tandem/assets/svg/BlueButton';
 import {styles} from './styles';
 import RNNumericBulletin from '@tandem/components/RNNumericBulletin';
@@ -23,10 +23,13 @@ import dayjs from 'dayjs';
 import {addNewChild} from '@tandem/api/creatChildProfile';
 import validationFunction from '@tandem/functions/validationFunction';
 import {
+  saveAdultData,
   saveChildData,
+  saveCurrentAdult,
   saveCurrentChild,
 } from '@tandem/redux/slices/createChild.slice';
 import {CreateChildProfileProps} from '@tandem/navigation/types';
+import {addNewAdult} from '@tandem/api/createAdultProfile';
 
 const CreateChildProfile = ({route}: CreateChildProfileProps) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -43,6 +46,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
   });
   const {bulletinArray, questionIndex, gender} = state;
   const [name, setName] = useState<ValidationError>({value: ''});
+  const [role, setRole] = useState<ValidationError>({value: ''});
   const [dateModal, setDateModal] = useState(false);
   const [dob, setDob] = useState<ValidationError>({
     value: new Date().toString(),
@@ -65,52 +69,10 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
       });
       updateState({questionIndex: questionIndex + 1, bulletinArray: indexArry});
     } else {
-      if (
-        !validationFunction([
-          {
-            state: name,
-            setState: setName,
-            typeOfValidation: FORM_INPUT_TYPE.NAME,
-          },
-          {
-            state: dob,
-            setState: setDob,
-            typeOfValidation: FORM_INPUT_TYPE.DOB,
-          },
-        ])
-      ) {
-        return;
-      }
-      // TODO make it dynamic
-
-      const response = await addNewChild({
-        name: name.value,
-        dob: dob.value, // ! pass in the whole date object
-        gender: gender,
-        avatar,
-      });
-      if (response) {
-        dispatch(
-          saveCurrentChild({
-            childId: response?.childId,
-            name: name.value,
-            dob: dob.value,
-            gender: gender,
-            avatar: avatar,
-            type: 'child',
-          }),
-        );
-
-        dispatch(
-          saveChildData({
-            childId: response?.childId,
-            name: name.value,
-            dob: dob.value,
-            gender: gender,
-            avatar: avatar,
-            type: 'child',
-          }),
-        );
+      if (fromAddAdult) {
+        handleAddAdult();
+      } else {
+        handleCreateChild();
       }
     }
   };
@@ -127,6 +89,100 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
       updateState({questionIndex: questionIndex - 1});
     } else {
       navigateTo();
+    }
+  };
+
+  const handleCreateChild = async () => {
+    if (
+      !validationFunction([
+        {
+          state: name,
+          setState: setName,
+          typeOfValidation: FORM_INPUT_TYPE.NAME,
+        },
+        {
+          state: dob,
+          setState: setDob,
+          typeOfValidation: FORM_INPUT_TYPE.DOB,
+        },
+      ])
+    ) {
+      return;
+    }
+    // TODO make it dynamic
+
+    const response = await addNewChild({
+      name: name.value,
+      dob: dob.value, // ! pass in the whole date object
+      gender: gender,
+      avatar,
+    });
+    if (response) {
+      dispatch(
+        saveCurrentChild({
+          childId: response?.childId,
+          name: name.value,
+          dob: dob.value,
+          gender: gender,
+          avatar: avatar,
+          type: 'child',
+        }),
+      );
+
+      dispatch(
+        saveChildData({
+          childId: response?.childId,
+          name: name.value,
+          dob: dob.value,
+          gender: gender,
+          avatar: avatar,
+          type: 'child',
+        }),
+      );
+    }
+  };
+
+  const handleAddAdult = async () => {
+    if (
+      !validationFunction([
+        {
+          state: role,
+          setState: setRole,
+          typeOfValidation: FORM_INPUT_TYPE.NAME,
+        },
+        {
+          state: dob,
+          setState: setDob,
+          typeOfValidation: FORM_INPUT_TYPE.DOB,
+        },
+      ])
+    ) {
+      return;
+    }
+    // TODO make it dynamic
+
+    const response = await addNewAdult({
+      role: role.value,
+      dob: dob.value, // ! pass in the whole date object
+      avatar,
+    });
+    if (response) {
+      dispatch(
+        saveCurrentAdult({
+          profileId: response?.profileId,
+          dob: dob.value,
+          avatar: avatar,
+          type: 'adult',
+        }),
+      );
+      dispatch(
+        saveAdultData({
+          profileId: response?.profileId,
+          dob: dob.value,
+          avatar: avatar,
+          type: 'adult',
+        }),
+      );
     }
   };
 
@@ -163,6 +219,12 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
   };
 
   const disableButtonForAdultForm = () => {
+    if (questionIndex === 1 && role.value === '') {
+      return false;
+    }
+    if (avatar === null && questionIndex === 3) {
+      return false;
+    }
     return true;
   };
 
@@ -345,16 +407,18 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
                 styles.inputField,
                 isTablet && {width: 400, alignSelf: 'center'},
               ]}>
-              <Pressable
-                onPress={() => {
-                  // selectDate();
-                }}>
-                <LanguageDropDown
-                  customStyle={styles.date}
-                  heading={translation('SELECT')}
-                  text={translation('MUM')}
-                />
-              </Pressable>
+              <RNTextInputWithLabel
+                label={translation('RELATIONSHIP')}
+                inputViewStyle={[
+                  styles.inputBox,
+                  isTablet && {borderRadius: 12, marginTop: 8},
+                ]}
+                containerStyle={styles.containerBox}
+                value={role}
+                validationType={FORM_INPUT_TYPE.NAME}
+                updateText={setRole}
+                hint={translation('ENTER')}
+              />
             </View>
           </>
         );
@@ -369,16 +433,12 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
                 styles.inputField,
                 isTablet && {width: 400, alignSelf: 'center'},
               ]}>
-              <Pressable
-                onPress={() => {
-                  selectDate();
-                }}>
-                <LanguageDropDown
-                  customStyle={styles.date}
-                  heading={translation('DATE_OF_BIRTH')}
-                  text={dayjs(dob.value?.toString()).format('DD/MM/YYYY')}
-                />
-              </Pressable>
+              <LanguageDropDown
+                customStyle={styles.date}
+                heading={translation('DATE_OF_BIRTH')}
+                text={dayjs(dob.value?.toString()).format('DD/MM/YYYY')}
+                onPress={selectDate}
+              />
             </View>
           </>
         );

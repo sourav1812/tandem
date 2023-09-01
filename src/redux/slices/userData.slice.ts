@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {ChildData} from './createChild.slice';
+import {AdultData, ChildData} from './createChild.slice';
 
 // Define a type for the slice state
 
@@ -9,6 +9,7 @@ interface userDataState {
     name: string;
     userId: string;
     children?: ChildData[];
+    adults?: AdultData[];
   };
 }
 
@@ -19,6 +20,7 @@ const initialState: userDataState = {
     name: '',
     userId: '',
     children: [],
+    adults: [],
   },
 };
 
