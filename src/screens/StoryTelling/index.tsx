@@ -106,7 +106,7 @@ const StoryTelling = () => {
     if (currentIndex === 0) {
       setTimeout(() => {
         toggleModal();
-      }, 1000);
+      }, 4000);
     }
     if (rating === 0) {
       return;
