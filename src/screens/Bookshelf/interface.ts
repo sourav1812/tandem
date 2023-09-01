@@ -25,7 +25,7 @@ export interface BooksData {
   image: any;
   readingTime: number;
   isNew: boolean;
-  emogi: string;
+  emogi: string | null;
   week: string;
   teaser: string;
 }

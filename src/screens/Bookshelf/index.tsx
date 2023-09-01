@@ -23,6 +23,7 @@ import {useSelector} from 'react-redux';
 import {RootState} from '@tandem/redux/store';
 import themeColor from '@tandem/theme/themeColor';
 import {BooksData} from './interface';
+import {ratingList} from '@tandem/components/RNRatingModal/interface';
 
 const Bookshelf = () => {
   const isTablet = checkIfTablet();
@@ -41,7 +42,10 @@ const Bookshelf = () => {
       image: book.thumbnail || require('../../assets/png/imageOne.png'),
       readingTime: Math.ceil(book.story.split(' ').length / 100) || 10, //  ! avg reading speed is 200 to 300 wpm so we are calculating time in miniutes to read the whole story. using 100 wpm for children
       isNew: isThisWeek, // ! langauge support?
-      emogi: '\u{1F60D}',
+      emogi:
+        book.rating && book.rating !== 0
+          ? ratingList[book.rating - 1].name
+          : null,
       week: isThisWeek ? 'This Week' : 'Last Week', // ! need langauge support
       teaser: book.teaser,
     };
