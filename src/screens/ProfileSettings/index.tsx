@@ -18,6 +18,10 @@ import {RootState} from '@tandem/redux/store';
 import {editUserProfile} from '@tandem/api/editUserProfile';
 import validationFunction from '@tandem/functions/validationFunction';
 import {saveUserData} from '@tandem/redux/slices/userData.slice';
+import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
+import navigateTo from '@tandem/navigation/navigate';
+import {languages} from '../SelectLanguage/interface';
+import i18n from '@tandem/constants/lang/i18n';
 
 const ProfileSettings = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -91,20 +95,15 @@ const ProfileSettings = () => {
           heading={translation('YOUR_EMAIL')}
           text={userData.email}
           showIcon={false}
+          fadeText
           customStyle={styles.dropDownButton}
         />
-        {/* <RNTextInputWithLabel
-          label={translation('YOUR_EMAIL')}
-          containerStyle={styles.input}
-          hint={translation('EMAIL')}
-          inputViewStyle={styles.inputBox}
-          value={name}
-          validationType={FORM_INPUT_TYPE.EMAIL}
-          updateText={() => {}}
-        /> */}
         <LanguageDropDown
+          onPress={() => {
+            navigateTo(SCREEN_NAME.SELECT_LANGUAGE, {goBack: true});
+          }}
           heading={translation('LANGUAGE')}
-          text={'English'}
+          text={languages.filter(obj => obj.code === i18n.locale)[0].name}
           customStyle={styles.dropDownButton}
         />
         <NotificationSwitch />

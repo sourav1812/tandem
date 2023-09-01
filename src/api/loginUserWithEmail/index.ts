@@ -11,14 +11,13 @@ export default async ({
   deviceType,
   fcmToken,
 }: LoginUserWithEmail) => {
-  console.log({email, password, deviceId, deviceType, fcmToken});
-  const response = await post<LoginResponse>({
-    path: API.LOGIN_USER_WITH_EMAIL,
-    data: {email, password, deviceId, deviceType, fcmToken},
-  });
-  if (!response) {
-    throw new Error('issue with login');
+  try {
+    const response = await post<LoginResponse>({
+      path: API.LOGIN_USER_WITH_EMAIL,
+      data: {email, password, deviceId, deviceType, fcmToken},
+    });
+    await loginFlow(response); // for every type of login we have to come to this function in the end
+  } catch (error) {
+    throw error;
   }
-  await loginFlow(response); // for every type of login we have to come to this function in the end
-  return response;
 };
