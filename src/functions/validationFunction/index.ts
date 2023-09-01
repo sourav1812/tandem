@@ -7,7 +7,7 @@ interface ValueObject {
 }
 
 const validationFunction = (valueObject: ValueObject[]) => {
-  let array: any = [];
+  const array: any = [];
   valueObject.map(value => {
     if (value.state.value === '' || value.state.message) {
       value.setState(validateForm(value.typeOfValidation, value.state.value));
