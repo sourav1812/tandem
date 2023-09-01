@@ -7,7 +7,7 @@ export interface ChildData {
   gender: string;
   avatar: string;
   childId: string;
-  type: string;
+  type: 'child';
 }
 
 export interface AdultData {
@@ -15,7 +15,7 @@ export interface AdultData {
   dob: string;
   avatar: string;
   profileId: string;
-  type: string;
+  type: 'adult';
 }
 
 interface ChildState {
@@ -34,7 +34,7 @@ const initialState: ChildState = {
     gender: '',
     avatar: '',
     childId: '',
-    type: '',
+    type: 'child',
   },
   adultList: [],
   currentAdult: {
@@ -42,7 +42,7 @@ const initialState: ChildState = {
     dob: '',
     avatar: '',
     profileId: '',
-    type: '',
+    type: 'adult',
   },
 };
 
