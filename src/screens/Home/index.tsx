@@ -252,7 +252,7 @@ const Home = () => {
                   !isTablet && portrait ? verticalScale(60) : verticalScale(20),
               }}>
               {translation('HELLO')}, {currentChild.name || 'Ella'}!
-              {mode === MODE.A && `(${currentAdult.name})!`} 👋🏻
+              {mode === MODE.A && `(${currentAdult.role})!`} 👋🏻
             </RNTextComponent>
             <Pressable
               onPress={() => navigation.push(SCREEN_NAME.ACCOUNT)}

@@ -1,5 +1,4 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {AdultProfile} from '@tandem/screens/Account/interface';
 
 // Define a type for the slice state
 export interface ChildData {
@@ -11,10 +10,19 @@ export interface ChildData {
   type: string;
 }
 
+export interface AdultData {
+  role: string;
+  dob: string;
+  avatar: string;
+  profileId: string;
+  type: string;
+}
+
 interface ChildState {
   childList: ChildData[];
   currentChild: ChildData;
-  currentAdult: AdultProfile;
+  currentAdult: AdultData;
+  adultList: AdultData[];
 }
 
 // Define the initial state using that type
@@ -28,9 +36,13 @@ const initialState: ChildState = {
     childId: '',
     type: '',
   },
+  adultList: [],
   currentAdult: {
-    type: 'adult',
-    name: '',
+    role: '',
+    dob: '',
+    avatar: '',
+    profileId: '',
+    type: '',
   },
 };
 
@@ -47,23 +59,33 @@ export const createChildSlice = createSlice({
         state.childList.push(action.payload);
       }
     },
+    saveAdultData: (state, action) => {
+      // state.childList.push(action.payload);
+      if (Array.isArray(action.payload)) {
+        state.adultList = action.payload;
+      } else {
+        state.adultList.push(action.payload);
+      }
+    },
     saveCurrentChild: (state, action) => {
       state.currentChild = action.payload;
     },
     saveCurrentAdult: (state, action) => {
       state.currentAdult = action.payload;
     },
-    resetChildData: state => {
+    resetChildAndChildData: state => {
       state.childList = [];
+      state.adultList = [];
     },
   },
 });
 
 export const {
   saveChildData,
-  resetChildData,
+  saveAdultData,
   saveCurrentAdult,
   saveCurrentChild,
+  resetChildAndChildData,
 } = createChildSlice.actions;
 
 export default createChildSlice.reducer;

@@ -87,11 +87,58 @@ export interface OnlyImageType {
 }
 
 export const place: OnlyImageType[] = [
-  {name: 'At home', url: require('../../assets/png/onboarding1.png')},
-  {name: 'Big sailing boat', url: require('../../assets/png/onboarding2.png')},
-  {name: 'Camping in tents', url: require('../../assets/png/onboarding3.png')},
-  {name: 'City', url: require('@tandem/assets/png/natureCamp.jpeg')},
-  {name: 'Dark forest', url: require('@tandem/assets/png/notSure.png')},
+  {
+    name: 'Outer Space',
+    url: {uri: 'https://tandem.geeky.dev/v1/images/locations/outer_space.png'},
+  },
+  {
+    name: 'Camping in tents',
+    url: {
+      uri: 'https://tandem.geeky.dev/v1/images/locations/camping_in_tents.png',
+    },
+  },
+  {
+    name: 'City',
+    url: {
+      uri: 'https://tandem.geeky.dev/v1/images/locations/city.png',
+    },
+  },
+  {
+    name: 'Dark Forest',
+    url: {
+      uri: 'https://tandem.geeky.dev/v1/images/locations/dark_forest.png',
+    },
+  },
+  {
+    name: 'Fair Ground',
+    url: {
+      uri: 'https://tandem.geeky.dev/v1/images/locations/fair_ground.png',
+    },
+  },
+  {
+    name: 'Farm Yard',
+    url: {
+      uri: 'https://tandem.geeky.dev/v1/images/locations/farm_yard.png',
+    },
+  },
+  {
+    name: 'Outer Space',
+    url: {
+      uri: 'https://tandem.geeky.dev/v1/images/locations/outer_space.png',
+    },
+  },
+  {
+    name: 'Snowy Mountain',
+    url: {
+      uri: 'https://tandem.geeky.dev/v1/images/locations/snowy_mountain.png',
+    },
+  },
+  {
+    name: 'Sunny Beach',
+    url: {
+      uri: 'https://tandem.geeky.dev/v1/images/locations/sunny_beach.png',
+    },
+  },
 ];
 
 export const audience: PlaceType[] = [

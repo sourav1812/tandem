@@ -8,6 +8,7 @@ export enum API {
   LOGOUT = 'user/log-out', //? POST
   USER_PROFILE = 'user/profile', //? GET
   CHANGE_PASSWORD = 'user/password', //? PUT
+  ADD_BIG_PEOPLE = 'user/big-people', //?POST
 }
 
 export enum ENVIRONMENT {
@@ -25,7 +26,7 @@ const ENV_VARS = {
 };
 
 // ! Select ENV from here
-export const SELECTED_ENVIRONMENT = ENVIRONMENT.PRODUCTION;
+export const SELECTED_ENVIRONMENT = ENVIRONMENT.DEVELOPMENT;
 // ! URLs
 export const BASE_URL = ENV_VARS[SELECTED_ENVIRONMENT].API_URL;
 export const BASE_URL_FOR_IMAGES =
