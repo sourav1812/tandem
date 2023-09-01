@@ -30,6 +30,7 @@ import {useRoute} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 import Book from '@tandem/api/getStories/interface';
 import {PageFlip} from '@tandem/components/PageFlip';
+import rateStory from '@tandem/api/rateStory';
 
 const StoryTelling = () => {
   const tooltipArray = getValueFromKey(TOOLTIP);
@@ -90,15 +91,6 @@ const StoryTelling = () => {
   //   }
   // }, [currentIndex]);
 
-  React.useEffect(() => {
-    if (currentIndex === 0) {
-      setTimeout(() => {
-        toggleModal();
-      }, 4000);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentIndex]);
-
   const toggleModal = () => {
     setRenderModal(!renderModal);
   };
@@ -109,7 +101,23 @@ const StoryTelling = () => {
   //   setReadingTip(!readingTip);
   // };
 
-  const renderRatingModal = () => {
+  const submitRatingModal = async (rating: number) => {
+    updateState({ratingModal: !ratingModal});
+    if (currentIndex === 0) {
+      setTimeout(() => {
+        toggleModal();
+      }, 4000);
+    }
+    if (rating === 0) {
+      return;
+    }
+    try {
+      await rateStory(book.bookId, rating);
+    } catch (error) {
+      console.log('error in rating story post', error);
+    }
+  };
+  const renderRatingModal = async () => {
     updateState({ratingModal: !ratingModal});
   };
 
@@ -374,11 +382,11 @@ const StoryTelling = () => {
           nextClick={renderTipLevel}
         />
       )} */}
-      {currentIndex === 0 && mode === MODE.B && (
+      {currentIndex === 0 && mode === MODE.B && book.rating === 0 && (
         <RNRatingModal
           visible={ratingModal}
           renderModal={renderRatingModal}
-          nextClick={renderRatingModal}
+          nextClick={submitRatingModal}
         />
       )}
       <RNWellDoneModal

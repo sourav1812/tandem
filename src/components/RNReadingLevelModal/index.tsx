@@ -1,6 +1,6 @@
 import {View} from 'react-native';
 import React, {useState} from 'react';
-import {readingTipsModalProps} from './interface';
+import {ReadingTipsModalProps} from './interface';
 import {styles} from './styles';
 import RNTextComponent from '../RNTextComponent';
 import {verticalScale} from 'react-native-size-matters';
@@ -16,7 +16,7 @@ import {translation} from '@tandem/utils/methods';
 const RNReadingLevelModal = ({
   visible = true,
   renderModal,
-}: readingTipsModalProps) => {
+}: ReadingTipsModalProps) => {
   let isTablet = useAppSelector(state => state.deviceType.isTablet);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [indicators, setIndicators] = useState([

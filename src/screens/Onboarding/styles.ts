@@ -5,7 +5,7 @@ import {scale, verticalScale} from 'react-native-size-matters';
 export const styles = StyleSheet.create({
   container: {
     height: '100%',
-    width: `100%`,
+    width: '100%',
   },
   img: {
     borderRadius: scale(16),

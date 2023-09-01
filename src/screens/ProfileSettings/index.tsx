@@ -148,6 +148,7 @@ const NotificationSwitch = () => {
     <Pressable
       style={[
         styles.dropdown,
+        // eslint-disable-next-line react-native/no-inline-styles
         {
           borderRadius: 16,
           marginTop: verticalScale(12),

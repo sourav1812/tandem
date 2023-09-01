@@ -50,10 +50,14 @@ export default ({
     [],
   );
   React.useEffect(() => {
-    if (color === 'transparent' || !allowMixing) return;
+    if (color === 'transparent' || !allowMixing) {
+      return;
+    }
     const newPaths = [...paths];
     const lastPosRef = newPaths[newPaths.length - 1]?.segments;
-    if (!lastPosRef) return;
+    if (!lastPosRef) {
+      return;
+    }
     newPaths[paths.length] = {
       segments: [],
       color,
@@ -87,7 +91,9 @@ export default ({
   const restartPen = (
     g: GestureStateChangeEvent<PanGestureHandlerEventPayload>,
   ) => {
-    if (color === 'transparent') return;
+    if (color === 'transparent') {
+      return;
+    }
     const newPaths = [...paths];
     newPaths[paths.length] = {
       segments: [],
@@ -126,7 +132,9 @@ export default ({
     .minDistance(0);
 
   React.useEffect(() => {
-    if (clear) setPaths([]);
+    if (clear) {
+      setPaths([]);
+    }
   }, [clear]);
 
   return (

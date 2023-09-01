@@ -1,4 +1,4 @@
-import {View} from 'react-native';
+import {Pressable, View} from 'react-native';
 import React from 'react';
 import {ratingList, ratingModalProps} from './interface';
 import {styles} from './styles';
@@ -8,9 +8,11 @@ import RNButton from '../RNButton';
 import RNModal from '../RNModal';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {translation} from '@tandem/utils/methods';
+import themeColor from '@tandem/theme/themeColor';
 
 const RNRatingModal = ({visible, renderModal, nextClick}: ratingModalProps) => {
   let isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const [rating, setRating] = React.useState(0);
   return (
     <RNModal
       visible={visible}
@@ -27,17 +29,32 @@ const RNRatingModal = ({visible, renderModal, nextClick}: ratingModalProps) => {
         <View style={styles.content}>
           {ratingList.map((item, index) => {
             return (
-              <View key={index.toString()} style={styles.rateView}>
+              <Pressable
+                onPress={() => {
+                  setRating(index + 1);
+                }}
+                key={index.toString()}
+                style={[
+                  styles.rateView,
+                  {
+                    backgroundColor:
+                      rating === index + 1
+                        ? themeColor.themeBlue
+                        : themeColor.lightGray,
+                  },
+                ]}>
                 <RNTextComponent style={styles.emoji}>
                   {item.name}
                 </RNTextComponent>
-              </View>
+              </Pressable>
             );
           })}
         </View>
         <RNButton
           customStyle={styles.button}
-          onClick={nextClick}
+          onClick={() => {
+            nextClick(rating);
+          }}
           title={translation('RATE')}
         />
       </View>

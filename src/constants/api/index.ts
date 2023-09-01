@@ -3,8 +3,9 @@ export enum API {
   LOGIN_USER_WITH_EMAIL = 'user/sign-in', //? POST
   CREATE_CHILD_PROFILE = 'children', //? POST
   REFRESH_TOKEN = 'user/refresh-access-token', //? POST
-  GENERATE_STORY = 'stories', //? POST
-  STORIES = 'stories', //? GET
+  GENERATE_STORY = 'story-books', //? POST
+  RATE_STORY = 'story-books/rate-book', //? POST
+  STORIES = 'story-books', //? GET
   LOGOUT = 'user/log-out', //? POST
   USER_PROFILE = 'user/profile', //? GET
   CHANGE_PASSWORD = 'user/password', //? PUT

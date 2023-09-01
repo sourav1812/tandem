@@ -10,7 +10,6 @@ import {verticalScale} from 'react-native-size-matters';
 import {VoiceQuestionProps} from './interface';
 import RNTextComponent from '../RNTextComponent';
 import RNTextInputWithLabel from '../RNTextInputWithLabel';
-import en from '@tandem/constants/lang/en';
 
 const RNVoiceWithTextInput = ({
   onNextPress,
@@ -31,7 +30,7 @@ const RNVoiceWithTextInput = ({
         <RNTextComponent
           style={[styles.heading, {color: themeColor.black, opacity: 0.6}]}
           isSemiBold>
-          Can you remember what{`\n`}
+          Can you remember what{'\n'}
         </RNTextComponent>
         <RNTextComponent isSemiBold style={[styles.heading, {marginTop: 0}]}>
           the cat was called?
