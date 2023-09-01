@@ -8,7 +8,6 @@ const getStories = async () => {
   const response = await get<Book>({
     path: API.STORIES + `/${store.getState().createChild.currentChild.childId}`,
     noLoader: true,
-    allowRequestAnyway: false,
   });
   if (!response) {
     return;

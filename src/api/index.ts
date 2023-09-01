@@ -202,7 +202,6 @@ const get = async <T>({
   path: string;
   params?: any;
   noLoader: boolean;
-  allowRequestAnyway: boolean;
 }): Promise<T> => {
   let persistedState = store.getState().getResponseReducer[path];
   const {isConnected} = await NetInfo.fetch();
