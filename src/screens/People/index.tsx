@@ -18,7 +18,6 @@ import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {useSelector} from 'react-redux';
 import {RootState} from '@tandem/redux/store';
-import {avatarArray} from '../CreateChildProfile/interface';
 
 const People = ({}: PeopleScreenProps) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -104,7 +103,7 @@ const People = ({}: PeopleScreenProps) => {
           <View style={styles.bigpeople}>
             <View>
               <Image
-                source={{uri: avatarArray[1].icon}}
+                source={{uri: currentAdult.avatar}}
                 style={[
                   styles.profile,
                   isTablet && {
@@ -114,7 +113,7 @@ const People = ({}: PeopleScreenProps) => {
                 ]}
               />
               <RNTextComponent style={styles.name} isSemiBold>
-                {currentAdult.name}
+                {currentAdult.role}
               </RNTextComponent>
             </View>
             <Pressable onPress={() => {}}>
