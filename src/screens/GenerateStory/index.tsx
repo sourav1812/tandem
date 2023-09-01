@@ -392,7 +392,9 @@ const GenerateStory = () => {
         store.dispatch(
           pushStoryGenerationResponse({
             type: STORY_PARTS.STYLES,
-            response: [addedIllustration], // ! VERY IMPORTANT : SEND ILLUSTRATION TEXT ASK CLIENT FOR KEYS
+            response: [
+              addedIllustration.toString() + 'Mock Illustration For Now',
+            ], // ! VERY IMPORTANT : SEND ILLUSTRATION TEXT ASK CLIENT FOR KEYS
           }),
         );
       }

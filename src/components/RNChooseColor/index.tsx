@@ -85,7 +85,7 @@ const RNChooseColor = ({
         store.dispatch(
           pushStoryGenerationResponse({
             type: STORY_PARTS.COLOR,
-            response: valueRef.current,
+            response: [valueRef.current],
           }),
         );
       } else {
