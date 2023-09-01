@@ -12,11 +12,14 @@ import {persistStore} from 'redux-persist';
 import {clearAlertData} from '@tandem/redux/slices/alertBox.slice';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import statusbar from '@tandem/functions/statusbar';
+import i18n from '@tandem/constants/lang/i18n';
+import setupLangauge from '@tandem/functions/language';
 
 const persistor = persistStore(store);
 
 const App: FC = () => {
   useEffect(() => {
+    i18n.locale = setupLangauge();
     if (Platform.OS === 'android') {
       PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
