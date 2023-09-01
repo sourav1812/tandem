@@ -121,12 +121,7 @@ export const place: OnlyImageType[] = [
       uri: 'https://tandem.geeky.dev/v1/images/locations/farm_yard.png',
     },
   },
-  {
-    name: 'Outer Space',
-    url: {
-      uri: 'https://tandem.geeky.dev/v1/images/locations/outer_space.png',
-    },
-  },
+
   {
     name: 'Snowy Mountain',
     url: {
