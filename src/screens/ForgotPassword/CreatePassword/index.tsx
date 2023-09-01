@@ -25,7 +25,6 @@ import {styles} from './style';
 const CreatePassword = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [password, setPassword] = useState<ValidationError>({value: ''});
   const [confirmPassword, setConfirmPassword] = useState<ValidationError>({
     value: '',

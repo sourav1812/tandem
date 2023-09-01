@@ -3,8 +3,6 @@ import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import RNLogoHeader from '@tandem/components/RNLogoHeader';
 import {translation} from '@tandem/utils/methods';
-import {StateObject} from './interface';
-import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import {
   Dimensions,
@@ -21,25 +19,9 @@ import Paste from '@tandem/assets/svg/Paste';
 import navigateTo from '@tandem/navigation/navigate';
 
 const height = Dimensions.get('screen').height;
-const width = Dimensions.get('screen').width;
 
 const RedeemVoucher = () => {
-  const isTablet = useAppSelector(state => state.deviceType.isTablet);
-  const [state, setState] = useState<StateObject>({
-    name: '',
-    email: '',
-    showModal: false,
-  });
-
-  const {name, email, showModal} = state;
-
-  const updateState = (date: any) => {
-    setState((previouState: any) => {
-      return {...previouState, ...date};
-    });
-  };
-
-  const [voucher, setVoucher] = useState<ValidationError>('');
+  const [voucher, setVoucher] = useState<ValidationError>({value: ''});
 
   return (
     <RNScreenWrapper style={styles.container}>

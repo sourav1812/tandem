@@ -22,13 +22,12 @@ import {useSelector} from 'react-redux';
 import {RootState} from '@tandem/redux/store';
 import RNButton from '@tandem/components/RNButton';
 import {useNavigation} from '@react-navigation/native';
-import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 import {clipStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration.slice';
 import generateStory from '@tandem/api/generateStory';
 
 const RNRoadmap = () => {
+  const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const dispatch = useAppDispatch();
-  const isTablet = checkIfTablet();
   const questionIndex = useAppSelector(state => state.questions.index);
   const [positionRefs, setPositionRefs] = React.useState({
     0: {height: 0, width: 0, x: 0, y: 0},
@@ -113,7 +112,9 @@ const RNRoadmap = () => {
               },
             ]}
             onPress={async () => {
-              if (questionIndex !== 7) return;
+              if (questionIndex !== 7) {
+                return;
+              }
               try {
                 await generateStory({
                   childId: currentChild.childId,

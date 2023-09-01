@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Alert, Pressable, TouchableOpacity} from 'react-native';
+import {Alert} from 'react-native';
 import {verticalScale} from 'react-native-size-matters';
 import Svg, {
   SvgProps,

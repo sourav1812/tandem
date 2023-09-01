@@ -12,7 +12,6 @@ import {scale, verticalScale} from 'react-native-size-matters';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
 import {ValidationError} from '@tandem/utils/validations';
-import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 import {translation} from '@tandem/utils/methods';
 import BlueBotton from '@tandem/assets/svg/BlueButton';
 import BothButton from '@tandem/assets/svg/BothButton';
@@ -26,7 +25,7 @@ import {BooksData} from './interface';
 import {ratingList} from '@tandem/components/RNRatingModal/interface';
 
 const Bookshelf = () => {
-  const isTablet = checkIfTablet();
+  const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const mode = useAppSelector(state => state.mode.mode);
   const [searchText, setText] = useState<ValidationError>({value: ''});
   const books = useSelector((state: RootState) => state.bookShelf.books);

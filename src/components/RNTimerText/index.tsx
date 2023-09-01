@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import themeColor from '@tandem/theme/themeColor';
 import React, {useState, useEffect} from 'react';
 import {verticalScale} from 'react-native-size-matters';

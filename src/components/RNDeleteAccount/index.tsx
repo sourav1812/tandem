@@ -7,7 +7,6 @@ import RNTextComponent from '../RNTextComponent';
 import RNModal from '../RNModal';
 import RNButton from '../RNButton';
 import {verticalScale} from 'react-native-size-matters';
-import en from '@tandem/constants/lang/en';
 import themeColor from '@tandem/theme/themeColor';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {translation} from '@tandem/utils/methods';
