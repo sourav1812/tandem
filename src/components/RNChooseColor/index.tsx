@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {
   View,
   TouchableOpacity,
@@ -24,8 +25,9 @@ import {
   pushStoryGenerationResponse,
   clipStoryGenerationResponse,
 } from '@tandem/redux/slices/storyGeneration.slice';
-import {store} from '@tandem/redux/store';
+import {RootState, store} from '@tandem/redux/store';
 import {STORY_PARTS} from '@tandem/constants/enums';
+import {useSelector} from 'react-redux';
 
 interface IPath {
   segments: String[];
@@ -60,7 +62,9 @@ const RNChooseColor = ({
   });
   const [paths, setPaths] = React.useState<IPath[]>([]);
   const valueRef = useRef<string>('');
-
+  const portrait = useSelector(
+    (state: RootState) => state.orientation.isPortrait,
+  );
   const handleReset = () => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setPalletArray([]);
@@ -115,22 +119,8 @@ const RNChooseColor = ({
   return (
     <View style={[styles.container, customStyle && customStyle]}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <RNTextComponent isSemiBold style={styles.question}>
-          {translation('choose-color.what-colors')}{' '}
-          <RNTextComponent
-            isSemiBold
-            // eslint-disable-next-line react-native/no-inline-styles
-            style={{...styles.question, color: 'rgba(10, 8, 4, 0.6)'}}>
-            {translation('choose-color.should-we-use')}
-          </RNTextComponent>{' '}
-          <RNTextComponent isSemiBold style={styles.question}>
-            {translation('choose-color.in-our-story')}
-          </RNTextComponent>{' '}
-        </RNTextComponent>
-        <RNTextComponent style={styles.subHeading}>
-          {translation('choose-color.select-two-colors')}
-        </RNTextComponent>
-        <View>
+        {portrait && <TextData />}
+        <View style={{flexDirection: portrait ? 'column' : 'row'}}>
           <View style={styles.colorView}>
             {colorPalette.map((item, index) => {
               return (
@@ -209,6 +199,7 @@ const RNChooseColor = ({
             </View>
           </View>
           <View style={styles.footer}>
+            {!portrait && <TextData />}
             <RNTooltip
               isTablet={isTablet}
               topViewStyle={{
@@ -220,6 +211,11 @@ const RNChooseColor = ({
               textStyle={styles.tooltip}
               dimensionObject={positionRefs[0]}>
               <View
+                style={{
+                  height: verticalScale(portrait ? 70 : 100),
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
                 ref={refOne}
                 onLayout={() => {
                   refOne?.current?.measure(
@@ -266,7 +262,7 @@ const RNChooseColor = ({
                 )}
               </View>
             </RNTooltip>
-            {[0, 1, 2, 3].map(val => (
+            {[...new Array(4).keys()].map(val => (
               <Pressable
                 onPress={() => {
                   if (palleteArray[val]) {
@@ -288,3 +284,24 @@ const RNChooseColor = ({
 };
 
 export default RNChooseColor;
+
+const TextData = () => {
+  return (
+    <>
+      <RNTextComponent isSemiBold style={styles.question}>
+        {translation('choose-color.what-colors')}{' '}
+        <RNTextComponent
+          isSemiBold
+          style={{...styles.question, color: 'rgba(10, 8, 4, 0.6)'}}>
+          {translation('choose-color.should-we-use')}
+        </RNTextComponent>{' '}
+        <RNTextComponent isSemiBold style={styles.question}>
+          {translation('choose-color.in-our-story')}
+        </RNTextComponent>{' '}
+      </RNTextComponent>
+      <RNTextComponent style={styles.subHeading}>
+        {translation('choose-color.select-two-colors')}
+      </RNTextComponent>
+    </>
+  );
+};

@@ -289,7 +289,7 @@ const GenerateStory = () => {
               setDisabled={setDisabled}
               type={STORY_PARTS.WHERE}
               index={2}
-              maxSelections={2}
+              maxSelections={1}
               data={place}
             />
           </>
@@ -306,7 +306,7 @@ const GenerateStory = () => {
               setDisabled={setDisabled}
               type={STORY_PARTS.WHAT_THINGS}
               index={3}
-              maxSelections={2}
+              maxSelections={5}
               data={attribute}
             />
           </>

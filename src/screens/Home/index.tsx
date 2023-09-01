@@ -62,7 +62,6 @@ const Home = () => {
     {color: themeColor.gold, title: translation('LEARN_SOMETHING')},
     {color: themeColor.green, title: translation('HAVE_FUN')},
   ];
-  console.log(currentChild, 'currentChildcurrentChild');
 
   const modeA: {
     color: string;

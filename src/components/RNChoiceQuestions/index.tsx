@@ -112,6 +112,7 @@ const RNChoiceQuestions = ({
                 customStyle={styles.optionsCustom}
                 icon={value.icon}
                 bgcColor={value.bgc}
+                Svgimg={value.svgIcon}
               />
             </RNTooltip>
           );
@@ -123,8 +124,9 @@ const RNChoiceQuestions = ({
               key={index.toString()}
               heading={value.name}
               customStyle={[styles.optionsCustom, itemStyle && itemStyle]}
-              icon={value.icon}
+              icon={value?.icon}
               bgcColor={value.bgc}
+              Svgimg={value.svgIcon}
             />
           );
         }
