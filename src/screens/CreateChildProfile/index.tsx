@@ -173,6 +173,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
           dob: dob.value,
           avatar: avatar,
           type: 'adult',
+          role: role.value,
         }),
       );
       dispatch(
@@ -181,6 +182,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
           dob: dob.value,
           avatar: avatar,
           type: 'adult',
+          role: role.value,
         }),
       );
     }
