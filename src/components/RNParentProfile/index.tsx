@@ -1,4 +1,4 @@
-import {StyleProp, TextStyle, View, Image, ImageStyle} from 'react-native';
+import {StyleProp, View, Image, ImageStyle} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
 import RNTextComponent from '../RNTextComponent';

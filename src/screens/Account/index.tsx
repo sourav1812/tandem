@@ -299,7 +299,7 @@ const Account = () => {
                     />
                   </Pressable>
                 );
-              } else {
+              } else if (item.type === 'adult') {
                 return (
                   <Pressable
                     key={index.toString()}

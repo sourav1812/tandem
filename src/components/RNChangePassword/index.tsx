@@ -1,4 +1,4 @@
-import {View, ImageBackground} from 'react-native';
+import {ImageBackground} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
 import RNTextComponent from '../RNTextComponent';

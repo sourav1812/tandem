@@ -36,7 +36,7 @@ const RNStoryCard = ({item}: {item: BooksData}) => {
               styles.imageImojiContainer,
               isTablet && {right: verticalScale(28)},
             ]}>
-            <Text style={styles.emojiText}>{'\u{1F60D}'}</Text>
+            {item.emogi && <Text style={styles.emojiText}>{item.emogi}</Text>}
           </View>
           <Image
             source={item.image}

@@ -20,16 +20,11 @@ import {verticalScale} from 'react-native-size-matters';
 import navigateTo from '@tandem/navigation/navigate';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
-import {RootState} from '@tandem/redux/store';
 import {translation} from '@tandem/utils/methods';
 
 const ForgotPassword = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
-
   const [email, setEmail] = useState<ValidationError>({value: ''});
-  const portrait = useAppSelector(
-    (state: RootState) => state.orientation.isPortrait,
-  );
   const height = Dimensions.get('screen').height;
   const width = Dimensions.get('screen').width;
 

@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
-import {Alert, Pressable, ScrollView, View} from 'react-native';
+import {Pressable, ScrollView, View} from 'react-native';
 import BlueButton from '@tandem/assets/svg/BlueButton';
 import {styles} from './styles';
 import RNNumericBulletin from '@tandem/components/RNNumericBulletin';
@@ -18,9 +18,7 @@ import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
 import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
 import DatePicker from 'react-native-date-picker';
-import {LanguageDropDown} from '@tandem/components/LanguageDropDown';
 import dayjs from 'dayjs';
-import {addNewChild} from '@tandem/api/creatChildProfile';
 import validationFunction from '@tandem/functions/validationFunction';
 import {
   saveAdultData,
@@ -29,6 +27,8 @@ import {
   saveCurrentChild,
 } from '@tandem/redux/slices/createChild.slice';
 import {CreateChildProfileProps} from '@tandem/navigation/types';
+import {LanguageDropDown} from '@tandem/components/LanguageDropDown';
+import {addNewChild} from '@tandem/api/creatChildProfile';
 import {addNewAdult} from '@tandem/api/createAdultProfile';
 
 const CreateChildProfile = ({route}: CreateChildProfileProps) => {
@@ -320,16 +320,12 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
                 updateText={setName}
                 hint={translation('ENTER_NAME')}
               />
-              <Pressable
-                onPress={() => {
-                  selectDate();
-                }}>
-                <LanguageDropDown
-                  customStyle={styles.date}
-                  heading={translation('DATE_OF_BIRTH')}
-                  text={dayjs(dob.value?.toString()).format('DD/MM/YYYY')}
-                />
-              </Pressable>
+              <LanguageDropDown
+                customStyle={styles.date}
+                heading={translation('DATE_OF_BIRTH')}
+                text={dayjs(dob.value?.toString()).format('DD/MM/YYYY')}
+                onPress={selectDate}
+              />
             </View>
           </>
         );

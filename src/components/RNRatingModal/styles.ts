@@ -46,7 +46,6 @@ export const styles = StyleSheet.create({
     width: verticalScale(35),
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: themeColor.lightGray,
     borderRadius: 72,
   },
   emoji: {

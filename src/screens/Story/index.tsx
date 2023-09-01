@@ -93,11 +93,13 @@ const Story = () => {
           <Image style={styles.poster} source={routeData?.image} />
           <View style={styles.scrollView}>
             <View style={styles.midContent}>
-              <View style={styles.rating}>
-                <RNTextComponent style={styles.emoji}>
-                  {routeData.emogi}
-                </RNTextComponent>
-              </View>
+              {routeData.emogi && (
+                <View style={styles.rating}>
+                  <RNTextComponent style={styles.emoji}>
+                    {routeData.emogi}
+                  </RNTextComponent>
+                </View>
+              )}
               {routeData.isNew && (
                 <View style={styles.duration}>
                   <RNTextComponent style={styles.new} isSemiBold>

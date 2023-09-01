@@ -3,6 +3,7 @@ import North from '@tandem/assets/svg/arrows/North';
 import NorthEast from '@tandem/assets/svg/arrows/NorthEast';
 import NorthWest from '@tandem/assets/svg/arrows/NorthWest';
 import West from '@tandem/assets/svg/arrows/West';
+import React from 'react';
 
 const RNArrowIconTop = ({
   type,
