@@ -21,4 +21,8 @@ export const styles = StyleSheet.create({
     fontSize: verticalScale(45),
     fontFamily: 'Poppins-Bold',
   },
+  svgIcon: {
+    height: verticalScale(55),
+    width: verticalScale(55),
+  },
 });

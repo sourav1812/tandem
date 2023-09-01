@@ -40,6 +40,7 @@ import {
   clipStoryGenerationResponse,
   pushStoryGenerationResponse,
 } from '@tandem/redux/slices/storyGeneration.slice';
+import RNImageChoice from '@tandem/components/RNImageChoice';
 
 const GenerateStory = () => {
   const dispatch = useAppDispatch();
@@ -284,11 +285,11 @@ const GenerateStory = () => {
                 {translation('generate-story.go-in-our-story')}
               </RNTextComponent>
             </RNTextComponent>
-            <RNChoiceQuestions
+            <RNImageChoice
               setDisabled={setDisabled}
               type={STORY_PARTS.WHERE}
               index={2}
-              maxSelections={2}
+              maxSelections={1}
               data={place}
             />
           </>
@@ -305,7 +306,7 @@ const GenerateStory = () => {
               setDisabled={setDisabled}
               type={STORY_PARTS.WHAT_THINGS}
               index={3}
-              maxSelections={2}
+              maxSelections={5}
               data={attribute}
             />
           </>

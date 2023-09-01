@@ -11,6 +11,8 @@ import RNChangePassword from '@tandem/components/RNChangePassword';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import RNTextInputWithLabel from '@tandem/components/RNTextInputWithLabel';
 import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
+import validationFunction from '@tandem/functions/validationFunction';
+import {changePassword} from '@tandem/api/changePassword';
 
 const ChangePassword = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -36,6 +38,45 @@ const ChangePassword = () => {
 
   const toggleModal = () => {
     updateState({showModal: !showModal});
+  };
+
+  const hangleChangePassword = async () => {
+    if (
+      !validationFunction([
+        {
+          state: currentPassword,
+          setState: setCurrentPassword,
+          typeOfValidation: FORM_INPUT_TYPE.PASSWORD,
+        },
+        {
+          state: newPassword,
+          setState: setCurrentPassword,
+          typeOfValidation: FORM_INPUT_TYPE.PASSWORD,
+        },
+        {
+          state: confirmPassword,
+          setState: setConfirmPassword,
+          typeOfValidation: FORM_INPUT_TYPE.CONFIRM_PASSWORD,
+        },
+      ])
+    ) {
+      return;
+    }
+    if (newPassword.value === confirmPassword.value) {
+      const response = await changePassword({
+        currentPassword: currentPassword.value,
+        newPassword: newPassword.value,
+      });
+      if (!response) {
+        return;
+      }
+      // toggleModal();
+    } else {
+      setConfirmPassword(prev => ({
+        ...prev,
+        message: 'Your password do not match.',
+      }));
+    }
   };
 
   return (
@@ -85,7 +126,7 @@ const ChangePassword = () => {
       <RNButton
         customStyle={[styles.button, isTablet && {maxWidth: scale(180)}]}
         title={translation('CHANGE_PASSWORD')}
-        onClick={toggleModal}
+        onClick={hangleChangePassword}
       />
       <RNChangePassword visible={showModal} renderModal={toggleModal} />
     </RNScreenWrapper>
