@@ -41,7 +41,6 @@ const RNRoadmap = () => {
   const storyGenerationArray = useAppSelector(
     (state: RootState) => state.storyGeneration.responseArray,
   );
-
   const currentChild = useAppSelector(
     (state: RootState) => state.createChild.currentChild,
   );

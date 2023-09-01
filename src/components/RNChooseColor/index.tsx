@@ -245,6 +245,7 @@ const RNChooseColor = ({
                         prev.length < 4 ? [...prev, activeColor] : prev,
                       );
                       setActiveColor('');
+                      valueRef.current = '';
                       setUsedColor([]);
                       setClear(true);
                       setTimeout(() => {
@@ -267,6 +268,7 @@ const RNChooseColor = ({
                 onPress={() => {
                   if (palleteArray[val]) {
                     setFinalColor(palleteArray[val]);
+                    valueRef.current = palleteArray[val];
                   }
                 }}
                 key={val.toString()}>
