@@ -143,5 +143,6 @@ const styles = StyleSheet.create({
     paddingVertical: verticalScale(14),
     color: themeColor.black,
     fontSize: verticalScale(14),
+    flex: 1,
   },
 });

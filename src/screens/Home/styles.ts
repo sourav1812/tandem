@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {scale, verticalScale} from 'react-native-size-matters';
+import {verticalScale} from 'react-native-size-matters';
 import themeColor from '@tandem/theme/themeColor';
 
 export const styles = StyleSheet.create({
@@ -10,7 +10,6 @@ export const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     justifyContent: 'center',
-    backgroundColor: themeColor.gold,
     marginBottom: verticalScale(40),
   },
   profilePic: {
@@ -25,7 +24,6 @@ export const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    paddingHorizontal: scale(20),
   },
   heading: {
     fontSize: verticalScale(16),
@@ -75,12 +73,13 @@ export const styles = StyleSheet.create({
     height: verticalScale(59),
     width: verticalScale(59),
     borderRadius: 100,
+    marginBottom: 8,
   },
   tooltipUserName: {
     marginTop: 5,
     position: 'absolute',
     bottom: -verticalScale(10),
-    fontSize: verticalScale(18),
+    fontSize: verticalScale(16),
   },
   curveViewHeaderWrapper: {
     width: '100%',
@@ -93,12 +92,10 @@ export const styles = StyleSheet.create({
     zIndex: 50,
   },
   curvedViewHeaderLeft: {
-    backgroundColor: themeColor.gold,
     borderBottomRightRadius: 100,
     borderTopRightRadius: 100,
   },
   curvedViewHeaderRight: {
-    backgroundColor: themeColor.gold,
     borderBottomLeftRadius: 100,
     borderTopLeftRadius: 100,
   },

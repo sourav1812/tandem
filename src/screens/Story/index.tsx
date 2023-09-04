@@ -13,14 +13,66 @@ import {verticalScale} from 'react-native-size-matters';
 import {translation} from '@tandem/utils/methods';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {MODE} from '@tandem/constants/mode';
+import {useRoute} from '@react-navigation/native';
+import {BooksData} from '../Bookshelf/interface';
+import {store} from '@tandem/redux/store';
+import {setImageForPage} from '@tandem/redux/slices/bookShelf.slice';
+import RNFetchBlob from 'rn-fetch-blob';
 
 const Story = () => {
   const [visible, setVisible] = useState(false);
+  const [progress, setProgress] = useState({val: 0, len: 0});
+  const [redirect, setRedirect] = useState(true);
   const mode = useAppSelector(state => state.mode.mode);
-
+  const route: any = useRoute();
+  const routeData: BooksData = route?.params?.routeData;
   const toggelMenuBar = () => {
     setVisible(!visible);
   };
+  const {val, len} = progress;
+  const shouldRedirect = () => {
+    if (val && len) {
+      if (val === len) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  React.useEffect(() => {
+    setRedirect(shouldRedirect());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [val]);
+
+  React.useEffect(() => {
+    // routeData.id
+    const books = store.getState().bookShelf.books;
+    const bookIndex = books.findIndex(book => book.bookId === routeData.id);
+    const book = books[bookIndex];
+    const doWeHaveImage = book.pages.every(obj => obj.image);
+    if (doWeHaveImage) {
+      setRedirect(true);
+      return;
+    }
+    setProgress(prev => ({...prev, len: book.pages.length}));
+    book.pages.forEach((page, pageIndex) => {
+      if (!page.image) {
+        RNFetchBlob.config({fileCache: true})
+          .fetch('GET', page.illustration_url, {})
+          .then(res => {
+            store.dispatch(
+              setImageForPage({
+                bookIndex,
+                pageIndex,
+                image: 'file://' + res.path(),
+              }),
+            );
+            setProgress(prev => ({...prev, val: prev.val + 1}));
+          });
+      }
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -38,58 +90,57 @@ const Story = () => {
         </View>
 
         <View style={styles.container}>
-          <Image
-            style={styles.poster}
-            source={{
-              uri: 'https://i.pinimg.com/originals/92/bc/57/92bc5785532102412df54f1623bf0c02.jpg',
-            }}
-          />
+          <Image style={styles.poster} source={routeData?.image} />
           <View style={styles.scrollView}>
             <View style={styles.midContent}>
-              <View style={styles.rating}>
-                <RNTextComponent style={styles.emoji}>😍</RNTextComponent>
-              </View>
-              <View style={styles.duration}>
-                <RNTextComponent style={styles.emoji} isSemiBold>
-                  {translation('NEW')}
-                </RNTextComponent>
-              </View>
+              {routeData.emogi && (
+                <View style={styles.rating}>
+                  <RNTextComponent style={styles.emoji}>
+                    {routeData.emogi}
+                  </RNTextComponent>
+                </View>
+              )}
+              {routeData.isNew && (
+                <View style={styles.duration}>
+                  <RNTextComponent style={styles.new} isSemiBold>
+                    {translation('NEW')}
+                  </RNTextComponent>
+                </View>
+              )}
             </View>
             <ScrollView
+              bounces
               contentContainerStyle={styles.scrollContainer}
               showsVerticalScrollIndicator={false}>
               <View style={styles.dateTime}>
                 <RNTextComponent style={styles.date}>
-                  14.08.2023
+                  {routeData.time}
                 </RNTextComponent>
                 <RNTextComponent
                   style={[styles.date, {color: 'rgba(0, 0, 0, 0.6)'}]}>
-                  {'     '}2 min reading
+                  {`${routeData.readingTime} min reading`}
                 </RNTextComponent>
               </View>
               <RNTextComponent isSemiBold style={styles.heading}>
-                Lola and her friends
+                {routeData.headerTitle}
               </RNTextComponent>
               <RNTextComponent style={styles.story}>
-                A silly parrot, an adventurous iguana, and a young girl called
-                Lola. Make the story about them going on an adventure, and
-                finding new friends".{'\n'}
-                {'\n'}
-                Once upon a time, in a vibrant, lush rainforest full of colorful
-                flowers and the sweetest fruits.
+                {routeData.teaser}
               </RNTextComponent>
             </ScrollView>
           </View>
           <RNButton
+            isDisabled={!redirect}
             title={
               mode === MODE.B
                 ? translation('READ_TOGETHER')
                 : translation('REREAD')
             }
-            customStyle={styles.button}
+            loadPercentage={redirect ? undefined : (val * 100) / (len || 1)}
+            customStyle={[styles.button]}
             textStyle={{fontSize: verticalScale(14)}}
             onClick={() => {
-              navigateTo(SCREEN_NAME.STORY_TELLING);
+              navigateTo(SCREEN_NAME.STORY_TELLING, {id: routeData.id});
             }}
           />
         </View>

@@ -5,7 +5,7 @@ import {Pressable, ScrollView, View} from 'react-native';
 import BlueButton from '@tandem/assets/svg/BlueButton';
 import {styles} from './styles';
 import RNNumericBulletin from '@tandem/components/RNNumericBulletin';
-import {avatarArray, childProfileStateObject, indicatorType} from './interface';
+import {avatarArray, ChildProfileStateObject, indicatorType} from './interface';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import {translation} from '@tandem/utils/methods';
 import RNEmojiWithText from '@tandem/components/RNEmojiWithText';
@@ -15,19 +15,27 @@ import RNTextInputWithLabel from '@tandem/components/RNTextInputWithLabel';
 import RNAvatarComponent from '@tandem/components/RNAvatarComponent';
 import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
-import {verticalScale} from 'react-native-size-matters';
-import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
 import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
 import DatePicker from 'react-native-date-picker';
-import {LanguageDropDown} from '@tandem/components/LanguageDropDown';
-import ImagePicker from 'react-native-image-crop-picker';
 import dayjs from 'dayjs';
-import {addNewChild} from '@tandem/api/creatChildProfile';
 import validationFunction from '@tandem/functions/validationFunction';
+import {
+  saveAdultData,
+  saveChildData,
+  saveCurrentAdult,
+  saveCurrentChild,
+} from '@tandem/redux/slices/createChild.slice';
+import {CreateChildProfileProps} from '@tandem/navigation/types';
+import {LanguageDropDown} from '@tandem/components/LanguageDropDown';
+import {addNewChild} from '@tandem/api/creatChildProfile';
+import {addNewAdult} from '@tandem/api/createAdultProfile';
 
-const CreateChildProfile = () => {
+const CreateChildProfile = ({route}: CreateChildProfileProps) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
-  const [state, setState] = useState<childProfileStateObject>({
+  const fromAddAdult = route.params?.fromAddAdult;
+  const dispatch = useAppDispatch();
+  const [state, setState] = useState<ChildProfileStateObject>({
     bulletinArray: [
       {index: 1, isSelected: true},
       {index: 2, isSelected: false},
@@ -38,10 +46,12 @@ const CreateChildProfile = () => {
   });
   const {bulletinArray, questionIndex, gender} = state;
   const [name, setName] = useState<ValidationError>({value: ''});
+  const [role, setRole] = useState<ValidationError>({value: ''});
   const [dateModal, setDateModal] = useState(false);
-  const [dob, setDob] = useState(new Date());
-  const [imageData, setImageData] = useState(null);
-  const [avtarIndex, setavtarIndex] = useState<number | null>(null);
+  const [dob, setDob] = useState<ValidationError>({
+    value: new Date().toString(),
+  });
+  const [avatar, setAvatar] = useState<string | null>(null);
 
   const updateState = (date: any) => {
     setState((previouState: any) => {
@@ -50,7 +60,7 @@ const CreateChildProfile = () => {
   };
 
   const nextQuestion = async () => {
-    if (questionIndex <= 2) {
+    if (questionIndex <= 2 && avatar === null) {
       let indexArry: indicatorType[] = [...bulletinArray];
       bulletinArray.map((item, index) => {
         if (questionIndex + 1 > index) {
@@ -59,34 +69,10 @@ const CreateChildProfile = () => {
       });
       updateState({questionIndex: questionIndex + 1, bulletinArray: indexArry});
     } else {
-      if (
-        !validationFunction([
-          {
-            state: name,
-            setState: setName,
-            typeOfValidation: FORM_INPUT_TYPE.NAME,
-          },
-          {
-            state: dob,
-            setState: setDob,
-            typeOfValidation: FORM_INPUT_TYPE.DOB,
-          },
-        ]) &&
-        avtarIndex === null &&
-        gender === ''
-      ) {
-        return;
-      }
-      const response = await addNewChild({
-        name: 'mohan',
-        age: '32',
-        gender: 'male',
-        avatar: 'sjdfkljklfskl34349349895jksjdfksj',
-      });
-      if (response) {
-        setTimeout(() => {
-          navigateTo(SCREEN_NAME.BOTTOM_TAB, {}, true);
-        }, 300);
+      if (fromAddAdult) {
+        handleAddAdult();
+      } else {
+        handleCreateChild();
       }
     }
   };
@@ -101,6 +87,104 @@ const CreateChildProfile = () => {
         }
       });
       updateState({questionIndex: questionIndex - 1});
+    } else {
+      navigateTo();
+    }
+  };
+
+  const handleCreateChild = async () => {
+    if (
+      !validationFunction([
+        {
+          state: name,
+          setState: setName,
+          typeOfValidation: FORM_INPUT_TYPE.NAME,
+        },
+        {
+          state: dob,
+          setState: setDob,
+          typeOfValidation: FORM_INPUT_TYPE.DOB,
+        },
+      ])
+    ) {
+      return;
+    }
+    // TODO make it dynamic
+
+    const response = await addNewChild({
+      name: name.value,
+      dob: dob.value, // ! pass in the whole date object
+      gender: gender,
+      avatar,
+    });
+    if (response) {
+      dispatch(
+        saveCurrentChild({
+          childId: response?.childId,
+          name: name.value,
+          dob: dob.value,
+          gender: gender,
+          avatar: avatar,
+          type: 'child',
+        }),
+      );
+
+      dispatch(
+        saveChildData({
+          childId: response?.childId,
+          name: name.value,
+          dob: dob.value,
+          gender: gender,
+          avatar: avatar,
+          type: 'child',
+        }),
+      );
+    }
+  };
+
+  const handleAddAdult = async () => {
+    if (
+      !validationFunction([
+        {
+          state: role,
+          setState: setRole,
+          typeOfValidation: FORM_INPUT_TYPE.NAME,
+        },
+        {
+          state: dob,
+          setState: setDob,
+          typeOfValidation: FORM_INPUT_TYPE.DOB,
+        },
+      ])
+    ) {
+      return;
+    }
+    // TODO make it dynamic
+
+    const response = await addNewAdult({
+      role: role.value,
+      dob: dob.value, // ! pass in the whole date object
+      avatar,
+    });
+    if (response) {
+      dispatch(
+        saveCurrentAdult({
+          profileId: response?.profileId,
+          dob: dob.value,
+          avatar: avatar,
+          type: 'adult',
+          role: role.value,
+        }),
+      );
+      dispatch(
+        saveAdultData({
+          profileId: response?.profileId,
+          dob: dob.value,
+          avatar: avatar,
+          type: 'adult',
+          role: role.value,
+        }),
+      );
     }
   };
 
@@ -122,7 +206,31 @@ const CreateChildProfile = () => {
     }
   };
 
-  const form = () => {
+  const disableButtonForChilForm = () => {
+    if (questionIndex === 1 && !gender) {
+      return false;
+    }
+    if (questionIndex === 2 && !name.value) {
+      return false;
+    }
+    if (avatar === null && questionIndex === 3) {
+      return false;
+    }
+
+    return true;
+  };
+
+  const disableButtonForAdultForm = () => {
+    if (questionIndex === 1 && role.value === '') {
+      return false;
+    }
+    if (avatar === null && questionIndex === 3) {
+      return false;
+    }
+    return true;
+  };
+
+  const childForm = () => {
     switch (questionIndex) {
       case 1:
         return (
@@ -212,17 +320,12 @@ const CreateChildProfile = () => {
                 updateText={setName}
                 hint={translation('ENTER_NAME')}
               />
-              <Pressable
-                onPress={() => {
-                  // Alert.alert('');
-                  selectDate();
-                }}>
-                <LanguageDropDown
-                  customStyle={styles.date}
-                  heading={translation('DATE_OF_BIRTH')}
-                  text={dayjs(dob.toJSON()).format('DD/MM/YYYY')}
-                />
-              </Pressable>
+              <LanguageDropDown
+                customStyle={styles.date}
+                heading={translation('DATE_OF_BIRTH')}
+                text={dayjs(dob.value?.toString()).format('DD/MM/YYYY')}
+                onPress={selectDate}
+              />
             </View>
           </>
         );
@@ -243,49 +346,145 @@ const CreateChildProfile = () => {
                 {avatarArray.map((item, index) => {
                   return (
                     <RNAvatarComponent
-                      icon={
-                        imageData && index === 0
-                          ? {uri: imageData?.path}
-                          : item.icon
-                      }
+                      key={index.toString()}
+                      icon={item.icon}
                       customStyle={[
                         styles.avatar,
-                        index === 0 && {justifyContent: 'center'},
-                        index === 0 &&
-                          index === avtarIndex &&
-                          imageData && {
-                            borderWidth: 3,
-                            borderColor: themeColor.themeBlue,
-                          },
-                        index === avtarIndex &&
-                          index !== 0 && {
-                            backgroundColor: themeColor.themeBlue,
-                          },
-                        isTablet && {marginTop: verticalScale(24)},
+                        avatar === item.icon && {
+                          backgroundColor: themeColor.themeBlue,
+                        },
                       ]}
-                      imgStyle={
-                        index !== 0
-                          ? styles.avatarImg
-                          : imageData && {height: '100%', width: '100%'}
-                      }
+                      imgStyle={styles.avatarImg}
+                      onPress={() => {
+                        // if (index === 0) {
+                        //   return;
+                        // ImagePicker.openPicker({
+                        //   width: 300,
+                        //   height: 300,
+                        //   cropping: true,
+                        //   includeBase64: true,
+                        //   loadingLabelText: 'Image',
+                        //   mediaType: 'photo',
+                        // })
+                        //   .then(response => {
+                        //     setImageData(response);
+                        //   })
+                        //   .catch(err => {
+                        //     console.log(err);
+                        //   });
+                        // }
+                        setAvatar(item.icon);
+                      }}
+                    />
+                  );
+                })}
+              </ScrollView>
+            </View>
+          </>
+        );
+    }
+  };
+
+  const adultForm = () => {
+    switch (questionIndex) {
+      case 1:
+        return (
+          <>
+            <RNTextComponent isSemiBold style={styles.heading}>
+              {translation('YOUR_RELATIONSHIP')}
+            </RNTextComponent>
+            <RNTextComponent
+              style={[
+                styles.content,
+                isTablet && {fontSize: 17.5, marginTop: 8},
+              ]}>
+              {translation('WHICH_OF_THESE_BEST_DESCRIBE')}
+            </RNTextComponent>
+            <View
+              style={[
+                styles.inputField,
+                isTablet && {width: 400, alignSelf: 'center'},
+              ]}>
+              <RNTextInputWithLabel
+                label={translation('RELATIONSHIP')}
+                inputViewStyle={[
+                  styles.inputBox,
+                  isTablet && {borderRadius: 12, marginTop: 8},
+                ]}
+                containerStyle={styles.containerBox}
+                value={role}
+                validationType={FORM_INPUT_TYPE.NAME}
+                updateText={setRole}
+                hint={translation('ENTER')}
+              />
+            </View>
+          </>
+        );
+      case 2:
+        return (
+          <>
+            <RNTextComponent isSemiBold style={styles.heading}>
+              {translation('YOUR_DOB')}
+            </RNTextComponent>
+            <View
+              style={[
+                styles.inputField,
+                isTablet && {width: 400, alignSelf: 'center'},
+              ]}>
+              <LanguageDropDown
+                customStyle={styles.date}
+                heading={translation('DATE_OF_BIRTH')}
+                text={dayjs(dob.value?.toString()).format('DD/MM/YYYY')}
+                onPress={selectDate}
+              />
+            </View>
+          </>
+        );
+      case 3:
+        return (
+          <>
+            <RNTextComponent isSemiBold style={styles.heading}>
+              {translation('SELECT_AN_AVATAR')}
+            </RNTextComponent>
+            <RNTextComponent
+              style={[styles.content, isTablet && {fontSize: 18}]}>
+              {translation('YOU_CAN_CHANGE_IT_AFTER')}
+            </RNTextComponent>
+            <View style={styles.avatarBox}>
+              <ScrollView
+                contentContainerStyle={styles.list}
+                showsVerticalScrollIndicator={false}>
+                {avatarArray.map((item, index) => {
+                  return (
+                    <RNAvatarComponent
+                      icon={item.icon}
+                      customStyle={[
+                        styles.avatar,
+                        avatar === item.icon && {
+                          backgroundColor: themeColor.themeBlue,
+                        },
+                      ]}
+                      imgStyle={styles.avatarImg}
                       onPress={() => {
                         if (index === 0) {
-                          ImagePicker.openPicker({
-                            width: 500,
-                            height: 500,
-                            cropping: true,
-                            includeBase64: true,
-                            loadingLabelText: 'Image',
-                          })
-                            .then(response => {
-                              setImageData(response);
-                              console.log(response);
-                            })
-                            .catch(err => {
-                              console.log(err);
-                            });
+                          return;
+                          // ImagePicker.openPicker({
+                          //   width: 300,
+                          //   height: 300,
+                          //   cropping: true,
+                          //   includeBase64: true,
+                          //   loadingLabelText: 'Image',
+                          //   mediaType: 'photo',
+                          // })
+                          //   .then(response => {
+                          //     setImageData(response);
+                          //     console.log(response, 'sdfghjrfdsresponse');
+                          //   })
+                          //   .catch(err => {
+                          //     console.log(err);
+                          //   });
                         }
-                        setavtarIndex(index);
+                        setAvatar(item.icon);
                       }}
                     />
                   );
@@ -310,7 +509,7 @@ const CreateChildProfile = () => {
           <RNNumericBulletin selected={item.isSelected} heading={item.index} />
         ))}
       </View>
-      {form()}
+      {fromAddAdult ? adultForm() : childForm()}
       <View style={[styles.bottomButtons, isTablet && {width: 430}]}>
         <RNButton
           title={'<'}
@@ -321,18 +520,27 @@ const CreateChildProfile = () => {
         <RNButton
           title={translation('NEXT')}
           onClick={nextQuestion}
-          customStyle={gender === '' && styles.disabled}
+          customStyle={
+            !fromAddAdult
+              ? !disableButtonForChilForm() && styles.disabled
+              : !disableButtonForAdultForm() && styles.disabled
+          }
           textStyle={[styles.rightText, isTablet && {maxWidth: 310}]}
+          isDisabled={
+            !fromAddAdult
+              ? !disableButtonForChilForm()
+              : !disableButtonForAdultForm()
+          }
         />
       </View>
       <DatePicker
         modal
         mode={'date'}
         open={dateModal}
-        date={dob}
+        date={new Date(dob.value)}
         onConfirm={date => {
           setDateModal(false);
-          setDob(date);
+          setDob({value: date.toISOString()});
         }}
         onCancel={() => {
           setDateModal(false);

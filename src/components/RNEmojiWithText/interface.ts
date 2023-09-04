@@ -11,10 +11,11 @@ export interface Props {
   customStyle?: StyleProp<ViewStyle>;
   heading?: string;
   emoji?: StyleProp<TextStyle>;
-  icon: string;
+  icon: string | undefined;
   bgcColor: string;
   ref?: any;
   onLayout?: ((event: LayoutChangeEvent) => void) | undefined;
-  onPress: () => void;
-  isSelected: boolean;
+  onPress?: () => void;
+  isSelected?: boolean;
+  Svgimg?: any;
 }

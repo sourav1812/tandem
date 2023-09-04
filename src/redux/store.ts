@@ -11,6 +11,10 @@ import getResponseReducer from './slices/getResponseReducer';
 import languageReducer from './slices/languageReducer';
 import tokensSlice from './slices/tokens.slice';
 import alertBoxSlice from './slices/alertBox.slice';
+import storyGeneration from './slices/storyGeneration.slice';
+import createChildSlice from './slices/createChild.slice';
+import bookShelf from './slices/bookShelf.slice';
+import setUserData from './slices/userData.slice';
 
 export const storage = new MMKV();
 
@@ -25,6 +29,10 @@ export const appReducer = combineReducers({
   language: languageReducer,
   tokenReducer: tokensSlice,
   alertBoxReducer: alertBoxSlice,
+  createChild: createChildSlice,
+  userData: setUserData,
+  storyGeneration,
+  bookShelf,
 });
 
 export const reduxStorage: Storage = {

@@ -1,0 +1,82 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RNButton Component renders correctly 1`] = `
+<View
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": false,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    [
+      {
+        "alignItems": "center",
+        "backgroundColor": "#4285F6",
+        "borderColor": "#4285F6",
+        "borderRadius": 14,
+        "borderWidth": 1,
+        "height": 94.16470588235293,
+        "justifyContent": "center",
+      },
+      {},
+      {},
+      {},
+      false,
+      undefined,
+    ]
+  }
+>
+  <Text
+    style={
+      [
+        {
+          "color": "black",
+          "flexShrink": 1,
+          "fontFamily": "Poppins-Regular",
+          "fontSize": 30,
+        },
+        undefined,
+        {
+          "fontFamily": "Poppins-SemiBold",
+          "fontSize": 16,
+        },
+        undefined,
+        [
+          {
+            "color": "#ffffff",
+            "fontSize": 27.46470588235294,
+            "textAlign": "center",
+          },
+          undefined,
+        ],
+      ]
+    }
+  >
+    My Button
+  </Text>
+</View>
+`;

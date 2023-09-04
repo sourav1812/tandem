@@ -28,10 +28,10 @@ import {RootState} from '@tandem/redux/store';
 import {translation} from '@tandem/utils/methods';
 import loginUserWithEmail from '@tandem/api/loginUserWithEmail';
 import validationFunction from '@tandem/functions/validationFunction';
+import fcm from '@tandem/functions/fcm';
 
 const SignIn = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
-
   const [email, setEmail] = useState<ValidationError>({value: ''});
   const [password, setPassword] = useState<ValidationError>({value: ''});
   const portrait = useAppSelector(
@@ -57,16 +57,19 @@ const SignIn = () => {
     ) {
       return;
     }
-
-    const response = await loginUserWithEmail({
-      email: email.value,
-      password: password.value,
-    });
-
-    if (!response) {
-      return;
+    try {
+      const {deviceId, deviceType, fcmToken} = await fcm();
+      await loginUserWithEmail({
+        email: email.value,
+        password: password.value,
+        deviceId,
+        deviceType,
+        fcmToken,
+      });
+      navigateTo(SCREEN_NAME.TERMS_AND_CONDITIONS);
+    } catch (error: any) {
+      console.log('error in login api', error.message);
     }
-    navigateTo(SCREEN_NAME.TERMS_AND_CONDITIONS);
   };
 
   return (

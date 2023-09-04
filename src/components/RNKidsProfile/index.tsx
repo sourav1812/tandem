@@ -7,20 +7,17 @@ import {KidsProfileProps} from './interface';
 const RNKidsProfile = ({
   style,
   data,
+  avatar,
 }: {
   style: StyleProp<ImageStyle>;
   data: KidsProfileProps;
+  avatar: string;
 }) => {
   return (
     <View style={styles.container}>
-      <Image
-        source={{
-          uri: 'https://thumbs.dreamstime.com/b/cute-giraffe-face-wild-animal-character-animated-cartoon-png-illustration-isolated-transparent-background-hand-drawn-png-264757481.jpg',
-        }}
-        style={[styles.profile, style]}
-      />
+      <Image source={{uri: avatar}} style={[styles.profile, style]} />
       <RNTextComponent style={styles.name} isMedium>
-        {data && data.name}
+        {data && data?.name}
       </RNTextComponent>
     </View>
   );

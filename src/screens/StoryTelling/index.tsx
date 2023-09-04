@@ -1,23 +1,14 @@
-/* eslint-disable react/no-unstable-nested-components */
-import {
-  View,
-  ImageBackground,
-  FlatList,
-  ScrollView,
-  Dimensions,
-} from 'react-native';
-import React, {useState, useCallback, useRef} from 'react';
+/* eslint-disable react-native/no-inline-styles */
+import {View} from 'react-native';
+import React, {useState, useRef} from 'react';
 import {styles} from './style';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import RNButton from '@tandem/components/RNButton';
 import Close from '@tandem/assets/svg/Cross';
 import Speaker from '@tandem/assets/svg/VolumeDown';
 import RNTextComponent from '@tandem/components/RNTextComponent';
-import RNCharacterComponent from '@tandem/components/RNCharacterComponent';
-import {characterList, StateObject} from './interface';
-import {characterProps} from '@tandem/components/RNCharacterComponent/interface';
+import {StateObject} from './interface';
 import RNCongratsModal from '@tandem/components/RNCongratsModal';
-import themeColor from '@tandem/theme/themeColor';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import RNReadingLevelModal from '@tandem/components/RNReadingLevelModal';
@@ -35,15 +26,24 @@ import RNMultipleChoice from '@tandem/components/RNMultipleChoice';
 import {TOOLTIP} from '@tandem/constants/LocalConstants';
 import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
 import RNTooltip from '@tandem/components/RNTooltip';
+import {useRoute} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
+import Book from '@tandem/api/getStories/interface';
+import {PageFlip} from '@tandem/components/PageFlip';
+import rateStory from '@tandem/api/rateStory';
 
 const StoryTelling = () => {
-  const flatlistRef = useRef(null);
   const tooltipArray = getValueFromKey(TOOLTIP);
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const mode = useAppSelector(state => state.mode.mode);
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [renderModal, setRenderModal] = useState(false);
   const [readingLevel, setReadingLevel] = useState(false);
+  const routes: any = useRoute();
+  const routesData = routes?.params;
+  const books = useSelector((state: RootState) => state.bookShelf.books);
+  const book = books.filter((item: Book) => item?.bookId === routesData.id)[0];
+  const totalPages = book?.pages?.length - 1;
+  const [currentIndex, setActiveIndex] = React.useState(totalPages);
   const [state, setState] = useState<StateObject>({
     ratingModal: true,
     toggleMic: false,
@@ -55,9 +55,6 @@ const StoryTelling = () => {
     tooltipFour: false,
   });
 
-  const portrait = useAppSelector(
-    (state: RootState) => state.orientation.isPortrait,
-  );
   const refOne = useRef<any>(null);
   const refTwo = useRef<any>(null);
   const refThree = useRef<any>(null);
@@ -67,8 +64,7 @@ const StoryTelling = () => {
     1: {height: 0, width: 0, x: 0, y: 0},
     2: {height: 0, width: 0, x: 0, y: 0},
   });
-  const height = Dimensions.get('screen').height;
-  const width = Dimensions.get('screen').width;
+
   const {
     ratingModal,
     showQuestion,
@@ -84,76 +80,16 @@ const StoryTelling = () => {
       return {...previouState, ...date};
     });
   };
-  const renderStory = () => {
-    return (
-      <ImageBackground
-        style={[styles.container, {height: height, width: width}]}
-        source={require('../../assets/png/storyBackground.png')}>
-        {currentIndex + 1 === 5 && (
-          <View>
-            <View
-              style={[
-                styles.summary,
-                {height: !portrait ? verticalScale(270) : verticalScale(400)},
-              ]}>
-              <ScrollView showsVerticalScrollIndicator={false}>
-                <RNTextComponent style={styles.title} isSemiBold>
-                  Magic Castle
-                </RNTextComponent>
-                <RNTextComponent style={styles.mainCharacter} isSemiBold>
-                  The main Characters
-                </RNTextComponent>
-                <View style={styles.characterList}>
-                  {characterList.map((item: characterProps) => {
-                    return (
-                      <RNCharacterComponent
-                        characterName={item.characterName}
-                        url={item.url}
-                        customStyle={styles.boxStyle}
-                      />
-                    );
-                  })}
-                </View>
-                <RNTextComponent style={styles.content}>
-                  Fascinating children's book that recounts the exciting
-                  adventure of three friends, Tim, Lena, and Max. Together they
-                  go in search of the lost treasure, about which legends and
-                  tales are told. During their journey, the children encounter
-                  mysterious conspiracies, solve puzzles, and overcome dangers
-                  to reach their.
-                </RNTextComponent>
-              </ScrollView>
-            </View>
-            <RNButton
-              title={`${translation('GREAT')}!`}
-              customStyle={[
-                styles.footerButton,
-                isTablet && {maxHeight: verticalScale(180)},
-              ]}
-              textStyle={isTablet && {fontSize: scale(12)}}
-              onClick={toggleModal}
-            />
-          </View>
-        )}
-      </ImageBackground>
-    );
-  };
-  const onViewableItemsChanged = useCallback(({viewableItems}: any) => {
-    if (viewableItems.length > 0) {
-      setCurrentIndex(viewableItems[0].index);
-    }
-  }, []);
-
-  React.useEffect(() => {
-    switch (currentIndex) {
-      case 1:
-        updateState({showQuestion: true});
-        break;
-      case 3:
-        updateState({showQuestion: true});
-        break;
-    }
-  }, [currentIndex]);
+  // React.useEffect(() => {
+  //   switch (currentIndex) {
+  //     case 1:
+  //       updateState({showQuestion: true});
+  //       break;
+  //     case 3:
+  //       updateState({showQuestion: true});
+  //       break;
+  //   }
+  // }, [currentIndex]);
 
   const toggleModal = () => {
     setRenderModal(!renderModal);
@@ -165,7 +101,23 @@ const StoryTelling = () => {
   //   setReadingTip(!readingTip);
   // };
 
-  const renderRatingModal = () => {
+  const submitRatingModal = async (rating: number) => {
+    updateState({ratingModal: !ratingModal});
+    if (currentIndex === 0) {
+      setTimeout(() => {
+        toggleModal();
+      }, 4000);
+    }
+    if (rating === 0) {
+      return;
+    }
+    try {
+      await rateStory(book.bookId, rating);
+    } catch (error) {
+      console.log('error in rating story post', error);
+    }
+  };
+  const renderRatingModal = async () => {
     updateState({ratingModal: !ratingModal});
   };
 
@@ -199,13 +151,16 @@ const StoryTelling = () => {
 
     return (
       <RNTooltip
+        isTablet={isTablet}
+        topViewStyle={{
+          alignItems: 'center',
+        }}
         open={tooltipArray?.includes(8) ? false : tooltipOne}
         setClose={() => {
           updateState({tooltipOne: false, tooltipTwo: true});
           tooltipArray.push(8);
           storeKey(TOOLTIP, tooltipArray);
         }}
-        rotation={10}
         text={translation('READ_ALOUD')}
         textContainerStyle={styles.tooltipTwo}
         textStyle={[
@@ -243,7 +198,7 @@ const StoryTelling = () => {
 
   const renderQuestions = () => {
     switch (currentIndex) {
-      case 1:
+      case 2:
         return (
           <View style={styles.questionView}>
             <RNLogoHeader
@@ -299,10 +254,13 @@ const StoryTelling = () => {
   };
 
   return (
-    <RNScreenWrapper
-      giveStatusColor={tooltipArray?.includes(13) ? false : true}>
+    <RNScreenWrapper giveStatusColor={false}>
       <View style={styles.headingButton}>
         <RNTooltip
+          isTablet={isTablet}
+          topViewStyle={{
+            alignItems: 'center',
+          }}
           open={tooltipArray?.includes(9) ? false : tooltipTwo}
           setClose={() => {
             updateState({tooltipTwo: false, tooltipThree: true});
@@ -322,7 +280,7 @@ const StoryTelling = () => {
             },
           ]}
           dimensionObject={positionRefs[1]}>
-          <RNButton
+          <View
             ref={refTwo}
             onLayout={() => {
               refTwo?.current?.measure(
@@ -340,40 +298,33 @@ const StoryTelling = () => {
                   }));
                 },
               );
-            }}
-            onlyIcon
-            icon={<Close />}
-            onClick={() => {
-              navigateTo(SCREEN_NAME.BOOKSHELF);
-            }}
-          />
+            }}>
+            <RNButton
+              onlyIcon
+              icon={<Close />}
+              onClick={() => {
+                navigateTo(SCREEN_NAME.BOOKSHELF);
+              }}
+            />
+          </View>
         </RNTooltip>
-        {currentIndex + 1 === 5 && (
+        {currentIndex === totalPages && (
           <RNTextComponent isSemiBold style={styles.summaryTitle}>
             {translation('SUMMARY')}
           </RNTextComponent>
         )}
         {headerButton()}
       </View>
-      <FlatList
-        data={Array.from({length: 5}, (_, i) => {
-          return {index: i};
-        })}
-        ref={flatlistRef}
-        renderItem={renderStory}
-        pagingEnabled
-        horizontal
-        decelerationRate={50}
-        onEndReachedThreshold={2}
-        bounces={false}
-        onViewableItemsChanged={onViewableItemsChanged}
-        viewabilityConfig={{
-          itemVisiblePercentThreshold: 2, // adjust threshold as needed
-        }}
-        showsHorizontalScrollIndicator={false}
+      <PageFlip
+        book={book}
+        activeIndex={currentIndex}
+        setActiveIndex={setActiveIndex}
       />
-      {currentIndex + 1 !== 5 && (
+      {currentIndex !== totalPages && (
         <RNTooltip
+          isTablet={isTablet}
+          topViewStyle={{alignItems: 'center'}}
+          bottom="South"
           open={tooltipArray?.includes(10) ? false : tooltipThree}
           setClose={() => {
             updateState({tooltipFour: true, tooltipThree: false});
@@ -382,9 +333,8 @@ const StoryTelling = () => {
           }}
           text={translation('READ_A_STORY')}
           textContainerStyle={[styles.tooltipTwo, {margin: 0, marginLeft: 20}]}
-          // bottom={'South'}
           mainStyle={{
-            marginTop: verticalScale(-200),
+            marginTop: verticalScale(-140),
             height: verticalScale(200),
           }}
           textStyle={[
@@ -396,7 +346,7 @@ const StoryTelling = () => {
           ]}
           dimensionObject={positionRefs[2]}>
           <View
-            style={{width: '100%'}}
+            style={{width: '100%', backgroundColor: 'black'}}
             ref={refThree}
             onLayout={() => {
               refThree?.current?.measure(
@@ -414,33 +364,8 @@ const StoryTelling = () => {
                   }));
                 },
               );
-            }}>
-            <ImageBackground
-              style={styles.storyContent}
-              blurRadius={20}
-              source={require('../../assets/png/blurBgc.png')}
-              imageStyle={[
-                styles.imageStyle,
-                isTablet && {
-                  borderTopLeftRadius: verticalScale(8),
-                  borderTopRightRadius: verticalScale(8),
-                },
-              ]}>
-              <RNTextComponent style={styles.slideNo} isSemiBold>
-                {currentIndex + 1}/4
-              </RNTextComponent>
-              <RNTextComponent
-                style={[
-                  styles.slideNo,
-                  {color: themeColor.black, textAlign: 'center', zIndex: 3},
-                ]}
-                isSemiBold>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Corrupti sunt quod culpa nulla praesentium accusantium voluptas
-                sit esse, quibusdam dasperisi!
-              </RNTextComponent>
-            </ImageBackground>
-          </View>
+            }}
+          />
         </RNTooltip>
       )}
       {showQuestion && renderQuestions()}
@@ -457,11 +382,11 @@ const StoryTelling = () => {
           nextClick={renderTipLevel}
         />
       )} */}
-      {currentIndex + 1 === 5 && mode === MODE.B && (
+      {currentIndex === 0 && mode === MODE.B && book.rating === 0 && (
         <RNRatingModal
           visible={ratingModal}
           renderModal={renderRatingModal}
-          nextClick={renderRatingModal}
+          nextClick={submitRatingModal}
         />
       )}
       <RNWellDoneModal

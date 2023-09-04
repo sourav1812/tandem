@@ -2,7 +2,7 @@
 import React, {useRef, useState} from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {styles} from './styles';
-import {View, Image, ScrollView, Pressable} from 'react-native';
+import {View, Image, ScrollView, Pressable, Dimensions} from 'react-native';
 import Logout from '@tandem/assets/svg/Logout';
 import RNButton from '@tandem/components/RNButton';
 import RNTextComponent from '@tandem/components/RNTextComponent';
@@ -11,10 +11,9 @@ import RNKidsProfile from '@tandem/components/RNKidsProfile';
 import Add from '@tandem/assets/svg/Add';
 import RNParentProfile from '@tandem/components/RNParentProfile';
 import RNSignoutModal from '@tandem/components/RNSignoutModal';
-import {adultProfile, childProfile, StateObject} from './interface';
+import {StateObject} from './interface';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
-import Lion from '@tandem/assets/svg/AnimatedLion';
 import {translation} from '@tandem/utils/methods';
 import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
 import {changeMode} from '@tandem/redux/slices/mode.slice';
@@ -25,27 +24,30 @@ import {RootState} from '@tandem/redux/store';
 import RNTooltip from '@tandem/components/RNTooltip';
 import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
 import {TOOLTIP} from '@tandem/constants/LocalConstants';
+import {
+  AdultData,
+  ChildData,
+  saveCurrentAdult,
+  saveCurrentChild,
+} from '@tandem/redux/slices/createChild.slice';
+import logout from '@tandem/functions/logout';
 
 const Account = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const childList = useAppSelector(state => state.createChild.childList);
+  const adultList = useAppSelector(state => state.createChild.adultList);
   const [openTooltip, setOpentTooltip] = useState({
     tooltipOne: true,
     tooltipTwo: false,
   });
+
+  const {width} = Dimensions.get('window');
   const dispatch = useAppDispatch();
   const tooltipArray = getValueFromKey(TOOLTIP);
 
   // const mode = useAppSelector(state => state.mode.mode);
   const [state, setState] = useState<StateObject>({
     signoutModal: false,
-    childrenList: [
-      {name: 'Tim', type: 'child'},
-      {name: 'Alisa', type: 'child'},
-    ],
-    adultList: [
-      {name: 'Mom', type: 'adult'},
-      {name: 'Dad', type: 'adult'},
-    ],
     playerList: [],
   });
 
@@ -57,9 +59,9 @@ const Account = () => {
   });
 
   const portrait = useSelector(
-    (state: RootState) => state.orientation.isPortrait,
+    (state1: RootState) => state1.orientation.isPortrait,
   );
-  const {signoutModal, childrenList, adultList, playerList} = state;
+  const {signoutModal, playerList} = state;
   const updateState = (date: any) => {
     setState((previouState: any) => {
       return {...previouState, ...date};
@@ -70,10 +72,11 @@ const Account = () => {
     updateState({signoutModal: !signoutModal});
   };
 
-  const addPlayer = (item: childProfile | adultProfile) => {
+  const addPlayer = (item: ChildData | AdultData) => {
     if (
       item.type === 'child' &&
-      playerList.filter(item => item.type === 'child').length === 0
+      item?.childId &&
+      playerList.filter(v => v?.type === 'child' && item.childId).length === 0
     ) {
       let playerArrar = [...playerList];
       playerArrar.push(item);
@@ -81,7 +84,7 @@ const Account = () => {
     }
     if (
       item.type === 'adult' &&
-      playerList.filter(item => item.type === 'adult').length === 0
+      playerList.filter(v => v.type === 'adult').length === 0
     ) {
       let playerArrar = [...playerList];
       playerArrar.push(item);
@@ -111,15 +114,21 @@ const Account = () => {
   };
 
   const buttonPress = () => {
+    const currentAdult = playerList.filter(item => item.type === 'adult')[0];
+    const currentChild = playerList.filter(item => item.type === 'child')[0];
     if (
       playerList.filter(item => item.type === 'child').length > 0 &&
       playerList.filter(item => item.type === 'adult').length > 0
     ) {
       dispatch(changeMode(MODE.B));
+      dispatch(saveCurrentAdult(currentAdult));
+      dispatch(saveCurrentChild(currentChild));
     } else if (playerList.filter(item => item.type === 'child').length > 0) {
       dispatch(changeMode(MODE.C));
+      dispatch(saveCurrentChild(currentChild));
     } else if (playerList.filter(item => item.type === 'adult').length > 0) {
       dispatch(changeMode(MODE.A));
+      dispatch(saveCurrentAdult(currentAdult));
     } else {
       return '';
     }
@@ -129,7 +138,9 @@ const Account = () => {
     <RNScreenWrapper
       style={styles.container}
       giveStatusColor={
-        (openTooltip.tooltipOne && !tooltipArray?.includes(1)) ||
+        (openTooltip.tooltipOne &&
+          !tooltipArray?.includes(1) &&
+          childList.length === 0) ||
         (openTooltip.tooltipTwo && !tooltipArray?.includes(2))
           ? true
           : false
@@ -165,26 +176,41 @@ const Account = () => {
             horizontal
             showsHorizontalScrollIndicator={false}
             decelerationRate={'normal'}>
-            {childrenList.map((item, index) => {
-              return (
-                <Pressable
-                  key={index.toString()}
-                  onPress={() => {
-                    addPlayer(item);
-                  }}>
-                  <RNKidsProfile
-                    style={{
-                      height: portrait ? verticalScale(60) : verticalScale(40),
-                      width: portrait ? verticalScale(60) : verticalScale(40),
-                    }}
-                    data={item}
-                  />
-                </Pressable>
-              );
+            {childList.map((item, index) => {
+              if (item.childId !== '' && item.childId) {
+                return (
+                  <Pressable
+                    key={index.toString()}
+                    style={{marginRight: 20}}
+                    onPress={() => {
+                      addPlayer(item);
+                    }}>
+                    <RNKidsProfile
+                      style={{
+                        height: portrait
+                          ? verticalScale(60)
+                          : verticalScale(40),
+                        width: portrait ? verticalScale(60) : verticalScale(40),
+                        borderRadius: 100,
+                      }}
+                      data={item}
+                      avatar={item.avatar}
+                    />
+                  </Pressable>
+                );
+              }
             })}
             <RNTooltip
-              text={'Here you can add your child.'}
-              open={tooltipArray?.includes(1) ? false : openTooltip.tooltipOne}
+              open={
+                tooltipArray?.includes(1)
+                  ? false
+                  : childList.length !== 0
+                  ? false
+                  : openTooltip.tooltipOne
+              }
+              isTablet={isTablet}
+              topViewStyle={{alignItems: 'center'}}
+              text={translation('ADD_CHILD')}
               setClose={() => {
                 setOpentTooltip({
                   tooltipOne: false,
@@ -252,7 +278,7 @@ const Account = () => {
             showsHorizontalScrollIndicator={false}
             decelerationRate={'normal'}>
             {playerList.map((item, index) => {
-              if (item.type === 'child') {
+              if (item.type === 'child' && item?.childId) {
                 return (
                   <Pressable
                     key={index.toString()}
@@ -265,12 +291,15 @@ const Account = () => {
                           ? verticalScale(60)
                           : verticalScale(40),
                         width: portrait ? verticalScale(60) : verticalScale(40),
+                        marginRight: 12,
+                        borderRadius: 100,
                       }}
                       data={item}
+                      avatar={item.avatar}
                     />
                   </Pressable>
                 );
-              } else {
+              } else if (item.type === 'adult') {
                 return (
                   <Pressable
                     key={index.toString()}
@@ -278,10 +307,15 @@ const Account = () => {
                       removePlayer(index);
                     }}>
                     <RNParentProfile
-                      height={portrait ? verticalScale(60) : verticalScale(40)}
-                      width={portrait ? verticalScale(60) : verticalScale(40)}
                       data={item}
-                      custumStyle={{marginTop: 5}}
+                      avatar={item.avatar}
+                      custumStyle={{
+                        height: portrait
+                          ? verticalScale(85)
+                          : verticalScale(65),
+                        width: portrait ? verticalScale(85) : verticalScale(65),
+                        marginRight: 12,
+                      }}
                     />
                   </Pressable>
                 );
@@ -301,16 +335,18 @@ const Account = () => {
                   onPress={() => {
                     addPlayer(item);
                   }}>
-                  <RNParentProfile
-                    height={portrait ? verticalScale(105) : verticalScale(52.5)}
-                    width={portrait ? verticalScale(90) : verticalScale(45)}
-                    data={item}
-                  />
+                  <RNParentProfile data={item} avatar={item.avatar} />
                 </Pressable>
               );
             })}
             <RNTooltip
-              text={'Here you can add youself.'}
+              isTablet={isTablet}
+              topViewStyle={{
+                alignItems: 'center',
+                width: width,
+                marginBottom: verticalScale(-20),
+              }}
+              text={translation('ADD_YOURSELF')}
               open={
                 tooltipArray?.includes(2) || positionRefs[1].x === 0
                   ? false
@@ -347,42 +383,54 @@ const Account = () => {
                 style={[
                   styles.add,
                   {
-                    height: portrait ? verticalScale(105) : verticalScale(52.5),
-                    width: portrait ? verticalScale(90) : verticalScale(45),
+                    height: portrait ? verticalScale(150) : verticalScale(80),
+                    width: portrait ? verticalScale(70) : verticalScale(45),
                     borderRadius: 60,
                     backgroundColor: 'white',
+                    alignItems: 'center',
+                    justifyContent: 'center',
                   },
                 ]}
                 onPress={() => {
-                  dispatch(changeMode(MODE.A));
-                  navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN, {}, true);
+                  navigateTo(SCREEN_NAME.CREATE_CHILD_PROFILE, {
+                    fromAddAdult: true,
+                  });
                 }}>
                 <View
                   style={{
-                    height: portrait ? verticalScale(100) : verticalScale(52.5),
-                    width: portrait ? verticalScale(80) : verticalScale(45),
+                    height: portrait ? verticalScale(50) : verticalScale(30),
+                    width: portrait ? verticalScale(40) : verticalScale(25),
                     borderRadius: 60,
                     alignItems: 'center',
                     justifyContent: 'center',
+
+                    marginTop: portrait ? 0 : verticalScale(20),
                   }}>
                   <Add />
                 </View>
+                <RNTextComponent
+                  isMedium
+                  style={[
+                    styles.addText,
+                    {
+                      marginTop: portrait
+                        ? verticalScale(40)
+                        : verticalScale(10),
+                    },
+                  ]}>
+                  {translation('ADD')}
+                </RNTextComponent>
               </Pressable>
-              <RNTextComponent
-                isMedium
-                style={[
-                  styles.addText,
-                  {marginLeft: portrait ? scale(25) : verticalScale(10)},
-                ]}>
-                {translation('ADD')}
-              </RNTextComponent>
             </RNTooltip>
           </ScrollView>
         </View>
         <View
           style={[
             styles.footer,
-            playerList.length === 0 && {backgroundColor: themeColor.lightGray},
+            playerList.length === 0 &&
+              childList.length === 0 && {
+                backgroundColor: themeColor.lightGray,
+              },
             {
               marginTop: portrait ? verticalScale(30) : 'auto',
             },
@@ -391,9 +439,10 @@ const Account = () => {
             isSemiBold
             style={[
               styles.text,
-              playerList.length === 0 && {
-                color: themeColor.themeBlue,
-              },
+              playerList.length === 0 &&
+                childList.length === 0 && {
+                  color: themeColor.themeBlue,
+                },
             ]}>
             {' '}
             {buttonHeading()}{' '}
@@ -405,20 +454,25 @@ const Account = () => {
                 buttonPress();
                 navigateTo(SCREEN_NAME.BOTTOM_TAB, {}, true);
               }
-            }}>
+            }}
+            disabled={childList.length === 0 || playerList.length === 0}>
             {playerList.map((item, index) => {
               if (item.type === 'child') {
                 return (
                   <Image
                     key={index.toString()}
-                    source={{
-                      uri: 'https://thumbs.dreamstime.com/b/cute-giraffe-face-wild-animal-character-animated-cartoon-png-illustration-isolated-transparent-background-hand-drawn-png-264757481.jpg',
-                    }}
+                    source={{uri: item.avatar}}
                     style={styles.profile}
                   />
                 );
               } else {
-                return <Lion key={index.toString()} height={32} width={32} />;
+                return (
+                  <Image
+                    key={index.toString()}
+                    source={{uri: item.avatar}}
+                    style={[styles.profile, {height: 40, width: 40}]}
+                  />
+                );
               }
             })}
           </Pressable>
@@ -427,10 +481,7 @@ const Account = () => {
       <RNSignoutModal
         visible={signoutModal}
         renderModal={toggleSignOut}
-        nextClick={() => {
-          dispatch(changeMode(MODE.A));
-          navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN, {}, true);
-        }}
+        nextClick={() => logout({})}
       />
     </RNScreenWrapper>
   );

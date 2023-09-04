@@ -1,20 +1,19 @@
 /* eslint-disable react-native/no-inline-styles */
-import {View, Image, ImageSourcePropType, Text} from 'react-native';
+import {View, Image, Text} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
 import RNTextComponent from '../RNTextComponent';
 import RightArrow from '@tandem/assets/svg/RightArrow';
-import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 import {verticalScale} from 'react-native-size-matters';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {translation} from '@tandem/utils/methods';
+import {BooksData} from '@tandem/screens/Bookshelf/interface';
 
 const ProgressIndicator = ({progress}: {progress: number}) => {
   const progressPercentage = `${progress * 10}%`;
   return (
     <View style={styles.progressIndicatorTop}>
       <View
-        // eslint-disable-next-line react-native/no-inline-styles
         style={{
           height: '100%',
           width: progressPercentage,
@@ -25,20 +24,7 @@ const ProgressIndicator = ({progress}: {progress: number}) => {
     </View>
   );
 };
-const RNStoryCard = ({
-  item,
-}: {
-  item: {
-    id: number;
-    headerTitle: string;
-    time: string;
-    image: ImageSourcePropType;
-    readingTime: number;
-    isNew: boolean;
-    emogi: string;
-    week: string;
-  };
-}) => {
+const RNStoryCard = ({item}: {item: BooksData}) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
 
   return (
@@ -50,7 +36,7 @@ const RNStoryCard = ({
               styles.imageImojiContainer,
               isTablet && {right: verticalScale(28)},
             ]}>
-            <Text style={styles.emojiText}>{'\u{1F60D}'}</Text>
+            {item.emogi && <Text style={styles.emojiText}>{item.emogi}</Text>}
           </View>
           <Image
             source={item.image}
@@ -79,7 +65,7 @@ const RNStoryCard = ({
           </RNTextComponent>
           <RNTextComponent
             style={[styles.minReading, isTablet && {fontSize: 22}]}>
-            {`${10 - item.readingTime} ${translation('MIN_READING')}`}
+            {`${item.readingTime} ${translation('MIN_READING')}`}
           </RNTextComponent>
           <ProgressIndicator progress={item.readingTime} />
         </View>

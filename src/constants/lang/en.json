@@ -130,6 +130,10 @@
   "CHILD": "Child",
   "ADULT": "Adult",
   "SELECT_MODE": "Select Mode",
+  "ADD_CHILD": "Here you can add your child.",
+  "ADD_YOURSELF": "Here you can add yourself.",
+  "YES_NO_SELECT": "Select Yes/No \n if you want to select your \n character in the story",
+
   "validations": {
     "email-required": "Email is required",
     "email-no-spaces": "Email should not contain whitespaces",
@@ -143,6 +147,7 @@
     "phone-no-spaces": "Phone number must not contain whitespaces",
     "phone-invalid": "Please enter a valid phone number",
     "pin-required": "Pin is required",
+    "dob-required": "DOB required",
     "pin-no-spaces": "Pin must not contain whitespaces",
     "pin-invalid": "Please enter a valid pin",
     "atleast-one-character": "At least one character",
@@ -190,7 +195,7 @@
   },
   "generate-story": {
     "is-in-story": " is going to be in our story?",
-    "included-in-story": "Do you want to be included in the story, Alisa?",
+    "included-in-story": "Do you want to be included in the story,",
     "where-shall-we": "Where shall we ",
     "go-in-our-story": "go in our story today?",
     "include-things": "Shall we include any of these things in the story?",
@@ -254,5 +259,10 @@
     "limitation-value": "We are not responsible for any damages or losses resulting from your use of our website or services. We are not liable for any indirect, incidental, or consequential damages.",
     "Changes-to-these-terms": "Changes to these terms",
     "Changes-to-these-terms-value": "These Terms and Conditions are governed by and construed in accordance with the laws of [Country]. Any disputes arising from these terms will be subject to the jurisdiction of the courts of [Country]."
-  }
+  },
+  "YOUR_RELATIONSHIP": "Your relationship/role",
+  "WHICH_OF_THESE_BEST_DESCRIBE": "Which of these best describes your relationship with the children you you're goint to use TANDEM with?",
+  "YOUR_DOB": "Your date of birth",
+  "ENTER": "Enter",
+  "RELATIONSHIP": "Relationship"
 }

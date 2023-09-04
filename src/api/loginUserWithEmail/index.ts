@@ -4,14 +4,20 @@ import {API} from '@tandem/constants/api';
 import loginFlow from '@tandem/functions/loginFlow';
 import {LoginResponse} from '@tandem/functions/loginFlow/interface';
 
-export default async ({email, password}: LoginUserWithEmail) => {
-  const response = await post<LoginResponse>({
-    path: API.LOGIN_USER_WITH_EMAIL,
-    data: {email, password},
-  });
-  if (!response) {
-    return;
+export default async ({
+  email,
+  password,
+  deviceId,
+  deviceType,
+  fcmToken,
+}: LoginUserWithEmail) => {
+  try {
+    const response = await post<LoginResponse>({
+      path: API.LOGIN_USER_WITH_EMAIL,
+      data: {email, password, deviceId, deviceType, fcmToken},
+    });
+    await loginFlow(response); // for every type of login we have to come to this function in the end
+  } catch (error) {
+    throw error;
   }
-  await loginFlow(response); // for every type of login we have to come to this function in the end
-  return response;
 };

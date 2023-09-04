@@ -6,7 +6,7 @@ import {PeopleScreenProps} from '@tandem/navigation/types';
 import {menuArray, StateObject} from './interface';
 import BlueButton from '@tandem/assets/svg/BlueButton';
 import RNButton from '@tandem/components/RNButton';
-import {Pressable, ScrollView, View} from 'react-native';
+import {Image, Pressable, ScrollView, View} from 'react-native';
 import themeColor from '@tandem/theme/themeColor';
 import {translation} from '@tandem/utils/methods';
 import RNTextComponent from '@tandem/components/RNTextComponent';
@@ -16,6 +16,8 @@ import RNAddComponent from '@tandem/components/RNAddComponent';
 import {verticalScale} from 'react-native-size-matters';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {useSelector} from 'react-redux';
+import {RootState} from '@tandem/redux/store';
 
 const People = ({}: PeopleScreenProps) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -39,7 +41,12 @@ const People = ({}: PeopleScreenProps) => {
   const rightTab = () => {
     updateState({firstTab: true});
   };
-
+  const currentAdult = useSelector(
+    (state1: RootState) => state1.createChild.currentAdult,
+  );
+  const currentChild = useSelector(
+    (state1: RootState) => state1.createChild.currentChild,
+  );
   return (
     <RNScreenWrapper style={styles.container}>
       <Pressable
@@ -95,9 +102,18 @@ const People = ({}: PeopleScreenProps) => {
         <>
           <View style={styles.bigpeople}>
             <View>
-              <View style={styles.profile} />
+              <Image
+                source={{uri: currentAdult.avatar}}
+                style={[
+                  styles.profile,
+                  isTablet && {
+                    height: verticalScale(94),
+                    width: verticalScale(94),
+                  },
+                ]}
+              />
               <RNTextComponent style={styles.name} isSemiBold>
-                Ella
+                {currentAdult.role}
               </RNTextComponent>
             </View>
             <Pressable onPress={() => {}}>
@@ -139,7 +155,10 @@ const People = ({}: PeopleScreenProps) => {
                 onPress={() => {
                   navigateTo(SCREEN_NAME.EditChildProfile);
                 }}>
-                <View
+                <Image
+                  source={{
+                    uri: currentChild?.avatar,
+                  }}
                   style={[
                     styles.profile,
                     isTablet && {
@@ -148,8 +167,9 @@ const People = ({}: PeopleScreenProps) => {
                     },
                   ]}
                 />
+
                 <RNTextComponent style={styles.name} isSemiBold>
-                  Ella
+                  {currentChild.name}
                 </RNTextComponent>
               </Pressable>
               <Pressable

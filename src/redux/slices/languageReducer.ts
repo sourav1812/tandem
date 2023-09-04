@@ -1,7 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
-import setupLangauge from '@tandem/functions/language';
+// import setupLangauge from '@tandem/functions/language';
 const initialState = {
-  locale: setupLangauge() || 'en',
+  locale: 'en',
   toastText: null,
   keyboardVisible: false,
 };
@@ -9,8 +9,8 @@ const langualSlice = createSlice({
   name: 'language',
   initialState,
   reducers: {
-    setLocale: state => {
-      state.locale = setupLangauge();
+    setLocale: (state, action) => {
+      state.locale = action.payload;
     },
     setKeyboardVisible: (state, action) => {
       state.keyboardVisible = action.payload;

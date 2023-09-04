@@ -6,7 +6,6 @@ export const styles = StyleSheet.create({
   container: {
     width: '100%',
     height: '100%',
-    backgroundColor: themeColor.themeBlue,
   },
   bookshelfHeaderText: {
     alignSelf: 'center',
@@ -23,6 +22,7 @@ export const styles = StyleSheet.create({
   },
   searchBoxContainerStyle: {
     alignSelf: 'center',
+    width: '90%',
   },
   searchBoxInputStyle: {
     width: '85%',
@@ -63,7 +63,7 @@ export const styles = StyleSheet.create({
     marginBottom: verticalScale(8),
   },
   headingView: {
-    marginTop: verticalScale(60),
+    marginTop: verticalScale(45),
     marginBottom: verticalScale(14),
     flexDirection: 'row',
     alignItems: 'center',

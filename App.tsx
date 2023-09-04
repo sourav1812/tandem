@@ -6,17 +6,20 @@ import {Alert, Platform, UIManager} from 'react-native';
 import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
 import {TOOLTIP} from '@tandem/constants/LocalConstants';
 import {PermissionsAndroid} from 'react-native';
-import {requestUserPermissionIOS} from '@tandem/functions/fcm';
 import messaging from '@react-native-firebase/messaging';
 import {PersistGate} from 'redux-persist/integration/react';
 import {persistStore} from 'redux-persist';
 import {clearAlertData} from '@tandem/redux/slices/alertBox.slice';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import statusbar from '@tandem/functions/statusbar';
+import i18n from '@tandem/constants/lang/i18n';
+import setupLangauge from '@tandem/functions/language';
 
 const persistor = persistStore(store);
 
 const App: FC = () => {
   useEffect(() => {
+    i18n.locale = setupLangauge();
     if (Platform.OS === 'android') {
       PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
@@ -25,7 +28,7 @@ const App: FC = () => {
         UIManager.setLayoutAnimationEnabledExperimental(true);
       }
     } else if (Platform.OS === 'ios') {
-      requestUserPermissionIOS();
+      messaging().requestPermission();
     }
     const tooltip = getValueFromKey(TOOLTIP);
     store.dispatch(clearAlertData());
@@ -42,11 +45,13 @@ const App: FC = () => {
   }, []);
 
   return (
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <AppNavigator />
-      </PersistGate>
-    </Provider>
+    <GestureHandlerRootView style={{flex: 1}}>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <AppNavigator />
+        </PersistGate>
+      </Provider>
+    </GestureHandlerRootView>
   );
 };
 

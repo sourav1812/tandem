@@ -1,5 +1,6 @@
+/* eslint-disable react-native/no-inline-styles */
 import {View, Text, FlatList, Pressable} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import RNTextInputWithLabel from '@tandem/components/RNTextInputWithLabel';
@@ -11,49 +12,53 @@ import {scale, verticalScale} from 'react-native-size-matters';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
 import {ValidationError} from '@tandem/utils/validations';
-import {checkIfTablet} from '@tandem/hooks/isTabletHook';
 import {translation} from '@tandem/utils/methods';
 import BlueBotton from '@tandem/assets/svg/BlueButton';
 import BothButton from '@tandem/assets/svg/BothButton';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {MODE} from '@tandem/constants/mode';
+import getStories from '@tandem/api/getStories';
+import {useSelector} from 'react-redux';
+import {RootState} from '@tandem/redux/store';
+import themeColor from '@tandem/theme/themeColor';
+import {BooksData} from './interface';
+import {ratingList} from '@tandem/components/RNRatingModal/interface';
 
 const Bookshelf = () => {
-  const isTablet = checkIfTablet();
+  const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const mode = useAppSelector(state => state.mode.mode);
   const [searchText, setText] = useState<ValidationError>({value: ''});
-  const data = [
-    {
-      id: 0,
-      headerTitle: 'Story of the best of friends. ',
-      time: '14.08.2023',
-      image: require('../../assets/png/imageOne.png'),
-      readingTime: 7,
-      isNew: true,
-      emogi: ':heart_eyes:',
-      week: 'This Week',
-    },
-    {
-      id: 1,
-      headerTitle: 'Story of Wonderland. ',
-      time: '04.08.2023',
-      image: require('../../assets/png/imageTwo.png'),
-      readingTime: 3,
-      isNew: false,
-      emogi: ':heart_eyes:',
-      week: 'Last Week',
-    },
-    {
-      id: 2,
-      headerTitle: 'Story of a little girl Lily. ',
-      time: '05.08.2023',
-      image: require('../../assets/png/imageThree.png'),
-      readingTime: 9,
-      isNew: false,
-      emogi: ':heart_eyes:',
-      week: '',
-    },
-  ];
+  const books = useSelector((state: RootState) => state.bookShelf.books);
+  const data: BooksData[] = books?.map((book, index) => {
+    const isThisWeek =
+      ((new Date().getTime() - new Date(book.createdAt).getTime()) * 1.157) /
+        10_00_00_000 <
+      7; // ! are checking if the book is screated within a week
+    return {
+      id: book.bookId,
+      headerTitle: book.title || `Mock Story ${index + 1}`,
+      time: new Date(book.createdAt).toDateString() || 'Some Date',
+      image: book.thumbnail || require('../../assets/png/imageOne.png'),
+      readingTime: Math.ceil(book.story.split(' ').length / 100) || 10, //  ! avg reading speed is 200 to 300 wpm so we are calculating time in miniutes to read the whole story. using 100 wpm for children
+      isNew: isThisWeek, // ! langauge support?
+      emogi:
+        book.rating && book.rating !== 0
+          ? ratingList[book.rating - 1].name
+          : null,
+      week: isThisWeek ? 'This Week' : 'Last Week', // ! need langauge support
+      teaser: book.teaser,
+    };
+  });
+
+  useEffect(() => {
+    (async () => {
+      try {
+        getStories();
+      } catch (e) {
+        console.log(e);
+      }
+    })();
+  }, []);
 
   const listEmptyComponent = React.useCallback(() => {
     return (
@@ -76,7 +81,7 @@ const Bookshelf = () => {
       </View>
     );
   }, []);
-  const renderItem = React.useCallback(({item}: any) => {
+  const renderItem = React.useCallback(({item}: {item: BooksData}) => {
     return (
       <>
         <View style={[{marginHorizontal: isTablet ? verticalScale(30) : 0}]}>
@@ -90,7 +95,7 @@ const Bookshelf = () => {
           )}
           <Pressable
             onPress={() => {
-              navigateTo(SCREEN_NAME.STORY);
+              navigateTo(SCREEN_NAME.STORY, {routeData: item});
             }}>
             <RNStoryCard item={item} />
           </Pressable>
@@ -106,7 +111,18 @@ const Bookshelf = () => {
 
   return (
     <RNScreenWrapper>
-      <View style={styles.container}>
+      <View
+        style={[
+          styles.container,
+          {
+            backgroundColor:
+              mode === MODE.A
+                ? themeColor.themeBlue
+                : mode === MODE.B
+                ? themeColor.lightGreen
+                : themeColor.gold,
+          },
+        ]}>
         <View style={styles.headingView}>
           <View style={styles.spaces} />
           <RNTextComponent style={styles.bookshelfHeaderText} isSemiBold>
@@ -136,6 +152,7 @@ const Bookshelf = () => {
         />
         <View style={styles.bottomViewContainer}>
           <FlatList
+            bounces={false}
             style={styles.flatListContatiner}
             contentContainerStyle={[styles.flatListContentContainer]}
             data={data}
@@ -143,6 +160,9 @@ const Bookshelf = () => {
             ListEmptyComponent={listEmptyComponent}
             showsVerticalScrollIndicator={false}
             ItemSeparatorComponent={seperateComponent}
+            ListFooterComponent={() => {
+              return <View style={{height: '5%'}} />;
+            }}
           />
         </View>
       </View>

@@ -8,20 +8,33 @@ import RNTextInputWithLabel from '@tandem/components/RNTextInputWithLabel';
 import {StateObject} from './interface';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import {scale, verticalScale} from 'react-native-size-matters';
-import DownArrow from '@tandem/assets/svg/DownArrow';
 import themeColor from '@tandem/theme/themeColor';
 import RNButton from '@tandem/components/RNButton';
 import RNDeleteAccount from '@tandem/components/RNDeleteAccount';
-import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
 import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
+import {LanguageDropDown} from '@tandem/components/LanguageDropDown';
+import {RootState} from '@tandem/redux/store';
+import {editUserProfile} from '@tandem/api/editUserProfile';
+import validationFunction from '@tandem/functions/validationFunction';
+import {saveUserData} from '@tandem/redux/slices/userData.slice';
+import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
+import navigateTo from '@tandem/navigation/navigate';
+import {languages} from '../SelectLanguage/interface';
+import i18n from '@tandem/constants/lang/i18n';
 
 const ProfileSettings = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const dispatch = useAppDispatch();
+  const userData = useAppSelector(
+    (state1: RootState) => state1.userData.userDataObject,
+  );
+  console.log(userData, 'userDatauserData');
   const [state, setState] = useState<StateObject>({
     showModal: false,
   });
-  const [name, setName] = useState<ValidationError>({value: ''});
-  const [email, setEmail] = useState<ValidationError>({value: ''});
+  const [name, setName] = useState<ValidationError>({value: userData.name});
+  // const [email, setEmail] = useState<ValidationError>({value: ''});
   const {showModal} = state;
 
   const updateState = (date: any) => {
@@ -32,6 +45,31 @@ const ProfileSettings = () => {
 
   const toggleModal = () => {
     updateState({showModal: !showModal});
+  };
+
+  const handleUserProfileRequest = async () => {
+    if (
+      !validationFunction([
+        {
+          state: name,
+          setState: setName,
+          typeOfValidation: FORM_INPUT_TYPE.NAME,
+        },
+      ])
+    ) {
+      return;
+    }
+    const response = await editUserProfile({
+      name: name.value,
+    });
+    if (response) {
+      dispatch(
+        saveUserData({
+          ...userData,
+          name: name.value,
+        }),
+      );
+    }
   };
 
   return (
@@ -53,16 +91,21 @@ const ProfileSettings = () => {
           validationType={FORM_INPUT_TYPE.NAME}
           updateText={setName}
         />
-        <RNTextInputWithLabel
-          label={translation('YOUR_EMAIL')}
-          containerStyle={styles.input}
-          hint={translation('EMAIL')}
-          inputViewStyle={styles.inputBox}
-          value={email}
-          validationType={FORM_INPUT_TYPE.EMAIL}
-          updateText={setEmail}
+        <LanguageDropDown
+          heading={translation('YOUR_EMAIL')}
+          text={userData.email}
+          showIcon={false}
+          fadeText
+          customStyle={styles.dropDownButton}
         />
-        <LanguageDropDown />
+        <LanguageDropDown
+          onPress={() => {
+            navigateTo(SCREEN_NAME.SELECT_LANGUAGE, {goBack: true});
+          }}
+          heading={translation('LANGUAGE')}
+          text={languages.filter(obj => obj.code === i18n.locale)[0].name}
+          customStyle={styles.dropDownButton}
+        />
         <NotificationSwitch />
       </View>
       <View
@@ -73,7 +116,7 @@ const ProfileSettings = () => {
         <RNButton
           customStyle={styles.button}
           title={translation('SAVE_CHANGES')}
-          onClick={() => {}}
+          onClick={handleUserProfileRequest}
         />
         <RNTextComponent
           style={styles.bottom}
@@ -95,31 +138,6 @@ const ProfileSettings = () => {
 
 export default ProfileSettings;
 
-const LanguageDropDown = () => {
-  const isTablet = useAppSelector(state => state.deviceType.isTablet);
-  return (
-    <View>
-      <RNTextComponent
-        style={[
-          styles.dropdownBox,
-          {fontSize: isTablet ? 16 : verticalScale(12)},
-        ]}>
-        {translation('LANGUAGE')}
-      </RNTextComponent>
-      <Pressable
-        style={[
-          styles.dropdown,
-          isTablet && {paddingVertical: verticalScale(10)},
-        ]}>
-        <RNTextComponent style={[isTablet && {fontSize: 18}]}>
-          English
-        </RNTextComponent>
-        <DownArrow />
-      </Pressable>
-    </View>
-  );
-};
-
 const NotificationSwitch = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const [isEnabled, setIsEnabled] = useState(false);
@@ -130,6 +148,7 @@ const NotificationSwitch = () => {
     <Pressable
       style={[
         styles.dropdown,
+        // eslint-disable-next-line react-native/no-inline-styles
         {
           borderRadius: 16,
           marginTop: verticalScale(12),

@@ -13,6 +13,9 @@ import navigateTo from '@tandem/navigation/navigate';
 import {StateObject} from './interface';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {translation} from '@tandem/utils/methods';
+import logout from '@tandem/functions/logout';
+import {storeKey} from '@tandem/helpers/encryptedStorage';
+import {TERMS_ACCEPTED} from '@tandem/constants/LocalConstants';
 
 const TermsAndConditions = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -69,19 +72,20 @@ const TermsAndConditions = () => {
             onlyBorder
             buttonColor={themeColor.themeBlue}
             onClick={() => {
-              navigateTo();
+              logout({});
             }}
             title={translation('CANCEL')}
             customStyle={styles.button}
           />
           <RNButton
             onClick={() => {
-              navigateTo(SCREEN_NAME.HELP_CENTER, {}, true);
+              storeKey(TERMS_ACCEPTED, TERMS_ACCEPTED);
+              navigateTo(SCREEN_NAME.HELP_CENTER);
             }}
             title={translation('ACCEPT')}
             customStyle={[
               styles.button,
-              !term1 && !term2 && !term3
+              !term1 || !term2 || !term3
                 ? {
                     backgroundColor: themeColor.lightGray,
                     borderColor: themeColor.lightGray,

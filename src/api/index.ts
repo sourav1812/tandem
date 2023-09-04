@@ -3,6 +3,7 @@ import NetInfo from '@react-native-community/netinfo';
 import {getStoredTokens, storeTokens} from '@tandem/functions/tokens';
 import Api from './interface';
 import {
+  buttonLoader,
   startLoader,
   stopLoader,
 } from '@tandem/redux/slices/activityIndicator.slice';
@@ -12,6 +13,7 @@ import {addParams, clearParams} from '@tandem/redux/slices/paramsReducer';
 import logout from '@tandem/functions/logout';
 import {addGetResponse} from '@tandem/redux/slices/getResponseReducer';
 import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
+import i18n from '@tandem/constants/lang/i18n';
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
@@ -25,6 +27,7 @@ axiosInstance.interceptors.request.use(
       config.headers.Authorization = `Bearer ${token}`;
       config.params = store.getState().params.object;
     }
+    config.headers['Accept-Language'] = i18n.locale;
     return config;
   },
   error => {
@@ -44,14 +47,13 @@ const refreshAccessToken = async () => {
 
     try {
       if (!refreshToken) {
-        logout();
+        logout({api: false});
         throw new Error('No refreshToken found');
       }
 
       const response = await axios.post(BASE_URL + API.REFRESH_TOKEN, {
         refreshToken,
       });
-      console.log(response, 'refresh token');
       const {accessToken, refreshToken: newRefreshToken} = response.data;
       storeTokens(accessToken, newRefreshToken);
       requestQueue.forEach(resolve => resolve(accessToken));
@@ -60,12 +62,10 @@ const refreshAccessToken = async () => {
       return accessToken;
     } catch (error) {
       console.log('error in refresh token logic:', error);
-      logout();
-      throw error;
+      logout({api: false});
     }
   } else {
     // If another request is already refreshing the token, wait for it to complete
-    console.log(requestQueue);
     return new Promise<string>(resolve => {
       requestQueue.push(token => resolve(token));
     });
@@ -159,6 +159,7 @@ const executeRequest = async <T>(
   ) => Promise<AxiosResponse<Api & T, any>>,
   path: string,
   data?: any,
+  onSuccess?: () => void,
 ) => {
   const {isConnected} = await NetInfo.fetch();
   if (!isConnected) {
@@ -166,6 +167,7 @@ const executeRequest = async <T>(
   }
 
   store.dispatch(startLoader());
+  store.dispatch(buttonLoader());
   store.dispatch(clearParams());
 
   try {
@@ -173,18 +175,20 @@ const executeRequest = async <T>(
       path,
       data,
     );
-    console.log('yay', response.data);
-
-    store.dispatch(
-      addAlertData({
-        type: 'Message',
-        message: response.data.message,
-      }),
-    );
+    if (response.data.message) {
+      store.dispatch(
+        addAlertData({
+          type: 'Message',
+          message: response.data.message,
+          onSuccess: onSuccess,
+        }),
+      );
+    }
     //! Toast message here to show completion of POST/PUT request
     return response?.data;
   } catch (error: any) {
     console.log(error.message);
+    throw new Error('Error in this path: ' + path + ': ' + error.message);
   } finally {
     store.dispatch(stopLoader());
   }
@@ -198,7 +202,6 @@ const get = async <T>({
   path: string;
   params?: any;
   noLoader: boolean;
-  allowRequestAnyway: boolean;
 }): Promise<T> => {
   let persistedState = store.getState().getResponseReducer[path];
   const {isConnected} = await NetInfo.fetch();
@@ -219,14 +222,14 @@ const get = async <T>({
     if (!token && !refreshToken) {
       throw new Error('Your Session has expired. Please login to continue');
     }
-    const response = await axiosInstance.get<Api & T>(path);
+    const response = await axiosInstance.get<Api & T>(BASE_URL + path);
     store.dispatch(addGetResponse({path, response: response?.data}));
     return response?.data;
   } catch (error: any) {
     persistedState = store.getState().getResponseReducer[path];
 
     if (!persistedState) {
-      console.log(error.message);
+      console.log('Persisted state in get req not found', error.message);
     }
     return persistedState;
   } finally {
@@ -236,12 +239,45 @@ const get = async <T>({
   }
 };
 
-const post = async <T>({path, data}: {path: string; data: any}) => {
-  return executeRequest<Api & T>(axiosInstance.post, BASE_URL + path, data);
+const post = async <T>({
+  path,
+  data,
+  onSuccess = () => {},
+}: {
+  path: string;
+  data: any;
+  onSuccess?: () => void;
+}) => {
+  return executeRequest<Api & T>(
+    axiosInstance.post,
+    BASE_URL + path,
+    data,
+    onSuccess,
+  );
 };
 
-const put = async <T>({path, data}: {path: string; data: any}) => {
-  return executeRequest<Api & T>(axiosInstance.put, path, data);
+const put = async <T>({
+  path,
+  data,
+  onSuccess = () => {},
+}: {
+  path: string;
+  data: any;
+  onSuccess: () => void;
+}) => {
+  return executeRequest<Api & T>(axiosInstance.put, path, data, onSuccess);
 };
 
-export {get, post, put};
+const patch = async <T>({
+  path,
+  data,
+  onSuccess = () => {},
+}: {
+  path: string;
+  data: any;
+  onSuccess: () => void;
+}) => {
+  return executeRequest<Api & T>(axiosInstance.patch, path, data, onSuccess);
+};
+
+export {get, post, put, patch};

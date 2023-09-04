@@ -15,7 +15,7 @@ export interface Props {
   title?: string;
   buttonColor?: string;
   noBorderRadius?: boolean;
-  onClick: () => void;
+  onClick: () => Promise<void> | void;
   onlyIcon?: boolean;
   IconButtoncustomStyle?: StyleProp<ViewStyle>;
   icon?: ReactNode;
@@ -23,4 +23,5 @@ export interface Props {
   isDisabled?: boolean;
   ref?: any;
   onLayout?: ((event: LayoutChangeEvent) => void) | undefined;
+  loadPercentage?: number;
 }

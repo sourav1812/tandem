@@ -22,11 +22,12 @@ import {useSelector} from 'react-redux';
 import {RootState} from '@tandem/redux/store';
 import RNButton from '@tandem/components/RNButton';
 import {useNavigation} from '@react-navigation/native';
-import {checkIfTablet} from '@tandem/hooks/isTabletHook';
+import {clipStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration.slice';
+import generateStory from '@tandem/api/generateStory';
 
 const RNRoadmap = () => {
+  const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const dispatch = useAppDispatch();
-  const isTablet = checkIfTablet();
   const questionIndex = useAppSelector(state => state.questions.index);
   const [positionRefs, setPositionRefs] = React.useState({
     0: {height: 0, width: 0, x: 0, y: 0},
@@ -37,6 +38,13 @@ const RNRoadmap = () => {
     5: {height: 0, width: 0, x: 0, y: 0},
     6: {height: 0, width: 0, x: 0, y: 0},
   });
+  const storyGenerationArray = useAppSelector(
+    (state: RootState) => state.storyGeneration.responseArray,
+  );
+  const currentChild = useAppSelector(
+    (state: RootState) => state.createChild.currentChild,
+  );
+
   const portrait = useSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
@@ -46,108 +54,45 @@ const RNRoadmap = () => {
   React.useEffect(
     () =>
       navigation.addListener('beforeRemove', e => {
-        // if (questionIndex === 0) {
-        //   Alert.alert('');
-        //   navigation.push(SCREEN_NAME.BOTTOM_TAB);
-        // } else {
-        //   dispatch(setQuestionIndex(questionIndex - 1));
-        //   navigateTo(SCREEN_NAME.GENERATE_STORY);
-        // }
         e.preventDefault();
       }),
     [navigation],
   );
 
   const handleNavigate = (index: number) => {
-    // if (index >= questionIndex) {
-    //   dispatch(setQuestionIndex(index));
-    // }
+    if (index > questionIndex) {
+      return;
+    }
+    if (storyGenerationArray.length > index) {
+      dispatch(clipStoryGenerationResponse(index));
+    }
     dispatch(setQuestionIndex(index));
-
     navigateTo(SCREEN_NAME.GENERATE_STORY);
   };
 
   return (
-    <RNScreenWrapper style={styles.container}>
-      <View style={styles.header}>
-        <RNButton
-          onlyIcon
-          icon={<BackButton />}
-          onClick={() => {
-            if (questionIndex === 0) {
-              // navigation.push(SCREEN_NAME.BOTTOM_TAB);
+    <>
+      <RNScreenWrapper style={styles.container}>
+        <View style={styles.header}>
+          <RNButton
+            onlyIcon
+            icon={<BackButton />}
+            onClick={() => {
               navigateTo(SCREEN_NAME.HOME);
-            } else {
-              dispatch(setQuestionIndex(questionIndex - 1));
-              setTimeout(() => {
-                navigateTo(SCREEN_NAME.GENERATE_STORY);
-              }, 100);
-            }
-          }}
-        />
-        <Pressable
-          onPress={() => {
-            navigateTo(SCREEN_NAME.ACCOUNT);
-          }}>
-          <YellowButton />
-        </Pressable>
-      </View>
-      <View
-        style={[
-          styles.roadmap,
-          !isTablet && Platform.OS !== 'ios' && {paddingTop: 10},
-        ]}>
-        <Pressable
-          onLayout={event => {
-            const layout = event.nativeEvent?.layout;
-            LayoutAnimation.configureNext(
-              LayoutAnimation.Presets.easeInEaseOut,
-            );
-            setPositionRefs(prev => ({
-              ...prev,
-              6: layout,
-            }));
-          }}
-          style={[styles.create, {left: verticalScale(35) / scale}]}
-          onPress={() => {
-            navigateTo(SCREEN_NAME.STORY_TELLING);
-          }}>
-          <Create scale={scale} mapIndex={questionIndex} />
-        </Pressable>
-        {positionRefs[6].y !== 0 && (
-          <Pressable
-            onLayout={event => {
-              const layout = event.nativeEvent?.layout;
-              LayoutAnimation.configureNext(
-                LayoutAnimation.Presets.easeInEaseOut,
-              );
-              setPositionRefs(prev => ({
-                ...prev,
-                5: layout,
-              }));
             }}
+          />
+          <Pressable
             onPress={() => {
-              handleNavigate(5);
-            }}
-            style={[
-              styles.stylecolor,
-              {
-                top: positionRefs[6].y + verticalScale(110) / scale,
-                left: positionRefs[6].x - verticalScale(83) / scale,
-              },
-            ]}>
-            <StyleColor
-              scale={scale}
-              fillColor={
-                questionIndex > 5 ? themeColor.themeBlue : themeColor.lightGray
-              }
-              textColor={
-                questionIndex > 5 ? themeColor.white : themeColor.themeBlue
-              }
-            />
+              navigateTo(SCREEN_NAME.ACCOUNT);
+            }}>
+            <YellowButton />
           </Pressable>
-        )}
-        {positionRefs[5].y !== 0 && (
+        </View>
+        <View
+          style={[
+            styles.roadmap,
+            !isTablet && Platform.OS !== 'ios' && {paddingTop: 10},
+          ]}>
           <Pressable
             onLayout={event => {
               const layout = event.nativeEvent?.layout;
@@ -156,160 +101,236 @@ const RNRoadmap = () => {
               );
               setPositionRefs(prev => ({
                 ...prev,
-                4: layout,
-              }));
-            }}
-            onPress={() => {
-              handleNavigate(4);
-            }}
-            style={[
-              styles.whatHappens,
-              {
-                top: positionRefs[5].y + verticalScale(71.6) / scale,
-                left: positionRefs[5].x + verticalScale(81) / scale,
-              },
-            ]}>
-            <WhatHappens
-              scale={scale}
-              fillColor={
-                questionIndex > 4 ? themeColor.lightGreen : themeColor.lightGray
-              }
-              textColor={
-                questionIndex > 4 ? themeColor.white : themeColor.themeBlue
-              }
-            />
-          </Pressable>
-        )}
-        {positionRefs[4].y !== 0 && (
-          <Pressable
-            onLayout={event => {
-              const layout = event.nativeEvent?.layout;
-              LayoutAnimation.configureNext(
-                LayoutAnimation.Presets.easeInEaseOut,
-              );
-              setPositionRefs(prev => ({
-                ...prev,
-                3: layout,
-              }));
-            }}
-            onPress={() => {
-              handleNavigate(3);
-            }}
-            style={[
-              styles.whatThing,
-              {
-                top: positionRefs[4].y + verticalScale(80) / scale,
-                left: positionRefs[4].x - verticalScale(102) / scale,
-              },
-            ]}>
-            <WhatThing
-              scale={scale}
-              fillColor={
-                questionIndex > 3 ? themeColor.gold : themeColor.lightGray
-              }
-              textColor={
-                questionIndex > 3 ? themeColor.white : themeColor.themeBlue
-              }
-            />
-          </Pressable>
-        )}
-        {positionRefs[3].y !== 0 && (
-          <Pressable
-            onLayout={event => {
-              const layout = event.nativeEvent?.layout;
-              LayoutAnimation.configureNext(
-                LayoutAnimation.Presets.easeInEaseOut,
-              );
-              setPositionRefs(prev => ({
-                ...prev,
-                2: layout,
-              }));
-            }}
-            onPress={() => {
-              handleNavigate(2);
-            }}
-            style={[
-              styles.where,
-              {
-                top: positionRefs[3].y + verticalScale(96.5) / scale,
-                left: positionRefs[3].x + verticalScale(105) / scale,
-              },
-            ]}>
-            <Where
-              scale={scale}
-              fillColor={
-                questionIndex > 2 ? themeColor.green : themeColor.lightGray
-              }
-              textColor={
-                questionIndex > 2 ? themeColor.white : themeColor.themeBlue
-              }
-            />
-          </Pressable>
-        )}
-        {positionRefs[2].y !== 0 && (
-          <Pressable
-            onLayout={event => {
-              const layout = event.nativeEvent?.layout;
-              LayoutAnimation.configureNext(
-                LayoutAnimation.Presets.easeInEaseOut,
-              );
-              setPositionRefs(prev => ({
-                ...prev,
-                1: layout,
-              }));
-            }}
-            onPress={() => {
-              handleNavigate(0);
-            }}
-            style={[
-              styles.who,
-              {
-                top: positionRefs[2].y + verticalScale(76.5) / scale,
-                left: positionRefs[2].x - verticalScale(81) / scale,
-              },
-            ]}>
-            <Who
-              scale={scale}
-              fillColor={questionIndex >= 1 ? '#9A00FF' : themeColor.lightGray}
-              textColor={
-                questionIndex >= 1 ? themeColor.white : themeColor.themeBlue
-              }
-            />
-          </Pressable>
-        )}
-        {positionRefs[1].y !== 0 && (
-          <Pressable
-            onLayout={event => {
-              const layout = event.nativeEvent?.layout;
-              LayoutAnimation.configureNext(
-                LayoutAnimation.Presets.easeInEaseOut,
-              );
-              setPositionRefs(prev => ({
-                ...prev,
-                0: layout,
+                6: layout,
               }));
             }}
             style={[
-              styles.start,
+              styles.create,
               {
-                top: positionRefs[1].y + verticalScale(120) / scale,
-                left: positionRefs[1].x + verticalScale(105) / scale,
-                height: verticalScale(80) / scale,
-                width: verticalScale(80) / scale,
+                left: verticalScale(35) / scale,
               },
             ]}
-            onPress={() => {
-              handleNavigate(0);
+            onPress={async () => {
+              if (questionIndex !== 7) {
+                return;
+              }
+              try {
+                await generateStory({
+                  childId: currentChild.childId,
+                  storyPromptData: storyGenerationArray,
+                });
+              } catch (error) {
+                console.log('error generating story', error);
+              }
             }}>
-            <RNTextComponent
-              style={[styles.startText, {fontSize: verticalScale(14) / scale}]}
-              isSemiBold>
-              {translation('START')}
-            </RNTextComponent>
+            <Create scale={scale} mapIndex={questionIndex} />
           </Pressable>
-        )}
-      </View>
-    </RNScreenWrapper>
+          {positionRefs[6].y !== 0 && (
+            <Pressable
+              onLayout={event => {
+                const layout = event.nativeEvent?.layout;
+                LayoutAnimation.configureNext(
+                  LayoutAnimation.Presets.easeInEaseOut,
+                );
+                setPositionRefs(prev => ({
+                  ...prev,
+                  5: layout,
+                }));
+              }}
+              onPress={() => {
+                handleNavigate(5);
+              }}
+              style={[
+                styles.stylecolor,
+                {
+                  top: positionRefs[6].y + verticalScale(110) / scale,
+                  left: positionRefs[6].x - verticalScale(83) / scale,
+                },
+              ]}>
+              <StyleColor
+                scale={scale}
+                fillColor={
+                  questionIndex > 4
+                    ? themeColor.themeBlue
+                    : themeColor.lightGray
+                }
+                textColor={
+                  questionIndex > 4 ? themeColor.white : themeColor.themeBlue
+                }
+              />
+            </Pressable>
+          )}
+          {positionRefs[5].y !== 0 && (
+            <Pressable
+              onLayout={event => {
+                const layout = event.nativeEvent?.layout;
+                LayoutAnimation.configureNext(
+                  LayoutAnimation.Presets.easeInEaseOut,
+                );
+                setPositionRefs(prev => ({
+                  ...prev,
+                  4: layout,
+                }));
+              }}
+              onPress={() => {
+                handleNavigate(4);
+              }}
+              style={[
+                styles.whatHappens,
+                {
+                  top: positionRefs[5].y + verticalScale(71.6) / scale,
+                  left: positionRefs[5].x + verticalScale(81) / scale,
+                },
+              ]}>
+              <WhatHappens
+                scale={scale}
+                fillColor={
+                  questionIndex > 3
+                    ? themeColor.lightGreen
+                    : themeColor.lightGray
+                }
+                textColor={
+                  questionIndex > 3 ? themeColor.white : themeColor.themeBlue
+                }
+              />
+            </Pressable>
+          )}
+          {positionRefs[4].y !== 0 && (
+            <Pressable
+              onLayout={event => {
+                const layout = event.nativeEvent?.layout;
+                LayoutAnimation.configureNext(
+                  LayoutAnimation.Presets.easeInEaseOut,
+                );
+                setPositionRefs(prev => ({
+                  ...prev,
+                  3: layout,
+                }));
+              }}
+              onPress={() => {
+                handleNavigate(3);
+              }}
+              style={[
+                styles.whatThing,
+                {
+                  top: positionRefs[4].y + verticalScale(80) / scale,
+                  left: positionRefs[4].x - verticalScale(102) / scale,
+                },
+              ]}>
+              <WhatThing
+                scale={scale}
+                fillColor={
+                  questionIndex > 2 ? themeColor.gold : themeColor.lightGray
+                }
+                textColor={
+                  questionIndex > 2 ? themeColor.white : themeColor.themeBlue
+                }
+              />
+            </Pressable>
+          )}
+          {positionRefs[3].y !== 0 && (
+            <Pressable
+              onLayout={event => {
+                const layout = event.nativeEvent?.layout;
+                LayoutAnimation.configureNext(
+                  LayoutAnimation.Presets.easeInEaseOut,
+                );
+                setPositionRefs(prev => ({
+                  ...prev,
+                  2: layout,
+                }));
+              }}
+              onPress={() => {
+                handleNavigate(2);
+              }}
+              style={[
+                styles.where,
+                {
+                  top: positionRefs[3].y + verticalScale(96.5) / scale,
+                  left: positionRefs[3].x + verticalScale(105) / scale,
+                },
+              ]}>
+              <Where
+                scale={scale}
+                fillColor={
+                  questionIndex > 1 ? themeColor.green : themeColor.lightGray
+                }
+                textColor={
+                  questionIndex > 1 ? themeColor.white : themeColor.themeBlue
+                }
+              />
+            </Pressable>
+          )}
+          {positionRefs[2].y !== 0 && (
+            <Pressable
+              onLayout={event => {
+                const layout = event.nativeEvent?.layout;
+                LayoutAnimation.configureNext(
+                  LayoutAnimation.Presets.easeInEaseOut,
+                );
+                setPositionRefs(prev => ({
+                  ...prev,
+                  1: layout,
+                }));
+              }}
+              onPress={() => {
+                handleNavigate(0);
+              }}
+              style={[
+                styles.who,
+                {
+                  top: positionRefs[2].y + verticalScale(76.5) / scale,
+                  left: positionRefs[2].x - verticalScale(81) / scale,
+                },
+              ]}>
+              <Who
+                scale={scale}
+                fillColor={
+                  questionIndex >= 0 ? '#9A00FF' : themeColor.lightGray
+                }
+                textColor={
+                  questionIndex >= 0 ? themeColor.white : themeColor.themeBlue
+                }
+              />
+            </Pressable>
+          )}
+          {positionRefs[1].y !== 0 && (
+            <Pressable
+              onLayout={event => {
+                const layout = event.nativeEvent?.layout;
+                LayoutAnimation.configureNext(
+                  LayoutAnimation.Presets.easeInEaseOut,
+                );
+                setPositionRefs(prev => ({
+                  ...prev,
+                  0: layout,
+                }));
+              }}
+              style={[
+                styles.start,
+                {
+                  top: positionRefs[1].y + verticalScale(120) / scale,
+                  left: positionRefs[1].x + verticalScale(105) / scale,
+                  height: verticalScale(80) / scale,
+                  width: verticalScale(80) / scale,
+                },
+              ]}
+              onPress={() => {
+                handleNavigate(0);
+              }}>
+              <RNTextComponent
+                style={[
+                  styles.startText,
+                  {fontSize: verticalScale(14) / scale},
+                ]}
+                isSemiBold>
+                {translation('START')}
+              </RNTextComponent>
+            </Pressable>
+          )}
+        </View>
+      </RNScreenWrapper>
+    </>
   );
 };
 

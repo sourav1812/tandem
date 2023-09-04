@@ -7,7 +7,7 @@ interface ValueObject {
 }
 
 const validationFunction = (valueObject: ValueObject[]) => {
-  let array: any = [];
+  const array: any = [];
   valueObject.map(value => {
     if (value.state.value === '' || value.state.message) {
       value.setState(validateForm(value.typeOfValidation, value.state.value));
@@ -16,7 +16,6 @@ const validationFunction = (valueObject: ValueObject[]) => {
       array.push(true);
     }
   });
-  console.log(array);
   if (array.includes(false)) {
     return false;
   } else {

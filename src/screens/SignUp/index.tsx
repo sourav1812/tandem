@@ -42,6 +42,13 @@ const SignUp = () => {
   const height = Dimensions.get('screen').height;
   const width = Dimensions.get('screen').width;
 
+  const resetStates = () => {
+    setName(prev => ({...prev, value: ''}));
+    setEmail(prev => ({...prev, value: ''}));
+    setPassword(prev => ({...prev, value: ''}));
+    setConfirmPassword(prev => ({...prev, value: ''}));
+  };
+
   const handleSignUpButton = async () => {
     if (
       !validationFunction([
@@ -70,16 +77,16 @@ const SignUp = () => {
       return;
     }
     if (confirmPassword.value === password.value) {
-      const signUpResponse = await registerUser({
-        email: email.value,
-        name: name.value,
-        password: password.value,
-      });
-
-      if (!signUpResponse) {
-        return;
+      try {
+        await registerUser({
+          email: email.value,
+          name: name.value,
+          password: password.value,
+        });
+        navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN);
+      } catch (error) {
+        resetStates();
       }
-      navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN);
     } else {
       setConfirmPassword(prev => ({
         ...prev,

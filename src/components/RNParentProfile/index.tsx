@@ -1,26 +1,28 @@
-import {StyleProp, TextStyle, View} from 'react-native';
+import {StyleProp, View, Image, ImageStyle} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
 import RNTextComponent from '../RNTextComponent';
-import Lion from '../../assets/svg/AnimatedLion';
 import {RNParentProfileProp} from './interface';
 
 const RNParentProfile = ({
-  height,
-  width,
+  avatar,
   data,
   custumStyle,
 }: {
-  height: number;
-  width: number;
+  avatar: string;
   data: RNParentProfileProp;
-  custumStyle?: StyleProp<TextStyle>;
+  custumStyle?: StyleProp<ImageStyle>;
 }) => {
+  console.log(data, 'RNParentProfileProp');
   return (
     <View style={styles.container}>
-      <Lion height={height} width={width} />
-      <RNTextComponent style={[styles.name, custumStyle]} isMedium>
-        {data && data.name}
+      <Image
+        source={{uri: avatar}}
+        style={[styles.profile, custumStyle && custumStyle]}
+        borderRadius={100}
+      />
+      <RNTextComponent style={[styles.name]} isMedium>
+        {data && data?.role}
       </RNTextComponent>
     </View>
   );

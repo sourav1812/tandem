@@ -10,13 +10,13 @@ export interface multipleChoiceProps {
   customStyle?: StyleProp<ViewStyle>;
 }
 
-interface placeType {
+interface PlaceType {
   name: string;
   icon: string;
   bgc: string;
 }
 
-export const place: placeType[] = [
+export const place: PlaceType[] = [
   {name: 'Bear', icon: '🐻', bgc: themeColor.red},
   {name: 'Cat', icon: '🐱', bgc: '#74D949'},
   {name: 'Cow', icon: '🐮', bgc: themeColor.red},

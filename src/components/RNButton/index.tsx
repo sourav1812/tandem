@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {Pressable, StyleSheet} from 'react-native';
+import {ActivityIndicator, Pressable, StyleSheet, View} from 'react-native';
 import React from 'react';
 import themeColor from '@tandem/theme/themeColor';
 import RNTextComponent from '../RNTextComponent';
@@ -21,9 +21,24 @@ const RNButton = ({
   textStyle,
   isDisabled = false,
   ref,
+  loadPercentage,
   onLayout,
 }: Props) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const isButtonDisabled = useAppSelector(
+    state => state.activityIndicator.isButtonDisabled,
+  );
+  const [pressed, setPressed] = React.useState(false);
+  const disabled = isDisabled || isButtonDisabled;
+
+  const handlePress = async () => {
+    if (pressed) {
+      return;
+    }
+    setPressed(true);
+    await onClick();
+    setPressed(false);
+  };
 
   return (
     <>
@@ -44,22 +59,47 @@ const RNButton = ({
             isTablet && {maxHeight: 55},
             customStyle && customStyle,
           ]}
-          disabled={isDisabled}
+          disabled={disabled}
           {...props}
-          onPress={onClick}>
-          <RNTextComponent
-            isSemiBold
-            style={[
-              {
-                textAlign: 'center',
-                fontSize: isTablet ? 16 : verticalScale(14),
-                color: themeColor.white,
-                ...(onlyBorder && {color: buttonColor || themeColor.themeBlue}),
-              },
-              textStyle && textStyle,
-            ]}>
-            {title}
-          </RNTextComponent>
+          onPress={handlePress}>
+          {isButtonDisabled && pressed ? (
+            <ActivityIndicator
+              style={{marginHorizontal: 15}}
+              color={
+                onlyBorder
+                  ? buttonColor || themeColor.themeBlue
+                  : themeColor.white
+              }
+            />
+          ) : (
+            <RNTextComponent
+              isSemiBold
+              style={[
+                {
+                  textAlign: 'center',
+                  fontSize: isTablet ? 16 : verticalScale(14),
+                  color: themeColor.white,
+                  ...(onlyBorder && {
+                    color: buttonColor || themeColor.themeBlue,
+                  }),
+                },
+                textStyle && textStyle,
+              ]}>
+              {title}
+            </RNTextComponent>
+          )}
+          {loadPercentage !== undefined && (
+            <View
+              style={{
+                width: `${100 - loadPercentage}%`,
+                height: '100%',
+                backgroundColor: '#00000088',
+                zIndex: -1,
+                position: 'absolute',
+                alignSelf: 'flex-end',
+              }}
+            />
+          )}
         </Pressable>
       ) : (
         <Pressable
@@ -70,8 +110,18 @@ const RNButton = ({
             IconButtoncustomStyle && IconButtoncustomStyle,
           ]}
           {...props}
-          onPress={onClick}>
-          {icon}
+          onPress={handlePress}>
+          {isButtonDisabled && pressed ? (
+            <ActivityIndicator
+              color={
+                onlyBorder
+                  ? buttonColor || themeColor.themeBlue
+                  : themeColor.white
+              }
+            />
+          ) : (
+            icon
+          )}
         </Pressable>
       )}
     </>
@@ -82,9 +132,7 @@ export default RNButton;
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
     borderWidth: 1,
-    // maxHeight: 52,
     height: verticalScale(48),
     borderRadius: 14,
     justifyContent: 'center',

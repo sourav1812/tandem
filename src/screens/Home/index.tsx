@@ -16,7 +16,7 @@ import {scale, verticalScale} from 'react-native-size-matters';
 import RNBookmarkComponent from '@tandem/components/RNBookmarkComponent';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
-import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
 import {StateObject} from './interface';
 import {translation} from '@tandem/utils/methods';
 import {MODE} from '@tandem/constants/mode';
@@ -26,13 +26,22 @@ import RNTooltip from '@tandem/components/RNTooltip';
 import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
 import {TOOLTIP} from '@tandem/constants/LocalConstants';
 import {useNavigation} from '@react-navigation/native';
-import {RootState} from '@tandem/redux/store';
+import {RootState, store} from '@tandem/redux/store';
+import {setQuestionIndex} from '@tandem/redux/slices/questions.slice';
+import {
+  ChildData,
+  saveCurrentChild,
+} from '@tandem/redux/slices/createChild.slice';
 
 const Home = () => {
   const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
   const mode = useAppSelector(state => state.mode.mode);
+  const currentChild = useAppSelector(state => state.createChild.currentChild);
+  const currentAdult = useAppSelector(state => state.createChild.currentAdult);
+  const childList = useAppSelector(state => state.createChild.childList);
+
   const [tooltipMode, setToolTipMode] = useState({
     tooltipOne: true,
     tooltipTwo: false,
@@ -47,7 +56,6 @@ const Home = () => {
   });
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const widthDimention = useWindowDimensions().width;
-
   const modeBC: {color: string; title: string}[] = [
     {color: themeColor.purple, title: translation('WRITE_A_STORY')},
     {color: themeColor.purple, title: translation('I_CANT_DECIDE')},
@@ -98,13 +106,11 @@ const Home = () => {
 
   const [state, setState] = useState<StateObject>({
     changeUser: false,
-    userProfile:
-      'https://static.vecteezy.com/system/resources/previews/016/461/449/non_2x/cute-giraffe-face-wild-animal-character-in-animated-cartoon-illustration-vector.jpg',
-    name: 'Lisa',
     showTooltip: true,
+    pseudoList: [],
   });
 
-  const {changeUser, userProfile, name} = state;
+  const {changeUser, pseudoList} = state;
 
   const updateState = (date: any) => {
     setState((previouState: any) => {
@@ -115,6 +121,17 @@ const Home = () => {
   const openDrawer = () => {
     updateState({changeUser: !changeUser});
   };
+
+  React.useEffect(() => {
+    const tempPseudoList: ChildData[] = [];
+    childList.forEach(item => {
+      if (item?.childId !== currentChild?.childId) {
+        tempPseudoList.push(item);
+      }
+    });
+    updateState({pseudoList: tempPseudoList});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentChild?.childId]);
 
   const [heightOfBanner, setHeight] = useState({
     value: 0,
@@ -128,21 +145,14 @@ const Home = () => {
           {
             top:
               heightOfBanner.value - verticalScale(18) - verticalScale(89) / 2,
-            ...(changeUser &&
-              mode === MODE.A && {
-                shadowColor: '#000',
-                shadowOffset: {
-                  width: 0,
-                  height: 1,
-                },
-                shadowOpacity: 0.32,
-                shadowRadius: 5.22,
-                elevation: 4,
-              }),
           },
         ]}
-        onPress={openDrawer}>
+        onPress={() => {
+          openDrawer();
+        }}>
         <RNTooltip
+          topViewStyle={{alignItems: 'center'}}
+          isTablet={isTablet}
           open={tooltipArray?.includes(4) ? false : tooltipMode.tooltipTwo}
           setClose={() => {
             setToolTipMode({
@@ -161,8 +171,6 @@ const Home = () => {
             onLayout={() => {
               refTwo?.current?.measure(
                 (
-                  x: number,
-                  y: number,
                   width: number,
                   height: number,
                   pageX: number,
@@ -179,18 +187,28 @@ const Home = () => {
             <Image
               style={styles.tooltipUserImage}
               source={{
-                uri: userProfile,
+                uri: currentChild?.avatar,
               }}
             />
             <RNTextComponent style={styles.tooltipUserName} isSemiBold>
-              {name}
+              {currentChild?.name?.split(' ')[0]}
             </RNTextComponent>
           </View>
         </RNTooltip>
-
-        {changeUser && mode === MODE.A && (
-          <ChangeChild userProfile={userProfile} name={name} />
-        )}
+        {changeUser &&
+          mode === MODE.A &&
+          pseudoList.map(item => {
+            if (item.childId && item.childId !== '') {
+              return (
+                <ChangeChild
+                  userProfile={item}
+                  name={item.name}
+                  changeUser={changeUser}
+                  toggleDrawer={updateState}
+                />
+              );
+            }
+          })}
       </Pressable>
       <RNScreenWrapper
         giveStatusColor={
@@ -217,6 +235,12 @@ const Home = () => {
                   : isTablet
                   ? verticalScale(115)
                   : verticalScale(165),
+                backgroundColor:
+                  mode === MODE.A
+                    ? themeColor.themeBlue
+                    : mode === MODE.B
+                    ? themeColor.lightGreen
+                    : themeColor.gold,
               },
             ]}>
             <RNTextComponent
@@ -227,7 +251,8 @@ const Home = () => {
                 marginTop:
                   !isTablet && portrait ? verticalScale(60) : verticalScale(20),
               }}>
-              {translation('HELLO')}, Ella!{mode === MODE.A && '(Mum)!'} 👋🏻
+              {translation('HELLO')}, {currentChild.name || 'Ella'}!
+              {mode === MODE.A && `(${currentAdult.role})!`} 👋🏻
             </RNTextComponent>
             <Pressable
               onPress={() => navigation.push(SCREEN_NAME.ACCOUNT)}
@@ -241,6 +266,11 @@ const Home = () => {
                 },
               ]}>
               <RNTooltip
+                isTablet={isTablet}
+                topViewStyle={{
+                  width: widthDimention / 2,
+                  alignItems: 'flex-end',
+                }}
                 open={
                   tooltipArray?.includes(3) ? false : tooltipMode.tooltipOne
                 }
@@ -252,7 +282,8 @@ const Home = () => {
                   tooltipArray.push(3);
                   storeKey(TOOLTIP, tooltipArray);
                 }}
-                text={'switch mode'}
+                text={translation('SWITCH_MODE')}
+                // textContainerStyle={{marginRight: isTablet ? scale(100) : 0}}
                 dimensionObject={positionRefs[0]}>
                 {mode === MODE.B ? (
                   <View
@@ -260,8 +291,6 @@ const Home = () => {
                     onLayout={() => {
                       refOne?.current?.measure(
                         (
-                          x: number,
-                          y: number,
                           width: number,
                           height: number,
                           pageX: number,
@@ -287,8 +316,6 @@ const Home = () => {
                     onLayout={() => {
                       refOne?.current?.measure(
                         (
-                          x: number,
-                          y: number,
                           width: number,
                           height: number,
                           pageX: number,
@@ -316,8 +343,6 @@ const Home = () => {
               onLayout={() => {
                 refOne?.current?.measure(
                   (
-                    x: number,
-                    y: number,
                     width: number,
                     height: number,
                     pageX: number,
@@ -335,6 +360,12 @@ const Home = () => {
                 style={[
                   {
                     width: (+widthDimention - verticalScale(80)) / 2,
+                    backgroundColor:
+                      mode === MODE.A
+                        ? themeColor.themeBlue
+                        : mode === MODE.B
+                        ? themeColor.lightGreen
+                        : themeColor.gold,
                   },
                   styles.curvedViewHeaderLeft,
                 ]}
@@ -343,6 +374,12 @@ const Home = () => {
                 style={[
                   {
                     width: (+widthDimention - verticalScale(80)) / 2,
+                    backgroundColor:
+                      mode === MODE.A
+                        ? themeColor.themeBlue
+                        : mode === MODE.B
+                        ? themeColor.lightGreen
+                        : themeColor.gold,
                   },
                   styles.curvedViewHeaderRight,
                 ]}
@@ -351,7 +388,9 @@ const Home = () => {
           </View>
           <ScrollView
             style={styles.content}
-            contentContainerStyle={{paddingVertical: verticalScale(5)}}
+            contentContainerStyle={{
+              paddingVertical: verticalScale(0),
+            }}
             showsVerticalScrollIndicator={false}>
             {mode !== MODE.A && (
               <RNTextComponent
@@ -369,7 +408,7 @@ const Home = () => {
                 ...styles.options,
                 ...(!portrait && styles.optionsPortrait),
                 ...(isTablet && {
-                  paddingHorizontal: portrait ? scale(20) : scale(130),
+                  paddingHorizontal: portrait ? scale(20) : scale(100),
                 }),
               }}>
               {mode === MODE.B || mode === MODE.C
@@ -378,6 +417,7 @@ const Home = () => {
                       key={index.toString()}
                       onPress={() => {
                         if (index === 0) {
+                          store.dispatch(setQuestionIndex(0));
                           navigateTo(SCREEN_NAME.ROADMAP);
                         } else {
                           // toggleModal();
@@ -447,10 +487,15 @@ export default Home;
 const ChangeChild = ({
   userProfile,
   name,
+  changeUser,
+  toggleDrawer,
 }: {
-  userProfile: string;
+  userProfile: ChildData;
   name: string;
+  changeUser: boolean;
+  toggleDrawer: (date: any) => void;
 }) => {
+  const dispatch = useAppDispatch();
   const translateRef = useRef(new Animated.Value(-30)).current;
   React.useEffect(() => {
     Animated.timing(translateRef, {
@@ -468,19 +513,24 @@ const ChangeChild = ({
         },
         styles.changeChildWrapper,
       ]}>
-      <Image
-        style={styles.changeChildImage}
-        source={{
-          uri: userProfile,
+      <Pressable
+        onPress={() => {
+          dispatch(saveCurrentChild(userProfile));
+          toggleDrawer({changeUser: !changeUser});
         }}
-      />
-      <RNTextComponent
-        style={{
-          fontSize: verticalScale(16),
-        }}
-        isSemiBold>
-        {name}
-      </RNTextComponent>
+        style={{alignItems: 'center'}}>
+        <Image
+          style={styles.changeChildImage}
+          source={{uri: userProfile?.avatar}}
+        />
+        <RNTextComponent
+          style={{
+            fontSize: verticalScale(16),
+          }}
+          isSemiBold>
+          {name}
+        </RNTextComponent>
+      </Pressable>
     </Animated.View>
   );
 };

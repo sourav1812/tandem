@@ -1,4 +1,5 @@
-import {ImageBackground, Image, View, Alert} from 'react-native';
+
+import {ImageBackground, Image, View} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';

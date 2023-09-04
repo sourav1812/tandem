@@ -2,12 +2,12 @@ import {createSlice} from '@reduxjs/toolkit';
 
 interface InitialState {
   isEnabled: boolean;
-  isButtonEnabled: boolean;
+  isButtonDisabled: boolean;
 }
 
 const initialState: InitialState = {
   isEnabled: false,
-  isButtonEnabled: false,
+  isButtonDisabled: false,
 };
 const activityIndicatorSlice = createSlice({
   name: 'activityIndicator',
@@ -18,10 +18,10 @@ const activityIndicatorSlice = createSlice({
     },
     stopLoader: state => {
       state.isEnabled = false;
-      state.isButtonEnabled = false;
+      state.isButtonDisabled = false;
     },
     buttonLoader: state => {
-      state.isButtonEnabled = true;
+      state.isButtonDisabled = true;
     },
   },
 });

@@ -18,7 +18,7 @@ export type RootStackParamList = {
   SplashScreen: undefined;
   Onboarding: undefined;
   SocialSignIn: undefined;
-  CreateChildProfile: undefined;
+  CreateChildProfile: {fromAddAdult: boolean} | undefined;
   ProfileSettings: undefined;
   ChangePassword: undefined;
   People: undefined;
@@ -33,6 +33,7 @@ export type RootStackParamList = {
   CreatePassword: undefined;
   PrivacyPolicies: undefined;
   TermsOfUse: undefined;
+  Congratulation: undefined;
 };
 
 export type RootTabParamList = {

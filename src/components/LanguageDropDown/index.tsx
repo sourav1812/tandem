@@ -1,4 +1,4 @@
-import {StyleProp, View, ViewStyle} from 'react-native';
+import {Pressable, StyleProp, View, ViewStyle} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
@@ -9,17 +9,23 @@ import {verticalScale} from 'react-native-size-matters';
 interface languageDropDownProp {
   heading: string;
   text: string;
-  customStyle: StyleProp<ViewStyle>;
+  customStyle?: StyleProp<ViewStyle>;
+  showIcon?: boolean;
+  fadeText?: boolean;
+  onPress?: () => void;
 }
 
 export const LanguageDropDown = ({
   heading,
   text,
   customStyle,
+  showIcon = true,
+  fadeText = false,
+  onPress,
 }: languageDropDownProp) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   return (
-    <View>
+    <Pressable onPress={onPress}>
       <RNTextComponent
         style={[
           styles.dropdownBox,
@@ -33,11 +39,15 @@ export const LanguageDropDown = ({
           isTablet && {paddingVertical: verticalScale(10)},
           customStyle && customStyle,
         ]}>
-        <RNTextComponent style={[isTablet && {fontSize: 18}]}>
+        <RNTextComponent
+          style={[
+            isTablet && {fontSize: 18},
+            {color: fadeText ? '#979797' : undefined},
+          ]}>
           {text}
         </RNTextComponent>
-        <DownArrow />
+        {showIcon && <DownArrow />}
       </View>
-    </View>
+    </Pressable>
   );
 };

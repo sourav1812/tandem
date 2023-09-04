@@ -1,13 +1,12 @@
 import {StyleProp, ViewStyle} from 'react-native';
 
-export interface colorPaletteType {
+export interface ColorPaletteType {
   tooltipVisible: boolean;
   onTooltipClose: () => void;
   customStyle?: StyleProp<ViewStyle>;
+  isTablet?: boolean;
+  setDisabled: React.Dispatch<React.SetStateAction<boolean>>;
 }
 export interface StateObject {
   colorPalette: {firstColor: string; secondColor: string}[];
-  color1: string;
-  color2: string;
-  color3: string;
 }

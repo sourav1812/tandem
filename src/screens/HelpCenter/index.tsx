@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import RNTextComponent from '@tandem/components/RNTextComponent';
@@ -31,7 +32,7 @@ const HelpCenter = ({route}: HelpCenterProps) => {
     (state: RootState) => state.orientation.isPortrait,
   );
 
-  const {fromPeople} = route.params;
+  const fromPeople = route.params?.fromPeople;
 
   const [state, setState] = useState<StateObject>({
     firstTab: false,
@@ -168,7 +169,7 @@ const HelpCenter = ({route}: HelpCenterProps) => {
           if (fromPeople) {
             navigateTo();
           } else {
-            navigateTo(SCREEN_NAME.ACCOUNT);
+            navigateTo(SCREEN_NAME.ACCOUNT, {}, true);
           }
         }}
       />

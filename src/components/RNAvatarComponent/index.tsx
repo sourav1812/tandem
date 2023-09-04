@@ -16,7 +16,7 @@ const RNAvatarComponent = ({
       disabled={pressableDisable}
       onPress={onPress}>
       <Image
-        source={icon}
+        source={{uri: icon}}
         style={[styles.img, imgStyle && imgStyle]}
         resizeMode="contain"
       />
