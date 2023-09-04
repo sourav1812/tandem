@@ -94,10 +94,10 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.playtandem"
+    namespace "playtandem.com"
     defaultConfig {
         vectorDrawables.useSupportLibrary = true
-        applicationId "com.playtandem"
+        applicationId "playtandem.com"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

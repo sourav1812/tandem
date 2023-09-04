@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:395516850709:android:da62302a4df557ddac541c",
+        "mobilesdk_app_id": "1:395516850709:android:edbadf67dae85c32ac541c",
         "android_client_info": {
-          "package_name": "com.playtandem"
+          "package_name": "playtandem.com"
         }
       },
       "oauth_client": [
@@ -20,7 +20,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBUTRkU06lxL2lKuhy7qbI-a80w4WuRDaM"
+          "current_key": "AIzaSyAeNTPQd35BttyEc5JfsiMcC7KlpxJGYtE"
         }
       ],
       "services": {
@@ -31,10 +31,10 @@
               "client_type": 3
             },
             {
-              "client_id": "395516850709-nnjk4svrlppmi9mcu493gjqqjomj55sm.apps.googleusercontent.com",
+              "client_id": "395516850709-fkmtns6jned2q7i36igu95rvb8k02gau.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.playtandem"
+                "bundle_id": "playtandem.com"
               }
             }
           ]

@@ -3,9 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>395516850709-nnjk4svrlppmi9mcu493gjqqjomj55sm.apps.googleusercontent.com</string>
+	<string>395516850709-fkmtns6jned2q7i36igu95rvb8k02gau.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.395516850709-nnjk4svrlppmi9mcu493gjqqjomj55sm</string>
+	<string>com.googleusercontent.apps.395516850709-fkmtns6jned2q7i36igu95rvb8k02gau</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>395516850709-7i4s2imkkbqo0e2cbf58b93n34rth7tr.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyAsVHJVF5xgttxAauPEfwSG6NVOgnryKLk</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.playtandem</string>
+	<string>playtandem.com</string>
 	<key>PROJECT_ID</key>
 	<string>tandem-001</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:395516850709:ios:b3360517fa0500efac541c</string>
+	<string>1:395516850709:ios:ca253780cbd01362ac541c</string>
 </dict>
 </plist>

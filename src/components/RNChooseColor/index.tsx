@@ -21,13 +21,10 @@ import chroma from 'chroma-js';
 import RNButton from '../RNButton';
 import {scale, verticalScale} from 'react-native-size-matters';
 import RNPaintBrush from '../RNPaintBrush';
-import {
-  pushStoryGenerationResponse,
-  clipStoryGenerationResponse,
-} from '@tandem/redux/slices/storyGeneration.slice';
+import {pushStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration.slice';
 import {RootState, store} from '@tandem/redux/store';
 import {STORY_PARTS} from '@tandem/constants/enums';
-import {useSelector} from 'react-redux';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 
 interface IPath {
   segments: String[];
@@ -62,7 +59,7 @@ const RNChooseColor = ({
   });
   const [paths, setPaths] = React.useState<IPath[]>([]);
   const valueRef = useRef<string>('');
-  const portrait = useSelector(
+  const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
   const handleReset = () => {
@@ -77,22 +74,6 @@ const RNChooseColor = ({
     }, 100);
     valueRef.current = '';
   };
-
-  React.useEffect(() => {
-    return () => {
-      if (valueRef.current) {
-        store.dispatch(clipStoryGenerationResponse(6));
-        store.dispatch(
-          pushStoryGenerationResponse({
-            type: STORY_PARTS.COLOR,
-            response: [valueRef.current],
-          }),
-        );
-      } else {
-        store.dispatch(clipStoryGenerationResponse(5));
-      }
-    };
-  }, []);
 
   React.useEffect(() => {
     if (finalColor) {
@@ -238,6 +219,9 @@ const RNChooseColor = ({
                   <Pressable
                     disabled={palleteArray.includes(activeColor)}
                     onPress={() => {
+                      if (activeColor === '') {
+                        return;
+                      }
                       LayoutAnimation.configureNext(
                         LayoutAnimation.Presets.easeInEaseOut,
                       );
@@ -268,7 +252,12 @@ const RNChooseColor = ({
                 onPress={() => {
                   if (palleteArray[val]) {
                     setFinalColor(palleteArray[val]);
-                    valueRef.current = palleteArray[val];
+                    store.dispatch(
+                      pushStoryGenerationResponse({
+                        key: STORY_PARTS.COLOR,
+                        value: [palleteArray[val]],
+                      }),
+                    );
                   }
                 }}
                 key={val.toString()}>

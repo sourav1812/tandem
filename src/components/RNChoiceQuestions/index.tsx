@@ -8,11 +8,7 @@ import {TOOLTIP} from '@tandem/constants/LocalConstants';
 import {getValueFromKey} from '@tandem/helpers/encryptedStorage';
 import {translation} from '@tandem/utils/methods';
 import {store} from '@tandem/redux/store';
-import {
-  clipStoryGenerationResponse,
-  pushStoryGenerationResponse,
-} from '@tandem/redux/slices/storyGeneration.slice';
-import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {pushStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration.slice';
 
 const RNChoiceQuestions = ({
   data = [],
@@ -23,7 +19,6 @@ const RNChoiceQuestions = ({
   isTablet,
   type,
   maxSelections = data.length,
-  index,
   setDisabled,
 }: MultipleChoiceProps) => {
   const tooltipArray = getValueFromKey(TOOLTIP);
@@ -32,32 +27,16 @@ const RNChoiceQuestions = ({
     0: {height: 0, width: 0, x: 0, y: 0},
   });
   const [selected, setSelected] = React.useState<string[]>([]);
-  const questionIndex = useAppSelector(state => state.questions.index);
-  const valueRef = useRef<string[]>([]);
 
   React.useEffect(() => {
-    valueRef.current = selected;
-
+    store.dispatch(pushStoryGenerationResponse({key: type, value: selected}));
     if (selected.length === 0) {
       setDisabled(true);
     } else {
       setDisabled(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selected]);
-
-  React.useEffect(() => {
-    return () => {
-      if (valueRef.current.length > 0 && index === questionIndex) {
-        store.dispatch(
-          pushStoryGenerationResponse({type, response: valueRef.current}),
-        );
-      } else {
-        store.dispatch(clipStoryGenerationResponse(index));
-      }
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [selected.length]);
 
   const handlePress = (name: string) => {
     if (selected.length < maxSelections && !selected.includes(name)) {
@@ -72,11 +51,11 @@ const RNChoiceQuestions = ({
       contentContainerStyle={[styles.scrollView, customStyle && customStyle]}
       scrollEnabled
       showsVerticalScrollIndicator={false}>
-      {data.map((value, index) => {
-        if (index === 0) {
+      {data.map((value, indexLocal) => {
+        if (indexLocal === 0) {
           return (
             <RNTooltip
-              key={index.toString()}
+              key={indexLocal.toString()}
               isTablet={isTablet}
               topViewStyle={{
                 alignItems: 'center',
@@ -121,7 +100,7 @@ const RNChoiceQuestions = ({
             <RNEmojiWithText
               isSelected={selected.includes(value.name)}
               onPress={() => handlePress(value.name)}
-              key={index.toString()}
+              key={indexLocal.toString()}
               heading={value.name}
               customStyle={[styles.optionsCustom, itemStyle && itemStyle]}
               icon={value?.icon}

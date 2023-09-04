@@ -19,7 +19,6 @@ import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
 import {changeMode} from '@tandem/redux/slices/mode.slice';
 import {MODE} from '@tandem/constants/mode';
 import themeColor from '@tandem/theme/themeColor';
-import {useSelector} from 'react-redux';
 import {RootState} from '@tandem/redux/store';
 import RNTooltip from '@tandem/components/RNTooltip';
 import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
@@ -58,7 +57,7 @@ const Account = () => {
     1: {height: 0, width: 0, x: 0, y: 0},
   });
 
-  const portrait = useSelector(
+  const portrait = useAppSelector(
     (state1: RootState) => state1.orientation.isPortrait,
   );
   const {signoutModal, playerList} = state;
