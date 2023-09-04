@@ -5,10 +5,10 @@ import {Image} from 'react-native';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import DeviceInfo from 'react-native-device-info';
 import {changeDevice} from '@tandem/redux/slices/tablet.slice';
-import {useDispatch} from 'react-redux';
+import {useAppDispatch} from '@tandem/hooks/navigationHooks';
 
 const SplashScreen = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     let isIpad = DeviceInfo.getSystemName() === 'iPadOS' ? true : false;

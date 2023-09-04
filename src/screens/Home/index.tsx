@@ -27,11 +27,11 @@ import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
 import {TOOLTIP} from '@tandem/constants/LocalConstants';
 import {useNavigation} from '@react-navigation/native';
 import {RootState, store} from '@tandem/redux/store';
-import {setQuestionIndex} from '@tandem/redux/slices/questions.slice';
 import {
   ChildData,
   saveCurrentChild,
 } from '@tandem/redux/slices/createChild.slice';
+import {clearStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration.slice';
 
 const Home = () => {
   const portrait = useAppSelector(
@@ -417,7 +417,7 @@ const Home = () => {
                       key={index.toString()}
                       onPress={() => {
                         if (index === 0) {
-                          store.dispatch(setQuestionIndex(0));
+                          store.dispatch(clearStoryGenerationResponse());
                           navigateTo(SCREEN_NAME.ROADMAP);
                         } else {
                           // toggleModal();

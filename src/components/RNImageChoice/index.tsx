@@ -1,14 +1,10 @@
 /* eslint-disable react-native/no-inline-styles */
 import {Pressable, ScrollView, Image} from 'react-native';
-import React, {useRef} from 'react';
+import React from 'react';
 import {styles} from './styles';
 import {MultipleChoiceProps} from './interface';
 import {store} from '@tandem/redux/store';
-import {
-  clipStoryGenerationResponse,
-  pushStoryGenerationResponse,
-} from '@tandem/redux/slices/storyGeneration.slice';
-import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {pushStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration.slice';
 import themeColor from '@tandem/theme/themeColor';
 
 const RNImageChoice = ({
@@ -17,16 +13,12 @@ const RNImageChoice = ({
   itemStyle,
   type,
   maxSelections = data.length,
-  index,
   setDisabled,
 }: MultipleChoiceProps) => {
   const [selected, setSelected] = React.useState<string[]>([]);
-  const questionIndex = useAppSelector(state => state.questions.index);
-  const valueRef = useRef<string[]>([]);
 
   React.useEffect(() => {
-    valueRef.current = selected;
-
+    store.dispatch(pushStoryGenerationResponse({key: type, value: selected}));
     if (selected.length === 0) {
       setDisabled(true);
     } else {
@@ -34,19 +26,6 @@ const RNImageChoice = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selected]);
-
-  React.useEffect(() => {
-    return () => {
-      if (valueRef.current.length > 0 && index === questionIndex) {
-        store.dispatch(
-          pushStoryGenerationResponse({type, response: valueRef.current}),
-        );
-      } else {
-        store.dispatch(clipStoryGenerationResponse(index));
-      }
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const handlePress = (name: string) => {
     if (selected.length < maxSelections && !selected.includes(name)) {
@@ -61,10 +40,10 @@ const RNImageChoice = ({
       contentContainerStyle={[styles.scrollView, customStyle && customStyle]}
       scrollEnabled
       showsVerticalScrollIndicator={false}>
-      {data.map((value, index) => {
+      {data.map((value, indexLocal) => {
         return (
           <Pressable
-            key={index.toString()}
+            key={indexLocal.toString()}
             onPress={() => {
               handlePress(value.name);
             }}>

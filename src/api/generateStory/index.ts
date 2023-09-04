@@ -9,7 +9,7 @@ export default async ({childId, storyPromptData}: GenerateStoryData) => {
   const response = await post({
     path: API.GENERATE_STORY + `/${childId}`,
     data: {
-      storyPromptData,
+      ...storyPromptData,
     },
     onSuccess: () => {
       navigateTo(SCREEN_NAME.CONGRATULATION);

@@ -15,20 +15,20 @@ import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import BackButton from '@tandem/assets/svg/LeftArrow';
 import {verticalScale} from 'react-native-size-matters';
-import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
-import {setQuestionIndex} from '@tandem/redux/slices/questions.slice';
-import {useSelector} from 'react-redux';
-import {RootState} from '@tandem/redux/store';
+import {RootState, store} from '@tandem/redux/store';
 import RNButton from '@tandem/components/RNButton';
 import {useNavigation} from '@react-navigation/native';
-import {clipStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration.slice';
 import generateStory from '@tandem/api/generateStory';
+import {changeQuestionIndex} from '@tandem/redux/slices/storyGeneration.slice';
 
 const RNRoadmap = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
-  const dispatch = useAppDispatch();
-  const questionIndex = useAppSelector(state => state.questions.index);
+  const questionIndex = useAppSelector(
+    state => state.storyGeneration.questionIndex,
+  );
+  console.log({questionIndex});
   const [positionRefs, setPositionRefs] = React.useState({
     0: {height: 0, width: 0, x: 0, y: 0},
     1: {height: 0, width: 0, x: 0, y: 0},
@@ -38,14 +38,14 @@ const RNRoadmap = () => {
     5: {height: 0, width: 0, x: 0, y: 0},
     6: {height: 0, width: 0, x: 0, y: 0},
   });
-  const storyGenerationArray = useAppSelector(
-    (state: RootState) => state.storyGeneration.responseArray,
+  const storyGenerationResponse = useAppSelector(
+    (state: RootState) => state.storyGeneration.response,
   );
   const currentChild = useAppSelector(
     (state: RootState) => state.createChild.currentChild,
   );
 
-  const portrait = useSelector(
+  const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
   let scale = portrait ? 1 : 1.4;
@@ -63,10 +63,7 @@ const RNRoadmap = () => {
     if (index > questionIndex) {
       return;
     }
-    if (storyGenerationArray.length > index) {
-      dispatch(clipStoryGenerationResponse(index));
-    }
-    dispatch(setQuestionIndex(index));
+    store.dispatch(changeQuestionIndex(index));
     navigateTo(SCREEN_NAME.GENERATE_STORY);
   };
 
@@ -117,7 +114,7 @@ const RNRoadmap = () => {
               try {
                 await generateStory({
                   childId: currentChild.childId,
-                  storyPromptData: storyGenerationArray,
+                  storyPromptData: storyGenerationResponse,
                 });
               } catch (error) {
                 console.log('error generating story', error);
