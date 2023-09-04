@@ -493,7 +493,7 @@
 					"-lc++",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.playtandem;
+				PRODUCT_BUNDLE_IDENTIFIER = playtandem.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tandem.app/Tandem";
@@ -518,7 +518,7 @@
 					"-lc++",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.playtandem;
+				PRODUCT_BUNDLE_IDENTIFIER = playtandem.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tandem.app/Tandem";
@@ -547,7 +547,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.playtandem;
+				PRODUCT_BUNDLE_IDENTIFIER = playtandem.com;
 				PRODUCT_NAME = Tandem;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -577,7 +577,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.playtandem;
+				PRODUCT_BUNDLE_IDENTIFIER = playtandem.com;
 				PRODUCT_NAME = Tandem;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
