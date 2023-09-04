@@ -16,7 +16,6 @@ import RNAddComponent from '@tandem/components/RNAddComponent';
 import {verticalScale} from 'react-native-size-matters';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
-import {useSelector} from 'react-redux';
 import {RootState} from '@tandem/redux/store';
 
 const People = ({}: PeopleScreenProps) => {
@@ -41,10 +40,10 @@ const People = ({}: PeopleScreenProps) => {
   const rightTab = () => {
     updateState({firstTab: true});
   };
-  const currentAdult = useSelector(
+  const currentAdult = useAppSelector(
     (state1: RootState) => state1.createChild.currentAdult,
   );
-  const currentChild = useSelector(
+  const currentChild = useAppSelector(
     (state1: RootState) => state1.createChild.currentChild,
   );
   return (

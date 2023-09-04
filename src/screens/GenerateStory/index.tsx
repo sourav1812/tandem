@@ -27,9 +27,8 @@ import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import RNChooseColor from '@tandem/components/RNChooseColor';
 import navigateTo from '@tandem/navigation/navigate';
 import {scale, verticalScale} from 'react-native-size-matters';
-import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import RNChoiceQuestions from '@tandem/components/RNChoiceQuestions';
-import {setQuestionIndex} from '@tandem/redux/slices/questions.slice';
 import {translation} from '@tandem/utils/methods';
 import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
 import {TOOLTIP} from '@tandem/constants/LocalConstants';
@@ -37,21 +36,21 @@ import RNTooltip from '@tandem/components/RNTooltip';
 import {RootState, store} from '@tandem/redux/store';
 import {STORY_PARTS} from '@tandem/constants/enums';
 import {
-  clipStoryGenerationResponse,
+  changeQuestionIndex,
   pushStoryGenerationResponse,
 } from '@tandem/redux/slices/storyGeneration.slice';
 import RNImageChoice from '@tandem/components/RNImageChoice';
 
 const GenerateStory = () => {
-  const dispatch = useAppDispatch();
-
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const currentChild = useAppSelector(state => state.createChild.currentChild);
 
   const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
-  const questionIndex = useAppSelector(state => state.questions.index);
+  const questionIndex = useAppSelector(
+    (state: RootState) => state.storyGeneration.questionIndex,
+  );
   const [disabled, setDisabled] = React.useState(true);
   const tooltipArray = getValueFromKey(TOOLTIP);
   const refOne = useRef<any>(null);
@@ -239,8 +238,8 @@ const GenerateStory = () => {
                       onClick={() => {
                         store.dispatch(
                           pushStoryGenerationResponse({
-                            type: STORY_PARTS.INCLUSION,
-                            response: true,
+                            key: STORY_PARTS.INCLUSION,
+                            value: true,
                           }),
                         );
                         nextQuestion();
@@ -253,8 +252,8 @@ const GenerateStory = () => {
                       onClick={() => {
                         store.dispatch(
                           pushStoryGenerationResponse({
-                            type: STORY_PARTS.INCLUSION,
-                            response: false,
+                            key: STORY_PARTS.INCLUSION,
+                            value: false,
                           }),
                         );
                         nextQuestion();
@@ -386,20 +385,17 @@ const GenerateStory = () => {
   };
 
   const nextQuestion = () => {
+    console.log('im in next question');
     if (questionIndex < 7) {
       if (questionIndex === 5 && addedIllustration) {
-        store.dispatch(clipStoryGenerationResponse(5));
         store.dispatch(
           pushStoryGenerationResponse({
-            type: STORY_PARTS.STYLES,
-            response: [
-              addedIllustration.toString() + 'Mock Illustration For Now',
-            ], // ! VERY IMPORTANT : SEND ILLUSTRATION TEXT ASK CLIENT FOR KEYS
+            key: STORY_PARTS.STYLES,
+            value: [addedIllustration.toString() + 'Mock Illustration For Now'], // ! VERY IMPORTANT : SEND ILLUSTRATION TEXT ASK CLIENT FOR KEYS
           }),
         );
       }
-
-      dispatch(setQuestionIndex(questionIndex + 1));
+      store.dispatch(changeQuestionIndex(questionIndex + 1));
       if (questionIndex !== 0 && questionIndex !== 5) {
         navigateTo(SCREEN_NAME.ROADMAP);
       }
@@ -408,7 +404,6 @@ const GenerateStory = () => {
 
   const previousQuestion = () => {
     if (questionIndex > 0) {
-      dispatch(setQuestionIndex(questionIndex - 1));
     }
     navigateTo();
   };

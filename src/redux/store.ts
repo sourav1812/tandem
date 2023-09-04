@@ -2,7 +2,6 @@ import {AnyAction, combineReducers, configureStore} from '@reduxjs/toolkit';
 import modeSlice from './slices/mode.slice';
 import deviceTypeSlice from './slices/tablet.slice';
 import orientationSlice from './slices/orientation.slice';
-import questionsSlice from './slices/questions.slice';
 import activityIndicatorSlice from './slices/activityIndicator.slice';
 import paramsReducer from './slices/paramsReducer';
 import {MMKV} from 'react-native-mmkv';
@@ -22,7 +21,6 @@ export const appReducer = combineReducers({
   mode: modeSlice,
   deviceType: deviceTypeSlice,
   orientation: orientationSlice,
-  questions: questionsSlice,
   activityIndicator: activityIndicatorSlice,
   params: paramsReducer,
   getResponseReducer: getResponseReducer,

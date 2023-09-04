@@ -18,7 +18,6 @@ import BothButton from '@tandem/assets/svg/BothButton';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {MODE} from '@tandem/constants/mode';
 import getStories from '@tandem/api/getStories';
-import {useSelector} from 'react-redux';
 import {RootState} from '@tandem/redux/store';
 import themeColor from '@tandem/theme/themeColor';
 import {BooksData} from './interface';
@@ -28,7 +27,7 @@ const Bookshelf = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const mode = useAppSelector(state => state.mode.mode);
   const [searchText, setText] = useState<ValidationError>({value: ''});
-  const books = useSelector((state: RootState) => state.bookShelf.books);
+  const books = useAppSelector((state: RootState) => state.bookShelf.books);
   const data: BooksData[] = books?.map((book, index) => {
     const isThisWeek =
       ((new Date().getTime() - new Date(book.createdAt).getTime()) * 1.157) /

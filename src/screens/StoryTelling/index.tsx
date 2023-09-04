@@ -27,7 +27,6 @@ import {TOOLTIP} from '@tandem/constants/LocalConstants';
 import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
 import RNTooltip from '@tandem/components/RNTooltip';
 import {useRoute} from '@react-navigation/native';
-import {useSelector} from 'react-redux';
 import Book from '@tandem/api/getStories/interface';
 import {PageFlip} from '@tandem/components/PageFlip';
 import rateStory from '@tandem/api/rateStory';
@@ -40,7 +39,7 @@ const StoryTelling = () => {
   const [readingLevel, setReadingLevel] = useState(false);
   const routes: any = useRoute();
   const routesData = routes?.params;
-  const books = useSelector((state: RootState) => state.bookShelf.books);
+  const books = useAppSelector((state: RootState) => state.bookShelf.books);
   const book = books.filter((item: Book) => item?.bookId === routesData.id)[0];
   const totalPages = book?.pages?.length - 1;
   const [currentIndex, setActiveIndex] = React.useState(totalPages);

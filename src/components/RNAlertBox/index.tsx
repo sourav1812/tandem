@@ -5,9 +5,8 @@ import RNTextComponent from '../RNTextComponent';
 import RNModal from '../RNModal';
 import RNButton from '../RNButton';
 import {verticalScale} from 'react-native-size-matters';
-import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
 import {styles} from './style';
-import {useDispatch} from 'react-redux';
 import {AlertBoxInterface} from './interface';
 import {clearAlertData} from '@tandem/redux/slices/alertBox.slice';
 
@@ -20,7 +19,7 @@ const RNAlertBox = ({
 }: AlertBoxInterface) => {
   let isTablet = useAppSelector(state => state.deviceType.isTablet);
   let {onSuccess} = useAppSelector(state => state.alertBoxReducer.data);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   return (
     <RNModal
       visible={visible}
