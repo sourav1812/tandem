@@ -4,19 +4,19 @@ import {saveUserData} from '@tandem/redux/slices/userData.slice';
 import {store} from '@tandem/redux/store';
 import {userDataResponse} from './interface';
 import {saveChildData} from '@tandem/redux/slices/createChild.slice';
+import {PEOPLE} from '@tandem/constants/enums';
 
 export default async () => {
   const response = await get<userDataResponse>({
     path: API.USER_PROFILE,
     noLoader: false,
-    allowRequestAnyway: false,
   });
   if (!response) {
     return;
   }
   const children = response.children.map(child => ({
     ...child,
-    type: 'child',
+    type: PEOPLE.CHILD,
   }));
   // ! we will have to decide where we should keep children
   store.dispatch(saveUserData({...response, children}));

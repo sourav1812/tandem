@@ -7,6 +7,7 @@ import {
 } from '@tandem/redux/slices/createChild.slice';
 import {saveUserData} from '@tandem/redux/slices/userData.slice';
 import {cacheAvatars, cachePlaces} from '../cache';
+import {PEOPLE} from '@tandem/constants/enums';
 
 export default async (loginResponse: LoginResponse) => {
   storeTokens(loginResponse.accessToken, loginResponse.refreshToken);
@@ -14,7 +15,10 @@ export default async (loginResponse: LoginResponse) => {
   // ! Store user data from login response as well
   store.dispatch(
     saveChildData(
-      loginResponse.userInfo.children.map(child => ({...child, type: 'child'})),
+      loginResponse.userInfo.children.map(child => ({
+        ...child,
+        type: PEOPLE.CHILD,
+      })),
     ),
   );
 
@@ -25,7 +29,7 @@ export default async (loginResponse: LoginResponse) => {
     saveAdultData(
       loginResponse.userInfo.adults.map(adult => ({
         ...adult,
-        type: 'adult',
+        type: PEOPLE.ADULT,
       })),
     ),
   );
@@ -35,11 +39,11 @@ export default async (loginResponse: LoginResponse) => {
       ...loginResponse.userInfo,
       children: loginResponse.userInfo.children.map(child => ({
         ...child,
-        type: 'child',
+        type: PEOPLE.CHILD,
       })),
       adults: loginResponse.userInfo.adults.map(adult => ({
         ...adult,
-        type: 'adult',
+        type: PEOPLE.ADULT,
       })),
     }),
   );

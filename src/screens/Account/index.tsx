@@ -30,6 +30,7 @@ import {
   saveCurrentChild,
 } from '@tandem/redux/slices/createChild.slice';
 import logout from '@tandem/functions/logout';
+import {PEOPLE} from '@tandem/constants/enums';
 
 const Account = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -73,17 +74,18 @@ const Account = () => {
 
   const addPlayer = (item: ChildData | AdultData) => {
     if (
-      item.type === 'child' &&
+      item.type === PEOPLE.CHILD &&
       item?.childId &&
-      playerList.filter(v => v?.type === 'child' && item.childId).length === 0
+      playerList.filter(v => v?.type === PEOPLE.CHILD && item.childId)
+        .length === 0
     ) {
       let playerArrar = [...playerList];
       playerArrar.push(item);
       updateState({playerList: playerArrar});
     }
     if (
-      item.type === 'adult' &&
-      playerList.filter(v => v.type === 'adult').length === 0
+      item.type === PEOPLE.ADULT &&
+      playerList.filter(v => v.type === PEOPLE.ADULT).length === 0
     ) {
       let playerArrar = [...playerList];
       playerArrar.push(item);
@@ -99,13 +101,17 @@ const Account = () => {
 
   const buttonHeading = () => {
     if (
-      playerList.filter(item => item.type === 'child').length > 0 &&
-      playerList.filter(item => item.type === 'adult').length > 0
+      playerList.filter(item => item.type === PEOPLE.CHILD).length > 0 &&
+      playerList.filter(item => item.type === PEOPLE.ADULT).length > 0
     ) {
       return `${translation('START')}: Tandem`;
-    } else if (playerList.filter(item => item.type === 'child').length > 0) {
+    } else if (
+      playerList.filter(item => item.type === PEOPLE.CHILD).length > 0
+    ) {
       return `${translation('START')}: ${translation('CHILD')}`;
-    } else if (playerList.filter(item => item.type === 'adult').length > 0) {
+    } else if (
+      playerList.filter(item => item.type === PEOPLE.ADULT).length > 0
+    ) {
       return `${translation('START')}: ${translation('ADULT')}`;
     } else {
       return `${translation('SELECT_MODE')}`;
@@ -113,19 +119,27 @@ const Account = () => {
   };
 
   const buttonPress = () => {
-    const currentAdult = playerList.filter(item => item.type === 'adult')[0];
-    const currentChild = playerList.filter(item => item.type === 'child')[0];
+    const currentAdult = playerList.filter(
+      item => item.type === PEOPLE.ADULT,
+    )[0];
+    const currentChild = playerList.filter(
+      item => item.type === PEOPLE.CHILD,
+    )[0];
     if (
-      playerList.filter(item => item.type === 'child').length > 0 &&
-      playerList.filter(item => item.type === 'adult').length > 0
+      playerList.filter(item => item.type === PEOPLE.CHILD).length > 0 &&
+      playerList.filter(item => item.type === PEOPLE.ADULT).length > 0
     ) {
       dispatch(changeMode(MODE.B));
       dispatch(saveCurrentAdult(currentAdult));
       dispatch(saveCurrentChild(currentChild));
-    } else if (playerList.filter(item => item.type === 'child').length > 0) {
+    } else if (
+      playerList.filter(item => item.type === PEOPLE.CHILD).length > 0
+    ) {
       dispatch(changeMode(MODE.C));
       dispatch(saveCurrentChild(currentChild));
-    } else if (playerList.filter(item => item.type === 'adult').length > 0) {
+    } else if (
+      playerList.filter(item => item.type === PEOPLE.ADULT).length > 0
+    ) {
       dispatch(changeMode(MODE.A));
       dispatch(saveCurrentAdult(currentAdult));
     } else {
@@ -275,7 +289,7 @@ const Account = () => {
             showsHorizontalScrollIndicator={false}
             decelerationRate={'normal'}>
             {playerList.map((item, index) => {
-              if (item.type === 'child' && item?.childId) {
+              if (item.type === PEOPLE.CHILD && item?.childId) {
                 return (
                   <Pressable
                     key={index.toString()}
@@ -296,7 +310,7 @@ const Account = () => {
                     />
                   </Pressable>
                 );
-              } else if (item.type === 'adult') {
+              } else if (item.type === PEOPLE.ADULT) {
                 return (
                   <Pressable
                     key={index.toString()}
@@ -452,7 +466,7 @@ const Account = () => {
             }}
             disabled={childList.length === 0 || playerList.length === 0}>
             {playerList.map((item, index) => {
-              if (item.type === 'child') {
+              if (item.type === PEOPLE.CHILD) {
                 return (
                   <Image
                     key={index.toString()}

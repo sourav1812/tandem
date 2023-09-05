@@ -30,6 +30,7 @@ import {CreateChildProfileProps} from '@tandem/navigation/types';
 import {LanguageDropDown} from '@tandem/components/LanguageDropDown';
 import {addNewChild} from '@tandem/api/creatChildProfile';
 import {addNewAdult} from '@tandem/api/createAdultProfile';
+import {PEOPLE} from '@tandem/constants/enums';
 
 const GENDERS = {
   girl: 'girl',
@@ -132,7 +133,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
             dob: dob.value,
             gender: gender,
             avatar: avatar,
-            type: 'child',
+            type: PEOPLE.CHILD,
           }),
         );
 
@@ -143,7 +144,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
             dob: dob.value,
             gender: gender,
             avatar: avatar,
-            type: 'child',
+            type: PEOPLE.CHILD,
           }),
         );
       }
@@ -182,7 +183,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
             profileId: response?.profileId,
             dob: dob.value,
             avatar: avatar,
-            type: 'adult',
+            type: PEOPLE.ADULT,
             role: role.value,
           }),
         );
@@ -191,7 +192,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
             profileId: response?.profileId,
             dob: dob.value,
             avatar: avatar,
-            type: 'adult',
+            type: PEOPLE.ADULT,
             role: role.value,
           }),
         );
