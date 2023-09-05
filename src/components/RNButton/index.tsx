@@ -60,22 +60,6 @@ const RNButton = ({
       {!onlyIcon ? (
         <Pressable
           style={[pressableStyle && pressableStyle]}
-          // ref={ref && ref}
-          // style={[
-          //   styles.container,
-          //   // {transform: [{scale: scaleButton}]},
-          //   {
-          //     ...(buttonColor && {
-          //       borderColor: buttonColor,
-          //       backgroundColor: buttonColor,
-          //     }),
-          //   },
-          //   {...(onlyBorder && {backgroundColor: 'white'})},
-          //   {...(noBorderRadius && {borderRadius: 0})},
-          //   isTablet && {maxHeight: 55},
-          //   customStyle && customStyle,
-          // ]}
-          // onLayout={onLayout && onLayout}
           disabled={disabled}
           {...props}
           onLongPress={runAnimation}
