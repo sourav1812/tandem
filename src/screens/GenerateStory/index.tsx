@@ -12,13 +12,7 @@ import {styles} from './styles';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import themeColor from '@tandem/theme/themeColor';
 import RNButton from '@tandem/components/RNButton';
-import {
-  place,
-  audience,
-  typeOfStory,
-  attribute,
-  illustration,
-} from './interface';
+
 import {StateObject} from './interface';
 import Camera from '@tandem/assets/svg/Camera';
 import LeftArrow from '@tandem/assets/svg/LeftArrow';
@@ -31,7 +25,13 @@ import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import RNChoiceQuestions from '@tandem/components/RNChoiceQuestions';
 import {translation} from '@tandem/utils/methods';
 import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
-import {TOOLTIP} from '@tandem/constants/LocalConstants';
+import {
+  TOOLTIP,
+  ATTRIBUTE,
+  AUDIENCE,
+  ILLUSTRATION,
+  TYPE_OF_STORY,
+} from '@tandem/constants/localConstants';
 import RNTooltip from '@tandem/components/RNTooltip';
 import {RootState, store} from '@tandem/redux/store';
 import {STORY_PARTS} from '@tandem/constants/enums';
@@ -44,7 +44,11 @@ import RNImageChoice from '@tandem/components/RNImageChoice';
 const GenerateStory = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const currentChild = useAppSelector(state => state.createChild.currentChild);
-
+  const places = useAppSelector(state => state.cache.places);
+  const avatars = useAppSelector(state => state.cache.avatars);
+  const currentChildAvatar = avatars.filter(
+    obj => obj.path === currentChild?.avatar,
+  )[0]?.file;
   const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
@@ -134,7 +138,7 @@ const GenerateStory = () => {
               index={0}
               maxSelections={3}
               isTablet={isTablet}
-              data={audience}
+              data={AUDIENCE}
               visibletoolTip={tooltipFirst}
               onTooltipClose={onCloseFirstTooltip}
             />
@@ -159,7 +163,7 @@ const GenerateStory = () => {
               ]}>
               <ImageBackground
                 source={{
-                  uri: currentChild.avatar,
+                  uri: currentChildAvatar || currentChild.avatar,
                 }}
                 style={styles.addImage}
                 imageStyle={{borderRadius: 200}}>
@@ -289,7 +293,7 @@ const GenerateStory = () => {
               type={STORY_PARTS.WHERE}
               index={2}
               maxSelections={1}
-              data={place}
+              data={places}
             />
           </>
         );
@@ -306,7 +310,7 @@ const GenerateStory = () => {
               type={STORY_PARTS.WHAT_THINGS}
               index={3}
               maxSelections={5}
-              data={attribute}
+              data={ATTRIBUTE}
             />
           </>
         );
@@ -326,7 +330,7 @@ const GenerateStory = () => {
               type={STORY_PARTS.WHAT_HAPPENS}
               index={4}
               maxSelections={1}
-              data={typeOfStory}
+              data={TYPE_OF_STORY}
             />
           </>
         );
@@ -347,7 +351,7 @@ const GenerateStory = () => {
               contentContainerStyle={[styles.scrollView]}
               scrollEnabled
               showsVerticalScrollIndicator={false}>
-              {illustration.map((value, index) => {
+              {ILLUSTRATION.map((value, index) => {
                 return (
                   <Pressable
                     key={index.toString()}

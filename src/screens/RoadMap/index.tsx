@@ -28,7 +28,6 @@ const RNRoadmap = () => {
   const questionIndex = useAppSelector(
     state => state.storyGeneration.questionIndex,
   );
-  console.log({questionIndex});
   const [positionRefs, setPositionRefs] = React.useState({
     0: {height: 0, width: 0, x: 0, y: 0},
     1: {height: 0, width: 0, x: 0, y: 0},

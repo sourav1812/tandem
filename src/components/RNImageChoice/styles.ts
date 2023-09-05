@@ -8,10 +8,9 @@ export const styles = StyleSheet.create({
     paddingHorizontal: scale(20),
   },
   scrollView: {
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    justifyContent: 'center',
+    flex: 1,
   },
+
   optionsCustom: {
     margin: scale(10),
   },

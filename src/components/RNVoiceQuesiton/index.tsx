@@ -14,7 +14,7 @@ import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {translation} from '@tandem/utils/methods';
 import RNTooltip from '../RNTooltip';
 import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
-import {TOOLTIP} from '@tandem/constants/LocalConstants';
+import {TOOLTIP} from '@tandem/constants/localConstants';
 import {RootState} from '@tandem/redux/store';
 
 const RNVoiceQuesiton = ({

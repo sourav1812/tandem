@@ -9,7 +9,6 @@ import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import themeColor from '@tandem/theme/themeColor';
 import {ScrollView} from 'react-native-gesture-handler';
 import RNAvatarComponent from '../RNAvatarComponent';
-import {avatarArray} from '@tandem/screens/CreateChildProfile/interface';
 
 interface ChangeAvatarProps {
   visible: boolean;
@@ -24,8 +23,8 @@ const RNChangeAvatarModal = ({
 }: ChangeAvatarProps) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
 
-  const [avatar, setAvatar] = useState(null);
-
+  const [avatar, setAvatar] = useState<null | string>(null);
+  const avatars = useAppSelector(state => state.cache.avatars);
   return (
     <RNModal visible={visible} renderModal={renderModal}>
       <View style={styles.container}>
@@ -36,20 +35,20 @@ const RNChangeAvatarModal = ({
           <ScrollView
             contentContainerStyle={styles.list}
             showsVerticalScrollIndicator={false}>
-            {avatarArray.map((item, index) => {
+            {avatars.map((item, index) => {
               return (
                 <RNAvatarComponent
                   key={index.toString()}
-                  icon={item.icon}
+                  icon={item.file}
                   customStyle={[
                     styles.avatar,
-                    avatar === item.icon && {
+                    avatar === item.path && {
                       backgroundColor: themeColor.themeBlue,
                     },
                   ]}
                   imgStyle={styles.avatarImg}
                   onPress={() => {
-                    setAvatar(item.icon);
+                    setAvatar(item.path);
                   }}
                 />
               );

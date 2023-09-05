@@ -187,9 +187,18 @@
     "you-are-both": "Ihr macht das beide großartig. Warum versucht ihr nicht auch abwechselnd vorzulesen oder euch während des Lesens Fragen zur Geschichte zu stellen?"
   },
   "bookshelf": {
-    "nothing-to-see-here": "Hier gibt es nichts zu sehen... noch nicht!",
-    "why-dont-we-one": "Warum schreiben wir nicht eine Geschichte",
-    "why-dont-we-two": "zusammen jetzt?",
+    "A_MODE": {
+      "heading": "hat noch keine Bücher",
+      "subHeading": "Warum nicht heute eins erstellen?"
+    },
+    "B_MODE": {
+      "heading": "Du hast noch keine Geschichten erstellt",
+      "subHeading": "Warum nicht heute eine erstellen?"
+    },
+    "C_MODE": {
+      "heading": "Hier gibt es noch nichts zu sehen...!",
+      "subHeading": "Warum schreiben wir nicht jetzt gemeinsam eine Geschichte?"
+    },
     "write-a-story": "Eine Geschichte schreiben"
   },
   "generate-story": {

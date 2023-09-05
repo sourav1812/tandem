@@ -24,7 +24,7 @@ import BlueButon from '@tandem/assets/svg/YellowButton';
 import BothButton from '@tandem/assets/svg/BothButton';
 import RNTooltip from '@tandem/components/RNTooltip';
 import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
-import {TOOLTIP} from '@tandem/constants/LocalConstants';
+import {TOOLTIP} from '@tandem/constants/localConstants';
 import {useNavigation} from '@react-navigation/native';
 import {RootState, store} from '@tandem/redux/store';
 import {
@@ -41,7 +41,8 @@ const Home = () => {
   const currentChild = useAppSelector(state => state.createChild.currentChild);
   const currentAdult = useAppSelector(state => state.createChild.currentAdult);
   const childList = useAppSelector(state => state.createChild.childList);
-
+  const avatars = useAppSelector(state => state.cache.avatars);
+  const filePath = avatars.filter(obj => obj.path === currentChild?.avatar)[0];
   const [tooltipMode, setToolTipMode] = useState({
     tooltipOne: true,
     tooltipTwo: false,
@@ -187,7 +188,7 @@ const Home = () => {
             <Image
               style={styles.tooltipUserImage}
               source={{
-                uri: currentChild?.avatar,
+                uri: filePath?.file || currentChild?.avatar,
               }}
             />
             <RNTextComponent style={styles.tooltipUserName} isSemiBold>
@@ -197,10 +198,11 @@ const Home = () => {
         </RNTooltip>
         {changeUser &&
           mode === MODE.A &&
-          pseudoList.map(item => {
+          pseudoList.map((item, index) => {
             if (item.childId && item.childId !== '') {
               return (
                 <ChangeChild
+                  key={index.toString()}
                   userProfile={item}
                   name={item.name}
                   changeUser={changeUser}
@@ -497,6 +499,8 @@ const ChangeChild = ({
 }) => {
   const dispatch = useAppDispatch();
   const translateRef = useRef(new Animated.Value(-30)).current;
+  const avatars = useAppSelector(state => state.cache.avatars);
+  const filePath = avatars.filter(obj => obj.path === userProfile?.avatar)[0];
   React.useEffect(() => {
     Animated.timing(translateRef, {
       toValue: 0,
@@ -521,7 +525,7 @@ const ChangeChild = ({
         style={{alignItems: 'center'}}>
         <Image
           style={styles.changeChildImage}
-          source={{uri: userProfile?.avatar}}
+          source={{uri: filePath?.file || userProfile?.avatar}}
         />
         <RNTextComponent
           style={{

@@ -1,4 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
+import {PEOPLE} from '@tandem/constants/enums';
 
 // Define a type for the slice state
 export interface ChildData {
@@ -7,7 +8,7 @@ export interface ChildData {
   gender: string;
   avatar: string;
   childId: string;
-  type: 'child';
+  type: PEOPLE.CHILD;
 }
 
 export interface AdultData {
@@ -15,7 +16,7 @@ export interface AdultData {
   dob: string;
   avatar: string;
   profileId: string;
-  type: 'adult';
+  type: PEOPLE.ADULT;
 }
 
 interface ChildState {
@@ -34,7 +35,7 @@ const initialState: ChildState = {
     gender: '',
     avatar: '',
     childId: '',
-    type: 'child',
+    type: PEOPLE.CHILD,
   },
   adultList: [],
   currentAdult: {
@@ -42,7 +43,7 @@ const initialState: ChildState = {
     dob: '',
     avatar: '',
     profileId: '',
-    type: 'adult',
+    type: PEOPLE.ADULT,
   },
 };
 

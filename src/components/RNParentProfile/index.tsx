@@ -3,6 +3,7 @@ import React from 'react';
 import {styles} from './styles';
 import RNTextComponent from '../RNTextComponent';
 import {RNParentProfileProp} from './interface';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 
 const RNParentProfile = ({
   avatar,
@@ -13,11 +14,12 @@ const RNParentProfile = ({
   data: RNParentProfileProp;
   custumStyle?: StyleProp<ImageStyle>;
 }) => {
-  console.log(data, 'RNParentProfileProp');
+  const avatars = useAppSelector(state => state.cache.avatars);
+  const filePath = avatars.filter(obj => obj.path === avatar)[0]?.file;
   return (
     <View style={styles.container}>
       <Image
-        source={{uri: avatar}}
+        source={{uri: filePath || avatar}}
         style={[styles.profile, custumStyle && custumStyle]}
         borderRadius={100}
       />
