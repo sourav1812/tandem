@@ -52,10 +52,21 @@ export const cacheSlice = createSlice({
         state.places = [];
       }
     },
+    clearCacheForce: state => {
+      state.avatars = [];
+      state.places = [];
+      state.isAvatarArrayFull = false;
+      state.isPlaceArrayFull = false;
+    },
   },
 });
 
-export const {addAvatarFile, clearAvatars, addPlaceFile, clearPlaces} =
-  cacheSlice.actions;
+export const {
+  addAvatarFile,
+  clearAvatars,
+  addPlaceFile,
+  clearPlaces,
+  clearCacheForce,
+} = cacheSlice.actions;
 
 export default cacheSlice.reducer;

@@ -14,6 +14,7 @@ import {removeToken} from '@tandem/redux/slices/tokens.slice';
 import {store} from '@tandem/redux/store';
 import logoutApi from '@tandem/api/logoutApi';
 import {firebase} from '@react-native-firebase/messaging';
+import {clearCacheForce} from '@tandem/redux/slices/cache.slice';
 
 const logout = async ({api = true}: {api?: boolean}) => {
   try {
@@ -25,6 +26,7 @@ const logout = async ({api = true}: {api?: boolean}) => {
   store.dispatch(removeToken);
   store.dispatch(logoutFromRedux());
   store.dispatch(clearAlertData());
+  store.dispatch(clearCacheForce());
   removeKey(TERMS_ACCEPTED);
   firebase.messaging().deleteToken();
   store.dispatch(changeMode(MODE.A));

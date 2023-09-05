@@ -6,17 +6,20 @@ import {
   saveChildData,
 } from '@tandem/redux/slices/createChild.slice';
 import {saveUserData} from '@tandem/redux/slices/userData.slice';
+import {cacheAvatars, cachePlaces} from '../cache';
 
 export default async (loginResponse: LoginResponse) => {
   storeTokens(loginResponse.accessToken, loginResponse.refreshToken);
   // ! other logic related to navigation flow , modes ,family here
-
   // ! Store user data from login response as well
   store.dispatch(
     saveChildData(
       loginResponse.userInfo.children.map(child => ({...child, type: 'child'})),
     ),
   );
+
+  cacheAvatars();
+  cachePlaces();
 
   store.dispatch(
     saveAdultData(
