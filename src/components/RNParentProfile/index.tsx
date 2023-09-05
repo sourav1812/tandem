@@ -1,4 +1,4 @@
-import {StyleProp, View, Image, ImageStyle} from 'react-native';
+import {StyleProp, Image, ImageStyle} from 'react-native';
 import React, {useEffect} from 'react';
 import {styles} from './styles';
 import RNTextComponent from '../RNTextComponent';
