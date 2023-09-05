@@ -31,6 +31,12 @@ import {LanguageDropDown} from '@tandem/components/LanguageDropDown';
 import {addNewChild} from '@tandem/api/creatChildProfile';
 import {addNewAdult} from '@tandem/api/createAdultProfile';
 
+const GENDERS = {
+  girl: 'girl',
+  boy: 'boy',
+  preferNotToSay: 'preferNotToSay',
+};
+
 const CreateChildProfile = ({route}: CreateChildProfileProps) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const avatars = useAppSelector(state => state.cache.avatars);
@@ -71,9 +77,9 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
       updateState({questionIndex: questionIndex + 1, bulletinArray: indexArry});
     } else {
       if (fromAddAdult) {
-        handleAddAdult();
+        await handleAddAdult();
       } else {
-        handleCreateChild();
+        await handleCreateChild();
       }
     }
   };
@@ -111,35 +117,38 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
       return;
     }
     // TODO make it dynamic
+    try {
+      const response = await addNewChild({
+        name: name.value,
+        dob: dob.value, // ! pass in the whole date object
+        gender: gender,
+        avatar,
+      });
+      if (response) {
+        dispatch(
+          saveCurrentChild({
+            childId: response?.childId,
+            name: name.value,
+            dob: dob.value,
+            gender: gender,
+            avatar: avatar,
+            type: 'child',
+          }),
+        );
 
-    const response = await addNewChild({
-      name: name.value,
-      dob: dob.value, // ! pass in the whole date object
-      gender: gender,
-      avatar,
-    });
-    if (response) {
-      dispatch(
-        saveCurrentChild({
-          childId: response?.childId,
-          name: name.value,
-          dob: dob.value,
-          gender: gender,
-          avatar: avatar,
-          type: 'child',
-        }),
-      );
-
-      dispatch(
-        saveChildData({
-          childId: response?.childId,
-          name: name.value,
-          dob: dob.value,
-          gender: gender,
-          avatar: avatar,
-          type: 'child',
-        }),
-      );
+        dispatch(
+          saveChildData({
+            childId: response?.childId,
+            name: name.value,
+            dob: dob.value,
+            gender: gender,
+            avatar: avatar,
+            type: 'child',
+          }),
+        );
+      }
+    } catch (error) {
+      console.log('error in adding child', error);
     }
   };
 
@@ -161,31 +170,34 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
       return;
     }
     // TODO make it dynamic
-
-    const response = await addNewAdult({
-      role: role.value,
-      dob: dob.value, // ! pass in the whole date object
-      avatar,
-    });
-    if (response) {
-      dispatch(
-        saveCurrentAdult({
-          profileId: response?.profileId,
-          dob: dob.value,
-          avatar: avatar,
-          type: 'adult',
-          role: role.value,
-        }),
-      );
-      dispatch(
-        saveAdultData({
-          profileId: response?.profileId,
-          dob: dob.value,
-          avatar: avatar,
-          type: 'adult',
-          role: role.value,
-        }),
-      );
+    try {
+      const response = await addNewAdult({
+        role: role.value,
+        dob: dob.value, // ! pass in the whole date object
+        avatar,
+      });
+      if (response) {
+        dispatch(
+          saveCurrentAdult({
+            profileId: response?.profileId,
+            dob: dob.value,
+            avatar: avatar,
+            type: 'adult',
+            role: role.value,
+          }),
+        );
+        dispatch(
+          saveAdultData({
+            profileId: response?.profileId,
+            dob: dob.value,
+            avatar: avatar,
+            type: 'adult',
+            role: role.value,
+          }),
+        );
+      }
+    } catch (error) {
+      console.log('error in adding  adult data', error);
     }
   };
 
@@ -194,17 +206,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
   };
 
   const selectGender = (type: string) => {
-    switch (type) {
-      case 'girl':
-        updateState({gender: 'girl'});
-        break;
-      case 'boy':
-        updateState({gender: 'boy'});
-        break;
-      case 'preferNotToSay':
-        updateState({gender: 'preferNotToSay'});
-        break;
-    }
+    updateState({gender: type});
   };
 
   const disableButtonForChilForm = () => {
@@ -252,9 +254,9 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
                 customStyle={styles.girl}
                 bgcColor={themeColor.purple}
                 onPress={() => {
-                  selectGender('girl');
+                  selectGender(GENDERS.girl);
                 }}
-                isSelected={gender === 'girl'}
+                isSelected={gender === GENDERS.girl}
               />
               <RNTextComponent style={styles.sex}>
                 {translation('GIRL')}
@@ -266,9 +268,9 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
                 customStyle={styles.boy}
                 bgcColor={themeColor.lightGreen}
                 onPress={() => {
-                  selectGender('boy');
+                  selectGender(GENDERS.boy);
                 }}
-                isSelected={gender === 'boy'}
+                isSelected={gender === GENDERS.boy}
               />
               <RNTextComponent style={styles.sex}>
                 {translation('BOY')}
@@ -277,16 +279,16 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
             <RNButton
               title={translation('PREFER_NOT_TO_SAY')}
               onClick={() => {
-                selectGender('preferNotToSay');
+                selectGender(GENDERS.preferNotToSay);
               }}
               onlyBorder
               customStyle={
-                gender === 'preferNotToSay'
+                gender === GENDERS.preferNotToSay
                   ? styles.footerButtonOnSelect
                   : styles.footerButton
               }
               textStyle={
-                gender === 'preferNotToSay' && {color: themeColor.white}
+                gender === GENDERS.preferNotToSay && {color: themeColor.white}
               }
             />
           </>

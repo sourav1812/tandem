@@ -10,20 +10,21 @@ export const addNewChild = async ({
   gender,
   avatar,
 }: CreateChildProfile) => {
-  const response = await post<{childId: string}>({
-    path: API.CREATE_CHILD_PROFILE,
-    data: {
-      name,
-      dob,
-      gender,
-      avatar,
-    },
-    onSuccess: () => {
-      navigateTo(SCREEN_NAME.ACCOUNT);
-    },
-  });
-  if (!response) {
-    return;
+  try {
+    const response = await post<{childId: string}>({
+      path: API.CREATE_CHILD_PROFILE,
+      data: {
+        name,
+        dob,
+        gender,
+        avatar,
+      },
+      onSuccess: () => {
+        navigateTo(SCREEN_NAME.ACCOUNT);
+      },
+    });
+    return response;
+  } catch (error) {
+    throw error;
   }
-  return response;
 };
