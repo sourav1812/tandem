@@ -48,6 +48,7 @@ const RNChoiceQuestions = ({
 
   return (
     <ScrollView
+      style={{flex: 1}}
       contentContainerStyle={[styles.scrollView, customStyle && customStyle]}
       scrollEnabled
       showsVerticalScrollIndicator={false}>

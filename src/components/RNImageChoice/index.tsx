@@ -37,7 +37,12 @@ const RNImageChoice = ({
 
   return (
     <ScrollView
-      contentContainerStyle={[styles.scrollView, customStyle && customStyle]}
+      style={[styles.scrollView, customStyle && customStyle]}
+      contentContainerStyle={{
+        justifyContent: 'center',
+        flexWrap: 'wrap',
+        flexDirection: 'row',
+      }}
       scrollEnabled
       showsVerticalScrollIndicator={false}>
       {data.map((value, indexLocal) => {
