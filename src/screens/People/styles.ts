@@ -16,6 +16,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: verticalScale(5),
+    height: verticalScale(40),
   },
   tab: {
     flex: 1,

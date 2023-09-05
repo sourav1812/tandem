@@ -59,6 +59,7 @@ const People = ({}: PeopleScreenProps) => {
         <RNButton
           title={translation('BIG_PEOPLE')}
           onlyBorder
+          pressableStyle={{flex: 1}}
           onClick={leftTab}
           customStyle={[
             styles.tab,
@@ -80,6 +81,7 @@ const People = ({}: PeopleScreenProps) => {
           title={translation('LITTLE_PEOPLE')}
           onlyBorder
           onClick={rightTab}
+          pressableStyle={{flex: 1}}
           customStyle={[
             styles.tab,
             firstTab

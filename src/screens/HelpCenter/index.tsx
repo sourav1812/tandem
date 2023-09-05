@@ -76,6 +76,7 @@ const HelpCenter = ({route}: HelpCenterProps) => {
           <View style={styles.customTab}>
             <RNButton
               title={translation('FAQ')}
+              pressableStyle={{flex: 1}}
               onlyBorder
               onClick={leftTab}
               customStyle={[
@@ -92,6 +93,7 @@ const HelpCenter = ({route}: HelpCenterProps) => {
             />
             <RNButton
               title={translation('CONTACT_US')}
+              pressableStyle={{flex: 1}}
               onlyBorder
               onClick={rightTab}
               customStyle={[
@@ -163,7 +165,7 @@ const HelpCenter = ({route}: HelpCenterProps) => {
       </KeyboardAvoidingView>
 
       <RNButton
-        customStyle={styles.button}
+        pressableStyle={styles.button}
         title={firstTab ? translation('SEND') : translation('CONTINUE')}
         onClick={() => {
           if (fromPeople) {
