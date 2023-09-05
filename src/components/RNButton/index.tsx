@@ -35,9 +35,9 @@ const RNButton = ({
   const isButtonDisabled = useAppSelector(
     state => state.activityIndicator.isButtonDisabled,
   );
-  const scaleButton = useSharedValue(1);
   const [pressed, setPressed] = React.useState(false);
   const disabled = isDisabled || isButtonDisabled;
+  const scaleButton = useSharedValue(1);
 
   const runAnimation = () => {
     scaleButton.value = withSequence(
@@ -63,7 +63,12 @@ const RNButton = ({
           disabled={disabled}
           {...props}
           onLongPress={runAnimation}
-          onPress={handlePress}>
+          onPress={() => {
+            if (handlePress) {
+              handlePress();
+              runAnimation();
+            }
+          }}>
           <Animated.View
             ref={ref && ref}
             onLayout={onLayout && onLayout}

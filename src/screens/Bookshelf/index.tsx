@@ -92,12 +92,12 @@ const Bookshelf = () => {
               {item.week}
             </RNTextComponent>
           )}
-          <Pressable
+          <RNStoryCard
+            item={item}
             onPress={() => {
               navigateTo(SCREEN_NAME.STORY, {routeData: item});
-            }}>
-            <RNStoryCard item={item} />
-          </Pressable>
+            }}
+          />
         </View>
       </>
     );

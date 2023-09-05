@@ -54,7 +54,6 @@ const People = ({}: PeopleScreenProps) => {
         }}>
         <BlueButton style={styles.button} />
       </Pressable>
-
       <View style={styles.customTab}>
         <RNButton
           title={translation('BIG_PEOPLE')}
@@ -117,7 +116,12 @@ const People = ({}: PeopleScreenProps) => {
                 {currentAdult.role}
               </RNTextComponent>
             </View>
-            <Pressable onPress={() => {}}>
+            <Pressable
+              onPress={() => {
+                navigateTo(SCREEN_NAME.CREATE_CHILD_PROFILE, {
+                  fromAddAdult: true,
+                });
+              }}>
               <RNAddComponent
                 customStyle={styles.addButton}
                 boxStyle={styles.addBox}
@@ -127,7 +131,7 @@ const People = ({}: PeopleScreenProps) => {
           <View style={styles.firstTab}>
             <ScrollView showsVerticalScrollIndicator={false}>
               {menuArray.map((item, index) => (
-                <Pressable
+                <RNMenuButton
                   key={index.toString()}
                   onPress={() =>
                     item.navigate &&
@@ -135,15 +139,13 @@ const People = ({}: PeopleScreenProps) => {
                       item.navigate,
                       item.param && {fromPeople: item.param},
                     )
-                  }>
-                  <RNMenuButton
-                    title={item.name}
-                    customStyle={[
-                      styles.menu,
-                      isTablet && {marginHorizontal: 36},
-                    ]}
-                  />
-                </Pressable>
+                  }
+                  title={item.name}
+                  customStyle={[
+                    styles.menu,
+                    isTablet && {marginHorizontal: 36},
+                  ]}
+                />
               ))}
             </ScrollView>
           </View>

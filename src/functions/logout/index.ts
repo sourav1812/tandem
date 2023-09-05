@@ -28,7 +28,7 @@ const logout = async ({api = true}: {api?: boolean}) => {
   removeKey(TERMS_ACCEPTED);
   firebase.messaging().deleteToken();
   store.dispatch(changeMode(MODE.A));
-  navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN, {}, true);
+  navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN, {}, true, false);
   store.dispatch(stopLoader());
 };
 
