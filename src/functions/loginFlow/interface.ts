@@ -4,5 +4,13 @@ export interface LoginResponse {
   refreshToken: string;
   userInfo: {
     children: ChildData[];
+    adults: AdultData[];
   };
+}
+
+interface AdultData {
+  avatar: string;
+  dob: string;
+  profileId: string;
+  role: string;
 }

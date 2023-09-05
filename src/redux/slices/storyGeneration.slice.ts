@@ -49,8 +49,17 @@ export const storyGeneration = createSlice({
       state.questionIndex = WHICH_QUESTION_INDEX[key];
     },
     // empty story gen reducer
-    clearStoryGenerationResponse: _state => {
-      _state = initialState;
+    clearStoryGenerationResponse: state => {
+      state.questionIndex = 0;
+      state.response = {
+        [STORY_PARTS.WHO]: [],
+        [STORY_PARTS.INCLUSION]: false,
+        [STORY_PARTS.WHERE]: [],
+        [STORY_PARTS.WHAT_THINGS]: [],
+        [STORY_PARTS.WHAT_HAPPENS]: [],
+        [STORY_PARTS.STYLES]: [],
+        [STORY_PARTS.COLOR]: [],
+      };
     },
     changeQuestionIndex: (state, action) => {
       state.questionIndex = action.payload;

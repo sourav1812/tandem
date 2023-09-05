@@ -15,7 +15,7 @@ import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {translation} from '@tandem/utils/methods';
 import logout from '@tandem/functions/logout';
 import {storeKey} from '@tandem/helpers/encryptedStorage';
-import {TERMS_ACCEPTED} from '@tandem/constants/LocalConstants';
+import {TERMS_ACCEPTED} from '@tandem/constants/localConstants';
 
 const TermsAndConditions = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);

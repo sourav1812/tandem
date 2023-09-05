@@ -5,6 +5,7 @@ import RNTextComponent from '../RNTextComponent';
 import {RNParentProfileProp} from './interface';
 import {useSharedValue, withTiming} from 'react-native-reanimated';
 import Animated from 'react-native-reanimated';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 
 const RNParentProfile = ({
   avatar,
@@ -23,12 +24,15 @@ const RNParentProfile = ({
 
   useEffect(() => {
     runAnimation();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const avatars = useAppSelector(state => state.cache.avatars);
+  const filePath = avatars.filter(obj => obj.path === avatar)[0]?.file;
   return (
     <Animated.View style={[styles.container, {opacity: opacity}]}>
       <Image
-        source={{uri: avatar}}
+        source={{uri: filePath || avatar}}
         style={[styles.profile, custumStyle && custumStyle]}
         borderRadius={100}
       />

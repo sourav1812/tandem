@@ -15,7 +15,7 @@ import AddColor from '@tandem/assets/svg/AddColor';
 import EmptyPatch from '@tandem/assets/svg/EmptyPatch';
 import {translation} from '@tandem/utils/methods';
 import RNTooltip from '../RNTooltip';
-import {TOOLTIP} from '@tandem/constants/LocalConstants';
+import {COLOR_PALETTE, TOOLTIP} from '@tandem/constants/localConstants';
 import {getValueFromKey} from '@tandem/helpers/encryptedStorage';
 import chroma from 'chroma-js';
 import RNButton from '../RNButton';
@@ -45,14 +45,7 @@ const RNChooseColor = ({
   const [activeColor, setActiveColor] = React.useState<string>('');
   const [clear, setClear] = React.useState<boolean>(false);
   const [usedColor, setUsedColor] = React.useState<string[]>([]);
-  const colorPalette = [
-    {firstColor: '#0633FD', secondColor: '#FEF902'},
-    {firstColor: '#0998FF', secondColor: '#FF9409'},
-    {firstColor: '#00FDFF', secondColor: '#FF2E09'},
-    {firstColor: '#02F98F', secondColor: '#FF2F8F'},
-    {firstColor: '#02F902', secondColor: '#FF3FFB'},
-    {firstColor: '#89F902', secondColor: '#9137FF'},
-  ];
+
   const refOne = useRef<any>(null);
   const [positionRefs, setPositionRefs] = React.useState({
     0: {height: 0, width: 0, x: 0, y: 0},
@@ -103,7 +96,7 @@ const RNChooseColor = ({
         {portrait && <TextData />}
         <View style={{flexDirection: portrait ? 'column' : 'row'}}>
           <View style={styles.colorView}>
-            {colorPalette.map((item, index) => {
+            {COLOR_PALETTE.map((item, index) => {
               return (
                 <View
                   key={index.toString()}

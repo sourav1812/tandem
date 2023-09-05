@@ -83,7 +83,7 @@ const RNButton = ({
               },
               {...(onlyBorder && {backgroundColor: 'white'})},
               {...(noBorderRadius && {borderRadius: 0})},
-              isTablet && {maxHeight: 55},
+              isTablet && {maxHeight: verticalScale(50)},
               customStyle && customStyle,
             ]}>
             {isButtonDisabled && pressed ? (
@@ -101,7 +101,7 @@ const RNButton = ({
                 style={[
                   {
                     textAlign: 'center',
-                    fontSize: isTablet ? 16 : verticalScale(14),
+                    fontSize: isTablet ? verticalScale(16) : verticalScale(14),
                     color: themeColor.white,
                     ...(onlyBorder && {
                       color: buttonColor || themeColor.themeBlue,

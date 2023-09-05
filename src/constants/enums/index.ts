@@ -41,3 +41,8 @@ export enum STORIES_RESPONSE {
   SELECTED_ILLUSTRATION = 'selected_illustration',
   STORY_TEXT = 'story_text',
 }
+
+export enum PEOPLE {
+  ADULT = 'adult',
+  CHILD = 'child',
+}
