@@ -4,7 +4,7 @@ import {styles} from './styles';
 import RNEmojiWithText from '../RNEmojiWithText';
 import {MultipleChoiceProps} from './interface';
 import RNTooltip from '../RNTooltip';
-import {TOOLTIP} from '@tandem/constants/LocalConstants';
+import {TOOLTIP} from '@tandem/constants/localConstants';
 import {getValueFromKey} from '@tandem/helpers/encryptedStorage';
 import {translation} from '@tandem/utils/methods';
 import {store} from '@tandem/redux/store';

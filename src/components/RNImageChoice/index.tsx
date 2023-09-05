@@ -48,7 +48,7 @@ const RNImageChoice = ({
               handlePress(value.name);
             }}>
             <Image
-              source={value.url}
+              source={{uri: value.file}}
               style={[
                 styles.illustration,
                 selected.includes(value.name) && {

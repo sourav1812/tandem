@@ -22,7 +22,7 @@ import themeColor from '@tandem/theme/themeColor';
 import {RootState} from '@tandem/redux/store';
 import RNTooltip from '@tandem/components/RNTooltip';
 import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
-import {TOOLTIP} from '@tandem/constants/LocalConstants';
+import {TOOLTIP} from '@tandem/constants/localConstants';
 import {
   AdultData,
   ChildData,
@@ -224,8 +224,6 @@ const Account = () => {
                 onLayout={() => {
                   refOne?.current?.measure(
                     (
-                      x: number,
-                      y: number,
                       width: number,
                       height: number,
                       pageX: number,
@@ -365,8 +363,6 @@ const Account = () => {
                 onLayout={() => {
                   refTwo?.current?.measure(
                     (
-                      x: number,
-                      y: number,
                       width: number,
                       height: number,
                       pageX: number,

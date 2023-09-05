@@ -5,7 +5,7 @@ import {Pressable, ScrollView, View} from 'react-native';
 import BlueButton from '@tandem/assets/svg/BlueButton';
 import {styles} from './styles';
 import RNNumericBulletin from '@tandem/components/RNNumericBulletin';
-import {avatarArray, ChildProfileStateObject, indicatorType} from './interface';
+import {ChildProfileStateObject, IndicatorType} from './interface';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import {translation} from '@tandem/utils/methods';
 import RNEmojiWithText from '@tandem/components/RNEmojiWithText';
@@ -33,6 +33,7 @@ import {addNewAdult} from '@tandem/api/createAdultProfile';
 
 const CreateChildProfile = ({route}: CreateChildProfileProps) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const avatars = useAppSelector(state => state.cache.avatars);
   const fromAddAdult = route.params?.fromAddAdult;
   const dispatch = useAppDispatch();
   const [state, setState] = useState<ChildProfileStateObject>({
@@ -61,7 +62,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
 
   const nextQuestion = async () => {
     if (questionIndex <= 2 && avatar === null) {
-      let indexArry: indicatorType[] = [...bulletinArray];
+      let indexArry: IndicatorType[] = [...bulletinArray];
       bulletinArray.map((item, index) => {
         if (questionIndex + 1 > index) {
           indexArry[index].isSelected = true;
@@ -79,7 +80,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
 
   const previousQuestion = () => {
     if (questionIndex > 1) {
-      let indexArry: indicatorType[] = [...bulletinArray];
+      let indexArry: IndicatorType[] = [...bulletinArray];
       indexArry.map(item => (item.isSelected = false));
       bulletinArray.map((item, index) => {
         if (questionIndex - 1 > index) {
@@ -343,14 +344,14 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
               <ScrollView
                 contentContainerStyle={styles.list}
                 showsVerticalScrollIndicator={false}>
-                {avatarArray.map((item, index) => {
+                {avatars.map((item, index) => {
                   return (
                     <RNAvatarComponent
                       key={index.toString()}
-                      icon={item.icon}
+                      icon={item.file}
                       customStyle={[
                         styles.avatar,
-                        avatar === item.icon && {
+                        avatar === item.path && {
                           backgroundColor: themeColor.themeBlue,
                         },
                       ]}
@@ -373,7 +374,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
                         //     console.log(err);
                         //   });
                         // }
-                        setAvatar(item.icon);
+                        setAvatar(item.path);
                       }}
                     />
                   );
@@ -454,13 +455,13 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
               <ScrollView
                 contentContainerStyle={styles.list}
                 showsVerticalScrollIndicator={false}>
-                {avatarArray.map((item, index) => {
+                {avatars.map((item, index) => {
                   return (
                     <RNAvatarComponent
-                      icon={item.icon}
+                      icon={item.file}
                       customStyle={[
                         styles.avatar,
-                        avatar === item.icon && {
+                        avatar === item.path && {
                           backgroundColor: themeColor.themeBlue,
                         },
                       ]}
@@ -484,7 +485,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
                           //     console.log(err);
                           //   });
                         }
-                        setAvatar(item.icon);
+                        setAvatar(item.path);
                       }}
                     />
                   );

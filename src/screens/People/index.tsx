@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {PeopleScreenProps} from '@tandem/navigation/types';
-import {menuArray, StateObject} from './interface';
+import {MENU_ARRAY, StateObject} from './interface';
 import BlueButton from '@tandem/assets/svg/BlueButton';
 import RNButton from '@tandem/components/RNButton';
 import {Image, Pressable, ScrollView, View} from 'react-native';
@@ -46,6 +46,15 @@ const People = ({}: PeopleScreenProps) => {
   const currentChild = useAppSelector(
     (state1: RootState) => state1.createChild.currentChild,
   );
+  const avatars = useAppSelector(stateL => stateL.cache.avatars);
+
+  const currentAdultAvatar = avatars.filter(
+    obj => obj.path === currentAdult?.avatar,
+  )[0]?.file;
+  const currentChildAvatar = avatars.filter(
+    obj => obj.path === currentChild?.avatar,
+  )[0]?.file;
+
   return (
     <RNScreenWrapper style={styles.container}>
       <Pressable
@@ -102,7 +111,7 @@ const People = ({}: PeopleScreenProps) => {
           <View style={styles.bigpeople}>
             <View>
               <Image
-                source={{uri: currentAdult.avatar}}
+                source={{uri: currentAdultAvatar || currentAdult.avatar}}
                 style={[
                   styles.profile,
                   isTablet && {
@@ -124,7 +133,7 @@ const People = ({}: PeopleScreenProps) => {
           </View>
           <View style={styles.firstTab}>
             <ScrollView showsVerticalScrollIndicator={false}>
-              {menuArray.map((item, index) => (
+              {MENU_ARRAY.map((item, index) => (
                 <Pressable
                   key={index.toString()}
                   onPress={() =>
@@ -156,7 +165,7 @@ const People = ({}: PeopleScreenProps) => {
                 }}>
                 <Image
                   source={{
-                    uri: currentChild?.avatar,
+                    uri: currentChildAvatar || currentChild?.avatar,
                   }}
                   style={[
                     styles.profile,
