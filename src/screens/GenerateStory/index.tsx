@@ -502,6 +502,10 @@ const GenerateStory = () => {
               customStyle={[
                 styles.footerButton,
                 {height: verticalScale(70), maxHeight: verticalScale(70)},
+                disabled && {
+                  backgroundColor: '#474747',
+                  borderColor: '#474747',
+                },
               ]}
               title={translation('SELECT')}
               onClick={nextQuestion}
