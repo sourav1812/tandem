@@ -23,7 +23,7 @@ import RNVoiceQuesiton from '@tandem/components/RNVoiceQuesiton';
 import QuestionMark from '@tandem/assets/svg/QuestionMark';
 import RNWellDoneModal from '@tandem/components/RNWellDoneModal';
 import RNMultipleChoice from '@tandem/components/RNMultipleChoice';
-import {TOOLTIP} from '@tandem/constants/localConstants';
+import {TOOLTIP} from '@tandem/constants/local';
 import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
 import RNTooltip from '@tandem/components/RNTooltip';
 import {useRoute} from '@react-navigation/native';

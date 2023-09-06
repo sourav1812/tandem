@@ -15,7 +15,7 @@ import AddColor from '@tandem/assets/svg/AddColor';
 import EmptyPatch from '@tandem/assets/svg/EmptyPatch';
 import {translation} from '@tandem/utils/methods';
 import RNTooltip from '../RNTooltip';
-import {COLOR_PALETTE, TOOLTIP} from '@tandem/constants/localConstants';
+import {COLOR_PALETTE, TOOLTIP} from '@tandem/constants/local';
 import {getValueFromKey} from '@tandem/helpers/encryptedStorage';
 import chroma from 'chroma-js';
 import RNButton from '../RNButton';

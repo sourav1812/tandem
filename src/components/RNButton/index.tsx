@@ -56,7 +56,7 @@ const RNButton = ({
             },
             {...(onlyBorder && {backgroundColor: 'white'})},
             {...(noBorderRadius && {borderRadius: 0})},
-            isTablet && {maxHeight: verticalScale(50)},
+            isTablet && {maxHeight: verticalScale(40)},
             customStyle && customStyle,
           ]}
           disabled={disabled}

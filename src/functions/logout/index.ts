@@ -1,4 +1,4 @@
-import {TERMS_ACCEPTED} from '@tandem/constants/localConstants';
+import {TERMS_ACCEPTED} from '@tandem/constants/local';
 import {MODE} from '@tandem/constants/mode';
 import {removeKey} from '@tandem/helpers/encryptedStorage';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';

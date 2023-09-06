@@ -2,7 +2,7 @@ import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
 import {getStoredTokens} from '../tokens';
 import {getValueFromKey} from '@tandem/helpers/encryptedStorage';
-import {TERMS_ACCEPTED} from '@tandem/constants/localConstants';
+import {TERMS_ACCEPTED} from '@tandem/constants/local';
 import userProfile from '@tandem/api/userProfile';
 import {cacheAvatars, cachePlaces} from '../cache';
 

@@ -50,6 +50,13 @@ const validatePassword = (value: string): ValidationError => {
       value,
     };
   }
+  if (/[.]/.test(value)) {
+    return {
+      message: translation('validations.dot-not-allowed'),
+      type: FORM_INPUT_TYPE.PASSWORD,
+      value,
+    };
+  }
   if (/\s/.test(value)) {
     return {
       message: translation('validations.password-no-spaces'),
@@ -57,6 +64,7 @@ const validatePassword = (value: string): ValidationError => {
       value,
     };
   }
+
   if (!/^\S{9,}$/.test(value)) {
     return {
       message: translation('validations.password-length'),
@@ -85,13 +93,7 @@ const validatePassword = (value: string): ValidationError => {
       value,
     };
   }
-  if (/[.]/.test(value)) {
-    return {
-      message: translation('validations.dot-not-allowed'),
-      type: FORM_INPUT_TYPE.PASSWORD,
-      value,
-    };
-  }
+
   return {value};
 };
 

@@ -49,11 +49,11 @@ interface RenderSceneProps {
 
 const pd = PixelRatio.get();
 const cornerRadius = 0;
-const padding = verticalScale(50);
-const fontSize = verticalScale(16);
+const padding = verticalScale(70);
+const fontSize = verticalScale(20);
 
 const processSentences = (text: string, wWidth: number) => {
-  const numberOfChars = Math.floor((wWidth * 1.5) / fontSize);
+  const numberOfChars = Math.floor((wWidth * 1.35) / fontSize);
   let maxCharsReached = 0;
   let wordsArray: string[] = [];
   const sentenceArray: string[] = [];
@@ -80,7 +80,12 @@ const processSentences = (text: string, wWidth: number) => {
 
 const getRoundRect = (length: number, wWidth: number, hHeight: number) => {
   return rrect(
-    rect(0, hHeight - 1.5 * padding - fontSize * length, wWidth, hHeight),
+    rect(
+      0,
+      hHeight - 1.5 * padding - (fontSize + verticalScale(10)) * length,
+      wWidth,
+      hHeight,
+    ),
     20,
     20,
   );
@@ -229,9 +234,9 @@ const RenderScene = ({
   hHeight,
 }: RenderSceneProps) => {
   const imageRef = useImage(image);
-  const {width: wWidth} = useWindowDimensions();
+  // const {width: wWidth} = useWindowDimensions();
+  // const numberOfChars = Math.floor((wWidth * 1.5) / fontSize);
   const [showBackdrop, setShowBackdrop] = React.useState(false);
-  const numberOfChars = Math.floor((wWidth * 1.5) / fontSize);
   React.useEffect(() => {
     if (!showBackdrop) {
       setShowBackdrop(true);
@@ -258,8 +263,11 @@ const RenderScene = ({
       {sentences.map((sentence, index) => (
         <Text
           key={index.toString()}
-          x={wWidth / 2 - ((sentence.length / numberOfChars) * wWidth) / 2.5}
-          y={hHeight - padding / 2 - fontSize * index} //  number of line the text is on
+          x={
+            verticalScale(25)
+            // wWidth / 2 - ((sentence.length / numberOfChars) * wWidth) / 2.5
+          }
+          y={hHeight - padding / 2 - (fontSize + verticalScale(10)) * index} //  number of line the text is on
           text={sentence}
           font={font}
         />
@@ -284,7 +292,7 @@ const Progressbar = ({
     <Group>
       <RoundedRect
         x={verticalScale(20)}
-        y={hHeight - padding - fontSize * length}
+        y={hHeight - padding - (fontSize + verticalScale(10)) * length}
         width={wWidth - verticalScale(40)}
         height={verticalScale(12)}
         r={10}
@@ -292,7 +300,7 @@ const Progressbar = ({
       />
       <RoundedRect
         x={verticalScale(20)}
-        y={hHeight - padding - fontSize * length}
+        y={hHeight - padding - (fontSize + verticalScale(10)) * length}
         width={(wWidth - verticalScale(40)) * ((total + 1 - page) / total)}
         height={verticalScale(12)}
         r={10}

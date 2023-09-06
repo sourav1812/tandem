@@ -1,4 +1,4 @@
-import {ImageBackground, Image, View} from 'react-native';
+import {ImageBackground, Image, View, Platform} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
@@ -56,12 +56,14 @@ const SocialSignIn = () => {
             title={`${translation('CONTINUE_WITH')} Google`}
             customStyle={styles.button}
           />
-          <RNSocialButton
-            icon={<Apple />}
-            onClick={() => {}}
-            title={`${translation('CONTINUE_WITH')} Apple`}
-            customStyle={styles.button}
-          />
+          {Platform.OS === 'ios' && (
+            <RNSocialButton
+              icon={<Apple />}
+              onClick={() => {}}
+              title={`${translation('CONTINUE_WITH')} Apple`}
+              customStyle={styles.button}
+            />
+          )}
           <View style={styles.or}>
             <View style={styles.line} />
             <RNTextComponent
