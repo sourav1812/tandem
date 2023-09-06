@@ -66,7 +66,7 @@ const SignIn = () => {
         deviceType,
         fcmToken,
       });
-      navigateTo(SCREEN_NAME.TERMS_AND_CONDITIONS, {}, false, false);
+      navigateTo(SCREEN_NAME.TERMS_AND_CONDITIONS, {}, false);
     } catch (error: any) {
       console.log('error in login api', error.message);
     }
@@ -138,7 +138,6 @@ const SignIn = () => {
                   {translation('FORGOT_PASSWORD')}
                 </RNTextComponent>
               </Pressable>
-
               <RNButton
                 title={translation('SIGN_IN')}
                 customStyle={styles.button}
@@ -152,7 +151,6 @@ const SignIn = () => {
                 </RNTextComponent>
                 <View style={styles.line} />
               </View>
-
               <View style={styles.bottomOptions}>
                 <View
                   style={[

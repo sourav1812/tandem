@@ -20,6 +20,7 @@ const logout = async ({api = true}: {api?: boolean}) => {
   try {
     store.dispatch(startLoader());
     if (api) {
+      console.log('logoutapidone');
       await logoutApi();
     }
   } catch (error) {}
@@ -30,7 +31,7 @@ const logout = async ({api = true}: {api?: boolean}) => {
   removeKey(TERMS_ACCEPTED);
   firebase.messaging().deleteToken();
   store.dispatch(changeMode(MODE.A));
-  navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN, {}, true, false);
+  navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN, {}, true);
   store.dispatch(stopLoader());
 };
 
