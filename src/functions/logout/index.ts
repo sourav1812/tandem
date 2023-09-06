@@ -23,6 +23,7 @@ const logout = async ({api = true}: {api?: boolean}) => {
   try {
     store.dispatch(startLoader());
     if (api) {
+      console.log('logoutapidone');
       await logoutApi();
     }
   } catch (error) {}

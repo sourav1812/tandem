@@ -154,7 +154,7 @@ const HelpCenter = ({route}: HelpCenterProps) => {
       </ScrollView>
 
       <RNButton
-        customStyle={styles.button}
+        pressableStyle={styles.button}
         title={firstTab ? translation('SEND') : translation('CONTINUE')}
         onClick={() => {
           if (fromPeople) {

@@ -33,6 +33,7 @@ export const styles = StyleSheet.create({
   button: {
     marginTop: verticalScale(32),
     width: '100%',
+    minWidth: '100%',
   },
   icon: {
     alignSelf: 'flex-end',

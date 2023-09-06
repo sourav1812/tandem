@@ -67,7 +67,7 @@ const SignIn = () => {
         deviceType,
         fcmToken,
       });
-      navigateTo(SCREEN_NAME.TERMS_AND_CONDITIONS);
+      navigateTo(SCREEN_NAME.TERMS_AND_CONDITIONS, {}, true);
     } catch (error: any) {
       console.log('error in login api', error.message);
     }

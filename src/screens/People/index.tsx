@@ -63,11 +63,11 @@ const People = ({}: PeopleScreenProps) => {
         }}>
         <BlueButton style={styles.button} />
       </Pressable>
-
       <View style={styles.customTab}>
         <RNButton
           title={translation('BIG_PEOPLE')}
           onlyBorder
+          pressableStyle={{flex: 1}}
           onClick={leftTab}
           customStyle={[
             styles.tab,
@@ -89,6 +89,7 @@ const People = ({}: PeopleScreenProps) => {
           title={translation('LITTLE_PEOPLE')}
           onlyBorder
           onClick={rightTab}
+          pressableStyle={{flex: 1}}
           customStyle={[
             styles.tab,
             firstTab
@@ -124,7 +125,12 @@ const People = ({}: PeopleScreenProps) => {
                 {currentAdult.role}
               </RNTextComponent>
             </View>
-            <Pressable onPress={() => {}}>
+            <Pressable
+              onPress={() => {
+                navigateTo(SCREEN_NAME.CREATE_CHILD_PROFILE, {
+                  fromAddAdult: true,
+                });
+              }}>
               <RNAddComponent
                 customStyle={styles.addButton}
                 boxStyle={styles.addBox}
@@ -134,7 +140,7 @@ const People = ({}: PeopleScreenProps) => {
           <View style={styles.firstTab}>
             <ScrollView showsVerticalScrollIndicator={false}>
               {MENU_ARRAY.map((item, index) => (
-                <Pressable
+                <RNMenuButton
                   key={index.toString()}
                   onPress={() =>
                     item.navigate &&
@@ -142,15 +148,13 @@ const People = ({}: PeopleScreenProps) => {
                       item.navigate,
                       item.param && {fromPeople: item.param},
                     )
-                  }>
-                  <RNMenuButton
-                    title={item.name}
-                    customStyle={[
-                      styles.menu,
-                      isTablet && {marginHorizontal: 36},
-                    ]}
-                  />
-                </Pressable>
+                  }
+                  title={item.name}
+                  customStyle={[
+                    styles.menu,
+                    isTablet && {marginHorizontal: 36},
+                  ]}
+                />
               ))}
             </ScrollView>
           </View>

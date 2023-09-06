@@ -9,7 +9,7 @@ export enum API {
   LOGOUT = 'user/log-out', //? POST
   USER_PROFILE = 'user/profile', //? GET
   CHANGE_PASSWORD = 'user/password', //? PUT
-  ADD_BIG_PEOPLE = 'user/big-people', //?POST
+  ADD_BIG_PEOPLE = 'big-people', //?POST
 }
 
 export enum ENVIRONMENT {

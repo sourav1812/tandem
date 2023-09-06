@@ -66,5 +66,6 @@ export const styles = StyleSheet.create({
   },
   button: {
     marginTop: verticalScale(16),
+    minWidth: '100%',
   },
 });
