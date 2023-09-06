@@ -39,7 +39,7 @@ export const styles = StyleSheet.create({
   },
   bottomOptions: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     marginTop: verticalScale(12),
   },
   option: {

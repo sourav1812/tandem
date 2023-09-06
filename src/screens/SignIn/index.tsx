@@ -174,13 +174,15 @@ const SignIn = () => {
                 ]}>
                 <FB />
               </View>
-              <View
-                style={[
-                  styles.option,
-                  isTablet && {paddingHorizontal: 36, paddingVertical: 17},
-                ]}>
-                <Apple />
-              </View>
+              {Platform.OS === 'ios' && (
+                <View
+                  style={[
+                    styles.option,
+                    isTablet && {paddingHorizontal: 36, paddingVertical: 17},
+                  ]}>
+                  <Apple />
+                </View>
+              )}
             </View>
             <RNTextComponent
               style={[styles.buttonText, isTablet && {fontSize: 22}]}>

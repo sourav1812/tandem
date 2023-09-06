@@ -222,16 +222,18 @@ const SignUp = () => {
                       ]}>
                       <FB />
                     </View>
-                    <View
-                      style={[
-                        styles.option,
-                        isTablet && {
-                          paddingHorizontal: 36,
-                          paddingVertical: 17,
-                        },
-                      ]}>
-                      <Apple />
-                    </View>
+                    {Platform.OS === 'ios' && (
+                      <View
+                        style={[
+                          styles.option,
+                          isTablet && {
+                            paddingHorizontal: 36,
+                            paddingVertical: 17,
+                          },
+                        ]}>
+                        <Apple />
+                      </View>
+                    )}
                   </View>
                   <RNTextComponent
                     style={[styles.buttonText, isTablet && {fontSize: 16}]}>
@@ -335,29 +337,36 @@ const SignUp = () => {
                       ]}>
                       <FB />
                     </View>
-                    <View
-                      style={[
-                        styles.option,
-                        isTablet && {
-                          paddingHorizontal: 36,
-                          paddingVertical: 17,
-                        },
-                      ]}>
-                      <Apple />
-                    </View>
+                    {Platform.OS === 'ios' && (
+                      <View
+                        style={[
+                          styles.option,
+                          isTablet && {
+                            paddingHorizontal: 36,
+                            paddingVertical: 17,
+                          },
+                        ]}>
+                        <Apple />
+                      </View>
+                    )}
                   </View>
                   <RNTextComponent
-                    style={[styles.buttonText, isTablet && {fontSize: 16}]}>
+                    style={[
+                      styles.buttonText,
+                      isTablet && {fontSize: verticalScale(16)},
+                    ]}>
                     {translation('ALREADY_HAVE_AN_ACCOUNT')}{' '}
                     <RNTextComponent
                       isSemiBold
-                      style={[styles.signup, isTablet && {fontSize: 16}]}
+                      style={[
+                        styles.signup,
+                        isTablet && {fontSize: verticalScale(16)},
+                      ]}
                       handleOnPress={() => navigateTo(SCREEN_NAME.SIGN_IN)}>
                       {translation('SIGN_IN')}
                     </RNTextComponent>
                   </RNTextComponent>
                 </View>
-                <View style={{height: 20}} />
               </>
             )}
           </>
