@@ -6,7 +6,7 @@ import themeColor from '@tandem/theme/themeColor';
 import {Props} from './interface';
 import {verticalScale} from 'react-native-size-matters';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
-import validateForm from '@tandem/utils/validations';
+import validateForm, {FORM_INPUT_TYPE} from '@tandem/utils/validations';
 import Show from '@tandem/assets/svg/Eye';
 import Hide from '@tandem/assets/svg/CloseEye';
 
@@ -71,6 +71,11 @@ const RNTextInputWithLabel = ({
           ]}>
           {Icon && Icon}
           <TextInput
+            keyboardType={
+              validationType === FORM_INPUT_TYPE.EMAIL
+                ? 'email-address'
+                : 'default'
+            }
             editable={editable}
             multiline={multiline}
             autoCapitalize={autoCapitalize}

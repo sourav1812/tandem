@@ -23,7 +23,7 @@ const RNLogoHeader = ({
           onlyIcon
           icon={<Back />}
           onClick={() => {
-            if (customRight) {
+            if (customRight && onRightButtonPress) {
               onRightButtonPress();
             } else {
               navigateTo();

@@ -1,11 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {
-  View,
-  ScrollView,
-  ImageBackground,
-  Image,
-  Pressable,
-} from 'react-native';
+import {View, ScrollView, ImageBackground, Pressable} from 'react-native';
 import React, {useRef, useState} from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {styles} from './styles';
@@ -31,7 +25,7 @@ import {
   AUDIENCE,
   ILLUSTRATION,
   TYPE_OF_STORY,
-} from '@tandem/constants/localConstants';
+} from '@tandem/constants/local';
 import RNTooltip from '@tandem/components/RNTooltip';
 import {RootState, store} from '@tandem/redux/store';
 import {STORY_PARTS} from '@tandem/constants/enums';
@@ -351,7 +345,7 @@ const GenerateStory = () => {
               contentContainerStyle={[styles.scrollView]}
               scrollEnabled
               showsVerticalScrollIndicator={false}>
-              {ILLUSTRATION.map((value, index) => {
+              {ILLUSTRATION.map((SvgIcon, index) => {
                 return (
                   <Pressable
                     key={index.toString()}
@@ -359,8 +353,9 @@ const GenerateStory = () => {
                       updateState({addedIllustration: index});
                       setDisabled(false);
                     }}>
-                    <Image
-                      source={value.url}
+                    <SvgIcon
+                      width={verticalScale(120)}
+                      height={verticalScale(120)}
                       style={[
                         styles.illustration,
                         index === addedIllustration && {
@@ -507,6 +502,10 @@ const GenerateStory = () => {
               customStyle={[
                 styles.footerButton,
                 {height: verticalScale(70), maxHeight: verticalScale(70)},
+                disabled && {
+                  backgroundColor: '#474747',
+                  borderColor: '#474747',
+                },
               ]}
               title={translation('SELECT')}
               onClick={nextQuestion}

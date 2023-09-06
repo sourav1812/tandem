@@ -22,7 +22,7 @@ import themeColor from '@tandem/theme/themeColor';
 import {RootState} from '@tandem/redux/store';
 import RNTooltip from '@tandem/components/RNTooltip';
 import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
-import {TOOLTIP} from '@tandem/constants/localConstants';
+import {TOOLTIP} from '@tandem/constants/local';
 import {
   AdultData,
   ChildData,

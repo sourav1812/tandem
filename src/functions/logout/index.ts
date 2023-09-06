@@ -1,4 +1,4 @@
-import {TERMS_ACCEPTED} from '@tandem/constants/localConstants';
+import {CACHE_SESSION, TERMS_ACCEPTED} from '@tandem/constants/local';
 import {MODE} from '@tandem/constants/mode';
 import {removeKey} from '@tandem/helpers/encryptedStorage';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
@@ -15,8 +15,11 @@ import {store} from '@tandem/redux/store';
 import logoutApi from '@tandem/api/logoutApi';
 import {firebase} from '@react-native-firebase/messaging';
 import {clearCacheForce} from '@tandem/redux/slices/cache.slice';
+import RNFetchBlob from 'rn-fetch-blob';
 
 const logout = async ({api = true}: {api?: boolean}) => {
+  RNFetchBlob.session(CACHE_SESSION).dispose();
+
   try {
     store.dispatch(startLoader());
     if (api) {

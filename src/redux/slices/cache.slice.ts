@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {AVATAR_ARRAY, PLACE} from '@tandem/constants/localConstants';
+import {AVATAR_ARRAY, PLACE} from '@tandem/constants/local';
 
 interface CacheState {
   avatars: {path: string; file: string}[];

@@ -23,15 +23,12 @@ export const styles = StyleSheet.create({
   info: {
     textAlign: 'center',
     fontSize: verticalScale(14),
-    marginHorizontal: verticalScale(25),
     marginTop: 10,
   },
   possibleResolution: {
     textAlign: 'center',
-    fontSize: verticalScale(10),
-    marginHorizontal: verticalScale(25),
-    color: themeColor.green,
-    marginTop: 10,
+    fontSize: verticalScale(12),
+    color: themeColor.themeBlue,
   },
   button: {
     marginTop: verticalScale(14),
@@ -44,9 +41,10 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   button2: {
-    width: '80%',
     padding: 10,
     marginTop: 20,
     alignSelf: 'center',
+    flex: 1,
+    marginHorizontal: verticalScale(10),
   },
 });

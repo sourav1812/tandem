@@ -272,5 +272,6 @@
   "WHICH_OF_THESE_BEST_DESCRIBE": "Welche dieser Beschreibungen trifft am besten auf Ihre Beziehung zu den Kindern zu, mit denen Sie TANDEM verwenden?",
   "YOUR_DOB": "Ihr Geburtsdatum",
   "ENTER": "Eingeben",
-  "RELATIONSHIP": "Beziehung"
+  "RELATIONSHIP": "Beziehung",
+  "LOGOUT_FROM_ALL_DEVICES": "Ihr Passwort wird für alle Geräte geändert. Möchten Sie sich auch von Ihren anderen Geräten abmelden?"
 }

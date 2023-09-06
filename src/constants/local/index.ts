@@ -62,6 +62,13 @@ import {
   PlaceType,
 } from '@tandem/screens/GenerateStory/interface';
 
+import Card from '@tandem/assets/svg/illustrationTypes/card.svg';
+import Card1 from '@tandem/assets/svg/illustrationTypes/card-1.svg';
+import Card2 from '@tandem/assets/svg/illustrationTypes/card-2.svg';
+import Card3 from '@tandem/assets/svg/illustrationTypes/card-3.svg';
+import Card4 from '@tandem/assets/svg/illustrationTypes/card-4.svg';
+import Card5 from '@tandem/assets/svg/illustrationTypes/card-5.svg';
+
 export const TOOLTIP = 'ToolTip';
 export const TERMS_ACCEPTED = 'TERMS_ACCEPTED';
 
@@ -146,13 +153,7 @@ export const ATTRIBUTE: PlaceType[] = [
   {name: 'Ambulance', bgc: themeColor.pink, svgIcon: Ambulance},
 ];
 
-export const ILLUSTRATION = [
-  {url: require('@tandem/assets/png/onboarding1.png')},
-  {url: require('@tandem/assets/png/onboarding2.png')},
-  {url: require('@tandem/assets/png/onboarding3.png')},
-  {url: require('@tandem/assets/png/natureCamp.jpeg')},
-  {url: require('@tandem/assets/png/notSure.png')},
-];
+export const ILLUSTRATION = [Card, Card1, Card2, Card3, Card4, Card5];
 
 export const COLOR_PALETTE = [
   {firstColor: '#0633FD', secondColor: '#FEF902'},
@@ -202,3 +203,5 @@ export const PLACE: OnlyImageType[] = [
     url: 'https://tandem.geeky.dev/v1/images/locations/sunny_beach.png',
   },
 ];
+
+export const CACHE_SESSION = 'tandemcache';
