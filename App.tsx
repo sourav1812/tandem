@@ -4,7 +4,7 @@ import {Provider} from 'react-redux';
 import {store} from './src/redux/store';
 import {Alert, Platform, UIManager} from 'react-native';
 import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
-import {TOOLTIP} from '@tandem/constants/localConstants';
+import {TOOLTIP} from '@tandem/constants/local';
 import {PermissionsAndroid} from 'react-native';
 import messaging from '@react-native-firebase/messaging';
 import {PersistGate} from 'redux-persist/integration/react';

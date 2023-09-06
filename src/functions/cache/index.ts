@@ -1,4 +1,4 @@
-import {AVATAR_ARRAY, PLACE} from '@tandem/constants/localConstants';
+import {AVATAR_ARRAY, PLACE} from '@tandem/constants/local';
 import {
   addAvatarFile,
   addPlaceFile,

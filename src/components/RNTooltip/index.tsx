@@ -6,7 +6,7 @@ import {scale} from 'react-native-size-matters';
 import RNTextComponent from '../RNTextComponent';
 import {Platform, StatusBar, View} from 'react-native';
 import {getValueFromKey} from '@tandem/helpers/encryptedStorage';
-import {TOOLTIP} from '@tandem/constants/localConstants';
+import {TOOLTIP} from '@tandem/constants/local';
 import {
   tooltipHelperBottom,
   tooltipHelperTop,
