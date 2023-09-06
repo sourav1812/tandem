@@ -20,7 +20,7 @@ const SelectLanguage = ({route}: {route?: {params?: {goBack?: boolean}}}) => {
   const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
-  const [lan, setLang] = React.useState(i18n.locale);
+  const [lan, setLang] = React.useState('');
   return (
     <RNScreenWrapper style={{backgroundColor: themeColor.white}}>
       <RNTextComponent style={styles.heading} isSemiBold>
