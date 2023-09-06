@@ -81,7 +81,7 @@ const handleError = async (error: {
 }) => {
   const originalRequest = error.config;
   const {status, data} = error.response;
-  console.log('error in intercerpt', {error: data});
+  console.log('error in intercerpt', {error: data, status});
   if (status === 401) {
     // Handle token refresh for 401 (Unauthorized) errors
     try {

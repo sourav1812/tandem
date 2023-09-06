@@ -13,6 +13,8 @@ import RNTextInputWithLabel from '@tandem/components/RNTextInputWithLabel';
 import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
 import validationFunction from '@tandem/functions/validationFunction';
 import {changePassword} from '@tandem/api/changePassword';
+import {store} from '@tandem/redux/store';
+import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
 
 const ChangePassword = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -40,7 +42,7 @@ const ChangePassword = () => {
     updateState({showModal: !showModal});
   };
 
-  const hangleChangePassword = async () => {
+  const hangleChangePassword = () => {
     if (
       !validationFunction([
         {
@@ -63,19 +65,31 @@ const ChangePassword = () => {
       return;
     }
     if (newPassword.value === confirmPassword.value) {
-      const response = await changePassword({
-        currentPassword: currentPassword.value,
-        newPassword: newPassword.value,
-      });
-      if (!response) {
-        return;
-      }
-      // toggleModal();
+      store.dispatch(
+        addAlertData({
+          type: 'Message',
+          message: translation('LOGOUT_FROM_ALL_DEVICES'),
+          onSuccess: () => handleResetPassword(true),
+          onDestructive: () => handleResetPassword(false),
+        }),
+      );
     } else {
       setConfirmPassword(prev => ({
         ...prev,
         message: 'Your password do not match.',
       }));
+    }
+  };
+
+  const handleResetPassword = async (logoutFromAllDevices: boolean) => {
+    try {
+      await changePassword({
+        currentPassword: currentPassword.value,
+        newPassword: newPassword.value,
+        logoutFromAllDevices,
+      });
+    } catch (error) {
+      console.log('error in reset password', error);
     }
   };
 
