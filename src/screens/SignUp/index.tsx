@@ -122,6 +122,7 @@ const SignUp = () => {
           width: width,
         }}>
         <ScrollView
+          keyboardShouldPersistTaps="handled"
           bounces={false}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{}}>

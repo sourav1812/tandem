@@ -99,6 +99,7 @@ const SignIn = () => {
           width: width,
         }}>
         <ScrollView
+          keyboardShouldPersistTaps="handled"
           contentContainerStyle={{
             height: height,
             width: width,

@@ -1,5 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
-import {ActivityIndicator, Pressable, StyleSheet, View} from 'react-native';
+import {
+  ActivityIndicator,
+  Keyboard,
+  Pressable,
+  StyleSheet,
+  View,
+} from 'react-native';
 import React from 'react';
 import themeColor from '@tandem/theme/themeColor';
 import RNTextComponent from '../RNTextComponent';
@@ -32,6 +38,7 @@ const RNButton = ({
   const disabled = isDisabled || isButtonDisabled;
 
   const handlePress = async () => {
+    Keyboard.dismiss();
     if (pressed) {
       return;
     }
