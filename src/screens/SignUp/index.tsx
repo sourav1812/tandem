@@ -6,6 +6,7 @@ import {
   View,
   ImageBackground,
   Dimensions,
+  StatusBar,
 } from 'react-native';
 import React, {useState} from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
@@ -97,6 +98,23 @@ const SignUp = () => {
 
   return (
     <RNScreenWrapper style={{backgroundColor: themeColor.white, flex: 1}}>
+      {isTablet && (
+        <ImageBackground
+          style={[styles.container]}
+          source={
+            !portrait
+              ? require('@tandem/assets/png/tabletWelcomeScreen.png')
+              : require('@tandem/assets/png/authScreenBgc.png')
+          }
+          resizeMode="stretch"
+        />
+      )}
+      <View
+        style={{
+          height:
+            Platform.OS === 'ios' ? verticalScale(20) : StatusBar.currentHeight,
+        }}
+      />
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={{
@@ -106,20 +124,10 @@ const SignUp = () => {
         <ScrollView
           bounces={false}
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{
-            height: portrait ? height + 50 : undefined,
-            width: portrait ? width : undefined,
-          }}>
+          contentContainerStyle={{}}>
           <>
             {isTablet ? (
-              <ImageBackground
-                style={[styles.container]}
-                source={
-                  !portrait
-                    ? require('@tandem/assets/png/tabletWelcomeScreen.png')
-                    : require('@tandem/assets/png/authScreenBgc.png')
-                }
-                resizeMode="stretch">
+              <>
                 <RNLogoHeader customStyle={styles.header} />
                 <RNTextComponent style={styles.heading} isSemiBold>
                   {translation('CREATE_AN_ACCOUNT')}
@@ -236,7 +244,7 @@ const SignUp = () => {
                     </RNTextComponent>
                   </RNTextComponent>
                 </View>
-              </ImageBackground>
+              </>
             ) : (
               <>
                 <RNLogoHeader customStyle={styles.header} />
