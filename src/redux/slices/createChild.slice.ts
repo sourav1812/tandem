@@ -57,7 +57,7 @@ export const createChildSlice = createSlice({
       if (Array.isArray(action.payload)) {
         state.childList = action.payload;
       } else {
-        state.childList.push(action.payload);
+        state.childList.unshift(action.payload);
       }
     },
     saveAdultData: (state, action) => {

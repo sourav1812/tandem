@@ -274,5 +274,6 @@
   "YOUR_DOB": "Votre date de naissance",
   "ENTER": "Entrer",
   "RELATIONSHIP": "Relation",
-  "LOGOUT_FROM_ALL_DEVICES": "Votre mot de passe sera changé pour tous les appareils. Souhaitez-vous également vous déconnecter de vos autres appareils ?"
+  "LOGOUT_FROM_ALL_DEVICES": "Votre mot de passe sera changé pour tous les appareils. Souhaitez-vous également vous déconnecter de vos autres appareils ?",
+  "DELETE_CHILD": "Supprimer l'enfant"
 }

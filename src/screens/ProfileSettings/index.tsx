@@ -22,6 +22,7 @@ import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
 import {languages} from '../SelectLanguage/interface';
 import i18n from '@tandem/constants/lang/i18n';
+import {deleteUser} from '@tandem/api/deleteUser';
 
 const ProfileSettings = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -69,6 +70,15 @@ const ProfileSettings = () => {
           name: name.value,
         }),
       );
+    }
+  };
+
+  const handleDeleteUserRequest = async () => {
+    try {
+      await deleteUser();
+      toggleModal();
+    } catch (error) {
+      console.log('error in delete user api ', error);
     }
   };
 
@@ -128,7 +138,7 @@ const ProfileSettings = () => {
       <RNDeleteAccount
         visible={showModal}
         renderModal={toggleModal}
-        nextClick={() => {}}
+        nextClick={handleDeleteUserRequest}
         heading={translation('DELETE_ACCOUNT')}
         content={translation('IF_YOU_DELETE_ACCOUNT')}
       />
