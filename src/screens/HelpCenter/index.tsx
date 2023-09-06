@@ -5,13 +5,7 @@ import RNTextComponent from '@tandem/components/RNTextComponent';
 import {styles} from './styles';
 import themeColor from '@tandem/theme/themeColor';
 import {verticalScale} from 'react-native-size-matters';
-import {
-  KeyboardAvoidingView,
-  Platform,
-  Pressable,
-  ScrollView,
-  View,
-} from 'react-native';
+import {Pressable, ScrollView, View} from 'react-native';
 import RNButton from '@tandem/components/RNButton';
 import RNLogoHeader from '@tandem/components/RNLogoHeader';
 import RNTextInputWithLabel from '@tandem/components/RNTextInputWithLabel';
@@ -62,105 +56,102 @@ const HelpCenter = ({route}: HelpCenterProps) => {
         backgroundColor: themeColor.white,
         paddingHorizontal: verticalScale(20),
       }}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={{height: '100%', width: '100%'}}>
-        <ScrollView
-          style={{height: '100%', width: '100%'}}
-          showsVerticalScrollIndicator={false}>
-          <RNLogoHeader
-            heading={translation('HELP_CENTER')}
-            textHeading
-            customStyle={styles.heading}
-          />
-          <View style={styles.customTab}>
-            <RNButton
-              title={translation('FAQ')}
-              onlyBorder
-              onClick={leftTab}
-              customStyle={[
-                styles.tab,
-                !firstTab ? styles.highlightedTab : {borderWidth: 0},
-              ]}
-              textStyle={[
-                styles.tabText,
-                {
-                  color: !firstTab ? themeColor.themeBlue : themeColor.black,
-                },
-                isTablet && {fontSize: verticalScale(12)},
-              ]}
+      <RNLogoHeader
+        heading={translation('HELP_CENTER')}
+        textHeading
+        customStyle={{
+          marginTop: portrait ? verticalScale(50) : verticalScale(20),
+        }}
+      />
+      <View
+        style={[
+          styles.customTab,
+          {marginTop: portrait ? verticalScale(20) : 0},
+        ]}>
+        <RNButton
+          title={translation('FAQ')}
+          onlyBorder
+          onClick={leftTab}
+          customStyle={[
+            styles.tab,
+            !firstTab ? styles.highlightedTab : {borderWidth: 0},
+          ]}
+          textStyle={[
+            styles.tabText,
+            {
+              color: !firstTab ? themeColor.themeBlue : themeColor.black,
+            },
+            isTablet && {fontSize: verticalScale(12)},
+          ]}
+        />
+        <RNButton
+          title={translation('CONTACT_US')}
+          onlyBorder
+          onClick={rightTab}
+          customStyle={[
+            styles.tab,
+            firstTab ? styles.highlightedTab : {borderWidth: 0},
+          ]}
+          textStyle={[
+            styles.tabText,
+            {
+              color: firstTab ? themeColor.themeBlue : themeColor.black,
+            },
+            isTablet && {fontSize: verticalScale(12)},
+          ]}
+        />
+      </View>
+
+      <ScrollView
+        style={{flex: 1}}
+        contentContainerStyle={[
+          styles.scrollView,
+          isTablet && {paddingHorizontal: firstTab ? 160 : 50},
+        ]}
+        showsVerticalScrollIndicator={false}>
+        {firstTab ? (
+          <>
+            <RNTextComponent
+              isSemiBold
+              style={[styles.subHeading, isTablet && {fontSize: 25}]}>
+              {translation('QUESTIONS_COMMENTS')}
+            </RNTextComponent>
+            <RNTextInputWithLabel
+              label={translation('NAME')}
+              backgroundColor={themeColor.lightGray}
+              containerStyle={styles.input2}
+              value={name}
+              validationType={FORM_INPUT_TYPE.NAME}
+              updateText={setName}
+              hint={translation('ENTER_NAME')}
+              inputStyle={styles.inputText}
             />
-            <RNButton
-              title={translation('CONTACT_US')}
-              onlyBorder
-              onClick={rightTab}
-              customStyle={[
-                styles.tab,
-                firstTab ? styles.highlightedTab : {borderWidth: 0},
-              ]}
-              textStyle={[
-                styles.tabText,
-                {
-                  color: firstTab ? themeColor.themeBlue : themeColor.black,
-                },
-                isTablet && {fontSize: verticalScale(12)},
-              ]}
+            <RNTextInputWithLabel
+              label={translation('EMAIL')}
+              backgroundColor={themeColor.lightGray}
+              containerStyle={styles.input2}
+              value={email}
+              validationType={FORM_INPUT_TYPE.EMAIL}
+              updateText={setEmail}
+              hint={translation('ENTER_YOUR_EMAIL')}
+              inputStyle={styles.inputText}
             />
-          </View>
-          <View
-            style={[styles.content, !portrait && {height: verticalScale(270)}]}>
-            <ScrollView
-              contentContainerStyle={[
-                styles.scrollView,
-                isTablet && {paddingHorizontal: firstTab ? 160 : 50},
-              ]}
-              showsVerticalScrollIndicator={false}>
-              {firstTab ? (
-                <>
-                  <RNTextComponent
-                    isSemiBold
-                    style={[styles.subHeading, isTablet && {fontSize: 25}]}>
-                    {translation('QUESTIONS_COMMENTS')}
-                  </RNTextComponent>
-                  <RNTextInputWithLabel
-                    label={translation('NAME')}
-                    backgroundColor={themeColor.lightGray}
-                    containerStyle={styles.input2}
-                    value={name}
-                    validationType={FORM_INPUT_TYPE.NAME}
-                    updateText={setName}
-                    hint={translation('ENTER_NAME')}
-                    inputStyle={styles.inputText}
-                  />
-                  <RNTextInputWithLabel
-                    label={translation('EMAIL')}
-                    backgroundColor={themeColor.lightGray}
-                    containerStyle={styles.input2}
-                    value={email}
-                    validationType={FORM_INPUT_TYPE.EMAIL}
-                    updateText={setEmail}
-                    hint={translation('ENTER_YOUR_EMAIL')}
-                    inputStyle={styles.inputText}
-                  />
-                  <RNTextInputWithLabel
-                    label={translation('MESSAGE')}
-                    backgroundColor={themeColor.lightGray}
-                    containerStyle={styles.input2}
-                    value={message}
-                    updateText={setMessage}
-                    hint={translation('ENTER_MESSAGE')}
-                    inputStyle={[styles.inputText, {width: '100%', flex: 0}]}
-                    inputViewStyle={styles.inputView}
-                  />
-                </>
-              ) : (
-                <FAQScreen />
-              )}
-            </ScrollView>
-          </View>
-          <View style={{height: 200}} />
-        </ScrollView>
-      </KeyboardAvoidingView>
+            <RNTextInputWithLabel
+              multiline
+              label={translation('MESSAGE')}
+              backgroundColor={themeColor.lightGray}
+              containerStyle={styles.input2}
+              value={message}
+              updateText={setMessage}
+              hint={translation('ENTER_MESSAGE')}
+              inputStyle={[styles.inputText, {width: '100%', flex: 0}]}
+              inputViewStyle={styles.inputView}
+            />
+          </>
+        ) : (
+          <FAQScreen />
+        )}
+      </ScrollView>
 
       <RNButton
         customStyle={styles.button}
@@ -179,7 +170,7 @@ const HelpCenter = ({route}: HelpCenterProps) => {
 
 const FAQScreen = () => {
   return (
-    <View>
+    <>
       <ExpandDetails />
       <ExpandDetails />
       <ExpandDetails />
@@ -191,7 +182,7 @@ const FAQScreen = () => {
           navigateTo(SCREEN_NAME.CREATE_CHILD_PROFILE);
         }}
       /> */}
-    </View>
+    </>
   );
 };
 
