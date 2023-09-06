@@ -71,9 +71,14 @@ const RNButton = ({
           {...props}
           onLongPress={runAnimation}
           onPress={() => {
+            if (disabled) {
+              return;
+            }
             if (handlePress) {
-              handlePress();
               runAnimation();
+              setTimeout(() => {
+                handlePress();
+              }, 300);
             }
           }}>
           <Animated.View

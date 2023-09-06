@@ -21,11 +21,11 @@ const RNTextComponent = ({
       style={[
         styles.text,
         isMedium && {
-          fontSize: 16,
+          fontSize: scale(16),
           fontFamily: 'Poppins-Medium',
         },
-        isSemiBold && {fontSize: 16, fontFamily: 'Poppins-SemiBold'},
-        isBold && {fontSize: 14, fontFamily: 'Poppins-Bold'},
+        isSemiBold && {fontSize: scale(16), fontFamily: 'Poppins-SemiBold'},
+        isBold && {fontSize: scale(16), fontFamily: 'Poppins-Bold'},
         style && style,
       ]}
       onPress={handleOnPress}

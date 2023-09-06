@@ -22,6 +22,7 @@ const RNAlertBox = ({
   const {onSuccess, onDestructive} = useAppSelector(
     state => state.alertBoxReducer.data,
   );
+
   const dispatch = useAppDispatch();
   return (
     <RNModal
@@ -52,7 +53,7 @@ const RNAlertBox = ({
           style={{
             flexDirection: 'row',
             alignItems: 'center',
-            justifyContent: 'space-between',
+            justifyContent: onDestructive ? 'space-around' : 'center',
             alignSelf: 'center',
             width: '100%',
           }}>
@@ -64,9 +65,12 @@ const RNAlertBox = ({
               dispatch(clearAlertData());
             }}
             title={'OK'}
-            customStyle={[styles.button2]}
+            customStyle={[
+              styles.button2,
+              {minWidth: onDestructive ? '60%' : '90%'},
+            ]}
           />
-          {onDestructive && (
+          {onDestructive ? (
             <RNButton
               onClick={() => {
                 if (onDestructive) {
@@ -77,10 +81,14 @@ const RNAlertBox = ({
               title={'NO'}
               customStyle={[
                 styles.button2,
-                {backgroundColor: themeColor.red, borderColor: themeColor.red},
+                {
+                  backgroundColor: themeColor.red,
+                  borderColor: themeColor.red,
+                  minWidth: '60%',
+                },
               ]}
             />
-          )}
+          ) : null}
         </View>
       </View>
     </RNModal>
