@@ -203,3 +203,5 @@ export const PLACE: OnlyImageType[] = [
     url: 'https://tandem.geeky.dev/v1/images/locations/sunny_beach.png',
   },
 ];
+
+export const CACHE_SESSION = 'tandemcache';

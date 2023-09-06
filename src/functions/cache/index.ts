@@ -1,4 +1,4 @@
-import {AVATAR_ARRAY, PLACE} from '@tandem/constants/local';
+import {AVATAR_ARRAY, CACHE_SESSION, PLACE} from '@tandem/constants/local';
 import {
   addAvatarFile,
   addPlaceFile,
@@ -21,6 +21,7 @@ export const cacheAvatars = () => {
     RNFetchBlob.config({fileCache: true})
       .fetch('GET', url, {})
       .then(res => {
+        RNFetchBlob.session(CACHE_SESSION).add(res.path());
         store.dispatch(
           addAvatarFile({file: 'file://' + res.path(), path: url}),
         );
@@ -40,6 +41,7 @@ export const cachePlaces = () => {
     RNFetchBlob.config({fileCache: true})
       .fetch('GET', obj.url, {})
       .then(res => {
+        RNFetchBlob.session(CACHE_SESSION).add(res.path());
         store.dispatch(
           addPlaceFile({file: 'file://' + res.path(), name: obj.name}),
         );
