@@ -48,7 +48,7 @@ const StoryTelling = () => {
     toggleMic: false,
     showQuestion: false,
     wellDoneModal: false,
-    tooltipOne: true,
+    tooltipOne: !tooltipArray?.includes(8),
     tooltipTwo: false,
     tooltipThree: false,
     tooltipFour: false,
@@ -147,7 +147,7 @@ const StoryTelling = () => {
     //       />
     //     );
     // }
-
+    console.log({tooltipFour, tooltipOne, tooltipTwo, tooltipThree});
     return (
       <RNTooltip
         isTablet={isTablet}
@@ -253,7 +253,8 @@ const StoryTelling = () => {
   };
 
   return (
-    <RNScreenWrapper giveStatusColor={false}>
+    <RNScreenWrapper
+      giveStatusColor={tooltipOne || tooltipTwo || tooltipThree || tooltipFour}>
       <View style={styles.headingButton}>
         <RNTooltip
           isTablet={isTablet}
@@ -326,7 +327,7 @@ const StoryTelling = () => {
           bottom="South"
           open={tooltipArray?.includes(10) ? false : tooltipThree}
           setClose={() => {
-            updateState({tooltipFour: true, tooltipThree: false});
+            updateState({tooltipThree: false});
             tooltipArray.push(10);
             storeKey(TOOLTIP, tooltipArray);
           }}
