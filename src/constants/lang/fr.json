@@ -278,5 +278,6 @@
   "ENTER": "Entrer",
   "RELATIONSHIP": "Relation",
   "LOGOUT_FROM_ALL_DEVICES": "Votre mot de passe sera changé pour tous les appareils. Souhaitez-vous également vous déconnecter de vos autres appareils ?",
-  "DELETE_CHILD": "Supprimer l'enfant"
+  "DELETE_CHILD": "Supprimer l'enfant",
+  "DELETE_ADULT": "Supprimer le contenu pour adultes"
 }

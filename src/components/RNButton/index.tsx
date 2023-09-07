@@ -36,6 +36,7 @@ const RNButton = ({
   loadPercentage,
   pressableStyle = {},
   onLayout,
+  hitSlop,
 }: Props) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const isButtonDisabled = useAppSelector(
@@ -70,6 +71,7 @@ const RNButton = ({
           disabled={disabled}
           {...props}
           onLongPress={runAnimation}
+          hitSlop={hitSlop}
           onPress={() => {
             if (disabled) {
               return;
@@ -130,7 +132,7 @@ const RNButton = ({
                   width: `${100 - loadPercentage}%`,
                   height: '100%',
                   backgroundColor: '#00000088',
-                  zIndex: -1,
+                  zIndex: -3,
                   position: 'absolute',
                   alignSelf: 'flex-end',
                 }}

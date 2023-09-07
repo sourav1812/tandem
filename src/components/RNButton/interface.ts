@@ -25,4 +25,5 @@ export interface Props {
   onLayout?: ((event: LayoutChangeEvent) => void) | undefined;
   loadPercentage?: number;
   pressableStyle?: StyleProp<ViewStyle>;
+  hitSlop?: number;
 }

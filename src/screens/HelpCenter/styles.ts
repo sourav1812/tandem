@@ -10,6 +10,7 @@ export const styles = StyleSheet.create({
   customTab: {
     flexDirection: 'row',
     alignItems: 'center',
+    height: verticalScale(45),
   },
   tab: {
     flex: 1,

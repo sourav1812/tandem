@@ -138,6 +138,7 @@ const Story = () => {
                 ? translation('READ_TOGETHER')
                 : translation('REREAD')
             }
+            hitSlop={40}
             loadPercentage={redirect ? undefined : (val * 100) / (len || 1)}
             customStyle={[styles.button]}
             textStyle={{fontSize: verticalScale(14)}}

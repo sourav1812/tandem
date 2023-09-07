@@ -110,7 +110,10 @@ const People = ({}: PeopleScreenProps) => {
       {!firstTab ? (
         <>
           <View style={styles.bigpeople}>
-            <View>
+            <Pressable
+              onPress={() =>
+                navigateTo(SCREEN_NAME.EditChildProfile, {editAdult: true})
+              }>
               <Image
                 source={{uri: currentAdultAvatar || currentAdult.avatar}}
                 style={[
@@ -124,7 +127,7 @@ const People = ({}: PeopleScreenProps) => {
               <RNTextComponent style={styles.name} isSemiBold>
                 {currentAdult.role}
               </RNTextComponent>
-            </View>
+            </Pressable>
             <Pressable
               onPress={() => {
                 navigateTo(SCREEN_NAME.CREATE_CHILD_PROFILE, {

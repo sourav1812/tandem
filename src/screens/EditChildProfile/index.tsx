@@ -20,24 +20,38 @@ import {LanguageDropDown} from '@tandem/components/LanguageDropDown';
 import validationFunction from '@tandem/functions/validationFunction';
 import {editChildProfile} from '@tandem/api/editChildProfile';
 import userProfile from '@tandem/api/userProfile';
-import {saveCurrentChild} from '@tandem/redux/slices/createChild.slice';
+import {
+  resetAdultData,
+  saveCurrentAdult,
+  saveCurrentChild,
+} from '@tandem/redux/slices/createChild.slice';
 import {deleteChildProfile} from '@tandem/api/deleteChildProfile';
+import {EditChildProfileProps} from '@tandem/navigation/types';
+import {editAdultProfile} from '@tandem/api/editAdultProfile';
+import {deleteAdultProfile} from '@tandem/api/deleteAdultProfile';
 
-const EditChildProfile = () => {
+const EditChildProfile = ({route}: EditChildProfileProps) => {
   const dispatch = useAppDispatch();
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const childList = useAppSelector(state => state.createChild.childList);
+  const adultList = useAppSelector(state => state.createChild.adultList);
+
+  const currentAdult = useAppSelector(
+    (state1: RootState) => state1.createChild.currentAdult,
+  );
+
+  const {editAdult} = route.params;
 
   const currentChild = useAppSelector(
     (state1: RootState) => state1.createChild.currentChild,
   );
   const [name, setName] = useState<ValidationError>({
-    value: currentChild.name || '',
+    value: editAdult ? currentAdult.role || '' : currentChild.name || '',
   });
   const [dateModal, setDateModal] = useState(false);
 
   const [dob, setDob] = useState<ValidationError>({
-    value: currentChild.dob || '',
+    value: editAdult ? currentAdult.dob || '' : currentChild.dob || '',
   });
   const [state, setState] = useState<StateObject>({
     showModal: false,
@@ -68,7 +82,7 @@ const EditChildProfile = () => {
     updateState({localAvatarState: url});
   };
 
-  const handleEditProfileRequest = async () => {
+  const handleEditChildProfileRequest = async () => {
     if (
       !validationFunction([
         {
@@ -99,13 +113,58 @@ const EditChildProfile = () => {
     }
   };
 
+  const handleEditAdultProfileRequest = async () => {
+    if (
+      !validationFunction([
+        {
+          state: name,
+          setState: setName,
+          typeOfValidation: FORM_INPUT_TYPE.NAME,
+        },
+      ])
+    ) {
+      return;
+    }
+    const response = await editAdultProfile({
+      role: name.value,
+      dob: dob.value, // ! pass in the whole date object
+      avatar: localAvatarState || currentAdult.avatar,
+      adultId: currentAdult.profileId,
+    });
+    if (response) {
+      userProfile();
+      dispatch(
+        saveCurrentAdult({
+          ...currentAdult,
+          role: name.value,
+          dob: dob.value,
+          avatar: localAvatarState || currentAdult.avatar,
+        }),
+      );
+    }
+  };
+
   const handleDeleteChildRequest = async () => {
     try {
       await deleteChildProfile({childId: currentChild.childId});
       toggleModal();
       dispatch(saveCurrentChild(childList[0]));
     } catch (error) {
-      console.log('error in delete child profile api', error);
+      console.log('error in delete adult profile api', error);
+    }
+  };
+
+  const handleDeleteAdultRequest = async () => {
+    try {
+      await deleteAdultProfile({adultId: currentAdult.profileId});
+      toggleModal();
+      if (adultList.length !== 0) {
+        dispatch(saveCurrentAdult(adultList[0]));
+      } else {
+        dispatch(resetAdultData());
+      }
+    } catch (error) {
+      console.log('error in delete adult profile api', error);
     }
   };
 
@@ -120,7 +179,9 @@ const EditChildProfile = () => {
       <Pressable onPress={renderAvatarModal}>
         <Image
           source={{
-            uri: localAvatarState || currentChild?.avatar,
+            uri:
+              localAvatarState ||
+              (editAdult ? currentAdult.avatar : currentChild?.avatar),
           }}
           style={styles.profile}
         />
@@ -128,7 +189,11 @@ const EditChildProfile = () => {
       <View
         style={[styles.content, isTablet && {paddingHorizontal: scale(65)}]}>
         <RNTextInputWithLabel
-          label={translation('WHAT_IS_CHILD_NAME')}
+          label={
+            editAdult
+              ? translation('RELATIONSHIP')
+              : translation('WHAT_IS_CHILD_NAME')
+          }
           containerStyle={styles.input}
           hint={translation('NAME')}
           inputViewStyle={styles.inputBox}
@@ -163,7 +228,11 @@ const EditChildProfile = () => {
               },
           ]}
           title={translation('SAVE_CHANGES')}
-          onClick={handleEditProfileRequest}
+          onClick={
+            editAdult
+              ? handleEditAdultProfileRequest
+              : handleEditChildProfileRequest
+          }
           isDisabled={
             currentChild.name === name.value &&
             currentChild.dob === dob.value &&
@@ -174,13 +243,15 @@ const EditChildProfile = () => {
           style={styles.bottom}
           isSemiBold
           handleOnPress={toggleModal}>
-          {translation('DELETE_CHILD')}
+          {translation(editAdult ? 'DELETE_ADULT' : 'DELETE_CHILD')}
         </RNTextComponent>
       </View>
       <RNDeleteAccount
         visible={showModal}
         renderModal={toggleModal}
-        nextClick={handleDeleteChildRequest}
+        nextClick={
+          editAdult ? handleDeleteAdultRequest : handleDeleteChildRequest
+        }
         heading={translation('DELETE_MY_ACCOUNT')}
         content={translation('IF_YOU_DELETE_CHILD_ACCOUNT')}
       />

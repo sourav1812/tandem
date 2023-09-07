@@ -277,5 +277,6 @@
   "ENTER": "Eingeben",
   "RELATIONSHIP": "Beziehung",
   "LOGOUT_FROM_ALL_DEVICES": "Ihr Passwort wird für alle Geräte geändert. Möchten Sie sich auch von Ihren anderen Geräten abmelden?",
-  "DELETE_CHILD": "Kind löschen"
+  "DELETE_CHILD": "Kind löschen",
+  "DELETE_ADULT": "Erwachseneninhalte löschen"
 }
