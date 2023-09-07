@@ -10,12 +10,14 @@
     "test": "jest"
   },
   "dependencies": {
+    "@invertase/react-native-apple-authentication": "^2.2.2",
     "@react-native-community/blur": "^4.3.2",
     "@react-native-community/clipboard": "^1.5.1",
     "@react-native-community/netinfo": "^9.4.1",
     "@react-native-firebase/analytics": "^18.3.0",
     "@react-native-firebase/app": "^18.3.0",
     "@react-native-firebase/messaging": "^18.3.0",
+    "@react-native-google-signin/google-signin": "^10.0.1",
     "@react-navigation/bottom-tabs": "^6.5.7",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/native-stack": "^6.9.12",
@@ -32,6 +34,7 @@
     "react-native": "0.71.8",
     "react-native-date-picker": "^4.2.13",
     "react-native-device-info": "^10.6.0",
+    "react-native-fbsdk-next": "^11.2.1",
     "react-native-gesture-handler": "^2.12.1",
     "react-native-image-crop-picker": "^0.37.3",
     "react-native-mmkv": "^2.10.1",

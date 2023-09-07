@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
-	<string>en</string>
+	<string>en,fr,it,de</string>
 	<key>CFBundleDisplayName</key>
 	<string>Tandem</string>
 	<key>CFBundleExecutable</key>
@@ -20,6 +20,23 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.395516850709-fkmtns6jned2q7i36igu95rvb8k02gau</string>
+			</array>
+		</dict>
+		<dict>
+  			<key>CFBundleURLSchemes</key>
+  		<array>
+    	<string>fb1461975321230004</string>
+  	</array>
+  </dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
@@ -35,20 +52,14 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>This app requires access to the camera.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
-<!-- ------------------------- -->
-  <key>NSPhotoLibraryUsageDescription</key>
-  <string>This app requires access to the photo library.</string>
-  <key>NSMicrophoneUsageDescription</key>
-  <string>This app does not require access to the microphone.</string>
-  <key>NSCameraUsageDescription</key>
-  <string>This app requires access to the camera.</string>
-<!-------------------------------->
-<!-------------------------------->
-<key>CFBundleDevelopmentRegion</key>
-<string>en,fr,it,de</string>
-<!-------------------------------->
+	<string></string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This app does not require access to the microphone.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app requires access to the photo library.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Poppins-Bold.ttf</string>
@@ -80,5 +91,16 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+<key>FacebookAppID</key>
+<string>1461975321230004</string>
+<key>FacebookClientToken</key>
+<string>d57bc16ea1157324bf3a335c3783749d</string>
+<key>FacebookDisplayName</key>
+<string>Tandem</string>
+<key>LSApplicationQueriesSchemes</key>
+<array>
+  <string>fbapi</string>
+  <string>fb-messenger-share-api</string>
+</array>
 </dict>
 </plist>

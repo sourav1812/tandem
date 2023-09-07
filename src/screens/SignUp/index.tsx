@@ -7,6 +7,7 @@ import {
   ImageBackground,
   Dimensions,
   StatusBar,
+  Pressable,
 } from 'react-native';
 import React, {useState} from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
@@ -28,6 +29,8 @@ import {RootState} from '@tandem/redux/store';
 import {translation} from '@tandem/utils/methods';
 import registerUser from '@tandem/api/registerUser';
 import validationFunction from '@tandem/functions/validationFunction';
+import socialLogin from '@tandem/functions/socialLogin';
+import {SOCIAL_AUTH} from '@tandem/constants/enums';
 
 const SignUp = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -203,7 +206,10 @@ const SignUp = () => {
                     <View style={styles.line} />
                   </View>
                   <View style={styles.bottomOptions}>
-                    <View
+                    <Pressable
+                      onPress={() => {
+                        socialLogin(SOCIAL_AUTH.GOOGLE);
+                      }}
                       style={[
                         styles.option,
                         isTablet && {
@@ -212,8 +218,11 @@ const SignUp = () => {
                         },
                       ]}>
                       <Google />
-                    </View>
-                    <View
+                    </Pressable>
+                    <Pressable
+                      onPress={() => {
+                        socialLogin(SOCIAL_AUTH.FACEBOOK);
+                      }}
                       style={[
                         styles.option,
                         isTablet && {
@@ -222,9 +231,12 @@ const SignUp = () => {
                         },
                       ]}>
                       <FB />
-                    </View>
+                    </Pressable>
                     {Platform.OS === 'ios' && (
-                      <View
+                      <Pressable
+                        onPress={() => {
+                          socialLogin(SOCIAL_AUTH.APPLE);
+                        }}
                         style={[
                           styles.option,
                           isTablet && {
@@ -233,7 +245,7 @@ const SignUp = () => {
                           },
                         ]}>
                         <Apple />
-                      </View>
+                      </Pressable>
                     )}
                   </View>
                   <RNTextComponent
@@ -318,7 +330,10 @@ const SignUp = () => {
                     <View style={styles.line} />
                   </View>
                   <View style={styles.bottomOptions}>
-                    <View
+                    <Pressable
+                      onPress={() => {
+                        socialLogin(SOCIAL_AUTH.GOOGLE);
+                      }}
                       style={[
                         styles.option,
                         isTablet && {
@@ -327,8 +342,11 @@ const SignUp = () => {
                         },
                       ]}>
                       <Google />
-                    </View>
-                    <View
+                    </Pressable>
+                    <Pressable
+                      onPress={() => {
+                        socialLogin(SOCIAL_AUTH.FACEBOOK);
+                      }}
                       style={[
                         styles.option,
                         isTablet && {
@@ -337,9 +355,12 @@ const SignUp = () => {
                         },
                       ]}>
                       <FB />
-                    </View>
+                    </Pressable>
                     {Platform.OS === 'ios' && (
-                      <View
+                      <Pressable
+                        onPress={() => {
+                          socialLogin(SOCIAL_AUTH.APPLE);
+                        }}
                         style={[
                           styles.option,
                           isTablet && {
@@ -348,7 +369,7 @@ const SignUp = () => {
                           },
                         ]}>
                         <Apple />
-                      </View>
+                      </Pressable>
                     )}
                   </View>
                   <RNTextComponent

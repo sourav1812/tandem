@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Tandem</string>
+    <string name="facebook_app_id">1461975321230004</string>
+    <string name="fb_login_protocol_scheme">fb1461975321230004</string>
+    <string name="facebook_client_token">d57bc16ea1157324bf3a335c3783749d</string>
 </resources>

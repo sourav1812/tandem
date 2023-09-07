@@ -30,6 +30,8 @@ import {translation} from '@tandem/utils/methods';
 import loginUserWithEmail from '@tandem/api/loginUserWithEmail';
 import validationFunction from '@tandem/functions/validationFunction';
 import fcm from '@tandem/functions/fcm';
+import socialLogin from '@tandem/functions/socialLogin';
+import {SOCIAL_AUTH} from '@tandem/constants/enums';
 
 const SignIn = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -161,28 +163,37 @@ const SignIn = () => {
             </View>
 
             <View style={styles.bottomOptions}>
-              <View
+              <Pressable
+                onPress={() => {
+                  socialLogin(SOCIAL_AUTH.GOOGLE);
+                }}
                 style={[
                   styles.option,
                   isTablet && {paddingHorizontal: 36, paddingVertical: 17},
                 ]}>
                 <Google />
-              </View>
-              <View
+              </Pressable>
+              <Pressable
+                onPress={() => {
+                  socialLogin(SOCIAL_AUTH.FACEBOOK);
+                }}
                 style={[
                   styles.option,
                   isTablet && {paddingHorizontal: 36, paddingVertical: 17},
                 ]}>
                 <FB />
-              </View>
+              </Pressable>
               {Platform.OS === 'ios' && (
-                <View
+                <Pressable
+                  onPress={() => {
+                    socialLogin(SOCIAL_AUTH.APPLE);
+                  }}
                   style={[
                     styles.option,
                     isTablet && {paddingHorizontal: 36, paddingVertical: 17},
                   ]}>
                   <Apple />
-                </View>
+                </Pressable>
               )}
             </View>
             <RNTextComponent

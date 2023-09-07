@@ -14,12 +14,15 @@ import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {RootState} from '@tandem/redux/store';
+import socialLogin from '@tandem/functions/socialLogin';
+import {SOCIAL_AUTH} from '@tandem/constants/enums';
 
 const SocialSignIn = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
+
   return (
     <RNScreenWrapper>
       <ImageBackground
@@ -46,20 +49,26 @@ const SocialSignIn = () => {
           </RNTextComponent>
           <RNSocialButton
             icon={<Fb />}
-            onClick={() => {}}
+            onClick={() => {
+              socialLogin(SOCIAL_AUTH.FACEBOOK);
+            }}
             title={`${translation('CONTINUE_WITH')} Facebook`}
             customStyle={styles.button}
           />
           <RNSocialButton
             icon={<Google />}
-            onClick={() => {}}
+            onClick={() => {
+              socialLogin(SOCIAL_AUTH.GOOGLE);
+            }}
             title={`${translation('CONTINUE_WITH')} Google`}
             customStyle={styles.button}
           />
           {Platform.OS === 'ios' && (
             <RNSocialButton
               icon={<Apple />}
-              onClick={() => {}}
+              onClick={() => {
+                socialLogin(SOCIAL_AUTH.APPLE);
+              }}
               title={`${translation('CONTINUE_WITH')} Apple`}
               customStyle={styles.button}
             />
