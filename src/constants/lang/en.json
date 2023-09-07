@@ -278,5 +278,6 @@
   "ENTER": "Enter",
   "RELATIONSHIP": "Relationship",
   "LOGOUT_FROM_ALL_DEVICES": "Your password will be changed for all devices. Do you wish to logout from your other devices as well?",
-  "DELETE_CHILD": "Delete child"
+  "DELETE_CHILD": "Delete child",
+  "DELETE_ADULT": "Delete adult"
 }

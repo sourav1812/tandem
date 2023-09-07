@@ -70,6 +70,7 @@ const HelpCenter = ({route}: HelpCenterProps) => {
         ]}>
         <RNButton
           title={translation('FAQ')}
+          pressableStyle={{flex: 1}}
           onlyBorder
           onClick={leftTab}
           customStyle={[
@@ -88,6 +89,7 @@ const HelpCenter = ({route}: HelpCenterProps) => {
           title={translation('CONTACT_US')}
           onlyBorder
           onClick={rightTab}
+          pressableStyle={{flex: 1}}
           customStyle={[
             styles.tab,
             firstTab ? styles.highlightedTab : {borderWidth: 0},
