@@ -13,19 +13,20 @@ export default async (type: 'apple' | 'google' | 'facebook') => {
     apple,
   };
   try {
-    const socialObjectResponse: any = await socialAuthFunctions[type]();
-    if (!socialObjectResponse) {
+    const response: SocialResponse | null = await socialAuthFunctions[type]();
+    if (!response) {
+      console.log('issue social auth ', type);
       return;
     }
-    console.log({type, socialObjectResponse});
+    const {firstName, lastName, idToken, image, email}: SocialResponse =
+      response;
+
     const socialLoginReponse = await socialLogin({
-      name: `${socialObjectResponse.firstName}${' '}${
-        socialObjectResponse.lastName
-      }`,
-      token: socialObjectResponse.idToken,
-      profilePicture: socialObjectResponse.image,
-      email: socialObjectResponse.email,
-      type: type,
+      name: `${firstName || ''}${lastName ? ' ' + lastName : ''}`,
+      token: idToken,
+      profilePicture: image,
+      email,
+      type,
     });
     console.log(socialLoginReponse, 'socialLoginReponse');
   } catch (error) {

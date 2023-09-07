@@ -29,7 +29,6 @@ import {RootState} from '@tandem/redux/store';
 import {translation} from '@tandem/utils/methods';
 import loginUserWithEmail from '@tandem/api/loginUserWithEmail';
 import validationFunction from '@tandem/functions/validationFunction';
-import fcm from '@tandem/functions/fcm';
 import socialLogin from '@tandem/functions/socialLogin';
 import {SOCIAL_AUTH} from '@tandem/constants/enums';
 
@@ -61,15 +60,10 @@ const SignIn = () => {
       return;
     }
     try {
-      const {deviceId, deviceType, fcmToken} = await fcm();
       await loginUserWithEmail({
         email: email.value,
         password: password.value,
-        deviceId,
-        deviceType,
-        fcmToken,
       });
-      navigateTo(SCREEN_NAME.TERMS_AND_CONDITIONS, {}, true);
     } catch (error: any) {
       console.log('error in login api', error.message);
     }

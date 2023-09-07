@@ -41,7 +41,6 @@ const validateEmail = (value: string): ValidationError => {
 
   return {value};
 };
-
 const validatePassword = (value: string): ValidationError => {
   if (!value) {
     return {
@@ -50,35 +49,31 @@ const validatePassword = (value: string): ValidationError => {
       value,
     };
   }
-  if (/[.]/.test(value)) {
-    return {
-      message: translation('validations.dot-not-allowed'),
-      type: FORM_INPUT_TYPE.PASSWORD,
-      value,
-    };
-  }
-  if (/\s/.test(value)) {
-    return {
-      message: translation('validations.password-no-spaces'),
-      type: FORM_INPUT_TYPE.PASSWORD,
-      value,
-    };
-  }
 
-  if (!/^\S{9,}$/.test(value)) {
+  if (value.length < 8 && value.length > 20) {
     return {
       message: translation('validations.password-length'),
       type: FORM_INPUT_TYPE.PASSWORD,
       value,
     };
   }
-  if (!/[A-Za-z]/.test(value)) {
+
+  if (!/[A-Z]/.test(value)) {
     return {
-      message: translation('validations.atleast-one-character'),
+      message: translation('validations.atleast-one-capital-letter'),
       type: FORM_INPUT_TYPE.PASSWORD,
       value,
     };
   }
+
+  if (!/[a-z]/.test(value)) {
+    return {
+      message: translation('validations.atleast-one-small-letter'),
+      type: FORM_INPUT_TYPE.PASSWORD,
+      value,
+    };
+  }
+
   if (!/\d/.test(value)) {
     return {
       message: translation('validations.atleast-one-digit'),
@@ -86,9 +81,18 @@ const validatePassword = (value: string): ValidationError => {
       value,
     };
   }
-  if (!/[@$!%*#?&]/.test(value)) {
+
+  if (!/\W/.test(value)) {
     return {
-      message: translation('validations.contain-special-character'),
+      message: translation('validations.atleast-one-symbol'),
+      type: FORM_INPUT_TYPE.PASSWORD,
+      value,
+    };
+  }
+
+  if (/\s/.test(value)) {
+    return {
+      message: translation('validations.password-no-spaces'),
       type: FORM_INPUT_TYPE.PASSWORD,
       value,
     };

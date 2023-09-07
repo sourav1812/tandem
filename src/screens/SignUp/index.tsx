@@ -31,6 +31,7 @@ import registerUser from '@tandem/api/registerUser';
 import validationFunction from '@tandem/functions/validationFunction';
 import socialLogin from '@tandem/functions/socialLogin';
 import {SOCIAL_AUTH} from '@tandem/constants/enums';
+import loginUserWithEmail from '@tandem/api/loginUserWithEmail';
 
 const SignUp = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -46,12 +47,12 @@ const SignUp = () => {
   const height = Dimensions.get('screen').height;
   const width = Dimensions.get('screen').width;
 
-  const resetStates = () => {
-    setName(prev => ({...prev, value: ''}));
-    setEmail(prev => ({...prev, value: ''}));
-    setPassword(prev => ({...prev, value: ''}));
-    setConfirmPassword(prev => ({...prev, value: ''}));
-  };
+  // const resetStates = () => {
+  //   setName(prev => ({...prev, value: ''}));
+  //   setEmail(prev => ({...prev, value: ''}));
+  //   setPassword(prev => ({...prev, value: ''}));
+  //   setConfirmPassword(prev => ({...prev, value: ''}));
+  // };
 
   const handleSignUpButton = async () => {
     if (
@@ -87,9 +88,13 @@ const SignUp = () => {
           name: name.value,
           password: password.value,
         });
-        navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN);
+        await loginUserWithEmail({
+          email: email.value,
+          password: password.value,
+        });
       } catch (error) {
-        resetStates();
+        // resetStates();
+        console.log('signup error', error);
       }
     } else {
       setConfirmPassword(prev => ({

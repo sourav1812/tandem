@@ -1,7 +1,7 @@
 export interface SocialLoginAuth {
-  name?: string;
-  email?: string;
-  profilePicture?: string;
-  token?: string;
-  type?: string;
+  name: string | null;
+  email: string | null;
+  profilePicture: string | null;
+  token: string | null;
+  type: string | null;
 }
