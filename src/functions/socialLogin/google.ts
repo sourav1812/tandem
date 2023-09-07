@@ -3,7 +3,6 @@ import {
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 import {SocialResponse} from './interface';
-import {socialLogin} from '@tandem/api/socialAuth';
 
 export const getCurrentUserInfo = async () => {
   try {
@@ -27,7 +26,7 @@ export const googleSignOut = async () => {
 };
 
 export default async () => {
-  console.log('Sdfdsfe');
+  console.log('google socail auth default func');
   GoogleSignin.configure({
     webClientId:
       '395516850709-pl3qfs2tq4494hjr557di9n4fgcs8ihm.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)

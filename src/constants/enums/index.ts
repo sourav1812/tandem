@@ -46,3 +46,9 @@ export enum PEOPLE {
   ADULT = 'adult',
   CHILD = 'child',
 }
+
+export enum SOCIAL_AUTH {
+  FACEBOOK = 'facebook',
+  GOOGLE = 'google',
+  APPLE = 'apple',
+}

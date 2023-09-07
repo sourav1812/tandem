@@ -14,58 +14,14 @@ import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {RootState} from '@tandem/redux/store';
-import google from '@tandem/functions/socialLogin/google';
-import facebook from '@tandem/functions/socialLogin/facebook';
-import {socialLogin} from '@tandem/api/socialAuth';
-import {SocialResponse} from '@tandem/functions/socialLogin/interface';
+import socialLogin from '@tandem/functions/socialLogin';
+import {SOCIAL_AUTH} from '@tandem/constants/enums';
 
 const SocialSignIn = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
-
-  const socialAuthFunctions: {
-    [key: string]: () => Promise<SocialResponse | null>;
-  } = {
-    google,
-    facebook,
-  };
-
-  const handleSocialLogin = async (type: 'apple' | 'google' | 'facebook') => {
-    try {
-      const socialObjectResponse: any = await socialAuthFunctions[type]();
-      if (!socialObjectResponse) {
-        return;
-      }
-      console.log(
-        socialObjectResponse,
-        'socialObjectResponsesocialObjectResponse',
-      );
-      try {
-        const socialLoginReponse = await socialLogin({
-          name: `${socialObjectResponse.firstName}${' '}${
-            socialObjectResponse.lastName
-          }`,
-          token: socialObjectResponse.idToken,
-          profilePicture: socialObjectResponse.image,
-          email: socialObjectResponse.email,
-          type: type,
-        });
-        console.log(socialLoginReponse, 'socialLoginReponse');
-      } catch (error) {}
-
-      // const forwardToSignup = await socialLogin(socialObjectLocal);
-      // if (forwardToSignup) {
-      //   navigation.push(routes.SOCIAL_SIGN_UP, {
-      //     socialObject: socialObjectLocal,
-      //     onlyPhoneNumber: true,
-      //   });
-      // }
-    } catch (error) {
-      // logout(true);
-    }
-  };
 
   return (
     <RNScreenWrapper>
@@ -94,7 +50,7 @@ const SocialSignIn = () => {
           <RNSocialButton
             icon={<Fb />}
             onClick={() => {
-              handleSocialLogin('facebook');
+              socialLogin(SOCIAL_AUTH.FACEBOOK);
             }}
             title={`${translation('CONTINUE_WITH')} Facebook`}
             customStyle={styles.button}
@@ -102,7 +58,7 @@ const SocialSignIn = () => {
           <RNSocialButton
             icon={<Google />}
             onClick={() => {
-              handleSocialLogin('google');
+              socialLogin(SOCIAL_AUTH.GOOGLE);
             }}
             title={`${translation('CONTINUE_WITH')} Google`}
             customStyle={styles.button}
@@ -110,7 +66,9 @@ const SocialSignIn = () => {
           {Platform.OS === 'ios' && (
             <RNSocialButton
               icon={<Apple />}
-              onClick={() => {}}
+              onClick={() => {
+                socialLogin(SOCIAL_AUTH.APPLE);
+              }}
               title={`${translation('CONTINUE_WITH')} Apple`}
               customStyle={styles.button}
             />
