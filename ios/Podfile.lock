@@ -538,6 +538,8 @@ PODS:
     - React-perflogger (= 0.71.8)
   - rn-fetch-blob (0.12.0):
     - React-Core
+  - RNAppleAuthentication (2.2.2):
+    - React-Core
   - RNCClipboard (1.5.1):
     - React-Core
   - RNDeviceInfo (10.9.0):
@@ -653,6 +655,7 @@ DEPENDENCIES:
   - React-runtimeexecutor (from `../node_modules/react-native/ReactCommon/runtimeexecutor`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - rn-fetch-blob (from `../node_modules/rn-fetch-blob`)
+  - "RNAppleAuthentication (from `../node_modules/@invertase/react-native-apple-authentication`)"
   - "RNCClipboard (from `../node_modules/@react-native-community/clipboard`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - "RNFBAnalytics (from `../node_modules/@react-native-firebase/analytics`)"
@@ -779,6 +782,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   rn-fetch-blob:
     :path: "../node_modules/rn-fetch-blob"
+  RNAppleAuthentication:
+    :path: "../node_modules/@invertase/react-native-apple-authentication"
   RNCClipboard:
     :path: "../node_modules/@react-native-community/clipboard"
   RNDeviceInfo:
@@ -872,6 +877,7 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: 7c51ae9d4b3e9608a2366e39ccaa606aa551b9ed
   ReactCommon: 9957c7530467adbdf4a4a1476d636bd00b2e4dd8
   rn-fetch-blob: f065bb7ab7fb48dd002629f8bdcb0336602d3cba
+  RNAppleAuthentication: 0571c08da8c327ae2afc0261b48b4a515b0286a6
   RNCClipboard: 41d8d918092ae8e676f18adada19104fa3e68495
   RNDeviceInfo: 02ea8b23e2280fa18e00a06d7e62804d74028579
   RNFBAnalytics: d134923fe835e844696d687b3e0e6b930a1a5b17
@@ -888,4 +894,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 5128f4c612512e169c3fd6f003baf4b0eb32dacd
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.0
