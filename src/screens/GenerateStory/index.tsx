@@ -349,6 +349,13 @@ const GenerateStory = () => {
                 return (
                   <Pressable
                     key={index.toString()}
+                    style={[
+                      styles.illustration,
+                      {borderWidth: 3, borderColor: 'transparent'},
+                      index === addedIllustration && {
+                        borderColor: themeColor.themeBlue,
+                      },
+                    ]}
                     onPress={() => {
                       updateState({addedIllustration: index});
                       setDisabled(false);
@@ -356,13 +363,6 @@ const GenerateStory = () => {
                     <SvgIcon
                       width={verticalScale(120)}
                       height={verticalScale(120)}
-                      style={[
-                        styles.illustration,
-                        index === addedIllustration && {
-                          borderWidth: 3,
-                          borderColor: themeColor.themeBlue,
-                        },
-                      ]}
                     />
                   </Pressable>
                 );

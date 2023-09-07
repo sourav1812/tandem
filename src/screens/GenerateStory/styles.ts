@@ -143,7 +143,7 @@ export const styles = StyleSheet.create({
     fontSize: verticalScale(16),
   },
   illustration: {
-    borderRadius: 16,
+    borderRadius: verticalScale(15),
     margin: scale(10),
   },
   tooltip: {
