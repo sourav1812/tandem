@@ -9,18 +9,18 @@ export const socialLogin = async ({
   token,
   type,
 }: SocialLoginAuth) => {
-  const response = await post({
-    path: API.AUTH + `${type}`,
-    data: {
-      name,
-      email,
-      profilePicture,
-      token,
-    },
-  });
-  console.log(response, 'social login');
-  if (!response) {
-    return;
+  try {
+    const response = await post({
+      path: API.AUTH + `${type}`,
+      data: {
+        name,
+        email,
+        profilePicture,
+        token,
+      },
+    });
+    return response;
+  } catch (error) {
+    throw error;
   }
-  return response;
 };

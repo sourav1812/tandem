@@ -17,32 +17,18 @@ export default async (type: 'apple' | 'google' | 'facebook') => {
     if (!socialObjectResponse) {
       return;
     }
-    console.log(
-      socialObjectResponse,
-      'socialObjectResponsesocialObjectResponse',
-    );
-    try {
-      const socialLoginReponse = await socialLogin({
-        name: `${socialObjectResponse.firstName}${' '}${
-          socialObjectResponse.lastName
-        }`,
-        token: socialObjectResponse.idToken,
-        profilePicture: socialObjectResponse.image,
-        email: socialObjectResponse.email,
-        type: type,
-      });
-      console.log(socialLoginReponse, 'socialLoginReponse');
-    } catch (error) {}
-
-    // const forwardToSignup = await socialLogin(socialObjectLocal);
-    // if (forwardToSignup) {
-    //   navigation.push(routes.SOCIAL_SIGN_UP, {
-    //     socialObject: socialObjectLocal,
-    //     onlyPhoneNumber: true,
-    //   });
-    // }
+    console.log({type, socialObjectResponse});
+    const socialLoginReponse = await socialLogin({
+      name: `${socialObjectResponse.firstName}${' '}${
+        socialObjectResponse.lastName
+      }`,
+      token: socialObjectResponse.idToken,
+      profilePicture: socialObjectResponse.image,
+      email: socialObjectResponse.email,
+      type: type,
+    });
+    console.log(socialLoginReponse, 'socialLoginReponse');
   } catch (error) {
-    // logout(true);
     console.log('error in socail auth', {error, type});
   }
 };
