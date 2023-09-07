@@ -3,7 +3,7 @@ export enum API {
   LOGIN_USER_WITH_EMAIL = 'user/sign-in', //? POST
   CREATE_CHILD_PROFILE = 'children', //? POST
   REFRESH_TOKEN = 'user/refresh-access-token', //? POST
-  AUTH = 'user/auth/:', //? POST
+  AUTH = 'user/auth', //? POST
   GENERATE_STORY = 'story-books', //? POST
   RATE_STORY = 'story-books/rate-book', //? POST
   STORIES = 'story-books', //? GET
@@ -28,7 +28,7 @@ const ENV_VARS = {
 };
 
 // ! Select ENV from here
-export const SELECTED_ENVIRONMENT = ENVIRONMENT.PRODUCTION;
+export const SELECTED_ENVIRONMENT = ENVIRONMENT.DEVELOPMENT;
 // ! URLs
 export const BASE_URL = ENV_VARS[SELECTED_ENVIRONMENT].API_URL;
 

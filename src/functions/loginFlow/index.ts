@@ -8,6 +8,8 @@ import {
 import {saveUserData} from '@tandem/redux/slices/userData.slice';
 import {cacheAvatars, cachePlaces} from '../cache';
 import {PEOPLE} from '@tandem/constants/enums';
+import navigateTo from '@tandem/navigation/navigate';
+import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 
 export default async (loginResponse: LoginResponse) => {
   storeTokens(loginResponse.accessToken, loginResponse.refreshToken);
@@ -47,4 +49,5 @@ export default async (loginResponse: LoginResponse) => {
       })),
     }),
   );
+  navigateTo(SCREEN_NAME.TERMS_AND_CONDITIONS, {}, true);
 };
