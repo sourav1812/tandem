@@ -103,11 +103,7 @@ const EditChildProfile = () => {
     try {
       await deleteChildProfile({childId: currentChild.childId});
       toggleModal();
-      setTimeout(() => {
-        if (childList.length !== 0) {
-          dispatch(saveCurrentChild(childList[0]));
-        }
-      }, 2000);
+      dispatch(saveCurrentChild(childList[0]));
     } catch (error) {
       console.log('error in delete child profile api', error);
     }

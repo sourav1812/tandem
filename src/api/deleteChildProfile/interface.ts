@@ -1,3 +1,3 @@
-export interface deleteChildProfileApiProp {
+export interface DeleteChildProfileApiProp {
   childId: string;
 }
