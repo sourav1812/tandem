@@ -21,10 +21,13 @@ import validationFunction from '@tandem/functions/validationFunction';
 import {editChildProfile} from '@tandem/api/editChildProfile';
 import userProfile from '@tandem/api/userProfile';
 import {saveCurrentChild} from '@tandem/redux/slices/createChild.slice';
+import {deleteChildProfile} from '@tandem/api/deleteChildProfile';
 
 const EditChildProfile = () => {
   const dispatch = useAppDispatch();
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const childList = useAppSelector(state => state.createChild.childList);
+
   const currentChild = useAppSelector(
     (state1: RootState) => state1.createChild.currentChild,
   );
@@ -96,6 +99,16 @@ const EditChildProfile = () => {
     }
   };
 
+  const handleDeleteChildRequest = async () => {
+    try {
+      await deleteChildProfile({childId: currentChild.childId});
+      toggleModal();
+      dispatch(saveCurrentChild(childList[0]));
+    } catch (error) {
+      console.log('error in delete child profile api', error);
+    }
+  };
+
   return (
     <RNScreenWrapper style={styles.container}>
       <RNLogoHeader
@@ -161,13 +174,13 @@ const EditChildProfile = () => {
           style={styles.bottom}
           isSemiBold
           handleOnPress={toggleModal}>
-          {translation('DELETE_ACCOUNT')}
+          {translation('DELETE_CHILD')}
         </RNTextComponent>
       </View>
       <RNDeleteAccount
         visible={showModal}
         renderModal={toggleModal}
-        nextClick={() => {}}
+        nextClick={handleDeleteChildRequest}
         heading={translation('DELETE_MY_ACCOUNT')}
         content={translation('IF_YOU_DELETE_CHILD_ACCOUNT')}
       />

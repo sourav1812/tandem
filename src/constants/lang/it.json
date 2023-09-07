@@ -274,5 +274,6 @@
   "YOUR_DOB": "La tua data di nascita",
   "ENTER": "Inserire",
   "RELATIONSHIP": "Relazione",
-  "LOGOUT_FROM_ALL_DEVICES": "La tua password verrà cambiata per tutti i dispositivi. Desideri anche disconnetterti dagli altri dispositivi?"
+  "LOGOUT_FROM_ALL_DEVICES": "La tua password verrà cambiata per tutti i dispositivi. Desideri anche disconnetterti dagli altri dispositivi?",
+  "DELETE_CHILD": "Elimina bambino"
 }

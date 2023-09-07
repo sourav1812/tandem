@@ -142,6 +142,9 @@ const Account = () => {
     ) {
       dispatch(changeMode(MODE.A));
       dispatch(saveCurrentAdult(currentAdult));
+      if (currentChild) {
+        dispatch(saveCurrentChild(childList[0]));
+      }
     } else {
       return '';
     }

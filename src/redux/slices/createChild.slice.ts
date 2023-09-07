@@ -74,9 +74,11 @@ export const createChildSlice = createSlice({
     saveCurrentAdult: (state, action) => {
       state.currentAdult = action.payload;
     },
-    resetChildAndChildData: state => {
-      state.childList = [];
+    resetAdultData: state => {
       state.adultList = [];
+    },
+    resetChildData: state => {
+      state.childList = [];
     },
   },
 });
@@ -86,7 +88,8 @@ export const {
   saveAdultData,
   saveCurrentAdult,
   saveCurrentChild,
-  resetChildAndChildData,
+  resetAdultData,
+  resetChildData,
 } = createChildSlice.actions;
 
 export default createChildSlice.reducer;
