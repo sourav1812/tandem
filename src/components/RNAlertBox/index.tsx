@@ -9,6 +9,7 @@ import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
 import {styles} from './style';
 import {AlertBoxInterface} from './interface';
 import {clearAlertData} from '@tandem/redux/slices/alertBox.slice';
+import themeColor from '@tandem/theme/themeColor';
 
 const RNAlertBox = ({
   visible,
@@ -17,8 +18,11 @@ const RNAlertBox = ({
   message,
   possibleResolution,
 }: AlertBoxInterface) => {
-  let isTablet = useAppSelector(state => state.deviceType.isTablet);
-  let {onSuccess} = useAppSelector(state => state.alertBoxReducer.data);
+  const isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const {onSuccess, onDestructive} = useAppSelector(
+    state => state.alertBoxReducer.data,
+  );
+
   const dispatch = useAppDispatch();
   return (
     <RNModal
@@ -32,6 +36,8 @@ const RNAlertBox = ({
             width: verticalScale(260),
             alignSelf: 'center',
             padding: 24,
+            alignItems: 'center',
+            justifyContent: 'center',
           },
         ]}>
         <RNTextComponent isSemiBold style={styles.heading}>
@@ -43,16 +49,47 @@ const RNAlertBox = ({
             {possibleResolution}
           </RNTextComponent>
         )}
-        <RNButton
-          onClick={() => {
-            if (onSuccess) {
-              onSuccess();
-            }
-            dispatch(clearAlertData());
-          }}
-          title={'OK'}
-          customStyle={[styles.button2]}
-        />
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: onDestructive ? 'space-around' : 'center',
+            alignSelf: 'center',
+            width: '100%',
+          }}>
+          <RNButton
+            onClick={() => {
+              if (onSuccess) {
+                onSuccess();
+              }
+              dispatch(clearAlertData());
+            }}
+            title={'OK'}
+            customStyle={[
+              styles.button2,
+              {minWidth: onDestructive ? '60%' : '90%'},
+            ]}
+          />
+          {onDestructive ? (
+            <RNButton
+              onClick={() => {
+                if (onDestructive) {
+                  onDestructive();
+                }
+                dispatch(clearAlertData());
+              }}
+              title={'NO'}
+              customStyle={[
+                styles.button2,
+                {
+                  backgroundColor: themeColor.red,
+                  borderColor: themeColor.red,
+                  minWidth: '60%',
+                },
+              ]}
+            />
+          ) : null}
+        </View>
       </View>
     </RNModal>
   );

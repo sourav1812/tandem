@@ -24,7 +24,7 @@ import BlueButon from '@tandem/assets/svg/YellowButton';
 import BothButton from '@tandem/assets/svg/BothButton';
 import RNTooltip from '@tandem/components/RNTooltip';
 import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
-import {TOOLTIP} from '@tandem/constants/LocalConstants';
+import {TOOLTIP} from '@tandem/constants/local';
 import {useNavigation} from '@react-navigation/native';
 import {RootState, store} from '@tandem/redux/store';
 import {
@@ -42,6 +42,10 @@ const Home = () => {
   const currentAdult = useAppSelector(state => state.createChild.currentAdult);
   const childList = useAppSelector(state => state.createChild.childList);
 
+  const scaleImg = useRef(new Animated.Value(1)).current;
+
+  const avatars = useAppSelector(state => state.cache.avatars);
+  const filePath = avatars.filter(obj => obj.path === currentChild?.avatar)[0];
   const [tooltipMode, setToolTipMode] = useState({
     tooltipOne: true,
     tooltipTwo: false,
@@ -122,6 +126,22 @@ const Home = () => {
     updateState({changeUser: !changeUser});
   };
 
+  const zoomInImg = () => {
+    Animated.sequence([
+      Animated.spring(scaleImg, {
+        toValue: 2,
+        useNativeDriver: true,
+        bounciness: 25,
+      }),
+      Animated.timing(scaleImg, {
+        toValue: 1,
+        duration: 300,
+        useNativeDriver: true,
+        delay: 2000,
+      }),
+    ]).start();
+  };
+
   React.useEffect(() => {
     const tempPseudoList: ChildData[] = [];
     childList.forEach(item => {
@@ -148,7 +168,11 @@ const Home = () => {
           },
         ]}
         onPress={() => {
-          openDrawer();
+          if (mode === MODE.A) {
+            openDrawer();
+          } else {
+            zoomInImg();
+          }
         }}>
         <RNTooltip
           topViewStyle={{alignItems: 'center'}}
@@ -184,10 +208,13 @@ const Home = () => {
               );
             }}
             style={styles.tooltipUserWrapper}>
-            <Image
-              style={styles.tooltipUserImage}
+            <Animated.Image
+              style={[
+                styles.tooltipUserImage,
+                {transform: [{scale: scaleImg}]},
+              ]}
               source={{
-                uri: currentChild?.avatar,
+                uri: filePath?.file || currentChild?.avatar,
               }}
             />
             <RNTextComponent style={styles.tooltipUserName} isSemiBold>
@@ -197,10 +224,11 @@ const Home = () => {
         </RNTooltip>
         {changeUser &&
           mode === MODE.A &&
-          pseudoList.map(item => {
+          pseudoList.map((item, index) => {
             if (item.childId && item.childId !== '') {
               return (
                 <ChangeChild
+                  key={index.toString()}
                   userProfile={item}
                   name={item.name}
                   changeUser={changeUser}
@@ -413,8 +441,18 @@ const Home = () => {
               }}>
               {mode === MODE.B || mode === MODE.C
                 ? modeBC.map((item, index) => (
-                    <Pressable
+                    <RNBookmarkComponent
                       key={index.toString()}
+                      customStyle={{
+                        marginTop: verticalScale(24),
+                        ...(!portrait && styles.cardPortrait),
+                      }}
+                      borderIconColor={item.color}
+                      showIcon={index === 0}
+                      showSubheading={index !== 0}
+                      heading={item.title}
+                      subHeading={translation('COMING_SOON')}
+                      emoji="🪄"
                       onPress={() => {
                         if (index === 0) {
                           store.dispatch(clearStoryGenerationResponse());
@@ -422,24 +460,30 @@ const Home = () => {
                         } else {
                           // toggleModal();
                         }
-                      }}>
-                      <RNBookmarkComponent
-                        customStyle={{
-                          marginTop: verticalScale(24),
-                          ...(!portrait && styles.cardPortrait),
-                        }}
-                        borderIconColor={item.color}
-                        showIcon={index === 0}
-                        showSubheading={index !== 0}
-                        heading={item.title}
-                        subHeading={translation('COMING_SOON')}
-                        emoji="🪄"
-                      />
-                    </Pressable>
+                      }}
+                    />
                   ))
                 : modeA.map((item, index) => (
-                    <Pressable
+                    <RNBookmarkComponent
                       key={index.toString()}
+                      customStyle={{
+                        marginTop: verticalScale(10),
+                        ...(!portrait && styles.cardPortrait),
+                      }}
+                      borderIconColor={item.color}
+                      showIcon={index <= 3}
+                      showSubheading={index !== 3}
+                      heading={item.title}
+                      subHeading={item.subHeading}
+                      emoji={item.emoji}
+                      headingStyle={
+                        index > 3
+                          ? {
+                              fontSize: verticalScale(12),
+                              marginVertical: verticalScale(8),
+                            }
+                          : null
+                      }
                       onPress={() => {
                         switch (index) {
                           case 0:
@@ -451,28 +495,8 @@ const Home = () => {
                             navigateTo(SCREEN_NAME.REDEEM_VOUCHER);
                             break;
                         }
-                      }}>
-                      <RNBookmarkComponent
-                        customStyle={{
-                          marginTop: verticalScale(10),
-                          ...(!portrait && styles.cardPortrait),
-                        }}
-                        borderIconColor={item.color}
-                        showIcon={index <= 3}
-                        showSubheading={index !== 3}
-                        heading={item.title}
-                        subHeading={item.subHeading}
-                        emoji={item.emoji}
-                        headingStyle={
-                          index > 3
-                            ? {
-                                fontSize: verticalScale(12),
-                                marginVertical: verticalScale(8),
-                              }
-                            : null
-                        }
-                      />
-                    </Pressable>
+                      }}
+                    />
                   ))}
             </View>
           </ScrollView>
@@ -497,6 +521,8 @@ const ChangeChild = ({
 }) => {
   const dispatch = useAppDispatch();
   const translateRef = useRef(new Animated.Value(-30)).current;
+  const avatars = useAppSelector(state => state.cache.avatars);
+  const filePath = avatars.filter(obj => obj.path === userProfile?.avatar)[0];
   React.useEffect(() => {
     Animated.timing(translateRef, {
       toValue: 0,
@@ -521,7 +547,7 @@ const ChangeChild = ({
         style={{alignItems: 'center'}}>
         <Image
           style={styles.changeChildImage}
-          source={{uri: userProfile?.avatar}}
+          source={{uri: filePath?.file || userProfile?.avatar}}
         />
         <RNTextComponent
           style={{

@@ -163,7 +163,7 @@ const NotificationSwitch = () => {
       <Switch
         trackColor={{false: themeColor.themeBlue, true: themeColor.gold}}
         thumbColor={themeColor.white}
-        ios_backgroundColor={themeColor.gold}
+        ios_backgroundColor={themeColor.themeBlue}
         onValueChange={toggleSwitch}
         value={isEnabled}
       />

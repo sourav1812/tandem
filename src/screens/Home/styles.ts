@@ -74,6 +74,7 @@ export const styles = StyleSheet.create({
     width: verticalScale(59),
     borderRadius: 100,
     marginBottom: 8,
+    zIndex: 2,
   },
   tooltipUserName: {
     marginTop: 5,

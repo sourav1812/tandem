@@ -5,7 +5,7 @@ import {Pressable, ScrollView, View} from 'react-native';
 import BlueButton from '@tandem/assets/svg/BlueButton';
 import {styles} from './styles';
 import RNNumericBulletin from '@tandem/components/RNNumericBulletin';
-import {avatarArray, ChildProfileStateObject, indicatorType} from './interface';
+import {ChildProfileStateObject, IndicatorType} from './interface';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import {translation} from '@tandem/utils/methods';
 import RNEmojiWithText from '@tandem/components/RNEmojiWithText';
@@ -30,9 +30,17 @@ import {CreateChildProfileProps} from '@tandem/navigation/types';
 import {LanguageDropDown} from '@tandem/components/LanguageDropDown';
 import {addNewChild} from '@tandem/api/creatChildProfile';
 import {addNewAdult} from '@tandem/api/createAdultProfile';
+import {PEOPLE} from '@tandem/constants/enums';
+
+const GENDERS = {
+  girl: 'girl',
+  boy: 'boy',
+  preferNotToSay: 'preferNotToSay',
+};
 
 const CreateChildProfile = ({route}: CreateChildProfileProps) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const avatars = useAppSelector(state => state.cache.avatars);
   const fromAddAdult = route.params?.fromAddAdult;
   const dispatch = useAppDispatch();
   const [state, setState] = useState<ChildProfileStateObject>({
@@ -61,7 +69,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
 
   const nextQuestion = async () => {
     if (questionIndex <= 2 && avatar === null) {
-      let indexArry: indicatorType[] = [...bulletinArray];
+      let indexArry: IndicatorType[] = [...bulletinArray];
       bulletinArray.map((item, index) => {
         if (questionIndex + 1 > index) {
           indexArry[index].isSelected = true;
@@ -70,16 +78,16 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
       updateState({questionIndex: questionIndex + 1, bulletinArray: indexArry});
     } else {
       if (fromAddAdult) {
-        handleAddAdult();
+        await handleAddAdult();
       } else {
-        handleCreateChild();
+        await handleCreateChild();
       }
     }
   };
 
   const previousQuestion = () => {
     if (questionIndex > 1) {
-      let indexArry: indicatorType[] = [...bulletinArray];
+      let indexArry: IndicatorType[] = [...bulletinArray];
       indexArry.map(item => (item.isSelected = false));
       bulletinArray.map((item, index) => {
         if (questionIndex - 1 > index) {
@@ -110,35 +118,38 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
       return;
     }
     // TODO make it dynamic
+    try {
+      const response = await addNewChild({
+        name: name.value,
+        dob: dob.value, // ! pass in the whole date object
+        gender: gender,
+        avatar,
+      });
+      if (response) {
+        dispatch(
+          saveCurrentChild({
+            childId: response?.childId,
+            name: name.value,
+            dob: dob.value,
+            gender: gender,
+            avatar: avatar,
+            type: PEOPLE.CHILD,
+          }),
+        );
 
-    const response = await addNewChild({
-      name: name.value,
-      dob: dob.value, // ! pass in the whole date object
-      gender: gender,
-      avatar,
-    });
-    if (response) {
-      dispatch(
-        saveCurrentChild({
-          childId: response?.childId,
-          name: name.value,
-          dob: dob.value,
-          gender: gender,
-          avatar: avatar,
-          type: 'child',
-        }),
-      );
-
-      dispatch(
-        saveChildData({
-          childId: response?.childId,
-          name: name.value,
-          dob: dob.value,
-          gender: gender,
-          avatar: avatar,
-          type: 'child',
-        }),
-      );
+        dispatch(
+          saveChildData({
+            childId: response?.childId,
+            name: name.value,
+            dob: dob.value,
+            gender: gender,
+            avatar: avatar,
+            type: PEOPLE.CHILD,
+          }),
+        );
+      }
+    } catch (error) {
+      console.log('error in adding child', error);
     }
   };
 
@@ -160,31 +171,34 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
       return;
     }
     // TODO make it dynamic
-
-    const response = await addNewAdult({
-      role: role.value,
-      dob: dob.value, // ! pass in the whole date object
-      avatar,
-    });
-    if (response) {
-      dispatch(
-        saveCurrentAdult({
-          profileId: response?.profileId,
-          dob: dob.value,
-          avatar: avatar,
-          type: 'adult',
-          role: role.value,
-        }),
-      );
-      dispatch(
-        saveAdultData({
-          profileId: response?.profileId,
-          dob: dob.value,
-          avatar: avatar,
-          type: 'adult',
-          role: role.value,
-        }),
-      );
+    try {
+      const response = await addNewAdult({
+        role: role.value,
+        dob: dob.value, // ! pass in the whole date object
+        avatar,
+      });
+      if (response) {
+        dispatch(
+          saveCurrentAdult({
+            profileId: response?.profileId,
+            dob: dob.value,
+            avatar: avatar,
+            type: PEOPLE.ADULT,
+            role: role.value,
+          }),
+        );
+        dispatch(
+          saveAdultData({
+            profileId: response?.profileId,
+            dob: dob.value,
+            avatar: avatar,
+            type: PEOPLE.ADULT,
+            role: role.value,
+          }),
+        );
+      }
+    } catch (error) {
+      console.log('error in adding  adult data', error);
     }
   };
 
@@ -193,17 +207,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
   };
 
   const selectGender = (type: string) => {
-    switch (type) {
-      case 'girl':
-        updateState({gender: 'girl'});
-        break;
-      case 'boy':
-        updateState({gender: 'boy'});
-        break;
-      case 'preferNotToSay':
-        updateState({gender: 'preferNotToSay'});
-        break;
-    }
+    updateState({gender: type});
   };
 
   const disableButtonForChilForm = () => {
@@ -251,9 +255,9 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
                 customStyle={styles.girl}
                 bgcColor={themeColor.purple}
                 onPress={() => {
-                  selectGender('girl');
+                  selectGender(GENDERS.girl);
                 }}
-                isSelected={gender === 'girl'}
+                isSelected={gender === GENDERS.girl}
               />
               <RNTextComponent style={styles.sex}>
                 {translation('GIRL')}
@@ -265,9 +269,9 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
                 customStyle={styles.boy}
                 bgcColor={themeColor.lightGreen}
                 onPress={() => {
-                  selectGender('boy');
+                  selectGender(GENDERS.boy);
                 }}
-                isSelected={gender === 'boy'}
+                isSelected={gender === GENDERS.boy}
               />
               <RNTextComponent style={styles.sex}>
                 {translation('BOY')}
@@ -276,16 +280,16 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
             <RNButton
               title={translation('PREFER_NOT_TO_SAY')}
               onClick={() => {
-                selectGender('preferNotToSay');
+                selectGender(GENDERS.preferNotToSay);
               }}
               onlyBorder
               customStyle={
-                gender === 'preferNotToSay'
+                gender === GENDERS.preferNotToSay
                   ? styles.footerButtonOnSelect
                   : styles.footerButton
               }
               textStyle={
-                gender === 'preferNotToSay' && {color: themeColor.white}
+                gender === GENDERS.preferNotToSay && {color: themeColor.white}
               }
             />
           </>
@@ -343,14 +347,14 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
               <ScrollView
                 contentContainerStyle={styles.list}
                 showsVerticalScrollIndicator={false}>
-                {avatarArray.map((item, index) => {
+                {avatars.map((item, index) => {
                   return (
                     <RNAvatarComponent
                       key={index.toString()}
-                      icon={item.icon}
+                      icon={item.file}
                       customStyle={[
                         styles.avatar,
-                        avatar === item.icon && {
+                        avatar === item.path && {
                           backgroundColor: themeColor.themeBlue,
                         },
                       ]}
@@ -373,7 +377,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
                         //     console.log(err);
                         //   });
                         // }
-                        setAvatar(item.icon);
+                        setAvatar(item.path);
                       }}
                     />
                   );
@@ -454,13 +458,13 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
               <ScrollView
                 contentContainerStyle={styles.list}
                 showsVerticalScrollIndicator={false}>
-                {avatarArray.map((item, index) => {
+                {avatars.map((item, index) => {
                   return (
                     <RNAvatarComponent
-                      icon={item.icon}
+                      icon={item.file}
                       customStyle={[
                         styles.avatar,
-                        avatar === item.icon && {
+                        avatar === item.path && {
                           backgroundColor: themeColor.themeBlue,
                         },
                       ]}
@@ -484,7 +488,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
                           //     console.log(err);
                           //   });
                         }
-                        setAvatar(item.icon);
+                        setAvatar(item.path);
                       }}
                     />
                   );

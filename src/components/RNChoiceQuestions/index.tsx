@@ -4,7 +4,7 @@ import {styles} from './styles';
 import RNEmojiWithText from '../RNEmojiWithText';
 import {MultipleChoiceProps} from './interface';
 import RNTooltip from '../RNTooltip';
-import {TOOLTIP} from '@tandem/constants/LocalConstants';
+import {TOOLTIP} from '@tandem/constants/local';
 import {getValueFromKey} from '@tandem/helpers/encryptedStorage';
 import {translation} from '@tandem/utils/methods';
 import {store} from '@tandem/redux/store';
@@ -48,6 +48,7 @@ const RNChoiceQuestions = ({
 
   return (
     <ScrollView
+      style={{flex: 1}}
       contentContainerStyle={[styles.scrollView, customStyle && customStyle]}
       scrollEnabled
       showsVerticalScrollIndicator={false}>

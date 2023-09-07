@@ -18,6 +18,7 @@ import {BooksData} from '../Bookshelf/interface';
 import {store} from '@tandem/redux/store';
 import {setImageForPage} from '@tandem/redux/slices/bookShelf.slice';
 import RNFetchBlob from 'rn-fetch-blob';
+import {CACHE_SESSION} from '@tandem/constants/local';
 
 const Story = () => {
   const [visible, setVisible] = useState(false);
@@ -60,6 +61,7 @@ const Story = () => {
         RNFetchBlob.config({fileCache: true})
           .fetch('GET', page.illustration_url, {})
           .then(res => {
+            RNFetchBlob.session(CACHE_SESSION).add(res.path());
             store.dispatch(
               setImageForPage({
                 bookIndex,

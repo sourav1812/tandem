@@ -11,4 +11,5 @@ export interface Props {
   showSubheading?: boolean;
   emoji?: string;
   headingStyle?: StyleProp<TextStyle>;
+  onPress?: () => void | undefined;
 }

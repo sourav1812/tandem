@@ -5,6 +5,8 @@ import themeColor from '@tandem/theme/themeColor';
 export const styles = StyleSheet.create({
   container: {
     height: '100%',
+    position: 'absolute',
+    width: '100%',
   },
   heading: {
     fontSize: verticalScale(21.3),
@@ -37,7 +39,7 @@ export const styles = StyleSheet.create({
   },
   bottomOptions: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     marginTop: verticalScale(12),
   },
   option: {

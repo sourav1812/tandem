@@ -1,5 +1,4 @@
-
-import {ImageBackground, Image, View} from 'react-native';
+import {ImageBackground, Image, View, Platform} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
@@ -18,6 +17,7 @@ import {RootState} from '@tandem/redux/store';
 import google from '@tandem/functions/socialLogin/google';
 import facebook from '@tandem/functions/socialLogin/facebook';
 import {socialLogin} from '@tandem/api/socialAuth';
+import {SocialResponse} from '@tandem/functions/socialLogin/interface';
 
 const SocialSignIn = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -25,7 +25,9 @@ const SocialSignIn = () => {
     (state: RootState) => state.orientation.isPortrait,
   );
 
-  const socialAuthFunctions = {
+  const socialAuthFunctions: {
+    [key: string]: () => Promise<SocialResponse | null>;
+  } = {
     google,
     facebook,
   };
@@ -105,12 +107,14 @@ const SocialSignIn = () => {
             title={`${translation('CONTINUE_WITH')} Google`}
             customStyle={styles.button}
           />
-          <RNSocialButton
-            icon={<Apple />}
-            onClick={() => {}}
-            title={`${translation('CONTINUE_WITH')} Apple`}
-            customStyle={styles.button}
-          />
+          {Platform.OS === 'ios' && (
+            <RNSocialButton
+              icon={<Apple />}
+              onClick={() => {}}
+              title={`${translation('CONTINUE_WITH')} Apple`}
+              customStyle={styles.button}
+            />
+          )}
           <View style={styles.or}>
             <View style={styles.line} />
             <RNTextComponent

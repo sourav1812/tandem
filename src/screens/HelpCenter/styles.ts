@@ -4,16 +4,12 @@ import {verticalScale} from 'react-native-size-matters';
 
 export const styles = StyleSheet.create({
   container: {},
-  heading: {
-    marginTop: verticalScale(50),
-  },
   content: {
     // height: verticalScale(450),
   },
   customTab: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: verticalScale(20),
   },
   tab: {
     flex: 1,
@@ -25,6 +21,7 @@ export const styles = StyleSheet.create({
   },
   scrollView: {
     marginTop: verticalScale(20),
+    paddingBottom: verticalScale(50),
   },
   input2: {
     width: '100%',
@@ -40,12 +37,8 @@ export const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   button: {
-    // marginTop: verticalScale(30),
-    position: 'absolute',
-    alignSelf: 'center',
-    width: '100%',
-    maxWidth: 362,
-    bottom: '4%',
+    marginBottom: '5%',
+    marginTop: verticalScale(5),
   },
   expandDetailsWrapper: {
     backgroundColor: '#F1F4F9',

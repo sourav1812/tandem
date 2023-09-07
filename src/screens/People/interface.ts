@@ -6,7 +6,7 @@ export interface StateObject {
   navigate?: string;
 }
 
-export const menuArray = [
+export const MENU_ARRAY = [
   {
     name: translation('PROFILE_SETTINGS'),
     navigate: SCREEN_NAME.PROFILE_SETTINGS,

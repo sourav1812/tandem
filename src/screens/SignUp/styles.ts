@@ -6,6 +6,7 @@ export const styles = StyleSheet.create({
   container: {
     height: '100%',
     width: '100%',
+    position: 'absolute',
   },
   heading: {
     fontSize: verticalScale(21.3),
@@ -37,7 +38,7 @@ export const styles = StyleSheet.create({
   },
   bottomOptions: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     marginTop: verticalScale(12),
   },
   option: {
@@ -51,6 +52,7 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: verticalScale(20),
     fontSize: scale(12),
+    marginBottom: verticalScale(30),
   },
   signup: {
     color: themeColor.themeBlue,

@@ -14,6 +14,7 @@ import storyGeneration from './slices/storyGeneration.slice';
 import createChildSlice from './slices/createChild.slice';
 import bookShelf from './slices/bookShelf.slice';
 import setUserData from './slices/userData.slice';
+import cache from './slices/cache.slice';
 
 export const storage = new MMKV();
 
@@ -31,6 +32,7 @@ export const appReducer = combineReducers({
   userData: setUserData,
   storyGeneration,
   bookShelf,
+  cache,
 });
 
 export const reduxStorage: Storage = {

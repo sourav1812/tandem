@@ -10,7 +10,7 @@ export enum API {
   LOGOUT = 'user/log-out', //? POST
   USER_PROFILE = 'user/profile', //? GET
   CHANGE_PASSWORD = 'user/password', //? PUT
-  ADD_BIG_PEOPLE = 'user/big-people', //?POST
+  ADD_BIG_PEOPLE = 'big-people', //?POST
 }
 
 export enum ENVIRONMENT {
@@ -31,8 +31,6 @@ const ENV_VARS = {
 export const SELECTED_ENVIRONMENT = ENVIRONMENT.PRODUCTION;
 // ! URLs
 export const BASE_URL = ENV_VARS[SELECTED_ENVIRONMENT].API_URL;
-export const BASE_URL_FOR_IMAGES =
-  ENV_VARS[SELECTED_ENVIRONMENT].API_URL.slice(0, -3) + 'public/assets/images/';
 
 export const PEXELS_API_KEY =
   'EX5cnNzfNvWCwgBYmgPwZzLAR7KX1CMnj1bDHJEHljQk2bEA2lh8oPc5';

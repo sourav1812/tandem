@@ -227,6 +227,7 @@ const AppNavigator = () => {
         visible={alertData?.type ? true : false}
         type={alertData?.type}
         message={alertData?.message}
+        possibleResolution={alertData?.possibleResolution}
       />
     </>
   );

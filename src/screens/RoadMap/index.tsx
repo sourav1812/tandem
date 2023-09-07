@@ -19,7 +19,6 @@ import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {RootState, store} from '@tandem/redux/store';
 import RNButton from '@tandem/components/RNButton';
-import {useNavigation} from '@react-navigation/native';
 import generateStory from '@tandem/api/generateStory';
 import {changeQuestionIndex} from '@tandem/redux/slices/storyGeneration.slice';
 
@@ -28,7 +27,6 @@ const RNRoadmap = () => {
   const questionIndex = useAppSelector(
     state => state.storyGeneration.questionIndex,
   );
-  console.log({questionIndex});
   const [positionRefs, setPositionRefs] = React.useState({
     0: {height: 0, width: 0, x: 0, y: 0},
     1: {height: 0, width: 0, x: 0, y: 0},
@@ -49,15 +47,6 @@ const RNRoadmap = () => {
     (state: RootState) => state.orientation.isPortrait,
   );
   let scale = portrait ? 1 : 1.4;
-  const navigation = useNavigation();
-
-  React.useEffect(
-    () =>
-      navigation.addListener('beforeRemove', e => {
-        e.preventDefault();
-      }),
-    [navigation],
-  );
 
   const handleNavigate = (index: number) => {
     if (index > questionIndex) {

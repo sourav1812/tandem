@@ -188,9 +188,18 @@
     "you-are-both": "State facendo entrambi un ottimo lavoro. Perché non provate anche a alternarvi nella lettura o a farvi domande sulla storia mentre procedete?"
   },
   "bookshelf": {
-    "nothing-to-see-here": "Non c'è niente da vedere qui... ancora!",
-    "why-dont-we-one": "Perché non scriviamo una storia",
-    "why-dont-we-two": "insieme adesso?",
+    "A_MODE": {
+      "heading": "non ha ancora nessun libro",
+      "subHeading": "Perché non crearne uno oggi?"
+    },
+    "B_MODE": {
+      "heading": "Non hai ancora creato storie",
+      "subHeading": "Perché non crearne una oggi?"
+    },
+    "C_MODE": {
+      "heading": "Niente da vedere qui... ancora!",
+      "subHeading": "Perché non scriviamo una storia insieme ora?"
+    },
     "write-a-story": "Scrivi una storia"
   },
   "generate-story": {
@@ -264,5 +273,6 @@
   "WHICH_OF_THESE_BEST_DESCRIBE": "Quale di queste descrive meglio la tua relazione con i bambini con cui utilizzerai TANDEM?",
   "YOUR_DOB": "La tua data di nascita",
   "ENTER": "Inserire",
-  "RELATIONSHIP": "Relazione"
+  "RELATIONSHIP": "Relazione",
+  "LOGOUT_FROM_ALL_DEVICES": "La tua password verrà cambiata per tutti i dispositivi. Desideri anche disconnetterti dagli altri dispositivi?"
 }

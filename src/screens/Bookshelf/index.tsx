@@ -18,10 +18,11 @@ import BothButton from '@tandem/assets/svg/BothButton';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {MODE} from '@tandem/constants/mode';
 import getStories from '@tandem/api/getStories';
-import {RootState} from '@tandem/redux/store';
+import {RootState, store} from '@tandem/redux/store';
 import themeColor from '@tandem/theme/themeColor';
 import {BooksData} from './interface';
 import {ratingList} from '@tandem/components/RNRatingModal/interface';
+import {clearStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration.slice';
 
 const Bookshelf = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -60,26 +61,32 @@ const Bookshelf = () => {
   }, []);
 
   const listEmptyComponent = React.useCallback(() => {
+    const currentChild = store.getState().createChild.currentChild;
     return (
       <View style={styles.listEmptyComponentContainer}>
         <View style={styles.listEmptyComponentEmogiContainer}>
           <Text style={styles.listEmptyComponentEmoji}>{'\u{1F614}'}</Text>
         </View>
-        <RNTextComponent style={styles.nothingToSeeText}>
-          {translation('bookshelf.nothing-to-see-here')}
+        <RNTextComponent isSemiBold style={styles.nothingToSeeText}>
+          {mode === MODE.A ? currentChild.name + ' ' : null}
+          {translation(`bookshelf.${mode}.heading`)}
         </RNTextComponent>
         <RNTextComponent numberOfLines={2} style={styles.whyDontWriteStory}>
-          {`${translation('bookshelf.why-dont-we-one')} \n ${translation(
-            'bookshelf.why-dont-we-two',
-          )}together now?`}
+          {translation(`bookshelf.${mode}.subHeading`)}
         </RNTextComponent>
+
         <RNButton
+          customStyle={{width: '40%', minWidth: '40%'}}
           title={translation('bookshelf.write-a-story')}
-          onClick={() => {}}
+          onClick={() => {
+            store.dispatch(clearStoryGenerationResponse());
+            navigateTo(SCREEN_NAME.ROADMAP);
+          }}
         />
       </View>
     );
-  }, []);
+  }, [mode]);
+
   const renderItem = React.useCallback(({item}: {item: BooksData}) => {
     return (
       <>
@@ -92,12 +99,12 @@ const Bookshelf = () => {
               {item.week}
             </RNTextComponent>
           )}
-          <Pressable
+          <RNStoryCard
+            item={item}
             onPress={() => {
               navigateTo(SCREEN_NAME.STORY, {routeData: item});
-            }}>
-            <RNStoryCard item={item} />
-          </Pressable>
+            }}
+          />
         </View>
       </>
     );
