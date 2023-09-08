@@ -1,11 +1,14 @@
 import {Dimensions} from 'react-native';
 
-const tooltipHelperTop = (positionRefs: {
+const tooltipHelperTop = (positionRefs?: {
   height: number;
   width: number;
   x: number;
   y: number;
 }) => {
+  if (!positionRefs) {
+    return null;
+  }
   const {width, height} = Dimensions.get('screen');
   if (positionRefs.x > width / 2 && positionRefs.y < height / 2) {
     return 'NorthEast';
@@ -33,12 +36,15 @@ const tooltipHelperTop = (positionRefs: {
   }
   return null;
 };
-const tooltipHelperBottom = (positionRefs: {
+const tooltipHelperBottom = (positionRefs?: {
   height: number;
   width: number;
   x: number;
   y: number;
 }) => {
+  if (!positionRefs) {
+    return null;
+  }
   const {width, height} = Dimensions.get('window');
   if (positionRefs.x > width / 2 && positionRefs.y < height / 2) {
     return null;

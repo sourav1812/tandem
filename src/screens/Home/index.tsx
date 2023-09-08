@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {
   View,
   Image,
@@ -294,6 +295,7 @@ const Home = () => {
                 },
               ]}>
               <RNTooltip
+                top={'North'}
                 isTablet={isTablet}
                 topViewStyle={{
                   width: widthDimention / 2,

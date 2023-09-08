@@ -315,11 +315,7 @@ const StoryTelling = () => {
         )}
         {headerButton()}
       </View>
-      <PageFlip
-        book={book}
-        activeIndex={currentIndex}
-        setActiveIndex={setActiveIndex}
-      />
+
       {currentIndex !== totalPages && (
         <RNTooltip
           isTablet={isTablet}
@@ -334,8 +330,8 @@ const StoryTelling = () => {
           text={translation('READ_A_STORY')}
           textContainerStyle={[styles.tooltipTwo, {margin: 0, marginLeft: 20}]}
           mainStyle={{
-            marginTop: verticalScale(-140),
-            height: verticalScale(200),
+            marginTop: verticalScale(-100),
+            height: verticalScale(300),
           }}
           textStyle={[
             {

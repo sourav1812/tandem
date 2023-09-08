@@ -354,11 +354,11 @@ const Account = () => {
               );
             })}
             <RNTooltip
+              bottom={'South'}
               isTablet={isTablet}
               topViewStyle={{
                 alignItems: 'center',
                 width: width,
-                marginBottom: verticalScale(-20),
               }}
               text={translation('ADD_YOURSELF')}
               open={
@@ -373,8 +373,7 @@ const Account = () => {
                 });
                 tooltipArray.push(2);
                 storeKey(TOOLTIP, tooltipArray);
-              }}
-              dimensionObject={positionRefs[1]}>
+              }}>
               <Pressable
                 ref={refTwo}
                 onLayout={() => {
