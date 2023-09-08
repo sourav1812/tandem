@@ -458,7 +458,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
               <ScrollView
                 contentContainerStyle={styles.list}
                 showsVerticalScrollIndicator={false}>
-                {avatars.map((item, index) => {
+                {avatars.map(item => {
                   return (
                     <RNAvatarComponent
                       icon={item.file}
@@ -470,24 +470,24 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
                       ]}
                       imgStyle={styles.avatarImg}
                       onPress={() => {
-                        if (index === 0) {
-                          return;
-                          // ImagePicker.openPicker({
-                          //   width: 300,
-                          //   height: 300,
-                          //   cropping: true,
-                          //   includeBase64: true,
-                          //   loadingLabelText: 'Image',
-                          //   mediaType: 'photo',
-                          // })
-                          //   .then(response => {
-                          //     setImageData(response);
-                          //     console.log(response, 'sdfghjrfdsresponse');
-                          //   })
-                          //   .catch(err => {
-                          //     console.log(err);
-                          //   });
-                        }
+                        // if (index === 0) {
+                        //   return;
+                        // ImagePicker.openPicker({
+                        //   width: 300,
+                        //   height: 300,
+                        //   cropping: true,
+                        //   includeBase64: true,
+                        //   loadingLabelText: 'Image',
+                        //   mediaType: 'photo',
+                        // })
+                        //   .then(response => {
+                        //     setImageData(response);
+                        //     console.log(response, 'sdfghjrfdsresponse');
+                        //   })
+                        //   .catch(err => {
+                        //     console.log(err);
+                        //   });
+                        // }
                         setAvatar(item.path);
                       }}
                     />

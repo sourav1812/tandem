@@ -42,7 +42,7 @@
   "SPARK_YOUR_CHILD_CREATIVITY": "Spark Your Child's Creativity",
   "CREATE_MAGIC_WITH_AI": "Create Magic With AI",
   "WITH_TANDEM_YOU_WILL_THE_POWER": "With Tandem, you'll be able to use the power of AI to bring your child's imagination to life",
-  "YOUR_CHILD_CAN_CHOOSE_FROM_A_VARIETY": "Your child can choose from a variety of characters, settings, and objects to create their own unique story",
+  "YOUR_CHILD_CAN_CHOOSE_FROM_A_VARIETY": "Your child can choose from a variety of characters, settings, and objects to create their very own unique story",
 
   "BOOKSHELF": "Bookshelf",
   "SEARCH": "Search",
@@ -277,7 +277,7 @@
   "YOUR_DOB": "Your date of birth",
   "ENTER": "Enter",
   "RELATIONSHIP": "Relationship",
-  "LOGOUT_FROM_ALL_DEVICES": "Your password will be changed for all devices. Do you wish to logout from your other devices as well?",
+  "LOGOUT_FROM_ALL_DEVICES": "Do you wish to logout from your other devices?",
   "DELETE_CHILD": "Delete child",
   "DELETE_ADULT": "Delete adult"
 }

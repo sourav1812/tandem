@@ -4,6 +4,7 @@ const initialState = {
   locale: 'en',
   toastText: null,
   keyboardVisible: false,
+  notification: false,
 };
 const langualSlice = createSlice({
   name: 'language',
@@ -17,8 +18,15 @@ const langualSlice = createSlice({
     },
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     logoutFromRedux: state => {},
+    setNotificationKey: (state, action) => {
+      state.notification = action.payload;
+    },
   },
 });
-export const {setLocale, setKeyboardVisible, logoutFromRedux} =
-  langualSlice.actions;
+export const {
+  setLocale,
+  setNotificationKey,
+  setKeyboardVisible,
+  logoutFromRedux,
+} = langualSlice.actions;
 export default langualSlice.reducer;
