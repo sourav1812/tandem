@@ -76,9 +76,9 @@ const GenerateStory = () => {
     tooltipFifth,
   } = state;
 
-  const updateState = (date: any) => {
+  const updateState = (data: any) => {
     setState((previouState: any) => {
-      return {...previouState, ...date};
+      return {...previouState, ...data};
     });
   };
 
@@ -98,6 +98,10 @@ const GenerateStory = () => {
     setDisabled(true);
     if (!tooltipArray?.includes(5)) {
       updateState({tooltipFirst: true});
+    }
+    if (questionIndex === 5) {
+      updateState({addedIllustration: null});
+      setDisabled(true);
     }
     if (questionIndex === 6) {
       updateState({tooltipThird: true});

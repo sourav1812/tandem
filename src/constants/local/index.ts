@@ -67,7 +67,6 @@ import Card1 from '@tandem/assets/svg/illustrationTypes/card-1.svg';
 import Card2 from '@tandem/assets/svg/illustrationTypes/card-2.svg';
 import Card3 from '@tandem/assets/svg/illustrationTypes/card-3.svg';
 import Card4 from '@tandem/assets/svg/illustrationTypes/card-4.svg';
-import Card5 from '@tandem/assets/svg/illustrationTypes/card-5.svg';
 
 export const TOOLTIP = 'ToolTip';
 export const TERMS_ACCEPTED = 'TERMS_ACCEPTED';
@@ -153,7 +152,7 @@ export const ATTRIBUTE: PlaceType[] = [
   {name: 'Ambulance', bgc: themeColor.pink, svgIcon: Ambulance},
 ];
 
-export const ILLUSTRATION = [Card, Card1, Card2, Card3, Card4, Card5];
+export const ILLUSTRATION = [Card, Card1, Card2, Card3, Card4];
 
 export const COLOR_PALETTE = [
   {firstColor: '#0633FD', secondColor: '#FEF902'},

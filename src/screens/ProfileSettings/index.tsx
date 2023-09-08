@@ -14,7 +14,7 @@ import RNDeleteAccount from '@tandem/components/RNDeleteAccount';
 import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
 import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
 import {LanguageDropDown} from '@tandem/components/LanguageDropDown';
-import {RootState} from '@tandem/redux/store';
+import {RootState, store} from '@tandem/redux/store';
 import {editUserProfile} from '@tandem/api/editUserProfile';
 import validationFunction from '@tandem/functions/validationFunction';
 import {saveUserData} from '@tandem/redux/slices/userData.slice';
@@ -23,6 +23,7 @@ import navigateTo from '@tandem/navigation/navigate';
 import {languages} from '../SelectLanguage/interface';
 import i18n from '@tandem/constants/lang/i18n';
 import {deleteUser} from '@tandem/api/deleteUser';
+import {setNotificationKey} from '@tandem/redux/slices/languageReducer';
 
 const ProfileSettings = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -152,7 +153,10 @@ const NotificationSwitch = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => {
-    setIsEnabled(!isEnabled);
+    setIsEnabled(prev => {
+      store.dispatch(setNotificationKey(!prev));
+      return !prev;
+    });
   };
   return (
     <Pressable
