@@ -10,8 +10,11 @@ import {cacheAvatars, cachePlaces} from '../cache';
 import {PEOPLE} from '@tandem/constants/enums';
 import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
+import RNFetchBlob from 'rn-fetch-blob';
+import {CACHE_SESSION} from '@tandem/constants/local';
 
 export default async (loginResponse: LoginResponse) => {
+  RNFetchBlob.session(CACHE_SESSION).dispose();
   storeTokens(loginResponse.accessToken, loginResponse.refreshToken);
   // ! other logic related to navigation flow , modes ,family here
   // ! Store user data from login response as well

@@ -6,6 +6,12 @@ import {MultipleChoiceProps} from './interface';
 import {store} from '@tandem/redux/store';
 import {pushStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration.slice';
 import themeColor from '@tandem/theme/themeColor';
+import {
+  useSharedValue,
+  withSequence,
+  withTiming,
+} from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 
 const RNImageChoice = ({
   data = [],
@@ -35,6 +41,14 @@ const RNImageChoice = ({
     }
   };
 
+  const scaleButton = useSharedValue(1);
+
+  const runAnimation = () => {
+    scaleButton.value = withSequence(
+      withTiming(1.2, {duration: 200}),
+      withTiming(1),
+    );
+  };
   return (
     <ScrollView
       style={[styles.scrollView, customStyle && customStyle]}
@@ -51,18 +65,21 @@ const RNImageChoice = ({
             key={indexLocal.toString()}
             onPress={() => {
               handlePress(value.name);
+              runAnimation();
             }}>
-            <Image
-              source={{uri: value.file}}
-              style={[
-                styles.illustration,
-                selected.includes(value.name) && {
-                  borderWidth: 3,
-                  borderColor: themeColor.themeBlue,
-                },
-                itemStyle && itemStyle,
-              ]}
-            />
+            <Animated.View style={[{transform: [{scale: scaleButton}]}]}>
+              <Image
+                source={{uri: value.file}}
+                style={[
+                  styles.illustration,
+                  selected.includes(value.name) && {
+                    borderWidth: 3,
+                    borderColor: themeColor.themeBlue,
+                  },
+                  itemStyle && itemStyle,
+                ]}
+              />
+            </Animated.View>
           </Pressable>
         );
       })}

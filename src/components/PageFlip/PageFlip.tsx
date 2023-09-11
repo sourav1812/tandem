@@ -6,14 +6,16 @@ export const PageFlip = ({
   book,
   activeIndex,
   setActiveIndex,
+  readWithoutImages,
 }: {
   book: Book;
   setActiveIndex: React.Dispatch<React.SetStateAction<number>>;
   activeIndex: number;
+  readWithoutImages?: boolean;
 }) => {
   const textArray = book.pages.map(page => ({
     text: page.story_text,
-    img: page.image,
+    img: readWithoutImages ? null : page.image,
   }));
   return (
     <Project

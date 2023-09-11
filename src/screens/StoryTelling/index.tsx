@@ -79,16 +79,24 @@ const StoryTelling = () => {
       return {...previouState, ...date};
     });
   };
-  // React.useEffect(() => {
-  //   switch (currentIndex) {
-  //     case 1:
-  //       updateState({showQuestion: true});
-  //       break;
-  //     case 3:
-  //       updateState({showQuestion: true});
-  //       break;
-  //   }
-  // }, [currentIndex]);
+  React.useEffect(() => {
+    // switch (currentIndex) {
+    //   case 1:
+    //     updateState({showQuestion: true});
+    //     break;
+    //   case 3:
+    //     updateState({showQuestion: true});
+    //     break;
+    // }
+    if (currentIndex !== 0) {
+      return;
+    }
+    if (book.rating !== 0) {
+      setTimeout(() => {
+        setRenderModal(true);
+      }, 2000);
+    }
+  }, [book.rating, currentIndex]);
 
   const toggleModal = () => {
     setRenderModal(!renderModal);
@@ -147,7 +155,6 @@ const StoryTelling = () => {
     //       />
     //     );
     // }
-    console.log({tooltipFour, tooltipOne, tooltipTwo, tooltipThree});
     return (
       <RNTooltip
         isTablet={isTablet}
@@ -316,6 +323,7 @@ const StoryTelling = () => {
         {headerButton()}
       </View>
       <PageFlip
+        readWithoutImages={routesData?.readWithoutImages}
         book={book}
         activeIndex={currentIndex}
         setActiveIndex={setActiveIndex}

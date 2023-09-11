@@ -7,7 +7,6 @@ export interface MultipleChoiceProps {
   visibletoolTip?: boolean;
   onTooltipClose?: () => void;
   itemStyle?: StyleProp<ViewStyle>;
-  isTablet?: boolean;
   type?: string;
   maxSelections?: number;
   index?: number;

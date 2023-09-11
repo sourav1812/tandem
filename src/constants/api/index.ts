@@ -6,11 +6,12 @@ export enum API {
   AUTH = 'user/auth', //? POST
   GENERATE_STORY = 'story-books', //? POST
   RATE_STORY = 'story-books/rate-book', //? POST
-  STORIES = 'story-books', //? GET
+  STORIES = 'story-books', //* GET
   LOGOUT = 'user/log-out', //? POST
-  USER_PROFILE = 'user/profile', //? GET
+  USER_PROFILE = 'user/profile', //* GET
   CHANGE_PASSWORD = 'user/password', //? PUT
   ADD_BIG_PEOPLE = 'big-people', //?POST
+  CONSENT = 'user/profile/consent-form', //? POST
 }
 
 export enum ENVIRONMENT {

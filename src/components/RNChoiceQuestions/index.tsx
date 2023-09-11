@@ -9,6 +9,7 @@ import {getValueFromKey} from '@tandem/helpers/encryptedStorage';
 import {translation} from '@tandem/utils/methods';
 import {store} from '@tandem/redux/store';
 import {pushStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration.slice';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 
 const RNChoiceQuestions = ({
   data = [],
@@ -16,7 +17,6 @@ const RNChoiceQuestions = ({
   visibletoolTip = false,
   itemStyle,
   onTooltipClose = () => {},
-  isTablet,
   type,
   maxSelections = data.length,
   setDisabled,
@@ -26,6 +26,7 @@ const RNChoiceQuestions = ({
   const [positionRefs, setPositionRefs] = React.useState({
     0: {height: 0, width: 0, x: 0, y: 0},
   });
+  const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const [selected, setSelected] = React.useState<string[]>([]);
 
   React.useEffect(() => {
