@@ -32,4 +32,5 @@ export enum SCREEN_NAME {
   TERMS_OF_USE = 'TermsOfUse',
   PRIVACY_POLICIES = 'PrivacyPolicies',
   CONGRATULATION = 'Congratulation',
+  NOTIFICATION_SCREEN = 'NotificationScreen',
 }

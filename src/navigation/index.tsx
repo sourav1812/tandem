@@ -192,6 +192,12 @@ const AppNavigator = () => {
                 }
                 name={SCREEN_NAME.PROFILE_SETTINGS}
               />
+              <Stack.Screen
+                getComponent={() =>
+                  require('@tandem/screens/NotificationScreen').default
+                }
+                name={SCREEN_NAME.NOTIFICATION_SCREEN}
+              />
             </>
           )}
           {mode === MODE.B && (

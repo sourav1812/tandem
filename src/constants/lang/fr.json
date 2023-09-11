@@ -279,5 +279,9 @@
   "RELATIONSHIP": "Relation",
   "LOGOUT_FROM_ALL_DEVICES": "Souhaitez-vous également vous déconnecter de vos autres appareils ?",
   "DELETE_CHILD": "Supprimer l'enfant",
-  "DELETE_ADULT": "Supprimer le contenu pour adultes"
+  "DELETE_ADULT": "Supprimer le contenu pour adultes",
+  "DONT_MISS_NEW_BOOOKS": "Ne manquez pas les nouveaux livres",
+  "ACTIVATE_THE_NOTIFICATION": "Activez la notification pour pouvoir voir les nouveaux livres de votre enfant",
+  "TURN_ON_NOTIFICATION": "Activer la notification",
+  "MAYBE_LATER": "Peut-être plus tard"
 }

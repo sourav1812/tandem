@@ -31,6 +31,9 @@ import {LanguageDropDown} from '@tandem/components/LanguageDropDown';
 import {addNewChild} from '@tandem/api/creatChildProfile';
 import {addNewAdult} from '@tandem/api/createAdultProfile';
 import {PEOPLE} from '@tandem/constants/enums';
+import RNAvatarComponentWithEdit from '@tandem/components/RNAvatarComponentWithEdit';
+import ImageCropPicker from 'react-native-image-crop-picker';
+import {verticalScale} from 'react-native-size-matters';
 
 const GENDERS = {
   girl: 'girl',
@@ -51,8 +54,11 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
     ],
     questionIndex: 1,
     gender: '',
+    imagePickerUrl: null,
+    galaryImage: null,
   });
-  const {bulletinArray, questionIndex, gender} = state;
+  const {bulletinArray, questionIndex, gender, imagePickerUrl, galaryImage} =
+    state;
   const [name, setName] = useState<ValidationError>({value: ''});
   const [role, setRole] = useState<ValidationError>({value: ''});
   const [dateModal, setDateModal] = useState(false);
@@ -347,10 +353,42 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
               <ScrollView
                 contentContainerStyle={styles.list}
                 showsVerticalScrollIndicator={false}>
-                {avatars.map((item, index) => {
+                <RNAvatarComponentWithEdit
+                  onEdit={() => {
+                    ImageCropPicker.openPicker({
+                      width: 350,
+                      height: 350,
+                      cropping: true,
+                      loadingLabelText: 'Image',
+                      mediaType: 'photo',
+                    })
+                      .then(response => {
+                        updateState({imagePickerUrl: response.path});
+                      })
+                      .catch(err => {
+                        console.log(err);
+                      });
+                  }}
+                  onSelect={() => {
+                    setAvatar(null);
+                    updateState({galaryImage: imagePickerUrl});
+                  }}
+                  icon={{uri: imagePickerUrl}}
+                  imgStyle={[
+                    {
+                      marginTop: verticalScale(12),
+                      borderWidth: 3,
+                      borderColor: 'transparent',
+                    },
+                    galaryImage !== null && {
+                      borderColor: themeColor.themeBlue,
+                      borderRadius: 1000,
+                    },
+                  ]}
+                />
+                {avatars.map(item => {
                   return (
                     <RNAvatarComponent
-                      key={index.toString()}
                       icon={item.file}
                       customStyle={[
                         styles.avatar,
@@ -360,24 +398,8 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
                       ]}
                       imgStyle={styles.avatarImg}
                       onPress={() => {
-                        // if (index === 0) {
-                        //   return;
-                        // ImagePicker.openPicker({
-                        //   width: 300,
-                        //   height: 300,
-                        //   cropping: true,
-                        //   includeBase64: true,
-                        //   loadingLabelText: 'Image',
-                        //   mediaType: 'photo',
-                        // })
-                        //   .then(response => {
-                        //     setImageData(response);
-                        //   })
-                        //   .catch(err => {
-                        //     console.log(err);
-                        //   });
-                        // }
                         setAvatar(item.path);
+                        updateState({galaryImage: null});
                       }}
                     />
                   );
@@ -458,6 +480,39 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
               <ScrollView
                 contentContainerStyle={styles.list}
                 showsVerticalScrollIndicator={false}>
+                <RNAvatarComponentWithEdit
+                  onEdit={() => {
+                    ImageCropPicker.openPicker({
+                      width: 350,
+                      height: 350,
+                      cropping: true,
+                      loadingLabelText: 'Image',
+                      mediaType: 'photo',
+                    })
+                      .then(response => {
+                        updateState({imagePickerUrl: response.path});
+                      })
+                      .catch(err => {
+                        console.log(err);
+                      });
+                  }}
+                  onSelect={() => {
+                    setAvatar(null);
+                    updateState({galaryImage: imagePickerUrl});
+                  }}
+                  icon={{uri: imagePickerUrl}}
+                  imgStyle={[
+                    {
+                      marginTop: verticalScale(12),
+                      borderWidth: 3,
+                      borderColor: 'transparent',
+                    },
+                    galaryImage !== null && {
+                      borderColor: themeColor.themeBlue,
+                      borderRadius: 1000,
+                    },
+                  ]}
+                />
                 {avatars.map(item => {
                   return (
                     <RNAvatarComponent
@@ -470,25 +525,8 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
                       ]}
                       imgStyle={styles.avatarImg}
                       onPress={() => {
-                        // if (index === 0) {
-                        //   return;
-                        // ImagePicker.openPicker({
-                        //   width: 300,
-                        //   height: 300,
-                        //   cropping: true,
-                        //   includeBase64: true,
-                        //   loadingLabelText: 'Image',
-                        //   mediaType: 'photo',
-                        // })
-                        //   .then(response => {
-                        //     setImageData(response);
-                        //     console.log(response, 'sdfghjrfdsresponse');
-                        //   })
-                        //   .catch(err => {
-                        //     console.log(err);
-                        //   });
-                        // }
                         setAvatar(item.path);
+                        updateState({galaryImage: null});
                       }}
                     />
                   );

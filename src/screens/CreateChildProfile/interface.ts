@@ -7,4 +7,6 @@ export interface ChildProfileStateObject {
   bulletinArray: IndicatorType[];
   questionIndex: number;
   gender: string;
+  imagePickerUrl: string | null;
+  galaryImage: string | null;
 }

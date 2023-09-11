@@ -34,6 +34,7 @@ export type RootStackParamList = {
   PrivacyPolicies: undefined;
   TermsOfUse: undefined;
   Congratulation: undefined;
+  NotificationScreen: undefined;
 };
 
 export type RootTabParamList = {

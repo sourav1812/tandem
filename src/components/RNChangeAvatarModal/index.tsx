@@ -9,6 +9,9 @@ import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import themeColor from '@tandem/theme/themeColor';
 import {ScrollView} from 'react-native-gesture-handler';
 import RNAvatarComponent from '../RNAvatarComponent';
+import RNAvatarComponentWithEdit from '../RNAvatarComponentWithEdit';
+import ImageCropPicker from 'react-native-image-crop-picker';
+import {verticalScale} from 'react-native-size-matters';
 
 interface ChangeAvatarProps {
   visible: boolean;
@@ -24,6 +27,7 @@ const RNChangeAvatarModal = ({
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
 
   const [avatar, setAvatar] = useState<null | string>(null);
+  const [pickerUrl, setPickerUrl] = useState<null | string>(null);
   const avatars = useAppSelector(state => state.cache.avatars);
   return (
     <RNModal visible={visible} renderModal={renderModal}>
@@ -35,6 +39,39 @@ const RNChangeAvatarModal = ({
           <ScrollView
             contentContainerStyle={styles.list}
             showsVerticalScrollIndicator={false}>
+            <RNAvatarComponentWithEdit
+              onEdit={() => {
+                ImageCropPicker.openPicker({
+                  width: 350,
+                  height: 350,
+                  cropping: true,
+                  loadingLabelText: 'Image',
+                  mediaType: 'photo',
+                })
+                  .then(response => {
+                    setPickerUrl(response.path);
+                  })
+                  .catch(err => {
+                    console.log(err);
+                  });
+              }}
+              onSelect={() => {
+                // setAvatar(null);
+                // updateState({galaryImage: imagePickerUrl});
+              }}
+              icon={{uri: pickerUrl}}
+              imgStyle={[
+                {
+                  marginTop: verticalScale(12),
+                  borderWidth: 3,
+                  borderColor: 'transparent',
+                },
+                // galaryImage !== null && {
+                //   borderColor: themeColor.themeBlue,
+                //   borderRadius: 1000,
+                // },
+              ]}
+            />
             {avatars.map((item, index) => {
               return (
                 <RNAvatarComponent

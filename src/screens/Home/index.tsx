@@ -458,7 +458,7 @@ const Home = () => {
                           store.dispatch(clearStoryGenerationResponse());
                           navigateTo(SCREEN_NAME.ROADMAP);
                         } else {
-                          // toggleModal();
+                          navigateTo(SCREEN_NAME.NOTIFICATION_SCREEN);
                         }
                       }}
                     />
