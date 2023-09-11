@@ -315,7 +315,11 @@ const StoryTelling = () => {
         )}
         {headerButton()}
       </View>
-
+      <PageFlip
+        book={book}
+        activeIndex={currentIndex}
+        setActiveIndex={setActiveIndex}
+      />
       {currentIndex !== totalPages && (
         <RNTooltip
           isTablet={isTablet}
