@@ -52,3 +52,14 @@ export enum SOCIAL_AUTH {
   GOOGLE = 'google',
   APPLE = 'apple',
 }
+
+export enum DIRECTION_ARROWS {
+  EAST = 'East',
+  WEST = 'West',
+  NORTH = 'North',
+  SOUTH = 'South',
+  NORTH_EAST = 'NorthEast',
+  NORTH_WEST = 'NorthWest',
+  SOUTH_EAST = 'SouthEast',
+  SOUTH_WEST = 'SouthWest',
+}

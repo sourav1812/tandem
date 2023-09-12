@@ -28,7 +28,7 @@ import {
 } from '@tandem/constants/local';
 import RNTooltip from '@tandem/components/RNTooltip';
 import {RootState, store} from '@tandem/redux/store';
-import {STORY_PARTS} from '@tandem/constants/enums';
+import {DIRECTION_ARROWS, STORY_PARTS} from '@tandem/constants/enums';
 import {
   changeQuestionIndex,
   pushStoryGenerationResponse,
@@ -181,8 +181,8 @@ const GenerateStory = () => {
                   marginRight: !portrait ? scale(50) : undefined,
                 }}
                 textStyle={{fontSize: !portrait ? scale(14) : scale(18)}}
-                bottom={portrait ? 'South' : undefined}
-                top={portrait ? undefined : 'SouthEast'}
+                bottom={portrait ? DIRECTION_ARROWS.SOUTH : undefined}
+                top={portrait ? undefined : DIRECTION_ARROWS.SOUTH_EAST}
                 text={translation('YES_NO_SELECT')}
                 open={tooltipArray?.includes(15) ? false : tooltipFifth}
                 setClose={() => {
@@ -476,7 +476,7 @@ const GenerateStory = () => {
           tooltipArray.push(6);
           updateState({tooltipSecond: false});
         }}
-        bottom={'South'}
+        bottom={DIRECTION_ARROWS.SOUTH}
         text={translation('PRESS_THE_BUTTON')}
         textStyle={styles.tooltip}
         dimensionObject={positionRefs[0]}>

@@ -30,7 +30,7 @@ import {
   saveCurrentChild,
 } from '@tandem/redux/slices/createChild.slice';
 import logout from '@tandem/functions/logout';
-import {PEOPLE} from '@tandem/constants/enums';
+import {DIRECTION_ARROWS, PEOPLE} from '@tandem/constants/enums';
 
 const Account = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -354,11 +354,11 @@ const Account = () => {
               );
             })}
             <RNTooltip
+              bottom={DIRECTION_ARROWS.SOUTH}
               isTablet={isTablet}
               topViewStyle={{
                 alignItems: 'center',
                 width: width,
-                marginBottom: verticalScale(-20),
               }}
               text={translation('ADD_YOURSELF')}
               open={
@@ -373,8 +373,7 @@ const Account = () => {
                 });
                 tooltipArray.push(2);
                 storeKey(TOOLTIP, tooltipArray);
-              }}
-              dimensionObject={positionRefs[1]}>
+              }}>
               <Pressable
                 ref={refTwo}
                 onLayout={() => {

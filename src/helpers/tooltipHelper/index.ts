@@ -1,17 +1,21 @@
+import {DIRECTION_ARROWS} from '@tandem/constants/enums';
 import {Dimensions} from 'react-native';
 
-const tooltipHelperTop = (positionRefs: {
+const tooltipHelperTop = (positionRefs?: {
   height: number;
   width: number;
   x: number;
   y: number;
 }) => {
+  if (!positionRefs) {
+    return null;
+  }
   const {width, height} = Dimensions.get('screen');
   if (positionRefs.x > width / 2 && positionRefs.y < height / 2) {
-    return 'NorthEast';
+    return DIRECTION_ARROWS.NORTH_EAST;
   }
   if (positionRefs.x < width / 2 && positionRefs.y < height / 2) {
-    return 'NorthWest';
+    return DIRECTION_ARROWS.NORTH_WEST;
   }
   if (positionRefs.x < width / 2 && positionRefs.y > height / 2) {
     return null;
@@ -20,25 +24,28 @@ const tooltipHelperTop = (positionRefs: {
     return null;
   }
   if (positionRefs.x === width / 2 && positionRefs.y < height / 2) {
-    return 'North';
+    return DIRECTION_ARROWS.NORTH;
   }
   if (positionRefs.x < width / 2 && positionRefs.y === height / 2) {
-    return 'West';
+    return DIRECTION_ARROWS.WEST;
   }
   if (positionRefs.x === width / 2 && positionRefs.y > height / 2) {
     return null;
   }
   if (positionRefs.x > width / 2 && positionRefs.y === height / 2) {
-    return 'East';
+    return DIRECTION_ARROWS.EAST;
   }
   return null;
 };
-const tooltipHelperBottom = (positionRefs: {
+const tooltipHelperBottom = (positionRefs?: {
   height: number;
   width: number;
   x: number;
   y: number;
 }) => {
+  if (!positionRefs) {
+    return null;
+  }
   const {width, height} = Dimensions.get('window');
   if (positionRefs.x > width / 2 && positionRefs.y < height / 2) {
     return null;
@@ -47,10 +54,10 @@ const tooltipHelperBottom = (positionRefs: {
     return null;
   }
   if (positionRefs.x < width / 2 && positionRefs.y > height / 2) {
-    return 'SouthWest';
+    return DIRECTION_ARROWS.SOUTH_WEST;
   }
   if (positionRefs.x > width / 2 && positionRefs.y > height / 2) {
-    return 'SouthEast';
+    return DIRECTION_ARROWS.SOUTH_EAST;
   }
   if (positionRefs.x === width / 2 && positionRefs.y < height / 2) {
     return null;
@@ -59,7 +66,7 @@ const tooltipHelperBottom = (positionRefs: {
     return null;
   }
   if (positionRefs.x === width / 2 && positionRefs.y > height / 2) {
-    return 'South';
+    return DIRECTION_ARROWS.SOUTH;
   }
   if (positionRefs.x > width / 2 && positionRefs.y === height / 2) {
     return null;

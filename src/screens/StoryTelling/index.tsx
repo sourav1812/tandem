@@ -56,7 +56,6 @@ const StoryTelling = () => {
 
   const refOne = useRef<any>(null);
   const refTwo = useRef<any>(null);
-  const refThree = useRef<any>(null);
 
   const [positionRefs, setPositionRefs] = React.useState({
     0: {height: 0, width: 0, x: 0, y: 0},
@@ -255,7 +254,11 @@ const StoryTelling = () => {
   return (
     <RNScreenWrapper
       giveStatusColor={tooltipOne || tooltipTwo || tooltipThree || tooltipFour}>
-      <View style={styles.headingButton}>
+      <View
+        style={[
+          styles.headingButton,
+          {opacity: tooltipArray?.includes(10) ? 1 : tooltipThree ? 0.1 : 1},
+        ]}>
         <RNTooltip
           isTablet={isTablet}
           topViewStyle={{
@@ -319,55 +322,10 @@ const StoryTelling = () => {
         book={book}
         activeIndex={currentIndex}
         setActiveIndex={setActiveIndex}
+        tooltipState={state}
+        setTooltipState={setState}
       />
-      {currentIndex !== totalPages && (
-        <RNTooltip
-          isTablet={isTablet}
-          topViewStyle={{alignItems: 'center'}}
-          bottom="South"
-          open={tooltipArray?.includes(10) ? false : tooltipThree}
-          setClose={() => {
-            updateState({tooltipThree: false});
-            tooltipArray.push(10);
-            storeKey(TOOLTIP, tooltipArray);
-          }}
-          text={translation('READ_A_STORY')}
-          textContainerStyle={[styles.tooltipTwo, {margin: 0, marginLeft: 20}]}
-          mainStyle={{
-            marginTop: verticalScale(-140),
-            height: verticalScale(200),
-          }}
-          textStyle={[
-            {
-              textAlign: 'center',
-              fontSize: verticalScale(16),
-              marginTop: 10,
-            },
-          ]}
-          dimensionObject={positionRefs[2]}>
-          <View
-            style={{width: '100%', backgroundColor: 'black'}}
-            ref={refThree}
-            onLayout={() => {
-              refThree?.current?.measure(
-                (
-                  x: number,
-                  y: number,
-                  width: number,
-                  height: number,
-                  pageX: number,
-                  pageY: number,
-                ) => {
-                  setPositionRefs(prev => ({
-                    ...prev,
-                    2: {height: width, width: height, x: pageX, y: pageY},
-                  }));
-                },
-              );
-            }}
-          />
-        </RNTooltip>
-      )}
+
       {showQuestion && renderQuestions()}
       <RNCongratsModal visible={renderModal} renderModal={toggleModal} />
       <RNReadingLevelModal
