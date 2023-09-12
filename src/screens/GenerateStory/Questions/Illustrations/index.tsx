@@ -15,15 +15,45 @@ import {
 import Animated from 'react-native-reanimated';
 import {STORY_PARTS} from '@tandem/constants/enums';
 import {pushStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration.slice';
-import {store} from '@tandem/redux/store';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
 import {SvgProps} from 'react-native-svg';
 import removeQuestionData from '@tandem/functions/removeQuestionData';
+import {useAppSelector, useAppDispatch} from '@tandem/hooks/navigationHooks';
 
 export default () => {
   const [disabled, setDisabled] = React.useState(true);
-  const [selected, setSelectable] = React.useState<null | string>(null);
+  const type = STORY_PARTS.STYLES;
+  const maxSelections = 1;
+  const activeState = useAppSelector(state => state.storyGeneration[type]);
+  const dispatch = useAppDispatch();
+  React.useEffect(() => {
+    if (activeState.length === 0) {
+      setDisabled(true);
+    } else {
+      setDisabled(false);
+    }
+  }, [activeState.length]);
+
+  const handlePress = (name: string) => {
+    // ! VERY IMPORTANT : SEND ILLUSTRATION TEXT ASK CLIENT FOR KEYS
+    if (maxSelections === 1) {
+      dispatch(pushStoryGenerationResponse({key: type, value: [name]}));
+      return;
+    }
+    if (activeState.length < maxSelections && !activeState.includes(name)) {
+      dispatch(
+        pushStoryGenerationResponse({key: type, value: [...activeState, name]}),
+      );
+      return;
+    }
+    dispatch(
+      pushStoryGenerationResponse({
+        key: type,
+        value: activeState.filter(oldName => oldName !== name),
+      }),
+    );
+  };
   return (
     <GenerateStory
       onBack={() => {
@@ -31,12 +61,6 @@ export default () => {
       }}
       questionNumber={6}
       onNextQuestion={() => {
-        store.dispatch(
-          pushStoryGenerationResponse({
-            key: STORY_PARTS.STYLES,
-            value: [selected], // ! VERY IMPORTANT : SEND ILLUSTRATION TEXT ASK CLIENT FOR KEYS
-          }),
-        );
         navigateTo(SCREEN_NAME.GENERATE_STORY_COLORS);
       }}
       disabled={disabled}>
@@ -59,17 +83,9 @@ export default () => {
             return (
               <AnimatedIllustrationChoice
                 obj={obj}
-                selected={selected}
+                activeState={activeState}
                 key={index.toString()}
-                onPress={() => {
-                  if (obj.name === selected) {
-                    setSelectable(null);
-                    setDisabled(true);
-                    return;
-                  }
-                  setDisabled(false);
-                  setSelectable(obj.name);
-                }}
+                onPress={() => handlePress(obj.name)}
               />
             );
           })}
@@ -82,14 +98,14 @@ export default () => {
 const AnimatedIllustrationChoice = ({
   obj,
   onPress,
-  selected,
+  activeState,
 }: {
   obj: {
     name: string;
     svg: React.FC<SvgProps>;
   };
   onPress: () => void;
-  selected: string | null;
+  activeState: string[];
 }) => {
   const scaleButton = useSharedValue(1);
 
@@ -110,7 +126,7 @@ const AnimatedIllustrationChoice = ({
           {transform: [{scale: scaleButton}]},
           styles.illustration,
           {borderWidth: 3, borderColor: 'transparent'},
-          obj.name === selected && {
+          activeState.includes(obj.name) && {
             borderColor: themeColor.themeBlue,
           },
         ]}>

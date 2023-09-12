@@ -3,7 +3,6 @@ import {Pressable, ScrollView, Image} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
 import {MultipleChoiceProps} from './interface';
-import {store} from '@tandem/redux/store';
 import {pushStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration.slice';
 import themeColor from '@tandem/theme/themeColor';
 import {
@@ -12,6 +11,7 @@ import {
   withTiming,
 } from 'react-native-reanimated';
 import Animated from 'react-native-reanimated';
+import {useAppSelector, useAppDispatch} from '@tandem/hooks/navigationHooks';
 
 const RNImageChoice = ({
   data = [],
@@ -20,28 +20,34 @@ const RNImageChoice = ({
   maxSelections = data.length,
   setDisabled,
 }: MultipleChoiceProps) => {
-  const [selected, setSelected] = React.useState<string[]>([]);
-
+  const activeState = useAppSelector(state => state.storyGeneration[type]);
+  const dispatch = useAppDispatch();
   React.useEffect(() => {
-    store.dispatch(pushStoryGenerationResponse({key: type, value: selected}));
-    if (selected.length === 0) {
+    if (activeState.length === 0) {
       setDisabled(true);
     } else {
       setDisabled(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selected]);
+  }, [activeState.length]);
 
   const handlePress = (name: string) => {
     if (maxSelections === 1) {
-      setSelected([name]);
+      dispatch(pushStoryGenerationResponse({key: type, value: [name]}));
       return;
     }
-    if (selected.length < maxSelections && !selected.includes(name)) {
-      setSelected(prev => [...prev, name]);
-    } else {
-      setSelected(prev => prev.filter(oldName => oldName !== name));
+    if (activeState.length < maxSelections && !activeState.includes(name)) {
+      dispatch(
+        pushStoryGenerationResponse({key: type, value: [...activeState, name]}),
+      );
+      return;
     }
+    dispatch(
+      pushStoryGenerationResponse({
+        key: type,
+        value: activeState.filter(oldName => oldName !== name),
+      }),
+    );
   };
 
   return (
@@ -59,7 +65,7 @@ const RNImageChoice = ({
           <AnimatedImageChoice
             value={value}
             onPress={() => handlePress(value.name)}
-            selected={selected}
+            activeState={activeState}
             key={indexLocal.toString()}
           />
         );
@@ -73,14 +79,14 @@ export default RNImageChoice;
 const AnimatedImageChoice = ({
   value,
   onPress,
-  selected,
+  activeState,
 }: {
   value: {
     name: string;
     file: string;
   };
   onPress: () => void;
-  selected: string[];
+  activeState: string[];
 }) => {
   const scaleButton = useSharedValue(1);
 
@@ -102,7 +108,7 @@ const AnimatedImageChoice = ({
           source={{uri: value.file}}
           style={[
             styles.illustration,
-            selected.includes(value.name) && {
+            activeState.includes(value.name) && {
               borderWidth: 3,
               borderColor: themeColor.themeBlue,
             },
