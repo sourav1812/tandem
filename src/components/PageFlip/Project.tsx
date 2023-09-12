@@ -25,7 +25,11 @@ import {
 import {PixelRatio, StatusBar, useWindowDimensions} from 'react-native';
 import React, {useState} from 'react';
 import {pageCurl} from './pageCurl';
-import {verticalScale} from 'react-native-size-matters';
+import {scale, verticalScale} from 'react-native-size-matters';
+import {StateObject} from '@tandem/screens/StoryTelling/interface';
+import {translation} from '@tandem/utils/methods';
+import {TOOLTIP} from '@tandem/constants/local';
+import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
 
 interface ProjectProps {
   textArray: {
@@ -34,6 +38,8 @@ interface ProjectProps {
   }[];
   activeIndex: number;
   setActiveIndex: React.Dispatch<React.SetStateAction<number>>;
+  tooltipState: StateObject;
+  setTooltipState: React.Dispatch<React.SetStateAction<StateObject>>;
 }
 interface RenderSceneProps {
   image: any;
@@ -45,6 +51,8 @@ interface RenderSceneProps {
   total: number;
   hHeight: number;
   outer: SkRect;
+  tooltipState: StateObject;
+  tooltipArray: number[];
 }
 
 const pd = PixelRatio.get();
@@ -95,6 +103,8 @@ export const Project = ({
   textArray,
   activeIndex,
   setActiveIndex,
+  tooltipState,
+  setTooltipState,
 }: ProjectProps) => {
   const {width: wWidth, height: heightRef} = useWindowDimensions();
   const [hHeight, setHeight] = useState(
@@ -117,6 +127,7 @@ export const Project = ({
 
   const [show, setShow] = React.useState(true);
   const [disbaleTouch, setDisbaleTouch] = React.useState(false);
+  const tooltipArray = getValueFromKey(TOOLTIP);
 
   React.useEffect(() => {
     if (!show) {
@@ -144,6 +155,13 @@ export const Project = ({
 
   const onTouch = useTouchHandler({
     onStart: ({x}) => {
+      setTooltipState(prev => ({
+        ...prev,
+        tooltipThree: false,
+        tooltipFour: true,
+      }));
+      tooltipArray.push(10);
+      storeKey(TOOLTIP, tooltipArray);
       origin.current = x;
     },
     onActive: ({x}) => {
@@ -185,6 +203,8 @@ export const Project = ({
           )}
           sentences={processSentences(textArray[activeIndex - 1].text, wWidth)}
           font={font}
+          tooltipState={tooltipState}
+          tooltipArray={tooltipArray}
         />
       )}
       <Group transform={[{scale: 1 / pd}]}>
@@ -213,6 +233,8 @@ export const Project = ({
                 roundedRect={getRoundRect(sentence.length, wWidth, hHeight)}
                 sentences={sentence}
                 font={font}
+                tooltipState={tooltipState}
+                tooltipArray={tooltipArray}
               />
             );
           })}
@@ -232,11 +254,25 @@ const RenderScene = ({
   total,
   outer,
   hHeight,
+  tooltipState,
+  tooltipArray,
 }: RenderSceneProps) => {
   const imageRef = useImage(image);
   // const {width: wWidth} = useWindowDimensions();
   // const numberOfChars = Math.floor((wWidth * 1.5) / fontSize);
   const [showBackdrop, setShowBackdrop] = React.useState(false);
+  const arrowImage = useImage(require('../../assets/png/SouthArrow.png'));
+  const {width: wWidth} = useWindowDimensions();
+
+  const arrowRect = Skia.XYWHRect(
+    wWidth / 2,
+    hHeight -
+      padding -
+      (fontSize + verticalScale(10)) * sentences.length -
+      verticalScale(100),
+    verticalScale(30),
+    verticalScale(60),
+  );
   React.useEffect(() => {
     if (!showBackdrop) {
       setShowBackdrop(true);
@@ -249,9 +285,36 @@ const RenderScene = ({
   return (
     <Group>
       <Image image={imageRef} rect={outer} fit="cover" />
+      {tooltipArray?.includes(10)
+        ? undefined
+        : tooltipState.tooltipThree && (
+            <>
+              <BackdropBlur blur={0} clip={outer}>
+                <Fill color="rgba(35, 35, 35, 0.9)" />
+              </BackdropBlur>
+              <Text
+                x={wWidth / 2 - scale(50)}
+                y={
+                  hHeight -
+                  padding -
+                  (fontSize + verticalScale(10)) * sentences.length -
+                  verticalScale(120)
+                }
+                //  number of line the text is on
+                text={translation('READ_A_STORY')}
+                color={'white'}
+                font={font}
+              />
+              <Image image={arrowImage} rect={arrowRect} fit="cover" />
+            </>
+          )}
       {showBackdrop && (
         <BackdropBlur blur={8} clip={roundedRect}>
-          <Fill color="rgba(255, 255, 255, 0.438)" />
+          {tooltipState.tooltipThree ? (
+            <Fill color="rgba(255, 255, 255, 0.876)" />
+          ) : (
+            <Fill color="rgba(255, 255, 255, 0.438)" />
+          )}
         </BackdropBlur>
       )}
       <Progressbar
