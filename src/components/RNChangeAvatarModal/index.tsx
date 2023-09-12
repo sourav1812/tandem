@@ -9,9 +9,6 @@ import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import themeColor from '@tandem/theme/themeColor';
 import {ScrollView} from 'react-native-gesture-handler';
 import RNAvatarComponent from '../RNAvatarComponent';
-import RNAvatarComponentWithEdit from '../RNAvatarComponentWithEdit';
-import ImageCropPicker from 'react-native-image-crop-picker';
-import {verticalScale} from 'react-native-size-matters';
 
 interface ChangeAvatarProps {
   visible: boolean;
@@ -25,14 +22,14 @@ const RNChangeAvatarModal = ({
   getAvatar,
 }: ChangeAvatarProps) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
-  const socialLoginData = useAppSelector(
-    state => state.socialLogin.socialDataObject,
-  );
+  // const socialLoginData = useAppSelector(
+  //   state => state.socialLogin.socialDataObject,
+  // );
 
   const [avatar, setAvatar] = useState<null | string>(null);
-  const [pickerUrl, setPickerUrl] = useState<null | string>(
-    socialLoginData.image !== '' ? socialLoginData.image : null,
-  );
+  // const [pickerUrl, setPickerUrl] = useState<null | string>(
+  //   socialLoginData.image !== '' ? socialLoginData.image : null,
+  // );
   const avatars = useAppSelector(state => state.cache.avatars);
   return (
     <RNModal visible={visible} renderModal={renderModal}>

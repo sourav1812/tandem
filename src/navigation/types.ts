@@ -41,6 +41,7 @@ export type RootTabParamList = {
   Home: undefined;
   Bookshelf: undefined;
   People: undefined;
+  NotificationScreen: undefined;
 };
 
 export type AllStackScreenParamList = RootStackParamList & RootTabParamList;

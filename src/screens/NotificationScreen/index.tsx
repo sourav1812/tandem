@@ -11,8 +11,13 @@ import RNTextComponent from '@tandem/components/RNTextComponent';
 import {translation} from '@tandem/utils/methods';
 import navigateTo from '@tandem/navigation/navigate';
 import {requestPermission} from '@tandem/functions/permissions';
+import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
+import {useAppDispatch} from '@tandem/hooks/navigationHooks';
+import {setIsFirstTime} from '@tandem/redux/slices/permissions.slice';
 
 const NotificationScreen = () => {
+  const dispatch = useAppDispatch();
+
   return (
     <RNScreenWrapper style={{backgroundColor: themeColor.white, flex: 1}}>
       <ImageBackground
@@ -22,7 +27,8 @@ const NotificationScreen = () => {
           onlyIcon
           icon={<Close />}
           onClick={() => {
-            navigateTo();
+            dispatch(setIsFirstTime('false'));
+            navigateTo(SCREEN_NAME.BOOKSHELF);
           }}
         />
         <Book style={styles.icon} height={verticalScale(155)} />
@@ -43,7 +49,10 @@ const NotificationScreen = () => {
           pressableStyle={{marginTop: verticalScale(12)}}
           onlyBorder
           title={translation('MAYBE_LATER')}
-          onClick={() => {}}
+          onClick={() => {
+            dispatch(setIsFirstTime('false'));
+            navigateTo(SCREEN_NAME.BOOKSHELF);
+          }}
         />
       </ImageBackground>
     </RNScreenWrapper>

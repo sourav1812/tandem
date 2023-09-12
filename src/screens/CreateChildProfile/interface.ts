@@ -8,6 +8,5 @@ export interface ChildProfileStateObject {
   questionIndex: number;
   gender: string;
   imagePickerUrl: string | null;
-  galaryImage: string | null;
   showImageModal: boolean;
 }

@@ -61,17 +61,10 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
     questionIndex: 1,
     gender: '',
     imagePickerUrl: socialLoginData.image !== '' ? socialLoginData.image : null,
-    galaryImage: null,
     showImageModal: false,
   });
-  const {
-    bulletinArray,
-    questionIndex,
-    gender,
-    imagePickerUrl,
-    galaryImage,
-    showImageModal,
-  } = state;
+  const {bulletinArray, questionIndex, gender, imagePickerUrl, showImageModal} =
+    state;
   const [name, setName] = useState<ValidationError>({value: ''});
   const [role, setRole] = useState<ValidationError>({value: ''});
   const [dateModal, setDateModal] = useState(false);
@@ -443,7 +436,6 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
                         imgStyle={styles.avatarImg}
                         onPress={() => {
                           setAvatar(item.path);
-                          updateState({galaryImage: null});
                         }}
                       />
                     );
@@ -566,7 +558,6 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
                         imgStyle={styles.avatarImg}
                         onPress={() => {
                           setAvatar(item.path);
-                          updateState({galaryImage: null});
                         }}
                       />
                     );
