@@ -20,6 +20,9 @@ import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {RootState} from '@tandem/redux/store';
 import RNButton from '@tandem/components/RNButton';
 import generateStory from '@tandem/api/generateStory';
+import {STORY_PARTS} from '@tandem/constants/enums';
+import {goBackInOrder} from '@tandem/functions/removeQuestionData';
+import {useNavigation} from '@react-navigation/native';
 
 const SCREEN = [
   SCREEN_NAME.GENERATE_STORY_WHO,
@@ -32,6 +35,7 @@ const SCREEN = [
 ];
 
 const RNRoadmap = () => {
+  const navigation: any = useNavigation();
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const [positionRefs, setPositionRefs] = React.useState({
     0: {height: 0, width: 0, x: 0, y: 0},
@@ -54,8 +58,42 @@ const RNRoadmap = () => {
   );
   let scale = portrait ? 1 : 1.4;
 
+  const who = true;
+  const inclusion =
+    storyGenerationResponse[STORY_PARTS.WHO].length > 0 ||
+    storyGenerationResponse[STORY_PARTS.INCLUSION] !== null;
+  const where =
+    (inclusion && storyGenerationResponse[STORY_PARTS.INCLUSION] !== null) ||
+    storyGenerationResponse[STORY_PARTS.WHERE].length > 0;
+  const whatThings =
+    (where && storyGenerationResponse[STORY_PARTS.WHERE].length > 0) ||
+    storyGenerationResponse[STORY_PARTS.WHAT_THINGS].length > 0;
+  const whatHappens =
+    (whatThings &&
+      storyGenerationResponse[STORY_PARTS.WHAT_THINGS].length > 0) ||
+    storyGenerationResponse[STORY_PARTS.WHAT_HAPPENS].length > 0;
+  const illustration =
+    (whatHappens &&
+      storyGenerationResponse[STORY_PARTS.WHAT_HAPPENS].length > 0) ||
+    storyGenerationResponse[STORY_PARTS.STYLES].length > 0;
+  const colors =
+    (illustration && storyGenerationResponse[STORY_PARTS.STYLES].length > 0) ||
+    storyGenerationResponse[STORY_PARTS.COLOR].length > 0;
+
+  const checkIfClickable = [
+    who,
+    inclusion,
+    where,
+    whatThings,
+    whatHappens,
+    illustration,
+    colors,
+  ];
+
   const handleNavigate = (index: number) => {
-    navigateTo(SCREEN[index]);
+    if (checkIfClickable[index]) {
+      navigation.push(SCREEN[index]);
+    }
   };
 
   return (
@@ -66,7 +104,7 @@ const RNRoadmap = () => {
             onlyIcon
             icon={<BackButton />}
             onClick={() => {
-              navigateTo();
+              goBackInOrder();
             }}
           />
           <Pressable
@@ -99,6 +137,9 @@ const RNRoadmap = () => {
               },
             ]}
             onPress={async () => {
+              if (!checkIfClickable[6]) {
+                return;
+              }
               try {
                 await generateStory({
                   childId: currentChild.childId,
@@ -108,13 +149,7 @@ const RNRoadmap = () => {
                 console.log('error generating story', error);
               }
             }}>
-            <Create
-              scale={scale}
-              mapIndex={
-                storyGenerationResponse.illustrationColors.length > 0 &&
-                storyGenerationResponse.illustrationStyle.length > 0
-              }
-            />
+            <Create scale={scale} mapIndex={!!checkIfClickable[6]} />
           </Pressable>
           {positionRefs[6].y !== 0 && (
             <Pressable
@@ -141,14 +176,12 @@ const RNRoadmap = () => {
               <StyleColor
                 scale={scale}
                 fillColor={
-                  storyGenerationResponse.genre.length > 0
+                  checkIfClickable[5]
                     ? themeColor.themeBlue
                     : themeColor.lightGray
                 }
                 textColor={
-                  storyGenerationResponse.genre.length > 0
-                    ? themeColor.white
-                    : themeColor.themeBlue
+                  checkIfClickable[5] ? themeColor.white : themeColor.themeBlue
                 }
               />
             </Pressable>
@@ -178,14 +211,12 @@ const RNRoadmap = () => {
               <WhatHappens
                 scale={scale}
                 fillColor={
-                  storyGenerationResponse.plotElements.length > 0
+                  checkIfClickable[4]
                     ? themeColor.lightGreen
                     : themeColor.lightGray
                 }
                 textColor={
-                  storyGenerationResponse.plotElements.length > 0
-                    ? themeColor.white
-                    : themeColor.themeBlue
+                  checkIfClickable[4] ? themeColor.white : themeColor.themeBlue
                 }
               />
             </Pressable>
@@ -215,14 +246,10 @@ const RNRoadmap = () => {
               <WhatThing
                 scale={scale}
                 fillColor={
-                  storyGenerationResponse.location.length > 0
-                    ? themeColor.gold
-                    : themeColor.lightGray
+                  checkIfClickable[3] ? themeColor.gold : themeColor.lightGray
                 }
                 textColor={
-                  storyGenerationResponse.location.length > 0
-                    ? themeColor.white
-                    : themeColor.themeBlue
+                  checkIfClickable[3] ? themeColor.white : themeColor.themeBlue
                 }
               />
             </Pressable>
@@ -252,16 +279,10 @@ const RNRoadmap = () => {
               <Where
                 scale={scale}
                 fillColor={
-                  storyGenerationResponse.characters.length > 0 &&
-                  storyGenerationResponse.childInStory !== null
-                    ? themeColor.green
-                    : themeColor.lightGray
+                  checkIfClickable[2] ? themeColor.green : themeColor.lightGray
                 }
                 textColor={
-                  storyGenerationResponse.characters.length > 0 &&
-                  storyGenerationResponse.childInStory !== null
-                    ? themeColor.white
-                    : themeColor.themeBlue
+                  checkIfClickable[2] ? themeColor.white : themeColor.themeBlue
                 }
               />
             </Pressable>

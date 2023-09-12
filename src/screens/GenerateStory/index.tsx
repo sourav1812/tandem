@@ -8,13 +8,13 @@ import themeColor from '@tandem/theme/themeColor';
 import RNButton from '@tandem/components/RNButton';
 import LeftArrow from '@tandem/assets/svg/LeftArrow';
 import QuestionMark from '@tandem/assets/svg/QuestionMark';
-import navigateTo from '@tandem/navigation/navigate';
 import {scale, verticalScale} from 'react-native-size-matters';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {translation} from '@tandem/utils/methods';
 import {getValueFromKey} from '@tandem/helpers/encryptedStorage';
 import {TOOLTIP} from '@tandem/constants/local';
 import RNTooltip from '@tandem/components/RNTooltip';
+import navigateTo from '@tandem/navigation/navigate';
 
 export default ({
   onNextQuestion,
@@ -404,8 +404,8 @@ export default ({
             <RNButton
               onlyIcon
               onClick={() => {
-                navigateTo();
                 onBack();
+                navigateTo();
               }}
               icon={<LeftArrow />}
             />

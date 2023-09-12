@@ -10,11 +10,12 @@ import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {RootState} from '@tandem/redux/store';
 import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
 import GenerateStory from '../..';
-import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import removeQuestionData from '@tandem/functions/removeQuestionData';
+import {useNavigation} from '@react-navigation/native';
 
 export default () => {
+  const navigation: any = useNavigation();
   const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
@@ -37,7 +38,7 @@ export default () => {
       giveStatusColor={tooltipFirst}
       questionNumber={1}
       onNextQuestion={() => {
-        navigateTo(SCREEN_NAME.GENERATE_STORY_INCLUSION);
+        navigation.push(SCREEN_NAME.GENERATE_STORY_INCLUSION);
       }}
       disabled={disabled}>
       <>

@@ -16,12 +16,13 @@ import Animated from 'react-native-reanimated';
 import {STORY_PARTS} from '@tandem/constants/enums';
 import {pushStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration.slice';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
-import navigateTo from '@tandem/navigation/navigate';
 import {SvgProps} from 'react-native-svg';
 import removeQuestionData from '@tandem/functions/removeQuestionData';
 import {useAppSelector, useAppDispatch} from '@tandem/hooks/navigationHooks';
+import {useNavigation} from '@react-navigation/native';
 
 export default () => {
+  const navigation: any = useNavigation();
   const [disabled, setDisabled] = React.useState(true);
   const type = STORY_PARTS.STYLES;
   const maxSelections = 1;
@@ -61,7 +62,7 @@ export default () => {
       }}
       questionNumber={6}
       onNextQuestion={() => {
-        navigateTo(SCREEN_NAME.GENERATE_STORY_COLORS);
+        navigation.push(SCREEN_NAME.GENERATE_STORY_COLORS);
       }}
       disabled={disabled}>
       <>
