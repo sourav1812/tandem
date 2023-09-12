@@ -6,7 +6,9 @@ import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {TOOLTIP} from '@tandem/constants/local';
 import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
-import navigateTo from '@tandem/navigation/navigate';
+import {useNavigation} from '@react-navigation/native';
+import {STORY_PARTS} from '@tandem/constants/enums';
+import removeQuestionData from '@tandem/functions/removeQuestionData';
 
 export default () => {
   const [disabled, setDisabled] = React.useState(true);
@@ -20,11 +22,15 @@ export default () => {
     tooltipArray.push(7);
     storeKey(TOOLTIP, tooltipArray);
   };
+  const navigation: any = useNavigation();
   return (
     <GenerateStory
+      onBack={() => {
+        removeQuestionData(STORY_PARTS.COLOR);
+      }}
       questionNumber={7}
       onNextQuestion={() => {
-        navigateTo(SCREEN_NAME.ROADMAP);
+        navigation.push(SCREEN_NAME.ROADMAP);
       }}
       disabled={disabled}>
       <RNChooseColor

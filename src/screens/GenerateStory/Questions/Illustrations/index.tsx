@@ -18,20 +18,17 @@ import {pushStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration.
 import {store} from '@tandem/redux/store';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
+import {SvgProps} from 'react-native-svg';
+import removeQuestionData from '@tandem/functions/removeQuestionData';
 
 export default () => {
   const [disabled, setDisabled] = React.useState(true);
   const [selected, setSelectable] = React.useState<null | string>(null);
-  const scaleButton = useSharedValue(1);
-
-  const runAnimation = () => {
-    scaleButton.value = withSequence(
-      withTiming(1.2, {duration: 200}),
-      withTiming(1),
-    );
-  };
   return (
     <GenerateStory
+      onBack={() => {
+        removeQuestionData(STORY_PARTS.STYLES);
+      }}
       questionNumber={6}
       onNextQuestion={() => {
         store.dispatch(
@@ -60,10 +57,11 @@ export default () => {
           showsVerticalScrollIndicator={false}>
           {ILLUSTRATION.map((obj, index) => {
             return (
-              <Pressable
+              <AnimatedIllustrationChoice
+                obj={obj}
+                selected={selected}
                 key={index.toString()}
                 onPress={() => {
-                  runAnimation();
                   if (obj.name === selected) {
                     setSelectable(null);
                     setDisabled(true);
@@ -71,27 +69,53 @@ export default () => {
                   }
                   setDisabled(false);
                   setSelectable(obj.name);
-                }}>
-                <Animated.View
-                  style={[
-                    {transform: [{scale: scaleButton}]},
-
-                    styles.illustration,
-                    {borderWidth: 3, borderColor: 'transparent'},
-                    obj.name === selected && {
-                      borderColor: themeColor.themeBlue,
-                    },
-                  ]}>
-                  <obj.svg
-                    width={verticalScale(120)}
-                    height={verticalScale(120)}
-                  />
-                </Animated.View>
-              </Pressable>
+                }}
+              />
             );
           })}
         </ScrollView>
       </>
     </GenerateStory>
+  );
+};
+
+const AnimatedIllustrationChoice = ({
+  obj,
+  onPress,
+  selected,
+}: {
+  obj: {
+    name: string;
+    svg: React.FC<SvgProps>;
+  };
+  onPress: () => void;
+  selected: string | null;
+}) => {
+  const scaleButton = useSharedValue(1);
+
+  const runAnimation = () => {
+    scaleButton.value = withSequence(
+      withTiming(1.2, {duration: 200}),
+      withTiming(1),
+    );
+  };
+  return (
+    <Pressable
+      onPress={() => {
+        runAnimation();
+        onPress();
+      }}>
+      <Animated.View
+        style={[
+          {transform: [{scale: scaleButton}]},
+          styles.illustration,
+          {borderWidth: 3, borderColor: 'transparent'},
+          obj.name === selected && {
+            borderColor: themeColor.themeBlue,
+          },
+        ]}>
+        <obj.svg width={verticalScale(120)} height={verticalScale(120)} />
+      </Animated.View>
+    </Pressable>
   );
 };

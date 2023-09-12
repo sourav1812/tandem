@@ -12,6 +12,7 @@ import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
 import GenerateStory from '../..';
 import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
+import removeQuestionData from '@tandem/functions/removeQuestionData';
 
 export default () => {
   const portrait = useAppSelector(
@@ -30,6 +31,9 @@ export default () => {
 
   return (
     <GenerateStory
+      onBack={() => {
+        removeQuestionData(STORY_PARTS.WHO);
+      }}
       giveStatusColor={tooltipFirst}
       questionNumber={1}
       onNextQuestion={() => {

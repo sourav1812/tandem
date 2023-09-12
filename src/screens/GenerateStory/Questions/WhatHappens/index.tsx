@@ -7,16 +7,20 @@ import {styles} from '../../styles';
 import React from 'react';
 import GenerateStory from '../..';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
-import navigateTo from '@tandem/navigation/navigate';
+import {useNavigation} from '@react-navigation/native';
+import removeQuestionData from '@tandem/functions/removeQuestionData';
 
 export default () => {
   const [disabled, setDisabled] = React.useState(true);
-
+  const navigation: any = useNavigation();
   return (
     <GenerateStory
+      onBack={() => {
+        removeQuestionData(STORY_PARTS.WHAT_HAPPENS);
+      }}
       questionNumber={5}
       onNextQuestion={() => {
-        navigateTo(SCREEN_NAME.ROADMAP);
+        navigation.push(SCREEN_NAME.ROADMAP);
       }}
       disabled={disabled}>
       <>

@@ -8,17 +8,21 @@ import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import GenerateStory from '../..';
 import RNImageChoice from '@tandem/components/RNImageChoice';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
-import navigateTo from '@tandem/navigation/navigate';
+import {useNavigation} from '@react-navigation/native';
+import removeQuestionData from '@tandem/functions/removeQuestionData';
 
 export default () => {
   const [disabled, setDisabled] = React.useState(true);
   const places = useAppSelector(state => state.cache.places);
-
+  const navigation: any = useNavigation();
   return (
     <GenerateStory
+      onBack={() => {
+        removeQuestionData(STORY_PARTS.WHERE);
+      }}
       questionNumber={3}
       onNextQuestion={() => {
-        navigateTo(SCREEN_NAME.ROADMAP);
+        navigation.push(SCREEN_NAME.ROADMAP);
       }}
       disabled={disabled}>
       <>

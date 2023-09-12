@@ -66,7 +66,7 @@ const RNRoadmap = () => {
             onlyIcon
             icon={<BackButton />}
             onClick={() => {
-              navigateTo(SCREEN_NAME.HOME);
+              navigateTo();
             }}
           />
           <Pressable

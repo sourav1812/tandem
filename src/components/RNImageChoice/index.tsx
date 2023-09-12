@@ -16,7 +16,6 @@ import Animated from 'react-native-reanimated';
 const RNImageChoice = ({
   data = [],
   customStyle,
-  itemStyle,
   type,
   maxSelections = data.length,
   setDisabled,
@@ -34,6 +33,10 @@ const RNImageChoice = ({
   }, [selected]);
 
   const handlePress = (name: string) => {
+    if (maxSelections === 1) {
+      setSelected([name]);
+      return;
+    }
     if (selected.length < maxSelections && !selected.includes(name)) {
       setSelected(prev => [...prev, name]);
     } else {
@@ -41,14 +44,6 @@ const RNImageChoice = ({
     }
   };
 
-  const scaleButton = useSharedValue(1);
-
-  const runAnimation = () => {
-    scaleButton.value = withSequence(
-      withTiming(1.2, {duration: 200}),
-      withTiming(1),
-    );
-  };
   return (
     <ScrollView
       style={[styles.scrollView, customStyle && customStyle]}
@@ -61,26 +56,12 @@ const RNImageChoice = ({
       showsVerticalScrollIndicator={false}>
       {data.map((value, indexLocal) => {
         return (
-          <Pressable
+          <AnimatedImageChoice
+            value={value}
+            onPress={() => handlePress(value.name)}
+            selected={selected}
             key={indexLocal.toString()}
-            onPress={() => {
-              handlePress(value.name);
-              runAnimation();
-            }}>
-            <Animated.View style={[{transform: [{scale: scaleButton}]}]}>
-              <Image
-                source={{uri: value.file}}
-                style={[
-                  styles.illustration,
-                  selected.includes(value.name) && {
-                    borderWidth: 3,
-                    borderColor: themeColor.themeBlue,
-                  },
-                  itemStyle && itemStyle,
-                ]}
-              />
-            </Animated.View>
-          </Pressable>
+          />
         );
       })}
     </ScrollView>
@@ -88,3 +69,46 @@ const RNImageChoice = ({
 };
 
 export default RNImageChoice;
+
+const AnimatedImageChoice = ({
+  value,
+  onPress,
+  selected,
+}: {
+  value: {
+    name: string;
+    file: string;
+  };
+  onPress: () => void;
+  selected: string[];
+}) => {
+  const scaleButton = useSharedValue(1);
+
+  const runAnimation = () => {
+    scaleButton.value = withSequence(
+      withTiming(1.2, {duration: 200}),
+      withTiming(1),
+    );
+  };
+
+  return (
+    <Pressable
+      onPress={() => {
+        onPress();
+        runAnimation();
+      }}>
+      <Animated.View style={[{transform: [{scale: scaleButton}]}]}>
+        <Image
+          source={{uri: value.file}}
+          style={[
+            styles.illustration,
+            selected.includes(value.name) && {
+              borderWidth: 3,
+              borderColor: themeColor.themeBlue,
+            },
+          ]}
+        />
+      </Animated.View>
+    </Pressable>
+  );
+};

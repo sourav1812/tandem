@@ -4,8 +4,6 @@ import {styles} from './styles';
 import RNEmojiWithText from '../RNEmojiWithText';
 import {MultipleChoiceProps} from './interface';
 import RNTooltip from '../RNTooltip';
-import {TOOLTIP} from '@tandem/constants/local';
-import {getValueFromKey} from '@tandem/helpers/encryptedStorage';
 import {translation} from '@tandem/utils/methods';
 import {store} from '@tandem/redux/store';
 import {pushStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration.slice';
@@ -21,7 +19,6 @@ const RNChoiceQuestions = ({
   maxSelections = data.length,
   setDisabled,
 }: MultipleChoiceProps) => {
-  const tooltipArray = getValueFromKey(TOOLTIP);
   const refOne = useRef<any>(null);
   const [positionRefs, setPositionRefs] = React.useState({
     0: {height: 0, width: 0, x: 0, y: 0},
@@ -62,7 +59,7 @@ const RNChoiceQuestions = ({
               topViewStyle={{
                 alignItems: 'center',
               }}
-              open={tooltipArray?.includes(5) ? false : visibletoolTip}
+              open={visibletoolTip}
               setClose={onTooltipClose}
               text={translation('CHOOSE_FROM_THE_GIVE_OPTIONS')}
               textContainerStyle={[

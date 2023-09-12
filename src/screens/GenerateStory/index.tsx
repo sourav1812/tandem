@@ -22,12 +22,14 @@ export default ({
   disabled,
   giveStatusColor,
   questionNumber,
+  onBack,
 }: {
   onNextQuestion?: () => void;
   children: React.ReactElement;
   disabled?: boolean;
   giveStatusColor?: boolean;
   questionNumber: number;
+  onBack: () => void;
 }) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
 
@@ -403,6 +405,7 @@ export default ({
               onlyIcon
               onClick={() => {
                 navigateTo();
+                onBack();
               }}
               icon={<LeftArrow />}
             />

@@ -16,7 +16,8 @@ import React, {useRef} from 'react';
 import {styles} from '../../styles';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
-import navigateTo from '@tandem/navigation/navigate';
+import {useNavigation} from '@react-navigation/native';
+import removeQuestionData from '@tandem/functions/removeQuestionData';
 
 export default () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -40,13 +41,18 @@ export default () => {
   });
 
   const refTwo = useRef<any>(null);
-
+  const navigation: any = useNavigation();
   const nextQuestion = () => {
-    navigateTo(SCREEN_NAME.ROADMAP);
+    navigation.push(SCREEN_NAME.ROADMAP);
   };
 
   return (
-    <GenerateStory giveStatusColor={tooltipFifth} questionNumber={2}>
+    <GenerateStory
+      onBack={() => {
+        removeQuestionData(STORY_PARTS.INCLUSION);
+      }}
+      giveStatusColor={tooltipFifth}
+      questionNumber={2}>
       <>
         <RNTextComponent isSemiBold style={styles.question}>
           {translation('generate-story.included-in-story')} {currentChild.name}?
