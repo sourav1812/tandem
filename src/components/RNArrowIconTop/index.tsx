@@ -3,6 +3,7 @@ import North from '@tandem/assets/svg/arrows/North';
 import NorthEast from '@tandem/assets/svg/arrows/NorthEast';
 import NorthWest from '@tandem/assets/svg/arrows/NorthWest';
 import West from '@tandem/assets/svg/arrows/West';
+import {DIRECTION_ARROWS} from '@tandem/constants/enums';
 import React from 'react';
 
 const RNArrowIconTop = ({
@@ -15,17 +16,17 @@ const RNArrowIconTop = ({
   isTablet?: boolean;
 }) => {
   switch (type) {
-    case 'North':
+    case DIRECTION_ARROWS.NORTH:
       return <North rotation={rotation} isTablet={isTablet} />;
-    case 'East':
+    case DIRECTION_ARROWS.EAST:
       return <East rotation={rotation} isTablet={isTablet} />;
-    case 'NorthEast':
+    case DIRECTION_ARROWS.NORTH_EAST:
       return <NorthEast rotation={rotation} isTablet={isTablet} />;
 
-    case 'NorthWest':
+    case DIRECTION_ARROWS.NORTH_WEST:
       return <NorthWest rotation={rotation} isTablet={isTablet} />;
 
-    case 'West':
+    case DIRECTION_ARROWS.WEST:
       return <West rotation={rotation} isTablet={isTablet} />;
   }
 };

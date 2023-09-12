@@ -15,6 +15,7 @@ import {getValueFromKey} from '@tandem/helpers/encryptedStorage';
 import {TOOLTIP} from '@tandem/constants/local';
 import RNTooltip from '@tandem/components/RNTooltip';
 import navigateTo from '@tandem/navigation/navigate';
+import {DIRECTION_ARROWS} from '@tandem/constants/enums';
 
 export default ({
   onNextQuestion,
@@ -451,7 +452,7 @@ export default ({
             tooltipArray.push(6);
             setTooltipSecond(false);
           }}
-          bottom={'South'}
+          bottom={DIRECTION_ARROWS.SOUTH}
           text={translation('PRESS_THE_BUTTON')}
           textStyle={styles.tooltip}
           dimensionObject={positionRefs[0]}>

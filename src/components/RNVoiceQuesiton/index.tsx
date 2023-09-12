@@ -16,6 +16,7 @@ import RNTooltip from '../RNTooltip';
 import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
 import {TOOLTIP} from '@tandem/constants/local';
 import {RootState} from '@tandem/redux/store';
+import {DIRECTION_ARROWS} from '@tandem/constants/enums';
 
 const RNVoiceQuesiton = ({
   onClick,
@@ -148,7 +149,7 @@ const RNVoiceQuesiton = ({
             tooltipArray.push(13);
             storeKey(TOOLTIP, tooltipArray);
           }}
-          bottom={'South'}
+          bottom={DIRECTION_ARROWS.SOUTH}
           text={translation('YOU_CAN_PRESS_AND_SAY_ANIMAL')}
           textContainerStyle={styles.tooltipTwo}
           textStyle={[
@@ -194,7 +195,7 @@ const RNVoiceQuesiton = ({
           storeKey(TOOLTIP, tooltipArray);
         }}
         text={translation("IF_YOU_DON'T_KNOW_LET_HELP")}
-        bottom={'South'}
+        bottom={DIRECTION_ARROWS.SOUTH}
         textContainerStyle={styles.tooltipTwo}
         textStyle={[
           {

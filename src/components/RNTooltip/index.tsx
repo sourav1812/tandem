@@ -31,8 +31,8 @@ const RNTooltip = ({
   placement,
 }: TooltipProps) => {
   const tooltipNumber = getValueFromKey(TOOLTIP);
-  const helperTop = tooltipHelperTop(dimensionObject);
-  const helperBottom = tooltipHelperBottom(dimensionObject);
+  const helperTop = top ? top : tooltipHelperTop(dimensionObject);
+  const helperBottom = bottom ? bottom : tooltipHelperBottom(dimensionObject);
 
   return (
     <Tooltip
@@ -43,7 +43,7 @@ const RNTooltip = ({
           {helperTop && (
             <RNArrowIconTop
               rotation={rotation}
-              type={top ? top : helperTop}
+              type={helperTop}
               isTablet={isTablet}
             />
           )}
@@ -64,7 +64,7 @@ const RNTooltip = ({
           {helperBottom && (
             <RNArrowIconBottom
               rotation={rotation}
-              type={bottom ? bottom : helperBottom}
+              type={helperBottom}
               isTablet={isTablet}
             />
           )}
