@@ -33,6 +33,7 @@ import {
   saveCurrentChild,
 } from '@tandem/redux/slices/createChild.slice';
 import {clearStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration.slice';
+import {DIRECTION_ARROWS} from '@tandem/constants/enums';
 
 const Home = () => {
   const portrait = useAppSelector(
@@ -295,7 +296,7 @@ const Home = () => {
                 },
               ]}>
               <RNTooltip
-                top={'North'}
+                top={DIRECTION_ARROWS.NORTH}
                 isTablet={isTablet}
                 topViewStyle={{
                   width: widthDimention / 2,

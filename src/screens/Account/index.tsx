@@ -30,7 +30,7 @@ import {
   saveCurrentChild,
 } from '@tandem/redux/slices/createChild.slice';
 import logout from '@tandem/functions/logout';
-import {PEOPLE} from '@tandem/constants/enums';
+import {DIRECTION_ARROWS, PEOPLE} from '@tandem/constants/enums';
 
 const Account = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -354,7 +354,7 @@ const Account = () => {
               );
             })}
             <RNTooltip
-              bottom={'South'}
+              bottom={DIRECTION_ARROWS.SOUTH}
               isTablet={isTablet}
               topViewStyle={{
                 alignItems: 'center',
