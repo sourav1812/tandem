@@ -15,6 +15,7 @@ import createChildSlice from './slices/createChild.slice';
 import bookShelf from './slices/bookShelf.slice';
 import setUserData from './slices/userData.slice';
 import cache from './slices/cache.slice';
+import setSocialLoginData from './slices/socialLogin.slice';
 
 export const storage = new MMKV();
 
@@ -30,6 +31,7 @@ export const appReducer = combineReducers({
   alertBoxReducer: alertBoxSlice,
   createChild: createChildSlice,
   userData: setUserData,
+  socialLogin: setSocialLoginData,
   storyGeneration,
   bookShelf,
   cache,

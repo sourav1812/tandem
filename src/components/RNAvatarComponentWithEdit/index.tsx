@@ -11,13 +11,16 @@ const RNAvatarComponentWithEdit = ({
   imgStyle,
   onEdit,
   onSelect,
+  isImageFromPicker = false,
 }: avatarComponentProps) => {
   return icon.uri !== null ? (
     <Pressable onPress={onSelect} style={[imgStyle && imgStyle]}>
       <ImageBackground source={icon} style={[styles.img]} resizeMode="cover">
-        <Pressable onPress={onEdit} style={styles.icon}>
-          <GrayCamera height={20} width={24} />
-        </Pressable>
+        {isImageFromPicker && (
+          <Pressable onPress={onEdit} style={styles.icon}>
+            <GrayCamera height={20} width={24} />
+          </Pressable>
+        )}
       </ImageBackground>
     </Pressable>
   ) : (

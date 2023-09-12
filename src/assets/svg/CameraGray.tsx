@@ -9,7 +9,7 @@ const SvgComponent = (props: SvgProps) => (
     fill="none"
     {...props}>
     <Path
-      stroke="rgba(255,255,255, 0.6)"
+      stroke="rgba(255,255,255, 0.8)"
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={2}
@@ -17,14 +17,14 @@ const SvgComponent = (props: SvgProps) => (
       clipRule="evenodd"
     />
     <Path
-      stroke="rgba(255,255,255, 0.6)"
+      stroke="rgba(255,255,255, 0.8)"
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={2.5}
       d="M15.495 6.5h.01"
     />
     <Path
-      stroke="rgba(255,255,255, 0.6)"
+      stroke="rgba(255,255,255, 0.8)"
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={2}

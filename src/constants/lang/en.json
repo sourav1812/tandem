@@ -283,5 +283,8 @@
   "DONT_MISS_NEW_BOOOKS": "Don't miss new books",
   "ACTIVATE_THE_NOTIFICATION": "Activate the notification to be able to view your child's new books",
   "TURN_ON_NOTIFICATION": "Turn on the notification",
-  "MAYBE_LATER": "Maybe Later"
+  "MAYBE_LATER": "Maybe Later",
+  "ADD_PHOTO": "Add Photo",
+  "CAMERA": "Camera",
+  "GALLERY": "Gallery"
 }

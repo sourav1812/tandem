@@ -3,6 +3,8 @@ import {
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 import {SocialResponse} from './interface';
+import {store} from '@tandem/redux/store';
+import {resetSocialData} from '@tandem/redux/slices/socialLogin.slice';
 
 export const getCurrentUserInfo = async () => {
   try {
@@ -20,6 +22,7 @@ export const googleSignOut = async () => {
     if (isSignedInKey) {
       await GoogleSignin.signOut();
     }
+    store.dispatch(resetSocialData());
   } catch (error) {
     console.error('google signout', error);
   }

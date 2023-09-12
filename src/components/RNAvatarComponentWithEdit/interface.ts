@@ -6,4 +6,5 @@ export interface avatarComponentProps {
   imgStyle?: StyleProp<ImageStyle>;
   onEdit?: () => void;
   onSelect?: () => void;
+  isImageFromPicker?: boolean;
 }
