@@ -12,9 +12,11 @@ import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import RNFetchBlob from 'rn-fetch-blob';
 import {CACHE_SESSION} from '@tandem/constants/local';
+import {clearCacheForce} from '@tandem/redux/slices/cache.slice';
 
 export default async (loginResponse: LoginResponse) => {
   RNFetchBlob.session(CACHE_SESSION).dispose();
+  store.dispatch(clearCacheForce());
   storeTokens(loginResponse.accessToken, loginResponse.refreshToken);
   // ! other logic related to navigation flow , modes ,family here
   // ! Store user data from login response as well

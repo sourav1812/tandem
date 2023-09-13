@@ -23,15 +23,25 @@ export default () => {
   const [tooltipFirst, setTooltipFirst] = React.useState(
     !tooltipArray.includes(5),
   );
+  const [buttonTooltip, setShowButtonTooltip] = React.useState(false);
   const onCloseFirstTooltip = () => {
     setTooltipFirst(false);
     tooltipArray.push(5);
     storeKey(TOOLTIP, tooltipArray);
+    if (!tooltipArray.includes(6)) {
+      setShowButtonTooltip(true);
+    }
   };
+  const onCloseButtonTooltip = () => {
+    setShowButtonTooltip(false);
+  };
+
   const [disabled, setDisabled] = React.useState(true);
 
   return (
     <GenerateStory
+      onCloseButtonTooltip={onCloseButtonTooltip}
+      showButtonTooltip={buttonTooltip}
       onBack={() => {
         removeQuestionData(STORY_PARTS.WHO);
       }}

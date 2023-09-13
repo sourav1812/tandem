@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import {View} from 'react-native';
-import React, {useRef, useState} from 'react';
+import React from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {styles} from './styles';
 import RNTextComponent from '@tandem/components/RNTextComponent';
@@ -11,7 +11,7 @@ import QuestionMark from '@tandem/assets/svg/QuestionMark';
 import {scale, verticalScale} from 'react-native-size-matters';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {translation} from '@tandem/utils/methods';
-import {getValueFromKey} from '@tandem/helpers/encryptedStorage';
+import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
 import {TOOLTIP} from '@tandem/constants/local';
 import RNTooltip from '@tandem/components/RNTooltip';
 import navigateTo from '@tandem/navigation/navigate';
@@ -24,6 +24,8 @@ export default ({
   giveStatusColor,
   questionNumber,
   onBack,
+  showButtonTooltip,
+  onCloseButtonTooltip,
 }: {
   onNextQuestion?: () => void;
   children: React.ReactElement;
@@ -31,368 +33,12 @@ export default ({
   giveStatusColor?: boolean;
   questionNumber: number;
   onBack: () => void;
+  showButtonTooltip?: boolean;
+  onCloseButtonTooltip?: () => void;
 }) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
 
   const tooltipArray = getValueFromKey(TOOLTIP);
-  const refOne = useRef<any>(null);
-
-  const [positionRefs, setPositionRefs] = React.useState({
-    0: {height: 0, width: 0, x: 0, y: 0},
-    1: {height: 0, width: 0, x: 0, y: 0},
-  });
-  const [tooltipSecond, setTooltipSecond] = useState(true);
-
-  // const refTwo = useRef<any>(null);
-  // const currentChild = useAppSelector(state => state.createChild.currentChild);
-  // const places = useAppSelector(state => state.cache.places);
-  // const avatars = useAppSelector(state => state.cache.avatars);
-  // const currentChildAvatar = avatars.filter(
-  //   obj => obj.path === currentChild?.avatar,
-  // )[0]?.file;
-  // const portrait = useAppSelector(
-  //   (state: RootState) => state.orientation.isPortrait,
-  // );
-  // const questionIndex = useAppSelector(
-  //   (state: RootState) => state.storyGeneration.questionIndex,
-  // );
-  // const {
-  //   addedIllustration,
-  //   tooltipFirst,
-  //   tooltipSecond,
-  //   tooltipThird,
-  //   tooltipFourth,
-  //   tooltipFifth,
-  // } = state;
-
-  // const onCloseFirstTooltip = () => {
-  //   updateState({tooltipFirst: false, tooltipSecond: true});
-  //   tooltipArray.push(5);
-  //   storeKey(TOOLTIP, tooltipArray);
-  // };
-
-  // const onCloseThirdTooltip = () => {
-  //   updateState({tooltipThird: false});
-  //   tooltipArray.push(7);
-  //   storeKey(TOOLTIP, tooltipArray);
-  // };
-
-  // React.useEffect(() => {
-  //   setDisabled(true);
-  //   if (!tooltipArray?.includes(5)) {
-  //     updateState({tooltipFirst: true});
-  //   }
-  //   if (questionIndex === 5) {
-  //     updateState({addedIllustration: null});
-  //     setDisabled(true);
-  //   }
-  //   if (questionIndex === 6) {
-  //     updateState({tooltipThird: true});
-  //   }
-  //   if (questionIndex === 1) {
-  //     updateState({tooltipFifth: true});
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [questionIndex]);
-
-  // const dynamicContent = () => {
-  //   switch (questionIndex) {
-  //     case 0:
-  //       return (
-  //         <>
-  //           <RNTextComponent
-  //             isSemiBold
-  //             style={[
-  //               styles.question,
-  //               !portrait && {height: verticalScale(40)},
-  //             ]}>
-  //             {translation('WHO')}{' '}
-  //             <RNTextComponent
-  //               isSemiBold
-  //               style={{...styles.question, color: 'rgba(10, 8, 4, 0.6)'}}>
-  //               {translation('generate-story.is-in-story')}{' '}
-  //             </RNTextComponent>
-  //           </RNTextComponent>
-  //           <RNChoiceQuestions
-  //             setDisabled={setDisabled}
-  //             type={STORY_PARTS.WHO}
-  //             index={0}
-  //             maxSelections={3}
-  //             isTablet={isTablet}
-  //             data={AUDIENCE}
-  //             visibletoolTip={tooltipFirst}
-  //             onTooltipClose={onCloseFirstTooltip}
-  //           />
-  //         </>
-  //       );
-  //     case 1:
-  //       return (
-  //         <>
-  //           <RNTextComponent isSemiBold style={styles.question}>
-  //             {translation('generate-story.included-in-story')}{' '}
-  //             {currentChild.name}?
-  //           </RNTextComponent>
-  //           <View
-  //             style={[
-  //               styles.picView,
-  //               !portrait && {
-  //                 flexDirection: 'row',
-  //                 justifyContent: 'space-evenly',
-  //                 alignItems: 'flex-start',
-  //                 marginTop: verticalScale(40),
-  //               },
-  //             ]}>
-  //             <ImageBackground
-  //               source={{
-  //                 uri: currentChildAvatar || currentChild.avatar,
-  //               }}
-  //               style={styles.addImage}
-  //               imageStyle={{borderRadius: 200}}>
-  //               <RNButton
-  //                 onlyIcon
-  //                 icon={<Camera height={18} width={20} />}
-  //                 onClick={() => {}}
-  //                 IconButtoncustomStyle={styles.camera}
-  //               />
-  //             </ImageBackground>
-  //             <RNTooltip
-  //               placement={!portrait ? 'left' : undefined}
-  //               isTablet={isTablet}
-  //               topViewStyle={{
-  //                 height: !portrait ? scale(150) : undefined,
-  //                 alignItems: 'center',
-  //                 marginRight: !portrait ? scale(50) : undefined,
-  //               }}
-  //               textStyle={{fontSize: !portrait ? scale(14) : scale(18)}}
-  //               bottom={portrait ? 'South' : undefined}
-  //               top={portrait ? undefined : 'SouthEast'}
-  //               text={translation('YES_NO_SELECT')}
-  //               open={tooltipArray?.includes(15) ? false : tooltipFifth}
-  //               setClose={() => {
-  //                 setState({
-  //                   ...state,
-  //                   tooltipFifth: false,
-  //                 });
-  //                 tooltipArray.push(15);
-  //                 storeKey(TOOLTIP, tooltipArray);
-  //               }}
-  //               dimensionObject={positionRefs[1]}>
-  //               <View
-  //                 ref={refTwo}
-  //                 onLayout={() => {
-  //                   refTwo?.current?.measure(
-  //                     (
-  //                       x: number,
-  //                       y: number,
-  //                       width: number,
-  //                       height: number,
-  //                       pageX: number,
-  //                       pageY: number,
-  //                     ) => {
-  //                       setPositionRefs(prev => ({
-  //                         ...prev,
-  //                         1: {height: width, width: height, x: pageX, y: pageY},
-  //                       }));
-  //                     },
-  //                   );
-  //                 }}
-  //                 style={[
-  //                   styles.buttonContainer,
-  //                   tooltipFifth && {
-  //                     backgroundColor: 'white',
-  //                     borderRadius: scale(20),
-  //                     height: portrait ? '53%' : '70%',
-  //                     width: '120%',
-  //                     marginBottom: portrait
-  //                       ? verticalScale(130)
-  //                       : verticalScale(100),
-  //                   },
-  //                 ]}>
-  //                 <RNTextComponent style={styles.yesOrNo} isMedium>
-  //                   {translation('YES')} or {translation('NO')}?
-  //                 </RNTextComponent>
-  //                 <View
-  //                   style={[
-  //                     styles.buttonView,
-  //                     isTablet && {width: scale(180)},
-  //                   ]}>
-  //                   <RNButton
-  //                     title="✔"
-  //                     customStyle={styles.buttonStyle}
-  //                     onlyBorder
-  //                     onClick={() => {
-  //                       store.dispatch(
-  //                         pushStoryGenerationResponse({
-  //                           key: STORY_PARTS.INCLUSION,
-  //                           value: true,
-  //                         }),
-  //                       );
-  //                       nextQuestion();
-  //                     }}
-  //                     textStyle={styles.YesbuttonText}
-  //                   />
-  //                   <RNButton
-  //                     title="✕"
-  //                     customStyle={styles.buttonStyle}
-  //                     onClick={() => {
-  //                       store.dispatch(
-  //                         pushStoryGenerationResponse({
-  //                           key: STORY_PARTS.INCLUSION,
-  //                           value: false,
-  //                         }),
-  //                       );
-  //                       nextQuestion();
-  //                     }}
-  //                     textStyle={styles.YesbuttonText}
-  //                   />
-  //                 </View>
-  //               </View>
-  //             </RNTooltip>
-  //           </View>
-  //         </>
-  //       );
-  //     case 2:
-  //       return (
-  //         <>
-  //           <RNTextComponent
-  //             isSemiBold
-  //             style={[
-  //               styles.question,
-  //               {
-  //                 color: 'rgba(10, 8, 4, 0.6)',
-  //                 height: verticalScale(70),
-  //               },
-  //             ]}>
-  //             {translation('generate-story.where-shall-we')}
-  //             {'\n '}
-  //             <RNTextComponent isSemiBold style={styles.question}>
-  //               {translation('generate-story.go-in-our-story')}
-  //             </RNTextComponent>
-  //           </RNTextComponent>
-  //           <RNImageChoice
-  //             setDisabled={setDisabled}
-  //             type={STORY_PARTS.WHERE}
-  //             index={2}
-  //             maxSelections={1}
-  //             data={places}
-  //           />
-  //         </>
-  //       );
-  //     case 3:
-  //       return (
-  //         <>
-  //           <RNTextComponent
-  //             isSemiBold
-  //             style={[styles.question, {height: verticalScale(70)}]}>
-  //             {translation('generate-story.include-things')}{' '}
-  //           </RNTextComponent>
-  //           <RNChoiceQuestions
-  //             setDisabled={setDisabled}
-  //             type={STORY_PARTS.WHAT_THINGS}
-  //             index={3}
-  //             maxSelections={5}
-  //             data={ATTRIBUTE}
-  //           />
-  //         </>
-  //       );
-  //     case 4:
-  //       return (
-  //         <>
-  //           <RNTextComponent isSemiBold style={styles.question}>
-  //             {translation('generate-story.what-sort-of')}{' '}
-  //             <RNTextComponent
-  //               isSemiBold
-  //               style={{...styles.question, color: 'rgba(10, 8, 4, 0.6)'}}>
-  //               {translation('generate-story.do-you-want-today')}
-  //             </RNTextComponent>{' '}
-  //           </RNTextComponent>
-  //           <RNChoiceQuestions
-  //             setDisabled={setDisabled}
-  //             type={STORY_PARTS.WHAT_HAPPENS}
-  //             index={4}
-  //             maxSelections={1}
-  //             data={TYPE_OF_STORY}
-  //           />
-  //         </>
-  //       );
-  //     case 5:
-  //       return (
-  //         <>
-  //           <RNTextComponent
-  //             isSemiBold
-  //             style={[styles.question, {height: verticalScale(70)}]}>
-  //             {translation('generate-story.what-style-illustration')}{' '}
-  //             <RNTextComponent
-  //               style={{...styles.question, color: 'rgba(10, 8, 4, 0.6)'}}
-  //               isSemiBold>
-  //               {translation('generate-story.shall-we-use')}
-  //             </RNTextComponent>{' '}
-  //           </RNTextComponent>
-  //           <ScrollView
-  //             contentContainerStyle={[styles.scrollView]}
-  //             scrollEnabled
-  //             showsVerticalScrollIndicator={false}>
-  //             {ILLUSTRATION.map((SvgIcon, index) => {
-  //               return (
-  //                 <Pressable
-  //                   key={index.toString()}
-  //                   style={[
-  //                     styles.illustration,
-  //                     {borderWidth: 3, borderColor: 'transparent'},
-  //                     index === addedIllustration && {
-  //                       borderColor: themeColor.themeBlue,
-  //                     },
-  //                   ]}
-  //                   onPress={() => {
-  //                     updateState({addedIllustration: index});
-  //                     setDisabled(false);
-  //                   }}>
-  //                   <SvgIcon
-  //                     width={verticalScale(120)}
-  //                     height={verticalScale(120)}
-  //                   />
-  //                 </Pressable>
-  //               );
-  //             })}
-  //           </ScrollView>
-  //         </>
-  //       );
-  //     case 6:
-  //       return (
-  //         <RNChooseColor
-  //           setDisabled={setDisabled}
-  //           isTablet={isTablet}
-  //           tooltipVisible={tooltipThird}
-  //           onTooltipClose={onCloseThirdTooltip}
-  //           customStyle={{paddingHorizontal: scale(16)}}
-  //         />
-  //       );
-  //   }
-  // };
-
-  // const nextQuestion = () => {
-  //   console.log('im in next question');
-  //   if (questionIndex < 7) {
-  //     if (questionIndex === 5 && addedIllustration) {
-  //       store.dispatch(
-  //         pushStoryGenerationResponse({
-  //           key: STORY_PARTS.STYLES,
-  //           value: [addedIllustration.toString() + 'Mock Illustration For Now'], // ! VERY IMPORTANT : SEND ILLUSTRATION TEXT ASK CLIENT FOR KEYS
-  //         }),
-  //       );
-  //     }
-  //     store.dispatch(changeQuestionIndex(questionIndex + 1));
-  //     if (questionIndex !== 0 && questionIndex !== 5) {
-  //       navigateTo(SCREEN_NAME.ROADMAP);
-  //     }
-  //   }
-  // };
-
-  // const previousQuestion = () => {
-  //   if (questionIndex > 0) {
-  //   }
-  //   navigateTo();
-  // };
 
   return (
     <RNScreenWrapper giveStatusColor={giveStatusColor}>
@@ -447,33 +93,18 @@ export default ({
           topViewStyle={{
             alignItems: 'center',
           }}
-          open={tooltipArray?.includes(6) ? false : tooltipSecond}
+          open={!!showButtonTooltip}
           setClose={() => {
             tooltipArray.push(6);
-            setTooltipSecond(false);
+            storeKey(TOOLTIP, tooltipArray);
+            if (onCloseButtonTooltip) {
+              onCloseButtonTooltip();
+            }
           }}
           bottom={DIRECTION_ARROWS.SOUTH}
           text={translation('PRESS_THE_BUTTON')}
-          textStyle={styles.tooltip}
-          dimensionObject={positionRefs[0]}>
-          <View
-            style={{width: '100%', backgroundColor: 'pink'}}
-            ref={refOne}
-            onLayout={() => {
-              refOne?.current?.measure(
-                (
-                  width: number,
-                  height: number,
-                  pageX: number,
-                  pageY: number,
-                ) => {
-                  setPositionRefs(prev => ({
-                    ...prev,
-                    0: {height: width, width: height, x: pageX, y: pageY},
-                  }));
-                },
-              );
-            }}>
+          textStyle={styles.tooltip}>
+          <View style={{width: '100%', backgroundColor: 'pink'}}>
             <RNButton
               isDisabled={disabled}
               customStyle={[
