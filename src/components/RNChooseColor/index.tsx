@@ -25,6 +25,7 @@ import {pushStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration.
 import {RootState, store} from '@tandem/redux/store';
 import {STORY_PARTS} from '@tandem/constants/enums';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import ColorRemove from '@tandem/assets/svg/ColorRemove';
 
 interface IPath {
   segments: String[];
@@ -254,6 +255,15 @@ const RNChooseColor = ({
                   }
                 }}
                 key={val.toString()}>
+                {finalColor === palleteArray[val] && (
+                  <ColorRemove
+                    onPress={() => {
+                      const localRef = [...palleteArray];
+                      localRef.splice(val, 1);
+                      setPalletArray(localRef);
+                    }}
+                  />
+                )}
                 <EmptyPatch
                   selected={finalColor === palleteArray[val]}
                   fill={palleteArray[val] || undefined}
