@@ -2,7 +2,14 @@
 import React, {useRef, useState} from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {styles} from './styles';
-import {View, Image, ScrollView, Pressable, Dimensions} from 'react-native';
+import {
+  View,
+  Image,
+  ScrollView,
+  Pressable,
+  Dimensions,
+  LayoutAnimation,
+} from 'react-native';
 import Logout from '@tandem/assets/svg/Logout';
 import RNButton from '@tandem/components/RNButton';
 import RNTextComponent from '@tandem/components/RNTextComponent';
@@ -63,6 +70,7 @@ const Account = () => {
   );
   const {signoutModal, playerList} = state;
   const updateState = (date: any) => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setState((previouState: any) => {
       return {...previouState, ...date};
     });
@@ -454,9 +462,12 @@ const Account = () => {
                 childList.length === 0 && {
                   color: themeColor.themeBlue,
                 },
+              {
+                fontSize: verticalScale(15),
+                marginRight: 10,
+              },
             ]}>
-            {' '}
-            {buttonHeading()}{' '}
+            {buttonHeading()}
           </RNTextComponent>
           <Pressable
             style={[styles.button, isTablet && {width: scale(90)}]}

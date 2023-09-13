@@ -34,6 +34,13 @@ export type RootStackParamList = {
   PrivacyPolicies: undefined;
   TermsOfUse: undefined;
   Congratulation: undefined;
+  Who: undefined;
+  Inclusion: undefined;
+  Where: undefined;
+  WhatThings: undefined;
+  WhatHappens: undefined;
+  Illustrations: undefined;
+  Colors: undefined;
 };
 
 export type RootTabParamList = {
@@ -44,10 +51,6 @@ export type RootTabParamList = {
 
 export type AllStackScreenParamList = RootStackParamList & RootTabParamList;
 
-export type GeneratingStoryScreenProps = NativeStackScreenProps<
-  AllStackScreenParamList,
-  SCREEN_NAME.GENERATE_STORY
->;
 export type StoryTellingScreenProps = NativeStackScreenProps<
   AllStackScreenParamList,
   SCREEN_NAME.STORY_TELLING

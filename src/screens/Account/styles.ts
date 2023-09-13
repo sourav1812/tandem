@@ -43,7 +43,8 @@ export const styles = StyleSheet.create({
   footer: {
     alignSelf: 'center',
     height: verticalScale(64),
-    width: verticalScale(250),
+    // width: verticalScale(270),
+    paddingLeft: 10,
     borderRadius: 100,
     backgroundColor: themeColor.themeBlue,
     maxHeight: 64,

@@ -152,7 +152,13 @@ export const ATTRIBUTE: PlaceType[] = [
   {name: 'Ambulance', bgc: themeColor.pink, svgIcon: Ambulance},
 ];
 
-export const ILLUSTRATION = [Card, Card1, Card2, Card3, Card4];
+export const ILLUSTRATION = [
+  {name: 'dog', svg: Card},
+  {name: 'school', svg: Card1},
+  {name: 'camp', svg: Card2},
+  {name: 'art', svg: Card3},
+  {name: 'space', svg: Card4},
+];
 
 export const COLOR_PALETTE = [
   {firstColor: '#0633FD', secondColor: '#FEF902'},

@@ -25,11 +25,14 @@ import {
 import {PixelRatio, StatusBar, useWindowDimensions} from 'react-native';
 import React, {useState} from 'react';
 import {pageCurl} from './pageCurl';
+
 import {scale, verticalScale} from 'react-native-size-matters';
 import {StateObject} from '@tandem/screens/StoryTelling/interface';
 import {translation} from '@tandem/utils/methods';
 import {TOOLTIP} from '@tandem/constants/local';
 import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
+
+const PAPER = require('@tandem/assets/png/paper.jpg');
 
 interface ProjectProps {
   textArray: {
@@ -188,7 +191,7 @@ export const Project = ({
         width: wWidth,
         height: hHeight,
       }}
-      onTouch={disbaleTouch ? undefined : onTouch}>
+      onTouch={disbaleTouch || activeIndex === 0 ? undefined : onTouch}>
       {activeIndex - 1 >= 0 && (
         <RenderScene
           hHeight={hHeight}
@@ -257,7 +260,7 @@ const RenderScene = ({
   tooltipState,
   tooltipArray,
 }: RenderSceneProps) => {
-  const imageRef = useImage(image);
+  const imageRef = useImage(image || PAPER);
   // const {width: wWidth} = useWindowDimensions();
   // const numberOfChars = Math.floor((wWidth * 1.5) / fontSize);
   const [showBackdrop, setShowBackdrop] = React.useState(false);

@@ -4,11 +4,9 @@ import {styles} from './styles';
 import RNEmojiWithText from '../RNEmojiWithText';
 import {MultipleChoiceProps} from './interface';
 import RNTooltip from '../RNTooltip';
-import {TOOLTIP} from '@tandem/constants/local';
-import {getValueFromKey} from '@tandem/helpers/encryptedStorage';
 import {translation} from '@tandem/utils/methods';
-import {store} from '@tandem/redux/store';
 import {pushStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration.slice';
+import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
 
 const RNChoiceQuestions = ({
   data = [],
@@ -16,34 +14,43 @@ const RNChoiceQuestions = ({
   visibletoolTip = false,
   itemStyle,
   onTooltipClose = () => {},
-  isTablet,
   type,
   maxSelections = data.length,
   setDisabled,
 }: MultipleChoiceProps) => {
-  const tooltipArray = getValueFromKey(TOOLTIP);
   const refOne = useRef<any>(null);
   const [positionRefs, setPositionRefs] = React.useState({
     0: {height: 0, width: 0, x: 0, y: 0},
   });
-  const [selected, setSelected] = React.useState<string[]>([]);
-
+  const isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const activeState = useAppSelector(state => state.storyGeneration[type]);
+  const dispatch = useAppDispatch();
   React.useEffect(() => {
-    store.dispatch(pushStoryGenerationResponse({key: type, value: selected}));
-    if (selected.length === 0) {
+    if (activeState.length === 0) {
       setDisabled(true);
     } else {
       setDisabled(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selected.length]);
+  }, [activeState.length]);
 
   const handlePress = (name: string) => {
-    if (selected.length < maxSelections && !selected.includes(name)) {
-      setSelected(prev => [...prev, name]);
-    } else {
-      setSelected(prev => prev.filter(oldName => oldName !== name));
+    if (maxSelections === 1) {
+      dispatch(pushStoryGenerationResponse({key: type, value: [name]}));
+      return;
     }
+    if (activeState.length < maxSelections && !activeState.includes(name)) {
+      dispatch(
+        pushStoryGenerationResponse({key: type, value: [...activeState, name]}),
+      );
+      return;
+    }
+    dispatch(
+      pushStoryGenerationResponse({
+        key: type,
+        value: activeState.filter(oldName => oldName !== name),
+      }),
+    );
   };
 
   return (
@@ -61,7 +68,7 @@ const RNChoiceQuestions = ({
               topViewStyle={{
                 alignItems: 'center',
               }}
-              open={tooltipArray?.includes(5) ? false : visibletoolTip}
+              open={visibletoolTip}
               setClose={onTooltipClose}
               text={translation('CHOOSE_FROM_THE_GIVE_OPTIONS')}
               textContainerStyle={[
@@ -71,7 +78,7 @@ const RNChoiceQuestions = ({
               textStyle={styles.tooltip}
               dimensionObject={positionRefs[0]}>
               <RNEmojiWithText
-                isSelected={selected.includes(value.name)}
+                isSelected={activeState.includes(value.name)}
                 onPress={() => handlePress(value.name)}
                 onLayout={() => {
                   refOne?.current?.measure(
@@ -99,7 +106,7 @@ const RNChoiceQuestions = ({
         } else {
           return (
             <RNEmojiWithText
-              isSelected={selected.includes(value.name)}
+              isSelected={activeState.includes(value.name)}
               onPress={() => handlePress(value.name)}
               key={indexLocal.toString()}
               heading={value.name}

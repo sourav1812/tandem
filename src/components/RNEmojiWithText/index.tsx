@@ -1,6 +1,6 @@
 import {Pressable, Text} from 'react-native';
 import React from 'react';
-import {Props} from './interface';
+import {IconProps, Props} from './interface';
 import {styles} from './styles';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import {verticalScale} from 'react-native-size-matters';
@@ -12,7 +12,6 @@ import {
 import Animated from 'react-native-reanimated';
 
 const RNEmojiWithText = ({
-  props,
   customStyle,
   heading,
   emoji,
@@ -49,36 +48,53 @@ const RNEmojiWithText = ({
           {
             ...(isSelected && bgcColor && {backgroundColor: bgcColor}),
           },
-        ]}
-        {...props}>
-        {icon ? (
-          <Text
-            style={[
-              styles.emoji,
-              {...(heading && isSelected && {fontSize: verticalScale(33)})},
-              emoji && emoji,
-            ]}>
-            {icon}
-          </Text>
-        ) : (
-          <Svgimg
-            style={[
-              styles.svgIcon,
-              isSelected && {
-                height: verticalScale(45),
-                width: verticalScale(45),
-              },
-            ]}
-          />
-        )}
-        {heading && isSelected && (
-          <RNTextComponent style={styles.heading} isSemiBold numberOfLines={2}>
-            {heading}
-          </RNTextComponent>
-        )}
+        ]}>
+        <IconRednerItem
+          icon={icon}
+          heading={heading}
+          isSelected={isSelected}
+          emoji={emoji}
+          Svgimg={Svgimg}
+        />
       </Animated.View>
     </Pressable>
   );
 };
 
 export default RNEmojiWithText;
+
+const IconRednerItem = ({
+  icon,
+  heading,
+  isSelected,
+  emoji,
+  Svgimg,
+}: IconProps) => (
+  <>
+    {icon ? (
+      <Text
+        style={[
+          styles.emoji,
+          {...(heading && isSelected && {fontSize: verticalScale(33)})},
+          emoji && emoji,
+        ]}>
+        {icon}
+      </Text>
+    ) : (
+      <Svgimg
+        style={[
+          styles.svgIcon,
+          isSelected && {
+            height: verticalScale(45),
+            width: verticalScale(45),
+          },
+        ]}
+      />
+    )}
+    {heading && isSelected && (
+      <RNTextComponent style={styles.heading} isSemiBold numberOfLines={2}>
+        {heading}
+      </RNTextComponent>
+    )}
+  </>
+);
