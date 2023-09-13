@@ -282,5 +282,6 @@
   "DELETE_ADULT": "Supprimer le contenu pour adultes",
   "Alert": "Alerte",
   "Message": "Message",
-  "COLOR_ADDED": "Cette couleur est déjà ajoutée"
+  "COLOR_ADDED": "Cette couleur est déjà ajoutée",
+  "DONT_HAVE_ACCOUNT": "Vous n'avez pas de compte?"
 }

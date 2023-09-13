@@ -192,7 +192,7 @@ const SignIn = () => {
             </View>
             <RNTextComponent
               style={[styles.buttonText, isTablet && {fontSize: 22}]}>
-              {translation('ALREADY_HAVE_AN_ACCOUNT')}{' '}
+              {translation('DONT_HAVE_ACCOUNT')}{' '}
               <RNTextComponent
                 isSemiBold
                 style={[styles.signup, isTablet && {fontSize: 22}]}

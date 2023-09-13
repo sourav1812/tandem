@@ -281,5 +281,6 @@
   "DELETE_ADULT": "Erwachseneninhalte löschen",
   "Alert": "Warnung",
   "Message": "Nachricht",
-  "COLOR_ADDED": "Diese Farbe wurde bereits hinzugefügt"
+  "COLOR_ADDED": "Diese Farbe wurde bereits hinzugefügt",
+  "DONT_HAVE_ACCOUNT": "Haben Sie kein Konto?"
 }

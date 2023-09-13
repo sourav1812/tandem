@@ -282,5 +282,6 @@
   "DELETE_ADULT": "Delete adult",
   "Alert": "Alert",
   "Message": "Message",
-  "COLOR_ADDED": "This color is already added"
+  "COLOR_ADDED": "This color is already added",
+  "DONT_HAVE_ACCOUNT": "Don't have an account?"
 }
