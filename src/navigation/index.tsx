@@ -211,7 +211,7 @@ const AppNavigator = () => {
                 getComponent={() =>
                   require('@tandem/screens/EditChildProfile').default
                 }
-                name={SCREEN_NAME.EditChildProfile}
+                name={SCREEN_NAME.EDIT_CHILD_PROFILE}
               />
               <Stack.Screen
                 getComponent={() =>

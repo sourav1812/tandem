@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {ScrollView} from 'react-native';
+import {Platform, ScrollView, StatusBar} from 'react-native';
 import React from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import themeColor from '@tandem/theme/themeColor';
@@ -15,6 +15,8 @@ const PrivacyPolicies = () => {
       style={{
         backgroundColor: themeColor.white,
         paddingHorizontal: verticalScale(20),
+        paddingTop:
+          Platform.OS === 'ios' ? verticalScale(20) : StatusBar.currentHeight,
       }}>
       <ScrollView
         style={{height: '100%', width: '100%'}}

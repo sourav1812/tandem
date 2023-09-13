@@ -42,7 +42,7 @@ export const styles = StyleSheet.create({
   },
   bigpeople: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
     alignItems: 'center',
     borderWidth: 1,
     borderColor: themeColor.white,
@@ -52,9 +52,6 @@ export const styles = StyleSheet.create({
     height: verticalScale(85),
     width: verticalScale(85),
   },
-  addBox: {
-    marginLeft: scale(32),
-  },
   littlePeople: {
     flex: 1,
     paddingTop: verticalScale(21),
@@ -62,9 +59,7 @@ export const styles = StyleSheet.create({
   scrollview: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: themeColor.white,
+    justifyContent: 'space-around',
   },
   addText: {
     marginTop: verticalScale(10),

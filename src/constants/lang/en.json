@@ -279,5 +279,8 @@
   "RELATIONSHIP": "Relationship",
   "LOGOUT_FROM_ALL_DEVICES": "Do you wish to logout from your other devices?",
   "DELETE_CHILD": "Delete child",
-  "DELETE_ADULT": "Delete adult"
+  "DELETE_ADULT": "Delete adult",
+  "Alert": "Alert",
+  "Message": "Message",
+  "COLOR_ADDED": "This color is already added"
 }
