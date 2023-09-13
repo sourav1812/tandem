@@ -2,7 +2,14 @@
 import React, {useRef, useState} from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {styles} from './styles';
-import {View, Image, ScrollView, Pressable, Dimensions} from 'react-native';
+import {
+  View,
+  Image,
+  ScrollView,
+  Pressable,
+  Dimensions,
+  LayoutAnimation,
+} from 'react-native';
 import Logout from '@tandem/assets/svg/Logout';
 import RNButton from '@tandem/components/RNButton';
 import RNTextComponent from '@tandem/components/RNTextComponent';
@@ -30,7 +37,7 @@ import {
   saveCurrentChild,
 } from '@tandem/redux/slices/createChild.slice';
 import logout from '@tandem/functions/logout';
-import {PEOPLE} from '@tandem/constants/enums';
+import {DIRECTION_ARROWS, PEOPLE} from '@tandem/constants/enums';
 
 const Account = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -63,6 +70,7 @@ const Account = () => {
   );
   const {signoutModal, playerList} = state;
   const updateState = (date: any) => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setState((previouState: any) => {
       return {...previouState, ...date};
     });
@@ -354,11 +362,11 @@ const Account = () => {
               );
             })}
             <RNTooltip
+              bottom={DIRECTION_ARROWS.SOUTH}
               isTablet={isTablet}
               topViewStyle={{
                 alignItems: 'center',
                 width: width,
-                marginBottom: verticalScale(-20),
               }}
               text={translation('ADD_YOURSELF')}
               open={
@@ -373,8 +381,7 @@ const Account = () => {
                 });
                 tooltipArray.push(2);
                 storeKey(TOOLTIP, tooltipArray);
-              }}
-              dimensionObject={positionRefs[1]}>
+              }}>
               <Pressable
                 ref={refTwo}
                 onLayout={() => {
@@ -455,9 +462,12 @@ const Account = () => {
                 childList.length === 0 && {
                   color: themeColor.themeBlue,
                 },
+              {
+                fontSize: verticalScale(15),
+                marginRight: 10,
+              },
             ]}>
-            {' '}
-            {buttonHeading()}{' '}
+            {buttonHeading()}
           </RNTextComponent>
           <Pressable
             style={[styles.button, isTablet && {width: scale(90)}]}

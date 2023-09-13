@@ -4,7 +4,7 @@ import {
 } from '@react-native-google-signin/google-signin';
 import {SocialResponse} from './interface';
 import {store} from '@tandem/redux/store';
-import {resetSocialData} from '@tandem/redux/slices/socialLogin.slice';
+import {resetSocialData} from '@tandem/redux/slices/userData.slice';
 
 export const getCurrentUserInfo = async () => {
   try {

@@ -50,7 +50,12 @@ const Story = () => {
     const books = store.getState().bookShelf.books;
     const bookIndex = books.findIndex(book => book.bookId === routeData.id);
     const book = books[bookIndex];
+
+    book.pages.forEach(obj => {
+      console.log({img: obj.image});
+    });
     const doWeHaveImage = book.pages.every(obj => obj.image);
+
     if (doWeHaveImage) {
       setRedirect(true);
       return;
@@ -70,6 +75,9 @@ const Story = () => {
               }),
             );
             setProgress(prev => ({...prev, val: prev.val + 1}));
+          })
+          .catch(error => {
+            console.log('error while caching story images', error);
           });
       }
     });
@@ -132,7 +140,6 @@ const Story = () => {
             </ScrollView>
           </View>
           <RNButton
-            isDisabled={!redirect}
             title={
               mode === MODE.B
                 ? translation('READ_TOGETHER')
@@ -143,7 +150,10 @@ const Story = () => {
             customStyle={[styles.button]}
             textStyle={{fontSize: verticalScale(14)}}
             onClick={() => {
-              navigateTo(SCREEN_NAME.STORY_TELLING, {id: routeData.id});
+              navigateTo(SCREEN_NAME.STORY_TELLING, {
+                id: routeData.id,
+                readWithoutImages: !redirect,
+              });
             }}
           />
         </View>

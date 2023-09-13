@@ -286,5 +286,8 @@
   "MAYBE_LATER": "Maybe Later",
   "ADD_PHOTO": "Add Photo",
   "CAMERA": "Camera",
-  "GALLERY": "Gallery"
+  "GALLERY": "Gallery",
+  "Alert": "Alert",
+  "Message": "Message",
+  "COLOR_ADDED": "This color is already added"
 }

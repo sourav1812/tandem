@@ -1,424 +1,47 @@
 /* eslint-disable react-native/no-inline-styles */
-import {View, ScrollView, ImageBackground, Pressable} from 'react-native';
-import React, {useRef, useState} from 'react';
+import {View} from 'react-native';
+import React from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {styles} from './styles';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import themeColor from '@tandem/theme/themeColor';
 import RNButton from '@tandem/components/RNButton';
-
-import {StateObject} from './interface';
-import Camera from '@tandem/assets/svg/Camera';
 import LeftArrow from '@tandem/assets/svg/LeftArrow';
 import QuestionMark from '@tandem/assets/svg/QuestionMark';
-import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
-import RNChooseColor from '@tandem/components/RNChooseColor';
-import navigateTo from '@tandem/navigation/navigate';
 import {scale, verticalScale} from 'react-native-size-matters';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
-import RNChoiceQuestions from '@tandem/components/RNChoiceQuestions';
 import {translation} from '@tandem/utils/methods';
 import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
-import {
-  TOOLTIP,
-  ATTRIBUTE,
-  AUDIENCE,
-  ILLUSTRATION,
-  TYPE_OF_STORY,
-} from '@tandem/constants/local';
+import {TOOLTIP} from '@tandem/constants/local';
 import RNTooltip from '@tandem/components/RNTooltip';
-import {RootState, store} from '@tandem/redux/store';
-import {STORY_PARTS} from '@tandem/constants/enums';
-import {
-  changeQuestionIndex,
-  pushStoryGenerationResponse,
-} from '@tandem/redux/slices/storyGeneration.slice';
-import RNImageChoice from '@tandem/components/RNImageChoice';
+import navigateTo from '@tandem/navigation/navigate';
+import {DIRECTION_ARROWS} from '@tandem/constants/enums';
 
-const GenerateStory = () => {
+export default ({
+  onNextQuestion,
+  children,
+  disabled,
+  giveStatusColor,
+  questionNumber,
+  onBack,
+  showButtonTooltip,
+  onCloseButtonTooltip,
+}: {
+  onNextQuestion?: () => void;
+  children: React.ReactElement;
+  disabled?: boolean;
+  giveStatusColor?: boolean;
+  questionNumber: number;
+  onBack: () => void;
+  showButtonTooltip?: boolean;
+  onCloseButtonTooltip?: () => void;
+}) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
-  const currentChild = useAppSelector(state => state.createChild.currentChild);
-  const places = useAppSelector(state => state.cache.places);
-  const avatars = useAppSelector(state => state.cache.avatars);
-  const currentChildAvatar = avatars.filter(
-    obj => obj.path === currentChild?.avatar,
-  )[0]?.file;
-  const portrait = useAppSelector(
-    (state: RootState) => state.orientation.isPortrait,
-  );
-  const questionIndex = useAppSelector(
-    (state: RootState) => state.storyGeneration.questionIndex,
-  );
-  const [disabled, setDisabled] = React.useState(true);
+
   const tooltipArray = getValueFromKey(TOOLTIP);
-  const refOne = useRef<any>(null);
-  const refTwo = useRef<any>(null);
-
-  const [positionRefs, setPositionRefs] = React.useState({
-    0: {height: 0, width: 0, x: 0, y: 0},
-    1: {height: 0, width: 0, x: 0, y: 0},
-  });
-  const [state, setState] = useState<StateObject>({
-    addedIllustration: null,
-    tooltipFirst: false,
-    tooltipSecond: false,
-    tooltipThird: false,
-    tooltipFourth: false,
-    tooltipFifth: false,
-  });
-
-  const {
-    addedIllustration,
-    tooltipFirst,
-    tooltipSecond,
-    tooltipThird,
-    tooltipFourth,
-    tooltipFifth,
-  } = state;
-
-  const updateState = (data: any) => {
-    setState((previouState: any) => {
-      return {...previouState, ...data};
-    });
-  };
-
-  const onCloseFirstTooltip = () => {
-    updateState({tooltipFirst: false, tooltipSecond: true});
-    tooltipArray.push(5);
-    storeKey(TOOLTIP, tooltipArray);
-  };
-
-  const onCloseThirdTooltip = () => {
-    updateState({tooltipThird: false});
-    tooltipArray.push(7);
-    storeKey(TOOLTIP, tooltipArray);
-  };
-
-  React.useEffect(() => {
-    setDisabled(true);
-    if (!tooltipArray?.includes(5)) {
-      updateState({tooltipFirst: true});
-    }
-    if (questionIndex === 5) {
-      updateState({addedIllustration: null});
-      setDisabled(true);
-    }
-    if (questionIndex === 6) {
-      updateState({tooltipThird: true});
-    }
-    if (questionIndex === 1) {
-      updateState({tooltipFifth: true});
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [questionIndex]);
-
-  const dynamicContent = () => {
-    switch (questionIndex) {
-      case 0:
-        return (
-          <>
-            <RNTextComponent
-              isSemiBold
-              style={[
-                styles.question,
-                !portrait && {height: verticalScale(40)},
-              ]}>
-              {translation('WHO')}{' '}
-              <RNTextComponent
-                isSemiBold
-                style={{...styles.question, color: 'rgba(10, 8, 4, 0.6)'}}>
-                {translation('generate-story.is-in-story')}{' '}
-              </RNTextComponent>
-            </RNTextComponent>
-            <RNChoiceQuestions
-              setDisabled={setDisabled}
-              type={STORY_PARTS.WHO}
-              index={0}
-              maxSelections={3}
-              isTablet={isTablet}
-              data={AUDIENCE}
-              visibletoolTip={tooltipFirst}
-              onTooltipClose={onCloseFirstTooltip}
-            />
-          </>
-        );
-      case 1:
-        return (
-          <>
-            <RNTextComponent isSemiBold style={styles.question}>
-              {translation('generate-story.included-in-story')}{' '}
-              {currentChild.name}?
-            </RNTextComponent>
-            <View
-              style={[
-                styles.picView,
-                !portrait && {
-                  flexDirection: 'row',
-                  justifyContent: 'space-evenly',
-                  alignItems: 'flex-start',
-                  marginTop: verticalScale(40),
-                },
-              ]}>
-              <ImageBackground
-                source={{
-                  uri: currentChildAvatar || currentChild.avatar,
-                }}
-                style={styles.addImage}
-                imageStyle={{borderRadius: 200}}>
-                <RNButton
-                  onlyIcon
-                  icon={<Camera height={18} width={20} />}
-                  onClick={() => {}}
-                  IconButtoncustomStyle={styles.camera}
-                />
-              </ImageBackground>
-              <RNTooltip
-                placement={!portrait ? 'left' : undefined}
-                isTablet={isTablet}
-                topViewStyle={{
-                  height: !portrait ? scale(150) : undefined,
-                  alignItems: 'center',
-                  marginRight: !portrait ? scale(50) : undefined,
-                }}
-                textStyle={{fontSize: !portrait ? scale(14) : scale(18)}}
-                bottom={portrait ? 'South' : undefined}
-                top={portrait ? undefined : 'SouthEast'}
-                text={translation('YES_NO_SELECT')}
-                open={tooltipArray?.includes(15) ? false : tooltipFifth}
-                setClose={() => {
-                  setState({
-                    ...state,
-                    tooltipFifth: false,
-                  });
-                  tooltipArray.push(15);
-                  storeKey(TOOLTIP, tooltipArray);
-                }}
-                dimensionObject={positionRefs[1]}>
-                <View
-                  ref={refTwo}
-                  onLayout={() => {
-                    refTwo?.current?.measure(
-                      (
-                        x: number,
-                        y: number,
-                        width: number,
-                        height: number,
-                        pageX: number,
-                        pageY: number,
-                      ) => {
-                        setPositionRefs(prev => ({
-                          ...prev,
-                          1: {height: width, width: height, x: pageX, y: pageY},
-                        }));
-                      },
-                    );
-                  }}
-                  style={[
-                    styles.buttonContainer,
-                    tooltipFifth && {
-                      backgroundColor: 'white',
-                      borderRadius: scale(20),
-                      height: portrait ? '53%' : '70%',
-                      width: '120%',
-                      marginBottom: portrait
-                        ? verticalScale(130)
-                        : verticalScale(100),
-                    },
-                  ]}>
-                  <RNTextComponent style={styles.yesOrNo} isMedium>
-                    {translation('YES')} or {translation('NO')}?
-                  </RNTextComponent>
-                  <View
-                    style={[
-                      styles.buttonView,
-                      isTablet && {width: scale(180)},
-                    ]}>
-                    <RNButton
-                      title="✔"
-                      customStyle={styles.buttonStyle}
-                      onlyBorder
-                      onClick={() => {
-                        store.dispatch(
-                          pushStoryGenerationResponse({
-                            key: STORY_PARTS.INCLUSION,
-                            value: true,
-                          }),
-                        );
-                        nextQuestion();
-                      }}
-                      textStyle={styles.YesbuttonText}
-                    />
-                    <RNButton
-                      title="✕"
-                      customStyle={styles.buttonStyle}
-                      onClick={() => {
-                        store.dispatch(
-                          pushStoryGenerationResponse({
-                            key: STORY_PARTS.INCLUSION,
-                            value: false,
-                          }),
-                        );
-                        nextQuestion();
-                      }}
-                      textStyle={styles.YesbuttonText}
-                    />
-                  </View>
-                </View>
-              </RNTooltip>
-            </View>
-          </>
-        );
-      case 2:
-        return (
-          <>
-            <RNTextComponent
-              isSemiBold
-              style={[
-                styles.question,
-                {
-                  color: 'rgba(10, 8, 4, 0.6)',
-                  height: verticalScale(70),
-                },
-              ]}>
-              {translation('generate-story.where-shall-we')}
-              {'\n '}
-              <RNTextComponent isSemiBold style={styles.question}>
-                {translation('generate-story.go-in-our-story')}
-              </RNTextComponent>
-            </RNTextComponent>
-            <RNImageChoice
-              setDisabled={setDisabled}
-              type={STORY_PARTS.WHERE}
-              index={2}
-              maxSelections={1}
-              data={places}
-            />
-          </>
-        );
-      case 3:
-        return (
-          <>
-            <RNTextComponent
-              isSemiBold
-              style={[styles.question, {height: verticalScale(70)}]}>
-              {translation('generate-story.include-things')}{' '}
-            </RNTextComponent>
-            <RNChoiceQuestions
-              setDisabled={setDisabled}
-              type={STORY_PARTS.WHAT_THINGS}
-              index={3}
-              maxSelections={5}
-              data={ATTRIBUTE}
-            />
-          </>
-        );
-      case 4:
-        return (
-          <>
-            <RNTextComponent isSemiBold style={styles.question}>
-              {translation('generate-story.what-sort-of')}{' '}
-              <RNTextComponent
-                isSemiBold
-                style={{...styles.question, color: 'rgba(10, 8, 4, 0.6)'}}>
-                {translation('generate-story.do-you-want-today')}
-              </RNTextComponent>{' '}
-            </RNTextComponent>
-            <RNChoiceQuestions
-              setDisabled={setDisabled}
-              type={STORY_PARTS.WHAT_HAPPENS}
-              index={4}
-              maxSelections={1}
-              data={TYPE_OF_STORY}
-            />
-          </>
-        );
-      case 5:
-        return (
-          <>
-            <RNTextComponent
-              isSemiBold
-              style={[styles.question, {height: verticalScale(70)}]}>
-              {translation('generate-story.what-style-illustration')}{' '}
-              <RNTextComponent
-                style={{...styles.question, color: 'rgba(10, 8, 4, 0.6)'}}
-                isSemiBold>
-                {translation('generate-story.shall-we-use')}
-              </RNTextComponent>{' '}
-            </RNTextComponent>
-            <ScrollView
-              contentContainerStyle={[styles.scrollView]}
-              scrollEnabled
-              showsVerticalScrollIndicator={false}>
-              {ILLUSTRATION.map((SvgIcon, index) => {
-                return (
-                  <Pressable
-                    key={index.toString()}
-                    style={[
-                      styles.illustration,
-                      {borderWidth: 3, borderColor: 'transparent'},
-                      index === addedIllustration && {
-                        borderColor: themeColor.themeBlue,
-                      },
-                    ]}
-                    onPress={() => {
-                      updateState({addedIllustration: index});
-                      setDisabled(false);
-                    }}>
-                    <SvgIcon
-                      width={verticalScale(120)}
-                      height={verticalScale(120)}
-                    />
-                  </Pressable>
-                );
-              })}
-            </ScrollView>
-          </>
-        );
-      case 6:
-        return (
-          <RNChooseColor
-            setDisabled={setDisabled}
-            isTablet={isTablet}
-            tooltipVisible={tooltipThird}
-            onTooltipClose={onCloseThirdTooltip}
-            customStyle={{paddingHorizontal: scale(16)}}
-          />
-        );
-    }
-  };
-
-  const nextQuestion = () => {
-    console.log('im in next question');
-    if (questionIndex < 7) {
-      if (questionIndex === 5 && addedIllustration) {
-        store.dispatch(
-          pushStoryGenerationResponse({
-            key: STORY_PARTS.STYLES,
-            value: [addedIllustration.toString() + 'Mock Illustration For Now'], // ! VERY IMPORTANT : SEND ILLUSTRATION TEXT ASK CLIENT FOR KEYS
-          }),
-        );
-      }
-      store.dispatch(changeQuestionIndex(questionIndex + 1));
-      if (questionIndex !== 0 && questionIndex !== 5) {
-        navigateTo(SCREEN_NAME.ROADMAP);
-      }
-    }
-  };
-
-  const previousQuestion = () => {
-    if (questionIndex > 0) {
-    }
-    navigateTo();
-  };
 
   return (
-    <RNScreenWrapper
-      giveStatusColor={
-        (tooltipFirst && !tooltipArray?.includes(5)) ||
-        (tooltipSecond && !tooltipArray?.includes(6)) ||
-        (tooltipThird && !tooltipArray?.includes(7)) ||
-        (tooltipFourth && !tooltipArray?.includes(8))
-      }>
+    <RNScreenWrapper giveStatusColor={giveStatusColor}>
       <View style={styles.container}>
         <View
           style={{
@@ -427,34 +50,32 @@ const GenerateStory = () => {
           <View style={styles.header}>
             <RNButton
               onlyIcon
-              onClick={previousQuestion}
+              onClick={() => {
+                onBack();
+                navigateTo();
+              }}
               icon={<LeftArrow />}
             />
             <RNTextComponent style={styles.heading} isSemiBold>
               {translation('GENERATE_STORY')}{' '}
               <RNTextComponent isSemiBold style={styles.questionNumber}>
-                {questionIndex === 0 ? 1 : questionIndex}/6
+                {questionNumber}/6
               </RNTextComponent>
             </RNTextComponent>
-            <RNButton
-              onlyIcon
-              onClick={previousQuestion}
-              icon={<QuestionMark />}
-            />
+            <RNButton onlyIcon onClick={() => {}} icon={<QuestionMark />} />
           </View>
           <View style={styles.progressBar}>
             {Array.from({length: 6}, (_, index) => {
-              return {index: index};
+              return index;
             }).map(index => {
-              const indicatorIndex = questionIndex === 0 ? 1 : questionIndex;
               return (
                 <View
-                  key={index.index}
+                  key={index.toString()}
                   style={[
                     styles.indicator,
                     {
                       backgroundColor:
-                        index.index < indicatorIndex
+                        index < questionNumber
                           ? themeColor.themeBlue
                           : 'rgba(66, 133, 246, 0.5)',
                     },
@@ -464,43 +85,26 @@ const GenerateStory = () => {
             })}
           </View>
         </View>
-        {dynamicContent()}
+        {children}
       </View>
-      <RNTooltip
-        isTablet={isTablet}
-        topViewStyle={{
-          alignItems: 'center',
-        }}
-        open={tooltipArray?.includes(6) ? false : tooltipSecond}
-        setClose={() => {
-          tooltipArray.push(6);
-          updateState({tooltipSecond: false});
-        }}
-        bottom={'South'}
-        text={translation('PRESS_THE_BUTTON')}
-        textStyle={styles.tooltip}
-        dimensionObject={positionRefs[0]}>
-        <View
-          style={{width: '100%', backgroundColor: 'pink'}}
-          ref={refOne}
-          onLayout={() => {
-            refOne?.current?.measure(
-              (
-                x: number,
-                y: number,
-                width: number,
-                height: number,
-                pageX: number,
-                pageY: number,
-              ) => {
-                setPositionRefs(prev => ({
-                  ...prev,
-                  0: {height: width, width: height, x: pageX, y: pageY},
-                }));
-              },
-            );
-          }}>
-          {questionIndex !== 1 && (
+      {onNextQuestion && (
+        <RNTooltip
+          isTablet={isTablet}
+          topViewStyle={{
+            alignItems: 'center',
+          }}
+          open={!!showButtonTooltip}
+          setClose={() => {
+            tooltipArray.push(6);
+            storeKey(TOOLTIP, tooltipArray);
+            if (onCloseButtonTooltip) {
+              onCloseButtonTooltip();
+            }
+          }}
+          bottom={DIRECTION_ARROWS.SOUTH}
+          text={translation('PRESS_THE_BUTTON')}
+          textStyle={styles.tooltip}>
+          <View style={{width: '100%', backgroundColor: 'pink'}}>
             <RNButton
               isDisabled={disabled}
               customStyle={[
@@ -512,14 +116,12 @@ const GenerateStory = () => {
                 },
               ]}
               title={translation('SELECT')}
-              onClick={nextQuestion}
+              onClick={onNextQuestion}
               textStyle={styles.buttonText}
             />
-          )}
-        </View>
-      </RNTooltip>
+          </View>
+        </RNTooltip>
+      )}
     </RNScreenWrapper>
   );
 };
-
-export default GenerateStory;

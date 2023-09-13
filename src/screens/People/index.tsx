@@ -43,16 +43,13 @@ const People = ({}: PeopleScreenProps) => {
   const currentAdult = useAppSelector(
     (state1: RootState) => state1.createChild.currentAdult,
   );
-  const currentChild = useAppSelector(
-    (state1: RootState) => state1.createChild.currentChild,
+  const children = useAppSelector(
+    (state1: RootState) => state1.createChild.childList,
   );
   const avatars = useAppSelector(stateL => stateL.cache.avatars);
 
   const currentAdultAvatar = avatars.filter(
     obj => obj.path === currentAdult?.avatar,
-  )[0]?.file;
-  const currentChildAvatar = avatars.filter(
-    obj => obj.path === currentChild?.avatar,
   )[0]?.file;
 
   return (
@@ -112,7 +109,7 @@ const People = ({}: PeopleScreenProps) => {
           <View style={styles.bigpeople}>
             <Pressable
               onPress={() =>
-                navigateTo(SCREEN_NAME.EditChildProfile, {editAdult: true})
+                navigateTo(SCREEN_NAME.EDIT_CHILD_PROFILE, {editAdult: true})
               }>
               <Image
                 source={{uri: currentAdultAvatar || currentAdult.avatar}}
@@ -134,10 +131,7 @@ const People = ({}: PeopleScreenProps) => {
                   fromAddAdult: true,
                 });
               }}>
-              <RNAddComponent
-                customStyle={styles.addButton}
-                boxStyle={styles.addBox}
-              />
+              <RNAddComponent customStyle={styles.addButton} />
             </Pressable>
           </View>
           <View style={styles.firstTab}>
@@ -166,34 +160,42 @@ const People = ({}: PeopleScreenProps) => {
         <>
           <View style={styles.littlePeople}>
             <ScrollView contentContainerStyle={styles.scrollview}>
-              <Pressable
-                onPress={() => {
-                  navigateTo(SCREEN_NAME.EditChildProfile);
-                }}>
-                <Image
-                  source={{
-                    uri: currentChildAvatar || currentChild?.avatar,
-                  }}
-                  style={[
-                    styles.profile,
-                    isTablet && {
-                      height: verticalScale(94),
-                      width: verticalScale(94),
-                    },
-                  ]}
-                />
-
-                <RNTextComponent style={styles.name} isSemiBold>
-                  {currentChild.name}
-                </RNTextComponent>
-              </Pressable>
+              {children.map((child, index) => {
+                const childcacheImage = avatars.filter(
+                  obj => obj.path === child?.avatar,
+                )[0]?.file;
+                return (
+                  <Pressable
+                    key={index.toString()}
+                    onPress={() => {
+                      navigateTo(SCREEN_NAME.EDIT_CHILD_PROFILE, {
+                        childId: child.childId,
+                      });
+                    }}>
+                    <Image
+                      source={{
+                        uri: childcacheImage || child.avatar,
+                      }}
+                      style={[
+                        styles.profile,
+                        isTablet && {
+                          height: verticalScale(94),
+                          width: verticalScale(94),
+                        },
+                      ]}
+                    />
+                    <RNTextComponent style={styles.name} isSemiBold>
+                      {child.name}
+                    </RNTextComponent>
+                  </Pressable>
+                );
+              })}
               <Pressable
                 onPress={() => {
                   navigateTo(SCREEN_NAME.CREATE_CHILD_PROFILE);
                 }}>
                 <RNAddComponent
                   customStyle={styles.addButton}
-                  boxStyle={styles.addBox}
                   textStyle={styles.addText}
                 />
               </Pressable>

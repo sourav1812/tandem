@@ -1,13 +1,6 @@
-import {
-  PressableProps,
-  ViewStyle,
-  StyleProp,
-  TextStyle,
-  LayoutChangeEvent,
-} from 'react-native';
+import {ViewStyle, StyleProp, TextStyle, LayoutChangeEvent} from 'react-native';
 
 export interface Props {
-  props?: PressableProps;
   customStyle?: StyleProp<ViewStyle>;
   heading?: string;
   emoji?: StyleProp<TextStyle>;
@@ -17,5 +10,14 @@ export interface Props {
   onLayout?: ((event: LayoutChangeEvent) => void) | undefined;
   onPress?: () => void;
   isSelected?: boolean;
+  Svgimg?: any;
+  image?: any;
+}
+
+export interface IconProps {
+  icon: string | undefined;
+  heading?: string;
+  isSelected?: boolean;
+  emoji?: StyleProp<TextStyle>;
   Svgimg?: any;
 }

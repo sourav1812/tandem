@@ -17,16 +17,26 @@ import BackButton from '@tandem/assets/svg/LeftArrow';
 import {verticalScale} from 'react-native-size-matters';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
-import {RootState, store} from '@tandem/redux/store';
+import {RootState} from '@tandem/redux/store';
 import RNButton from '@tandem/components/RNButton';
 import generateStory from '@tandem/api/generateStory';
-import {changeQuestionIndex} from '@tandem/redux/slices/storyGeneration.slice';
+import {STORY_PARTS} from '@tandem/constants/enums';
+import {goBackInOrder} from '@tandem/functions/removeQuestionData';
+import {useNavigation} from '@react-navigation/native';
+
+const SCREEN = [
+  SCREEN_NAME.GENERATE_STORY_WHO,
+  SCREEN_NAME.GENERATE_STORY_INCLUSION,
+  SCREEN_NAME.GENERATE_STORY_WHERE,
+  SCREEN_NAME.GENERATE_STORY_WHAT_THINGS,
+  SCREEN_NAME.GENERATE_STORY_WHAT_HAPPENS,
+  SCREEN_NAME.GENERATE_STORY_ILLUSTRATIONS,
+  SCREEN_NAME.GENERATE_STORY_COLORS,
+];
 
 const RNRoadmap = () => {
+  const navigation: any = useNavigation();
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
-  const questionIndex = useAppSelector(
-    state => state.storyGeneration.questionIndex,
-  );
   const [positionRefs, setPositionRefs] = React.useState({
     0: {height: 0, width: 0, x: 0, y: 0},
     1: {height: 0, width: 0, x: 0, y: 0},
@@ -37,7 +47,7 @@ const RNRoadmap = () => {
     6: {height: 0, width: 0, x: 0, y: 0},
   });
   const storyGenerationResponse = useAppSelector(
-    (state: RootState) => state.storyGeneration.response,
+    (state: RootState) => state.storyGeneration,
   );
   const currentChild = useAppSelector(
     (state: RootState) => state.createChild.currentChild,
@@ -48,12 +58,42 @@ const RNRoadmap = () => {
   );
   let scale = portrait ? 1 : 1.4;
 
+  const who = true;
+  const inclusion =
+    storyGenerationResponse[STORY_PARTS.WHO].length > 0 ||
+    storyGenerationResponse[STORY_PARTS.INCLUSION] !== null;
+  const where =
+    (inclusion && storyGenerationResponse[STORY_PARTS.INCLUSION] !== null) ||
+    storyGenerationResponse[STORY_PARTS.WHERE].length > 0;
+  const whatThings =
+    (where && storyGenerationResponse[STORY_PARTS.WHERE].length > 0) ||
+    storyGenerationResponse[STORY_PARTS.WHAT_THINGS].length > 0;
+  const whatHappens =
+    (whatThings &&
+      storyGenerationResponse[STORY_PARTS.WHAT_THINGS].length > 0) ||
+    storyGenerationResponse[STORY_PARTS.WHAT_HAPPENS].length > 0;
+  const illustration =
+    (whatHappens &&
+      storyGenerationResponse[STORY_PARTS.WHAT_HAPPENS].length > 0) ||
+    storyGenerationResponse[STORY_PARTS.STYLES].length > 0;
+  const colors =
+    (illustration && storyGenerationResponse[STORY_PARTS.STYLES].length > 0) ||
+    storyGenerationResponse[STORY_PARTS.COLOR].length > 0;
+
+  const checkIfClickable = [
+    who,
+    inclusion,
+    where,
+    whatThings,
+    whatHappens,
+    illustration,
+    colors,
+  ];
+
   const handleNavigate = (index: number) => {
-    if (index > questionIndex) {
-      return;
+    if (checkIfClickable[index]) {
+      navigation.push(SCREEN[index]);
     }
-    store.dispatch(changeQuestionIndex(index));
-    navigateTo(SCREEN_NAME.GENERATE_STORY);
   };
 
   return (
@@ -64,7 +104,7 @@ const RNRoadmap = () => {
             onlyIcon
             icon={<BackButton />}
             onClick={() => {
-              navigateTo(SCREEN_NAME.HOME);
+              goBackInOrder();
             }}
           />
           <Pressable
@@ -97,7 +137,7 @@ const RNRoadmap = () => {
               },
             ]}
             onPress={async () => {
-              if (questionIndex !== 7) {
+              if (!checkIfClickable[6]) {
                 return;
               }
               try {
@@ -109,7 +149,7 @@ const RNRoadmap = () => {
                 console.log('error generating story', error);
               }
             }}>
-            <Create scale={scale} mapIndex={questionIndex} />
+            <Create scale={scale} mapIndex={!!checkIfClickable[6]} />
           </Pressable>
           {positionRefs[6].y !== 0 && (
             <Pressable
@@ -136,12 +176,12 @@ const RNRoadmap = () => {
               <StyleColor
                 scale={scale}
                 fillColor={
-                  questionIndex > 4
+                  checkIfClickable[5]
                     ? themeColor.themeBlue
                     : themeColor.lightGray
                 }
                 textColor={
-                  questionIndex > 4 ? themeColor.white : themeColor.themeBlue
+                  checkIfClickable[5] ? themeColor.white : themeColor.themeBlue
                 }
               />
             </Pressable>
@@ -171,12 +211,12 @@ const RNRoadmap = () => {
               <WhatHappens
                 scale={scale}
                 fillColor={
-                  questionIndex > 3
+                  checkIfClickable[4]
                     ? themeColor.lightGreen
                     : themeColor.lightGray
                 }
                 textColor={
-                  questionIndex > 3 ? themeColor.white : themeColor.themeBlue
+                  checkIfClickable[4] ? themeColor.white : themeColor.themeBlue
                 }
               />
             </Pressable>
@@ -206,10 +246,10 @@ const RNRoadmap = () => {
               <WhatThing
                 scale={scale}
                 fillColor={
-                  questionIndex > 2 ? themeColor.gold : themeColor.lightGray
+                  checkIfClickable[3] ? themeColor.gold : themeColor.lightGray
                 }
                 textColor={
-                  questionIndex > 2 ? themeColor.white : themeColor.themeBlue
+                  checkIfClickable[3] ? themeColor.white : themeColor.themeBlue
                 }
               />
             </Pressable>
@@ -239,10 +279,10 @@ const RNRoadmap = () => {
               <Where
                 scale={scale}
                 fillColor={
-                  questionIndex > 1 ? themeColor.green : themeColor.lightGray
+                  checkIfClickable[2] ? themeColor.green : themeColor.lightGray
                 }
                 textColor={
-                  questionIndex > 1 ? themeColor.white : themeColor.themeBlue
+                  checkIfClickable[2] ? themeColor.white : themeColor.themeBlue
                 }
               />
             </Pressable>
@@ -271,12 +311,8 @@ const RNRoadmap = () => {
               ]}>
               <Who
                 scale={scale}
-                fillColor={
-                  questionIndex >= 0 ? '#9A00FF' : themeColor.lightGray
-                }
-                textColor={
-                  questionIndex >= 0 ? themeColor.white : themeColor.themeBlue
-                }
+                fillColor={'#9A00FF'}
+                textColor={themeColor.white}
               />
             </Pressable>
           )}

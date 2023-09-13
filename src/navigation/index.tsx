@@ -63,9 +63,51 @@ const AppNavigator = () => {
             <>
               <Stack.Screen
                 getComponent={() =>
-                  require('@tandem/screens/GenerateStory').default
+                  require('@tandem/screens/GenerateStory/Questions/Who').default
                 }
-                name={SCREEN_NAME.GENERATE_STORY}
+                name={SCREEN_NAME.GENERATE_STORY_WHO}
+              />
+              <Stack.Screen
+                getComponent={() =>
+                  require('@tandem/screens/GenerateStory/Questions/Inclusion')
+                    .default
+                }
+                name={SCREEN_NAME.GENERATE_STORY_INCLUSION}
+              />
+              <Stack.Screen
+                getComponent={() =>
+                  require('@tandem/screens/GenerateStory/Questions/Where')
+                    .default
+                }
+                name={SCREEN_NAME.GENERATE_STORY_WHERE}
+              />
+              <Stack.Screen
+                getComponent={() =>
+                  require('@tandem/screens/GenerateStory/Questions/WhatThings')
+                    .default
+                }
+                name={SCREEN_NAME.GENERATE_STORY_WHAT_THINGS}
+              />
+              <Stack.Screen
+                getComponent={() =>
+                  require('@tandem/screens/GenerateStory/Questions/WhatHappens')
+                    .default
+                }
+                name={SCREEN_NAME.GENERATE_STORY_WHAT_HAPPENS}
+              />
+              <Stack.Screen
+                getComponent={() =>
+                  require('@tandem/screens/GenerateStory/Questions/Illustrations')
+                    .default
+                }
+                name={SCREEN_NAME.GENERATE_STORY_ILLUSTRATIONS}
+              />
+              <Stack.Screen
+                getComponent={() =>
+                  require('@tandem/screens/GenerateStory/Questions/Colors')
+                    .default
+                }
+                name={SCREEN_NAME.GENERATE_STORY_COLORS}
               />
               <Stack.Screen
                 getComponent={() =>
@@ -169,7 +211,7 @@ const AppNavigator = () => {
                 getComponent={() =>
                   require('@tandem/screens/EditChildProfile').default
                 }
-                name={SCREEN_NAME.EditChildProfile}
+                name={SCREEN_NAME.EDIT_CHILD_PROFILE}
               />
               <Stack.Screen
                 getComponent={() =>
