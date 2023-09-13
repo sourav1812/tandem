@@ -20,6 +20,7 @@ import {SvgProps} from 'react-native-svg';
 import removeQuestionData from '@tandem/functions/removeQuestionData';
 import {useAppSelector, useAppDispatch} from '@tandem/hooks/navigationHooks';
 import {useNavigation} from '@react-navigation/native';
+import RNEmojiWithText from '@tandem/components/RNEmojiWithText';
 
 export default () => {
   const navigation: any = useNavigation();
@@ -90,6 +91,14 @@ export default () => {
               />
             );
           })}
+          <RNEmojiWithText
+            isSelected={activeState.includes('Not sure')}
+            onPress={() => handlePress('Not sure')}
+            heading={'Not sure'}
+            customStyle={styles.illustration}
+            icon={'🤷'}
+            bgcColor={'pink'}
+          />
         </ScrollView>
       </>
     </GenerateStory>
