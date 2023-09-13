@@ -3,6 +3,9 @@ import apple from './apple';
 import facebook from './facebook';
 import google from './google';
 import {SocialResponse} from './interface';
+import {store} from '@tandem/redux/store';
+import {cacheAvatars} from '../cache';
+import {saveSocialData} from '@tandem/redux/slices/userData.slice';
 
 export default async (type: 'apple' | 'google' | 'facebook') => {
   const socialAuthFunctions: {
@@ -21,15 +24,24 @@ export default async (type: 'apple' | 'google' | 'facebook') => {
     const {firstName, lastName, idToken, image, email}: SocialResponse =
       response;
 
-    const socialLoginReponse = await socialLogin({
+    await socialLogin({
       name: `${firstName || ''}${lastName ? ' ' + lastName : ''}`,
       token: idToken,
       profilePicture: image,
       email,
       type,
     });
-    console.log(socialLoginReponse, 'socialLoginReponse');
+    store.dispatch(
+      saveSocialData({
+        name: `${firstName || ''}${lastName ? ' ' + lastName : ''}`,
+        idToken: idToken,
+        image: image,
+        email: email,
+      }),
+    );
+    cacheAvatars('socialLoginImage', image);
+    console.log(response, 'socialLoginReponse');
   } catch (error) {
-    console.log('error in socail auth', {error, type});
+    console.log('error in social auth', {error, type});
   }
 };

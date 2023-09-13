@@ -11,6 +11,12 @@ interface userDataState {
     children?: ChildData[];
     adults?: AdultData[];
   };
+  socialDataObject: {
+    email: string;
+    name: string;
+    idToken: string;
+    image: string;
+  };
 }
 
 // Define the initial state using that type
@@ -21,6 +27,12 @@ const initialState: userDataState = {
     userId: '',
     children: [],
     adults: [],
+  },
+  socialDataObject: {
+    email: '',
+    name: '',
+    idToken: '',
+    image: '',
   },
 };
 
@@ -35,9 +47,21 @@ export const setUserData = createSlice({
     resetUserData: state => {
       state.userDataObject = {name: '', email: '', userId: '', children: []};
     },
+    saveSocialData: (state, action) => {
+      state.socialDataObject = action.payload;
+    },
+    resetSocialData: state => {
+      state.socialDataObject = {
+        name: '',
+        email: '',
+        idToken: '',
+        image: '',
+      };
+    },
   },
 });
 
-export const {saveUserData, resetUserData} = setUserData.actions;
+export const {saveUserData, resetUserData, saveSocialData, resetSocialData} =
+  setUserData.actions;
 
 export default setUserData.reducer;

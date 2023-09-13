@@ -22,10 +22,9 @@ const TermsAndConditions = () => {
   const [state, setState] = useState<StateObject>({
     term1: false,
     term2: false,
-    term3: false,
   });
 
-  const {term1, term2, term3} = state;
+  const {term1, term2} = state;
 
   const updateState = (date: any) => {
     setState((previouState: any) => {
@@ -64,7 +63,6 @@ const TermsAndConditions = () => {
           </RNTextComponent>
           <RNCheckboxWithText onAccept={() => updateState({term1: !term1})} />
           <RNCheckboxWithText onAccept={() => updateState({term2: !term2})} />
-          <RNCheckboxWithText onAccept={() => updateState({term3: !term3})} />
         </ScrollView>
         <View
           style={[styles.footerButton, isTablet && {paddingHorizontal: 100}]}>
@@ -85,14 +83,14 @@ const TermsAndConditions = () => {
             title={translation('ACCEPT')}
             customStyle={[
               styles.button,
-              !term1 || !term2 || !term3
+              !term1 && !term2
                 ? {
                     backgroundColor: themeColor.lightGray,
                     borderColor: themeColor.lightGray,
                   }
                 : null,
             ]}
-            isDisabled={term1 || term2 || term3 ? false : true}
+            isDisabled={term1 && term2 ? false : true}
           />
         </View>
       </View>

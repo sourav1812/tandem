@@ -280,6 +280,13 @@
   "LOGOUT_FROM_ALL_DEVICES": "Desideri anche disconnetterti dagli altri dispositivi?",
   "DELETE_CHILD": "Elimina bambino",
   "DELETE_ADULT": "Elimina contenuti per adulti",
+  "DONT_MISS_NEW_BOOOKS": "Non perderti i nuovi libri",
+  "ACTIVATE_THE_NOTIFICATION": "Attiva la notifica per poter visualizzare i nuovi libri del tuo bambino",
+  "TURN_ON_NOTIFICATION": "Attiva la notifica",
+  "MAYBE_LATER": "Forse più tardi",
+  "ADD_PHOTO": "Aggiungi foto",
+  "CAMERA": "Fotocamera",
+  "GALLERY": "Galleria",
   "Alert": "Allarme",
   "Message": "Messaggio",
   "COLOR_ADDED": "Questo colore è già stato aggiunto"

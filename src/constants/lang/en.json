@@ -280,6 +280,13 @@
   "LOGOUT_FROM_ALL_DEVICES": "Do you wish to logout from your other devices?",
   "DELETE_CHILD": "Delete child",
   "DELETE_ADULT": "Delete adult",
+  "DONT_MISS_NEW_BOOOKS": "Don't miss new books",
+  "ACTIVATE_THE_NOTIFICATION": "Activate the notification to be able to view your child's new books",
+  "TURN_ON_NOTIFICATION": "Turn on the notification",
+  "MAYBE_LATER": "Maybe Later",
+  "ADD_PHOTO": "Add Photo",
+  "CAMERA": "Camera",
+  "GALLERY": "Gallery",
   "Alert": "Alert",
   "Message": "Message",
   "COLOR_ADDED": "This color is already added"

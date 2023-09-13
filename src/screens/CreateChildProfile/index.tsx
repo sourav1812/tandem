@@ -31,6 +31,11 @@ import {LanguageDropDown} from '@tandem/components/LanguageDropDown';
 import {addNewChild} from '@tandem/api/creatChildProfile';
 import {addNewAdult} from '@tandem/api/createAdultProfile';
 import {PEOPLE} from '@tandem/constants/enums';
+import RNAvatarComponentWithEdit from '@tandem/components/RNAvatarComponentWithEdit';
+import ImageCropPicker from 'react-native-image-crop-picker';
+import {verticalScale} from 'react-native-size-matters';
+import {cacheAvatars} from '@tandem/functions/cache';
+import RNChooseImage from '@tandem/components/RNChooseImage';
 
 const GENDERS = {
   girl: 'girl',
@@ -41,6 +46,10 @@ const GENDERS = {
 const CreateChildProfile = ({route}: CreateChildProfileProps) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const avatars = useAppSelector(state => state.cache.avatars);
+  console.log(avatars, 'avatarsasdfgh');
+  const socialLoginData = useAppSelector(
+    state => state.userData.socialDataObject,
+  );
   const fromAddAdult = route.params?.fromAddAdult;
   const dispatch = useAppDispatch();
   const [state, setState] = useState<ChildProfileStateObject>({
@@ -51,8 +60,11 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
     ],
     questionIndex: 1,
     gender: '',
+    imagePickerUrl: socialLoginData.image !== '' ? socialLoginData.image : null,
+    showImageModal: false,
   });
-  const {bulletinArray, questionIndex, gender} = state;
+  const {bulletinArray, questionIndex, gender, imagePickerUrl, showImageModal} =
+    state;
   const [name, setName] = useState<ValidationError>({value: ''});
   const [role, setRole] = useState<ValidationError>({value: ''});
   const [dateModal, setDateModal] = useState(false);
@@ -210,6 +222,10 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
     updateState({gender: type});
   };
 
+  const renderImageModal = () => {
+    updateState({showImageModal: !showImageModal});
+  };
+
   const disableButtonForChilForm = () => {
     if (questionIndex === 1 && !gender) {
       return false;
@@ -232,6 +248,38 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
       return false;
     }
     return true;
+  };
+
+  const openCamera = () => {
+    ImageCropPicker.openCamera({
+      width: 350,
+      height: 350,
+      cropping: true,
+      loadingLabelText: 'Image',
+      mediaType: 'photo',
+    })
+      .then(response => {
+        cacheAvatars('imageFromGallery', response.path);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  const openGallery = () => {
+    ImageCropPicker.openPicker({
+      width: 350,
+      height: 350,
+      cropping: true,
+      loadingLabelText: 'Image',
+      mediaType: 'photo',
+    })
+      .then(response => {
+        cacheAvatars('imageFromGallery', response.path);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   const childForm = () => {
@@ -348,39 +396,50 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
                 contentContainerStyle={styles.list}
                 showsVerticalScrollIndicator={false}>
                 {avatars.map((item, index) => {
-                  return (
-                    <RNAvatarComponent
-                      key={index.toString()}
-                      icon={item.file}
-                      customStyle={[
-                        styles.avatar,
-                        avatar === item.path && {
-                          backgroundColor: themeColor.themeBlue,
-                        },
-                      ]}
-                      imgStyle={styles.avatarImg}
-                      onPress={() => {
-                        // if (index === 0) {
-                        //   return;
-                        // ImagePicker.openPicker({
-                        //   width: 300,
-                        //   height: 300,
-                        //   cropping: true,
-                        //   includeBase64: true,
-                        //   loadingLabelText: 'Image',
-                        //   mediaType: 'photo',
-                        // })
-                        //   .then(response => {
-                        //     setImageData(response);
-                        //   })
-                        //   .catch(err => {
-                        //     console.log(err);
-                        //   });
-                        // }
-                        setAvatar(item.path);
-                      }}
-                    />
-                  );
+                  if (index === 0) {
+                    console.log(item, 'indexvsdff');
+                    return (
+                      <RNAvatarComponentWithEdit
+                        onEdit={renderImageModal}
+                        onSelect={() => {
+                          if (item.isPickerImg) {
+                            renderImageModal();
+                          } else {
+                            setAvatar(item.path);
+                          }
+                        }}
+                        icon={{uri: imagePickerUrl || item.file}}
+                        imgStyle={[
+                          {
+                            marginTop: verticalScale(12),
+                            borderWidth: 3,
+                            borderColor: 'transparent',
+                          },
+                          avatar === item.path && {
+                            borderColor: themeColor.themeBlue,
+                            borderRadius: 1000,
+                          },
+                        ]}
+                        isImageFromPicker={imagePickerUrl ? true : false}
+                      />
+                    );
+                  } else {
+                    return (
+                      <RNAvatarComponent
+                        icon={item.file}
+                        customStyle={[
+                          styles.avatar,
+                          avatar === item.path && {
+                            backgroundColor: themeColor.themeBlue,
+                          },
+                        ]}
+                        imgStyle={styles.avatarImg}
+                        onPress={() => {
+                          setAvatar(item.path);
+                        }}
+                      />
+                    );
+                  }
                 })}
               </ScrollView>
             </View>
@@ -458,40 +517,51 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
               <ScrollView
                 contentContainerStyle={styles.list}
                 showsVerticalScrollIndicator={false}>
-                {avatars.map(item => {
-                  return (
-                    <RNAvatarComponent
-                      icon={item.file}
-                      customStyle={[
-                        styles.avatar,
-                        avatar === item.path && {
-                          backgroundColor: themeColor.themeBlue,
-                        },
-                      ]}
-                      imgStyle={styles.avatarImg}
-                      onPress={() => {
-                        // if (index === 0) {
-                        //   return;
-                        // ImagePicker.openPicker({
-                        //   width: 300,
-                        //   height: 300,
-                        //   cropping: true,
-                        //   includeBase64: true,
-                        //   loadingLabelText: 'Image',
-                        //   mediaType: 'photo',
-                        // })
-                        //   .then(response => {
-                        //     setImageData(response);
-                        //     console.log(response, 'sdfghjrfdsresponse');
-                        //   })
-                        //   .catch(err => {
-                        //     console.log(err);
-                        //   });
-                        // }
-                        setAvatar(item.path);
-                      }}
-                    />
-                  );
+                {avatars.map((item, index) => {
+                  if (index === 0) {
+                    console.log(item, 'indexvsdff');
+                    return (
+                      <RNAvatarComponentWithEdit
+                        onEdit={renderImageModal}
+                        onSelect={() => {
+                          if (item.isPickerImg) {
+                            renderImageModal();
+                          } else {
+                            setAvatar(item.path);
+                          }
+                        }}
+                        icon={{uri: imagePickerUrl || item.file}}
+                        imgStyle={[
+                          {
+                            marginTop: verticalScale(12),
+                            borderWidth: 3,
+                            borderColor: 'transparent',
+                          },
+                          avatar === item.path && {
+                            borderColor: themeColor.themeBlue,
+                            borderRadius: 1000,
+                          },
+                        ]}
+                        isImageFromPicker={imagePickerUrl ? true : false}
+                      />
+                    );
+                  } else {
+                    return (
+                      <RNAvatarComponent
+                        icon={item.file}
+                        customStyle={[
+                          styles.avatar,
+                          avatar === item.path && {
+                            backgroundColor: themeColor.themeBlue,
+                          },
+                        ]}
+                        imgStyle={styles.avatarImg}
+                        onPress={() => {
+                          setAvatar(item.path);
+                        }}
+                      />
+                    );
+                  }
                 })}
               </ScrollView>
             </View>
@@ -549,6 +619,12 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
         onCancel={() => {
           setDateModal(false);
         }}
+      />
+      <RNChooseImage
+        visible={showImageModal}
+        renderModal={renderImageModal}
+        openCamera={openCamera}
+        openGallery={openGallery}
       />
     </RNScreenWrapper>
   );

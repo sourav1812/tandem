@@ -17,10 +17,17 @@ import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {MODE} from '@tandem/constants/mode';
 import {translation} from '@tandem/utils/methods';
 import {RootState} from '@tandem/redux/store';
+import NotificationScreen from '@tandem/screens/NotificationScreen';
 
 const BottomTab = () => {
   const Tab = createBottomTabNavigator<RootTabParamList>();
   const mode = useAppSelector((state: RootState) => state.mode.mode);
+  const firstTime = useAppSelector(
+    (state: RootState) => state.permissions.isFirstTime,
+  );
+  const status = useAppSelector(
+    (state: RootState) => state.permissions.notificationStatus,
+  );
   const isTablet = useAppSelector(
     (state: RootState) => state.deviceType.isTablet,
   );
@@ -39,8 +46,14 @@ const BottomTab = () => {
       }}
       initialRouteName={SCREEN_NAME.HOME}>
       <Tab.Screen
-        component={Bookshelf}
-        name={SCREEN_NAME.BOOKSHELF}
+        component={
+          status || firstTime === 'false' ? Bookshelf : NotificationScreen
+        }
+        name={
+          status || firstTime === 'false'
+            ? SCREEN_NAME.BOOKSHELF
+            : SCREEN_NAME.NOTIFICATION_SCREEN
+        }
         options={{
           tabBarIcon: ({focused}: any) => {
             return (

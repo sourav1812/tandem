@@ -34,6 +34,7 @@ export type RootStackParamList = {
   PrivacyPolicies: undefined;
   TermsOfUse: undefined;
   Congratulation: undefined;
+  NotificationScreen: undefined;
   Who: undefined;
   Inclusion: undefined;
   Where: undefined;
@@ -47,6 +48,7 @@ export type RootTabParamList = {
   Home: undefined;
   Bookshelf: undefined;
   People: undefined;
+  NotificationScreen: undefined;
 };
 
 export type AllStackScreenParamList = RootStackParamList & RootTabParamList;
