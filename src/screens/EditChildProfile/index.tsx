@@ -40,10 +40,11 @@ const EditChildProfile = ({route}: EditChildProfileProps) => {
     (state1: RootState) => state1.createChild.currentAdult,
   );
 
-  const {editAdult} = route.params;
+  const {editAdult, childId} = route.params;
 
   const currentChild = useAppSelector(
-    (state1: RootState) => state1.createChild.currentChild,
+    (state1: RootState) =>
+      state1.createChild.childList.filter(obj => obj.childId === childId)[0],
   );
   const [name, setName] = useState<ValidationError>({
     value: editAdult ? currentAdult.role || '' : currentChild.name || '',
@@ -53,6 +54,7 @@ const EditChildProfile = ({route}: EditChildProfileProps) => {
   const [dob, setDob] = useState<ValidationError>({
     value: editAdult ? currentAdult.dob || '' : currentChild.dob || '',
   });
+
   const [state, setState] = useState<StateObject>({
     showModal: false,
     showAvatarModal: false,

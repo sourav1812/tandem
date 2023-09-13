@@ -23,7 +23,7 @@ export type RootStackParamList = {
   ChangePassword: undefined;
   People: undefined;
   AboutApp: undefined;
-  EditChildProfile: {editAdult: boolean} | undefined;
+  EditChildProfile: {editAdult?: boolean; childId?: string};
   RedeemVoucher: undefined;
   RoadMap: undefined;
   ForgotPasswords: undefined;
@@ -126,5 +126,5 @@ export type CreateChildProfileProps = NativeStackScreenProps<
 
 export type EditChildProfileProps = NativeStackScreenProps<
   AllStackScreenParamList,
-  SCREEN_NAME.EditChildProfile
+  SCREEN_NAME.EDIT_CHILD_PROFILE
 >;
