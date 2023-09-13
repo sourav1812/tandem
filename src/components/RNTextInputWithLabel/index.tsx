@@ -71,6 +71,13 @@ const RNTextInputWithLabel = ({
           ]}>
           {Icon && Icon}
           <TextInput
+            textContentType={
+              validationType === FORM_INPUT_TYPE.PASSWORD
+                ? 'password'
+                : validationType === FORM_INPUT_TYPE.EMAIL
+                ? 'emailAddress'
+                : 'none'
+            }
             keyboardType={
               validationType === FORM_INPUT_TYPE.EMAIL
                 ? 'email-address'
@@ -114,7 +121,6 @@ const RNTextInputWithLabel = ({
             ))}
         </View>
       </View>
-
       <Text
         style={[
           styles.errorText,

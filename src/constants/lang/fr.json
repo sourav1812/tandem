@@ -289,5 +289,6 @@
   "GALLERY": "Galerie",
   "Alert": "Alerte",
   "Message": "Message",
-  "COLOR_ADDED": "Cette couleur est déjà ajoutée"
+  "COLOR_ADDED": "Cette couleur est déjà ajoutée",
+  "DONT_HAVE_ACCOUNT": "Vous n'avez pas de compte?"
 }

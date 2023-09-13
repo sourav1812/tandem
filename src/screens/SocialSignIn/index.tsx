@@ -92,7 +92,7 @@ const SocialSignIn = () => {
           />
           <RNTextComponent
             style={[styles.buttonText, isTablet && {fontSize: 18}]}>
-            {translation('DONT_HAVE_AN_ACCOUNT')}{' '}
+            {translation('DONT_HAVE_ACCOUNT')}{' '}
             <RNTextComponent
               isSemiBold
               style={[styles.signup, isTablet && {fontSize: 18}]}
