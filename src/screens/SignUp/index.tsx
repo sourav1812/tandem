@@ -310,14 +310,12 @@ const SignUp = () => {
                   />
                   <RNTextInputWithLabel
                     label={translation('CONFIRM_PASSWORD')}
-                    // label={en.EMAIL}
                     containerStyle={styles.input2}
                     backgroundColor={themeColor.lightGray}
                     inputStyle={styles.inputText}
                     value={confirmPassword}
                     updateText={setConfirmPassword}
                     validationType={FORM_INPUT_TYPE.CONFIRM_PASSWORD}
-                    // errorText={errorText}
                     hint={translation('ENTER_PASSWORD')}
                     rightSideIcon
                   />

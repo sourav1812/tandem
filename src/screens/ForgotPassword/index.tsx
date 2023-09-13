@@ -27,68 +27,68 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState<ValidationError>({value: ''});
   const height = Dimensions.get('screen').height;
   const width = Dimensions.get('screen').width;
-
   return (
-    <RNScreenWrapper style={{backgroundColor: themeColor.white, flex: 1}}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={{
-          height: height,
-          width: width,
+    <RNScreenWrapper style={{backgroundColor: themeColor.white}}>
+      <ImageBackground
+        style={styles.container}
+        source={
+          isTablet
+            ? require('@tandem/assets/png/forgotPasswordTabletBgc.png')
+            : require('@tandem/assets/png/forgotPasswordMobileBgc.png')
+        }
+        resizeMode="cover"
+      />
+
+      <RNLogoHeader customStyle={styles.header} />
+      <ScrollView
+        contentContainerStyle={{
+          height: '100%',
+          width: '100%',
+          alignItems: 'center',
         }}>
-        <ScrollView
-          contentContainerStyle={{
-            height: height,
-            width: width,
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'position' : 'padding'}
+          style={{
+            width: width < height ? width : height,
           }}>
-          <ImageBackground
-            style={styles.container}
-            source={
-              isTablet
-                ? require('@tandem/assets/png/forgotPasswordTabletBgc.png')
-                : require('@tandem/assets/png/forgotPasswordMobileBgc.png')
-            }
-            resizeMode="stretch">
-            <RNLogoHeader customStyle={styles.header} />
-            <RNTextComponent style={styles.heading} isSemiBold>
-              {translation('FORGOT_PASSWORD')}?
-            </RNTextComponent>
-            <RNTextComponent
-              style={[
-                styles.subHeading,
-                {
-                  fontSize: isTablet ? verticalScale(11) : verticalScale(13),
-                  marginTop: verticalScale(10),
-                },
-              ]}>
-              {translation('ENTER_EMAIL_FOR_VERIFICATION')}
-            </RNTextComponent>
-            <View
-              style={[
-                styles.form,
-                isTablet && {paddingHorizontal: verticalScale(120)},
-              ]}>
-              <RNTextInputWithLabel
-                label={translation('EMAIL')}
-                backgroundColor={themeColor.lightGray}
-                containerStyle={styles.input2}
-                value={email}
-                validationType={FORM_INPUT_TYPE.EMAIL}
-                updateText={setEmail}
-                hint={translation('ENTER_YOUR_EMAIL')}
-                inputStyle={styles.inputText}
-              />
-              <RNButton
-                title={translation('GET_CODE')}
-                customStyle={styles.button}
-                onClick={() => {
-                  navigateTo(SCREEN_NAME.CHECK_EMAIL);
-                }}
-              />
-            </View>
-          </ImageBackground>
-        </ScrollView>
-      </KeyboardAvoidingView>
+          <RNTextComponent style={styles.heading} isSemiBold>
+            {translation('FORGOT_PASSWORD')}?
+          </RNTextComponent>
+          <RNTextComponent
+            style={[
+              styles.subHeading,
+              {
+                fontSize: isTablet ? verticalScale(11) : verticalScale(13),
+                marginTop: verticalScale(10),
+              },
+            ]}>
+            {translation('ENTER_EMAIL_FOR_VERIFICATION')}
+          </RNTextComponent>
+          <View
+            style={[
+              styles.form,
+              isTablet && {paddingHorizontal: verticalScale(120)},
+            ]}>
+            <RNTextInputWithLabel
+              label={translation('EMAIL')}
+              backgroundColor={themeColor.lightGray}
+              containerStyle={styles.input2}
+              value={email}
+              validationType={FORM_INPUT_TYPE.EMAIL}
+              updateText={setEmail}
+              hint={translation('ENTER_YOUR_EMAIL')}
+              inputStyle={styles.inputText}
+            />
+            <RNButton
+              title={translation('GET_CODE')}
+              customStyle={styles.button}
+              onClick={() => {
+                navigateTo(SCREEN_NAME.CHECK_EMAIL);
+              }}
+            />
+          </View>
+        </KeyboardAvoidingView>
+      </ScrollView>
     </RNScreenWrapper>
   );
 };

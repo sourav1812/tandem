@@ -5,11 +5,13 @@ import themeColor from '@tandem/theme/themeColor';
 export const styles = StyleSheet.create({
   container: {
     height: '100%',
+    width: '100%',
+    position: 'absolute',
   },
   heading: {
     fontSize: verticalScale(20),
     alignSelf: 'center',
-    marginTop: verticalScale(85),
+    marginTop: verticalScale(40),
   },
   header: {
     flexDirection: 'row',
