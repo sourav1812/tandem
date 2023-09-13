@@ -9,10 +9,7 @@ import {
 import {store} from '@tandem/redux/store';
 import RNFetchBlob from 'rn-fetch-blob';
 
-export const cacheAvatars = (
-  file?: string | undefined | null,
-  path?: string | undefined | null,
-) => {
+export const cacheAvatars = (file?: string | null, path?: string | null) => {
   console.log('cache avatar func', file, path);
   if (!file && !path) {
     store.dispatch(clearAvatars());
@@ -33,6 +30,7 @@ export const cacheAvatars = (
         });
     });
   } else {
+    if (!path) return;
     RNFetchBlob.config({fileCache: true})
       .fetch('GET', path, {})
       .then(res => {

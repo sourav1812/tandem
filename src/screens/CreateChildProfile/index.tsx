@@ -48,7 +48,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
   const avatars = useAppSelector(state => state.cache.avatars);
   console.log(avatars, 'avatarsasdfgh');
   const socialLoginData = useAppSelector(
-    state => state.socialLogin.socialDataObject,
+    state => state.userData.socialDataObject,
   );
   const fromAddAdult = route.params?.fromAddAdult;
   const dispatch = useAppDispatch();

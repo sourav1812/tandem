@@ -40,6 +40,6 @@ export const setSocialLoginData = createSlice({
   },
 });
 
-export const {saveSocialData, resetSocialData} = setSocialLoginData.actions;
+// export const {saveSocialData, resetSocialData} = setSocialLoginData.actions;
 
 export default setSocialLoginData.reducer;

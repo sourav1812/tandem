@@ -1,5 +1,4 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {storeKey} from '@tandem/helpers/encryptedStorage';
 
 // Define a type for the slice state
 
@@ -24,7 +23,6 @@ export const setPermissions = createSlice({
     },
     setIsFirstTime: (state, action) => {
       state.isFirstTime = action.payload;
-      storeKey('firstTime', action.payload);
     },
   },
 });

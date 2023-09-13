@@ -4,8 +4,8 @@ import facebook from './facebook';
 import google from './google';
 import {SocialResponse} from './interface';
 import {store} from '@tandem/redux/store';
-import {saveSocialData} from '@tandem/redux/slices/socialLogin.slice';
 import {cacheAvatars} from '../cache';
+import {saveSocialData} from '@tandem/redux/slices/userData.slice';
 
 export default async (type: 'apple' | 'google' | 'facebook') => {
   const socialAuthFunctions: {
