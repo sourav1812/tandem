@@ -26,6 +26,7 @@ import {RootState, store} from '@tandem/redux/store';
 import {STORY_PARTS} from '@tandem/constants/enums';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import ColorRemove from '@tandem/assets/svg/ColorRemove';
+import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
 
 interface IPath {
   segments: String[];
@@ -211,9 +212,23 @@ const RNChooseColor = ({
                 }}>
                 {palleteArray.length < 4 ? (
                   <Pressable
-                    disabled={palleteArray.includes(activeColor)}
+                    disabled={activeColor === ''}
                     onPress={() => {
-                      if (activeColor === '') {
+                      if (palleteArray.includes(activeColor)) {
+                        store.dispatch(
+                          addAlertData({
+                            type: 'Message',
+                            message: translation('COLOR_ADDED'),
+                            onSuccess: () => {
+                              setActiveColor('');
+                              setUsedColor([]);
+                              setClear(true);
+                              setTimeout(() => {
+                                setClear(false);
+                              }, 100);
+                            },
+                          }),
+                        );
                         return;
                       }
                       LayoutAnimation.configureNext(
@@ -261,6 +276,8 @@ const RNChooseColor = ({
                       const localRef = [...palleteArray];
                       localRef.splice(val, 1);
                       setPalletArray(localRef);
+                      setFinalColor('');
+                      valueRef.current = '';
                     }}
                   />
                 )}

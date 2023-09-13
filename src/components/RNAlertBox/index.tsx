@@ -10,6 +10,7 @@ import {styles} from './style';
 import {AlertBoxInterface} from './interface';
 import {clearAlertData} from '@tandem/redux/slices/alertBox.slice';
 import themeColor from '@tandem/theme/themeColor';
+import {translation} from '@tandem/utils/methods';
 
 const RNAlertBox = ({
   visible,
@@ -41,7 +42,7 @@ const RNAlertBox = ({
           },
         ]}>
         <RNTextComponent isSemiBold style={styles.heading}>
-          {type}
+          {translation(type)}
         </RNTextComponent>
         <RNTextComponent style={styles.info}>{message}</RNTextComponent>
         {possibleResolution && (

@@ -279,5 +279,8 @@
   "RELATIONSHIP": "Relazione",
   "LOGOUT_FROM_ALL_DEVICES": "Desideri anche disconnetterti dagli altri dispositivi?",
   "DELETE_CHILD": "Elimina bambino",
-  "DELETE_ADULT": "Elimina contenuti per adulti"
+  "DELETE_ADULT": "Elimina contenuti per adulti",
+  "Alert": "Allarme",
+  "Message": "Messaggio",
+  "COLOR_ADDED": "Questo colore è già stato aggiunto"
 }
