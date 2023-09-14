@@ -8,6 +8,8 @@
   "YOU_CAN_CHANGE_IT": "Puoi cambiarlo nelle impostazioni in qualsiasi momento",
   "CREATE_AN_ACCOUNT": "Crea un Account",
   "NAME": "Nome",
+  "SURNAME": "Cognome",
+  "ENTER_SURNAME": "Inserisci cognome",
   "DAD": "Papà",
   "MUM": "Mamma",
   "WHO": "Chi",
@@ -77,10 +79,8 @@
   "RATE": "Valuta",
   "BY_USING_OUR_APP_YOU_AGREE": "Utilizzando la nostra app, accetti i nostri Termini d'Uso.",
   "USER_ELIGIBILITY": "Idoneità dell'Utente: 1.1 L'App è destinata all'uso da parte di bambini di età inferiore ai 13 anni. Utilizzando l'App, dichiari di essere un genitore o un tutore legale e di avere l'autorità per acconsentire a questo Accordo per conto del tuo bambino. Se hai meno di 13 anni, puoi utilizzare l'App solo con il consenso e la supervisione di un genitore o di un tutore legale.",
-  "I_AGREE_TO_THE_TERMS": "Accetto i termini e le condizioni dell'Accordo di Licenza per l'Utente Finale.",
   "HAVE_FUN_MAKE_STORIES": "Divertiti, crea storie, leggi e ridi insieme. Costruisci menti e ricordi felici.",
   "GET_STARTED": "Inizia",
-
   "CONTINUE_WITH": "Continua con",
   "SIGN_IN_WITH_PASSWORD": "Accedi con la password",
   "DONT_HAVE_AN_ACCOUNT": "Non hai un account",
@@ -290,5 +290,6 @@
   "Alert": "Allarme",
   "Message": "Messaggio",
   "COLOR_ADDED": "Questo colore è già stato aggiunto",
-  "DONT_HAVE_ACCOUNT": "Non hai un account?"
+  "DONT_HAVE_ACCOUNT": "Non hai un account?",
+  "OPTIONAL": "Opzionale"
 }

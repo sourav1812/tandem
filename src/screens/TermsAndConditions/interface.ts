@@ -1,4 +1,5 @@
 export interface StateObject {
-  term1: boolean;
-  term2: boolean;
+  // terms: {description: string; isRequired: boolean; isAgreed: boolean};
+  terms: any[];
+  agreedToAllTerms: boolean;
 }

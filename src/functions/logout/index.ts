@@ -1,6 +1,7 @@
-import {CACHE_SESSION, TERMS_ACCEPTED} from '@tandem/constants/local';
+// import {CACHE_SESSION, TERMS_ACCEPTED} from '@tandem/constants/local';
+import {CACHE_SESSION} from '@tandem/constants/local';
 import {MODE} from '@tandem/constants/mode';
-import {removeKey} from '@tandem/helpers/encryptedStorage';
+// import {removeKey} from '@tandem/helpers/encryptedStorage';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
 import {
@@ -31,7 +32,7 @@ const logout = async ({api = true}: {api?: boolean}) => {
   store.dispatch(logoutFromRedux());
   store.dispatch(clearAlertData());
   store.dispatch(clearCacheForce());
-  removeKey(TERMS_ACCEPTED);
+  // removeKey(TERMS_ACCEPTED);
   firebase.messaging().deleteToken();
   store.dispatch(changeMode(MODE.A));
   navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN, {}, true);

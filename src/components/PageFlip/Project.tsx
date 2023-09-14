@@ -158,13 +158,15 @@ export const Project = ({
 
   const onTouch = useTouchHandler({
     onStart: ({x}) => {
-      setTooltipState(prev => ({
-        ...prev,
-        tooltipThree: false,
-        tooltipFour: true,
-      }));
-      tooltipArray.push(10);
-      storeKey(TOOLTIP, tooltipArray);
+      if (!tooltipArray?.includes(10) && !tooltipState.tooltipThree) {
+        setTooltipState(prev => ({
+          ...prev,
+          tooltipThree: false,
+          tooltipFour: true,
+        }));
+        tooltipArray.push(10);
+        storeKey(TOOLTIP, tooltipArray);
+      }
       origin.current = x;
     },
     onActive: ({x}) => {

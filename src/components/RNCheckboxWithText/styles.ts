@@ -11,4 +11,8 @@ export const styles = StyleSheet.create({
     marginLeft: 16,
     marginTop: -4,
   },
+  optional: {
+    color: '#808080',
+    fontSize: verticalScale(9),
+  },
 });

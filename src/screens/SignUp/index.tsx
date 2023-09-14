@@ -6,8 +6,8 @@ import {
   View,
   ImageBackground,
   Dimensions,
-  StatusBar,
   Pressable,
+  StatusBar,
 } from 'react-native';
 import React, {useState} from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
@@ -36,6 +36,7 @@ import loginUserWithEmail from '@tandem/api/loginUserWithEmail';
 const SignUp = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const [name, setName] = useState<ValidationError>({value: ''});
+  const [surName, setSurName] = useState<ValidationError>({value: ''});
   const [email, setEmail] = useState<ValidationError>({value: ''});
   const [password, setPassword] = useState<ValidationError>({value: ''});
   const [confirmPassword, setConfirmPassword] = useState<ValidationError>({
@@ -73,6 +74,11 @@ const SignUp = () => {
           typeOfValidation: FORM_INPUT_TYPE.NAME,
         },
         {
+          state: surName,
+          setState: setSurName,
+          typeOfValidation: FORM_INPUT_TYPE.NAME,
+        },
+        {
           state: confirmPassword,
           setState: setConfirmPassword,
           typeOfValidation: FORM_INPUT_TYPE.CONFIRM_PASSWORD,
@@ -85,7 +91,8 @@ const SignUp = () => {
       try {
         await registerUser({
           email: email.value,
-          name: name.value,
+          firstName: name.value,
+          lastName: surName.value,
           password: password.value,
         });
         await loginUserWithEmail({
@@ -150,16 +157,44 @@ const SignUp = () => {
                         : verticalScale(120),
                     },
                   ]}>
-                  <RNTextInputWithLabel
-                    label={translation('NAME')}
-                    backgroundColor={themeColor.lightGray}
-                    containerStyle={styles.input}
-                    value={name}
-                    updateText={setName}
-                    validationType={FORM_INPUT_TYPE.NAME}
-                    hint={translation('ENTER_NAME')}
-                    inputStyle={styles.inputText}
-                  />
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                    }}>
+                    <RNTextInputWithLabel
+                      label={translation('NAME')}
+                      backgroundColor={themeColor.lightGray}
+                      containerStyle={styles.input}
+                      value={name}
+                      updateText={setName}
+                      validationType={FORM_INPUT_TYPE.NAME}
+                      hint={translation('ENTER_NAME')}
+                      inputStyle={[styles.inputText]}
+                      inputViewStyle={{paddingRight: 5}}
+                      errorTextStyle={{
+                        fontSize: portrait
+                          ? verticalScale(8)
+                          : verticalScale(10),
+                      }}
+                    />
+                    <RNTextInputWithLabel
+                      label={translation('SURNAME')}
+                      backgroundColor={themeColor.lightGray}
+                      containerStyle={styles.input}
+                      value={surName}
+                      updateText={setSurName}
+                      validationType={FORM_INPUT_TYPE.NAME}
+                      hint={translation('ENTER_SURNAME')}
+                      inputStyle={[styles.inputText]}
+                      inputViewStyle={{paddingRight: 5}}
+                      errorTextStyle={{
+                        fontSize: portrait
+                          ? verticalScale(8)
+                          : verticalScale(10),
+                      }}
+                    />
+                  </View>
                   <RNTextInputWithLabel
                     autoCapitalize="none"
                     label={translation('EMAIL')}
@@ -277,16 +312,34 @@ const SignUp = () => {
                     styles.form,
                     isTablet && {paddingHorizontal: verticalScale(100)},
                   ]}>
-                  <RNTextInputWithLabel
-                    label={translation('NAME')}
-                    backgroundColor={themeColor.lightGray}
-                    containerStyle={styles.input}
-                    value={name}
-                    updateText={setName}
-                    validationType={FORM_INPUT_TYPE.NAME}
-                    hint={translation('ENTER_NAME')}
-                    inputStyle={styles.inputText}
-                  />
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                    }}>
+                    <RNTextInputWithLabel
+                      label={translation('NAME')}
+                      backgroundColor={themeColor.lightGray}
+                      containerStyle={styles.input}
+                      value={name}
+                      updateText={setName}
+                      validationType={FORM_INPUT_TYPE.NAME}
+                      hint={translation('ENTER_NAME')}
+                      inputStyle={styles.inputText}
+                      inputViewStyle={{paddingRight: 5}}
+                    />
+                    <RNTextInputWithLabel
+                      label={translation('SURNAME')}
+                      backgroundColor={themeColor.lightGray}
+                      containerStyle={styles.input}
+                      value={surName}
+                      updateText={setSurName}
+                      validationType={FORM_INPUT_TYPE.NAME}
+                      hint={translation('ENTER_SURNAME')}
+                      inputStyle={styles.inputText}
+                      inputViewStyle={{paddingRight: 5}}
+                    />
+                  </View>
                   <RNTextInputWithLabel
                     label={translation('EMAIL')}
                     backgroundColor={themeColor.lightGray}
