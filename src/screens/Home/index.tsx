@@ -47,6 +47,7 @@ const Home = () => {
   const scaleImg = useRef(new Animated.Value(1)).current;
 
   const avatars = useAppSelector(state => state.cache.avatars);
+  const user = useAppSelector(state => state.userData.userDataObject);
   const filePath = avatars.filter(obj => obj.path === currentChild?.avatar)[0];
   const [tooltipMode, setToolTipMode] = useState({
     tooltipOne: true,
@@ -281,8 +282,13 @@ const Home = () => {
                 marginTop:
                   !isTablet && portrait ? verticalScale(60) : verticalScale(20),
               }}>
-              {translation('HELLO')}, {currentChild.name || 'Ella'}!
-              {mode === MODE.A && `(${currentAdult.role})!`} 👋🏻
+              {translation('HELLO')}
+              {', '}
+              {mode === MODE.A && user.name
+                ? `${user.name}! `
+                : currentAdult.role}
+              {(mode === MODE.B || mode === MODE.C) && `${currentChild.name}! `}
+              👋🏻
             </RNTextComponent>
             <Pressable
               onPress={() => navigation.push(SCREEN_NAME.ACCOUNT)}
