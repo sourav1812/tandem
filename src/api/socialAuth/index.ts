@@ -6,7 +6,8 @@ import loginFlow from '@tandem/functions/loginFlow';
 import {LoginResponse} from '@tandem/functions/loginFlow/interface';
 
 export const socialLogin = async ({
-  name,
+  firstName,
+  lastName,
   email,
   profilePicture,
   token,
@@ -17,7 +18,8 @@ export const socialLogin = async ({
     const response = await post<LoginResponse>({
       path: API.AUTH + `/${type}`,
       data: {
-        name,
+        firstName,
+        lastName,
         email,
         profilePicture,
         token,

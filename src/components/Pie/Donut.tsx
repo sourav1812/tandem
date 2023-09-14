@@ -4,7 +4,6 @@ import {Canvas, Path, Skia, SkiaMutableValue} from '@shopify/react-native-skia';
 import RNTextComponent from '../RNTextComponent';
 import {StyleSheet, View, useWindowDimensions} from 'react-native';
 import themeColor from '@tandem/theme/themeColor';
-import {width} from '@tandem/helpers/dimensions';
 import {verticalScale} from 'react-native-size-matters';
 
 interface CircularProgressProps {

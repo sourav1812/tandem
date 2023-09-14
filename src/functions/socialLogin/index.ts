@@ -25,7 +25,8 @@ export default async (type: 'apple' | 'google' | 'facebook') => {
       response;
 
     await socialLogin({
-      name: `${firstName || ''}${lastName ? ' ' + lastName : ''}`,
+      firstName,
+      lastName,
       token: idToken,
       profilePicture: image,
       email,
@@ -33,7 +34,8 @@ export default async (type: 'apple' | 'google' | 'facebook') => {
     });
     store.dispatch(
       saveSocialData({
-        name: `${firstName || ''}${lastName ? ' ' + lastName : ''}`,
+        firstName,
+        lastName,
         idToken: idToken,
         image: image,
         email: email,
