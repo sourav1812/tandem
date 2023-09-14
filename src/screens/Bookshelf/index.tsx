@@ -74,7 +74,6 @@ const Bookshelf = () => {
         <RNTextComponent numberOfLines={2} style={styles.whyDontWriteStory}>
           {translation(`bookshelf.${mode}.subHeading`)}
         </RNTextComponent>
-
         <RNButton
           customStyle={{width: '40%', minWidth: '40%'}}
           title={translation('bookshelf.write-a-story')}

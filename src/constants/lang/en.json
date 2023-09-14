@@ -77,7 +77,6 @@
   "RATE": "Rate",
   "BY_USING_OUR_APP_YOU_AGREE": "By using our app, you agree to our Terms of Use.",
   "USER_ELIGIBILITY": "User Eligibility: 1.1 The App is intended for use by children aged 13 and under. By using the App, you represent that you are a parent or legal guardian and that you have the authority to consent to this Agreement on behalf of your child. If you are under 13, you may use the App only with the consent and supervision of a parent or legal guardian.",
-  "I_AGREE_TO_THE_TERMS": "I agree to the terms and conditions of the End-User License Agreement.",
   "HAVE_FUN_MAKE_STORIES": "Have fun, make stories, read and laugh together. Build brains and happy memories.",
   "GET_STARTED": "Get started",
 
@@ -290,5 +289,6 @@
   "Alert": "Alert",
   "Message": "Message",
   "COLOR_ADDED": "This color is already added",
-  "DONT_HAVE_ACCOUNT": "Don't have an account?"
+  "DONT_HAVE_ACCOUNT": "Don't have an account?",
+  "OPTIONAL": "Optional"
 }

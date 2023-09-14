@@ -54,5 +54,11 @@ export default async (loginResponse: LoginResponse) => {
       })),
     }),
   );
-  navigateTo(SCREEN_NAME.TERMS_AND_CONDITIONS, {}, true);
+  navigateTo(
+    loginResponse.userInfo.termsAndConditions
+      ? SCREEN_NAME.ACCOUNT
+      : SCREEN_NAME.TERMS_AND_CONDITIONS,
+    {},
+    true,
+  );
 };
