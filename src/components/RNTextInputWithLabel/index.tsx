@@ -45,81 +45,75 @@ const RNTextInputWithLabel = ({
   };
 
   return (
-    <>
-      <View style={[styles.container, containerStyle && containerStyle]}>
-        {label && (
-          <RNTextComponent
-            style={[
-              {
-                fontSize: isTablet ? 16 : verticalScale(12),
-                marginBottom: 2,
-              },
-              labelStyle,
-            ]}>
-            {label}
-          </RNTextComponent>
-        )}
-        <View
+    <View style={[styles.container, containerStyle && containerStyle]}>
+      {label && (
+        <RNTextComponent
           style={[
-            styles.box,
             {
-              borderWidth: 1,
-              borderColor: highlight ? themeColor.themeBlue : 'transparent',
+              fontSize: isTablet ? 16 : verticalScale(12),
+              marginBottom: 2,
             },
-            {backgroundColor: backgroundColor ? backgroundColor : undefined},
-            inputViewStyle && inputViewStyle,
+            labelStyle,
           ]}>
-          {Icon && Icon}
-          <TextInput
-            textContentType={
-              validationType === FORM_INPUT_TYPE.PASSWORD
-                ? 'password'
-                : validationType === FORM_INPUT_TYPE.EMAIL
-                ? 'emailAddress'
-                : 'none'
-            }
-            keyboardType={
-              validationType === FORM_INPUT_TYPE.EMAIL
-                ? 'email-address'
-                : 'default'
-            }
-            editable={editable}
-            multiline={multiline}
-            autoCapitalize={autoCapitalize}
-            style={[
-              styles.textinput,
-              isTablet && {paddingHorizontal: 12, paddingVertical: 16},
-              inputStyle && inputStyle,
-            ]}
-            {...props}
-            placeholder={hint}
-            onFocus={onFocus}
-            onBlur={onBlur}
-            onChangeText={text => {
-              if (updateText) {
-                if (validationType) {
-                  updateText(validateForm(validationType, text));
-                } else {
-                  updateText({value: text});
-                }
+          {label}
+        </RNTextComponent>
+      )}
+      <View
+        style={[
+          styles.box,
+          {
+            borderWidth: 1,
+            borderColor: highlight ? themeColor.themeBlue : 'transparent',
+          },
+          {backgroundColor: backgroundColor ? backgroundColor : undefined},
+          inputViewStyle && inputViewStyle,
+        ]}>
+        {Icon && Icon}
+        <TextInput
+          textContentType={
+            validationType === FORM_INPUT_TYPE.PASSWORD
+              ? 'password'
+              : validationType === FORM_INPUT_TYPE.EMAIL
+              ? 'emailAddress'
+              : 'none'
+          }
+          keyboardType={
+            validationType === FORM_INPUT_TYPE.EMAIL
+              ? 'email-address'
+              : 'default'
+          }
+          editable={editable}
+          multiline={multiline}
+          autoCapitalize={autoCapitalize}
+          style={[
+            styles.textinput,
+            isTablet && {paddingHorizontal: 12, paddingVertical: 16},
+            inputStyle && inputStyle,
+          ]}
+          {...props}
+          placeholder={hint}
+          onFocus={onFocus}
+          onBlur={onBlur}
+          onChangeText={text => {
+            if (updateText) {
+              if (validationType) {
+                updateText(validateForm(validationType, text));
+              } else {
+                updateText({value: text});
               }
-            }}
-            value={value.value}
-            secureTextEntry={
-              rightSideIcon && !showPassword && !rightSideIconProp
             }
-          />
-          {rightSideIcon &&
-            (rightSideIconProp ? (
-              <Pressable onPress={togglePassword}>
-                {rightSideIconProp}
-              </Pressable>
-            ) : (
-              <Pressable onPress={togglePassword}>
-                {showPassword ? <Show /> : <Hide />}
-              </Pressable>
-            ))}
-        </View>
+          }}
+          value={value.value}
+          secureTextEntry={rightSideIcon && !showPassword && !rightSideIconProp}
+        />
+        {rightSideIcon &&
+          (rightSideIconProp ? (
+            <Pressable onPress={togglePassword}>{rightSideIconProp}</Pressable>
+          ) : (
+            <Pressable onPress={togglePassword}>
+              {showPassword ? <Show /> : <Hide />}
+            </Pressable>
+          ))}
       </View>
       <Text
         style={[
@@ -129,7 +123,7 @@ const RNTextInputWithLabel = ({
         ]}>
         {value.message}
       </Text>
-    </>
+    </View>
   );
 };
 

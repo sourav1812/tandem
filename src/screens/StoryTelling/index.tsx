@@ -259,8 +259,7 @@ const StoryTelling = () => {
   };
 
   return (
-    <RNScreenWrapper
-      giveStatusColor={tooltipOne || tooltipTwo || tooltipThree || tooltipFour}>
+    <RNScreenWrapper giveStatusColor={tooltipOne || tooltipTwo}>
       <View
         style={[
           styles.headingButton,

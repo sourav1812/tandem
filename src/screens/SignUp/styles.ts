@@ -20,7 +20,7 @@ export const styles = StyleSheet.create({
     marginTop: verticalScale(37),
   },
   input: {
-    width: '100%',
+    width: '49%',
   },
   input2: {
     width: '100%',
