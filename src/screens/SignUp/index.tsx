@@ -6,8 +6,8 @@ import {
   View,
   ImageBackground,
   Dimensions,
-  StatusBar,
   Pressable,
+  StatusBar,
 } from 'react-native';
 import React, {useState} from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';

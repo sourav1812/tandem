@@ -18,6 +18,9 @@ import resumeAppState from '@tandem/functions/resumeAppState';
 const AppNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
   const mode = useAppSelector((state: RootState) => state.mode.mode);
+  const userData = useAppSelector(
+    (state: RootState) => state.userData.userDataObject,
+  );
   const isTablet = useAppSelector(
     (state: RootState) => state.deviceType.isTablet,
   );
@@ -51,6 +54,7 @@ const AppNavigator = () => {
             getComponent={() => require('@tandem/screens/Story').default}
             name={SCREEN_NAME.STORY}
           />
+
           <Stack.Screen
             getComponent={() => require('@tandem/screens/SocialSignIn').default}
             name={SCREEN_NAME.SOCIAL_SIGN_IN}
@@ -144,6 +148,20 @@ const AppNavigator = () => {
                 }
                 name={SCREEN_NAME.PRIVACY_POLICIES}
               />
+              {!userData.termsAndConditions && (
+                <Stack.Screen
+                  getComponent={() =>
+                    require('@tandem/screens/TermsAndConditions').default
+                  }
+                  name={SCREEN_NAME.TERMS_AND_CONDITIONS}
+                />
+              )}
+              <Stack.Screen
+                getComponent={() =>
+                  require('@tandem/screens/HelpCenter').default
+                }
+                name={SCREEN_NAME.HELP_CENTER}
+              />
               <Stack.Screen
                 getComponent={() =>
                   require('@tandem/screens/Onboarding').default
@@ -182,18 +200,6 @@ const AppNavigator = () => {
                   require('@tandem/screens/ForgotPassword').default
                 }
                 name={SCREEN_NAME.FORGOT_PASSWORD}
-              />
-              <Stack.Screen
-                getComponent={() =>
-                  require('@tandem/screens/TermsAndConditions').default
-                }
-                name={SCREEN_NAME.TERMS_AND_CONDITIONS}
-              />
-              <Stack.Screen
-                getComponent={() =>
-                  require('@tandem/screens/HelpCenter').default
-                }
-                name={SCREEN_NAME.HELP_CENTER}
               />
               <Stack.Screen
                 getComponent={() =>

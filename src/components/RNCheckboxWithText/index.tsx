@@ -4,14 +4,21 @@ import {styles} from './styles';
 import Inactive from '@tandem/assets/svg/InactiveCheckbox';
 import Active from '@tandem/assets/svg/ActiveCheckbox';
 import RNTextComponent from '../RNTextComponent';
-import i18n from '@tandem/constants/lang/i18n';
+import {translation} from '@tandem/utils/methods';
 
 export interface Props {
   customStyle?: ViewStyle;
   onAccept: () => void;
+  content: string;
+  isRequired: boolean;
 }
 
-const RNCheckboxWithText = ({customStyle, onAccept}: Props) => {
+const RNCheckboxWithText = ({
+  customStyle,
+  onAccept,
+  content,
+  isRequired,
+}: Props) => {
   const [select, setSelect] = useState(false);
 
   const toggleCheckbox = () => {
@@ -25,7 +32,13 @@ const RNCheckboxWithText = ({customStyle, onAccept}: Props) => {
       style={[styles.container, customStyle && customStyle]}>
       <View>{select ? <Active /> : <Inactive />}</View>
       <RNTextComponent style={styles.text}>
-        {i18n.t('I_AGREE_TO_THE_TERMS')}
+        {content}
+        {'\n'}
+        {!isRequired && (
+          <RNTextComponent style={styles.optional}>
+            ({translation('OPTIONAL')})
+          </RNTextComponent>
+        )}
       </RNTextComponent>
     </Pressable>
   );
