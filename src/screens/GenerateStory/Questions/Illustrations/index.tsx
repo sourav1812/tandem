@@ -18,9 +18,10 @@ import {pushStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration.
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {SvgProps} from 'react-native-svg';
 import removeQuestionData from '@tandem/functions/removeQuestionData';
-import {useAppSelector, useAppDispatch} from '@tandem/hooks/navigationHooks';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {useNavigation} from '@react-navigation/native';
 import RNEmojiWithText from '@tandem/components/RNEmojiWithText';
+import {store} from '@tandem/redux/store';
 
 export default () => {
   const navigation: any = useNavigation();
@@ -28,34 +29,35 @@ export default () => {
   const type = STORY_PARTS.STYLES;
   const maxSelections = 1;
   const activeState = useAppSelector(state => state.storyGeneration[type]);
-  const dispatch = useAppDispatch();
-  React.useEffect(() => {
-    if (activeState.length === 0) {
-      setDisabled(true);
-    } else {
-      setDisabled(false);
-    }
-  }, [activeState.length]);
 
   const handlePress = (name: string) => {
-    // ! VERY IMPORTANT : SEND ILLUSTRATION TEXT ASK CLIENT FOR KEYS
     if (maxSelections === 1) {
-      dispatch(pushStoryGenerationResponse({key: type, value: [name]}));
+      store.dispatch(pushStoryGenerationResponse({key: type, value: [name]}));
+      setDisabled(false);
       return;
     }
     if (activeState.length < maxSelections && !activeState.includes(name)) {
-      dispatch(
-        pushStoryGenerationResponse({key: type, value: [...activeState, name]}),
-      );
+      const localRef = JSON.parse(JSON.stringify(activeState));
+      localRef.push(name);
+      store.dispatch(pushStoryGenerationResponse({key: type, value: localRef}));
+      setDisabled(false);
       return;
     }
-    dispatch(
+    const stateFiltered = activeState.filter(oldName => oldName !== name);
+    if (stateFiltered.length === activeState.length) {
+      return;
+    }
+    store.dispatch(
       pushStoryGenerationResponse({
         key: type,
-        value: activeState.filter(oldName => oldName !== name),
+        value: stateFiltered,
       }),
     );
+    if (stateFiltered.length === 0) {
+      setDisabled(true);
+    }
   };
+
   return (
     <GenerateStory
       onBack={() => {

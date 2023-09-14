@@ -13,14 +13,12 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import statusbar from '@tandem/functions/statusbar';
 import i18n from '@tandem/constants/lang/i18n';
 import setupLangauge from '@tandem/functions/language';
-import {requestPermission} from '@tandem/functions/permissions';
 
 const persistor = persistStore(store);
 
 const App: FC = () => {
   useEffect(() => {
     i18n.locale = setupLangauge();
-    requestPermission();
     const tooltip = getValueFromKey(TOOLTIP);
     store.dispatch(clearAlertData());
     if (!tooltip) {
