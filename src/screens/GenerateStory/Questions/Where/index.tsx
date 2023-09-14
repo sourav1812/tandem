@@ -17,6 +17,8 @@ export default () => {
   const navigation: any = useNavigation();
   return (
     <GenerateStory
+      type={STORY_PARTS.WHERE}
+      maxSelections={1}
       onBack={() => {
         removeQuestionData(STORY_PARTS.WHERE);
       }}
@@ -45,8 +47,8 @@ export default () => {
         <RNImageChoice
           setDisabled={setDisabled}
           type={STORY_PARTS.WHERE}
-          index={2}
           maxSelections={1}
+          index={2}
           data={places}
         />
       </>

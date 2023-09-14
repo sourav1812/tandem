@@ -1,66 +1,71 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {FC} from 'react';
-
-import {
-  Canvas,
-  Path,
-  SkFont,
-  Skia,
-  SkiaMutableValue,
-  Text,
-} from '@shopify/react-native-skia';
+import {Canvas, Path, Skia, SkiaMutableValue} from '@shopify/react-native-skia';
+import RNTextComponent from '../RNTextComponent';
 import {StyleSheet, View} from 'react-native';
+import themeColor from '@tandem/theme/themeColor';
+import {width} from '@tandem/helpers/dimensions';
+import {verticalScale} from 'react-native-size-matters';
 
 interface CircularProgressProps {
-  strokeWidth: number;
-  radius: number;
-  backgroundColor: string;
   percentageComplete: SkiaMutableValue<number>;
-  font: SkFont;
   current: number;
   total: number;
 }
 
+const r = verticalScale(30);
+const s = verticalScale(10);
+
 export const DonutChart: FC<CircularProgressProps> = ({
-  strokeWidth,
-  radius,
   percentageComplete,
-  font,
   current,
   total,
 }) => {
-  const innerRadius = radius - strokeWidth;
-  const targetText = `${current}/${total}`;
-
   const path = Skia.Path.Make();
-  path.addCircle(radius, radius, innerRadius);
+  path.addCircle(r + s, r + s, r);
 
   return (
-    <View style={styles.container}>
-      <Canvas style={styles.container}>
+    <View
+      style={[
+        styles.conatiner,
+        {
+          width: 2 * (r + s),
+          height: 2 * (r + s),
+          backgroundColor: 'white',
+          borderRadius: 100,
+          overflow: 'hidden',
+          right: width.wMax / 2 - (r + s),
+          bottom: verticalScale(80) - (r + s),
+        },
+      ]}>
+      <RNTextComponent
+        isSemiBold
+        style={{
+          position: 'absolute',
+          color: themeColor.themeBlue,
+        }}>{`${current}/${total}`}</RNTextComponent>
+      <Canvas style={styles.conatiner}>
         <Path
           path={path}
           color="orange"
           style="stroke"
           strokeJoin="round"
-          strokeWidth={strokeWidth}
+          strokeWidth={s}
           strokeCap="round"
           start={0}
           end={percentageComplete}
-        />
-        <Text
-          x={radius - 17}
-          y={radius + 7}
-          text={targetText}
-          font={font}
-          color="black"
         />
       </Canvas>
     </View>
   );
 };
-
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  conatiner: {
+    position: 'absolute',
+    zIndex: 10,
+    width: 2 * (r + s),
+    height: 2 * (r + s),
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

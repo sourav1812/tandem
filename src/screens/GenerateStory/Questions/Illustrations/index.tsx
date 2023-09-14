@@ -60,6 +60,8 @@ export default () => {
 
   return (
     <GenerateStory
+      type={type}
+      maxSelections={maxSelections}
       onBack={() => {
         removeQuestionData(STORY_PARTS.STYLES);
       }}

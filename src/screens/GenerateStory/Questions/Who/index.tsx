@@ -40,6 +40,8 @@ export default () => {
 
   return (
     <GenerateStory
+      type={STORY_PARTS.WHO}
+      maxSelections={3}
       onCloseButtonTooltip={onCloseButtonTooltip}
       showButtonTooltip={buttonTooltip}
       onBack={() => {
@@ -65,8 +67,8 @@ export default () => {
         <RNChoiceQuestions
           setDisabled={setDisabled}
           type={STORY_PARTS.WHO}
-          index={0}
           maxSelections={3}
+          index={0}
           data={AUDIENCE}
           visibletoolTip={tooltipFirst}
           onTooltipClose={onCloseFirstTooltip}

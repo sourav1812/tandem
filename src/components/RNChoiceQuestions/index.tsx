@@ -25,7 +25,12 @@ const RNChoiceQuestions = ({
   });
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const activeState = useAppSelector(state => state.storyGeneration[type]);
-
+  React.useEffect(() => {
+    if (activeState.length > 0) {
+      setDisabled(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const handlePress = (name: string) => {
     if (maxSelections === 1) {
       store.dispatch(pushStoryGenerationResponse({key: type, value: [name]}));

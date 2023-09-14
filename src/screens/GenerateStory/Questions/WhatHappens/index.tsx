@@ -15,6 +15,8 @@ export default () => {
   const navigation: any = useNavigation();
   return (
     <GenerateStory
+      type={STORY_PARTS.WHAT_HAPPENS}
+      maxSelections={1}
       onBack={() => {
         removeQuestionData(STORY_PARTS.WHAT_HAPPENS);
       }}
@@ -35,8 +37,8 @@ export default () => {
         <RNChoiceQuestions
           setDisabled={setDisabled}
           type={STORY_PARTS.WHAT_HAPPENS}
-          index={4}
           maxSelections={1}
+          index={4}
           data={TYPE_OF_STORY}
         />
       </>
