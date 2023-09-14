@@ -11,7 +11,8 @@ import {
   withTiming,
 } from 'react-native-reanimated';
 import Animated from 'react-native-reanimated';
-import {useAppSelector, useAppDispatch} from '@tandem/hooks/navigationHooks';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {store} from '@tandem/redux/store';
 
 const RNImageChoice = ({
   data = [],
@@ -21,33 +22,38 @@ const RNImageChoice = ({
   setDisabled,
 }: MultipleChoiceProps) => {
   const activeState = useAppSelector(state => state.storyGeneration[type]);
-  const dispatch = useAppDispatch();
   React.useEffect(() => {
-    if (activeState.length === 0) {
-      setDisabled(true);
-    } else {
+    if (activeState.length > 0) {
       setDisabled(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeState.length]);
-
+  }, []);
   const handlePress = (name: string) => {
     if (maxSelections === 1) {
-      dispatch(pushStoryGenerationResponse({key: type, value: [name]}));
+      store.dispatch(pushStoryGenerationResponse({key: type, value: [name]}));
+      setDisabled(false);
       return;
     }
     if (activeState.length < maxSelections && !activeState.includes(name)) {
-      dispatch(
-        pushStoryGenerationResponse({key: type, value: [...activeState, name]}),
-      );
+      const localRef = JSON.parse(JSON.stringify(activeState));
+      localRef.push(name);
+      store.dispatch(pushStoryGenerationResponse({key: type, value: localRef}));
+      setDisabled(false);
       return;
     }
-    dispatch(
+    const stateFiltered = activeState.filter(oldName => oldName !== name);
+    if (stateFiltered.length === activeState.length) {
+      return;
+    }
+    store.dispatch(
       pushStoryGenerationResponse({
         key: type,
-        value: activeState.filter(oldName => oldName !== name),
+        value: stateFiltered,
       }),
     );
+    if (stateFiltered.length === 0) {
+      setDisabled(true);
+    }
   };
 
   return (

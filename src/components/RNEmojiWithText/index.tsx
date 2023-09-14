@@ -35,8 +35,8 @@ const RNEmojiWithText = ({
   return (
     <Pressable
       onPress={() => {
-        onPress();
         runAnimation();
+        onPress();
       }}>
       <Animated.View
         ref={ref && ref}

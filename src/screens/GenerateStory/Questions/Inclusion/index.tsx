@@ -12,7 +12,7 @@ import {translation} from '@tandem/utils/methods';
 import {View, ImageBackground} from 'react-native';
 import {verticalScale, scale} from 'react-native-size-matters';
 import GenerateStory from '../..';
-import React, {useRef} from 'react';
+import React from 'react';
 import {styles} from '../../styles';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
@@ -33,14 +33,7 @@ export default () => {
   const [tooltipFifth, setTooltipFifth] = React.useState(
     !tooltipArray.includes(15),
   );
-  const [positionRefs, setPositionRefs] = React.useState({
-    height: 0,
-    width: 0,
-    x: 0,
-    y: 0,
-  });
 
-  const refTwo = useRef<any>(null);
   const navigation: any = useNavigation();
   const nextQuestion = () => {
     navigation.push(SCREEN_NAME.ROADMAP);
@@ -97,27 +90,8 @@ export default () => {
               setTooltipFifth(false);
               tooltipArray.push(15);
               storeKey(TOOLTIP, tooltipArray);
-            }}
-            dimensionObject={positionRefs}>
+            }}>
             <View
-              ref={refTwo}
-              onLayout={() => {
-                refTwo?.current?.measure(
-                  (
-                    width: number,
-                    height: number,
-                    pageX: number,
-                    pageY: number,
-                  ) => {
-                    setPositionRefs({
-                      height: width,
-                      width: height,
-                      x: pageX,
-                      y: pageY,
-                    });
-                  },
-                );
-              }}
               style={[
                 styles.buttonContainer,
                 tooltipFifth && {

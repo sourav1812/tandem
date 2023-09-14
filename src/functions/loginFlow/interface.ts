@@ -5,7 +5,8 @@ export interface LoginResponse {
   refreshToken: string;
   userInfo: {
     email: string;
-    name: string;
+    firstName: string;
+    lastName: string;
     userId: string;
     children: ChildData[];
     adults: AdultData[];

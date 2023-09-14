@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {View} from 'react-native';
+import {LayoutAnimation, View} from 'react-native';
 import React from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {styles} from './styles';
@@ -15,7 +15,8 @@ import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
 import {TOOLTIP} from '@tandem/constants/local';
 import RNTooltip from '@tandem/components/RNTooltip';
 import navigateTo from '@tandem/navigation/navigate';
-import {DIRECTION_ARROWS} from '@tandem/constants/enums';
+import {DIRECTION_ARROWS, STORY_PARTS} from '@tandem/constants/enums';
+import Pie from '@tandem/components/Pie';
 
 export default ({
   onNextQuestion,
@@ -26,6 +27,8 @@ export default ({
   onBack,
   showButtonTooltip,
   onCloseButtonTooltip,
+  type,
+  maxSelections,
 }: {
   onNextQuestion?: () => void;
   children: React.ReactElement;
@@ -35,10 +38,32 @@ export default ({
   onBack: () => void;
   showButtonTooltip?: boolean;
   onCloseButtonTooltip?: () => void;
+  type?:
+    | STORY_PARTS.WHO
+    | STORY_PARTS.WHAT_THINGS
+    | STORY_PARTS.WHAT_HAPPENS
+    | STORY_PARTS.COLOR
+    | STORY_PARTS.WHERE
+    | STORY_PARTS.STYLES;
+  maxSelections?: number;
 }) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
-
   const tooltipArray = getValueFromKey(TOOLTIP);
+
+  const storyGeneration = useAppSelector(state => state.storyGeneration);
+  const activeState = type ? storyGeneration[type] : null;
+
+  const [userCameback, setUserCameBack] = React.useState(false);
+
+  React.useEffect(() => {
+    if (activeState && activeState?.length > 0) {
+      setUserCameBack(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  React.useEffect(() => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+  }, [disabled]);
 
   return (
     <RNScreenWrapper giveStatusColor={giveStatusColor}>
@@ -51,6 +76,9 @@ export default ({
             <RNButton
               onlyIcon
               onClick={() => {
+                if (userCameback && activeState && activeState.length === 0) {
+                  return;
+                }
                 onBack();
                 navigateTo();
               }}
@@ -104,23 +132,27 @@ export default ({
           bottom={DIRECTION_ARROWS.SOUTH}
           text={translation('PRESS_THE_BUTTON')}
           textStyle={styles.tooltip}>
-          <View style={{width: '100%', backgroundColor: 'pink'}}>
-            <RNButton
-              isDisabled={disabled}
-              customStyle={[
-                styles.footerButton,
-                {height: verticalScale(70), maxHeight: verticalScale(70)},
-                disabled && {
-                  backgroundColor: '#474747',
-                  borderColor: '#474747',
-                },
-              ]}
-              title={translation('SELECT')}
-              onClick={onNextQuestion}
-              textStyle={styles.buttonText}
-            />
-          </View>
+          <RNButton
+            isDisabled={disabled}
+            customStyle={[
+              styles.footerButton,
+              {height: verticalScale(80), maxHeight: verticalScale(80)},
+              disabled && {
+                backgroundColor: '#474747',
+                borderColor: '#474747',
+              },
+            ]}
+            title={translation('SELECT')}
+            onClick={onNextQuestion}
+            textStyle={[
+              styles.buttonText,
+              {marginTop: disabled || !maxSelections ? 0 : verticalScale(40)},
+            ]}
+          />
         </RNTooltip>
+      )}
+      {!disabled && activeState && maxSelections && (
+        <Pie current={activeState.length} total={maxSelections} />
       )}
     </RNScreenWrapper>
   );

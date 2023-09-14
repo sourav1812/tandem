@@ -7,10 +7,11 @@ export interface TermsInterface {
   terms: string;
   optiosns: {description: string; isRequired: boolean}[];
 }
-interface userDataState {
+interface UserDataState {
   userDataObject: {
     email: string;
-    name: string;
+    firstName: string;
+    lastName: string;
     userId: string;
     children?: ChildData[];
     adults?: AdultData[];
@@ -20,17 +21,19 @@ interface userDataState {
   };
   socialDataObject: {
     email: string;
-    name: string;
+    firstName: string;
+    lastName: string;
     idToken: string;
     image: string;
   };
 }
 
 // Define the initial state using that type
-const initialState: userDataState = {
+const initialState: UserDataState = {
   userDataObject: {
     email: '',
-    name: '',
+    firstName: '',
+    lastName: '',
     userId: '',
     children: [],
     adults: [],
@@ -40,7 +43,8 @@ const initialState: userDataState = {
   },
   socialDataObject: {
     email: '',
-    name: '',
+    firstName: '',
+    lastName: '',
     idToken: '',
     image: '',
   },
@@ -56,7 +60,8 @@ export const setUserData = createSlice({
     },
     resetUserData: state => {
       state.userDataObject = {
-        name: '',
+        firstName: '',
+        lastName: '',
         email: '',
         userId: '',
         children: [],
@@ -71,7 +76,8 @@ export const setUserData = createSlice({
     },
     resetSocialData: state => {
       state.socialDataObject = {
-        name: '',
+        firstName: '',
+        lastName: '',
         email: '',
         idToken: '',
         image: '',
