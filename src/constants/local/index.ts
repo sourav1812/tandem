@@ -73,7 +73,7 @@ export const TERMS_ACCEPTED = 'TERMS_ACCEPTED';
 
 export const AUDIENCE: PlaceType[] = [
   {name: 'Domestic animals', icon: '🐱', bgc: themeColor.themeBlue},
-  {name: 'Peoples', icon: '👦🏽', bgc: themeColor.gold},
+  {name: 'People', icon: '👦🏽', bgc: themeColor.gold},
   {name: 'Farm animals', icon: '🐮', bgc: themeColor.lightGreen},
   {name: 'Jungle animals', icon: '🦁', bgc: themeColor.pink},
   {name: 'Space aliens', icon: '👽', bgc: themeColor.themeBlue},
@@ -198,7 +198,6 @@ export const PLACE: OnlyImageType[] = [
     name: 'Farm Yard',
     url: 'https://tandem.geeky.dev/v1/images/locations/farm_yard.png',
   },
-
   {
     name: 'Snowy Mountain',
     url: 'https://tandem.geeky.dev/v1/images/locations/snowy_mountain.png',
