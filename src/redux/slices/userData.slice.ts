@@ -3,7 +3,7 @@ import {AdultData, ChildData} from './createChild.slice';
 
 // Define a type for the slice state
 
-export interface termsInterface {
+export interface TermsInterface {
   terms: string;
   optiosns: {description: string; isRequired: boolean}[];
 }
@@ -16,7 +16,7 @@ interface userDataState {
     adults?: AdultData[];
     termsAndConditions: boolean;
     allowNotifications: boolean;
-    consentForm: termsInterface;
+    consentForm: TermsInterface;
   };
   socialDataObject: {
     email: string;

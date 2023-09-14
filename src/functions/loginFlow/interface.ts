@@ -1,5 +1,5 @@
 import {ChildData} from '@tandem/redux/slices/createChild.slice';
-import {termsInterface} from '@tandem/redux/slices/userData.slice';
+import {TermsInterface} from '@tandem/redux/slices/userData.slice';
 export interface LoginResponse {
   accessToken: string;
   refreshToken: string;
@@ -11,7 +11,7 @@ export interface LoginResponse {
     adults: AdultData[];
     termsAndConditions: boolean;
     allowNotifications: boolean;
-    consentForm: termsInterface;
+    consentForm: TermsInterface;
   };
 }
 

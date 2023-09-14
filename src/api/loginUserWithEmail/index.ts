@@ -12,7 +12,7 @@ export default async ({email, password}: LoginUserWithEmail) => {
       path: API.LOGIN_USER_WITH_EMAIL,
       data: {email, password, deviceId, deviceType, fcmToken},
     });
-    loginFlow(response); // for every type of login we have to come to this function in the end
+    await loginFlow(response); // for every type of login we have to come to this function in the end
   } catch (error) {
     throw error;
   }
