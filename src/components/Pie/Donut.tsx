@@ -2,7 +2,7 @@
 import React, {FC} from 'react';
 import {Canvas, Path, Skia, SkiaMutableValue} from '@shopify/react-native-skia';
 import RNTextComponent from '../RNTextComponent';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, useWindowDimensions} from 'react-native';
 import themeColor from '@tandem/theme/themeColor';
 import {width} from '@tandem/helpers/dimensions';
 import {verticalScale} from 'react-native-size-matters';
@@ -23,7 +23,7 @@ export const DonutChart: FC<CircularProgressProps> = ({
 }) => {
   const path = Skia.Path.Make();
   path.addCircle(r + s, r + s, r);
-
+  const widthDimention = useWindowDimensions().width;
   return (
     <View
       style={[
@@ -34,7 +34,7 @@ export const DonutChart: FC<CircularProgressProps> = ({
           backgroundColor: 'white',
           borderRadius: 100,
           overflow: 'hidden',
-          right: width.wMax / 2 - (r + s),
+          right: widthDimention / 2 - (r + s),
           bottom: verticalScale(80) - (r + s),
         },
       ]}>
