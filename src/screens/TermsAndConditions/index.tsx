@@ -47,7 +47,7 @@ const TermsAndConditions = () => {
   const handleContentForm = async () => {
     try {
       consentFormApi({data: {isAgreed: true}});
-      navigateTo(SCREEN_NAME.HELP_CENTER, {}, true);
+      navigateTo(SCREEN_NAME.HELP_CENTER, {});
     } catch (error) {
       console.log(error, 'consent from api error');
     }
