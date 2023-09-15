@@ -20,7 +20,7 @@ import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
 import {RootState} from '@tandem/redux/store';
 import {HelpCenterProps} from '@tandem/navigation/types';
 
-const HelpCenter = ({route, navigation}: HelpCenterProps) => {
+const HelpCenter = ({route}: HelpCenterProps) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
