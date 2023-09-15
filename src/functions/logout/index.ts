@@ -1,5 +1,4 @@
-// import {CACHE_SESSION, TERMS_ACCEPTED} from '@tandem/constants/local';
-import {CACHE_SESSION} from '@tandem/constants/local';
+import {CACHE_SESSION, TERMS_ACCEPTED} from '@tandem/constants/local';
 import {MODE} from '@tandem/constants/mode';
 // import {removeKey} from '@tandem/helpers/encryptedStorage';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
@@ -17,6 +16,7 @@ import logoutApi from '@tandem/api/logoutApi';
 import {firebase} from '@react-native-firebase/messaging';
 import {clearCacheForce} from '@tandem/redux/slices/cache.slice';
 import RNFetchBlob from 'rn-fetch-blob';
+import {removeKey} from '@tandem/helpers/encryptedStorage';
 
 const logout = async ({api = true}: {api?: boolean}) => {
   RNFetchBlob.session(CACHE_SESSION).dispose();
@@ -32,7 +32,7 @@ const logout = async ({api = true}: {api?: boolean}) => {
   store.dispatch(logoutFromRedux());
   store.dispatch(clearAlertData());
   store.dispatch(clearCacheForce());
-  // removeKey(TERMS_ACCEPTED);
+  removeKey(TERMS_ACCEPTED);
   firebase.messaging().deleteToken();
   store.dispatch(changeMode(MODE.A));
   navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN, {}, true);

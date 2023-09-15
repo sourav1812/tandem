@@ -148,14 +148,12 @@ const AppNavigator = () => {
                 }
                 name={SCREEN_NAME.PRIVACY_POLICIES}
               />
-              {!userData.termsAndConditions && (
-                <Stack.Screen
-                  getComponent={() =>
-                    require('@tandem/screens/TermsAndConditions').default
-                  }
-                  name={SCREEN_NAME.TERMS_AND_CONDITIONS}
-                />
-              )}
+              <Stack.Screen
+                getComponent={() =>
+                  require('@tandem/screens/TermsAndConditions').default
+                }
+                name={SCREEN_NAME.TERMS_AND_CONDITIONS}
+              />
               <Stack.Screen
                 getComponent={() =>
                   require('@tandem/screens/HelpCenter').default

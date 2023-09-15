@@ -69,7 +69,7 @@ import Card3 from '@tandem/assets/svg/illustrationTypes/card-3.svg';
 import Card4 from '@tandem/assets/svg/illustrationTypes/card-4.svg';
 
 export const TOOLTIP = 'ToolTip';
-// export const TERMS_ACCEPTED = 'TERMS_ACCEPTED';
+export const TERMS_ACCEPTED = 'TERMS_ACCEPTED';
 
 export const AUDIENCE: PlaceType[] = [
   {name: 'Domestic animals', icon: '🐱', bgc: themeColor.themeBlue},

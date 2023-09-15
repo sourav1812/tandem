@@ -15,21 +15,24 @@ const RNLogoHeader = ({
   rightIcon,
   onRightButtonPress,
   customRight = false,
+  showBackButton = true,
 }: LogoHeaderProps) => {
   return (
     <View style={[styles.container, customStyle && customStyle]}>
       <View style={styles.sides}>
-        <RNButton
-          onlyIcon
-          icon={<Back />}
-          onClick={() => {
-            if (customRight && onRightButtonPress) {
-              onRightButtonPress();
-            } else {
-              navigateTo();
-            }
-          }}
-        />
+        {showBackButton && (
+          <RNButton
+            onlyIcon
+            icon={<Back />}
+            onClick={() => {
+              if (customRight && onRightButtonPress) {
+                onRightButtonPress();
+              } else {
+                navigateTo();
+              }
+            }}
+          />
+        )}
       </View>
       {!textHeading ? (
         <Image
