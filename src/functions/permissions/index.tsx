@@ -1,4 +1,4 @@
-import {PermissionsAndroid, Platform, UIManager} from 'react-native';
+import {Linking, PermissionsAndroid, Platform} from 'react-native';
 import messaging from '@react-native-firebase/messaging';
 import {store} from '@tandem/redux/store';
 import {
@@ -15,12 +15,9 @@ export const requestPermission = async () => {
       store.dispatch(setNotificationStatus(true));
       store.dispatch(setIsFirstTime('false'));
     } else {
-      store.dispatch(setNotificationStatus(false));
+      Linking.openSettings();
     }
     console.log(status, 'android permission request');
-    if (UIManager.setLayoutAnimationEnabledExperimental) {
-      UIManager.setLayoutAnimationEnabledExperimental(true);
-    }
   } else if (Platform.OS === 'ios') {
     const status = await messaging().requestPermission();
     console.log(status, 'iOS permission request');
@@ -28,7 +25,7 @@ export const requestPermission = async () => {
       store.dispatch(setNotificationStatus(true));
       store.dispatch(setIsFirstTime('false'));
     } else {
-      store.dispatch(setNotificationStatus(false));
+      Linking.openURL('App-Prefs:NOTIFICATIONS_ID&path=playtandem.com');
     }
   }
 };

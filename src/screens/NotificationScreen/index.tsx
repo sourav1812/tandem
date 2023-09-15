@@ -14,8 +14,11 @@ import navigateTo from '@tandem/navigation/navigate';
 import {requestPermission} from '@tandem/functions/permissions';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
-import {setIsFirstTime} from '@tandem/redux/slices/permissions.slice';
 import {RootState} from '@tandem/redux/store';
+import {
+  setIsFirstTime,
+  setNotificationStatus,
+} from '@tandem/redux/slices/permissions.slice';
 
 const NotificationScreen = () => {
   const dispatch = useAppDispatch();
@@ -87,6 +90,7 @@ const NotificationScreen = () => {
             title={translation('MAYBE_LATER')}
             onClick={() => {
               dispatch(setIsFirstTime('false'));
+              dispatch(setNotificationStatus(false));
               navigateTo(SCREEN_NAME.BOOKSHELF);
             }}
           />
