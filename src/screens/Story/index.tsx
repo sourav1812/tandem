@@ -18,7 +18,7 @@ import {BooksData} from '../Bookshelf/interface';
 import {store} from '@tandem/redux/store';
 import {setImageForPage} from '@tandem/redux/slices/bookShelf.slice';
 import RNFetchBlob from 'rn-fetch-blob';
-import {CACHE_SESSION} from '@tandem/constants/local';
+import {addFlush} from '@tandem/redux/slices/cache.slice';
 
 const Story = () => {
   const [visible, setVisible] = useState(false);
@@ -61,19 +61,29 @@ const Story = () => {
       return;
     }
     setProgress(prev => ({...prev, len: book.pages.length}));
+    let dirs = RNFetchBlob.fs.dirs;
     book.pages.forEach((page, pageIndex) => {
       if (!page.image) {
-        RNFetchBlob.config({fileCache: true})
+        RNFetchBlob.config({
+          fileCache: true,
+          path:
+            dirs.DocumentDir +
+            '/storybooks' +
+            book.bookId +
+            pageIndex.toString() +
+            'cache',
+        })
           .fetch('GET', page.illustration_url, {})
           .then(res => {
-            RNFetchBlob.session(CACHE_SESSION).add(res.path());
+            const pathLocal = res.path();
             store.dispatch(
               setImageForPage({
                 bookIndex,
                 pageIndex,
-                image: 'file://' + res.path(),
+                image: 'file://' + pathLocal,
               }),
             );
+            store.dispatch(addFlush(pathLocal));
             setProgress(prev => ({...prev, val: prev.val + 1}));
           })
           .catch(error => {

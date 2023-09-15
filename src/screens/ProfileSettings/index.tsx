@@ -31,11 +31,15 @@ const ProfileSettings = () => {
   const userData = useAppSelector(
     (state1: RootState) => state1.userData.userDataObject,
   );
-  console.log(userData, 'userDatauserData');
   const [state, setState] = useState<StateObject>({
     showModal: false,
   });
-  const [name, setName] = useState<ValidationError>({value: userData.name});
+  const [firstName, setFName] = useState<ValidationError>({
+    value: userData.firstName,
+  });
+  const [lastName, setLName] = useState<ValidationError>({
+    value: userData.lastName,
+  });
   // const [email, setEmail] = useState<ValidationError>({value: ''});
   const {showModal} = state;
 
@@ -53,8 +57,13 @@ const ProfileSettings = () => {
     if (
       !validationFunction([
         {
-          state: name,
-          setState: setName,
+          state: firstName,
+          setState: setFName,
+          typeOfValidation: FORM_INPUT_TYPE.NAME,
+        },
+        {
+          state: lastName,
+          setState: setLName,
           typeOfValidation: FORM_INPUT_TYPE.NAME,
         },
       ])
@@ -62,13 +71,15 @@ const ProfileSettings = () => {
       return;
     }
     const response = await editUserProfile({
-      name: name.value,
+      firstName: firstName.value,
+      lastName: lastName.value,
     });
     if (response) {
       dispatch(
         saveUserData({
           ...userData,
-          name: name.value,
+          firstName: firstName.value,
+          lastName: lastName.value,
         }),
       );
     }
@@ -93,15 +104,34 @@ const ProfileSettings = () => {
       />
       <View
         style={[styles.content, isTablet && {paddingHorizontal: scale(65)}]}>
-        <RNTextInputWithLabel
-          label={translation('YOUR_NAME')}
-          containerStyle={styles.input}
-          hint={translation('NAME')}
-          inputViewStyle={styles.inputBox}
-          value={name}
-          validationType={FORM_INPUT_TYPE.NAME}
-          updateText={setName}
-        />
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+          }}>
+          <RNTextInputWithLabel
+            label={translation('NAME')}
+            backgroundColor={themeColor.lightGray}
+            containerStyle={styles.input}
+            value={firstName}
+            updateText={setFName}
+            validationType={FORM_INPUT_TYPE.NAME}
+            hint={translation('ENTER_NAME')}
+            inputStyle={styles.inputText}
+            inputViewStyle={{paddingRight: 5}}
+          />
+          <RNTextInputWithLabel
+            label={translation('SURNAME')}
+            backgroundColor={themeColor.lightGray}
+            containerStyle={styles.input}
+            value={lastName}
+            updateText={setLName}
+            validationType={FORM_INPUT_TYPE.NAME}
+            hint={translation('ENTER_SURNAME')}
+            inputStyle={styles.inputText}
+            inputViewStyle={{paddingRight: 5}}
+          />
+        </View>
         <LanguageDropDown
           heading={translation('YOUR_EMAIL')}
           text={userData.email}
@@ -151,7 +181,8 @@ export default ProfileSettings;
 
 const NotificationSwitch = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
-  const [isEnabled, setIsEnabled] = useState(false);
+  const notification = useAppSelector(state => state.language.notification);
+  const [isEnabled, setIsEnabled] = useState(notification);
   const toggleSwitch = () => {
     setIsEnabled(prev => {
       store.dispatch(setNotificationKey(!prev));
@@ -175,9 +206,9 @@ const NotificationSwitch = () => {
         {translation('NOTIFICATION')}
       </RNTextComponent>
       <Switch
-        trackColor={{false: themeColor.themeBlue, true: themeColor.gold}}
+        trackColor={{false: '#474747', true: themeColor.gold}}
         thumbColor={themeColor.white}
-        ios_backgroundColor={themeColor.themeBlue}
+        ios_backgroundColor={'#474747'}
         onValueChange={toggleSwitch}
         value={isEnabled}
       />

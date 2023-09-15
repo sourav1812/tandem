@@ -2,7 +2,7 @@ import React, {FC, useEffect} from 'react';
 import AppNavigator from './src/navigation';
 import {Provider} from 'react-redux';
 import {store} from './src/redux/store';
-import {Alert} from 'react-native';
+import {Alert, Platform, UIManager} from 'react-native';
 import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
 import {TOOLTIP} from '@tandem/constants/local';
 import messaging from '@react-native-firebase/messaging';
@@ -18,6 +18,11 @@ const persistor = persistStore(store);
 
 const App: FC = () => {
   useEffect(() => {
+    if (Platform.OS === 'android') {
+      if (UIManager.setLayoutAnimationEnabledExperimental) {
+        UIManager.setLayoutAnimationEnabledExperimental(true);
+      }
+    }
     i18n.locale = setupLangauge();
     const tooltip = getValueFromKey(TOOLTIP);
     store.dispatch(clearAlertData());

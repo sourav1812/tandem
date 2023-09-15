@@ -1,3 +1,4 @@
 export interface CreateChildProfile {
-  name?: string;
+  firstName?: string;
+  lastName?: string;
 }
