@@ -3,23 +3,22 @@ import {scale, verticalScale} from 'react-native-size-matters';
 
 export const styles = StyleSheet.create({
   bgc: {
-    flex: 1,
-    paddingHorizontal: scale(20),
-    paddingTop: verticalScale(48),
+    height: '100%',
+    width: '100%',
+    position: 'absolute',
   },
   icon: {
     alignSelf: 'center',
-    marginTop: verticalScale(60),
   },
   content: {
-    fontSize: scale(17),
+    fontSize: scale(14),
     textAlign: 'center',
     marginTop: verticalScale(18),
   },
   para: {
-    fontSize: scale(14.5),
+    fontSize: scale(11.5),
     textAlign: 'center',
-    marginTop: verticalScale(6),
+    marginTop: 6,
     paddingHorizontal: scale(25),
   },
 });
