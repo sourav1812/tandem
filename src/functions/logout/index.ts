@@ -17,6 +17,7 @@ import logoutApi from '@tandem/api/logoutApi';
 import {firebase} from '@react-native-firebase/messaging';
 import {clearCacheForce} from '@tandem/redux/slices/cache.slice';
 import RNFetchBlob from 'rn-fetch-blob';
+// import {removeKey} from '@tandem/helpers/encryptedStorage';
 
 const logout = async ({api = true}: {api?: boolean}) => {
   RNFetchBlob.session(CACHE_SESSION).dispose();

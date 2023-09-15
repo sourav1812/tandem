@@ -42,10 +42,16 @@ const EditChildProfile = ({route}: EditChildProfileProps) => {
 
   const {editAdult, childId} = route.params;
 
-  const currentChild = useAppSelector(
+  console.log(childId, 'childIdchildId');
+
+  const currentChildFromRoute = useAppSelector(
     (state1: RootState) =>
       state1.createChild.childList.filter(obj => obj.childId === childId)[0],
   );
+  const currentChildFromRedux = useAppSelector(
+    (state1: RootState) => state1.createChild.currentChild,
+  );
+  const currentChild = currentChildFromRoute || currentChildFromRedux;
   const [name, setName] = useState<ValidationError>({
     value: editAdult ? currentAdult.role || '' : currentChild.name || '',
   });
@@ -214,6 +220,7 @@ const EditChildProfile = ({route}: EditChildProfileProps) => {
           />
         </Pressable>
       </View>
+      {console.log(currentChild, name.value)}
       <View
         style={[
           styles.footerButton,

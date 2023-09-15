@@ -9,4 +9,5 @@ export interface LogoHeaderProps {
   rightIcon?: ReactNode;
   onRightButtonPress?: () => void;
   customRight?: boolean;
+  showBackButton?: boolean;
 }

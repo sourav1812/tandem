@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import {styles} from './styles';
@@ -50,6 +50,14 @@ const HelpCenter = ({route}: HelpCenterProps) => {
     updateState({firstTab: true});
   };
 
+  // useEffect(() => {
+  //   navigation.addListener('beforeRemove', e => {
+  //     e.preventDefault();
+  //     //clear setInterval here and go back
+  //   });
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
+
   return (
     <RNScreenWrapper
       style={{
@@ -62,6 +70,7 @@ const HelpCenter = ({route}: HelpCenterProps) => {
         customStyle={{
           marginTop: portrait ? verticalScale(50) : verticalScale(20),
         }}
+        showBackButton={fromPeople ? true : false}
       />
       <View
         style={[

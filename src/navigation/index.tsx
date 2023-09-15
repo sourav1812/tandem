@@ -18,9 +18,7 @@ import resumeAppState from '@tandem/functions/resumeAppState';
 const AppNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
   const mode = useAppSelector((state: RootState) => state.mode.mode);
-  const userData = useAppSelector(
-    (state: RootState) => state.userData.userDataObject,
-  );
+
   const isTablet = useAppSelector(
     (state: RootState) => state.deviceType.isTablet,
   );
@@ -148,14 +146,12 @@ const AppNavigator = () => {
                 }
                 name={SCREEN_NAME.PRIVACY_POLICIES}
               />
-              {!userData.termsAndConditions && (
-                <Stack.Screen
-                  getComponent={() =>
-                    require('@tandem/screens/TermsAndConditions').default
-                  }
-                  name={SCREEN_NAME.TERMS_AND_CONDITIONS}
-                />
-              )}
+              <Stack.Screen
+                getComponent={() =>
+                  require('@tandem/screens/TermsAndConditions').default
+                }
+                name={SCREEN_NAME.TERMS_AND_CONDITIONS}
+              />
               <Stack.Screen
                 getComponent={() =>
                   require('@tandem/screens/HelpCenter').default

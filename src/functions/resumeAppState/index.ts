@@ -1,10 +1,9 @@
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
 import {getStoredTokens} from '../tokens';
-// import {getValueFromKey} from '@tandem/helpers/encryptedStorage';
-// import {TERMS_ACCEPTED} from '@tandem/constants/local';
 import userProfile from '@tandem/api/userProfile';
 import {cacheAvatars, cachePlaces} from '../cache';
+import {store} from '@tandem/redux/store';
 
 export default async () => {
   const {token, refreshToken} = getStoredTokens();
@@ -20,10 +19,10 @@ export default async () => {
     } else {
       userProfile();
     }
-    // if (!termsAccepted) {
-    //   navigateTo(SCREEN_NAME.TERMS_AND_CONDITIONS, {}, true);
-    //   return;
-    // }
-    navigateTo(SCREEN_NAME.ACCOUNT, {}, true);
+    if (store.getState().userData.userDataObject.termsAndConditions) {
+      navigateTo(SCREEN_NAME.ACCOUNT, {}, true);
+    } else {
+      navigateTo(SCREEN_NAME.TERMS_AND_CONDITIONS, {}, true);
+    }
   }, 2000);
 };
