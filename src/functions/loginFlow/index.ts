@@ -11,9 +11,10 @@ import {PEOPLE} from '@tandem/constants/enums';
 import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import RNFetchBlob from 'rn-fetch-blob';
-import {CACHE_SESSION, TERMS_ACCEPTED} from '@tandem/constants/local';
+// import {CACHE_SESSION, TERMS_ACCEPTED} from '@tandem/constants/local';
+import {CACHE_SESSION} from '@tandem/constants/local';
 import {clearCacheForce} from '@tandem/redux/slices/cache.slice';
-import {storeKey} from '@tandem/helpers/encryptedStorage';
+// import {storeKey} from '@tandem/helpers/encryptedStorage';
 
 export default async (loginResponse: LoginResponse) => {
   RNFetchBlob.session(CACHE_SESSION).dispose();
@@ -56,7 +57,7 @@ export default async (loginResponse: LoginResponse) => {
     }),
   );
   if (loginResponse.userInfo.termsAndConditions) {
-    storeKey(TERMS_ACCEPTED, TERMS_ACCEPTED);
+    // storeKey(TERMS_ACCEPTED, TERMS_ACCEPTED);
     navigateTo(SCREEN_NAME.ACCOUNT, {}, true);
   } else {
     navigateTo(SCREEN_NAME.TERMS_AND_CONDITIONS, {}, true);

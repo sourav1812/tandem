@@ -18,9 +18,7 @@ import resumeAppState from '@tandem/functions/resumeAppState';
 const AppNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
   const mode = useAppSelector((state: RootState) => state.mode.mode);
-  const userData = useAppSelector(
-    (state: RootState) => state.userData.userDataObject,
-  );
+
   const isTablet = useAppSelector(
     (state: RootState) => state.deviceType.isTablet,
   );

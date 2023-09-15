@@ -50,13 +50,13 @@ const HelpCenter = ({route, navigation}: HelpCenterProps) => {
     updateState({firstTab: true});
   };
 
-  useEffect(() => {
-    navigation.addListener('beforeRemove', e => {
-      e.preventDefault();
-      //clear setInterval here and go back
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   navigation.addListener('beforeRemove', e => {
+  //     e.preventDefault();
+  //     //clear setInterval here and go back
+  //   });
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   return (
     <RNScreenWrapper
