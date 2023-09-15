@@ -4,14 +4,10 @@ import {getStoredTokens} from '../tokens';
 // import {getValueFromKey} from '@tandem/helpers/encryptedStorage';
 // import {TERMS_ACCEPTED} from '@tandem/constants/local';
 import userProfile from '@tandem/api/userProfile';
-import {cacheAvatars, cachePlaces} from '../cache';
 
 export default async () => {
   const {token, refreshToken} = getStoredTokens();
   // const termsAccepted = getValueFromKey(TERMS_ACCEPTED);
-
-  cacheAvatars();
-  cachePlaces();
 
   setTimeout(() => {
     if (!token && !refreshToken) {

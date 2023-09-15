@@ -1,5 +1,4 @@
 // import {CACHE_SESSION, TERMS_ACCEPTED} from '@tandem/constants/local';
-import {CACHE_SESSION} from '@tandem/constants/local';
 import {MODE} from '@tandem/constants/mode';
 // import {removeKey} from '@tandem/helpers/encryptedStorage';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
@@ -19,9 +18,16 @@ import {clearCacheForce} from '@tandem/redux/slices/cache.slice';
 import RNFetchBlob from 'rn-fetch-blob';
 
 const logout = async ({api = true}: {api?: boolean}) => {
-  RNFetchBlob.session(CACHE_SESSION).dispose();
-
   try {
+    const flush = store.getState().cache.flush;
+    console.log(flush);
+    flush.forEach(item => {
+      try {
+        RNFetchBlob.fs.unlink(item);
+      } catch (error) {
+        console.log('#####', error);
+      }
+    });
     store.dispatch(startLoader());
     if (api) {
       console.log('logoutapidone');

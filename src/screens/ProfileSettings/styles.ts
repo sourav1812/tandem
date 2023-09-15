@@ -21,6 +21,7 @@ export const styles = StyleSheet.create({
   },
   input: {
     marginTop: verticalScale(14),
+    width: '49%',
   },
   inputBox: {
     backgroundColor: themeColor.input,
@@ -54,5 +55,9 @@ export const styles = StyleSheet.create({
   },
   dropDownButton: {
     height: verticalScale(55),
+  },
+  inputText: {
+    fontSize: verticalScale(13),
+    width: '100%',
   },
 });

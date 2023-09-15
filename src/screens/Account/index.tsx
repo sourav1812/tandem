@@ -47,7 +47,7 @@ const Account = () => {
     tooltipOne: true,
     tooltipTwo: false,
   });
-
+  const avatars = useAppSelector(state => state.cache.avatars);
   const {width} = Dimensions.get('window');
   const dispatch = useAppDispatch();
   const tooltipArray = getValueFromKey(TOOLTIP);
@@ -479,11 +479,14 @@ const Account = () => {
             }}
             disabled={childList.length === 0 || playerList.length === 0}>
             {playerList.map((item, index) => {
+              const filePath = avatars.filter(
+                obj => obj.path === item.avatar,
+              )[0]?.file;
               if (item.type === PEOPLE.CHILD) {
                 return (
                   <Image
                     key={index.toString()}
-                    source={{uri: item.avatar}}
+                    source={{uri: filePath || item.avatar}}
                     style={styles.profile}
                   />
                 );
@@ -491,7 +494,7 @@ const Account = () => {
                 return (
                   <Image
                     key={index.toString()}
-                    source={{uri: item.avatar}}
+                    source={{uri: filePath || item.avatar}}
                     style={[styles.profile, {height: 40, width: 40}]}
                   />
                 );
