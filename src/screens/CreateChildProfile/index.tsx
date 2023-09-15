@@ -395,51 +395,66 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
               <ScrollView
                 contentContainerStyle={styles.list}
                 showsVerticalScrollIndicator={false}>
-                {avatars.map((item, index) => {
-                  if (index === 0) {
-                    console.log(item, 'indexvsdff');
-                    return (
-                      <RNAvatarComponentWithEdit
-                        onEdit={renderImageModal}
-                        onSelect={() => {
-                          if (item.isPickerImg) {
-                            renderImageModal();
-                          } else {
-                            setAvatar(item.path);
-                          }
-                        }}
-                        icon={{uri: imagePickerUrl || item.file}}
-                        imgStyle={[
-                          {
-                            marginTop: verticalScale(12),
-                            borderWidth: 3,
-                            borderColor: 'transparent',
-                          },
-                          avatar === item.path && {
-                            borderColor: themeColor.themeBlue,
-                            borderRadius: 1000,
-                          },
-                        ]}
-                        isImageFromPicker={imagePickerUrl ? true : false}
-                      />
-                    );
-                  } else {
-                    return (
-                      <RNAvatarComponent
-                        icon={item.file}
-                        customStyle={[
-                          styles.avatar,
-                          avatar === item.path && {
-                            backgroundColor: themeColor.themeBlue,
-                          },
-                        ]}
-                        imgStyle={styles.avatarImg}
-                        onPress={() => {
-                          setAvatar(item.path);
-                        }}
-                      />
-                    );
-                  }
+                {avatars.map(item => {
+                  // if (index === 0) {
+                  //   console.log(item, 'indexvsdff');
+                  //   return (
+                  //     <RNAvatarComponentWithEdit
+                  //       onEdit={renderImageModal}
+                  //       onSelect={() => {
+                  //         if (item.isPickerImg) {
+                  //           renderImageModal();
+                  //         } else {
+                  //           setAvatar(item.path);
+                  //         }
+                  //       }}
+                  //       icon={{uri: imagePickerUrl || item.file}}
+                  //       imgStyle={[
+                  //         {
+                  //           marginTop: verticalScale(12),
+                  //           borderWidth: 3,
+                  //           borderColor: 'transparent',
+                  //         },
+                  //         avatar === item.path && {
+                  //           borderColor: themeColor.themeBlue,
+                  //           borderRadius: 1000,
+                  //         },
+                  //       ]}
+                  //       isImageFromPicker={imagePickerUrl ? true : false}
+                  //     />
+                  //   );
+                  // } else {
+                  //   return (
+                  //     <RNAvatarComponent
+                  //       icon={item.file}
+                  //       customStyle={[
+                  //         styles.avatar,
+                  //         avatar === item.path && {
+                  //           backgroundColor: themeColor.themeBlue,
+                  //         },
+                  //       ]}
+                  //       imgStyle={styles.avatarImg}
+                  //       onPress={() => {
+                  //         setAvatar(item.path);
+                  //       }}
+                  //     />
+                  //   );
+                  // }
+                  return (
+                    <RNAvatarComponent
+                      icon={item.file}
+                      customStyle={[
+                        styles.avatar,
+                        avatar === item.path && {
+                          backgroundColor: themeColor.themeBlue,
+                        },
+                      ]}
+                      imgStyle={styles.avatarImg}
+                      onPress={() => {
+                        setAvatar(item.path);
+                      }}
+                    />
+                  );
                 })}
               </ScrollView>
             </View>
@@ -517,51 +532,66 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
               <ScrollView
                 contentContainerStyle={styles.list}
                 showsVerticalScrollIndicator={false}>
-                {avatars.map((item, index) => {
-                  if (index === 0) {
-                    console.log(item, 'indexvsdff');
-                    return (
-                      <RNAvatarComponentWithEdit
-                        onEdit={renderImageModal}
-                        onSelect={() => {
-                          if (item.isPickerImg) {
-                            renderImageModal();
-                          } else {
-                            setAvatar(item.path);
-                          }
-                        }}
-                        icon={{uri: imagePickerUrl || item.file}}
-                        imgStyle={[
-                          {
-                            marginTop: verticalScale(12),
-                            borderWidth: 3,
-                            borderColor: 'transparent',
-                          },
-                          avatar === item.path && {
-                            borderColor: themeColor.themeBlue,
-                            borderRadius: 1000,
-                          },
-                        ]}
-                        isImageFromPicker={imagePickerUrl ? true : false}
-                      />
-                    );
-                  } else {
-                    return (
-                      <RNAvatarComponent
-                        icon={item.file}
-                        customStyle={[
-                          styles.avatar,
-                          avatar === item.path && {
-                            backgroundColor: themeColor.themeBlue,
-                          },
-                        ]}
-                        imgStyle={styles.avatarImg}
-                        onPress={() => {
-                          setAvatar(item.path);
-                        }}
-                      />
-                    );
-                  }
+                {avatars.map(item => {
+                  // if (index === 0) {
+                  //   console.log(item, 'indexvsdff');
+                  //   return (
+                  //     <RNAvatarComponentWithEdit
+                  //       onEdit={renderImageModal}
+                  //       onSelect={() => {
+                  //         if (item.isPickerImg) {
+                  //           renderImageModal();
+                  //         } else {
+                  //           setAvatar(item.path);
+                  //         }
+                  //       }}
+                  //       icon={{uri: imagePickerUrl || item.file}}
+                  //       imgStyle={[
+                  //         {
+                  //           marginTop: verticalScale(12),
+                  //           borderWidth: 3,
+                  //           borderColor: 'transparent',
+                  //         },
+                  //         avatar === item.path && {
+                  //           borderColor: themeColor.themeBlue,
+                  //           borderRadius: 1000,
+                  //         },
+                  //       ]}
+                  //       isImageFromPicker={imagePickerUrl ? true : false}
+                  //     />
+                  //   );
+                  // } else {
+                  //   return (
+                  //     <RNAvatarComponent
+                  //       icon={item.file}
+                  //       customStyle={[
+                  //         styles.avatar,
+                  //         avatar === item.path && {
+                  //           backgroundColor: themeColor.themeBlue,
+                  //         },
+                  //       ]}
+                  //       imgStyle={styles.avatarImg}
+                  //       onPress={() => {
+                  //         setAvatar(item.path);
+                  //       }}
+                  //     />
+                  //   );
+                  // }
+                  return (
+                    <RNAvatarComponent
+                      icon={item.file}
+                      customStyle={[
+                        styles.avatar,
+                        avatar === item.path && {
+                          backgroundColor: themeColor.themeBlue,
+                        },
+                      ]}
+                      imgStyle={styles.avatarImg}
+                      onPress={() => {
+                        setAvatar(item.path);
+                      }}
+                    />
+                  );
                 })}
               </ScrollView>
             </View>

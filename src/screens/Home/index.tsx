@@ -465,8 +465,6 @@ const Home = () => {
                         if (index === 0) {
                           store.dispatch(clearStoryGenerationResponse());
                           navigateTo(SCREEN_NAME.ROADMAP);
-                        } else {
-                          navigateTo(SCREEN_NAME.NOTIFICATION_SCREEN);
                         }
                       }}
                     />
