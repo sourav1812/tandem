@@ -1,4 +1,4 @@
-import {ImageBackground, Image, View, Platform} from 'react-native';
+import {ImageBackground, Image, View, Platform, Dimensions} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
@@ -13,15 +13,30 @@ import RNButton from '@tandem/components/RNButton';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
-import {RootState} from '@tandem/redux/store';
+import {RootState, store} from '@tandem/redux/store';
 import socialLogin from '@tandem/functions/socialLogin';
 import {SOCIAL_AUTH} from '@tandem/constants/enums';
+import {useFocusEffect} from '@react-navigation/native';
+import {changeOrientation} from '@tandem/redux/slices/orientation.slice';
+import {changeDevice} from '@tandem/redux/slices/tablet.slice';
+import DeviceInfo from 'react-native-device-info';
+import {useDispatch} from 'react-redux';
 
 const SocialSignIn = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
+  const dispatch = useDispatch();
+
+  useFocusEffect(() => {
+    let isIpad = DeviceInfo.getSystemName() === 'iPadOS' ? true : false;
+    let isAndroidTablet = DeviceInfo.isTablet();
+    let checkTablet = isIpad || isAndroidTablet ? true : false;
+    dispatch(changeDevice(checkTablet));
+    const {width, height} = Dimensions.get('window');
+    store.dispatch(changeOrientation(height > width));
+  });
 
   return (
     <RNScreenWrapper>
