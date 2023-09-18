@@ -28,7 +28,7 @@ export default () => {
       onBack={() => {
         removeQuestionData(STORY_PARTS.COLOR);
       }}
-      questionNumber={7}
+      questionNumber={6}
       onNextQuestion={() => {
         navigation.push(SCREEN_NAME.ROADMAP);
       }}
