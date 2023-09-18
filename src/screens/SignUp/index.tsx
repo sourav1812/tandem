@@ -95,10 +95,6 @@ const SignUp = () => {
           lastName: surName.value,
           password: password.value,
         });
-        // await loginUserWithEmail({
-        //   email: email.value,
-        //   password: password.value,
-        // });
       } catch (error) {
         // resetStates();
         console.log('signup error', error);
