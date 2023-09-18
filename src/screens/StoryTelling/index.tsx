@@ -15,7 +15,6 @@ import RNReadingLevelModal from '@tandem/components/RNReadingLevelModal';
 import RNRatingModal from '@tandem/components/RNRatingModal';
 import {scale, verticalScale} from 'react-native-size-matters';
 import navigateTo from '@tandem/navigation/navigate';
-import {MODE} from '@tandem/constants/mode';
 import {RootState} from '@tandem/redux/store';
 import {translation} from '@tandem/utils/methods';
 import RNLogoHeader from '@tandem/components/RNLogoHeader';
@@ -34,7 +33,6 @@ import rateStory from '@tandem/api/rateStory';
 const StoryTelling = () => {
   const tooltipArray = getValueFromKey(TOOLTIP);
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
-  const mode = useAppSelector(state => state.mode.mode);
   const [renderModal, setRenderModal] = useState(false);
   const [readingLevel, setReadingLevel] = useState(false);
   const routes: any = useRoute();
@@ -87,10 +85,10 @@ const StoryTelling = () => {
     //     updateState({showQuestion: true});
     //     break;
     // }
-    if (currentIndex !== 0) {
-      return;
+    if (currentIndex === 1 && book.rating === 0) {
+      updateState({ratingModal: true});
     }
-    if (book.rating !== 0) {
+    if (currentIndex === 0) {
       setTimeout(() => {
         setRenderModal(true);
       }, 2000);
@@ -109,11 +107,6 @@ const StoryTelling = () => {
 
   const submitRatingModal = async (rating: number) => {
     updateState({ratingModal: !ratingModal});
-    if (currentIndex === 0) {
-      setTimeout(() => {
-        toggleModal();
-      }, 4000);
-    }
     if (rating === 0) {
       return;
     }
@@ -347,7 +340,7 @@ const StoryTelling = () => {
           nextClick={renderTipLevel}
         />
       )} */}
-      {currentIndex === 0 && mode === MODE.B && book.rating === 0 && (
+      {currentIndex === 1 && book.rating === 0 && (
         <RNRatingModal
           visible={ratingModal}
           renderModal={renderRatingModal}
