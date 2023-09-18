@@ -59,9 +59,9 @@ const RNAlertBox = ({
             width: '100%',
           }}>
           <RNButton
-            onClick={() => {
+            onClick={async () => {
               if (onSuccess) {
-                onSuccess();
+                await onSuccess();
               }
               dispatch(clearAlertData());
             }}

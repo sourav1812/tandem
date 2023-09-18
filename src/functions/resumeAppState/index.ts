@@ -3,6 +3,7 @@ import navigateTo from '@tandem/navigation/navigate';
 import {getStoredTokens} from '../tokens';
 import userProfile from '@tandem/api/userProfile';
 import {store} from '@tandem/redux/store';
+import {Alert} from 'react-native';
 
 export default async () => {
   const {token, refreshToken} = getStoredTokens();
