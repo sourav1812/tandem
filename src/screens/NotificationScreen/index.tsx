@@ -78,8 +78,7 @@ const NotificationScreen = () => {
             <RNButton
               pressableStyle={{
                 marginTop: verticalScale(35),
-                paddingHorizontal: 10,
-                width: isTablet ? '70%' : '90%',
+                width: '100%',
               }}
               title={translation('TURN_ON_NOTIFICATION')}
               onClick={() => {
@@ -89,7 +88,7 @@ const NotificationScreen = () => {
             <RNButton
               pressableStyle={{
                 marginTop: verticalScale(12),
-                width: '50%',
+                width: '100%',
               }}
               onlyBorder
               title={translation('MAYBE_LATER')}
