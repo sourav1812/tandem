@@ -26,8 +26,6 @@ export const styles = StyleSheet.create({
     backgroundColor: themeColor.input,
   },
   button: {
-    position: 'absolute',
-    bottom: '4%',
     alignSelf: 'center',
     width: '100%',
   },

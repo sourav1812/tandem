@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
@@ -136,12 +137,14 @@ const ChangePassword = () => {
           validationType={FORM_INPUT_TYPE.PASSWORD}
           rightSideIcon
         />
+        <RNButton
+          pressableStyle={{marginTop: 'auto', marginBottom: 20}}
+          customStyle={[styles.button, isTablet && {maxWidth: scale(180)}]}
+          title={translation('CHANGE_PASSWORD')}
+          onClick={hangleChangePassword}
+        />
       </View>
-      <RNButton
-        customStyle={[styles.button, isTablet && {maxWidth: scale(180)}]}
-        title={translation('CHANGE_PASSWORD')}
-        onClick={hangleChangePassword}
-      />
+
       <RNChangePassword visible={showModal} renderModal={toggleModal} />
     </RNScreenWrapper>
   );

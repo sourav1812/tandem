@@ -132,23 +132,28 @@ export default ({
           bottom={DIRECTION_ARROWS.SOUTH}
           text={translation('PRESS_THE_BUTTON')}
           textStyle={styles.tooltip}>
-          <RNButton
-            isDisabled={disabled}
-            customStyle={[
-              styles.footerButton,
-              {height: verticalScale(80), maxHeight: verticalScale(80)},
-              disabled && {
-                backgroundColor: '#474747',
-                borderColor: '#474747',
-              },
-            ]}
-            title={translation('SELECT')}
-            onClick={onNextQuestion}
-            textStyle={[
-              styles.buttonText,
-              {marginTop: disabled || !maxSelections ? 0 : verticalScale(40)},
-            ]}
-          />
+          <View style={{width: '100%'}}>
+            <RNButton
+              isDisabled={disabled}
+              customStyle={[
+                styles.footerButton,
+                {
+                  height: verticalScale(80),
+                  maxHeight: verticalScale(80),
+                },
+                disabled && {
+                  backgroundColor: '#474747',
+                  borderColor: '#474747',
+                },
+              ]}
+              title={translation('SELECT')}
+              onClick={onNextQuestion}
+              textStyle={[
+                styles.buttonText,
+                {marginTop: disabled || !maxSelections ? 0 : verticalScale(40)},
+              ]}
+            />
+          </View>
         </RNTooltip>
       )}
       {!disabled && activeState && maxSelections && (
