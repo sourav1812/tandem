@@ -50,9 +50,6 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Tandem/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BD4437C32A8A660C0032E42E /* Tandem-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tandem-Bridging-Header.h"; sourceTree = "<group>"; };
 		BD4437C42A8A660D0032E42E /* FIle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FIle.swift; sourceTree = "<group>"; };
-		BD5539542AB1ECA5001E2007 /* FBSDKGamingServicesKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FBSDKGamingServicesKit.xcframework; path = Pods/FBSDKGamingServicesKit/XCFrameworks/FBSDKGamingServicesKit.xcframework; sourceTree = "<group>"; };
-		BD5A48D22AB1E8E400479EB6 /* FBSDKCoreKit_Basics.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FBSDKCoreKit_Basics.xcframework; path = Pods/FBSDKCoreKit_Basics/XCFrameworks/FBSDKCoreKit_Basics.xcframework; sourceTree = "<group>"; };
-		BD5A48D92AB1EB8F00479EB6 /* FBSDKCoreKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FBSDKCoreKit.xcframework; path = Pods/FBSDKCoreKit/XCFrameworks/FBSDKCoreKit.xcframework; sourceTree = "<group>"; };
 		BD5D4CE52A7A40D3005BA418 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BD5D4CE72A7A46EF005BA418 /* Tandem.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Tandem.entitlements; path = Tandem/Tandem.entitlements; sourceTree = "<group>"; };
 		C3EC6829F73C35299B73BEFC /* Pods_Tandem.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tandem.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -116,13 +113,10 @@
 			name = Tandem;
 			sourceTree = "<group>";
 		};
-		
+
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BD5539542AB1ECA5001E2007 /* FBSDKGamingServicesKit.xcframework */,
-				BD5A48D92AB1EB8F00479EB6 /* FBSDKCoreKit.xcframework */,
-				BD5A48D22AB1E8E400479EB6 /* FBSDKCoreKit_Basics.xcframework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				C3EC6829F73C35299B73BEFC /* Pods_Tandem.framework */,
 				7D881F35E0CA8EE8A4382347 /* Pods_Tandem_TandemTests.framework */,
