@@ -60,6 +60,7 @@ export default async (loginResponse: LoginResponse) => {
     // storeKey(TERMS_ACCEPTED, TERMS_ACCEPTED);
     navigateTo(SCREEN_NAME.ACCOUNT, {}, true);
   } else {
+    console.log('TERMS_AND_CONDITIONS');
     navigateTo(SCREEN_NAME.TERMS_AND_CONDITIONS, {}, true);
   }
 };

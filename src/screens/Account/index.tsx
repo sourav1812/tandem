@@ -41,7 +41,7 @@ import {DIRECTION_ARROWS, PEOPLE} from '@tandem/constants/enums';
 
 const Account = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
-  let childList = useAppSelector(state => state.createChild.childList);
+  const childList = useAppSelector(state => state.createChild.childList);
   const adultList = useAppSelector(state => state.createChild.adultList);
   const [kidsList, setKidList] = useState(() => [...childList].reverse());
   const [peopleList, setPeopleList] = useState(() => [...adultList].reverse());
