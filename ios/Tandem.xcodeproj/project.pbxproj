@@ -113,7 +113,6 @@
 			name = Tandem;
 			sourceTree = "<group>";
 		};
-
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
