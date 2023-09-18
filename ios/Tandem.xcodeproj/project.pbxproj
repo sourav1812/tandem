@@ -17,12 +17,6 @@
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		A70C3B6311274FBB664E238A /* Pods_Tandem_TandemTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D881F35E0CA8EE8A4382347 /* Pods_Tandem_TandemTests.framework */; };
 		BD4437C52A8A660D0032E42E /* FIle.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4437C42A8A660D0032E42E /* FIle.swift */; };
-		BD5539552AB1ECA5001E2007 /* FBSDKGamingServicesKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD5539542AB1ECA5001E2007 /* FBSDKGamingServicesKit.xcframework */; };
-		BD5539562AB1ECA5001E2007 /* FBSDKGamingServicesKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BD5539542AB1ECA5001E2007 /* FBSDKGamingServicesKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		BD5A48D62AB1EA0700479EB6 /* FBSDKCoreKit_Basics.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD5A48D22AB1E8E400479EB6 /* FBSDKCoreKit_Basics.xcframework */; };
-		BD5A48D72AB1EA0700479EB6 /* FBSDKCoreKit_Basics.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BD5A48D22AB1E8E400479EB6 /* FBSDKCoreKit_Basics.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		BD5A48DA2AB1EB8F00479EB6 /* FBSDKCoreKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD5A48D92AB1EB8F00479EB6 /* FBSDKCoreKit.xcframework */; };
-		BD5A48DB2AB1EB8F00479EB6 /* FBSDKCoreKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BD5A48D92AB1EB8F00479EB6 /* FBSDKCoreKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BD5D4CE62A7A40D3005BA418 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BD5D4CE52A7A40D3005BA418 /* GoogleService-Info.plist */; };
 		F4B847CD0D4C416A82288A83 /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1B7C90A90DA54E32B2ED2AB6 /* Poppins-Regular.ttf */; };
 		F7D7137AC3994E9BAEF633C4 /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0A8F9F47C5EB44FBA7A998F6 /* Poppins-Medium.ttf */; };
@@ -37,22 +31,6 @@
 			remoteInfo = Tandem;
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		BD5A48D82AB1EA0700479EB6 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				BD5A48DB2AB1EB8F00479EB6 /* FBSDKCoreKit.xcframework in Embed Frameworks */,
-				BD5539562AB1ECA5001E2007 /* FBSDKGamingServicesKit.xcframework in Embed Frameworks */,
-				BD5A48D72AB1EA0700479EB6 /* FBSDKCoreKit_Basics.xcframework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		00E356EE1AD99517003FC87E /* TandemTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TandemTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -98,10 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BD5A48DA2AB1EB8F00479EB6 /* FBSDKCoreKit.xcframework in Frameworks */,
 				06C352FFE18381E9EE4A4992 /* Pods_Tandem.framework in Frameworks */,
-				BD5539552AB1ECA5001E2007 /* FBSDKGamingServicesKit.xcframework in Frameworks */,
-				BD5A48D62AB1EA0700479EB6 /* FBSDKCoreKit_Basics.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -246,7 +221,6 @@
 				7A771D712E73E9B90C1376CF /* [CP] Embed Pods Frameworks */,
 				1661EB27080F1EB58EEB0718 /* [CP] Copy Pods Resources */,
 				0811D0E33D63152224938902 /* [CP-User] [RNFB] Core Configuration */,
-				BD5A48D82AB1EA0700479EB6 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
