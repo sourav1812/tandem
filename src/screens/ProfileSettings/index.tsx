@@ -3,7 +3,7 @@ import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import RNLogoHeader from '@tandem/components/RNLogoHeader';
 import {translation} from '@tandem/utils/methods';
-import {Pressable, Switch, View} from 'react-native';
+import {AppState, Pressable, Switch, View} from 'react-native';
 import RNTextInputWithLabel from '@tandem/components/RNTextInputWithLabel';
 import {StateObject} from './interface';
 import RNTextComponent from '@tandem/components/RNTextComponent';
@@ -14,7 +14,7 @@ import RNDeleteAccount from '@tandem/components/RNDeleteAccount';
 import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
 import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
 import {LanguageDropDown} from '@tandem/components/LanguageDropDown';
-import {RootState, store} from '@tandem/redux/store';
+import {RootState} from '@tandem/redux/store';
 import {editUserProfile} from '@tandem/api/editUserProfile';
 import validationFunction from '@tandem/functions/validationFunction';
 import {saveUserData} from '@tandem/redux/slices/userData.slice';
@@ -23,7 +23,11 @@ import navigateTo from '@tandem/navigation/navigate';
 import {languages} from '../SelectLanguage/interface';
 import i18n from '@tandem/constants/lang/i18n';
 import {deleteUser} from '@tandem/api/deleteUser';
-import {setNotificationKey} from '@tandem/redux/slices/languageReducer';
+import {
+  notificationActiveStatus,
+  requestPermission,
+} from '@tandem/functions/permissions';
+import {setNotificationStatus} from '@tandem/redux/slices/permissions.slice';
 
 const ProfileSettings = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -181,14 +185,55 @@ export default ProfileSettings;
 
 const NotificationSwitch = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
-  const notification = useAppSelector(state => state.language.notification);
-  const [isEnabled, setIsEnabled] = useState(notification);
-  const toggleSwitch = () => {
+  const user = useAppSelector(state => state.userData.userDataObject);
+  const localNotifications = useAppSelector(
+    state => state.permissions.notificationStatus,
+  );
+
+  const [isEnabled, setIsEnabled] = useState({
+    fromApp: localNotifications,
+    fromBackend: user.allowNotifications,
+  });
+
+  const appState = React.useRef(AppState.currentState);
+  const dispatch = useAppDispatch();
+  React.useEffect(() => {
+    const subscription = AppState.addEventListener('change', nextAppState => {
+      if (
+        appState.current.match(/inactive|background/) &&
+        nextAppState === 'active'
+      ) {
+        notificationActiveStatus().then(({fromApp}) => {
+          setIsEnabled(prev => ({...prev, fromApp}));
+        });
+      }
+      appState.current = nextAppState;
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
+
+  React.useEffect(() => {
+    dispatch(setNotificationStatus(user.allowNotifications));
+    notificationActiveStatus().then(res => {
+      setIsEnabled(res);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const toggleSwitch = async () => {
+    if (!isEnabled.fromApp) {
+      await requestPermission();
+      return;
+    }
+    dispatch(setNotificationStatus(!isEnabled.fromBackend));
     setIsEnabled(prev => {
-      store.dispatch(setNotificationKey(!prev));
-      return !prev;
+      return {...prev, fromBackend: !prev.fromBackend};
     });
   };
+
   return (
     <Pressable
       style={[
@@ -210,7 +255,7 @@ const NotificationSwitch = () => {
         thumbColor={themeColor.white}
         ios_backgroundColor={'#474747'}
         onValueChange={toggleSwitch}
-        value={isEnabled}
+        value={isEnabled.fromApp && isEnabled.fromBackend}
       />
     </Pressable>
   );

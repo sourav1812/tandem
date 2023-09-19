@@ -150,7 +150,7 @@ export default ({
               onClick={onNextQuestion}
               textStyle={[
                 styles.buttonText,
-                {marginTop: disabled || !maxSelections ? 0 : verticalScale(40)},
+                {marginTop: disabled || !maxSelections ? 0 : verticalScale(30)},
               ]}
             />
           </View>
