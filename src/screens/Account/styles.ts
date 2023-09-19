@@ -84,4 +84,8 @@ export const styles = StyleSheet.create({
     marginHorizontal: 10,
     borderRadius: 100,
   },
+  topList: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
 });
