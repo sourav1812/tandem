@@ -292,5 +292,12 @@
   "Message": "Message",
   "COLOR_ADDED": "This color is already added",
   "DONT_HAVE_ACCOUNT": "Don't have an account?",
-  "OPTIONAL": "Optional"
+  "OPTIONAL": "Optional",
+  "MOM": "Mom",
+  "UNCLE": "Uncle",
+  "AUNT": "Aunt",
+  "GRANDMOTHER": "Grandmother",
+  "GRANDFATHER": "Grandfather",
+  "FRIEND": "Friend",
+  "OTHER": "Other"
 }

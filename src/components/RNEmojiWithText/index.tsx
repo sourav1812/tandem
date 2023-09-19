@@ -85,8 +85,8 @@ const IconRednerItem = ({
         style={[
           styles.svgIcon,
           isSelected && {
-            height: verticalScale(45),
-            width: verticalScale(45),
+            height: verticalScale(65),
+            width: verticalScale(65),
           },
         ]}
       />

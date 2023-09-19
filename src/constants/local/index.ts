@@ -67,6 +67,7 @@ import Card1 from '@tandem/assets/svg/illustrationTypes/card-1.svg';
 import Card2 from '@tandem/assets/svg/illustrationTypes/card-2.svg';
 import Card3 from '@tandem/assets/svg/illustrationTypes/card-3.svg';
 import Card4 from '@tandem/assets/svg/illustrationTypes/card-4.svg';
+import {translation} from '@tandem/utils/methods';
 
 export const TOOLTIP = 'ToolTip';
 // export const TERMS_ACCEPTED = 'TERMS_ACCEPTED';
@@ -206,6 +207,17 @@ export const PLACE: OnlyImageType[] = [
     name: 'Sunny Beach',
     url: 'https://tandem.geeky.dev/v1/images/locations/sunny_beach.png',
   },
+];
+
+export const RELATIONSHIP_ARRAY = [
+  {role: translation('MOM')},
+  {role: translation('DAD')},
+  {role: translation('UNCLE')},
+  {role: translation('AUNT')},
+  {role: translation('GRANDMOTHER')},
+  {role: translation('GRANDFATHER')},
+  {role: translation('FRIEND')},
+  {role: translation('OTHER')},
 ];
 
 export const CACHE_SESSION = 'tandemcache';

@@ -4,7 +4,7 @@ export interface Props {
   customStyle?: StyleProp<ViewStyle>;
   heading?: string;
   emoji?: StyleProp<TextStyle>;
-  icon: string | undefined;
+  icon?: string | undefined;
   bgcColor: string;
   ref?: any;
   onLayout?: ((event: LayoutChangeEvent) => void) | undefined;
