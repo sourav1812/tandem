@@ -31,7 +31,6 @@ import registerUser from '@tandem/api/registerUser';
 import validationFunction from '@tandem/functions/validationFunction';
 import socialLogin from '@tandem/functions/socialLogin';
 import {SOCIAL_AUTH} from '@tandem/constants/enums';
-import loginUserWithEmail from '@tandem/api/loginUserWithEmail';
 
 const SignUp = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -93,10 +92,6 @@ const SignUp = () => {
           email: email.value,
           firstName: name.value,
           lastName: surName.value,
-          password: password.value,
-        });
-        await loginUserWithEmail({
-          email: email.value,
           password: password.value,
         });
       } catch (error) {
