@@ -9,4 +9,5 @@ export interface ChildProfileStateObject {
   gender: string;
   imagePickerUrl: string | null;
   showImageModal: boolean;
+  showRoles: boolean;
 }

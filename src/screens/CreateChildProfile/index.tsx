@@ -1,7 +1,13 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
-import {Pressable, ScrollView, View} from 'react-native';
+import {
+  Pressable,
+  ScrollView,
+  View,
+  Keyboard,
+  LayoutAnimation,
+} from 'react-native';
 import BlueButton from '@tandem/assets/svg/BlueButton';
 import {styles} from './styles';
 import RNNumericBulletin from '@tandem/components/RNNumericBulletin';
@@ -34,6 +40,9 @@ import {PEOPLE} from '@tandem/constants/enums';
 import ImageCropPicker from 'react-native-image-crop-picker';
 import {cacheAvatars} from '@tandem/functions/cache';
 import RNChooseImage from '@tandem/components/RNChooseImage';
+import Boy from '@tandem/assets/svg/Boy';
+import Girl from '@tandem/assets/svg/Girl';
+import {RELATIONSHIP_ARRAY} from '@tandem/constants/local';
 
 const GENDERS = {
   girl: 'girl',
@@ -60,10 +69,12 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
     gender: '',
     imagePickerUrl: socialLoginData.image !== '' ? socialLoginData.image : null,
     showImageModal: false,
+    showRoles: false,
   });
-  const {bulletinArray, questionIndex, gender, showImageModal} = state;
+  const {bulletinArray, questionIndex, gender, showImageModal, showRoles} =
+    state;
   const [name, setName] = useState<ValidationError>({value: ''});
-  const [role, setRole] = useState<ValidationError>({value: ''});
+  const [role, setRole] = useState('');
   const [dateModal, setDateModal] = useState(false);
   const [dob, setDob] = useState<ValidationError>({
     value: new Date().toString(),
@@ -122,7 +133,8 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
           setState: setDob,
           typeOfValidation: FORM_INPUT_TYPE.DOB,
         },
-      ])
+      ]) &&
+      role === ''
     ) {
       return;
     }
@@ -166,11 +178,6 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
     if (
       !validationFunction([
         {
-          state: role,
-          setState: setRole,
-          typeOfValidation: FORM_INPUT_TYPE.NAME,
-        },
-        {
           state: dob,
           setState: setDob,
           typeOfValidation: FORM_INPUT_TYPE.DOB,
@@ -182,7 +189,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
     // TODO make it dynamic
     try {
       const response = await addNewAdult({
-        role: role.value,
+        role: role,
         dob: dob.value, // ! pass in the whole date object
         avatar,
       });
@@ -193,7 +200,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
             dob: dob.value,
             avatar: avatar,
             type: PEOPLE.ADULT,
-            role: role.value,
+            role: role,
           }),
         );
         dispatch(
@@ -202,7 +209,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
             dob: dob.value,
             avatar: avatar,
             type: PEOPLE.ADULT,
-            role: role.value,
+            role: role,
           }),
         );
       }
@@ -212,7 +219,9 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
   };
 
   const selectDate = () => {
-    setDateModal(true);
+    setTimeout(() => {
+      setDateModal(true);
+    }, 200);
   };
 
   const selectGender = (type: string) => {
@@ -238,7 +247,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
   };
 
   const disableButtonForAdultForm = () => {
-    if (questionIndex === 1 && role.value === '') {
+    if (questionIndex === 1 && role === '') {
       return false;
     }
     if (avatar === null && questionIndex === 3) {
@@ -279,6 +288,10 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
       });
   };
 
+  const toggleRoles = () => {
+    updateState({showRoles: !showRoles});
+  };
+
   const childForm = () => {
     switch (questionIndex) {
       case 1:
@@ -296,7 +309,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
             </RNTextComponent>
             <View style={styles.options}>
               <RNEmojiWithText
-                icon={'👧'}
+                Svgimg={Girl}
                 customStyle={styles.girl}
                 bgcColor={themeColor.purple}
                 onPress={() => {
@@ -310,7 +323,8 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
             </View>
             <View style={styles.options}>
               <RNEmojiWithText
-                icon={'👦'}
+                // icon={'👦'}
+                Svgimg={Boy}
                 customStyle={styles.boy}
                 bgcColor={themeColor.lightGreen}
                 onPress={() => {
@@ -372,8 +386,11 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
               <LanguageDropDown
                 customStyle={styles.date}
                 heading={translation('DATE_OF_BIRTH')}
-                text={dayjs(dob.value?.toString()).format('DD/MM/YYYY')}
-                onPress={selectDate}
+                text={dayjs(dob.value?.toString()).format('MMM-YYYY')}
+                onPress={() => {
+                  Keyboard.dismiss();
+                  selectDate();
+                }}
               />
             </View>
           </>
@@ -480,18 +497,38 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
                 styles.inputField,
                 isTablet && {width: 400, alignSelf: 'center'},
               ]}>
-              <RNTextInputWithLabel
-                label={translation('RELATIONSHIP')}
-                inputViewStyle={[
-                  styles.inputBox,
-                  isTablet && {borderRadius: 12, marginTop: 8},
-                ]}
-                containerStyle={styles.containerBox}
-                value={role}
-                validationType={FORM_INPUT_TYPE.NAME}
-                updateText={setRole}
-                hint={translation('ENTER')}
+              <LanguageDropDown
+                customStyle={styles.date}
+                heading={translation('RELATIONSHIP')}
+                text={role}
+                onPress={() => {
+                  toggleRoles();
+                  LayoutAnimation.configureNext(
+                    LayoutAnimation.Presets.easeInEaseOut,
+                  );
+                }}
               />
+              {showRoles && (
+                <View style={styles.dropDown}>
+                  <ScrollView showsVerticalScrollIndicator={false}>
+                    {RELATIONSHIP_ARRAY.map(item => {
+                      return (
+                        <Pressable
+                          style={styles.role}
+                          onPress={() => {
+                            setRole(item.role);
+                            toggleRoles();
+                            LayoutAnimation.configureNext(
+                              LayoutAnimation.Presets.easeInEaseOut,
+                            );
+                          }}>
+                          <RNTextComponent>{item.role}</RNTextComponent>
+                        </Pressable>
+                      );
+                    })}
+                  </ScrollView>
+                </View>
+              )}
             </View>
           </>
         );
@@ -509,7 +546,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
               <LanguageDropDown
                 customStyle={styles.date}
                 heading={translation('DATE_OF_BIRTH')}
-                text={dayjs(dob.value?.toString()).format('DD/MM/YYYY')}
+                text={dayjs(dob.value?.toString()).format('MMM-YYYY')}
                 onPress={selectDate}
               />
             </View>
