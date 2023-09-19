@@ -83,6 +83,10 @@ const Account = () => {
     setPeopleList([...adultList].reverse());
   }, [childList, adultList]);
 
+  useEffect(() => {
+    dispatch(saveCurrentChild(childList[childList.length - 1]));
+  }, [childList, dispatch]);
+
   const toggleSignOut = () => {
     updateState({signoutModal: !signoutModal});
   };

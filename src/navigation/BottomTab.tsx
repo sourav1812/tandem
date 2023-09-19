@@ -22,11 +22,8 @@ import NotificationScreen from '@tandem/screens/NotificationScreen';
 const BottomTab = () => {
   const Tab = createBottomTabNavigator<RootTabParamList>();
   const mode = useAppSelector((state: RootState) => state.mode.mode);
-  const firstTime = useAppSelector(
-    (state: RootState) => state.permissions.isFirstTime,
-  );
-  const status = useAppSelector(
-    (state: RootState) => state.permissions.notificationStatus,
+  const notificationScreenPermissions = useAppSelector(
+    (state: RootState) => state.permissions,
   );
   const isTablet = useAppSelector(
     (state: RootState) => state.deviceType.isTablet,
@@ -47,10 +44,14 @@ const BottomTab = () => {
       initialRouteName={SCREEN_NAME.HOME}>
       <Tab.Screen
         component={
-          status || firstTime === 'false' ? Bookshelf : NotificationScreen
+          !notificationScreenPermissions.isFirstTime ||
+          notificationScreenPermissions.notificationStatus
+            ? Bookshelf
+            : NotificationScreen
         }
         name={
-          status || firstTime === 'false'
+          !notificationScreenPermissions.isFirstTime ||
+          notificationScreenPermissions.notificationStatus
             ? SCREEN_NAME.BOOKSHELF
             : SCREEN_NAME.NOTIFICATION_SCREEN
         }
