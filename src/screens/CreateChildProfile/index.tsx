@@ -74,7 +74,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
   const {bulletinArray, questionIndex, gender, showImageModal, showRoles} =
     state;
   const [name, setName] = useState<ValidationError>({value: ''});
-  const [role, setRole] = useState('');
+  const [role, setRole] = useState(translation('SELECT'));
   const [dateModal, setDateModal] = useState(false);
   const [dob, setDob] = useState<ValidationError>({
     value: new Date().toString(),
@@ -134,7 +134,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
           typeOfValidation: FORM_INPUT_TYPE.DOB,
         },
       ]) &&
-      role === ''
+      role === translation('SELECT')
     ) {
       return;
     }
@@ -247,7 +247,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
   };
 
   const disableButtonForAdultForm = () => {
-    if (questionIndex === 1 && role === '') {
+    if (questionIndex === 1 && role === translation('SELECT')) {
       return false;
     }
     if (avatar === null && questionIndex === 3) {
