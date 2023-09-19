@@ -65,6 +65,7 @@ export const cacheSlice = createSlice({
     clearCacheForce: state => {
       state.avatars = [];
       state.places = [];
+      state.flush = [];
       state.isAvatarArrayFull = false;
       state.isPlaceArrayFull = false;
     },

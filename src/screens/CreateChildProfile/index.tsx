@@ -31,9 +31,7 @@ import {LanguageDropDown} from '@tandem/components/LanguageDropDown';
 import {addNewChild} from '@tandem/api/creatChildProfile';
 import {addNewAdult} from '@tandem/api/createAdultProfile';
 import {PEOPLE} from '@tandem/constants/enums';
-import RNAvatarComponentWithEdit from '@tandem/components/RNAvatarComponentWithEdit';
 import ImageCropPicker from 'react-native-image-crop-picker';
-import {verticalScale} from 'react-native-size-matters';
 import {cacheAvatars} from '@tandem/functions/cache';
 import RNChooseImage from '@tandem/components/RNChooseImage';
 
@@ -46,7 +44,7 @@ const GENDERS = {
 const CreateChildProfile = ({route}: CreateChildProfileProps) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const avatars = useAppSelector(state => state.cache.avatars);
-  console.log(avatars, 'avatarsasdfgh');
+
   const socialLoginData = useAppSelector(
     state => state.userData.socialDataObject,
   );
@@ -63,8 +61,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
     imagePickerUrl: socialLoginData.image !== '' ? socialLoginData.image : null,
     showImageModal: false,
   });
-  const {bulletinArray, questionIndex, gender, imagePickerUrl, showImageModal} =
-    state;
+  const {bulletinArray, questionIndex, gender, showImageModal} = state;
   const [name, setName] = useState<ValidationError>({value: ''});
   const [role, setRole] = useState<ValidationError>({value: ''});
   const [dateModal, setDateModal] = useState(false);

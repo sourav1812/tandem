@@ -41,6 +41,7 @@ const SelectLanguage = ({route}: {route?: {params?: {goBack?: boolean}}}) => {
                 setTimeout(() => {
                   if (route?.params?.goBack) {
                     navigateTo(SCREEN_NAME.BOTTOM_TAB, {}, true);
+                    navigateTo(SCREEN_NAME.PROFILE_SETTINGS);
                     return;
                   }
                   navigateTo(SCREEN_NAME.ONBOARDING);
