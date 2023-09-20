@@ -103,4 +103,20 @@ export const styles = StyleSheet.create({
     height: verticalScale(55),
   },
   disabled: {backgroundColor: '#e9e9e9', borderColor: '#e9e9e9'},
+  dropDown: {
+    height: verticalScale(182),
+    backgroundColor: 'white',
+    shadowColor: '#000000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.19,
+    shadowRadius: 5.62,
+    elevation: 6,
+  },
+  role: {
+    paddingVertical: verticalScale(9),
+    paddingHorizontal: scale(16),
+  },
 });
