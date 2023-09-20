@@ -39,6 +39,13 @@ export const cacheSlice = createSlice({
       state.avatars.shift();
       state.avatars.unshift(action.payload);
     },
+    reinitialiseCacheDirectory: (state, action) => {
+      const {modifiedAvatars, modifiedFlush, modifiedPlaces} = action.payload;
+      console.log({didChange: modifiedAvatars[0].file});
+      state.avatars = modifiedAvatars;
+      state.flush = modifiedFlush;
+      state.places = modifiedPlaces;
+    },
     clearAvatars: state => {
       if (
         state.avatars.length < AVATAR_ARRAY.length + 1 &&
@@ -80,6 +87,7 @@ export const {
   clearCacheForce,
   replaceFirstElement,
   addFlush,
+  reinitialiseCacheDirectory,
 } = cacheSlice.actions;
 
 export default cacheSlice.reducer;
