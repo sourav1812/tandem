@@ -285,7 +285,7 @@ const Home = () => {
               {translation('HELLO')}
               {', '}
               {mode === MODE.A &&
-                (user.name ? `${user.name}! ` : currentAdult.role)}
+                (user.firstName ? `${user.firstName}! ` : currentAdult.role)}
               {(mode === MODE.B || mode === MODE.C) && `${currentChild.name}! `}
               👋🏻
             </RNTextComponent>

@@ -1,4 +1,4 @@
-import {View, Image, ScrollView} from 'react-native';
+import {View, Image, ScrollView, Platform} from 'react-native';
 import React, {useState} from 'react';
 import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
@@ -46,17 +46,30 @@ const Story = () => {
   }, [val]);
 
   React.useEffect(() => {
-    // routeData.id
     const books = store.getState().bookShelf.books;
     const bookIndex = books.findIndex(book => book.bookId === routeData.id);
     const book = books[bookIndex];
-
-    book.pages.forEach(obj => {
-      console.log({img: obj.image});
-    });
     const doWeHaveImage = book.pages.every(obj => obj.image);
 
     if (doWeHaveImage) {
+      // ! reset Directories if they are changed
+      if (Platform.OS === 'ios') {
+        const currentDirectory = RNFetchBlob.fs.dirs.DocumentDir;
+        book.pages.forEach((page, pageIndex) => {
+          if (!page.image?.includes(currentDirectory)) {
+            store.dispatch(
+              setImageForPage({
+                bookIndex,
+                pageIndex,
+                image:
+                  'file://' +
+                  currentDirectory +
+                  page.image?.split('Documents')[1],
+              }),
+            );
+          }
+        });
+      }
       setRedirect(true);
       return;
     }

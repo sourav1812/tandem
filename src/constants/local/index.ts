@@ -220,4 +220,4 @@ export const RELATIONSHIP_ARRAY = [
   {role: translation('OTHER')},
 ];
 
-export const CACHE_SESSION = 'tandemcache';
+export const CACHE_DIR = 'tandemCacheDirectory';
