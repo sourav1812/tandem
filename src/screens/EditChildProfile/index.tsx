@@ -216,7 +216,7 @@ const EditChildProfile = ({route}: EditChildProfileProps) => {
           <LanguageDropDown
             customStyle={styles.date}
             heading={translation('DATE_OF_BIRTH')}
-            text={dayjs(dob.value?.toString()).format('DD/MM/YYYY')}
+            text={dayjs(dob.value?.toString()).format('MMM-YYYY')}
           />
         </Pressable>
       </View>
