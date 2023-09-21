@@ -46,6 +46,11 @@ const RNChooseColor = ({
   const [finalColor, setFinalColor] = React.useState<string>('');
   const [activeColor, setActiveColor] = React.useState<string>('');
   const [clear, setClear] = React.useState<boolean>(false);
+  const [clearTimeoutOfMixing, setClearTimoutOfMixing] = React.useState<
+    number | undefined
+  >();
+  const [controlPaintMixHz, setControlPaintMixHz] =
+    React.useState<boolean>(false);
   const [usedColor, setUsedColor] = React.useState<string[]>([]);
 
   const refOne = useRef<any>(null);
@@ -80,14 +85,20 @@ const RNChooseColor = ({
   }, [finalColor]);
 
   React.useEffect(() => {
-    if (usedColor.length < 2) {
+    console.log({controlPaintMixHz});
+    if (usedColor.length < 2 || controlPaintMixHz) {
+      console.log('returning');
       return;
     }
     const avgColor = chroma.average(usedColor).hex();
     if (activeColor !== avgColor && paths.length > 0) {
-      setTimeout(() => {
+      setControlPaintMixHz(true);
+      const timeout = setTimeout(() => {
         setActiveColor(avgColor);
+        setControlPaintMixHz(false);
       }, 2000);
+      console.log({timeout});
+      setClearTimoutOfMixing(timeout);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paths.length, usedColor]);
@@ -238,6 +249,11 @@ const RNChooseColor = ({
                         prev.length < 4 ? [...prev, activeColor] : prev,
                       );
                       setActiveColor('');
+                      if (clearTimeoutOfMixing !== undefined) {
+                        clearTimeout(clearTimeoutOfMixing);
+                        setClearTimoutOfMixing(undefined);
+                        setControlPaintMixHz(false);
+                      }
                       valueRef.current = '';
                       setUsedColor([]);
                       setClear(true);

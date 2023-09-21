@@ -74,7 +74,8 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
   const {bulletinArray, questionIndex, gender, showImageModal, showRoles} =
     state;
   const [name, setName] = useState<ValidationError>({value: ''});
-  const [role, setRole] = useState(null);
+  const [role, setRole] = useState<null | string>(null);
+  const [otherRole, setOtherRole] = useState<ValidationError>({value: ''});
   const [dateModal, setDateModal] = useState(false);
   const [dob, setDob] = useState<ValidationError>({
     value: new Date().toString(),
@@ -188,8 +189,11 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
     }
     // TODO make it dynamic
     try {
+      if (!role) {
+        return;
+      }
       const response = await addNewAdult({
-        role: role,
+        role: role === 'Other' ? otherRole.value || role : role,
         dob: dob.value, // ! pass in the whole date object
         avatar,
       });
@@ -514,7 +518,13 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
                     {RELATIONSHIP_ARRAY.map(item => {
                       return (
                         <Pressable
-                          style={styles.role}
+                          style={[
+                            styles.role,
+                            {
+                              backgroundColor:
+                                role === item.role ? themeColor.gold : 'white',
+                            },
+                          ]}
                           onPress={() => {
                             setRole(item.role);
                             toggleRoles();
@@ -528,6 +538,19 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
                     })}
                   </ScrollView>
                 </View>
+              )}
+              {role === 'Other' && (
+                <RNTextInputWithLabel
+                  inputViewStyle={[
+                    styles.inputBox,
+                    isTablet && {borderRadius: 12, marginTop: 8},
+                  ]}
+                  containerStyle={styles.containerBox}
+                  value={otherRole}
+                  validationType={FORM_INPUT_TYPE.NAME}
+                  updateText={setOtherRole}
+                  hint={translation('ENTER_NAME')}
+                />
               )}
             </View>
           </>
