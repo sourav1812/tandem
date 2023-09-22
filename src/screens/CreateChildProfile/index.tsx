@@ -139,36 +139,26 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
     ) {
       return;
     }
-    // TODO make it dynamic
     try {
-      const response = await addNewChild({
+      const childObject: {
+        name: string;
+        dob: string;
+        gender: string;
+        avatar: string | null;
+        type?: PEOPLE;
+        childId?: string;
+      } = {
         name: name.value,
-        dob: dob.value, // ! pass in the whole date object
-        gender: gender,
+        dob: dob.value,
+        gender,
         avatar,
-      });
+      };
+      const response = await addNewChild(childObject);
       if (response) {
-        dispatch(
-          saveCurrentChild({
-            childId: response?.childId,
-            name: name.value,
-            dob: dob.value,
-            gender: gender,
-            avatar: avatar,
-            type: PEOPLE.CHILD,
-          }),
-        );
-
-        dispatch(
-          saveChildData({
-            childId: response?.childId,
-            name: name.value,
-            dob: dob.value,
-            gender: gender,
-            avatar: avatar,
-            type: PEOPLE.CHILD,
-          }),
-        );
+        childObject.type = PEOPLE.CHILD;
+        childObject.childId = response?.childId;
+        dispatch(saveCurrentChild(childObject));
+        dispatch(saveChildData(childObject));
       }
     } catch (error) {
       console.log('error in adding child', error);
@@ -187,35 +177,27 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
     ) {
       return;
     }
-    // TODO make it dynamic
+    if (!role) {
+      return;
+    }
     try {
-      if (!role) {
-        return;
-      }
-      const response = await addNewAdult({
+      const adultObject: {
+        role: string;
+        dob: string;
+        avatar: string | null;
+        type?: PEOPLE;
+        profileId?: string;
+      } = {
         role: role === 'Other' ? otherRole.value || role : role,
-        dob: dob.value, // ! pass in the whole date object
+        dob: dob.value,
         avatar,
-      });
+      };
+      const response = await addNewAdult(adultObject);
       if (response) {
-        dispatch(
-          saveCurrentAdult({
-            profileId: response?.profileId,
-            dob: dob.value,
-            avatar: avatar,
-            type: PEOPLE.ADULT,
-            role: role,
-          }),
-        );
-        dispatch(
-          saveAdultData({
-            profileId: response?.profileId,
-            dob: dob.value,
-            avatar: avatar,
-            type: PEOPLE.ADULT,
-            role: role,
-          }),
-        );
+        adultObject.profileId = response?.profileId;
+        adultObject.type = PEOPLE.ADULT;
+        dispatch(saveCurrentAdult(adultObject));
+        dispatch(saveAdultData(adultObject));
       }
     } catch (error) {
       console.log('error in adding  adult data', error);
