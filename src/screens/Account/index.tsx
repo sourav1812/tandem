@@ -61,7 +61,7 @@ const Account = () => {
     signoutModal: false,
     playerList: [],
   });
-
+  console.log(peopleList);
   const refOne = useRef<any>(null);
   const refTwo = useRef<any>(null);
   const [positionRefs, setPositionRefs] = React.useState({
@@ -127,6 +127,10 @@ const Account = () => {
       let playerArrar = [...playerList];
       playerArrar.push(item);
       updateState({playerList: playerArrar});
+      const updatedData = childList.filter(
+        data => data.childId !== item.childId,
+      );
+      setKidList(updatedData);
     }
     if (
       item.type === PEOPLE.ADULT &&
@@ -135,6 +139,10 @@ const Account = () => {
       let playerArrar = [...playerList];
       playerArrar.push(item);
       updateState({playerList: playerArrar});
+      const updatedData = peopleList.filter(
+        data => data.profileId !== item.profileId,
+      );
+      setPeopleList(updatedData);
     }
   };
 
@@ -142,6 +150,8 @@ const Account = () => {
     const playerArry = [...playerList];
     playerArry.splice(index, 1);
     updateState({playerList: playerArry});
+    setKidList(() => [...childList].reverse());
+    setPeopleList(() => [...adultList].reverse());
   };
 
   const buttonHeading = () => {
