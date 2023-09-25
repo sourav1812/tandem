@@ -90,4 +90,26 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  circleViewContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  yellowContainer: {
+    height: verticalScale(20),
+    width: verticalScale(20),
+    borderRadius: 100,
+    backgroundColor: '#FEC247CC',
+    position: 'absolute',
+    left: 0,
+  },
+  blueContainer: {
+    height: verticalScale(30),
+    width: verticalScale(30),
+    borderRadius: 100,
+    backgroundColor: '#4285F6CC',
+    position: 'absolute',
+    marginLeft: scale(10),
+    left: 0,
+  },
 });
