@@ -46,6 +46,11 @@ const RNChooseColor = ({
   const [finalColor, setFinalColor] = React.useState<string>('');
   const [activeColor, setActiveColor] = React.useState<string>('');
   const [clear, setClear] = React.useState<boolean>(false);
+  const [clearTimeoutOfMixing, setClearTimoutOfMixing] = React.useState<
+    number | undefined
+  >();
+  const [controlPaintMixHz, setControlPaintMixHz] =
+    React.useState<boolean>(false);
   const [usedColor, setUsedColor] = React.useState<string[]>([]);
 
   const refOne = useRef<any>(null);
@@ -53,7 +58,6 @@ const RNChooseColor = ({
     0: {height: 0, width: 0, x: 0, y: 0},
   });
   const [paths, setPaths] = React.useState<IPath[]>([]);
-  const valueRef = useRef<string>('');
   const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
@@ -67,30 +71,38 @@ const RNChooseColor = ({
     setTimeout(() => {
       setClear(false);
     }, 100);
-    valueRef.current = '';
   };
 
   React.useEffect(() => {
-    if (finalColor) {
-      setDisabled(false);
-    } else {
-      setDisabled(true);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [finalColor]);
-
-  React.useEffect(() => {
-    if (usedColor.length < 2) {
+    if (usedColor.length < 2 || controlPaintMixHz) {
       return;
     }
     const avgColor = chroma.average(usedColor).hex();
     if (activeColor !== avgColor && paths.length > 0) {
-      setTimeout(() => {
+      setControlPaintMixHz(true);
+      const timeout = setTimeout(() => {
         setActiveColor(avgColor);
+        setControlPaintMixHz(false);
       }, 2000);
+      setClearTimoutOfMixing(timeout);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paths.length, usedColor]);
+
+  React.useEffect(() => {
+    if (palleteArray.length === 0) {
+      setDisabled(true);
+    } else {
+      setDisabled(false);
+    }
+    store.dispatch(
+      pushStoryGenerationResponse({
+        key: STORY_PARTS.COLOR,
+        value: palleteArray,
+      }),
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [palleteArray.length]);
 
   return (
     <View style={[styles.container, customStyle && customStyle]}>
@@ -238,7 +250,11 @@ const RNChooseColor = ({
                         prev.length < 4 ? [...prev, activeColor] : prev,
                       );
                       setActiveColor('');
-                      valueRef.current = '';
+                      if (clearTimeoutOfMixing !== undefined) {
+                        clearTimeout(clearTimeoutOfMixing);
+                        setClearTimoutOfMixing(undefined);
+                        setControlPaintMixHz(false);
+                      }
                       setUsedColor([]);
                       setClear(true);
                       setTimeout(() => {
@@ -261,12 +277,6 @@ const RNChooseColor = ({
                 onPress={() => {
                   if (palleteArray[val]) {
                     setFinalColor(palleteArray[val]);
-                    store.dispatch(
-                      pushStoryGenerationResponse({
-                        key: STORY_PARTS.COLOR,
-                        value: [palleteArray[val]],
-                      }),
-                    );
                   }
                 }}
                 key={val.toString()}>
@@ -277,14 +287,10 @@ const RNChooseColor = ({
                       localRef.splice(val, 1);
                       setPalletArray(localRef);
                       setFinalColor('');
-                      valueRef.current = '';
                     }}
                   />
                 )}
-                <EmptyPatch
-                  selected={finalColor === palleteArray[val]}
-                  fill={palleteArray[val] || undefined}
-                />
+                <EmptyPatch fill={palleteArray[val] || undefined} />
               </Pressable>
             ))}
           </View>

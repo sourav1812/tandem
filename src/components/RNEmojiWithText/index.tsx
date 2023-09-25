@@ -84,16 +84,29 @@ const IconRednerItem = ({
       <Svgimg
         style={[
           styles.svgIcon,
-          isSelected && {
-            height: verticalScale(65),
-            width: verticalScale(65),
-          },
+          isSelected &&
+            (heading && heading.split(' ').length > 1
+              ? {
+                  height: verticalScale(55),
+                  width: verticalScale(55),
+                }
+              : {height: verticalScale(65), width: verticalScale(65)}),
         ]}
       />
     )}
     {heading && isSelected && (
-      <RNTextComponent style={styles.heading} isSemiBold numberOfLines={2}>
-        {heading}
+      <RNTextComponent
+        style={[
+          styles.heading,
+          {
+            fontSize:
+              heading.split(' ').length > 1
+                ? verticalScale(15)
+                : verticalScale(16),
+          },
+        ]}
+        isSemiBold>
+        {heading.split(' ').join('\n')}
       </RNTextComponent>
     )}
   </>

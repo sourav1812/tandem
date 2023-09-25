@@ -13,7 +13,6 @@ export const styles = StyleSheet.create({
     padding: verticalScale(14),
   },
   heading: {
-    fontSize: verticalScale(17),
     color: themeColor.white,
     textAlign: 'center',
   },

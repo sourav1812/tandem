@@ -126,7 +126,7 @@ const AppNavigator = () => {
 
           {/* Below mode will be changed to only MODE.A when app in stable
         version.  Only add Screens needed for MODE.A */}
-          {(mode === MODE.A || mode === MODE.B || mode === MODE.C) && ( //! TODO : Change to MODE.A only
+          {(mode === MODE.A || mode === MODE.B || mode === MODE.C) && (
             <>
               <Stack.Screen
                 getComponent={() =>

@@ -21,9 +21,11 @@ import {
   SkRRect,
   RoundedRect,
   SkRect,
+  makeImageFromView,
+  SkImage,
 } from '@shopify/react-native-skia';
 import {PixelRatio, StatusBar, useWindowDimensions} from 'react-native';
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {pageCurl} from './pageCurl';
 
 import {scale, verticalScale} from 'react-native-size-matters';
@@ -31,6 +33,7 @@ import {StateObject} from '@tandem/screens/StoryTelling/interface';
 import {translation} from '@tandem/utils/methods';
 import {TOOLTIP} from '@tandem/constants/local';
 import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
+import wait from '@tandem/functions/wait';
 
 const PAPER = require('@tandem/assets/png/paper.jpg');
 
@@ -129,10 +132,18 @@ export const Project = ({
   const pointer = useValue(wWidth);
 
   const [show, setShow] = React.useState(true);
+  const [goBackPossible, setGobackPossible] = React.useState(false);
+  const [goback, setGoBack] = React.useState(false);
   const [disbaleTouch, setDisbaleTouch] = React.useState(false);
   const tooltipArray = getValueFromKey(TOOLTIP);
+  const [overlay, setOverlay] = React.useState<SkImage | null>(null);
+  const ref = useRef(null);
+  const [dontTurnPage, setDontTurnPage] = React.useState(false);
 
   React.useEffect(() => {
+    if (goback) {
+      return;
+    }
     if (!show) {
       pointer.current = wWidth;
       setActiveIndex(prev => (prev > 0 ? prev - 1 : 0));
@@ -141,6 +152,14 @@ export const Project = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [show]);
+  React.useEffect(() => {
+    if (activeIndex === textArray.length - 1) {
+      setGobackPossible(false);
+    } else {
+      setGobackPossible(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeIndex]);
 
   const turnPage = (x: number) => {
     const turnpage = x < 100;
@@ -154,28 +173,66 @@ export const Project = ({
         setShow(false);
       }, 1000);
     }
+    setDontTurnPage(false);
   };
 
-  const onTouch = useTouchHandler({
-    onStart: ({x}) => {
-      if (!tooltipArray?.includes(10) && !tooltipState.tooltipThree) {
-        setTooltipState(prev => ({
-          ...prev,
-          tooltipThree: false,
-          tooltipFour: true,
-        }));
-        tooltipArray.push(10);
-        storeKey(TOOLTIP, tooltipArray);
-      }
-      origin.current = x;
+  const goBackIfPossible = async () => {
+    if (!goBackPossible) {
+      return;
+    }
+    setDisbaleTouch(true);
+    setGoBack(true);
+    const overlay1 = await makeImageFromView(ref);
+    setOverlay(overlay1);
+    setActiveIndex(prev => (prev + 2 <= textArray.length ? prev + 1 : prev));
+    pointer.current = -wWidth / 5;
+    origin.current = wWidth;
+    runTiming(pointer, wWidth, {
+      duration: 1000,
+      easing: Easing.in(Easing.sin),
+    });
+    await wait(50);
+    setOverlay(null);
+    await wait(16);
+    setGoBack(false);
+    await wait(1100);
+    setDisbaleTouch(false);
+  };
+
+  const onTouch = useTouchHandler(
+    {
+      onStart: ({x}) => {
+        if (!tooltipArray?.includes(10) && !tooltipState.tooltipThree) {
+          setTooltipState(prev => ({
+            ...prev,
+            tooltipThree: false,
+            tooltipFour: true,
+          }));
+          tooltipArray.push(10);
+          storeKey(TOOLTIP, tooltipArray);
+        }
+        origin.current = x;
+      },
+      onActive: ({x, velocityX}) => {
+        pointer.current = x;
+        if (velocityX <= 0) {
+          setDontTurnPage(true);
+        }
+      },
+      onEnd: ({x, velocityX}) => {
+        if (velocityX < 0) {
+          turnPage(x);
+        } else if (velocityX > 0 && x > 100) {
+          if (dontTurnPage) {
+            turnPage(x);
+          } else {
+            goBackIfPossible();
+          }
+        }
+      },
     },
-    onActive: ({x}) => {
-      pointer.current = x;
-    },
-    onEnd: ({x}) => {
-      turnPage(x);
-    },
-  });
+    [goBackIfPossible, dontTurnPage, turnPage],
+  );
 
   const uniforms = useComputedValue(() => {
     return {
@@ -189,6 +246,7 @@ export const Project = ({
 
   return (
     <Canvas
+      ref={ref}
       style={{
         width: wWidth,
         height: hHeight,
@@ -245,6 +303,7 @@ export const Project = ({
           })}
         </Group>
       </Group>
+      {overlay && <Image image={overlay} rect={outer} fit="cover" />}
     </Canvas>
   );
 };
