@@ -23,8 +23,10 @@ export const styles = StyleSheet.create({
   },
   content: {
     marginTop: verticalScale(18),
-    flex: 1,
+    height: '77%',
     paddingBottom: verticalScale(30),
+    marginLeft: verticalScale(20),
+    alignItems: 'center',
   },
   add: {
     alignItems: 'center',
@@ -87,5 +89,27 @@ export const styles = StyleSheet.create({
   topList: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  circleViewContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  yellowContainer: {
+    height: verticalScale(20),
+    width: verticalScale(20),
+    borderRadius: 100,
+    backgroundColor: '#FEC247CC',
+    position: 'absolute',
+    left: 0,
+  },
+  blueContainer: {
+    height: verticalScale(30),
+    width: verticalScale(30),
+    borderRadius: 100,
+    backgroundColor: '#4285F6CC',
+    position: 'absolute',
+    marginLeft: scale(10),
+    left: 0,
   },
 });
