@@ -1,15 +1,15 @@
 import * as React from 'react';
-import Svg, {SvgProps, Path} from 'react-native-svg';
-const SvgComponent = (props: SvgProps) => (
+import {verticalScale} from 'react-native-size-matters';
+import Svg, {Path} from 'react-native-svg';
+const SvgComponent = ({disabled}: {disabled?: boolean}) => (
   <Svg
     // xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 18 16"
-    width={18}
-    height={16}
-    fill="none"
-    {...props}>
+    width={verticalScale(16)}
+    height={verticalScale(16)}
+    fill="none">
     <Path
-      stroke="#4285F6"
+      stroke={disabled ? '#c9c9c9' : '#4285F6'}
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={1.5}
@@ -17,7 +17,7 @@ const SvgComponent = (props: SvgProps) => (
       clipRule="evenodd"
     />
     <Path
-      stroke="#4285F6"
+      stroke={disabled ? '#c9c9c9' : '#4285F6'}
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={1.5}
