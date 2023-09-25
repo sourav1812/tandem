@@ -61,7 +61,6 @@ const Account = () => {
     signoutModal: false,
     playerList: [],
   });
-  console.log(peopleList);
   const refOne = useRef<any>(null);
   const refTwo = useRef<any>(null);
   const [positionRefs, setPositionRefs] = React.useState({
