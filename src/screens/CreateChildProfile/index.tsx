@@ -43,6 +43,8 @@ import RNChooseImage from '@tandem/components/RNChooseImage';
 import Boy from '@tandem/assets/svg/Boy';
 import Girl from '@tandem/assets/svg/Girl';
 import {RELATIONSHIP_ARRAY} from '@tandem/constants/local';
+import {verticalScale, scale} from 'react-native-size-matters';
+import {width} from '@tandem/helpers/dimensions';
 
 const GENDERS = {
   girl: 'girl',
@@ -53,7 +55,7 @@ const GENDERS = {
 const CreateChildProfile = ({route}: CreateChildProfileProps) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const avatars = useAppSelector(state => state.cache.avatars);
-
+  const portrait = useAppSelector(state => state.orientation.isPortrait);
   const socialLoginData = useAppSelector(
     state => state.userData.socialDataObject,
   );
@@ -289,38 +291,47 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
             <RNTextComponent
               style={[
                 styles.content,
-                isTablet && {fontSize: 17.5, marginTop: 8},
+                isTablet && {fontSize: verticalScale(11), marginTop: 8},
               ]}>
               {translation('ADD_ONE_OF_YOUR_CHILDREN')}
             </RNTextComponent>
-            <View style={styles.options}>
-              <RNEmojiWithText
-                Svgimg={Girl}
-                customStyle={styles.girl}
-                bgcColor={themeColor.purple}
-                onPress={() => {
-                  selectGender(GENDERS.girl);
-                }}
-                isSelected={gender === GENDERS.girl}
-              />
-              <RNTextComponent style={styles.sex}>
-                {translation('GIRL')}
-              </RNTextComponent>
-            </View>
-            <View style={styles.options}>
-              <RNEmojiWithText
-                // icon={'👦'}
-                Svgimg={Boy}
-                customStyle={styles.boy}
-                bgcColor={themeColor.lightGreen}
-                onPress={() => {
-                  selectGender(GENDERS.boy);
-                }}
-                isSelected={gender === GENDERS.boy}
-              />
-              <RNTextComponent style={styles.sex}>
-                {translation('BOY')}
-              </RNTextComponent>
+            <View
+              style={{
+                flexDirection: !portrait ? 'row' : 'column',
+                justifyContent: 'space-around',
+                alignItems: 'center',
+                width: width.wMax - verticalScale(80),
+                alignSelf: 'center',
+              }}>
+              <View style={styles.options}>
+                <RNEmojiWithText
+                  Svgimg={Girl}
+                  customStyle={styles.girl}
+                  bgcColor={themeColor.purple}
+                  onPress={() => {
+                    selectGender(GENDERS.girl);
+                  }}
+                  isSelected={gender === GENDERS.girl}
+                />
+                <RNTextComponent style={styles.sex}>
+                  {translation('GIRL')}
+                </RNTextComponent>
+              </View>
+              <View style={styles.options}>
+                <RNEmojiWithText
+                  // icon={'👦'}
+                  Svgimg={Boy}
+                  customStyle={styles.boy}
+                  bgcColor={themeColor.lightGreen}
+                  onPress={() => {
+                    selectGender(GENDERS.boy);
+                  }}
+                  isSelected={gender === GENDERS.boy}
+                />
+                <RNTextComponent style={styles.sex}>
+                  {translation('BOY')}
+                </RNTextComponent>
+              </View>
             </View>
             <RNButton
               title={translation('PREFER_NOT_TO_SAY')}
@@ -348,14 +359,17 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
             <RNTextComponent
               style={[
                 styles.content,
-                isTablet && {fontSize: 17.5, marginTop: 8},
+                isTablet && {fontSize: verticalScale(11), marginTop: 8},
               ]}>
               {translation('COMPLETE_A_QUESTIONAIRE')}
             </RNTextComponent>
             <View
               style={[
                 styles.inputField,
-                isTablet && {width: 400, alignSelf: 'center'},
+                {
+                  width: width.wMax - (isTablet ? scale(120) : scale(50)),
+                  alignSelf: 'center',
+                },
               ]}>
               <RNTextInputWithLabel
                 label={translation('WHAT_IS_CHILD_NAME')}
@@ -388,7 +402,13 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
               {translation('SELECT_AN_AVATAR')}
             </RNTextComponent>
             <RNTextComponent
-              style={[styles.content, isTablet && {fontSize: 18}]}>
+              style={[
+                styles.content,
+                isTablet && {
+                  fontSize: verticalScale(11),
+                  marginBottom: verticalScale(10),
+                },
+              ]}>
               {translation('YOU_CAN_CHANGE_IT_AFTER')}
             </RNTextComponent>
             <View style={styles.avatarBox}>
@@ -474,14 +494,17 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
             <RNTextComponent
               style={[
                 styles.content,
-                isTablet && {fontSize: 17.5, marginTop: 8},
+                isTablet && {fontSize: verticalScale(12), marginTop: 8},
               ]}>
               {translation('WHICH_OF_THESE_BEST_DESCRIBE')}
             </RNTextComponent>
             <View
               style={[
                 styles.inputField,
-                isTablet && {width: 400, alignSelf: 'center'},
+                {width: width.wMax - scale(100), alignSelf: 'center'},
+                isTablet && {
+                  alignSelf: 'center',
+                },
               ]}>
               <LanguageDropDown
                 customStyle={styles.date}
@@ -514,7 +537,10 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
                               LayoutAnimation.Presets.easeInEaseOut,
                             );
                           }}>
-                          <RNTextComponent>{item.role}</RNTextComponent>
+                          <RNTextComponent
+                            style={{fontSize: verticalScale(12)}}>
+                            {item.role}
+                          </RNTextComponent>
                         </Pressable>
                       );
                     })}
@@ -546,7 +572,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
             <View
               style={[
                 styles.inputField,
-                isTablet && {width: 400, alignSelf: 'center'},
+                {width: width.wMax - scale(100), alignSelf: 'center'},
               ]}>
               <LanguageDropDown
                 customStyle={styles.date}
@@ -564,7 +590,13 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
               {translation('SELECT_AN_AVATAR')}
             </RNTextComponent>
             <RNTextComponent
-              style={[styles.content, isTablet && {fontSize: 18}]}>
+              style={[
+                styles.content,
+                isTablet && {
+                  fontSize: verticalScale(11),
+                  marginBottom: verticalScale(10),
+                },
+              ]}>
               {translation('YOU_CAN_CHANGE_IT_AFTER')}
             </RNTextComponent>
             <View style={styles.avatarBox}>
@@ -645,7 +677,12 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
         onPress={() => {
           navigateTo(SCREEN_NAME.ACCOUNT);
         }}>
-        <BlueButton style={styles.button} />
+        <BlueButton
+          style={[
+            styles.button,
+            {marginTop: isTablet ? verticalScale(20) : verticalScale(40)},
+          ]}
+        />
       </Pressable>
       <View style={styles.indicator}>
         {bulletinArray.map(item => (

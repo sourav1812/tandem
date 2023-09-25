@@ -13,7 +13,8 @@ export const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   img: {
-    height: verticalScale(50),
+    height: verticalScale(120),
     width: verticalScale(120),
+    borderRadius: 1000,
   },
 });
