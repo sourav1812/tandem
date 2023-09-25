@@ -6,8 +6,7 @@ import {translation} from '@tandem/utils/methods';
 import {Image, Pressable, View} from 'react-native';
 import RNTextInputWithLabel from '@tandem/components/RNTextInputWithLabel';
 import {StateObject} from './interface';
-import RNTextComponent from '@tandem/components/RNTextComponent';
-import {scale} from 'react-native-size-matters';
+import {scale, verticalScale} from 'react-native-size-matters';
 import RNButton from '@tandem/components/RNButton';
 import RNDeleteAccount from '@tandem/components/RNDeleteAccount';
 import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
@@ -29,6 +28,7 @@ import {deleteChildProfile} from '@tandem/api/deleteChildProfile';
 import {EditChildProfileProps} from '@tandem/navigation/types';
 import {editAdultProfile} from '@tandem/api/editAdultProfile';
 import {deleteAdultProfile} from '@tandem/api/deleteAdultProfile';
+import themeColor from '@tandem/theme/themeColor';
 
 const EditChildProfile = ({route}: EditChildProfileProps) => {
   const dispatch = useAppDispatch();
@@ -248,12 +248,15 @@ const EditChildProfile = ({route}: EditChildProfileProps) => {
             localAvatarState === null
           }
         />
-        <RNTextComponent
-          style={styles.bottom}
-          isSemiBold
-          handleOnPress={toggleModal}>
-          {translation(editAdult ? 'DELETE_ADULT' : 'DELETE_CHILD')}
-        </RNTextComponent>
+        <RNButton
+          customStyle={{
+            backgroundColor: themeColor.red,
+            borderColor: themeColor.red,
+            marginTop: isTablet ? 0 : verticalScale(10),
+          }}
+          title={translation(editAdult ? 'DELETE_ADULT' : 'DELETE_CHILD')}
+          onClick={toggleModal}
+        />
       </View>
       <RNDeleteAccount
         visible={showModal}

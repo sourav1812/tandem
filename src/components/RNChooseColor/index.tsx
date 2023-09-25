@@ -58,7 +58,6 @@ const RNChooseColor = ({
     0: {height: 0, width: 0, x: 0, y: 0},
   });
   const [paths, setPaths] = React.useState<IPath[]>([]);
-  const valueRef = useRef<string>('');
   const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
@@ -72,22 +71,10 @@ const RNChooseColor = ({
     setTimeout(() => {
       setClear(false);
     }, 100);
-    valueRef.current = '';
   };
 
   React.useEffect(() => {
-    if (finalColor) {
-      setDisabled(false);
-    } else {
-      setDisabled(true);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [finalColor]);
-
-  React.useEffect(() => {
-    console.log({controlPaintMixHz});
     if (usedColor.length < 2 || controlPaintMixHz) {
-      console.log('returning');
       return;
     }
     const avgColor = chroma.average(usedColor).hex();
@@ -97,11 +84,25 @@ const RNChooseColor = ({
         setActiveColor(avgColor);
         setControlPaintMixHz(false);
       }, 2000);
-      console.log({timeout});
       setClearTimoutOfMixing(timeout);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paths.length, usedColor]);
+
+  React.useEffect(() => {
+    if (palleteArray.length === 0) {
+      setDisabled(true);
+    } else {
+      setDisabled(false);
+    }
+    store.dispatch(
+      pushStoryGenerationResponse({
+        key: STORY_PARTS.COLOR,
+        value: palleteArray,
+      }),
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [palleteArray.length]);
 
   return (
     <View style={[styles.container, customStyle && customStyle]}>
@@ -254,7 +255,6 @@ const RNChooseColor = ({
                         setClearTimoutOfMixing(undefined);
                         setControlPaintMixHz(false);
                       }
-                      valueRef.current = '';
                       setUsedColor([]);
                       setClear(true);
                       setTimeout(() => {
@@ -277,12 +277,6 @@ const RNChooseColor = ({
                 onPress={() => {
                   if (palleteArray[val]) {
                     setFinalColor(palleteArray[val]);
-                    store.dispatch(
-                      pushStoryGenerationResponse({
-                        key: STORY_PARTS.COLOR,
-                        value: [palleteArray[val]],
-                      }),
-                    );
                   }
                 }}
                 key={val.toString()}>
@@ -293,14 +287,10 @@ const RNChooseColor = ({
                       localRef.splice(val, 1);
                       setPalletArray(localRef);
                       setFinalColor('');
-                      valueRef.current = '';
                     }}
                   />
                 )}
-                <EmptyPatch
-                  selected={finalColor === palleteArray[val]}
-                  fill={palleteArray[val] || undefined}
-                />
+                <EmptyPatch fill={palleteArray[val] || undefined} />
               </Pressable>
             ))}
           </View>

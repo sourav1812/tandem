@@ -18,7 +18,7 @@ const RNAvatarComponent = ({
       <Image
         source={{uri: icon}}
         style={[styles.img, imgStyle && imgStyle]}
-        resizeMode="contain"
+        // resizeMode="contain"
       />
     </Pressable>
   );

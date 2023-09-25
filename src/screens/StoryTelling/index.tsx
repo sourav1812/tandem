@@ -188,7 +188,7 @@ const StoryTelling = () => {
               },
             );
           }}>
-          <RNButton onlyIcon icon={<Speaker />} onClick={() => {}} />
+          <RNButton onlyIcon icon={<Speaker disabled />} onClick={() => {}} />
         </View>
       </RNTooltip>
     );

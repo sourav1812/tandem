@@ -1,5 +1,4 @@
 /* eslint-disable react-native/no-inline-styles */
-import Camera from '@tandem/assets/svg/Camera';
 import RNButton from '@tandem/components/RNButton';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import RNTooltip from '@tandem/components/RNTooltip';
@@ -24,6 +23,8 @@ export default () => {
   const currentChild = useAppSelector(state => state.createChild.currentChild);
   const portrait = useAppSelector(state => state.orientation.isPortrait);
   const avatars = useAppSelector(state => state.cache.avatars);
+
+  const [selected, setSelected] = React.useState<number>(0);
 
   const currentChildAvatar = avatars.filter(
     obj => obj.path === currentChild?.avatar,
@@ -65,14 +66,8 @@ export default () => {
               uri: currentChildAvatar || currentChild.avatar,
             }}
             style={styles.addImage}
-            imageStyle={{borderRadius: 200}}>
-            <RNButton
-              onlyIcon
-              icon={<Camera height={18} width={20} />}
-              onClick={() => {}}
-              IconButtoncustomStyle={styles.camera}
-            />
-          </ImageBackground>
+            imageStyle={{borderRadius: 200}}
+          />
           <RNTooltip
             placement={!portrait ? 'left' : undefined}
             isTablet={isTablet}
@@ -112,8 +107,9 @@ export default () => {
                 <RNButton
                   title="✔"
                   customStyle={styles.buttonStyle}
-                  onlyBorder
+                  onlyBorder={selected !== 1}
                   onClick={() => {
+                    setSelected(1);
                     store.dispatch(
                       pushStoryGenerationResponse({
                         key: STORY_PARTS.INCLUSION,
@@ -127,7 +123,9 @@ export default () => {
                 <RNButton
                   title="✕"
                   customStyle={styles.buttonStyle}
+                  onlyBorder={selected !== 2}
                   onClick={() => {
+                    setSelected(2);
                     store.dispatch(
                       pushStoryGenerationResponse({
                         key: STORY_PARTS.INCLUSION,
