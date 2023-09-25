@@ -43,6 +43,7 @@ import RNChooseImage from '@tandem/components/RNChooseImage';
 import Boy from '@tandem/assets/svg/Boy';
 import Girl from '@tandem/assets/svg/Girl';
 import {RELATIONSHIP_ARRAY} from '@tandem/constants/local';
+import {verticalScale} from 'react-native-size-matters';
 
 const GENDERS = {
   girl: 'girl',
@@ -498,7 +499,10 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
                 isTablet && {width: 400, alignSelf: 'center'},
               ]}>
               <LanguageDropDown
-                customStyle={styles.date}
+                customStyle={[
+                  styles.date,
+                  isTablet && {maxHeight: verticalScale(42)},
+                ]}
                 heading={translation('RELATIONSHIP')}
                 text={role || translation('SELECT')}
                 onPress={() => {
@@ -522,7 +526,10 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
                               LayoutAnimation.Presets.easeInEaseOut,
                             );
                           }}>
-                          <RNTextComponent>{item.role}</RNTextComponent>
+                          <RNTextComponent
+                            style={isTablet && {fontSize: verticalScale(14)}}>
+                            {item.role}
+                          </RNTextComponent>
                         </Pressable>
                       );
                     })}
