@@ -1,5 +1,5 @@
 export interface CreateAdultProfile {
   dob?: string;
-  role?: string;
+  role?: string | null;
   avatar?: string | number | null;
 }

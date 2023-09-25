@@ -507,7 +507,10 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
                 },
               ]}>
               <LanguageDropDown
-                customStyle={styles.date}
+                customStyle={[
+                  styles.date,
+                  isTablet && {maxHeight: verticalScale(42)},
+                ]}
                 heading={translation('RELATIONSHIP')}
                 text={role || translation('SELECT')}
                 onPress={() => {
@@ -538,7 +541,11 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
                             );
                           }}>
                           <RNTextComponent
-                            style={{fontSize: verticalScale(12)}}>
+                            style={{
+                              fontSize: isTablet
+                                ? verticalScale(14)
+                                : verticalScale(12),
+                            }}>
                             {item.role}
                           </RNTextComponent>
                         </Pressable>

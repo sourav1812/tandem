@@ -11,6 +11,7 @@ import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {translation} from '@tandem/utils/methods';
 import navigateTo from '@tandem/navigation/navigate';
+import Emoji from '@tandem/assets/svg/Kissing';
 
 const RNCongratsModal = ({
   visible = false,
@@ -47,9 +48,7 @@ const RNCongratsModal = ({
         ]}>
         <View style={styles.top}>
           <View style={styles.image}>
-            <RNTextComponent style={{fontSize: verticalScale(32)}}>
-              🥳
-            </RNTextComponent>
+            <Emoji style={styles.emoji} />
           </View>
           <RNTextComponent isSemiBold style={styles.heading}>
             {translation('CONGRATS')}!

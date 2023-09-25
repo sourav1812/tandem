@@ -68,4 +68,8 @@ export const styles = StyleSheet.create({
     marginTop: verticalScale(16),
     minWidth: '100%',
   },
+  emoji: {
+    height: verticalScale(56),
+    width: verticalScale(56),
+  },
 });
