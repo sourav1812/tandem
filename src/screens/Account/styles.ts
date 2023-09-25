@@ -23,8 +23,10 @@ export const styles = StyleSheet.create({
   },
   content: {
     marginTop: verticalScale(18),
-    flex: 1,
+    height: '77%',
     paddingBottom: verticalScale(30),
+    marginLeft: verticalScale(20),
+    alignItems: 'center',
   },
   add: {
     alignItems: 'center',
