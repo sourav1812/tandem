@@ -30,15 +30,6 @@ const RNModal = ({
     }).start();
   };
 
-  // const fadeOut = () => {
-  //   // Will change fadeAnim value to 0 in 3 seconds
-  //   Animated.timing(opacity, {
-  //     toValue: 0,
-  //     duration: 500,
-  //     useNativeDriver: true,
-  //   }).start();
-  // };
-
   return (
     <>
       {visible ? (
@@ -50,7 +41,7 @@ const RNModal = ({
               width: width,
             },
             customStyle && customStyle,
-            {opacity: opacity},
+            // {opacity: opacity},
           ]}>
           <Pressable style={styles.offset} onPress={renderModal} />
           {children}

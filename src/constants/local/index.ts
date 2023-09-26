@@ -221,3 +221,18 @@ export const RELATIONSHIP_ARRAY = [
 ];
 
 export const CACHE_SESSION = 'tandemcache';
+
+export const MONTH_ARRAY: {month: string; monthKey: string}[] = [
+  {month: translation('JANUARY'), monthKey: 'january'},
+  {month: translation('FEBRUARY'), monthKey: 'february'},
+  {month: translation('MARCH'), monthKey: 'march'},
+  {month: translation('APRIL'), monthKey: 'april'},
+  {month: translation('MAY'), monthKey: 'may'},
+  {month: translation('JUNE'), monthKey: 'june'},
+  {month: translation('JULY'), monthKey: 'july'},
+  {month: translation('AUGUST'), monthKey: 'august'},
+  {month: translation('SEPTEMBER'), monthKey: 'september'},
+  {month: translation('OCTOBER'), monthKey: 'october'},
+  {month: translation('NOVEMBER'), monthKey: 'november'},
+  {month: translation('DECEMBER'), monthKey: 'december'},
+];

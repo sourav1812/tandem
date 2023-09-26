@@ -23,7 +23,7 @@ import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
 import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
-import DatePicker from 'react-native-date-picker';
+// import DatePicker from 'react-native-date-picker';
 import dayjs from 'dayjs';
 import validationFunction from '@tandem/functions/validationFunction';
 import {
@@ -43,6 +43,7 @@ import RNChooseImage from '@tandem/components/RNChooseImage';
 import Boy from '@tandem/assets/svg/Boy';
 import Girl from '@tandem/assets/svg/Girl';
 import {RELATIONSHIP_ARRAY} from '@tandem/constants/local';
+import RNDatePicker from '@tandem/components/RNDatePicker';
 
 const GENDERS = {
   girl: 'girl',
@@ -74,7 +75,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
   const {bulletinArray, questionIndex, gender, showImageModal, showRoles} =
     state;
   const [name, setName] = useState<ValidationError>({value: ''});
-  const [role, setRole] = useState(null);
+  const [role, setRole] = useState<string | null>(null);
   const [dateModal, setDateModal] = useState(false);
   const [dob, setDob] = useState<ValidationError>({
     value: new Date().toString(),
@@ -290,6 +291,10 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
 
   const toggleRoles = () => {
     updateState({showRoles: !showRoles});
+  };
+
+  const toggleDatePicker = () => {
+    setDateModal(!dateModal);
   };
 
   const childForm = () => {
@@ -671,7 +676,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
           }
         />
       </View>
-      <DatePicker
+      {/* <DatePicker
         modal
         mode={'date'}
         open={dateModal}
@@ -683,12 +688,19 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
         onCancel={() => {
           setDateModal(false);
         }}
-      />
+      /> */}
       <RNChooseImage
         visible={showImageModal}
         renderModal={renderImageModal}
         openCamera={openCamera}
         openGallery={openGallery}
+      />
+      <RNDatePicker
+        visible={dateModal}
+        renderModal={toggleDatePicker}
+        getMonthYear={(month, year) => {
+          console.log(month, year);
+        }}
       />
     </RNScreenWrapper>
   );

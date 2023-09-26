@@ -298,5 +298,18 @@
   "GRANDMOTHER": "Nonna",
   "GRANDFATHER": "Nonno",
   "FRIEND": "Amico",
-  "OTHER": "Altro"
+  "OTHER": "Altro",
+  "JANUARY": "Gennaio",
+  "FEBRUARY": "Febbraio",
+  "MARCH": "Marzo",
+  "APRIL": "Aprile",
+  "MAY": "Maggio",
+  "JUNE": "Giugno",
+  "JULY": "Luglio",
+  "AUGUST": "Agosto",
+  "SEPTEMBER": "Settembre",
+  "OCTOBER": "Ottobre",
+  "NOVEMBER": "Novembre",
+  "DECEMBER": "Dicembre",
+  "OK": "Va bene"
 }
