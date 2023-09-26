@@ -202,7 +202,7 @@ export const Project = ({
   const onTouch = useTouchHandler(
     {
       onStart: ({x}) => {
-        if (!tooltipArray?.includes(10) && !tooltipState.tooltipThree) {
+        if (!tooltipArray?.includes(10) && tooltipState.tooltipThree) {
           setTooltipState(prev => ({
             ...prev,
             tooltipThree: false,
