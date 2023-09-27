@@ -1,5 +1,5 @@
 import themeColor from '@tandem/theme/themeColor';
-import {Platform, StatusBar, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {scale, verticalScale} from 'react-native-size-matters';
 
 export const styles = StyleSheet.create({
@@ -8,7 +8,8 @@ export const styles = StyleSheet.create({
     backgroundColor: themeColor.white,
     paddingHorizontal: scale(21),
     paddingTop:
-      Platform.OS === 'ios' ? verticalScale(20) : StatusBar.currentHeight,
+      // Platform.OS === 'ios' ? verticalScale(20) : StatusBar.currentHeight,
+      0,
   },
   text: {
     fontSize: verticalScale(18),
@@ -29,7 +30,7 @@ export const styles = StyleSheet.create({
     marginTop: verticalScale(8),
   },
   seperation: {
-    flexDirection: 'row',
+    // flexDirection: 'row',
     alignItems: 'center',
     marginTop: verticalScale(16),
   },

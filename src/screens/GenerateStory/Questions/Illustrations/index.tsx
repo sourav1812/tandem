@@ -22,6 +22,7 @@ import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {useNavigation} from '@react-navigation/native';
 import RNEmojiWithText from '@tandem/components/RNEmojiWithText';
 import {store} from '@tandem/redux/store';
+import Person from '@tandem/assets/svg/Shrugging';
 
 export default () => {
   const navigation: any = useNavigation();
@@ -100,8 +101,8 @@ export default () => {
             onPress={() => handlePress('Not sure')}
             heading={'Not sure'}
             customStyle={styles.illustration}
-            icon={'🤷'}
             bgcColor={'pink'}
+            Svgimg={Person}
           />
         </ScrollView>
       </>
