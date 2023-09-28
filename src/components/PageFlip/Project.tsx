@@ -21,8 +21,8 @@ import {
   SkRRect,
   RoundedRect,
   SkRect,
-  makeImageFromView,
   SkImage,
+  makeImageFromView,
 } from '@shopify/react-native-skia';
 import {PixelRatio, StatusBar, useWindowDimensions} from 'react-native';
 import React, {useRef, useState} from 'react';
@@ -32,7 +32,7 @@ import {scale, verticalScale} from 'react-native-size-matters';
 import {StateObject} from '@tandem/screens/StoryTelling/interface';
 import {translation} from '@tandem/utils/methods';
 import {TOOLTIP} from '@tandem/constants/local';
-import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
+import {getValueFromKey} from '@tandem/helpers/encryptedStorage';
 import wait from '@tandem/functions/wait';
 
 const PAPER = require('@tandem/assets/png/paper.jpg');
@@ -110,7 +110,6 @@ export const Project = ({
   activeIndex,
   setActiveIndex,
   tooltipState,
-  setTooltipState,
 }: ProjectProps) => {
   const {width: wWidth, height: heightRef} = useWindowDimensions();
   const [hHeight, setHeight] = useState(
@@ -131,109 +130,92 @@ export const Project = ({
   const origin = useValue(wWidth);
   const pointer = useValue(wWidth);
 
-  const [show, setShow] = React.useState(true);
-  const [goBackPossible, setGobackPossible] = React.useState(false);
-  const [goback, setGoBack] = React.useState(false);
   const [disbaleTouch, setDisbaleTouch] = React.useState(false);
   const tooltipArray = getValueFromKey(TOOLTIP);
   const [overlay, setOverlay] = React.useState<SkImage | null>(null);
+  const [overlay2, setOverlay2] = React.useState<SkImage | null>(null);
   const ref = useRef(null);
-  const [dontTurnPage, setDontTurnPage] = React.useState(false);
+  const [bottomPageIndex, setBottomPageindex] = React.useState(activeIndex);
+  const [pageArray, setPageArray] = React.useState<(SkImage | null)[]>([]);
+  const onTouch = useTouchHandler(
+    {
+      onStart: async ({x}) => {
+        if (disbaleTouch) {
+          return;
+        }
+        if (!overlay) {
+          const overlay1 = await makeImageFromView(ref);
+          setOverlay(overlay1);
+        }
+        setBottomPageindex(activeIndex > 0 ? activeIndex - 1 : 0);
+        origin.current = x;
+      },
+      onActive: ({x}) => {
+        if (disbaleTouch || !overlay) {
+          return;
+        }
+        pointer.current = x;
+      },
+      onEnd: async ({x}) => {
+        if (disbaleTouch) {
+          return;
+        }
+        setDisbaleTouch(true);
 
-  React.useEffect(() => {
-    if (goback) {
+        const frontFlip = origin.current >= pointer.current;
+
+        if (frontFlip) {
+          // ! origin greater than pointer then page flip
+          await frontTurn(x);
+        } else {
+          // ! pointer greater than origin then back flip
+          await backTurn();
+        }
+        setDisbaleTouch(false);
+      },
+    },
+    [disbaleTouch, activeIndex, overlay, pageArray],
+  );
+  const backTurn = async () => {
+    const lastPage = pageArray[pageArray.length - 1];
+    if (!lastPage) {
       return;
     }
-    if (!show) {
-      pointer.current = wWidth;
-      setActiveIndex(prev => (prev > 0 ? prev - 1 : 0));
-      setShow(true);
-      setDisbaleTouch(false);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [show]);
-  React.useEffect(() => {
-    if (activeIndex === textArray.length - 1) {
-      setGobackPossible(false);
-    } else {
-      setGobackPossible(true);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeIndex]);
+    setPageArray(prev => prev.slice(0, -1));
+    setOverlay2(overlay);
+    await wait(50);
 
-  const turnPage = (x: number) => {
+    setOverlay(lastPage);
+    pointer.current = -wWidth;
+
+    runTiming(pointer, wWidth, {
+      duration: 800,
+      easing: Easing.in(Easing.sin),
+    });
+    setBottomPageindex(
+      activeIndex + 2 <= textArray.length ? activeIndex + 1 : activeIndex,
+    );
+    setActiveIndex(prev => (prev + 2 <= textArray.length ? prev + 1 : prev));
+    await wait(800);
+    setOverlay2(null);
+    setOverlay(null);
+  };
+  const frontTurn = async (x: number) => {
     const turnpage = x < 100;
     runTiming(pointer, turnpage ? -wWidth : wWidth, {
-      duration: 1000,
+      duration: 1200,
       easing: Easing.in(Easing.sin),
     });
     if (turnpage) {
-      setDisbaleTouch(true);
-      setTimeout(() => {
-        setShow(false);
-      }, 1000);
+      setActiveIndex(prev => (prev > 0 ? prev - 1 : 0));
+      await wait(850);
+      console.log({pageArray});
+      setPageArray(prev => [...prev, overlay]);
+      setOverlay(null);
+      await wait(50);
+      pointer.current = wWidth;
     }
-    setDontTurnPage(false);
   };
-
-  const goBackIfPossible = async () => {
-    if (!goBackPossible) {
-      return;
-    }
-    setDisbaleTouch(true);
-    setGoBack(true);
-    const overlay1 = await makeImageFromView(ref);
-    setOverlay(overlay1);
-    setActiveIndex(prev => (prev + 2 <= textArray.length ? prev + 1 : prev));
-    pointer.current = -wWidth / 5;
-    origin.current = wWidth;
-    runTiming(pointer, wWidth, {
-      duration: 1000,
-      easing: Easing.in(Easing.sin),
-    });
-    await wait(50);
-    setOverlay(null);
-    await wait(16);
-    setGoBack(false);
-    await wait(1100);
-    setDisbaleTouch(false);
-  };
-
-  const onTouch = useTouchHandler(
-    {
-      onStart: ({x}) => {
-        if (!tooltipArray?.includes(10) && !tooltipState.tooltipThree) {
-          setTooltipState(prev => ({
-            ...prev,
-            tooltipThree: false,
-            tooltipFour: true,
-          }));
-          tooltipArray.push(10);
-          storeKey(TOOLTIP, tooltipArray);
-        }
-        origin.current = x;
-      },
-      onActive: ({x, velocityX}) => {
-        pointer.current = x;
-        if (velocityX <= 0) {
-          setDontTurnPage(true);
-        }
-      },
-      onEnd: ({x, velocityX}) => {
-        if (velocityX < 0) {
-          turnPage(x);
-        } else if (velocityX > 0 && x > 100) {
-          if (dontTurnPage) {
-            turnPage(x);
-          } else {
-            goBackIfPossible();
-          }
-        }
-      },
-    },
-    [goBackIfPossible, dontTurnPage, turnPage],
-  );
-
   const uniforms = useComputedValue(() => {
     return {
       pointer: pointer.current * pd,
@@ -251,59 +233,39 @@ export const Project = ({
         width: wWidth,
         height: hHeight,
       }}
-      onTouch={disbaleTouch || activeIndex === 0 ? undefined : onTouch}>
-      {activeIndex - 1 >= 0 && (
+      onTouch={activeIndex === 0 ? undefined : onTouch}>
+      {activeIndex >= 0 && (
         <RenderScene
           hHeight={hHeight}
           outer={outer}
-          page={activeIndex}
+          page={bottomPageIndex + 1}
           total={textArray.length}
-          image={textArray[activeIndex - 1].img}
+          image={textArray[bottomPageIndex].img}
           roundedRect={getRoundRect(
-            processSentences(textArray[activeIndex - 1].text, wWidth).length,
+            processSentences(textArray[bottomPageIndex].text, wWidth).length,
             wWidth,
             hHeight,
           )}
-          sentences={processSentences(textArray[activeIndex - 1].text, wWidth)}
+          sentences={processSentences(textArray[bottomPageIndex].text, wWidth)}
           font={font}
           tooltipState={tooltipState}
           tooltipArray={tooltipArray}
         />
       )}
-      <Group transform={[{scale: 1 / pd}]}>
-        <Group
-          layer={
-            <Paint>
-              <RuntimeShader source={pageCurl} uniforms={uniforms} />
-            </Paint>
-          }
-          transform={[{scale: pd}]}>
-          {textArray.map((obj, index) => {
-            const sentence = processSentences(obj.text, wWidth);
-            return (
-              <RenderScene
-                hHeight={hHeight}
-                outer={outer}
-                page={index + 1}
-                total={textArray.length}
-                mount={
-                  show
-                    ? index === activeIndex || index === activeIndex - 1
-                    : index === activeIndex - 1
-                }
-                key={index.toString()}
-                image={obj.img}
-                roundedRect={getRoundRect(sentence.length, wWidth, hHeight)}
-                sentences={sentence}
-                font={font}
-                tooltipState={tooltipState}
-                tooltipArray={tooltipArray}
-              />
-            );
-          })}
+      {overlay2 && <Image image={overlay2} rect={outer} fit="cover" />}
+      {overlay && (
+        <Group transform={[{scale: 1 / pd}]}>
+          <Group
+            layer={
+              <Paint>
+                <RuntimeShader source={pageCurl} uniforms={uniforms} />
+              </Paint>
+            }
+            transform={[{scale: pd}]}>
+            <Image image={overlay} rect={outer} fit="cover" />
+          </Group>
         </Group>
-      </Group>
-      {overlay && <Image image={overlay} rect={outer} fit="cover" />}
+      )}
     </Canvas>
   );
 };
