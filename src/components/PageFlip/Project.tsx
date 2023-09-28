@@ -189,14 +189,14 @@ export const Project = ({
     pointer.current = -wWidth;
 
     runTiming(pointer, wWidth, {
-      duration: 1200,
+      duration: 800,
       easing: Easing.in(Easing.sin),
     });
     setBottomPageindex(
       activeIndex + 2 <= textArray.length ? activeIndex + 1 : activeIndex,
     );
     setActiveIndex(prev => (prev + 2 <= textArray.length ? prev + 1 : prev));
-    await wait(1200);
+    await wait(800);
     setOverlay2(null);
     setOverlay(null);
   };
