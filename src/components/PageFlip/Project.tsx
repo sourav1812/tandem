@@ -198,22 +198,21 @@ export const Project = ({
     setActiveIndex(prev => (prev + 2 <= textArray.length ? prev + 1 : prev));
     await wait(800);
     setOverlay2(null);
-    setOverlay(null);
   };
   const frontTurn = async (x: number) => {
     const turnpage = x < 100;
     runTiming(pointer, turnpage ? -wWidth : wWidth, {
-      duration: 1200,
+      duration: 900,
       easing: Easing.in(Easing.sin),
     });
     if (turnpage) {
       setActiveIndex(prev => (prev > 0 ? prev - 1 : 0));
-      await wait(850);
-      console.log({pageArray});
       setPageArray(prev => [...prev, overlay]);
+      await wait(850);
       setOverlay(null);
       await wait(50);
       pointer.current = wWidth;
+      origin.current = wWidth;
     }
   };
   const uniforms = useComputedValue(() => {
