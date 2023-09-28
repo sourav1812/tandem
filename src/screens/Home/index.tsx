@@ -45,7 +45,9 @@ const Home = () => {
   const childList = useAppSelector(state => state.createChild.childList);
 
   const scaleImg = useRef(new Animated.Value(1)).current;
-
+  const notificationScreenPermissions = useAppSelector(
+    (state: RootState) => state.permissions,
+  );
   const avatars = useAppSelector(state => state.cache.avatars);
   const user = useAppSelector(state => state.userData.userDataObject);
   const filePath = avatars.filter(obj => obj.path === currentChild?.avatar)[0];
@@ -285,7 +287,7 @@ const Home = () => {
               {translation('HELLO')}
               {', '}
               {mode === MODE.A &&
-                (user.name ? `${user.name}! ` : currentAdult.role)}
+                (user.firstName ? `${user.firstName}! ` : currentAdult.role)}
               {(mode === MODE.B || mode === MODE.C) && `${currentChild.name}! `}
               👋🏻
             </RNTextComponent>
@@ -495,7 +497,11 @@ const Home = () => {
                           case 0:
                             break;
                           case 1:
-                            navigateTo(SCREEN_NAME.BOOKSHELF);
+                            !notificationScreenPermissions.isFirstTime ||
+                            notificationScreenPermissions.notificationStatus
+                              ? navigateTo(SCREEN_NAME.BOOKSHELF)
+                              : navigateTo(SCREEN_NAME.NOTIFICATION_SCREEN);
+
                             break;
                           case 3:
                             navigateTo(SCREEN_NAME.REDEEM_VOUCHER);

@@ -1,46 +1,59 @@
+/* eslint-disable react-native/no-inline-styles */
 import {View, FlatList, Pressable} from 'react-native';
 import React from 'react';
 import RNModal from '../RNModal';
 import styles from './styles';
 import {congratsModalProps} from './interface';
 import {verticalScale} from 'react-native-size-matters';
-
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {MONTH_ARRAY} from '@tandem/constants/local';
 import RNTextComponent from '../RNTextComponent';
-import themeColor from '@tandem/theme/themeColor';
 import {translation} from '@tandem/utils/methods';
+import themeColor from '@tandem/theme/themeColor';
+import {YEARS_ARRAY} from '@tandem/constants/local';
 
 const RNDatePicker = ({
   visible = false,
   renderModal = () => {},
   getMonthYear = () => {},
 }: congratsModalProps) => {
-  let isTablet = useAppSelector(state => state.deviceType.isTablet);
   const date = new Date();
-  //   const yearRef = React.useRef(null);
-  //   const monthRef = React.useRef(null);
-  const [month, setMonth] = React.useState(
-    MONTH_ARRAY[date.getMonth()].monthKey,
-  );
-  const [year, setYear] = React.useState<number>(date.getFullYear());
+  let isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const yearRef = React.useRef(null);
+  const monthRef = React.useRef(null);
+  const [month, setMonth] = React.useState(date.getMonth());
+  const [year, setYear] = React.useState<number>(YEARS_ARRAY.length - 1);
 
-  const yearsDiff = Math.abs(1970 - date.getFullYear());
+  React.useEffect(() => {
+    if (visible) {
+      setTimeout(() => {
+        monthRef.current.scrollToIndex({
+          animated: true,
+          index: month - 1,
+          // viewPosition: 0.35,
+        });
+        yearRef.current.scrollToIndex({
+          animated: true,
+          index: year,
+          viewPosition: 0.35,
+        });
+      }, 300);
+    }
+  }, [visible]);
 
-  //   React.useEffect(() => {
-  //     if (visible) {
-  //       setTimeout(() => {
-  //         monthRef.current.scrollToIndex({
-  //           animated: true,
-  //           index: date.getMonth(),
-  //           viewPosition: 0.5,
-  //         });
-  //         yearRef.current.scrollToEnd({
-  //           animated: true,
-  //         });
-  //       }, 1000);
+  // const onViewableItemsChangedForMonth = React.useCallback(
+  //   ({viewableItems}: any) => {
+  //     console.log(viewableItems, 'viewableItemsviewableItems234');
+  //     if (viewableItems.length % 2 === 0 || true) {
+  //       console.log(viewableItems, 'viewableItems');
+  //       const firstIndex = viewableItems[0].index;
+  //       // const lastIndex = viewableItems.slice(-1)[0].index;
+  //       // const middleIndex = Math.round((lastIndex - firstIndex) / 2);
+  //       setMonth(firstIndex + Math.round(viewableItems.length / 2 - 1));
   //     }
-  //   }, [date, visible]);
+  //   },
+  //   [],
+  // );
 
   return (
     <RNModal
@@ -53,51 +66,54 @@ const RNDatePicker = ({
           isTablet && {width: verticalScale(320), alignSelf: 'center'},
         ]}>
         <View style={styles.top}>
-          <View style={styles.box}>
-            <FlatList
-              data={MONTH_ARRAY}
-              //   ref={monthRef}
-              contentContainerStyle={{alignItems: 'center'}}
-              renderItem={({item}) => (
-                <Pressable
-                  onPress={() => {
-                    setMonth(item.monthKey);
-                  }}
+          <FlatList
+            data={MONTH_ARRAY}
+            // onViewableItemsChanged={onViewableItemsChangedForMonth}
+            initialNumToRender={MONTH_ARRAY.length + 1}
+            contentContainerStyle={{alignItems: 'center'}}
+            decelerationRate={5}
+            style={{width: '50%'}}
+            renderItem={({item, index}) => (
+              <Pressable
+                onPress={() => {
+                  setMonth(index);
+                }}
+                style={[
+                  styles.button,
+                  month === index && {
+                    borderWidth: 1,
+                    borderColor: themeColor.black,
+                  },
+                ]}>
+                <RNTextComponent
                   style={[
-                    styles.button,
-                    month === item.monthKey && {
-                      borderWidth: 1,
-                      borderColor: themeColor.black,
-                    },
+                    styles.text,
+                    month === index && {color: 'black', fontWeight: '700'},
                   ]}>
-                  <RNTextComponent
-                    style={[
-                      styles.text,
-                      month === item.monthKey && {color: 'black'},
-                    ]}>
-                    {item.month}
-                  </RNTextComponent>
-                </Pressable>
-              )}
-              keyExtractor={i => i.monthKey}
-              showsVerticalScrollIndicator={false}
-            />
-          </View>
+                  {item.month}
+                </RNTextComponent>
+              </Pressable>
+            )}
+            keyExtractor={i => i.monthKey}
+            showsVerticalScrollIndicator={false}
+            ref={monthRef}
+          />
           <View style={styles.line} />
-          <View style={styles.box}>
-            <FlatList
-              data={Array.from({length: yearsDiff + 1}, (_, i) => {
-                return {yearKey: 1970 + i};
-              })}
-              contentContainerStyle={{alignItems: 'center'}}
-              renderItem={({item}) => (
+          <FlatList
+            data={YEARS_ARRAY}
+            initialNumToRender={YEARS_ARRAY.length + 1}
+            contentContainerStyle={{alignItems: 'center'}}
+            style={{width: '50%'}}
+            renderItem={({item, index}) => {
+              console.log(year, index);
+              return (
                 <Pressable
                   onPress={() => {
-                    setYear(item.yearKey);
+                    setYear(item.index);
                   }}
                   style={[
                     styles.button,
-                    year === item.yearKey && {
+                    year === index && {
                       borderWidth: 1,
                       borderColor: 'black',
                     },
@@ -105,17 +121,20 @@ const RNDatePicker = ({
                   <RNTextComponent
                     style={[
                       styles.text,
-                      year === item.yearKey && {color: 'black'},
+                      year === item.index && {
+                        color: 'black',
+                        fontWeight: '700',
+                      },
                     ]}>
-                    {item.yearKey}
+                    {item.yearkey}
                   </RNTextComponent>
                 </Pressable>
-              )}
-              keyExtractor={i => i.yearKey}
-              showsVerticalScrollIndicator={false}
-              //   ref={yearRef}
-            />
-          </View>
+              );
+            }}
+            keyExtractor={i => i.index}
+            showsVerticalScrollIndicator={false}
+            ref={yearRef}
+          />
         </View>
         <View style={styles.bottom}>
           <Pressable onPress={renderModal}>
@@ -123,7 +142,10 @@ const RNDatePicker = ({
           </Pressable>
           <Pressable
             onPress={() => {
-              getMonthYear(month, year);
+              getMonthYear(
+                MONTH_ARRAY[date.getMonth()].monthKey,
+                YEARS_ARRAY[year].yearkey,
+              );
               renderModal();
             }}>
             <RNTextComponent>{translation('OK')}</RNTextComponent>

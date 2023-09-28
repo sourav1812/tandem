@@ -51,7 +51,7 @@ const NotificationScreen = () => {
         onlyIcon
         icon={<Close />}
         onClick={() => {
-          dispatch(setIsFirstTime('false'));
+          dispatch(setIsFirstTime(false));
           navigateTo(SCREEN_NAME.BOOKSHELF);
         }}
       />
@@ -93,7 +93,7 @@ const NotificationScreen = () => {
               onlyBorder
               title={translation('MAYBE_LATER')}
               onClick={() => {
-                dispatch(setIsFirstTime('false'));
+                dispatch(setIsFirstTime(false));
                 dispatch(setNotificationStatus(false));
                 navigateTo(SCREEN_NAME.BOOKSHELF);
               }}

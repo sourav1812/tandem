@@ -4,14 +4,14 @@ import {scale, verticalScale} from 'react-native-size-matters';
 
 export const styles = StyleSheet.create({
   content: {
-    height: verticalScale(6),
+    height: verticalScale(7),
     width: scale(98),
     borderRadius: 50,
     backgroundColor: themeColor.lightGray,
   },
   circle: {
-    height: verticalScale(25),
-    width: verticalScale(25),
+    height: verticalScale(35),
+    width: verticalScale(35),
     borderRadius: 100,
     position: 'absolute',
     zIndex: 3,
@@ -19,11 +19,11 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   container: {
-    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
   },
   text: {
     color: themeColor.white,
+    fontSize: verticalScale(25),
   },
 });

@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {LayoutAnimation, View} from 'react-native';
+import {LayoutAnimation, Pressable, View} from 'react-native';
 import React from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {styles} from './styles';
@@ -146,18 +146,20 @@ export default ({
                   borderColor: '#474747',
                 },
               ]}
-              title={translation('SELECT')}
+              title={translation('NEXT')}
               onClick={onNextQuestion}
               textStyle={[
                 styles.buttonText,
-                {marginTop: disabled || !maxSelections ? 0 : verticalScale(40)},
+                {marginTop: disabled || !maxSelections ? 0 : verticalScale(30)},
               ]}
             />
           </View>
         </RNTooltip>
       )}
       {!disabled && activeState && maxSelections && (
-        <Pie current={activeState.length} total={maxSelections} />
+        <Pressable onPress={onNextQuestion}>
+          <Pie current={activeState.length} total={maxSelections} />
+        </Pressable>
       )}
     </RNScreenWrapper>
   );

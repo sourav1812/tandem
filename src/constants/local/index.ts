@@ -236,3 +236,14 @@ export const MONTH_ARRAY: {month: string; monthKey: string}[] = [
   {month: translation('NOVEMBER'), monthKey: 'november'},
   {month: translation('DECEMBER'), monthKey: 'december'},
 ];
+export const CACHE_DIR = 'tandemCacheDirectory';
+
+export const YEARS_ARRAY = Array.from(
+  {length: Math.abs(1985 - new Date().getFullYear()) + 1},
+  (_, i) => {
+    return {
+      index: i,
+      yearkey: 1985 + i,
+    };
+  },
+);

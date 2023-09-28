@@ -4,13 +4,13 @@ import {createSlice} from '@reduxjs/toolkit';
 
 interface PermissionStates {
   notificationStatus: boolean;
-  isFirstTime: string;
+  isFirstTime: boolean;
 }
 
 // Define the initial state using that type
 const initialState: PermissionStates = {
   notificationStatus: false,
-  isFirstTime: 'true',
+  isFirstTime: true,
 };
 
 export const setPermissions = createSlice({

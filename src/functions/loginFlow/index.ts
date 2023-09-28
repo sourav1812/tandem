@@ -10,14 +10,13 @@ import {cacheAvatars, cachePlaces} from '../cache';
 import {PEOPLE} from '@tandem/constants/enums';
 import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
-import RNFetchBlob from 'rn-fetch-blob';
-// import {CACHE_SESSION, TERMS_ACCEPTED} from '@tandem/constants/local';
-import {CACHE_SESSION} from '@tandem/constants/local';
 import {clearCacheForce} from '@tandem/redux/slices/cache.slice';
+import {storeKey} from '@tandem/helpers/encryptedStorage';
+import RNFetchBlob from 'rn-fetch-blob';
+import {CACHE_DIR} from '@tandem/constants/local';
 // import {storeKey} from '@tandem/helpers/encryptedStorage';
 
 export default async (loginResponse: LoginResponse) => {
-  RNFetchBlob.session(CACHE_SESSION).dispose();
   store.dispatch(clearCacheForce());
   storeTokens(loginResponse.accessToken, loginResponse.refreshToken);
   // ! other logic related to navigation flow , modes ,family here
@@ -33,6 +32,7 @@ export default async (loginResponse: LoginResponse) => {
 
   cacheAvatars();
   cachePlaces();
+  storeKey(CACHE_DIR, RNFetchBlob.fs.dirs.DocumentDir);
 
   store.dispatch(
     saveAdultData(

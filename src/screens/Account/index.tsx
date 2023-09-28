@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useRef, useState, useEffect} from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
@@ -9,6 +10,7 @@ import {
   Pressable,
   Dimensions,
   LayoutAnimation,
+  ViewStyle,
 } from 'react-native';
 import Logout from '@tandem/assets/svg/Logout';
 import RNButton from '@tandem/components/RNButton';
@@ -49,7 +51,7 @@ const Account = () => {
     tooltipOne: true,
     tooltipTwo: false,
   });
-  const avatars = useAppSelector(state => state.cache.avatars);
+  // const avatars = useAppSelector(state => state.cache.avatars);
   const {width} = Dimensions.get('window');
   const dispatch = useAppDispatch();
   const tooltipArray = getValueFromKey(TOOLTIP);
@@ -59,14 +61,37 @@ const Account = () => {
     signoutModal: false,
     playerList: [],
   });
-
   const refOne = useRef<any>(null);
   const refTwo = useRef<any>(null);
   const [positionRefs, setPositionRefs] = React.useState({
     0: {height: 0, width: 0, x: 0, y: 0},
     1: {height: 0, width: 0, x: 0, y: 0},
   });
+  const CircleView = ({
+    style,
+    blue,
+    yellow,
+    both,
+  }: {
+    style?: ViewStyle;
+    blue?: boolean;
+    yellow?: boolean;
+    both?: boolean;
+  }) => {
+    return (
+      <View style={styles.circleViewContainer}>
+        {both && <View style={[styles.yellowContainer, {zIndex: 1}]} />}
 
+        <View
+          style={[
+            style,
+            yellow && styles.yellowContainer,
+            (blue || both) && styles.blueContainer,
+          ]}
+        />
+      </View>
+    );
+  };
   const portrait = useAppSelector(
     (state1: RootState) => state1.orientation.isPortrait,
   );
@@ -83,6 +108,10 @@ const Account = () => {
     setPeopleList([...adultList].reverse());
   }, [childList, adultList]);
 
+  useEffect(() => {
+    dispatch(saveCurrentChild(childList[childList.length - 1]));
+  }, [childList, dispatch]);
+
   const toggleSignOut = () => {
     updateState({signoutModal: !signoutModal});
   };
@@ -97,6 +126,10 @@ const Account = () => {
       let playerArrar = [...playerList];
       playerArrar.push(item);
       updateState({playerList: playerArrar});
+      const updatedData = childList.filter(
+        data => data.childId !== item.childId,
+      );
+      setKidList(updatedData);
     }
     if (
       item.type === PEOPLE.ADULT &&
@@ -105,6 +138,10 @@ const Account = () => {
       let playerArrar = [...playerList];
       playerArrar.push(item);
       updateState({playerList: playerArrar});
+      const updatedData = peopleList.filter(
+        data => data.profileId !== item.profileId,
+      );
+      setPeopleList(updatedData);
     }
   };
 
@@ -112,6 +149,8 @@ const Account = () => {
     const playerArry = [...playerList];
     playerArry.splice(index, 1);
     updateState({playerList: playerArry});
+    setKidList(() => [...childList].reverse());
+    setPeopleList(() => [...adultList].reverse());
   };
 
   const buttonHeading = () => {
@@ -505,27 +544,41 @@ const Account = () => {
               }
             }}
             disabled={childList.length === 0 || playerList.length === 0}>
-            {playerList.map((item, index) => {
-              const filePath = avatars.filter(
-                obj => obj.path === item.avatar,
-              )[0]?.file;
+            {playerList.map(item => {
+              const circleType = [];
+              // const filePath = avatars.filter(
+              //   obj => obj.path === item.avatar,
+              // )[0]?.file;
               if (item.type === PEOPLE.CHILD) {
-                return (
-                  <Image
-                    key={index.toString()}
-                    source={{uri: filePath || item.avatar}}
-                    style={styles.profile}
-                  />
-                );
-              } else {
-                return (
-                  <Image
-                    key={index.toString()}
-                    source={{uri: filePath || item.avatar}}
-                    style={[styles.profile, {height: 40, width: 40}]}
-                  />
-                );
+                circleType.push('C');
+                // return (
+                //   <CircleView yellow />
+                // <Image
+                //   key={index.toString()}
+                //   source={{uri: filePath || item.avatar}}
+                //   style={styles.profile}
+                // />
+                // );
               }
+              if (item.type === PEOPLE.ADULT) {
+                circleType.push('A');
+
+                // return (
+                //   <CircleView blue />
+                // <Image
+                //   key={index.toString()}
+                //   source={{uri: filePath || item.avatar}}
+                //   style={[styles.profile, {height: 40, width: 40}]}
+                // />
+                // );
+              }
+              return (
+                <CircleView
+                  blue={circleType.includes('A') && !circleType.includes('C')}
+                  yellow={!circleType.includes('A') && circleType.includes('C')}
+                  both={circleType.includes('A') && circleType.includes('C')}
+                />
+              );
             })}
           </Pressable>
         </View>

@@ -41,7 +41,7 @@ const RNModal = ({
               width: width,
             },
             customStyle && customStyle,
-            // {opacity: opacity},
+            {opacity: opacity},
           ]}>
           <Pressable style={styles.offset} onPress={renderModal} />
           {children}

@@ -27,10 +27,7 @@ export const LanguageDropDown = ({
   return (
     <Pressable onPress={onPress}>
       <RNTextComponent
-        style={[
-          styles.dropdownBox,
-          {fontSize: isTablet ? 16 : verticalScale(12)},
-        ]}>
+        style={[styles.dropdownBox, {fontSize: verticalScale(12)}]}>
         {heading}
       </RNTextComponent>
       <View
@@ -41,8 +38,10 @@ export const LanguageDropDown = ({
         ]}>
         <RNTextComponent
           style={[
-            isTablet && {fontSize: 18},
-            {color: fadeText ? '#979797' : undefined},
+            {
+              color: fadeText ? '#979797' : undefined,
+              fontSize: verticalScale(12),
+            },
           ]}>
           {text}
         </RNTextComponent>

@@ -9,14 +9,13 @@ export const styles = StyleSheet.create({
     paddingHorizontal: scale(20),
   },
   button: {
-    marginTop: verticalScale(40),
     alignSelf: 'flex-end',
   },
   indicator: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    marginTop: verticalScale(24),
+    justifyContent: 'space-around',
+    marginTop: verticalScale(10),
   },
   heading: {
     fontSize: verticalScale(18),
@@ -79,7 +78,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   avatar: {
-    marginTop: verticalScale(12),
+    margin: verticalScale(5),
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -95,8 +94,8 @@ export const styles = StyleSheet.create({
     backgroundColor: themeColor.themeBlue,
   },
   avatarImg: {
-    height: verticalScale(120),
-    borderRadius: 100,
+    height: verticalScale(115),
+    width: verticalScale(115),
   },
   date: {
     backgroundColor: themeColor.lightGray,

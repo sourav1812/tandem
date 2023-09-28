@@ -12,7 +12,7 @@ const RNKidsProfile = ({
   data,
   avatar,
 }: {
-  style: StyleProp<ImageStyle>;
+  style?: StyleProp<ImageStyle>;
   data: KidsProfileProps;
   avatar: string;
 }) => {
