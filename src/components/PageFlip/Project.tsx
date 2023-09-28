@@ -141,9 +141,11 @@ export const Project = ({
   const tooltipArray = useAppSelector(state => state.tooltipReducer);
   const dispatch = useDispatch();
   const [overlay, setOverlay] = React.useState<SkImage | null>(null);
+  const [overlay2, setOverlay2] = React.useState<SkImage | null>(null);
   const ref = useRef(null);
   const [bottomPageIndex, setBottomPageindex] = React.useState(activeIndex);
   const [tooltipA, setTooltipA] = useState(false);
+  const [pageArray, setPageArray] = React.useState<(SkImage | null)[]>([]);
   const onTouch = useTouchHandler(
     {
       onStart: async ({x}) => {
@@ -183,19 +185,31 @@ export const Project = ({
         setDisbaleTouch(false);
       },
     },
-    [disbaleTouch, activeIndex, overlay],
+    [disbaleTouch, activeIndex, overlay, pageArray],
   );
-
   const backTurn = async () => {
-    // make a new static image overlay2
-    // shift pointer to -wwidth
-    // set index to +1
-    // pop from prev page array and add to overlay1
-    // run timing function
-    // remove overlay2
-    // complete the timing function
-    // set index to +1
-    // remove overlay1
+    const lastPage = pageArray[pageArray.length - 1];
+    if (!lastPage) {
+      return;
+    }
+    setPageArray(prev => prev.slice(0, -1));
+    setOverlay2(overlay);
+    await wait(50);
+
+    setOverlay(lastPage);
+    pointer.current = -wWidth;
+
+    runTiming(pointer, wWidth, {
+      duration: 800,
+      easing: Easing.in(Easing.sin),
+    });
+    setBottomPageindex(
+      activeIndex + 2 <= textArray.length ? activeIndex + 1 : activeIndex,
+    );
+    setActiveIndex(prev => (prev + 2 <= textArray.length ? prev + 1 : prev));
+    await wait(800);
+    setOverlay2(null);
+    setOverlay(null);
   };
   const frontTurn = async (x: number) => {
     const turnpage = x < 100;
@@ -206,12 +220,13 @@ export const Project = ({
     if (turnpage) {
       setActiveIndex(prev => (prev > 0 ? prev - 1 : 0));
       await wait(850);
+      console.log({pageArray});
+      setPageArray(prev => [...prev, overlay]);
       setOverlay(null);
       await wait(50);
       pointer.current = wWidth;
     }
   };
-
   const uniforms = useComputedValue(() => {
     return {
       pointer: pointer.current * pd,
@@ -265,6 +280,8 @@ export const Project = ({
             tooltipArray={tooltipArray}
           />
         )}
+        {overlay2 && <Image image={overlay2} rect={outer} fit="cover" />}
+
         {overlay && (
           <Group transform={[{scale: 1 / pd}]}>
             <Group
