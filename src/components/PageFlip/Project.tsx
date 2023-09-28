@@ -34,7 +34,6 @@ import {translation} from '@tandem/utils/methods';
 import {TOOLTIP} from '@tandem/constants/local';
 import {getValueFromKey} from '@tandem/helpers/encryptedStorage';
 import wait from '@tandem/functions/wait';
-
 const PAPER = require('@tandem/assets/png/paper.jpg');
 
 interface ProjectProps {
@@ -185,8 +184,8 @@ export const Project = ({
     setOverlay2(overlay);
     await wait(50);
 
-    setOverlay(lastPage);
     pointer.current = -wWidth;
+    setOverlay(lastPage);
 
     runTiming(pointer, wWidth, {
       duration: 800,
@@ -198,6 +197,9 @@ export const Project = ({
     setActiveIndex(prev => (prev + 2 <= textArray.length ? prev + 1 : prev));
     await wait(800);
     setOverlay2(null);
+    setOverlay(null);
+    pointer.current = wWidth;
+    origin.current = wWidth;
   };
   const frontTurn = async (x: number) => {
     const turnpage = x < 100;
@@ -224,7 +226,6 @@ export const Project = ({
       cornerRadius: cornerRadius * pd,
     };
   }, [pointer, origin, hHeight]);
-
   return (
     <Canvas
       ref={ref}
@@ -232,7 +233,7 @@ export const Project = ({
         width: wWidth,
         height: hHeight,
       }}
-      onTouch={activeIndex === 0 ? undefined : onTouch}>
+      onTouch={disbaleTouch || activeIndex === 0 ? undefined : onTouch}>
       {activeIndex >= 0 && (
         <RenderScene
           hHeight={hHeight}
