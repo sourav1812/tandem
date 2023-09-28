@@ -142,13 +142,15 @@ export const Project = ({
         if (disbaleTouch) {
           return;
         }
-        const overlay1 = await makeImageFromView(ref);
-        setOverlay(overlay1);
+        if (!overlay) {
+          const overlay1 = await makeImageFromView(ref);
+          setOverlay(overlay1);
+        }
         setBottomPageindex(activeIndex > 0 ? activeIndex - 1 : 0);
         origin.current = x;
       },
       onActive: ({x}) => {
-        if (disbaleTouch) {
+        if (disbaleTouch || !overlay) {
           return;
         }
         pointer.current = x;
@@ -171,7 +173,7 @@ export const Project = ({
         setDisbaleTouch(false);
       },
     },
-    [disbaleTouch, activeIndex],
+    [disbaleTouch, activeIndex, overlay],
   );
 
   const backTurn = async () => {
@@ -188,14 +190,14 @@ export const Project = ({
   const frontTurn = async (x: number) => {
     const turnpage = x < 100;
     runTiming(pointer, turnpage ? -wWidth : wWidth, {
-      duration: 900,
+      duration: 1200,
       easing: Easing.in(Easing.sin),
     });
     if (turnpage) {
       setActiveIndex(prev => (prev > 0 ? prev - 1 : 0));
-      await wait(900);
+      await wait(850);
       setOverlay(null);
-      await wait(100);
+      await wait(50);
       pointer.current = wWidth;
     }
   };
@@ -217,7 +219,7 @@ export const Project = ({
         width: wWidth,
         height: hHeight,
       }}
-      onTouch={disbaleTouch || activeIndex === 0 ? undefined : onTouch}>
+      onTouch={activeIndex === 0 ? undefined : onTouch}>
       {activeIndex >= 0 && (
         <RenderScene
           hHeight={hHeight}
