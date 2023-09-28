@@ -3,8 +3,6 @@ import RNButton from '@tandem/components/RNButton';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import RNTooltip from '@tandem/components/RNTooltip';
 import {STORY_PARTS} from '@tandem/constants/enums';
-import {TOOLTIP} from '@tandem/constants/local';
-import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
 import {pushStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration.slice';
 import {store} from '@tandem/redux/store';
 import {translation} from '@tandem/utils/methods';
@@ -17,23 +15,23 @@ import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {useNavigation} from '@react-navigation/native';
 import removeQuestionData from '@tandem/functions/removeQuestionData';
+import {useDispatch} from 'react-redux';
+import {changeTooltipState} from '@tandem/redux/slices/tooltip.slice';
 
 export default () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const currentChild = useAppSelector(state => state.createChild.currentChild);
   const portrait = useAppSelector(state => state.orientation.isPortrait);
   const avatars = useAppSelector(state => state.cache.avatars);
-
+  const dispatch = useDispatch();
   const [selected, setSelected] = React.useState<number>(0);
 
   const currentChildAvatar = avatars.filter(
     obj => obj.path === currentChild?.avatar,
   )[0]?.file;
-  const tooltipArray = getValueFromKey(TOOLTIP);
+  const tooltipArray = useAppSelector(state => state.tooltipReducer);
 
-  const [tooltipFifth, setTooltipFifth] = React.useState(
-    !tooltipArray.includes(15),
-  );
+  const [tooltipFifth, setTooltipFifth] = React.useState(!tooltipArray?.[11]);
 
   const navigation: any = useNavigation();
   const nextQuestion = () => {
@@ -80,11 +78,10 @@ export default () => {
             bottom={portrait ? 'South' : undefined}
             top={portrait ? undefined : 'SouthEast'}
             text={translation('YES_NO_SELECT')}
-            open={tooltipArray?.includes(15) ? false : tooltipFifth}
+            open={tooltipArray?.[11] ? false : tooltipFifth}
             setClose={() => {
               setTooltipFifth(false);
-              tooltipArray.push(15);
-              storeKey(TOOLTIP, tooltipArray);
+              dispatch(changeTooltipState(11));
             }}>
             <View
               style={[

@@ -3,24 +3,23 @@ import GenerateStory from '../..';
 import RNChooseColor from '@tandem/components/RNChooseColor';
 import {scale} from 'react-native-size-matters';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
-import {TOOLTIP} from '@tandem/constants/local';
-import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {useNavigation} from '@react-navigation/native';
 import {STORY_PARTS} from '@tandem/constants/enums';
 import removeQuestionData from '@tandem/functions/removeQuestionData';
+import {useDispatch} from 'react-redux';
+import {changeTooltipState} from '@tandem/redux/slices/tooltip.slice';
 
 export default () => {
   const [disabled, setDisabled] = React.useState(true);
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
-  const tooltipArray = getValueFromKey(TOOLTIP);
-  const [tooltipThird, setTooltipThird] = React.useState(
-    !tooltipArray.includes(7),
-  );
+  const tooltipArray = useAppSelector(state => state.tooltipReducer);
+  const dispatch = useDispatch();
+
+  const [tooltipThird, setTooltipThird] = React.useState(!tooltipArray?.[12]);
   const onCloseThirdTooltip = () => {
     setTooltipThird(false);
-    tooltipArray.push(7);
-    storeKey(TOOLTIP, tooltipArray);
+    dispatch(changeTooltipState(12));
   };
   const navigation: any = useNavigation();
   return (

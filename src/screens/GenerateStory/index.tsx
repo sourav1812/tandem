@@ -11,12 +11,12 @@ import QuestionMark from '@tandem/assets/svg/QuestionMark';
 import {scale, verticalScale} from 'react-native-size-matters';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {translation} from '@tandem/utils/methods';
-import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
-import {TOOLTIP} from '@tandem/constants/local';
 import RNTooltip from '@tandem/components/RNTooltip';
 import navigateTo from '@tandem/navigation/navigate';
 import {DIRECTION_ARROWS, STORY_PARTS} from '@tandem/constants/enums';
 import Pie from '@tandem/components/Pie';
+import {changeTooltipState} from '@tandem/redux/slices/tooltip.slice';
+import {useDispatch} from 'react-redux';
 
 export default ({
   onNextQuestion,
@@ -48,11 +48,11 @@ export default ({
   maxSelections?: number;
 }) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
-  const tooltipArray = getValueFromKey(TOOLTIP);
+  const tooltipArray = useAppSelector(state => state.tooltipReducer);
 
   const storyGeneration = useAppSelector(state => state.storyGeneration);
   const activeState = type ? storyGeneration[type] : null;
-
+  const dispatch = useDispatch();
   const [userCameback, setUserCameBack] = React.useState(false);
 
   React.useEffect(() => {
@@ -123,8 +123,8 @@ export default ({
           }}
           open={!!showButtonTooltip}
           setClose={() => {
-            tooltipArray.push(6);
-            storeKey(TOOLTIP, tooltipArray);
+            tooltipArray?.[10];
+            dispatch(changeTooltipState(10));
             if (onCloseButtonTooltip) {
               onCloseButtonTooltip();
             }

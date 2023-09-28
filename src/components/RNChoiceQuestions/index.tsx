@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {ScrollView} from 'react-native';
 import React, {useRef} from 'react';
 import {styles} from './styles';

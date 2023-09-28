@@ -32,13 +32,10 @@ const tooltipSlice = createSlice({
   reducers: {
     changeTooltipState: (state, action) => {
       const indexI = action.payload;
-      state = {
-        ...state,
-        [indexI]: true,
-      };
+      state[indexI] = true;
     },
-    resetTooltipState: _state => {
-      _state = initialState;
+    resetTooltipState: state => {
+      Object.assign(state, initialState);
     },
   },
 });

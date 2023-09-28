@@ -22,16 +22,17 @@ import RNVoiceQuesiton from '@tandem/components/RNVoiceQuesiton';
 import QuestionMark from '@tandem/assets/svg/QuestionMark';
 import RNWellDoneModal from '@tandem/components/RNWellDoneModal';
 import RNMultipleChoice from '@tandem/components/RNMultipleChoice';
-import {TOOLTIP} from '@tandem/constants/local';
-import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
 import RNTooltip from '@tandem/components/RNTooltip';
 import {useRoute} from '@react-navigation/native';
 import Book from '@tandem/api/getStories/interface';
 import {PageFlip} from '@tandem/components/PageFlip';
 import rateStory from '@tandem/api/rateStory';
+import {useDispatch} from 'react-redux';
+import {changeTooltipState} from '@tandem/redux/slices/tooltip.slice';
 
 const StoryTelling = () => {
-  const tooltipArray = getValueFromKey(TOOLTIP);
+  const tooltipArray = useAppSelector(state => state.tooltipReducer);
+  const dispatch = useDispatch();
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const [renderModal, setRenderModal] = useState(false);
   const [readingLevel, setReadingLevel] = useState(false);
@@ -46,7 +47,7 @@ const StoryTelling = () => {
     toggleMic: false,
     showQuestion: false,
     wellDoneModal: false,
-    tooltipOne: !tooltipArray?.includes(8),
+    tooltipOne: !tooltipArray?.[13],
     tooltipTwo: false,
     tooltipThree: false,
     tooltipFour: false,
@@ -153,11 +154,10 @@ const StoryTelling = () => {
         topViewStyle={{
           alignItems: 'center',
         }}
-        open={tooltipArray?.includes(8) ? false : tooltipOne}
+        open={tooltipArray?.[13] ? false : tooltipOne}
         setClose={() => {
           updateState({tooltipOne: false, tooltipTwo: true});
-          tooltipArray.push(8);
-          storeKey(TOOLTIP, tooltipArray);
+          dispatch(changeTooltipState(13));
         }}
         text={translation('READ_ALOUD')}
         textContainerStyle={styles.tooltipTwo}
@@ -236,8 +236,7 @@ const StoryTelling = () => {
             <RNMultipleChoice
               onNextPress={() => {
                 updateState({showQuestion: false});
-                tooltipArray.push(12);
-                storeKey(TOOLTIP, tooltipArray);
+                dispatch(changeTooltipState(16));
               }}
               customStyle={[
                 styles.multiplechoice,
@@ -256,18 +255,17 @@ const StoryTelling = () => {
       <View
         style={[
           styles.headingButton,
-          {opacity: tooltipArray?.includes(10) ? 1 : tooltipThree ? 0.1 : 1},
+          {opacity: tooltipArray?.[15] ? 1 : tooltipThree ? 0.1 : 1},
         ]}>
         <RNTooltip
           isTablet={isTablet}
           topViewStyle={{
             alignItems: 'center',
           }}
-          open={tooltipArray?.includes(9) ? false : tooltipTwo}
+          open={tooltipArray?.[14] ? false : tooltipTwo}
           setClose={() => {
             updateState({tooltipTwo: false, tooltipThree: true});
-            tooltipArray.push(9);
-            storeKey(TOOLTIP, tooltipArray);
+            dispatch(changeTooltipState(14));
           }}
           text={translation('EXIT')}
           textContainerStyle={[

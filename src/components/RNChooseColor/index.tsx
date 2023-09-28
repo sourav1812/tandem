@@ -15,8 +15,7 @@ import AddColor from '@tandem/assets/svg/AddColor';
 import EmptyPatch from '@tandem/assets/svg/EmptyPatch';
 import {translation} from '@tandem/utils/methods';
 import RNTooltip from '../RNTooltip';
-import {COLOR_PALETTE, TOOLTIP} from '@tandem/constants/local';
-import {getValueFromKey} from '@tandem/helpers/encryptedStorage';
+import {COLOR_PALETTE} from '@tandem/constants/local';
 import chroma from 'chroma-js';
 import RNButton from '../RNButton';
 import {scale, verticalScale} from 'react-native-size-matters';
@@ -34,7 +33,6 @@ interface IPath {
   size: number;
 }
 
-const tooltipArray = getValueFromKey(TOOLTIP);
 const RNChooseColor = ({
   tooltipVisible,
   onTooltipClose,
@@ -46,6 +44,7 @@ const RNChooseColor = ({
   const [finalColor, setFinalColor] = React.useState<string>('');
   const [activeColor, setActiveColor] = React.useState<string>('');
   const [clear, setClear] = React.useState<boolean>(false);
+  const tooltipArray = useAppSelector(state => state.tooltipReducer);
   const [clearTimeoutOfMixing, setClearTimoutOfMixing] = React.useState<
     number | undefined
   >();
@@ -193,7 +192,7 @@ const RNChooseColor = ({
               topViewStyle={{
                 alignItems: 'center',
               }}
-              open={tooltipArray?.includes(7) ? false : tooltipVisible}
+              open={tooltipArray?.[12] ? false : tooltipVisible}
               setClose={onTooltipClose}
               text={translation('ADD_COLORS')}
               textStyle={styles.tooltip}

@@ -1,34 +1,35 @@
 import RNChoiceQuestions from '@tandem/components/RNChoiceQuestions';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import {STORY_PARTS} from '@tandem/constants/enums';
-import {AUDIENCE, TOOLTIP} from '@tandem/constants/local';
+import {AUDIENCE} from '@tandem/constants/local';
 import {translation} from '@tandem/utils/methods';
 import {verticalScale} from 'react-native-size-matters';
 import {styles} from '../../styles';
 import React from 'react';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {RootState} from '@tandem/redux/store';
-import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
 import GenerateStory from '../..';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import removeQuestionData from '@tandem/functions/removeQuestionData';
 import {useNavigation} from '@react-navigation/native';
+import {useDispatch} from 'react-redux';
+import {changeTooltipState} from '@tandem/redux/slices/tooltip.slice';
 
 export default () => {
   const navigation: any = useNavigation();
   const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
-  const tooltipArray = getValueFromKey(TOOLTIP);
-  const [tooltipFirst, setTooltipFirst] = React.useState(
-    !tooltipArray.includes(5),
-  );
+  const dispatch = useDispatch();
+  const tooltipArray = useAppSelector(state => state.tooltipReducer);
+  const [tooltipFirst, setTooltipFirst] = React.useState(!tooltipArray?.[9]);
   const [buttonTooltip, setShowButtonTooltip] = React.useState(false);
   const onCloseFirstTooltip = () => {
     setTooltipFirst(false);
-    tooltipArray.push(5);
-    storeKey(TOOLTIP, tooltipArray);
-    if (!tooltipArray.includes(6)) {
+    // tooltipArray.push(5);
+    // storeKey(TOOLTIP, tooltipArray);
+    dispatch(changeTooltipState(9));
+    if (!tooltipArray?.[10]) {
       setShowButtonTooltip(true);
     }
   };

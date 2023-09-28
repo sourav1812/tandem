@@ -488,7 +488,6 @@ const Account = () => {
               )}
 
             {playerList.map((item, index) => {
-              console.log(playerList);
               if (item.type === PEOPLE.CHILD && item?.childId) {
                 return (
                   <Pressable
