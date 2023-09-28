@@ -38,6 +38,7 @@ export const styles = StyleSheet.create({
   body: {
     flex: 1,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   add2: {
     alignItems: 'center',

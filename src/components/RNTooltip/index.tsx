@@ -5,14 +5,14 @@ import {TooltipProps} from './interface';
 import {scale} from 'react-native-size-matters';
 import RNTextComponent from '../RNTextComponent';
 import {Platform, StatusBar, View} from 'react-native';
-import {getValueFromKey} from '@tandem/helpers/encryptedStorage';
-import {TOOLTIP} from '@tandem/constants/local';
+
 import {
   tooltipHelperBottom,
   tooltipHelperTop,
 } from '@tandem/helpers/tooltipHelper';
 import RNArrowIconTop from '../RNArrowIconTop';
 import RNArrowIconBottom from '../RNArrowIconBottom';
+import {store} from '@tandem/redux/store';
 
 const RNTooltip = ({
   children,
@@ -30,14 +30,16 @@ const RNTooltip = ({
   isTablet,
   placement,
 }: TooltipProps) => {
-  const tooltipNumber = getValueFromKey(TOOLTIP);
   const helperTop = top ? top : tooltipHelperTop(dimensionObject);
   const helperBottom = bottom ? bottom : tooltipHelperBottom(dimensionObject);
-
+  const tooltipFromRedux = store.getState().tooltipReducer;
+  const toShowAllTooltip = Object.values(tooltipFromRedux).every(
+    value => value,
+  );
   return (
     <Tooltip
       allowChildInteraction={false}
-      isVisible={tooltipNumber?.length < 15 ? open : false}
+      isVisible={!toShowAllTooltip ? open : false}
       content={
         <View style={[topViewStyle && topViewStyle]}>
           {helperTop && (
