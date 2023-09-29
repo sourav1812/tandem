@@ -3,8 +3,8 @@ import {StyleProp, TextStyle, ViewStyle} from 'react-native';
 
 export interface TooltipProps {
   children: ReactNode;
-  open: boolean;
-  setClose: () => void;
+  open: number | undefined;
+  setClose?: () => void;
   text: string;
   textContainerStyle?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
@@ -16,4 +16,5 @@ export interface TooltipProps {
   topViewStyle?: StyleProp<ViewStyle>;
   isTablet?: boolean;
   placement?: 'center' | 'left' | 'right' | 'bottom' | 'top' | undefined;
+  useWait?: boolean;
 }

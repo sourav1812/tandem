@@ -34,8 +34,8 @@ interface IPath {
 }
 
 const RNChooseColor = ({
-  tooltipVisible,
-  onTooltipClose,
+  // tooltipVisible,
+  // onTooltipClose,
   customStyle,
   isTablet,
   setDisabled,
@@ -44,7 +44,6 @@ const RNChooseColor = ({
   const [finalColor, setFinalColor] = React.useState<string>('');
   const [activeColor, setActiveColor] = React.useState<string>('');
   const [clear, setClear] = React.useState<boolean>(false);
-  const tooltipArray = useAppSelector(state => state.tooltipReducer);
   const [clearTimeoutOfMixing, setClearTimoutOfMixing] = React.useState<
     number | undefined
   >();
@@ -60,6 +59,7 @@ const RNChooseColor = ({
   const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
+
   const handleReset = () => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setPalletArray([]);
@@ -192,8 +192,8 @@ const RNChooseColor = ({
               topViewStyle={{
                 alignItems: 'center',
               }}
-              open={tooltipArray?.[12] ? false : tooltipVisible}
-              setClose={onTooltipClose}
+              open={12}
+              // setClose={onTooltipClose}
               text={translation('ADD_COLORS')}
               textStyle={styles.tooltip}
               dimensionObject={positionRefs[0]}>

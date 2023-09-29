@@ -47,10 +47,10 @@ const StoryTelling = () => {
     toggleMic: false,
     showQuestion: false,
     wellDoneModal: false,
-    tooltipOne: !tooltipArray?.[13],
-    tooltipTwo: false,
-    tooltipThree: false,
-    tooltipFour: false,
+    // tooltipOne: !tooltipArray?.[13],
+    // tooltipTwo: false,
+    // tooltipThree: false,
+    // tooltipFour: false,
   });
 
   const refOne = useRef<any>(null);
@@ -66,10 +66,10 @@ const StoryTelling = () => {
     ratingModal,
     showQuestion,
     wellDoneModal,
-    tooltipOne,
-    tooltipTwo,
-    tooltipThree,
-    tooltipFour,
+    // tooltipOne,
+    // tooltipTwo,
+    // tooltipThree,
+    // tooltipFour,
   } = state;
 
   const updateState = (date: any) => {
@@ -154,11 +154,11 @@ const StoryTelling = () => {
         topViewStyle={{
           alignItems: 'center',
         }}
-        open={tooltipArray?.[13] ? false : tooltipOne}
-        setClose={() => {
-          updateState({tooltipOne: false, tooltipTwo: true});
-          dispatch(changeTooltipState(13));
-        }}
+        open={13}
+        // setClose={() => {
+        //   updateState({tooltipOne: false, tooltipTwo: true});
+        //   dispatch(changeTooltipState(13));
+        // }}
         text={translation('READ_ALOUD')}
         textContainerStyle={styles.tooltipTwo}
         textStyle={[
@@ -214,10 +214,6 @@ const StoryTelling = () => {
               //   updateState({showQuestion: false});
               // }}
               customStyle={{paddingHorizontal: scale(20)}}
-              tooltipOneVisible={tooltipFour}
-              onTooltipOneClose={() => {
-                updateState({tooltipFour: false});
-              }}
             />
           </View>
         );
@@ -251,22 +247,15 @@ const StoryTelling = () => {
   };
 
   return (
-    <RNScreenWrapper giveStatusColor={tooltipOne || tooltipTwo}>
+    <RNScreenWrapper>
       <View
-        style={[
-          styles.headingButton,
-          {opacity: tooltipArray?.[15] ? 1 : tooltipThree ? 0.1 : 1},
-        ]}>
+        style={[styles.headingButton, {opacity: tooltipArray?.[15] ? 1 : 0.1}]}>
         <RNTooltip
           isTablet={isTablet}
           topViewStyle={{
             alignItems: 'center',
           }}
-          open={tooltipArray?.[14] ? false : tooltipTwo}
-          setClose={() => {
-            updateState({tooltipTwo: false, tooltipThree: true});
-            dispatch(changeTooltipState(14));
-          }}
+          open={14}
           text={translation('EXIT')}
           textContainerStyle={[
             styles.tooltipTwo,

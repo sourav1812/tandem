@@ -7,20 +7,18 @@ import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {useNavigation} from '@react-navigation/native';
 import {STORY_PARTS} from '@tandem/constants/enums';
 import removeQuestionData from '@tandem/functions/removeQuestionData';
-import {useDispatch} from 'react-redux';
-import {changeTooltipState} from '@tandem/redux/slices/tooltip.slice';
 
 export default () => {
   const [disabled, setDisabled] = React.useState(true);
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
-  const tooltipArray = useAppSelector(state => state.tooltipReducer);
-  const dispatch = useDispatch();
+  // const tooltipArray = useAppSelector(state => state.tooltipReducer);
+  // const dispatch = useDispatch();
 
-  const [tooltipThird, setTooltipThird] = React.useState(!tooltipArray?.[12]);
-  const onCloseThirdTooltip = () => {
-    setTooltipThird(false);
-    dispatch(changeTooltipState(12));
-  };
+  // const [tooltipThird, setTooltipThird] = React.useState(!tooltipArray?.[12]);
+  // const onCloseThirdTooltip = () => {
+  //   setTooltipThird(false);
+  //   dispatch(changeTooltipState(12));
+  // };
   const navigation: any = useNavigation();
   return (
     <GenerateStory
@@ -35,8 +33,8 @@ export default () => {
       <RNChooseColor
         setDisabled={setDisabled}
         isTablet={isTablet}
-        tooltipVisible={tooltipThird}
-        onTooltipClose={onCloseThirdTooltip}
+        // tooltipVisible={tooltipThird}
+        // onTooltipClose={onCloseThirdTooltip}
         customStyle={{paddingHorizontal: scale(16)}}
       />
     </GenerateStory>

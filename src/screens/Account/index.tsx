@@ -38,7 +38,8 @@ import {
 } from '@tandem/redux/slices/createChild.slice';
 import logout from '@tandem/functions/logout';
 import {DIRECTION_ARROWS, PEOPLE} from '@tandem/constants/enums';
-import {changeTooltipState} from '@tandem/redux/slices/tooltip.slice';
+import {changeTooltipStateIfChildListNotEmpty} from '@tandem/redux/slices/tooltip.slice';
+// import {changeTooltipState} from '@tandem/redux/slices/tooltip.slice';
 
 const Account = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -46,20 +47,20 @@ const Account = () => {
   const adultList = useAppSelector(state => state.createChild.adultList);
   const [kidsList, setKidList] = useState(() => [...childList].reverse());
   const [peopleList, setPeopleList] = useState(() => [...adultList].reverse());
-  const [openTooltip, setOpentTooltip] = useState({
-    tooltipOne: true,
-    tooltipTwo: false,
-    tooltipThree: false,
-    tooltipFour: false,
-    tooltipFive: false,
-    tooltipSix: false,
-  });
-  const [dummyViews, setDummyViews] = useState({
-    One: false,
-    Two: false,
-    Three: false,
-    Four: false,
-  });
+  // const [openTooltip, setOpentTooltip] = useState({
+  //   tooltipOne: true,
+  //   tooltipTwo: false,
+  //   tooltipThree: false,
+  //   tooltipFour: false,
+  //   tooltipFive: false,
+  //   tooltipSix: false,
+  // });
+  // const [dummyViews, setDummyViews] = useState({
+  //   One: false,
+  //   Two: false,
+  //   Three: false,
+  //   Four: false,
+  // });
   // const avatars = useAppSelector(state => state.cache.avatars);
   const {width} = Dimensions.get('window');
   const dispatch = useAppDispatch();
@@ -76,7 +77,12 @@ const Account = () => {
     0: {height: 0, width: 0, x: 0, y: 0},
     1: {height: 0, width: 0, x: 0, y: 0},
   });
-
+  useEffect(() => {
+    if ((!tooltipArray?.[1] && childList.length) || adultList.length > 0) {
+      dispatch(changeTooltipStateIfChildListNotEmpty());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const CircleView = ({
     style,
     blue,
@@ -217,14 +223,12 @@ const Account = () => {
   return (
     <RNScreenWrapper
       style={styles.container}
-      giveStatusColor={
-        (openTooltip.tooltipOne &&
-          !tooltipArray?.[1] &&
-          childList.length === 0) ||
-        (openTooltip.tooltipTwo && !tooltipArray?.[2])
-          ? true
-          : false
-      }>
+      // giveStatusColor={
+      //   (!tooltipArray?.[1] && childList.length === 0) || !tooltipArray?.[2]
+      //     ? true
+      //     : false
+      // }
+    >
       <View
         style={[
           styles.header,
@@ -264,24 +268,10 @@ const Account = () => {
               alignItems: 'center',
             }}>
             <RNTooltip
-              open={
-                tooltipArray?.[1]
-                  ? false
-                  : childList.length !== 0
-                  ? false
-                  : openTooltip.tooltipOne
-              }
+              open={childList.length !== 0 ? undefined : 1}
               isTablet={isTablet}
               topViewStyle={{alignItems: 'center'}}
               text={translation('ADD_CHILD')}
-              setClose={() => {
-                setOpentTooltip({
-                  ...openTooltip,
-                  tooltipOne: false,
-                  tooltipTwo: true,
-                });
-                dispatch(changeTooltipState(1));
-              }}
               dimensionObject={positionRefs[0]}>
               <Pressable
                 ref={refOne}
@@ -339,7 +329,7 @@ const Account = () => {
               horizontal
               showsHorizontalScrollIndicator={false}
               decelerationRate={'normal'}>
-              {dummyViews.One && childList.length === 0 && !tooltipArray[3] && (
+              {childList.length === 0 && !tooltipArray[3] && (
                 <View
                   style={{
                     flexDirection: 'column',
@@ -348,32 +338,11 @@ const Account = () => {
                   }}>
                   <RNTooltip
                     isTablet={isTablet}
+                    useWait
                     top={DIRECTION_ARROWS.NORTH_EAST}
-                    open={
-                      tooltipArray?.[3]
-                        ? false
-                        : childList.length !== 0
-                        ? false
-                        : openTooltip.tooltipThree
-                    }
+                    open={childList.length !== 0 ? undefined : 3}
                     topViewStyle={{
                       alignItems: 'center',
-                    }}
-                    setClose={() => {
-                      setDummyViews({
-                        ...dummyViews,
-                        One: false,
-                        Two: true,
-                      });
-                      setTimeout(() => {
-                        setOpentTooltip({
-                          ...openTooltip,
-                          tooltipThree: false,
-                          tooltipFour: true,
-                        });
-                      });
-
-                      dispatch(changeTooltipState(3));
                     }}
                     text={translation('account-screen-tooltip.tip-one')}>
                     <View
@@ -429,31 +398,16 @@ const Account = () => {
             showsHorizontalScrollIndicator={false}
             decelerationRate={'normal'}>
             {playerList.length === 0 &&
-              dummyViews.Three &&
+              // dummyViews.Three &&
               !tooltipArray[5] && (
                 <RNTooltip
                   isTablet={isTablet}
+                  useWait
                   top={DIRECTION_ARROWS.NORTH}
-                  open={openTooltip.tooltipFive}
+                  open={5}
                   topViewStyle={{
                     alignItems: 'center',
                     justifyContent: 'center',
-                  }}
-                  setClose={() => {
-                    setDummyViews({
-                      ...dummyViews,
-                      Three: false,
-                      Four: true,
-                    });
-                    setTimeout(() => {
-                      setOpentTooltip({
-                        ...openTooltip,
-                        tooltipFive: false,
-                        tooltipSix: true,
-                      });
-                    }, 100);
-
-                    dispatch(changeTooltipState(5));
                   }}
                   text={translation('account-screen-tooltip.tip-two')}>
                   <View
@@ -550,19 +504,7 @@ const Account = () => {
                 width: width - scale(40),
               }}
               text={translation('ADD_YOURSELF')}
-              open={tooltipArray?.[2] ? false : openTooltip.tooltipTwo}
-              setClose={() => {
-                setOpentTooltip({
-                  ...openTooltip,
-                  tooltipTwo: false,
-                  tooltipThree: true,
-                });
-                setDummyViews({
-                  ...dummyViews,
-                  One: true,
-                });
-                dispatch(changeTooltipState(2));
-              }}>
+              open={2}>
               <Pressable
                 ref={refTwo}
                 onLayout={() => {
@@ -626,61 +568,37 @@ const Account = () => {
               horizontal
               showsHorizontalScrollIndicator={false}
               decelerationRate={'normal'}>
-              {peopleList.length === 0 &&
-                !tooltipArray[4] &&
-                dummyViews.Two && (
-                  <View
-                    style={{
-                      flexDirection: 'column',
+              {peopleList.length === 0 && !tooltipArray[4] && (
+                // dummyViews.Two &&
+                <View
+                  style={{
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <RNTooltip
+                    isTablet={isTablet}
+                    bottom={DIRECTION_ARROWS.SOUTH}
+                    useWait
+                    open={4}
+                    topViewStyle={{
                       alignItems: 'center',
-                      justifyContent: 'center',
-                    }}>
-                    <RNTooltip
-                      isTablet={isTablet}
-                      bottom={DIRECTION_ARROWS.SOUTH}
-                      open={
-                        tooltipArray?.[4]
-                          ? false
-                          : adultList.length !== 0
-                          ? false
-                          : openTooltip.tooltipFour
-                      }
-                      topViewStyle={{
-                        alignItems: 'center',
-                        marginLeft: scale(40),
+                      marginLeft: scale(40),
+                    }}
+                    text={translation('account-screen-tooltip.tip-three')}>
+                    <View
+                      style={{
+                        height: portrait
+                          ? verticalScale(70)
+                          : verticalScale(45),
+                        width: portrait ? verticalScale(70) : verticalScale(45),
+                        borderRadius: 60,
+                        backgroundColor: '#4285F6CC',
                       }}
-                      setClose={() => {
-                        setDummyViews({
-                          ...dummyViews,
-                          Two: false,
-                          Three: true,
-                        });
-                        setTimeout(() => {
-                          setOpentTooltip({
-                            ...openTooltip,
-                            tooltipFour: false,
-                            tooltipFive: true,
-                          });
-                        }, 100);
-
-                        dispatch(changeTooltipState(4));
-                      }}
-                      text={translation('account-screen-tooltip.tip-three')}>
-                      <View
-                        style={{
-                          height: portrait
-                            ? verticalScale(70)
-                            : verticalScale(45),
-                          width: portrait
-                            ? verticalScale(70)
-                            : verticalScale(45),
-                          borderRadius: 60,
-                          backgroundColor: '#4285F6CC',
-                        }}
-                      />
-                    </RNTooltip>
-                  </View>
-                )}
+                    />
+                  </RNTooltip>
+                </View>
+              )}
 
               {peopleList.map((item, index) => {
                 return (
@@ -699,22 +617,8 @@ const Account = () => {
         <RNTooltip
           isTablet={isTablet}
           bottom={DIRECTION_ARROWS.SOUTH}
-          open={openTooltip.tooltipSix}
+          open={6}
           topViewStyle={{alignItems: 'center'}}
-          setClose={() => {
-            setDummyViews({
-              ...dummyViews,
-              Four: false,
-            });
-            setTimeout(() => {
-              setOpentTooltip({
-                ...openTooltip,
-                tooltipSix: false,
-              });
-            }, 100);
-
-            dispatch(changeTooltipState(1));
-          }}
           text={translation('account-screen-tooltip.tip-four')}>
           <View
             style={[

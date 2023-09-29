@@ -6,24 +6,24 @@ interface Tooltip {
 
 const initialState: Tooltip = {
   1: false,
-  2: false,
-  3: false,
-  4: false,
-  5: false,
-  6: false,
-  7: false,
-  8: false,
-  9: false,
-  10: false,
-  11: false,
-  13: false,
-  14: false,
-  15: false,
-  16: false,
-  17: false,
-  18: false,
-  19: false,
-  20: false,
+  2: true,
+  3: true,
+  4: true,
+  5: true,
+  6: true,
+  7: true,
+  8: true,
+  9: true,
+  10: true,
+  11: true,
+  13: true,
+  14: true,
+  15: true,
+  16: true,
+  17: true,
+  18: true,
+  19: true,
+  20: true,
 };
 
 const tooltipSlice = createSlice({
@@ -34,10 +34,46 @@ const tooltipSlice = createSlice({
       const indexI = action.payload;
       state[indexI] = true;
     },
+    changeTooltipStatePlusONe: (state, action) => {
+      const indexJ = action.payload;
+      state[indexJ + 1] = false;
+    },
+    changeTooltipStateIfChildListNotEmpty: state => {
+      state[1] = true;
+      state[2] = true;
+      state[3] = true;
+      state[4] = true;
+      state[5] = true;
+      state[6] = true;
+      state[7] = false;
+      state[8] = true;
+      state[9] = true;
+      state[10] = true;
+      state[11] = true;
+      state[12] = true;
+      state[13] = true;
+      state[14] = true;
+      state[15] = true;
+      state[16] = true;
+      state[17] = true;
+      state[18] = true;
+      state[19] = true;
+      state[20] = true;
+    },
+    changeTooltipStateToFalse: (state, action) => {
+      const indexI = action.payload;
+      state[indexI] = false;
+    },
     resetTooltipState: state => {
       Object.assign(state, initialState);
     },
   },
 });
-export const {changeTooltipState, resetTooltipState} = tooltipSlice.actions;
+export const {
+  changeTooltipState,
+  resetTooltipState,
+  changeTooltipStatePlusONe,
+  changeTooltipStateIfChildListNotEmpty,
+  changeTooltipStateToFalse,
+} = tooltipSlice.actions;
 export default tooltipSlice.reducer;

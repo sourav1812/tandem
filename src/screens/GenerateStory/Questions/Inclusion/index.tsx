@@ -15,15 +15,13 @@ import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {useNavigation} from '@react-navigation/native';
 import removeQuestionData from '@tandem/functions/removeQuestionData';
-import {useDispatch} from 'react-redux';
-import {changeTooltipState} from '@tandem/redux/slices/tooltip.slice';
 
 export default () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const currentChild = useAppSelector(state => state.createChild.currentChild);
   const portrait = useAppSelector(state => state.orientation.isPortrait);
   const avatars = useAppSelector(state => state.cache.avatars);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [selected, setSelected] = React.useState<number>(0);
 
   const currentChildAvatar = avatars.filter(
@@ -31,7 +29,7 @@ export default () => {
   )[0]?.file;
   const tooltipArray = useAppSelector(state => state.tooltipReducer);
 
-  const [tooltipFifth, setTooltipFifth] = React.useState(!tooltipArray?.[11]);
+  // const [tooltipFifth, setTooltipFifth] = React.useState(!tooltipArray?.[11]);
 
   const navigation: any = useNavigation();
   const nextQuestion = () => {
@@ -43,7 +41,7 @@ export default () => {
       onBack={() => {
         removeQuestionData(STORY_PARTS.INCLUSION);
       }}
-      giveStatusColor={tooltipFifth}
+      // giveStatusColor={tooltipFifth}
       questionNumber={2}>
       <>
         <RNTextComponent isSemiBold style={styles.question}>
@@ -78,15 +76,11 @@ export default () => {
             bottom={portrait ? 'South' : undefined}
             top={portrait ? undefined : 'SouthEast'}
             text={translation('YES_NO_SELECT')}
-            open={tooltipArray?.[11] ? false : tooltipFifth}
-            setClose={() => {
-              setTooltipFifth(false);
-              dispatch(changeTooltipState(11));
-            }}>
+            open={11}>
             <View
               style={[
                 styles.buttonContainer,
-                tooltipFifth && {
+                !tooltipArray?.[11] && {
                   backgroundColor: 'white',
                   borderRadius: scale(20),
                   height: portrait ? '53%' : '70%',

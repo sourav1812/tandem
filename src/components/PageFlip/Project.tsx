@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {
   Easing,
   runTiming,
@@ -63,7 +64,7 @@ interface RenderSceneProps {
   total: number;
   hHeight: number;
   outer: SkRect;
-  tooltipState: StateObject;
+  // tooltipState: StateObject;
   tooltipArray: any;
 }
 
@@ -115,8 +116,6 @@ export const Project = ({
   textArray,
   activeIndex,
   setActiveIndex,
-  tooltipState,
-  setTooltipState,
 }: ProjectProps) => {
   const {width: wWidth, height: heightRef} = useWindowDimensions();
   const [hHeight, setHeight] = useState(
@@ -238,18 +237,31 @@ export const Project = ({
   }, [pointer, origin, hHeight]);
 
   return (
-    <Pressable
-      onPress={() => {
-        if (!tooltipArray?.[15] && tooltipState.tooltipThree) {
-          dispatch(changeTooltipState(15));
-          setTooltipState(prev => ({
-            ...prev,
-            tooltipThree: false,
-            tooltipFour: true,
-          }));
-          setTooltipA(true);
-        }
-      }}>
+    <>
+      {!tooltipArray?.[15] && (
+        <Pressable
+          style={{
+            backgroundColor: 'tranparent',
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            zIndex: 1,
+          }}
+          onPress={() => {
+            if (!tooltipArray?.[15]) {
+              dispatch(changeTooltipState(15));
+              // setTooltipState(prev => ({
+              //   ...prev,
+              //   tooltipThree: false,
+              //   tooltipFour: true,
+              // }));
+              setTooltipA(true);
+            }
+          }}
+        />
+      )}
       <Canvas
         ref={ref}
         style={{
@@ -276,7 +288,7 @@ export const Project = ({
               wWidth,
             )}
             font={font}
-            tooltipState={tooltipState}
+            // tooltipState={tooltipState}
             tooltipArray={tooltipArray}
           />
         )}
@@ -296,7 +308,7 @@ export const Project = ({
           </Group>
         )}
       </Canvas>
-    </Pressable>
+    </>
   );
 };
 
@@ -310,7 +322,7 @@ const RenderScene = ({
   total,
   outer,
   hHeight,
-  tooltipState,
+  // tooltipState,
   tooltipArray,
 }: RenderSceneProps) => {
   const imageRef = useImage(image || PAPER);
@@ -341,7 +353,7 @@ const RenderScene = ({
   return (
     <Group>
       <Image image={imageRef} rect={outer} fit="cover" />
-      {!tooltipArray?.[15] && tooltipState.tooltipThree && (
+      {!tooltipArray?.[15] && (
         <>
           <BackdropBlur blur={0} clip={outer}>
             <Fill color="rgba(35, 35, 35, 0.9)" />
@@ -364,7 +376,7 @@ const RenderScene = ({
       )}
       {showBackdrop && (
         <BackdropBlur blur={8} clip={roundedRect}>
-          {tooltipState.tooltipThree ? (
+          {!tooltipArray?.[15] ? (
             <Fill color="rgba(255, 255, 255, 0.876)" />
           ) : (
             <Fill color="rgba(255, 255, 255, 0.438)" />

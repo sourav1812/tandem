@@ -23,8 +23,11 @@ import themeColor from '@tandem/theme/themeColor';
 import {BooksData} from './interface';
 import {ratingList} from '@tandem/components/RNRatingModal/interface';
 import {clearStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration.slice';
+import {useDispatch} from 'react-redux';
+import {changeTooltipStateToFalse} from '@tandem/redux/slices/tooltip.slice';
 
 const Bookshelf = () => {
+  const dispatch = useDispatch();
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const mode = useAppSelector(state => state.mode.mode);
   const [searchText, setText] = useState<ValidationError>({value: ''});
@@ -101,6 +104,7 @@ const Bookshelf = () => {
           <RNStoryCard
             item={item}
             onPress={() => {
+              dispatch(changeTooltipStateToFalse(13));
               navigateTo(SCREEN_NAME.STORY, {routeData: item});
             }}
           />

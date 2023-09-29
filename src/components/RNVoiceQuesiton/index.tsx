@@ -15,27 +15,16 @@ import {translation} from '@tandem/utils/methods';
 import RNTooltip from '../RNTooltip';
 import {RootState} from '@tandem/redux/store';
 import {DIRECTION_ARROWS} from '@tandem/constants/enums';
-import {useDispatch} from 'react-redux';
-import {changeTooltipState} from '@tandem/redux/slices/tooltip.slice';
 
-const RNVoiceQuesiton = ({
-  onClick,
-  customStyle,
-  tooltipOneVisible = false,
-  onTooltipOneClose = () => {},
-}: VoiceQuestionProps) => {
+const RNVoiceQuesiton = ({onClick, customStyle}: VoiceQuestionProps) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
-  const tooltipArray = useAppSelector(state => state.tooltipReducer);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [inputList, setInputList] = useState<inputListState[]>([{answer: ''}]);
   const [micStatus, setMicStatus] = useState(false);
-  const [tooltipMode, setToolTipMode] = useState({
-    tooltipTwo: false,
-    tooltipThree: false,
-  });
+
   const refOne = useRef<any>(null);
   const refTwo = useRef<any>(null);
   const refThree = useRef<any>(null);
@@ -75,11 +64,7 @@ const RNVoiceQuesiton = ({
           <RNTooltip
             isTablet={isTablet}
             topViewStyle={{alignItems: 'center'}}
-            open={tooltipArray?.[16] ? false : tooltipOneVisible}
-            setClose={() => {
-              onTooltipOneClose();
-              setToolTipMode({tooltipTwo: true, tooltipThree: false});
-            }}
+            open={16}
             text={translation('YOU_CAN_WRITE_AN_ANIMAL')}
             textContainerStyle={styles.tooltipTwo}
             textStyle={[
@@ -144,11 +129,7 @@ const RNVoiceQuesiton = ({
         <RNTooltip
           isTablet={isTablet}
           topViewStyle={{alignItems: 'center'}}
-          open={tooltipArray?.[18] ? false : tooltipMode.tooltipTwo}
-          setClose={() => {
-            setToolTipMode({tooltipTwo: false, tooltipThree: true});
-            dispatch(changeTooltipState(18));
-          }}
+          open={18}
           bottom={DIRECTION_ARROWS.SOUTH}
           text={translation('YOU_CAN_PRESS_AND_SAY_ANIMAL')}
           textContainerStyle={styles.tooltipTwo}
@@ -188,11 +169,7 @@ const RNVoiceQuesiton = ({
       <RNTooltip
         isTablet={isTablet}
         topViewStyle={{alignItems: 'center'}}
-        open={tooltipArray?.[17] ? false : tooltipMode.tooltipThree}
-        setClose={() => {
-          setToolTipMode({tooltipTwo: false, tooltipThree: false});
-          dispatch(changeTooltipState(17));
-        }}
+        open={17}
         text={translation("IF_YOU_DON'T_KNOW_LET_HELP")}
         bottom={DIRECTION_ARROWS.SOUTH}
         textContainerStyle={styles.tooltipTwo}

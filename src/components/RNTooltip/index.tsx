@@ -12,7 +12,13 @@ import {
 } from '@tandem/helpers/tooltipHelper';
 import RNArrowIconTop from '../RNArrowIconTop';
 import RNArrowIconBottom from '../RNArrowIconBottom';
-import {store} from '@tandem/redux/store';
+import {
+  changeTooltipState,
+  changeTooltipStatePlusONe,
+} from '@tandem/redux/slices/tooltip.slice';
+import wait from '@tandem/functions/wait';
+import {useDispatch} from 'react-redux';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 
 const RNTooltip = ({
   children,
@@ -29,17 +35,27 @@ const RNTooltip = ({
   topViewStyle,
   isTablet,
   placement,
+  useWait,
 }: TooltipProps) => {
+  const dispatch = useDispatch();
   const helperTop = top ? top : tooltipHelperTop(dimensionObject);
   const helperBottom = bottom ? bottom : tooltipHelperBottom(dimensionObject);
-  const tooltipFromRedux = store.getState().tooltipReducer;
+  const tooltipFromRedux = useAppSelector(state => state.tooltipReducer);
   const toShowAllTooltip = Object.values(tooltipFromRedux).every(
     value => value,
   );
   return (
     <Tooltip
       allowChildInteraction={false}
-      isVisible={!toShowAllTooltip ? open : false}
+      isVisible={
+        !toShowAllTooltip
+          ? open
+            ? tooltipFromRedux?.[open]
+              ? false
+              : true
+            : false
+          : false
+      }
       content={
         <View style={[topViewStyle && topViewStyle]}>
           {helperTop && (
@@ -88,7 +104,17 @@ const RNTooltip = ({
       topAdjustment={
         Platform.OS === 'android' ? -(StatusBar.currentHeight || 0) : 0
       }
-      onClose={setClose}>
+      onClose={
+        setClose
+          ? setClose
+          : async () => {
+              dispatch(changeTooltipState(open));
+              if (useWait) {
+                await wait(500);
+              }
+              dispatch(changeTooltipStatePlusONe(open));
+            }
+      }>
       {children}
     </Tooltip>
   );

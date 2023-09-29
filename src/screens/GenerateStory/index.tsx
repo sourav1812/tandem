@@ -15,28 +15,26 @@ import RNTooltip from '@tandem/components/RNTooltip';
 import navigateTo from '@tandem/navigation/navigate';
 import {DIRECTION_ARROWS, STORY_PARTS} from '@tandem/constants/enums';
 import Pie from '@tandem/components/Pie';
-import {changeTooltipState} from '@tandem/redux/slices/tooltip.slice';
-import {useDispatch} from 'react-redux';
 
 export default ({
   onNextQuestion,
   children,
   disabled,
-  giveStatusColor,
+  // giveStatusColor,
   questionNumber,
   onBack,
-  showButtonTooltip,
-  onCloseButtonTooltip,
+  // showButtonTooltip,
+  // onCloseButtonTooltip,
   type,
   maxSelections,
 }: {
   onNextQuestion?: () => void;
   children: React.ReactElement;
   disabled?: boolean;
-  giveStatusColor?: boolean;
+  // giveStatusColor?: boolean;
   questionNumber: number;
   onBack: () => void;
-  showButtonTooltip?: boolean;
+  showButtonTooltip?: number;
   onCloseButtonTooltip?: () => void;
   type?:
     | STORY_PARTS.WHO
@@ -48,11 +46,10 @@ export default ({
   maxSelections?: number;
 }) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
-  const tooltipArray = useAppSelector(state => state.tooltipReducer);
 
   const storyGeneration = useAppSelector(state => state.storyGeneration);
   const activeState = type ? storyGeneration[type] : null;
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [userCameback, setUserCameBack] = React.useState(false);
 
   React.useEffect(() => {
@@ -66,7 +63,9 @@ export default ({
   }, [disabled]);
 
   return (
-    <RNScreenWrapper giveStatusColor={giveStatusColor}>
+    <RNScreenWrapper
+    //  giveStatusColor={giveStatusColor}
+    >
       <View style={styles.container}>
         <View
           style={{
@@ -121,14 +120,14 @@ export default ({
           topViewStyle={{
             alignItems: 'center',
           }}
-          open={!!showButtonTooltip}
-          setClose={() => {
-            tooltipArray?.[10];
-            dispatch(changeTooltipState(10));
-            if (onCloseButtonTooltip) {
-              onCloseButtonTooltip();
-            }
-          }}
+          open={10}
+          // setClose={() => {
+          //   dispatch(changeTooltipState(10));
+          //   dispatch(changeTooltipStatePlusONe(10));
+          //   if (onCloseButtonTooltip) {
+          //     onCloseButtonTooltip();
+          //   }
+          // }}
           bottom={DIRECTION_ARROWS.SOUTH}
           text={translation('PRESS_THE_BUTTON')}
           textStyle={styles.tooltip}>
