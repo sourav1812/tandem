@@ -298,5 +298,11 @@
   "GRANDMOTHER": "Grandmother",
   "GRANDFATHER": "Grandfather",
   "FRIEND": "Friend",
-  "OTHER": "Other"
+  "OTHER": "Other",
+  "account-screen-tooltip": {
+    "tip-one": "Once the child has been added , you can see the child here and tap on it to use the app next.",
+    "tip-two": "Your selected avatars appear here, Tap on them again if you change your mind.",
+    "tip-three": "Once you add yourself, you can see your avatar here and tap on it to use the app next.",
+    "tip-four": "When you are ready hit the 'start' button"
+  }
 }

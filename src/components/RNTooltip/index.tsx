@@ -5,14 +5,20 @@ import {TooltipProps} from './interface';
 import {scale} from 'react-native-size-matters';
 import RNTextComponent from '../RNTextComponent';
 import {Platform, StatusBar, View} from 'react-native';
-import {getValueFromKey} from '@tandem/helpers/encryptedStorage';
-import {TOOLTIP} from '@tandem/constants/local';
+
 import {
   tooltipHelperBottom,
   tooltipHelperTop,
 } from '@tandem/helpers/tooltipHelper';
 import RNArrowIconTop from '../RNArrowIconTop';
 import RNArrowIconBottom from '../RNArrowIconBottom';
+import {
+  changeTooltipState,
+  changeTooltipStatePlusONe,
+} from '@tandem/redux/slices/tooltip.slice';
+import wait from '@tandem/functions/wait';
+import {useDispatch} from 'react-redux';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 
 const RNTooltip = ({
   children,
@@ -29,15 +35,27 @@ const RNTooltip = ({
   topViewStyle,
   isTablet,
   placement,
+  useWait,
 }: TooltipProps) => {
-  const tooltipNumber = getValueFromKey(TOOLTIP);
+  const dispatch = useDispatch();
   const helperTop = top ? top : tooltipHelperTop(dimensionObject);
   const helperBottom = bottom ? bottom : tooltipHelperBottom(dimensionObject);
-
+  const tooltipFromRedux = useAppSelector(state => state.tooltipReducer);
+  const toShowAllTooltip = Object.values(tooltipFromRedux).every(
+    value => value,
+  );
   return (
     <Tooltip
       allowChildInteraction={false}
-      isVisible={tooltipNumber?.length < 15 ? open : false}
+      isVisible={
+        !toShowAllTooltip
+          ? open
+            ? tooltipFromRedux?.[open]
+              ? false
+              : true
+            : false
+          : false
+      }
       content={
         <View style={[topViewStyle && topViewStyle]}>
           {helperTop && (
@@ -86,7 +104,17 @@ const RNTooltip = ({
       topAdjustment={
         Platform.OS === 'android' ? -(StatusBar.currentHeight || 0) : 0
       }
-      onClose={setClose}>
+      onClose={
+        setClose
+          ? setClose
+          : async () => {
+              dispatch(changeTooltipState(open));
+              if (useWait) {
+                await wait(500);
+              }
+              dispatch(changeTooltipStatePlusONe(open));
+            }
+      }>
       {children}
     </Tooltip>
   );

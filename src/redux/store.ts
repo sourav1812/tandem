@@ -16,6 +16,7 @@ import bookShelf from './slices/bookShelf.slice';
 import setUserData from './slices/userData.slice';
 import cache from './slices/cache.slice';
 import setPermissions from './slices/permissions.slice';
+import tooltipSlice from './slices/tooltip.slice';
 import snapshotReducer from './slices/animationSnapshots.slice';
 
 export const storage = new MMKV();
@@ -36,6 +37,7 @@ export const appReducer = combineReducers({
   storyGeneration,
   bookShelf,
   cache,
+  tooltipReducer: tooltipSlice,
   snapshotReducer,
 });
 

@@ -11,8 +11,6 @@ import QuestionMark from '@tandem/assets/svg/QuestionMark';
 import {scale, verticalScale} from 'react-native-size-matters';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {translation} from '@tandem/utils/methods';
-import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
-import {TOOLTIP} from '@tandem/constants/local';
 import RNTooltip from '@tandem/components/RNTooltip';
 import navigateTo from '@tandem/navigation/navigate';
 import {DIRECTION_ARROWS, STORY_PARTS} from '@tandem/constants/enums';
@@ -22,21 +20,17 @@ export default ({
   onNextQuestion,
   children,
   disabled,
-  giveStatusColor,
   questionNumber,
   onBack,
-  showButtonTooltip,
-  onCloseButtonTooltip,
   type,
   maxSelections,
 }: {
   onNextQuestion?: () => void;
   children: React.ReactElement;
   disabled?: boolean;
-  giveStatusColor?: boolean;
   questionNumber: number;
   onBack: () => void;
-  showButtonTooltip?: boolean;
+  showButtonTooltip?: number;
   onCloseButtonTooltip?: () => void;
   type?:
     | STORY_PARTS.WHO
@@ -48,11 +42,9 @@ export default ({
   maxSelections?: number;
 }) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
-  const tooltipArray = getValueFromKey(TOOLTIP);
 
   const storyGeneration = useAppSelector(state => state.storyGeneration);
   const activeState = type ? storyGeneration[type] : null;
-
   const [userCameback, setUserCameBack] = React.useState(false);
 
   React.useEffect(() => {
@@ -66,7 +58,7 @@ export default ({
   }, [disabled]);
 
   return (
-    <RNScreenWrapper giveStatusColor={giveStatusColor}>
+    <RNScreenWrapper>
       <View style={styles.container}>
         <View
           style={{
@@ -121,14 +113,7 @@ export default ({
           topViewStyle={{
             alignItems: 'center',
           }}
-          open={!!showButtonTooltip}
-          setClose={() => {
-            tooltipArray.push(6);
-            storeKey(TOOLTIP, tooltipArray);
-            if (onCloseButtonTooltip) {
-              onCloseButtonTooltip();
-            }
-          }}
+          open={10}
           bottom={DIRECTION_ARROWS.SOUTH}
           text={translation('PRESS_THE_BUTTON')}
           textStyle={styles.tooltip}>

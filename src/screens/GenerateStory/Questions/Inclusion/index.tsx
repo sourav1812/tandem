@@ -3,8 +3,6 @@ import RNButton from '@tandem/components/RNButton';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import RNTooltip from '@tandem/components/RNTooltip';
 import {STORY_PARTS} from '@tandem/constants/enums';
-import {TOOLTIP} from '@tandem/constants/local';
-import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
 import {pushStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration.slice';
 import {store} from '@tandem/redux/store';
 import {translation} from '@tandem/utils/methods';
@@ -23,17 +21,14 @@ export default () => {
   const currentChild = useAppSelector(state => state.createChild.currentChild);
   const portrait = useAppSelector(state => state.orientation.isPortrait);
   const avatars = useAppSelector(state => state.cache.avatars);
-
   const [selected, setSelected] = React.useState<number>(0);
 
   const currentChildAvatar = avatars.filter(
     obj => obj.path === currentChild?.avatar,
   )[0]?.file;
-  const tooltipArray = getValueFromKey(TOOLTIP);
+  const tooltipArray = useAppSelector(state => state.tooltipReducer);
 
-  const [tooltipFifth, setTooltipFifth] = React.useState(
-    !tooltipArray.includes(15),
-  );
+  // const [tooltipFifth, setTooltipFifth] = React.useState(!tooltipArray?.[11]);
 
   const navigation: any = useNavigation();
   const nextQuestion = () => {
@@ -45,7 +40,6 @@ export default () => {
       onBack={() => {
         removeQuestionData(STORY_PARTS.INCLUSION);
       }}
-      giveStatusColor={tooltipFifth}
       questionNumber={2}>
       <>
         <RNTextComponent isSemiBold style={styles.question}>
@@ -80,16 +74,11 @@ export default () => {
             bottom={portrait ? 'South' : undefined}
             top={portrait ? undefined : 'SouthEast'}
             text={translation('YES_NO_SELECT')}
-            open={tooltipArray?.includes(15) ? false : tooltipFifth}
-            setClose={() => {
-              setTooltipFifth(false);
-              tooltipArray.push(15);
-              storeKey(TOOLTIP, tooltipArray);
-            }}>
+            open={11}>
             <View
               style={[
                 styles.buttonContainer,
-                tooltipFifth && {
+                !tooltipArray?.[11] && {
                   backgroundColor: 'white',
                   borderRadius: scale(20),
                   height: portrait ? '53%' : '70%',
