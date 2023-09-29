@@ -126,7 +126,8 @@ const Account = () => {
   useEffect(() => {
     setKidList([...childList].reverse());
     setPeopleList([...adultList].reverse());
-  }, [childList, adultList]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [childList.length, adultList.length]);
 
   useEffect(() => {
     dispatch(saveCurrentChild(childList[childList.length - 1]));
