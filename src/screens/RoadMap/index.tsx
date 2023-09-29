@@ -210,11 +210,7 @@ const RNRoadmap = () => {
             <YellowButton />
           </Pressable>
         </View>
-        <View
-          style={[
-            styles.roadmap,
-            // !isTablet && Platform.OS !== 'ios' && {paddingTop: 10},
-          ]}>
+        <View style={[styles.roadmap]}>
           <Pressable
             onLayout={event => {
               const layout = event.nativeEvent?.layout;
