@@ -34,6 +34,10 @@ import {
 } from '@tandem/redux/slices/createChild.slice';
 import {clearStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration.slice';
 import {DIRECTION_ARROWS} from '@tandem/constants/enums';
+import {
+  addSnapShot1,
+  addSnapShot2,
+} from '@tandem/redux/slices/animationSnapshots.slice';
 
 const Home = () => {
   const portrait = useAppSelector(
@@ -466,6 +470,8 @@ const Home = () => {
                       onPress={() => {
                         if (index === 0) {
                           store.dispatch(clearStoryGenerationResponse());
+                          store.dispatch(addSnapShot1(null));
+                          store.dispatch(addSnapShot2(null));
                           navigateTo(SCREEN_NAME.ROADMAP);
                         }
                       }}

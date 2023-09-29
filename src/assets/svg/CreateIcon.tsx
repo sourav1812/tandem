@@ -2,7 +2,6 @@ import * as React from 'react';
 import {verticalScale} from 'react-native-size-matters';
 import Svg, {SvgProps, Path, Circle} from 'react-native-svg';
 const SvgComponent = ({
-  props,
   mapIndex,
   scale = 1,
 }: {
@@ -15,8 +14,7 @@ const SvgComponent = ({
     viewBox="0 0 160 155"
     width={verticalScale(160) / scale}
     height={verticalScale(155) / scale}
-    fill="none"
-    {...props}>
+    fill="none">
     {mapIndex && (
       <>
         <Path
