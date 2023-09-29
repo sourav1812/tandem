@@ -32,6 +32,7 @@ import {
 
 const Bookshelf = () => {
   const dispatch = useDispatch();
+  const tooltipSelector = useAppSelector(state => state.tooltipReducer);
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const mode = useAppSelector(state => state.mode.mode);
   const [searchText, setText] = useState<ValidationError>({value: ''});
@@ -110,7 +111,9 @@ const Bookshelf = () => {
           <RNStoryCard
             item={item}
             onPress={() => {
-              dispatch(changeTooltipStateToFalse(13));
+              if (!tooltipSelector?.[13]) {
+                dispatch(changeTooltipStateToFalse(13));
+              }
               navigateTo(SCREEN_NAME.STORY, {routeData: item});
             }}
           />

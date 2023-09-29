@@ -16,7 +16,7 @@ const initialState: Tooltip = {
   9: true,
   10: true,
   11: true,
-  13: true,
+  13: false,
   14: true,
   15: true,
   16: true,
