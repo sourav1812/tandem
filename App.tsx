@@ -3,8 +3,6 @@ import AppNavigator from './src/navigation';
 import {Provider} from 'react-redux';
 import {store} from './src/redux/store';
 import {Alert, Platform, UIManager} from 'react-native';
-import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
-import {TOOLTIP} from '@tandem/constants/local';
 import messaging from '@react-native-firebase/messaging';
 import {PersistGate} from 'redux-persist/integration/react';
 import {persistStore} from 'redux-persist';
@@ -24,11 +22,7 @@ const App: FC = () => {
       }
     }
     i18n.locale = setupLangauge();
-    const tooltip = getValueFromKey(TOOLTIP);
     store.dispatch(clearAlertData());
-    if (!tooltip) {
-      storeKey(TOOLTIP, [0]);
-    }
     const unsubscribe = messaging().onMessage(async remoteMessage => {
       Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
     });

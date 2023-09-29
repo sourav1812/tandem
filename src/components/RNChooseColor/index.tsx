@@ -15,8 +15,7 @@ import AddColor from '@tandem/assets/svg/AddColor';
 import EmptyPatch from '@tandem/assets/svg/EmptyPatch';
 import {translation} from '@tandem/utils/methods';
 import RNTooltip from '../RNTooltip';
-import {COLOR_PALETTE, TOOLTIP} from '@tandem/constants/local';
-import {getValueFromKey} from '@tandem/helpers/encryptedStorage';
+import {COLOR_PALETTE} from '@tandem/constants/local';
 import chroma from 'chroma-js';
 import RNButton from '../RNButton';
 import {scale, verticalScale} from 'react-native-size-matters';
@@ -34,10 +33,9 @@ interface IPath {
   size: number;
 }
 
-const tooltipArray = getValueFromKey(TOOLTIP);
 const RNChooseColor = ({
-  tooltipVisible,
-  onTooltipClose,
+  // tooltipVisible,
+  // onTooltipClose,
   customStyle,
   isTablet,
   setDisabled,
@@ -61,6 +59,7 @@ const RNChooseColor = ({
   const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
+
   const handleReset = () => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setPalletArray([]);
@@ -193,8 +192,7 @@ const RNChooseColor = ({
               topViewStyle={{
                 alignItems: 'center',
               }}
-              open={tooltipArray?.includes(7) ? false : tooltipVisible}
-              setClose={onTooltipClose}
+              open={12}
               text={translation('ADD_COLORS')}
               textStyle={styles.tooltip}
               dimensionObject={positionRefs[0]}>

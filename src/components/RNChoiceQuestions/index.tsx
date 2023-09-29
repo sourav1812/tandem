@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {ScrollView} from 'react-native';
 import React, {useRef} from 'react';
 import {styles} from './styles';
@@ -12,9 +13,9 @@ import {store} from '@tandem/redux/store';
 const RNChoiceQuestions = ({
   data = [],
   customStyle,
-  visibletoolTip = false,
+  // visibletoolTip = false,
   itemStyle,
-  onTooltipClose = () => {},
+  // onTooltipClose = () => {},
   type,
   maxSelections = data.length,
   setDisabled,
@@ -23,6 +24,7 @@ const RNChoiceQuestions = ({
   const [positionRefs, setPositionRefs] = React.useState({
     0: {height: 0, width: 0, x: 0, y: 0},
   });
+
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const activeState = useAppSelector(state => state.storyGeneration[type]);
   React.useEffect(() => {
@@ -74,8 +76,7 @@ const RNChoiceQuestions = ({
               topViewStyle={{
                 alignItems: 'center',
               }}
-              open={visibletoolTip}
-              setClose={onTooltipClose}
+              open={9}
               text={translation('CHOOSE_FROM_THE_GIVE_OPTIONS')}
               textContainerStyle={[
                 styles.tooltipContainer,

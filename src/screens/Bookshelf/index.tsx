@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {View, Text, FlatList, Pressable} from 'react-native';
+import {View, FlatList, Pressable} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
@@ -24,6 +24,10 @@ import {BooksData} from './interface';
 import {ratingList} from '@tandem/components/RNRatingModal/interface';
 import {clearStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration.slice';
 import SadFace from '@tandem/assets/svg/Sad';
+import {
+  addSnapShot1,
+  addSnapShot2,
+} from '@tandem/redux/slices/animationSnapshots.slice';
 
 const Bookshelf = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -81,6 +85,8 @@ const Bookshelf = () => {
           title={translation('bookshelf.write-a-story')}
           onClick={() => {
             store.dispatch(clearStoryGenerationResponse());
+            store.dispatch(addSnapShot1(null));
+            store.dispatch(addSnapShot2(null));
             navigateTo(SCREEN_NAME.ROADMAP);
           }}
         />

@@ -310,5 +310,11 @@
   "OCTOBER": "Ottobre",
   "NOVEMBER": "Novembre",
   "DECEMBER": "Dicembre",
-  "OK": "Va bene"
+  "OK": "Va bene",
+  "account-screen-tooltip": {
+    "tip-one": "Una volta che il bambino è stato aggiunto, puoi vederlo qui e toccarlo per utilizzare l'app.",
+    "tip-two": "I tuoi avatar selezionati appaiono qui. Tocca di nuovo su di essi se cambi idea.",
+    "tip-three": "Una volta che ti sei aggiunto, puoi vedere il tuo avatar qui e toccarlo per utilizzare l'app.",
+    "tip-four": "Quando sei pronto, premi il pulsante 'Inizia'."
+  }
 }

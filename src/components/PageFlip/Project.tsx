@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {
   Easing,
   runTiming,
@@ -24,16 +25,22 @@ import {
   SkImage,
   makeImageFromView,
 } from '@shopify/react-native-skia';
-import {PixelRatio, StatusBar, useWindowDimensions} from 'react-native';
+import {
+  PixelRatio,
+  Pressable,
+  StatusBar,
+  useWindowDimensions,
+} from 'react-native';
 import React, {useRef, useState} from 'react';
 import {pageCurl} from './pageCurl';
 
 import {scale, verticalScale} from 'react-native-size-matters';
 import {StateObject} from '@tandem/screens/StoryTelling/interface';
 import {translation} from '@tandem/utils/methods';
-import {TOOLTIP} from '@tandem/constants/local';
-import {getValueFromKey} from '@tandem/helpers/encryptedStorage';
 import wait from '@tandem/functions/wait';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {useDispatch} from 'react-redux';
+import {changeTooltipState} from '@tandem/redux/slices/tooltip.slice';
 
 const PAPER = require('@tandem/assets/png/paper.jpg');
 
@@ -57,8 +64,7 @@ interface RenderSceneProps {
   total: number;
   hHeight: number;
   outer: SkRect;
-  tooltipState: StateObject;
-  tooltipArray: number[];
+  tooltipArray: any;
 }
 
 const pd = PixelRatio.get();
@@ -109,7 +115,6 @@ export const Project = ({
   textArray,
   activeIndex,
   setActiveIndex,
-  tooltipState,
 }: ProjectProps) => {
   const {width: wWidth, height: heightRef} = useWindowDimensions();
   const [hHeight, setHeight] = useState(
@@ -131,7 +136,8 @@ export const Project = ({
   const pointer = useValue(wWidth);
 
   const [disbaleTouch, setDisbaleTouch] = React.useState(false);
-  const tooltipArray = getValueFromKey(TOOLTIP);
+  const tooltipArray = useAppSelector(state => state.tooltipReducer);
+  const dispatch = useDispatch();
   const [overlay, setOverlay] = React.useState<SkImage | null>(null);
   const [overlay2, setOverlay2] = React.useState<SkImage | null>(null);
   const ref = useRef(null);
@@ -143,10 +149,12 @@ export const Project = ({
         if (disbaleTouch) {
           return;
         }
+
         if (!overlay) {
           const overlay1 = await makeImageFromView(ref);
           setOverlay(overlay1);
         }
+
         setBottomPageindex(activeIndex > 0 ? activeIndex - 1 : 0);
         origin.current = x;
       },
@@ -185,8 +193,8 @@ export const Project = ({
     setOverlay2(overlay);
     await wait(50);
 
-    setOverlay(lastPage);
     pointer.current = -wWidth;
+    setOverlay(lastPage);
 
     runTiming(pointer, wWidth, {
       duration: 800,
@@ -199,21 +207,23 @@ export const Project = ({
     await wait(800);
     setOverlay2(null);
     setOverlay(null);
+    pointer.current = wWidth;
+    origin.current = wWidth;
   };
   const frontTurn = async (x: number) => {
     const turnpage = x < 100;
     runTiming(pointer, turnpage ? -wWidth : wWidth, {
-      duration: 1200,
+      duration: 900,
       easing: Easing.in(Easing.sin),
     });
     if (turnpage) {
       setActiveIndex(prev => (prev > 0 ? prev - 1 : 0));
-      await wait(850);
-      console.log({pageArray});
       setPageArray(prev => [...prev, overlay]);
+      await wait(850);
       setOverlay(null);
       await wait(50);
       pointer.current = wWidth;
+      origin.current = wWidth;
     }
   };
   const uniforms = useComputedValue(() => {
@@ -225,48 +235,77 @@ export const Project = ({
       cornerRadius: cornerRadius * pd,
     };
   }, [pointer, origin, hHeight]);
-
   return (
-    <Canvas
-      ref={ref}
-      style={{
-        width: wWidth,
-        height: hHeight,
-      }}
-      onTouch={activeIndex === 0 ? undefined : onTouch}>
-      {activeIndex >= 0 && (
-        <RenderScene
-          hHeight={hHeight}
-          outer={outer}
-          page={bottomPageIndex + 1}
-          total={textArray.length}
-          image={textArray[bottomPageIndex].img}
-          roundedRect={getRoundRect(
-            processSentences(textArray[bottomPageIndex].text, wWidth).length,
-            wWidth,
-            hHeight,
-          )}
-          sentences={processSentences(textArray[bottomPageIndex].text, wWidth)}
-          font={font}
-          tooltipState={tooltipState}
-          tooltipArray={tooltipArray}
+    <>
+      {!tooltipArray?.[15] && (
+        <Pressable
+          style={{
+            backgroundColor: 'tranparent',
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            zIndex: 1,
+          }}
+          onPress={() => {
+            if (!tooltipArray?.[15]) {
+              dispatch(changeTooltipState(15));
+            }
+          }}
         />
       )}
-      {overlay2 && <Image image={overlay2} rect={outer} fit="cover" />}
-      {overlay && (
-        <Group transform={[{scale: 1 / pd}]}>
-          <Group
-            layer={
-              <Paint>
-                <RuntimeShader source={pageCurl} uniforms={uniforms} />
-              </Paint>
-            }
-            transform={[{scale: pd}]}>
-            <Image image={overlay} rect={outer} fit="cover" />
+      <Canvas
+        ref={ref}
+        style={{
+          width: wWidth,
+          height: hHeight,
+        }}
+        onTouch={
+          tooltipArray?.[15]
+            ? activeIndex === 0
+              ? undefined
+              : onTouch
+            : undefined
+        }>
+        {activeIndex >= 0 && (
+          <RenderScene
+            hHeight={hHeight}
+            outer={outer}
+            page={bottomPageIndex + 1}
+            total={textArray.length}
+            image={textArray[bottomPageIndex].img}
+            roundedRect={getRoundRect(
+              processSentences(textArray[bottomPageIndex].text, wWidth).length,
+              wWidth,
+              hHeight,
+            )}
+            sentences={processSentences(
+              textArray[bottomPageIndex].text,
+              wWidth,
+            )}
+            font={font}
+            // tooltipState={tooltipState}
+            tooltipArray={tooltipArray}
+          />
+        )}
+        {overlay2 && <Image image={overlay2} rect={outer} fit="cover" />}
+
+        {overlay && (
+          <Group transform={[{scale: 1 / pd}]}>
+            <Group
+              layer={
+                <Paint>
+                  <RuntimeShader source={pageCurl} uniforms={uniforms} />
+                </Paint>
+              }
+              transform={[{scale: pd}]}>
+              <Image image={overlay} rect={outer} fit="cover" />
+            </Group>
           </Group>
-        </Group>
-      )}
-    </Canvas>
+        )}
+      </Canvas>
+    </>
   );
 };
 
@@ -280,12 +319,9 @@ const RenderScene = ({
   total,
   outer,
   hHeight,
-  tooltipState,
   tooltipArray,
 }: RenderSceneProps) => {
   const imageRef = useImage(image || PAPER);
-  // const {width: wWidth} = useWindowDimensions();
-  // const numberOfChars = Math.floor((wWidth * 1.5) / fontSize);
   const [showBackdrop, setShowBackdrop] = React.useState(false);
   const arrowImage = useImage(require('../../assets/png/SouthArrow.png'));
   const {width: wWidth} = useWindowDimensions();
@@ -311,32 +347,30 @@ const RenderScene = ({
   return (
     <Group>
       <Image image={imageRef} rect={outer} fit="cover" />
-      {tooltipArray?.includes(10)
-        ? undefined
-        : tooltipState.tooltipThree && (
-            <>
-              <BackdropBlur blur={0} clip={outer}>
-                <Fill color="rgba(35, 35, 35, 0.9)" />
-              </BackdropBlur>
-              <Text
-                x={wWidth / 2 - scale(50)}
-                y={
-                  hHeight -
-                  padding -
-                  (fontSize + verticalScale(10)) * sentences.length -
-                  verticalScale(120)
-                }
-                //  number of line the text is on
-                text={translation('READ_A_STORY')}
-                color={'white'}
-                font={font}
-              />
-              <Image image={arrowImage} rect={arrowRect} fit="cover" />
-            </>
-          )}
+      {!tooltipArray?.[15] && (
+        <>
+          <BackdropBlur blur={0} clip={outer}>
+            <Fill color="rgba(35, 35, 35, 0.9)" />
+          </BackdropBlur>
+          <Text
+            x={wWidth / 2 - scale(50)}
+            y={
+              hHeight -
+              padding -
+              (fontSize + verticalScale(10)) * sentences.length -
+              verticalScale(120)
+            }
+            //  number of line the text is on
+            text={translation('READ_A_STORY')}
+            color={'white'}
+            font={font}
+          />
+          <Image image={arrowImage} rect={arrowRect} fit="cover" />
+        </>
+      )}
       {showBackdrop && (
         <BackdropBlur blur={8} clip={roundedRect}>
-          {tooltipState.tooltipThree ? (
+          {!tooltipArray?.[15] ? (
             <Fill color="rgba(255, 255, 255, 0.876)" />
           ) : (
             <Fill color="rgba(255, 255, 255, 0.438)" />

@@ -13,28 +13,18 @@ import {VoiceQuestionProps} from './interface';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {translation} from '@tandem/utils/methods';
 import RNTooltip from '../RNTooltip';
-import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
-import {TOOLTIP} from '@tandem/constants/local';
 import {RootState} from '@tandem/redux/store';
 import {DIRECTION_ARROWS} from '@tandem/constants/enums';
 
-const RNVoiceQuesiton = ({
-  onClick,
-  customStyle,
-  tooltipOneVisible = false,
-  onTooltipOneClose = () => {},
-}: VoiceQuestionProps) => {
+const RNVoiceQuesiton = ({onClick, customStyle}: VoiceQuestionProps) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
-  const tooltipArray = getValueFromKey(TOOLTIP);
+  // const dispatch = useDispatch();
   const [inputList, setInputList] = useState<inputListState[]>([{answer: ''}]);
   const [micStatus, setMicStatus] = useState(false);
-  const [tooltipMode, setToolTipMode] = useState({
-    tooltipTwo: false,
-    tooltipThree: false,
-  });
+
   const refOne = useRef<any>(null);
   const refTwo = useRef<any>(null);
   const refThree = useRef<any>(null);
@@ -74,11 +64,7 @@ const RNVoiceQuesiton = ({
           <RNTooltip
             isTablet={isTablet}
             topViewStyle={{alignItems: 'center'}}
-            open={tooltipArray?.includes(12) ? false : tooltipOneVisible}
-            setClose={() => {
-              onTooltipOneClose();
-              setToolTipMode({tooltipTwo: true, tooltipThree: false});
-            }}
+            open={16}
             text={translation('YOU_CAN_WRITE_AN_ANIMAL')}
             textContainerStyle={styles.tooltipTwo}
             textStyle={[
@@ -143,12 +129,7 @@ const RNVoiceQuesiton = ({
         <RNTooltip
           isTablet={isTablet}
           topViewStyle={{alignItems: 'center'}}
-          open={tooltipArray?.includes(13) ? false : tooltipMode.tooltipTwo}
-          setClose={() => {
-            setToolTipMode({tooltipTwo: false, tooltipThree: true});
-            tooltipArray.push(13);
-            storeKey(TOOLTIP, tooltipArray);
-          }}
+          open={18}
           bottom={DIRECTION_ARROWS.SOUTH}
           text={translation('YOU_CAN_PRESS_AND_SAY_ANIMAL')}
           textContainerStyle={styles.tooltipTwo}
@@ -188,12 +169,7 @@ const RNVoiceQuesiton = ({
       <RNTooltip
         isTablet={isTablet}
         topViewStyle={{alignItems: 'center'}}
-        open={tooltipArray?.includes(14) ? false : tooltipMode.tooltipThree}
-        setClose={() => {
-          setToolTipMode({tooltipTwo: false, tooltipThree: false});
-          tooltipArray.push(14);
-          storeKey(TOOLTIP, tooltipArray);
-        }}
+        open={17}
         text={translation("IF_YOU_DON'T_KNOW_LET_HELP")}
         bottom={DIRECTION_ARROWS.SOUTH}
         textContainerStyle={styles.tooltipTwo}
