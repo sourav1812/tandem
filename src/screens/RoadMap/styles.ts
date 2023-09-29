@@ -54,7 +54,6 @@ export const styles = StyleSheet.create({
     zIndex: 6,
   },
   create: {
-    top: -verticalScale(1),
     zIndex: 10,
     borderRadius: 1000,
   },

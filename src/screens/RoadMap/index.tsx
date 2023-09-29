@@ -1,4 +1,10 @@
-import {LayoutAnimation, Platform, Pressable, View} from 'react-native';
+import {
+  LayoutAnimation,
+  Pressable,
+  StatusBar,
+  View,
+  useWindowDimensions,
+} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
 import YellowButton from '@tandem/assets/svg/YellowButton';
@@ -17,12 +23,34 @@ import BackButton from '@tandem/assets/svg/LeftArrow';
 import {verticalScale} from 'react-native-size-matters';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
-import {RootState} from '@tandem/redux/store';
+import {RootState, store} from '@tandem/redux/store';
 import RNButton from '@tandem/components/RNButton';
 import generateStory from '@tandem/api/generateStory';
 import {STORY_PARTS} from '@tandem/constants/enums';
 import {goBackInOrder} from '@tandem/functions/removeQuestionData';
 import {useNavigation} from '@react-navigation/native';
+import {
+  Canvas,
+  Circle,
+  Group,
+  Image,
+  ImageShader,
+  Skia,
+  dist,
+  makeImageFromView,
+  mix,
+  vec,
+} from '@shopify/react-native-skia';
+import {
+  addSnapShot1,
+  addSnapShot2,
+} from '@tandem/redux/slices/animationSnapshots.slice';
+import {
+  useDerivedValue,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
+import wait from '@tandem/functions/wait';
 
 const SCREEN = [
   SCREEN_NAME.GENERATE_STORY_WHO,
@@ -36,7 +64,6 @@ const SCREEN = [
 
 const RNRoadmap = () => {
   const navigation: any = useNavigation();
-  const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const [positionRefs, setPositionRefs] = React.useState({
     0: {height: 0, width: 0, x: 0, y: 0},
     1: {height: 0, width: 0, x: 0, y: 0},
@@ -49,8 +76,13 @@ const RNRoadmap = () => {
   const storyGenerationResponse = useAppSelector(
     (state: RootState) => state.storyGeneration,
   );
+  const snapshots = useAppSelector((state: RootState) => state.snapshotReducer);
   const currentChild = useAppSelector(
     (state: RootState) => state.createChild.currentChild,
+  );
+
+  const [hightlightFirst, setHighlight] = React.useState(
+    snapshots.snapShot1 !== null,
   );
 
   const portrait = useAppSelector(
@@ -96,8 +128,72 @@ const RNRoadmap = () => {
     }
   };
 
+  const ref = React.useRef(null);
+
+  const {width: wWidth, height: heightRef} = useWindowDimensions();
+  const [hHeight, setHeight] = React.useState(
+    heightRef + (StatusBar.currentHeight || 0),
+  );
+  React.useEffect(() => {
+    setHeight(heightRef + (StatusBar.currentHeight || 0));
+  }, [heightRef]);
+
+  const outer = Skia.XYWHRect(0, 0, wWidth, hHeight);
+
+  const saveSnapShot = async () => {
+    const overlay = await makeImageFromView(ref);
+
+    if (!checkIfClickable[2]) {
+      // ! depending upon when .. the dispatched action will change
+      store.dispatch(addSnapShot1(overlay));
+      return;
+    }
+    if (checkIfClickable[6]) {
+      store.dispatch(addSnapShot2(overlay));
+    }
+  };
+
+  const circle = useSharedValue({x: 0, y: 0, r: 0});
+  const transition = useSharedValue(0);
+  const r = useDerivedValue(() => {
+    return mix(transition.value, 0, circle.value.r);
+  });
+
+  const performAnimation = async () => {
+    const y = positionRefs[1].y + verticalScale(120) / scale;
+    const x = positionRefs[1].x + verticalScale(105) / scale;
+    const corners = [
+      vec(0, 0),
+      vec(wWidth, 0),
+      vec(wWidth, hHeight),
+      vec(0, hHeight),
+    ];
+    const radius = Math.max(...corners.map(corner => dist(corner, {x, y})));
+    circle.value = {x, y, r: radius};
+    await saveSnapShot();
+    transition.value = 0;
+    transition.value = withTiming(1, {duration: 3000});
+    await wait(3000);
+
+    store.dispatch(addSnapShot1(null));
+    store.dispatch(addSnapShot2(null));
+  };
+
+  React.useEffect(() => {
+    const begin = async () => {
+      if (snapshots.snapShot1 !== null) {
+        return;
+      }
+      await wait(200);
+      await saveSnapShot();
+      setHighlight(true);
+    };
+    begin();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
-    <>
+    <View ref={ref} style={{flex: 1}}>
       <RNScreenWrapper style={styles.container}>
         <View style={styles.header}>
           <RNButton
@@ -117,7 +213,7 @@ const RNRoadmap = () => {
         <View
           style={[
             styles.roadmap,
-            !isTablet && Platform.OS !== 'ios' && {paddingTop: 10},
+            // !isTablet && Platform.OS !== 'ios' && {paddingTop: 10},
           ]}>
           <Pressable
             onLayout={event => {
@@ -134,13 +230,19 @@ const RNRoadmap = () => {
               styles.create,
               {
                 left: verticalScale(35) / scale,
+                height: verticalScale(160) / scale,
+                width: verticalScale(160) / scale,
+                top: verticalScale(portrait ? -1 : 40),
               },
             ]}
             onPress={async () => {
+              console.log('first');
               if (!checkIfClickable[6]) {
                 return;
               }
+
               try {
+                performAnimation();
                 await generateStory({
                   childId: currentChild.childId,
                   storyPromptData: storyGenerationResponse,
@@ -299,7 +401,10 @@ const RNRoadmap = () => {
                   1: layout,
                 }));
               }}
-              onPress={() => {
+              onPress={async () => {
+                if (!hightlightFirst) {
+                  return;
+                }
                 handleNavigate(0);
               }}
               style={[
@@ -311,8 +416,10 @@ const RNRoadmap = () => {
               ]}>
               <Who
                 scale={scale}
-                fillColor={'#9A00FF'}
-                textColor={themeColor.white}
+                fillColor={hightlightFirst ? '#9A00FF' : themeColor.lightGray}
+                textColor={
+                  hightlightFirst ? themeColor.white : themeColor.themeBlue
+                }
               />
             </Pressable>
           )}
@@ -337,7 +444,8 @@ const RNRoadmap = () => {
                   width: verticalScale(80) / scale,
                 },
               ]}
-              onPress={() => {
+              onPress={async () => {
+                await saveSnapShot();
                 handleNavigate(0);
               }}>
               <RNTextComponent
@@ -351,8 +459,27 @@ const RNRoadmap = () => {
             </Pressable>
           )}
         </View>
+        <Canvas
+          pointerEvents="none"
+          style={{
+            height: hHeight,
+            width: wWidth,
+          }}>
+          {snapshots.snapShot1 && snapshots.snapShot2 && (
+            <Group>
+              <Image image={snapshots.snapShot1} rect={outer} fit="cover" />
+              <Circle c={circle} r={r}>
+                <ImageShader
+                  image={snapshots.snapShot2}
+                  rect={outer}
+                  fit="cover"
+                />
+              </Circle>
+            </Group>
+          )}
+        </Canvas>
       </RNScreenWrapper>
-    </>
+    </View>
   );
 };
 
