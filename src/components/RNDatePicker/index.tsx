@@ -127,7 +127,7 @@ const RNDatePicker = ({
           />
         </View>
         <View style={styles.bottom}>
-          <Pressable onPress={renderModal}>
+          <Pressable onPress={renderModal} hitSlop={30}>
             <RNTextComponent>{translation('CANCEL')}</RNTextComponent>
           </Pressable>
           <Pressable
@@ -140,7 +140,8 @@ const RNDatePicker = ({
               }
               setIsDatePickerUsed(false);
               renderModal();
-            }}>
+            }}
+            hitSlop={30}>
             <RNTextComponent>{translation('OK')}</RNTextComponent>
           </Pressable>
         </View>
