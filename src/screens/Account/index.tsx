@@ -78,7 +78,11 @@ const Account = () => {
     1: {height: 0, width: 0, x: 0, y: 0},
   });
   useEffect(() => {
-    if ((!tooltipArray?.[1] && childList.length) || adultList.length > 0) {
+    if (
+      !tooltipArray?.[1] &&
+      !tooltipArray?.[7] &&
+      (childList.length > 0 || adultList.length > 0 || peopleList.length > 0)
+    ) {
       dispatch(changeTooltipStateIfChildListNotEmpty());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
