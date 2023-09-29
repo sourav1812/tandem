@@ -23,6 +23,7 @@ import themeColor from '@tandem/theme/themeColor';
 import {BooksData} from './interface';
 import {ratingList} from '@tandem/components/RNRatingModal/interface';
 import {clearStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration.slice';
+import SadFace from '@tandem/assets/svg/Sad';
 
 const Bookshelf = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -65,7 +66,8 @@ const Bookshelf = () => {
     return (
       <View style={styles.listEmptyComponentContainer}>
         <View style={styles.listEmptyComponentEmogiContainer}>
-          <Text style={styles.listEmptyComponentEmoji}>{'\u{1F614}'}</Text>
+          {/* <Text style={styles.listEmptyComponentEmoji}>{'\u{1F614}'}</Text> */}
+          <SadFace />
         </View>
         <RNTextComponent isSemiBold style={styles.nothingToSeeText}>
           {mode === MODE.A ? currentChild.name + ' ' : null}

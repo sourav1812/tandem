@@ -34,6 +34,7 @@ import {
 } from '@tandem/redux/slices/createChild.slice';
 import {clearStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration.slice';
 import {DIRECTION_ARROWS} from '@tandem/constants/enums';
+import WavingHand from '@tandem/assets/svg/WavingHand';
 
 const Home = () => {
   const portrait = useAppSelector(
@@ -276,21 +277,27 @@ const Home = () => {
                     : themeColor.gold,
               },
             ]}>
-            <RNTextComponent
-              isSemiBold
+            <View
               style={{
-                ...styles.heading,
-                color: themeColor.white,
+                flexDirection: 'row',
                 marginTop:
                   !isTablet && portrait ? verticalScale(60) : verticalScale(20),
               }}>
-              {translation('HELLO')}
-              {', '}
-              {mode === MODE.A &&
-                (user.firstName ? `${user.firstName}! ` : currentAdult.role)}
-              {(mode === MODE.B || mode === MODE.C) && `${currentChild.name}! `}
-              👋🏻
-            </RNTextComponent>
+              <RNTextComponent
+                isSemiBold
+                style={{
+                  ...styles.heading,
+                  color: themeColor.white,
+                }}>
+                {translation('HELLO')}
+                {', '}
+                {mode === MODE.A &&
+                  (user.firstName ? `${user.firstName}! ` : currentAdult.role)}
+                {(mode === MODE.B || mode === MODE.C) &&
+                  `${currentChild.name}! `}
+              </RNTextComponent>
+              <WavingHand style={{marginTop: -2}} />
+            </View>
             <Pressable
               onPress={() => navigation.push(SCREEN_NAME.ACCOUNT)}
               style={[
