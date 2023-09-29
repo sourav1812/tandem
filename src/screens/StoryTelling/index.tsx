@@ -47,10 +47,6 @@ const StoryTelling = () => {
     toggleMic: false,
     showQuestion: false,
     wellDoneModal: false,
-    // tooltipOne: !tooltipArray?.[13],
-    // tooltipTwo: false,
-    // tooltipThree: false,
-    // tooltipFour: false,
   });
 
   const refOne = useRef<any>(null);
@@ -62,15 +58,7 @@ const StoryTelling = () => {
     2: {height: 0, width: 0, x: 0, y: 0},
   });
 
-  const {
-    ratingModal,
-    showQuestion,
-    wellDoneModal,
-    // tooltipOne,
-    // tooltipTwo,
-    // tooltipThree,
-    // tooltipFour,
-  } = state;
+  const {ratingModal, showQuestion, wellDoneModal} = state;
 
   const updateState = (date: any) => {
     setState((previouState: any) => {
@@ -78,14 +66,6 @@ const StoryTelling = () => {
     });
   };
   React.useEffect(() => {
-    // switch (currentIndex) {
-    //   case 1:
-    //     updateState({showQuestion: true});
-    //     break;
-    //   case 3:
-    //     updateState({showQuestion: true});
-    //     break;
-    // }
     if (currentIndex === 1 && book.rating === 0) {
       updateState({ratingModal: true});
     }
@@ -102,9 +82,6 @@ const StoryTelling = () => {
   const renderReadingLevel = () => {
     setReadingLevel(!readingLevel);
   };
-  // const renderTipLevel = () => {
-  //   setReadingTip(!readingTip);
-  // };
 
   const submitRatingModal = async (rating: number) => {
     updateState({ratingModal: !ratingModal});
@@ -155,10 +132,6 @@ const StoryTelling = () => {
           alignItems: 'center',
         }}
         open={13}
-        // setClose={() => {
-        //   updateState({tooltipOne: false, tooltipTwo: true});
-        //   dispatch(changeTooltipState(13));
-        // }}
         text={translation('READ_ALOUD')}
         textContainerStyle={styles.tooltipTwo}
         textStyle={[
@@ -210,9 +183,6 @@ const StoryTelling = () => {
             />
             <RNVoiceQuesiton
               onClick={renderWellDoneModal}
-              // onClick={() => {
-              //   updateState({showQuestion: false});
-              // }}
               customStyle={{paddingHorizontal: scale(20)}}
             />
           </View>
@@ -234,12 +204,7 @@ const StoryTelling = () => {
                 updateState({showQuestion: false});
                 dispatch(changeTooltipState(16));
               }}
-              customStyle={[
-                styles.multiplechoice,
-                // !portrait && {
-                //   height: verticalScale(200),
-                // },
-              ]}
+              customStyle={[styles.multiplechoice]}
             />
           </View>
         );

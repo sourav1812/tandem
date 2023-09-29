@@ -232,11 +232,7 @@ const Home = () => {
             }
           })}
       </Pressable>
-      <RNScreenWrapper
-      // giveStatusColor={
-      //   !tooltipArray?.[7] || !tooltipArray?.[8] ? true : false
-      // }
-      >
+      <RNScreenWrapper>
         <View style={[styles.container]}>
           <View
             onLayout={event => {

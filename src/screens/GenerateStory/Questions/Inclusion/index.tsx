@@ -21,7 +21,6 @@ export default () => {
   const currentChild = useAppSelector(state => state.createChild.currentChild);
   const portrait = useAppSelector(state => state.orientation.isPortrait);
   const avatars = useAppSelector(state => state.cache.avatars);
-  // const dispatch = useDispatch();
   const [selected, setSelected] = React.useState<number>(0);
 
   const currentChildAvatar = avatars.filter(
@@ -41,7 +40,6 @@ export default () => {
       onBack={() => {
         removeQuestionData(STORY_PARTS.INCLUSION);
       }}
-      // giveStatusColor={tooltipFifth}
       questionNumber={2}>
       <>
         <RNTextComponent isSemiBold style={styles.question}>

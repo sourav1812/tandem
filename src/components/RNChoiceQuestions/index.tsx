@@ -77,7 +77,6 @@ const RNChoiceQuestions = ({
                 alignItems: 'center',
               }}
               open={9}
-              // setClose={onTooltipClose}
               text={translation('CHOOSE_FROM_THE_GIVE_OPTIONS')}
               textContainerStyle={[
                 styles.tooltipContainer,

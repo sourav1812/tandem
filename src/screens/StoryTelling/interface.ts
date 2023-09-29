@@ -13,8 +13,4 @@ export interface StateObject {
   toggleMic: boolean;
   showQuestion: boolean;
   wellDoneModal: boolean;
-  // tooltipOne: boolean;
-  // tooltipTwo: boolean;
-  // tooltipThree: boolean;
-  // tooltipFour: boolean;
 }

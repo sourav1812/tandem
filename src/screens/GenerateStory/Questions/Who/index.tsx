@@ -18,20 +18,6 @@ export default () => {
   const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
-  // const dispatch = useDispatch();
-  // const tooltipArray = useAppSelector(state => state.tooltipReducer);
-  // const [tooltipFirst, setTooltipFirst] = React.useState(!tooltipArray?.[9]);
-  // const [buttonTooltip, setShowButtonTooltip] = React.useState(false);
-  // const onCloseFirstTooltip = () => {
-  //   setTooltipFirst(false);
-  //   dispatch(changeTooltipState(9));
-  //   if (!tooltipArray?.[10]) {
-  //     setShowButtonTooltip(true);
-  //   }
-  // };
-  // const onCloseButtonTooltip = () => {
-  //   setShowButtonTooltip(false);
-  // };
 
   const [disabled, setDisabled] = React.useState(true);
 
@@ -39,8 +25,6 @@ export default () => {
     <GenerateStory
       type={STORY_PARTS.WHO}
       maxSelections={3}
-      // onCloseButtonTooltip={onCloseButtonTooltip}
-      // showButtonTooltip={buttonTooltip ? 10 : undefined}
       onBack={() => {
         removeQuestionData(STORY_PARTS.WHO);
       }}
@@ -66,8 +50,6 @@ export default () => {
           maxSelections={3}
           index={0}
           data={AUDIENCE}
-          // visibletoolTip={tooltipFirst}
-          // onTooltipClose={onCloseFirstTooltip}
         />
       </>
     </GenerateStory>

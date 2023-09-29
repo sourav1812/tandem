@@ -64,7 +64,6 @@ interface RenderSceneProps {
   total: number;
   hHeight: number;
   outer: SkRect;
-  // tooltipState: StateObject;
   tooltipArray: any;
 }
 
@@ -253,11 +252,6 @@ export const Project = ({
           onPress={() => {
             if (!tooltipArray?.[15]) {
               dispatch(changeTooltipState(15));
-              // setTooltipState(prev => ({
-              //   ...prev,
-              //   tooltipThree: false,
-              //   tooltipFour: true,
-              // }));
               setTooltipA(true);
             }
           }}
@@ -323,12 +317,9 @@ const RenderScene = ({
   total,
   outer,
   hHeight,
-  // tooltipState,
   tooltipArray,
 }: RenderSceneProps) => {
   const imageRef = useImage(image || PAPER);
-  // const {width: wWidth} = useWindowDimensions();
-  // const numberOfChars = Math.floor((wWidth * 1.5) / fontSize);
   const [showBackdrop, setShowBackdrop] = React.useState(false);
   const arrowImage = useImage(require('../../assets/png/SouthArrow.png'));
   const {width: wWidth} = useWindowDimensions();

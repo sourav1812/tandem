@@ -193,7 +193,6 @@ const RNChooseColor = ({
                 alignItems: 'center',
               }}
               open={12}
-              // setClose={onTooltipClose}
               text={translation('ADD_COLORS')}
               textStyle={styles.tooltip}
               dimensionObject={positionRefs[0]}>

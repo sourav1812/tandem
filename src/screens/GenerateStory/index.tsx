@@ -20,18 +20,14 @@ export default ({
   onNextQuestion,
   children,
   disabled,
-  // giveStatusColor,
   questionNumber,
   onBack,
-  // showButtonTooltip,
-  // onCloseButtonTooltip,
   type,
   maxSelections,
 }: {
   onNextQuestion?: () => void;
   children: React.ReactElement;
   disabled?: boolean;
-  // giveStatusColor?: boolean;
   questionNumber: number;
   onBack: () => void;
   showButtonTooltip?: number;
@@ -49,7 +45,6 @@ export default ({
 
   const storyGeneration = useAppSelector(state => state.storyGeneration);
   const activeState = type ? storyGeneration[type] : null;
-  // const dispatch = useDispatch();
   const [userCameback, setUserCameBack] = React.useState(false);
 
   React.useEffect(() => {
@@ -63,9 +58,7 @@ export default ({
   }, [disabled]);
 
   return (
-    <RNScreenWrapper
-    //  giveStatusColor={giveStatusColor}
-    >
+    <RNScreenWrapper>
       <View style={styles.container}>
         <View
           style={{
@@ -121,13 +114,6 @@ export default ({
             alignItems: 'center',
           }}
           open={10}
-          // setClose={() => {
-          //   dispatch(changeTooltipState(10));
-          //   dispatch(changeTooltipStatePlusONe(10));
-          //   if (onCloseButtonTooltip) {
-          //     onCloseButtonTooltip();
-          //   }
-          // }}
           bottom={DIRECTION_ARROWS.SOUTH}
           text={translation('PRESS_THE_BUTTON')}
           textStyle={styles.tooltip}>

@@ -225,14 +225,7 @@ const Account = () => {
   };
 
   return (
-    <RNScreenWrapper
-      style={styles.container}
-      // giveStatusColor={
-      //   (!tooltipArray?.[1] && childList.length === 0) || !tooltipArray?.[2]
-      //     ? true
-      //     : false
-      // }
-    >
+    <RNScreenWrapper style={styles.container}>
       <View
         style={[
           styles.header,
@@ -573,7 +566,6 @@ const Account = () => {
               showsHorizontalScrollIndicator={false}
               decelerationRate={'normal'}>
               {peopleList.length === 0 && !tooltipArray[4] && (
-                // dummyViews.Two &&
                 <View
                   style={{
                     flexDirection: 'column',
