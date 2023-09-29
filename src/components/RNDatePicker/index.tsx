@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import {View, FlatList, Pressable} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import RNModal from '../RNModal';
 import styles from './styles';
 import {congratsModalProps} from './interface';
@@ -23,37 +23,27 @@ const RNDatePicker = ({
   const monthRef = React.useRef(null);
   const [month, setMonth] = React.useState(date.getMonth());
   const [year, setYear] = React.useState<number>(YEARS_ARRAY.length - 1);
+  const [isDatePickerUsed, setIsDatePickerUsed] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (visible) {
       setTimeout(() => {
-        monthRef.current.scrollToIndex({
+        monthRef.current?.scrollToIndex({
           animated: true,
-          index: month - 1,
-          // viewPosition: 0.35,
+          index: month === 0 ? 0 : month - 1,
         });
-        yearRef.current.scrollToIndex({
+        yearRef.current?.scrollToIndex({
           animated: true,
-          index: year,
-          viewPosition: 0.35,
+          index: year ? year : YEARS_ARRAY.length - 1,
         });
       }, 300);
     }
+    return () => {
+      setMonth(date.getMonth());
+      setYear(YEARS_ARRAY.length - 1);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible]);
-
-  // const onViewableItemsChangedForMonth = React.useCallback(
-  //   ({viewableItems}: any) => {
-  //     console.log(viewableItems, 'viewableItemsviewableItems234');
-  //     if (viewableItems.length % 2 === 0 || true) {
-  //       console.log(viewableItems, 'viewableItems');
-  //       const firstIndex = viewableItems[0].index;
-  //       // const lastIndex = viewableItems.slice(-1)[0].index;
-  //       // const middleIndex = Math.round((lastIndex - firstIndex) / 2);
-  //       setMonth(firstIndex + Math.round(viewableItems.length / 2 - 1));
-  //     }
-  //   },
-  //   [],
-  // );
 
   return (
     <RNModal
@@ -68,7 +58,6 @@ const RNDatePicker = ({
         <View style={styles.top}>
           <FlatList
             data={MONTH_ARRAY}
-            // onViewableItemsChanged={onViewableItemsChangedForMonth}
             initialNumToRender={MONTH_ARRAY.length + 1}
             contentContainerStyle={{alignItems: 'center'}}
             decelerationRate={5}
@@ -77,6 +66,7 @@ const RNDatePicker = ({
               <Pressable
                 onPress={() => {
                   setMonth(index);
+                  setIsDatePickerUsed(true);
                 }}
                 style={[
                   styles.button,
@@ -105,11 +95,11 @@ const RNDatePicker = ({
             contentContainerStyle={{alignItems: 'center'}}
             style={{width: '50%'}}
             renderItem={({item, index}) => {
-              console.log(year, index);
               return (
                 <Pressable
                   onPress={() => {
                     setYear(item.index);
+                    setIsDatePickerUsed(true);
                   }}
                   style={[
                     styles.button,
@@ -131,7 +121,7 @@ const RNDatePicker = ({
                 </Pressable>
               );
             }}
-            keyExtractor={i => i.index}
+            keyExtractor={i => i.yearkey.toString()}
             showsVerticalScrollIndicator={false}
             ref={yearRef}
           />
@@ -142,10 +132,13 @@ const RNDatePicker = ({
           </Pressable>
           <Pressable
             onPress={() => {
-              getMonthYear(
-                MONTH_ARRAY[date.getMonth()].monthKey,
-                YEARS_ARRAY[year].yearkey,
-              );
+              const newDateISO = new Date(
+                `${YEARS_ARRAY[year].yearkey}-${month + 1}-01T01:01:01.000Z`,
+              ).toISOString();
+              if (isDatePickerUsed) {
+                getMonthYear(newDateISO);
+              }
+              setIsDatePickerUsed(false);
               renderModal();
             }}>
             <RNTextComponent>{translation('OK')}</RNTextComponent>

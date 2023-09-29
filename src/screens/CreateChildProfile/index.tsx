@@ -747,8 +747,8 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
       <RNDatePicker
         visible={dateModal}
         renderModal={toggleDatePicker}
-        getMonthYear={(month, year) => {
-          console.log(month, year);
+        getMonthYear={date => {
+          setDob({value: date});
         }}
       />
     </RNScreenWrapper>
