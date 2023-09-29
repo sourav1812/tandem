@@ -25,6 +25,10 @@ import {ratingList} from '@tandem/components/RNRatingModal/interface';
 import {clearStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration.slice';
 import {useDispatch} from 'react-redux';
 import {changeTooltipStateToFalse} from '@tandem/redux/slices/tooltip.slice';
+import {
+  addSnapShot1,
+  addSnapShot2,
+} from '@tandem/redux/slices/animationSnapshots.slice';
 
 const Bookshelf = () => {
   const dispatch = useDispatch();
@@ -82,6 +86,8 @@ const Bookshelf = () => {
           title={translation('bookshelf.write-a-story')}
           onClick={() => {
             store.dispatch(clearStoryGenerationResponse());
+            store.dispatch(addSnapShot1(null));
+            store.dispatch(addSnapShot2(null));
             navigateTo(SCREEN_NAME.ROADMAP);
           }}
         />
