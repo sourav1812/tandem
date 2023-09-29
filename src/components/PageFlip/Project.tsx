@@ -142,7 +142,6 @@ export const Project = ({
   const [overlay2, setOverlay2] = React.useState<SkImage | null>(null);
   const ref = useRef(null);
   const [bottomPageIndex, setBottomPageindex] = React.useState(activeIndex);
-  const [tooltipA, setTooltipA] = useState(false);
   const [pageArray, setPageArray] = React.useState<(SkImage | null)[]>([]);
   const onTouch = useTouchHandler(
     {
@@ -252,7 +251,6 @@ export const Project = ({
           onPress={() => {
             if (!tooltipArray?.[15]) {
               dispatch(changeTooltipState(15));
-              setTooltipA(true);
             }
           }}
         />
@@ -264,7 +262,11 @@ export const Project = ({
           height: hHeight,
         }}
         onTouch={
-          tooltipA ? (activeIndex === 0 ? undefined : onTouch) : undefined
+          tooltipArray?.[15]
+            ? activeIndex === 0
+              ? undefined
+              : onTouch
+            : undefined
         }>
         {activeIndex >= 0 && (
           <RenderScene
