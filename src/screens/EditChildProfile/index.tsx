@@ -3,7 +3,7 @@ import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import RNLogoHeader from '@tandem/components/RNLogoHeader';
 import {translation} from '@tandem/utils/methods';
-import {Alert, Image, Pressable, View} from 'react-native';
+import {Image, Pressable, View} from 'react-native';
 import RNTextInputWithLabel from '@tandem/components/RNTextInputWithLabel';
 import {StateObject} from './interface';
 import {scale, verticalScale} from 'react-native-size-matters';
@@ -14,7 +14,6 @@ import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
 import dayjs from 'dayjs';
 import {RootState} from '@tandem/redux/store';
 import RNChangeAvatarModal from '@tandem/components/RNChangeAvatarModal';
-import DatePicker from 'react-native-date-picker';
 import {LanguageDropDown} from '@tandem/components/LanguageDropDown';
 import validationFunction from '@tandem/functions/validationFunction';
 import {editChildProfile} from '@tandem/api/editChildProfile';
@@ -269,19 +268,6 @@ const EditChildProfile = ({route}: EditChildProfileProps) => {
         renderModal={renderAvatarModal}
         getAvatar={getAvatar}
       />
-      {/* <DatePicker
-        modal
-        mode={'date'}
-        open={dateModal}
-        date={new Date(dob.value)}
-        onConfirm={date => {
-          setDateModal(false);
-          setDob({value: date.toISOString()});
-        }}
-        onCancel={() => {
-          setDateModal(false);
-        }}
-      /> */}
       <RNDatePicker
         visible={dateModal}
         renderModal={toggleDatePicker}
