@@ -28,6 +28,8 @@ export const styles = StyleSheet.create({
     borderRadius: 1000,
     alignSelf: 'center',
     marginTop: verticalScale(18),
+    borderWidth: 1,
+    borderColor: '#D3D3D3',
   },
   name: {
     fontSize: verticalScale(17),

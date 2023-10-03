@@ -44,6 +44,7 @@ const RNTooltip = ({
   const toShowAllTooltip = Object.values(tooltipFromRedux).every(
     value => value,
   );
+
   return (
     <Tooltip
       allowChildInteraction={false}
