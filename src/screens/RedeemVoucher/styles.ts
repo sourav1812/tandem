@@ -7,9 +7,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: themeColor.white,
     paddingHorizontal: scale(21),
-    paddingTop:
-      // Platform.OS === 'ios' ? verticalScale(20) : StatusBar.currentHeight,
-      0,
+    paddingTop: 0,
   },
   text: {
     fontSize: verticalScale(18),
@@ -30,7 +28,6 @@ export const styles = StyleSheet.create({
     marginTop: verticalScale(8),
   },
   seperation: {
-    // flexDirection: 'row',
     alignItems: 'center',
     marginTop: verticalScale(16),
   },
