@@ -220,4 +220,30 @@ export const RELATIONSHIP_ARRAY = [
   {role: translation('OTHER')},
 ];
 
+export const CACHE_SESSION = 'tandemcache';
+
+export const MONTH_ARRAY: {month: string; monthKey: string}[] = [
+  {month: translation('JANUARY'), monthKey: 'january'},
+  {month: translation('FEBRUARY'), monthKey: 'february'},
+  {month: translation('MARCH'), monthKey: 'march'},
+  {month: translation('APRIL'), monthKey: 'april'},
+  {month: translation('MAY'), monthKey: 'may'},
+  {month: translation('JUNE'), monthKey: 'june'},
+  {month: translation('JULY'), monthKey: 'july'},
+  {month: translation('AUGUST'), monthKey: 'august'},
+  {month: translation('SEPTEMBER'), monthKey: 'september'},
+  {month: translation('OCTOBER'), monthKey: 'october'},
+  {month: translation('NOVEMBER'), monthKey: 'november'},
+  {month: translation('DECEMBER'), monthKey: 'december'},
+];
 export const CACHE_DIR = 'tandemCacheDirectory';
+
+export const YEARS_ARRAY = Array.from(
+  {length: Math.abs(1985 - new Date().getFullYear()) + 1},
+  (_, i) => {
+    return {
+      index: i,
+      yearkey: 1985 + i,
+    };
+  },
+);

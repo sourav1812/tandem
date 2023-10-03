@@ -14,7 +14,6 @@ import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
 import dayjs from 'dayjs';
 import {RootState} from '@tandem/redux/store';
 import RNChangeAvatarModal from '@tandem/components/RNChangeAvatarModal';
-import DatePicker from 'react-native-date-picker';
 import {LanguageDropDown} from '@tandem/components/LanguageDropDown';
 import validationFunction from '@tandem/functions/validationFunction';
 import {editChildProfile} from '@tandem/api/editChildProfile';
@@ -29,6 +28,7 @@ import {EditChildProfileProps} from '@tandem/navigation/types';
 import {editAdultProfile} from '@tandem/api/editAdultProfile';
 import {deleteAdultProfile} from '@tandem/api/deleteAdultProfile';
 import themeColor from '@tandem/theme/themeColor';
+import RNDatePicker from '@tandem/components/RNDatePicker';
 
 const EditChildProfile = ({route}: EditChildProfileProps) => {
   const dispatch = useAppDispatch();
@@ -81,13 +81,13 @@ const EditChildProfile = ({route}: EditChildProfileProps) => {
     updateState({showAvatarModal: !showAvatarModal});
   };
 
-  const selectDate = () => {
-    setDateModal(true);
-  };
-
   const getAvatar = (url: string | null) => {
     console.log(url);
     updateState({localAvatarState: url});
+  };
+
+  const toggleDatePicker = () => {
+    setDateModal(!dateModal);
   };
 
   const handleEditChildProfileRequest = async () => {
@@ -209,16 +209,12 @@ const EditChildProfile = ({route}: EditChildProfileProps) => {
           validationType={FORM_INPUT_TYPE.NAME}
           updateText={setName}
         />
-        <Pressable
-          onPress={() => {
-            selectDate();
-          }}>
-          <LanguageDropDown
-            customStyle={styles.date}
-            heading={translation('DATE_OF_BIRTH')}
-            text={dayjs(dob.value?.toString()).format('MMM-YYYY')}
-          />
-        </Pressable>
+        <LanguageDropDown
+          customStyle={styles.date}
+          heading={translation('DATE_OF_BIRTH')}
+          text={dayjs(dob.value?.toString()).format('MMM-YYYY')}
+          onPress={toggleDatePicker}
+        />
       </View>
       {console.log(currentChild, name.value)}
       <View
@@ -272,17 +268,11 @@ const EditChildProfile = ({route}: EditChildProfileProps) => {
         renderModal={renderAvatarModal}
         getAvatar={getAvatar}
       />
-      <DatePicker
-        modal
-        mode={'date'}
-        open={dateModal}
-        date={new Date(dob.value)}
-        onConfirm={date => {
-          setDateModal(false);
-          setDob({value: date.toISOString()});
-        }}
-        onCancel={() => {
-          setDateModal(false);
+      <RNDatePicker
+        visible={dateModal}
+        renderModal={toggleDatePicker}
+        getMonthYear={date => {
+          setDob({value: date});
         }}
       />
     </RNScreenWrapper>

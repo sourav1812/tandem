@@ -33,9 +33,9 @@ const ChangePassword = () => {
   });
   const {showModal} = state;
 
-  const updateState = (date: any) => {
+  const updateState = (data: any) => {
     setState((previouState: any) => {
-      return {...previouState, ...date};
+      return {...previouState, ...data};
     });
   };
 
@@ -144,7 +144,6 @@ const ChangePassword = () => {
           onClick={hangleChangePassword}
         />
       </View>
-
       <RNChangePassword visible={showModal} renderModal={toggleModal} />
     </RNScreenWrapper>
   );
