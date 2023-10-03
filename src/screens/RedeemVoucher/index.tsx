@@ -17,10 +17,14 @@ import RNTextInputWithLabel from '@tandem/components/RNTextInputWithLabel';
 import {ValidationError} from '@tandem/utils/validations';
 import Paste from '@tandem/assets/svg/Paste';
 import navigateTo from '@tandem/navigation/navigate';
+import {verticalScale} from 'react-native-size-matters';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 
 const height = Dimensions.get('screen').height;
 
 const RedeemVoucher = () => {
+  const isTablet = useAppSelector(state => state.deviceType.isTablet);
+
   const [voucher, setVoucher] = useState<ValidationError>({value: ''});
 
   return (
@@ -44,7 +48,13 @@ const RedeemVoucher = () => {
           </RNTextComponent>
           <Image
             source={require('@tandem/assets/png/qrcode.png')}
-            style={styles.qr}
+            style={[
+              styles.qr,
+              isTablet && {
+                height: verticalScale(200),
+                width: verticalScale(200),
+              },
+            ]}
           />
           <View style={styles.seperation}>
             <View style={styles.line} />
