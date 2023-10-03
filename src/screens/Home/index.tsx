@@ -24,8 +24,6 @@ import {MODE} from '@tandem/constants/mode';
 import BlueButon from '@tandem/assets/svg/YellowButton';
 import BothButton from '@tandem/assets/svg/BothButton';
 import RNTooltip from '@tandem/components/RNTooltip';
-import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
-import {TOOLTIP} from '@tandem/constants/local';
 import {useNavigation} from '@react-navigation/native';
 import {RootState, store} from '@tandem/redux/store';
 import {
@@ -34,6 +32,10 @@ import {
 } from '@tandem/redux/slices/createChild.slice';
 import {clearStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration.slice';
 import {DIRECTION_ARROWS} from '@tandem/constants/enums';
+import {
+  addSnapShot1,
+  addSnapShot2,
+} from '@tandem/redux/slices/animationSnapshots.slice';
 
 const Home = () => {
   const portrait = useAppSelector(
@@ -43,7 +45,6 @@ const Home = () => {
   const currentChild = useAppSelector(state => state.createChild.currentChild);
   const currentAdult = useAppSelector(state => state.createChild.currentAdult);
   const childList = useAppSelector(state => state.createChild.childList);
-
   const scaleImg = useRef(new Animated.Value(1)).current;
   const notificationScreenPermissions = useAppSelector(
     (state: RootState) => state.permissions,
@@ -51,11 +52,6 @@ const Home = () => {
   const avatars = useAppSelector(state => state.cache.avatars);
   const user = useAppSelector(state => state.userData.userDataObject);
   const filePath = avatars.filter(obj => obj.path === currentChild?.avatar)[0];
-  const [tooltipMode, setToolTipMode] = useState({
-    tooltipOne: true,
-    tooltipTwo: false,
-  });
-  const tooltipArray = getValueFromKey(TOOLTIP);
   const navigation: any = useNavigation();
   const refOne = useRef<any>(null);
   const refTwo = useRef<any>(null);
@@ -182,15 +178,8 @@ const Home = () => {
         <RNTooltip
           topViewStyle={{alignItems: 'center'}}
           isTablet={isTablet}
-          open={tooltipArray?.includes(4) ? false : tooltipMode.tooltipTwo}
-          setClose={() => {
-            setToolTipMode({
-              tooltipOne: false,
-              tooltipTwo: false,
-            });
-            tooltipArray.push(4);
-            storeKey(TOOLTIP, tooltipArray);
-          }}
+          open={8}
+          useWait
           text={translation('BY_CLICKING_CHANGE_CHILD_ACCOUNT')}
           textContainerStyle={styles.tooltipTwo}
           textStyle={styles.tooltipText}
@@ -243,13 +232,7 @@ const Home = () => {
             }
           })}
       </Pressable>
-      <RNScreenWrapper
-        giveStatusColor={
-          (tooltipMode.tooltipOne && !tooltipArray?.includes(3)) ||
-          (tooltipMode.tooltipTwo && !tooltipArray?.includes(4))
-            ? true
-            : false
-        }>
+      <RNScreenWrapper>
         <View style={[styles.container]}>
           <View
             onLayout={event => {
@@ -309,17 +292,7 @@ const Home = () => {
                   width: widthDimention / 2,
                   alignItems: 'flex-end',
                 }}
-                open={
-                  tooltipArray?.includes(3) ? false : tooltipMode.tooltipOne
-                }
-                setClose={() => {
-                  setToolTipMode({
-                    tooltipOne: false,
-                    tooltipTwo: true,
-                  });
-                  tooltipArray.push(3);
-                  storeKey(TOOLTIP, tooltipArray);
-                }}
+                open={7}
                 text={translation('SWITCH_MODE')}
                 // textContainerStyle={{marginRight: isTablet ? scale(100) : 0}}
                 dimensionObject={positionRefs[0]}>
@@ -466,6 +439,8 @@ const Home = () => {
                       onPress={() => {
                         if (index === 0) {
                           store.dispatch(clearStoryGenerationResponse());
+                          store.dispatch(addSnapShot1(null));
+                          store.dispatch(addSnapShot2(null));
                           navigateTo(SCREEN_NAME.ROADMAP);
                         }
                       }}

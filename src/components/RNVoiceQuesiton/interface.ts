@@ -7,6 +7,4 @@ export interface inputListState {
 export interface VoiceQuestionProps {
   onClick: () => void;
   customStyle?: StyleProp<ViewStyle>;
-  tooltipOneVisible?: boolean;
-  onTooltipOneClose?: () => void;
 }

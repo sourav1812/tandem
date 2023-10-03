@@ -30,8 +30,6 @@ import {MODE} from '@tandem/constants/mode';
 import themeColor from '@tandem/theme/themeColor';
 import {RootState} from '@tandem/redux/store';
 import RNTooltip from '@tandem/components/RNTooltip';
-import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
-import {TOOLTIP} from '@tandem/constants/local';
 import {
   AdultData,
   ChildData,
@@ -40,6 +38,8 @@ import {
 } from '@tandem/redux/slices/createChild.slice';
 import logout from '@tandem/functions/logout';
 import {DIRECTION_ARROWS, PEOPLE} from '@tandem/constants/enums';
+import {changeTooltipStateIfChildListNotEmpty} from '@tandem/redux/slices/tooltip.slice';
+// import {changeTooltipState} from '@tandem/redux/slices/tooltip.slice';
 
 const Account = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -47,14 +47,24 @@ const Account = () => {
   const adultList = useAppSelector(state => state.createChild.adultList);
   const [kidsList, setKidList] = useState(() => [...childList].reverse());
   const [peopleList, setPeopleList] = useState(() => [...adultList].reverse());
-  const [openTooltip, setOpentTooltip] = useState({
-    tooltipOne: true,
-    tooltipTwo: false,
-  });
+  // const [openTooltip, setOpentTooltip] = useState({
+  //   tooltipOne: true,
+  //   tooltipTwo: false,
+  //   tooltipThree: false,
+  //   tooltipFour: false,
+  //   tooltipFive: false,
+  //   tooltipSix: false,
+  // });
+  // const [dummyViews, setDummyViews] = useState({
+  //   One: false,
+  //   Two: false,
+  //   Three: false,
+  //   Four: false,
+  // });
   // const avatars = useAppSelector(state => state.cache.avatars);
   const {width} = Dimensions.get('window');
   const dispatch = useAppDispatch();
-  const tooltipArray = getValueFromKey(TOOLTIP);
+  const tooltipArray = useAppSelector(state => state.tooltipReducer);
 
   // const mode = useAppSelector(state => state.mode.mode);
   const [state, setState] = useState<StateObject>({
@@ -67,6 +77,16 @@ const Account = () => {
     0: {height: 0, width: 0, x: 0, y: 0},
     1: {height: 0, width: 0, x: 0, y: 0},
   });
+  useEffect(() => {
+    if (
+      !tooltipArray?.[1] &&
+      !tooltipArray?.[7] &&
+      (childList.length > 0 || adultList.length > 0 || peopleList.length > 0)
+    ) {
+      dispatch(changeTooltipStateIfChildListNotEmpty());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const CircleView = ({
     style,
     blue,
@@ -106,7 +126,8 @@ const Account = () => {
   useEffect(() => {
     setKidList([...childList].reverse());
     setPeopleList([...adultList].reverse());
-  }, [childList, adultList]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [childList.length, adultList.length]);
 
   useEffect(() => {
     dispatch(saveCurrentChild(childList[childList.length - 1]));
@@ -145,12 +166,12 @@ const Account = () => {
     }
   };
 
-  const removePlayer = (index: number) => {
+  const removePlayer = (index: number, type: string) => {
     const playerArry = [...playerList];
     playerArry.splice(index, 1);
     updateState({playerList: playerArry});
-    setKidList(() => [...childList].reverse());
-    setPeopleList(() => [...adultList].reverse());
+    if (type === PEOPLE.CHILD) setKidList(() => [...childList].reverse());
+    if (type === PEOPLE.ADULT) setPeopleList(() => [...adultList].reverse());
   };
 
   const buttonHeading = () => {
@@ -205,16 +226,7 @@ const Account = () => {
   };
 
   return (
-    <RNScreenWrapper
-      style={styles.container}
-      giveStatusColor={
-        (openTooltip.tooltipOne &&
-          !tooltipArray?.includes(1) &&
-          childList.length === 0) ||
-        (openTooltip.tooltipTwo && !tooltipArray?.includes(2))
-          ? true
-          : false
-      }>
+    <RNScreenWrapper style={styles.container}>
       <View
         style={[
           styles.header,
@@ -248,76 +260,102 @@ const Account = () => {
               justifyContent: 'center',
             },
           ]}>
-          <RNTooltip
-            open={
-              tooltipArray?.includes(1)
-                ? false
-                : childList.length !== 0
-                ? false
-                : openTooltip.tooltipOne
-            }
-            isTablet={isTablet}
-            topViewStyle={{alignItems: 'center'}}
-            text={translation('ADD_CHILD')}
-            setClose={() => {
-              setOpentTooltip({
-                tooltipOne: false,
-                tooltipTwo: true,
-              });
-              tooltipArray.push(1);
-              storeKey(TOOLTIP, tooltipArray);
-            }}
-            dimensionObject={positionRefs[0]}>
-            <Pressable
-              ref={refOne}
-              onLayout={() => {
-                refOne?.current?.measure(
-                  (
-                    width: number,
-                    height: number,
-                    pageX: number,
-                    pageY: number,
-                  ) => {
-                    setPositionRefs(prev => ({
-                      ...prev,
-                      0: {height: width, width: height, x: pageX, y: pageY},
-                    }));
+          <View
+            style={{
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}>
+            <RNTooltip
+              open={childList.length !== 0 ? undefined : 1}
+              isTablet={isTablet}
+              topViewStyle={{alignItems: 'center'}}
+              text={translation('ADD_CHILD')}
+              dimensionObject={positionRefs[0]}>
+              <Pressable
+                ref={refOne}
+                onLayout={() => {
+                  refOne?.current?.measure(
+                    (
+                      width: number,
+                      height: number,
+                      pageX: number,
+                      pageY: number,
+                    ) => {
+                      setPositionRefs(prev => ({
+                        ...prev,
+                        0: {height: width, width: height, x: pageX, y: pageY},
+                      }));
+                    },
+                  );
+                }}
+                style={[
+                  styles.add2,
+                  {
+                    height: portrait ? verticalScale(60) : verticalScale(45),
+                    width: portrait ? verticalScale(60) : verticalScale(45),
+                    borderRadius: 60,
+                    backgroundColor: 'white',
+                    marginRight: scale(3),
                   },
-                );
-              }}
-              style={[
-                styles.add2,
-                {
-                  height: portrait ? verticalScale(100) : verticalScale(80),
-                  width: portrait ? verticalScale(60) : verticalScale(80),
-                  borderRadius: 60,
-                  backgroundColor: 'white',
-                  marginRight: scale(3),
-                },
-              ]}
-              onPress={() => {
-                navigateTo(SCREEN_NAME.CREATE_CHILD_PROFILE);
-              }}>
-              <View
-                style={{
-                  height: portrait ? verticalScale(60) : verticalScale(40),
-                  width: portrait ? verticalScale(60) : verticalScale(40),
-                  borderRadius: 60,
-                  alignItems: 'center',
-                  justifyContent: 'center',
+                ]}
+                onPress={() => {
+                  navigateTo(SCREEN_NAME.CREATE_CHILD_PROFILE);
                 }}>
-                <Add />
-              </View>
-              <RNTextComponent isMedium style={[styles.addText]}>
-                {translation('ADD')}
-              </RNTextComponent>
-            </Pressable>
-          </RNTooltip>
-          <View>
+                <View
+                  style={{
+                    height: portrait ? verticalScale(60) : verticalScale(40),
+                    width: portrait ? verticalScale(60) : verticalScale(40),
+                    borderRadius: 60,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <Add />
+                </View>
+              </Pressable>
+            </RNTooltip>
+            <RNTextComponent isMedium style={[styles.addText]}>
+              {translation('ADD')}
+            </RNTextComponent>
+          </View>
+
+          <View
+            style={{
+              alignItems: 'center',
+              height: kidsList.length === 0 ? '20%' : '100%',
+            }}>
             <ScrollView
               horizontal
               showsHorizontalScrollIndicator={false}
               decelerationRate={'normal'}>
+              {childList.length === 0 && !tooltipArray[3] && (
+                <View
+                  style={{
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <RNTooltip
+                    isTablet={isTablet}
+                    useWait
+                    top={DIRECTION_ARROWS.NORTH_EAST}
+                    open={childList.length !== 0 ? undefined : 3}
+                    topViewStyle={{
+                      alignItems: 'center',
+                    }}
+                    text={translation('account-screen-tooltip.tip-one')}>
+                    <View
+                      style={{
+                        height: portrait
+                          ? verticalScale(60)
+                          : verticalScale(40),
+                        width: portrait ? verticalScale(60) : verticalScale(40),
+                        borderRadius: 60,
+                        backgroundColor: '#FEC247CC',
+                      }}
+                    />
+                  </RNTooltip>
+                </View>
+              )}
               {kidsList.map((item, index) => {
                 if (item.childId !== '' && item.childId) {
                   return (
@@ -353,16 +391,61 @@ const Account = () => {
             contentContainerStyle={{
               alignSelf: 'center',
               alignItems: 'center',
+              justifyContent: 'center',
             }}
             showsHorizontalScrollIndicator={false}
             decelerationRate={'normal'}>
+            {playerList.length === 0 &&
+              // dummyViews.Three &&
+              !tooltipArray[5] && (
+                <RNTooltip
+                  isTablet={isTablet}
+                  useWait
+                  top={DIRECTION_ARROWS.NORTH}
+                  open={5}
+                  topViewStyle={{
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                  text={translation('account-screen-tooltip.tip-two')}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'center',
+                    }}>
+                    <View
+                      style={{
+                        marginTop: scale(5),
+                        height: portrait
+                          ? verticalScale(60)
+                          : verticalScale(40),
+                        width: portrait ? verticalScale(60) : verticalScale(40),
+                        borderRadius: 60,
+                        backgroundColor: '#FEC247CC',
+                      }}
+                    />
+                    <View
+                      style={{
+                        marginLeft: scale(20),
+                        height: portrait
+                          ? verticalScale(70)
+                          : verticalScale(45),
+                        width: portrait ? verticalScale(70) : verticalScale(45),
+                        borderRadius: 60,
+                        backgroundColor: '#4285F6CC',
+                      }}
+                    />
+                  </View>
+                </RNTooltip>
+              )}
+
             {playerList.map((item, index) => {
               if (item.type === PEOPLE.CHILD && item?.childId) {
                 return (
                   <Pressable
                     key={index.toString()}
                     onPress={() => {
-                      removePlayer(index);
+                      removePlayer(index, item.type);
                     }}>
                     <RNKidsProfile
                       style={{
@@ -383,7 +466,7 @@ const Account = () => {
                   <Pressable
                     key={index.toString()}
                     onPress={() => {
-                      removePlayer(index);
+                      removePlayer(index, item.type);
                     }}>
                     <RNParentProfile
                       data={item}
@@ -409,92 +492,111 @@ const Account = () => {
             peopleList.length === 0 && {
               justifyContent: 'center',
             },
-            // {backgroundColor: 'yellow'},
           ]}>
-          <RNTooltip
-            bottom={DIRECTION_ARROWS.SOUTH}
-            rotation={30}
-            isTablet={isTablet}
-            topViewStyle={{
-              alignItems: 'center',
-              width: width,
-            }}
-            text={translation('ADD_YOURSELF')}
-            open={
-              tooltipArray?.includes(2) || positionRefs[1].x === 0
-                ? false
-                : openTooltip.tooltipTwo
-            }
-            setClose={() => {
-              setOpentTooltip({
-                tooltipOne: false,
-                tooltipTwo: false,
-              });
-              tooltipArray.push(2);
-              storeKey(TOOLTIP, tooltipArray);
-            }}>
-            <Pressable
-              ref={refTwo}
-              onLayout={() => {
-                refTwo?.current?.measure(
-                  (
-                    width: number,
-                    height: number,
-                    pageX: number,
-                    pageY: number,
-                  ) => {
-                    setPositionRefs(prev => ({
-                      ...prev,
-                      1: {height: width, width: height, x: pageX, y: pageY},
-                    }));
-                  },
-                );
+          <View style={{flexDirection: 'column', alignItems: 'center'}}>
+            <RNTooltip
+              bottom={DIRECTION_ARROWS.SOUTH}
+              isTablet={isTablet}
+              topViewStyle={{
+                alignItems: 'center',
+                width: width - scale(40),
               }}
-              style={[
-                styles.add,
-                {
-                  height: portrait ? verticalScale(150) : verticalScale(80),
-                  width: portrait ? verticalScale(70) : verticalScale(45),
-                  borderRadius: 60,
-                  backgroundColor: 'white',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginRight: scale(6),
-                },
-              ]}
-              onPress={() => {
-                navigateTo(SCREEN_NAME.CREATE_CHILD_PROFILE, {
-                  fromAddAdult: true,
-                });
-              }}>
-              <View
-                style={{
-                  height: portrait ? verticalScale(50) : verticalScale(30),
-                  width: portrait ? verticalScale(40) : verticalScale(25),
-                  borderRadius: 60,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginTop: portrait ? 0 : verticalScale(20),
-                }}>
-                <Add />
-              </View>
-              <RNTextComponent
-                isMedium
+              text={translation('ADD_YOURSELF')}
+              open={2}>
+              <Pressable
+                ref={refTwo}
+                onLayout={() => {
+                  refTwo?.current?.measure(
+                    (
+                      width: number,
+                      height: number,
+                      pageX: number,
+                      pageY: number,
+                    ) => {
+                      setPositionRefs(prev => ({
+                        ...prev,
+                        1: {height: width, width: height, x: pageX, y: pageY},
+                      }));
+                    },
+                  );
+                }}
                 style={[
-                  styles.addText,
+                  styles.add,
                   {
-                    marginTop: portrait ? verticalScale(15) : verticalScale(10),
+                    height: portrait ? verticalScale(70) : verticalScale(45),
+                    width: portrait ? verticalScale(70) : verticalScale(45),
+                    borderRadius: 60,
+                    backgroundColor: 'white',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginRight: scale(6),
                   },
-                ]}>
-                {translation('ADD')}
-              </RNTextComponent>
-            </Pressable>
-          </RNTooltip>
+                ]}
+                onPress={() => {
+                  navigateTo(SCREEN_NAME.CREATE_CHILD_PROFILE, {
+                    fromAddAdult: true,
+                  });
+                }}>
+                <View
+                  style={{
+                    height: portrait ? verticalScale(50) : verticalScale(30),
+                    width: portrait ? verticalScale(40) : verticalScale(25),
+                    borderRadius: 60,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <Add />
+                </View>
+              </Pressable>
+            </RNTooltip>
+            <RNTextComponent
+              isMedium
+              style={[
+                styles.addText,
+                {
+                  marginTop: portrait ? verticalScale(15) : verticalScale(10),
+                },
+              ]}>
+              {translation('ADD')}
+            </RNTextComponent>
+          </View>
+
           <View>
             <ScrollView
               horizontal
               showsHorizontalScrollIndicator={false}
               decelerationRate={'normal'}>
+              {peopleList.length === 0 && !tooltipArray[4] && (
+                <View
+                  style={{
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <RNTooltip
+                    isTablet={isTablet}
+                    bottom={DIRECTION_ARROWS.SOUTH}
+                    useWait
+                    open={4}
+                    topViewStyle={{
+                      alignItems: 'center',
+                      marginLeft: scale(40),
+                    }}
+                    text={translation('account-screen-tooltip.tip-three')}>
+                    <View
+                      style={{
+                        height: portrait
+                          ? verticalScale(70)
+                          : verticalScale(45),
+                        width: portrait ? verticalScale(70) : verticalScale(45),
+                        borderRadius: 60,
+                        backgroundColor: '#4285F6CC',
+                      }}
+                    />
+                  </RNTooltip>
+                </View>
+              )}
+
               {peopleList.map((item, index) => {
                 return (
                   <Pressable
@@ -509,79 +611,88 @@ const Account = () => {
             </ScrollView>
           </View>
         </View>
-        <View
-          style={[
-            styles.footer,
-            playerList.length === 0 &&
-              childList.length === 0 && {
-                backgroundColor: themeColor.lightGray,
-              },
-            {
-              marginTop: portrait ? verticalScale(30) : 'auto',
-            },
-          ]}>
-          <RNTextComponent
-            isSemiBold
+        <RNTooltip
+          isTablet={isTablet}
+          bottom={DIRECTION_ARROWS.SOUTH}
+          open={6}
+          topViewStyle={{alignItems: 'center'}}
+          text={translation('account-screen-tooltip.tip-four')}>
+          <View
             style={[
-              styles.text,
+              styles.footer,
               playerList.length === 0 &&
                 childList.length === 0 && {
-                  color: themeColor.themeBlue,
+                  backgroundColor: themeColor.lightGray,
                 },
               {
-                fontSize: verticalScale(15),
-                marginRight: 10,
+                marginTop: portrait ? verticalScale(30) : 'auto',
               },
             ]}>
-            {buttonHeading()}
-          </RNTextComponent>
-          <Pressable
-            style={[styles.button, isTablet && {width: scale(90)}]}
-            onPress={() => {
-              if (playerList.length !== 0) {
-                buttonPress();
-                navigateTo(SCREEN_NAME.BOTTOM_TAB, {}, true);
-              }
-            }}
-            disabled={childList.length === 0 || playerList.length === 0}>
-            {playerList.map(item => {
-              const circleType = [];
-              // const filePath = avatars.filter(
-              //   obj => obj.path === item.avatar,
-              // )[0]?.file;
-              if (item.type === PEOPLE.CHILD) {
-                circleType.push('C');
-                // return (
-                //   <CircleView yellow />
-                // <Image
-                //   key={index.toString()}
-                //   source={{uri: filePath || item.avatar}}
-                //   style={styles.profile}
-                // />
-                // );
-              }
-              if (item.type === PEOPLE.ADULT) {
-                circleType.push('A');
+            <RNTextComponent
+              isSemiBold
+              style={[
+                styles.text,
+                playerList.length === 0 &&
+                  childList.length === 0 && {
+                    color: themeColor.themeBlue,
+                  },
+                {
+                  fontSize: verticalScale(15),
+                  marginRight: 10,
+                },
+              ]}>
+              {buttonHeading()}
+            </RNTextComponent>
+            <Pressable
+              style={[styles.button, isTablet && {width: scale(90)}]}
+              onPress={() => {
+                if (playerList.length !== 0) {
+                  buttonPress();
+                  navigateTo(SCREEN_NAME.BOTTOM_TAB, {}, true);
+                }
+              }}
+              disabled={childList.length === 0 || playerList.length === 0}>
+              {playerList.map(item => {
+                const circleType = [];
+                // const filePath = avatars.filter(
+                //   obj => obj.path === item.avatar,
+                // )[0]?.file;
+                if (item.type === PEOPLE.CHILD) {
+                  circleType.push('C');
+                  // return (
+                  //   <CircleView yellow />
+                  // <Image
+                  //   key={index.toString()}
+                  //   source={{uri: filePath || item.avatar}}
+                  //   style={styles.profile}
+                  // />
+                  // );
+                }
+                if (item.type === PEOPLE.ADULT) {
+                  circleType.push('A');
 
-                // return (
-                //   <CircleView blue />
-                // <Image
-                //   key={index.toString()}
-                //   source={{uri: filePath || item.avatar}}
-                //   style={[styles.profile, {height: 40, width: 40}]}
-                // />
-                // );
-              }
-              return (
-                <CircleView
-                  blue={circleType.includes('A') && !circleType.includes('C')}
-                  yellow={!circleType.includes('A') && circleType.includes('C')}
-                  both={circleType.includes('A') && circleType.includes('C')}
-                />
-              );
-            })}
-          </Pressable>
-        </View>
+                  // return (
+                  //   <CircleView blue />
+                  // <Image
+                  //   key={index.toString()}
+                  //   source={{uri: filePath || item.avatar}}
+                  //   style={[styles.profile, {height: 40, width: 40}]}
+                  // />
+                  // );
+                }
+                return (
+                  <CircleView
+                    blue={circleType.includes('A') && !circleType.includes('C')}
+                    yellow={
+                      !circleType.includes('A') && circleType.includes('C')
+                    }
+                    both={circleType.includes('A') && circleType.includes('C')}
+                  />
+                );
+              })}
+            </Pressable>
+          </View>
+        </RNTooltip>
       </View>
       <RNSignoutModal
         visible={signoutModal}
