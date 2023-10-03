@@ -232,7 +232,7 @@ const RNRoadmap = () => {
               },
             ]}
             onPress={async () => {
-              console.log('first');
+              console.log({storyGenerationResponse});
               if (!checkIfClickable[6]) {
                 return;
               }

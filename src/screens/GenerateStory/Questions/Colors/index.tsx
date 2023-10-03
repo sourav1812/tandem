@@ -15,6 +15,9 @@ export default () => {
   return (
     <GenerateStory
       onBack={() => {
+        if (disabled) {
+          return;
+        }
         removeQuestionData(STORY_PARTS.COLOR);
       }}
       questionNumber={6}

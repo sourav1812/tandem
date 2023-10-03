@@ -26,6 +26,9 @@ export default () => {
       type={STORY_PARTS.WHO}
       maxSelections={3}
       onBack={() => {
+        if (disabled) {
+          return;
+        }
         removeQuestionData(STORY_PARTS.WHO);
       }}
       questionNumber={1}
