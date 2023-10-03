@@ -244,7 +244,7 @@
   },
   "otp-screen": {
     "enter-the-code": "Enter the code",
-    "enter-four-digit-code": "Please enter the 4 digit code sent to ",
+    "enter-six-digit-code": "Please enter the 6 digit code sent to ",
     "you-can-resend-in": "You can resend in",
     "resend": "Resend",
     "did-not-get-code": "Didn't get the code?",
@@ -317,5 +317,6 @@
     "tip-two": "Your selected avatars appear here, Tap on them again if you change your mind.",
     "tip-three": "Once you add yourself, you can see your avatar here and tap on it to use the app next.",
     "tip-four": "When you are ready hit the 'start' button"
-  }
+  },
+  "PASSWORD_DONT_MATCH": "Your password do not match."
 }
