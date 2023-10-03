@@ -15,6 +15,7 @@ export const styles = StyleSheet.create({
   heading: {
     color: themeColor.white,
     textAlign: 'center',
+    lineHeight: verticalScale(15),
   },
   emoji: {
     fontSize: verticalScale(45),

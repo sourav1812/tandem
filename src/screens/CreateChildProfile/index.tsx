@@ -23,7 +23,6 @@ import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
 import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
-// import DatePicker from 'react-native-date-picker';
 import dayjs from 'dayjs';
 import validationFunction from '@tandem/functions/validationFunction';
 import {

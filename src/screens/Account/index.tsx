@@ -485,7 +485,6 @@ const Account = () => {
             })}
           </ScrollView>
         </View>
-
         <View
           style={[
             styles.topList,
@@ -560,7 +559,6 @@ const Account = () => {
               {translation('ADD')}
             </RNTextComponent>
           </View>
-
           <View>
             <ScrollView
               horizontal

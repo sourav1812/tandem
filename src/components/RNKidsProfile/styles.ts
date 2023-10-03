@@ -8,6 +8,8 @@ export const styles = StyleSheet.create({
   profile: {
     height: verticalScale(60),
     width: verticalScale(60),
+    borderWidth: 1,
+    borderColor: '#D3D3D3',
   },
   name: {
     fontSize: verticalScale(14),

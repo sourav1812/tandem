@@ -13,10 +13,11 @@ const RNScreenWrapper = ({children, style, giveStatusColor = false}: Props) => {
   );
 
   statusbar(
-    giveStatusColor || !toShowAllTooltip
+    giveStatusColor || toShowAllTooltip
       ? themeColor.tooltipBgcColor
       : undefined,
   );
+
   return <View style={[styles.container, style && style]}>{children}</View>;
 };
 
