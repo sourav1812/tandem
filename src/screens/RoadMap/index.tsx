@@ -232,7 +232,6 @@ const RNRoadmap = () => {
               },
             ]}
             onPress={async () => {
-              console.log('first');
               if (!checkIfClickable[6]) {
                 return;
               }

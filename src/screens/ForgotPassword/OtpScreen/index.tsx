@@ -11,7 +11,6 @@ import RNLogoHeader from '@tandem/components/RNLogoHeader';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import themeColor from '@tandem/theme/themeColor';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
-import {RootState} from '@tandem/redux/store';
 import RNButton from '@tandem/components/RNButton';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
@@ -21,19 +20,36 @@ import styles from './styles';
 import RNTimerText from '@tandem/components/RNTimerText';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import {translation} from '@tandem/utils/methods';
+import {confirmOtp, getOtp} from '@tandem/api/forgotPassword';
+import {OtpScreenInterface} from '@tandem/navigation/types';
 
-const OtpScreen = () => {
+const OtpScreen = ({route}: OtpScreenInterface) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const [showButton, setShowButton] = useState(false);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const portrait = useAppSelector(
-    (state: RootState) => state.orientation.isPortrait,
-  );
   const [isCodeWrong, setCodeWrong] = useState(false);
 
   const height = Dimensions.get('screen').height;
   const width = Dimensions.get('screen').width;
   const [otp, setOtp] = useState<string>('');
+
+  const handleClick = async (code: string) => {
+    try {
+      const response = await confirmOtp(code, route.params.email);
+      console.log({response});
+      navigateTo(SCREEN_NAME.CREATE_PASSWORD, {
+        resetToken: response.resetToken,
+      });
+    } catch (error) {
+      console.log('error in Confirm OTP screen', error);
+      setCodeWrong(true);
+    }
+  };
+
+  React.useEffect(() => {
+    if (otp.length < 6) {
+      setCodeWrong(false);
+    }
+  }, [otp]);
 
   return (
     <RNScreenWrapper style={{backgroundColor: themeColor.white, flex: 1}}>
@@ -61,7 +77,7 @@ const OtpScreen = () => {
                   marginTop: verticalScale(10),
                 },
               ]}>
-              {translation('otp-screen.enter-four-digit-code')}
+              {translation('otp-screen.enter-six-digit-code')}
               {
                 <RNTextComponent
                   style={[
@@ -74,22 +90,20 @@ const OtpScreen = () => {
                       color: themeColor.themeBlue,
                     },
                   ]}>
-                  hello@gmail.com
+                  {route.params.email || 'email'}
                 </RNTextComponent>
               }
             </RNTextComponent>
             <OTPInputView
               style={{
-                width: '60%',
+                width: '85%',
                 height: verticalScale(48),
                 marginVertical: verticalScale(40),
               }}
-              pinCount={4}
+              pinCount={6}
               code={otp}
               onCodeChanged={setOtp}
               codeInputFieldStyle={{
-                height: scale(40),
-                width: scale(40),
                 color: isCodeWrong ? '#FF0101' : '#020408',
                 borderRadius: scale(40),
                 fontSize: scale(20),
@@ -105,11 +119,8 @@ const OtpScreen = () => {
                 fontSize: scale(20),
               }}
               autoFocusOnLoad={false}
-              onCodeFilled={(code: any) => {
-                if (code.length === 4) {
-                  setCodeWrong(true);
-                  console.log(code);
-                }
+              onCodeFilled={(code: string) => {
+                handleClick(code);
               }}
             />
             <RNTextComponent
@@ -142,8 +153,16 @@ const OtpScreen = () => {
               <RNButton
                 title={translation('otp-screen.resend')}
                 customStyle={styles.button}
-                onClick={() => {
-                  navigateTo(SCREEN_NAME.CREATE_PASSWORD);
+                onClick={async () => {
+                  try {
+                    await getOtp(route.params.email);
+                    setShowButton(false);
+                  } catch (error) {
+                    console.log('error while resending otp', error);
+                  } finally {
+                    setOtp('');
+                    setCodeWrong(false);
+                  }
                 }}
               />
             )}

@@ -27,10 +27,10 @@ export type RootStackParamList = {
   RedeemVoucher: undefined;
   RoadMap: undefined;
   ForgotPasswords: undefined;
-  CheckEmail: undefined;
+  CheckEmail: {email: string};
   ForgotPassword: undefined;
-  OtpScreen: undefined;
-  CreatePassword: undefined;
+  OtpScreen: {email: string};
+  CreatePassword: {resetToken: string};
   PrivacyPolicies: undefined;
   TermsOfUse: undefined;
   Congratulation: undefined;
@@ -129,4 +129,18 @@ export type CreateChildProfileProps = NativeStackScreenProps<
 export type EditChildProfileProps = NativeStackScreenProps<
   AllStackScreenParamList,
   SCREEN_NAME.EDIT_CHILD_PROFILE
+>;
+
+export type CreatePasswordInterface = NativeStackScreenProps<
+  AllStackScreenParamList,
+  SCREEN_NAME.CREATE_PASSWORD
+>;
+
+export type CheckEmailInterface = NativeStackScreenProps<
+  AllStackScreenParamList,
+  SCREEN_NAME.CHECK_EMAIL
+>;
+export type OtpScreenInterface = NativeStackScreenProps<
+  AllStackScreenParamList,
+  SCREEN_NAME.OTP_SCREEN
 >;

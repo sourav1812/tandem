@@ -64,6 +64,9 @@ export default () => {
       type={type}
       maxSelections={maxSelections}
       onBack={() => {
+        if (disabled) {
+          return;
+        }
         removeQuestionData(STORY_PARTS.STYLES);
       }}
       questionNumber={6}

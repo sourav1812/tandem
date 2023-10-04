@@ -21,12 +21,35 @@ import navigateTo from '@tandem/navigation/navigate';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
 import {translation} from '@tandem/utils/methods';
+import {getOtp} from '@tandem/api/forgotPassword';
+import validationFunction from '@tandem/functions/validationFunction';
 
 const ForgotPassword = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const [email, setEmail] = useState<ValidationError>({value: ''});
   const height = Dimensions.get('screen').height;
   const width = Dimensions.get('screen').width;
+
+  const handleClick = async () => {
+    if (
+      !validationFunction([
+        {
+          state: email,
+          setState: setEmail,
+          typeOfValidation: FORM_INPUT_TYPE.EMAIL,
+        },
+      ])
+    ) {
+      return;
+    }
+    try {
+      await getOtp(email.value);
+      navigateTo(SCREEN_NAME.CHECK_EMAIL, {email: email.value});
+    } catch (error) {
+      console.log('error in ForgotPassword get otp screen', error);
+    }
+  };
+
   return (
     <RNScreenWrapper style={{backgroundColor: themeColor.white}}>
       <ImageBackground
@@ -41,6 +64,7 @@ const ForgotPassword = () => {
 
       <RNLogoHeader customStyle={styles.header} />
       <ScrollView
+        keyboardShouldPersistTaps="handled"
         contentContainerStyle={{
           height: '100%',
           width: '100%',
@@ -78,13 +102,12 @@ const ForgotPassword = () => {
               updateText={setEmail}
               hint={translation('ENTER_YOUR_EMAIL')}
               inputStyle={styles.inputText}
+              autoCapitalize={'none'}
             />
             <RNButton
               title={translation('GET_CODE')}
               customStyle={styles.button}
-              onClick={() => {
-                navigateTo(SCREEN_NAME.CHECK_EMAIL);
-              }}
+              onClick={handleClick}
             />
           </View>
         </KeyboardAvoidingView>

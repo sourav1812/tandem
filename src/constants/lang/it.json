@@ -243,7 +243,7 @@
   },
   "otp-screen": {
     "enter-the-code": "Inserisci il codice",
-    "enter-four-digit-code": "Inserisci il codice di 4 cifre inviato a ",
+    "enter-six-digit-code": "Inserisci il codice di 6 cifre inviato a ",
     "you-can-resend-in": "Puoi riinviarlo in",
     "resend": "Rinvia",
     "did-not-get-code": "Non hai ricevuto il codice?",
@@ -316,5 +316,6 @@
     "tip-two": "I tuoi avatar selezionati appaiono qui. Tocca di nuovo su di essi se cambi idea.",
     "tip-three": "Una volta che ti sei aggiunto, puoi vedere il tuo avatar qui e toccarlo per utilizzare l'app.",
     "tip-four": "Quando sei pronto, premi il pulsante 'Inizia'."
-  }
+  },
+  "PASSWORD_DONT_MATCH": "La tua password non corrisponde."
 }

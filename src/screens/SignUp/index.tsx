@@ -101,7 +101,7 @@ const SignUp = () => {
     } else {
       setConfirmPassword(prev => ({
         ...prev,
-        message: 'Your password do not match.',
+        message: translation('PASSWORD_DONT_MATCH'),
       }));
     }
   };

@@ -18,6 +18,9 @@ export default () => {
       type={STORY_PARTS.WHAT_HAPPENS}
       maxSelections={1}
       onBack={() => {
+        if (disabled) {
+          return;
+        }
         removeQuestionData(STORY_PARTS.WHAT_HAPPENS);
       }}
       questionNumber={5}

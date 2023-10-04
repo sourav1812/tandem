@@ -20,6 +20,9 @@ export default () => {
       type={STORY_PARTS.WHERE}
       maxSelections={1}
       onBack={() => {
+        if (disabled) {
+          return;
+        }
         removeQuestionData(STORY_PARTS.WHERE);
       }}
       questionNumber={3}
