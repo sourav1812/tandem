@@ -106,7 +106,7 @@ const IconRednerItem = ({
           },
         ]}
         isSemiBold>
-        {heading.split(' ').join('\n')}
+        {heading}
       </RNTextComponent>
     )}
   </>
