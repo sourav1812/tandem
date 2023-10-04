@@ -29,6 +29,7 @@ import {PageFlip} from '@tandem/components/PageFlip';
 import rateStory from '@tandem/api/rateStory';
 import {useDispatch} from 'react-redux';
 import {changeTooltipState} from '@tandem/redux/slices/tooltip.slice';
+import Orientation from 'react-native-orientation-locker';
 
 const StoryTelling = () => {
   const tooltipArray = useAppSelector(state => state.tooltipReducer);
@@ -75,6 +76,25 @@ const StoryTelling = () => {
       }, 2000);
     }
   }, [book.rating, currentIndex]);
+
+  React.useEffect(() => {
+    Orientation.getOrientation(orientation => {
+      if (isTablet) {
+        if (orientation === 'PORTRAIT') {
+          Orientation.lockToPortrait();
+        } else if (orientation === 'LANDSCAPE-RIGHT') {
+          Orientation.lockToLandscapeRight();
+        } else if (orientation === 'LANDSCAPE-LEFT') {
+          Orientation.lockToLandscapeLeft();
+        }
+      }
+    });
+    return () => {
+      if (isTablet) {
+        Orientation.unlockAllOrientations();
+      }
+    };
+  }, [isTablet]);
 
   const toggleModal = () => {
     setRenderModal(!renderModal);
