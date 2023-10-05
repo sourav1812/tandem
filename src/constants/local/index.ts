@@ -68,6 +68,7 @@ import Card2 from '@tandem/assets/svg/illustrationTypes/card-2.svg';
 import Card3 from '@tandem/assets/svg/illustrationTypes/card-3.svg';
 import Card4 from '@tandem/assets/svg/illustrationTypes/card-4.svg';
 import QuestionMark from '@tandem/assets/svg/QuestionMarkRed';
+import RedQuestionMark from '@tandem/assets/svg/storySvg/RedQuestionMark.svg';
 import {translation} from '@tandem/utils/methods';
 
 export const TOOLTIP = 'ToolTip';
@@ -80,14 +81,14 @@ export const AUDIENCE: PlaceType[] = [
   {name: 'Jungle animals', icon: '🦁', bgc: themeColor.pink},
   {name: 'Space aliens', icon: '👽', bgc: themeColor.themeBlue},
   {name: 'Scientists', icon: '👨‍🔬', bgc: themeColor.gold},
-  {name: "I don't know", icon: '❓', bgc: themeColor.lightGreen},
+  {name: "I don't know", svgIcon: RedQuestionMark, bgc: themeColor.lightGreen},
 ];
 
 export const TYPE_OF_STORY: PlaceType[] = [
   {name: 'Fairy tale', icon: '✨', bgc: themeColor.pink},
   {name: 'Adventure', icon: '🏄', bgc: themeColor.themeBlue},
   {name: 'Silly/Comedy', icon: '🤣', bgc: themeColor.gold},
-  {name: "I don't know", icon: '❓', bgc: themeColor.lightGreen},
+  {name: "I don't know", svgIcon: RedQuestionMark, bgc: themeColor.lightGreen},
 ];
 
 export const ATTRIBUTE: PlaceType[] = [
