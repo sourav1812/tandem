@@ -52,6 +52,7 @@ import {
 } from 'react-native-reanimated';
 import wait from '@tandem/functions/wait';
 import Orientation from 'react-native-orientation-locker';
+import lockOrientation from '@tandem/functions/lockOrientation';
 
 const SCREEN = [
   SCREEN_NAME.GENERATE_STORY_WHO,
@@ -141,17 +142,7 @@ const RNRoadmap = () => {
   }, [heightRef]);
 
   React.useEffect(() => {
-    Orientation.getOrientation(orientation => {
-      if (isTablet) {
-        if (orientation === 'PORTRAIT') {
-          Orientation.lockToPortrait();
-        } else if (orientation === 'LANDSCAPE-RIGHT') {
-          Orientation.lockToLandscapeRight();
-        } else if (orientation === 'LANDSCAPE-LEFT') {
-          Orientation.lockToLandscapeLeft();
-        }
-      }
-    });
+    lockOrientation();
     return () => {
       if (isTablet) {
         Orientation.unlockAllOrientations();

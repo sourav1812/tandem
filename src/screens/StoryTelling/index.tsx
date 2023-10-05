@@ -30,6 +30,7 @@ import rateStory from '@tandem/api/rateStory';
 import {useDispatch} from 'react-redux';
 import {changeTooltipState} from '@tandem/redux/slices/tooltip.slice';
 import Orientation from 'react-native-orientation-locker';
+import lockOrientation from '@tandem/functions/lockOrientation';
 
 const StoryTelling = () => {
   const tooltipArray = useAppSelector(state => state.tooltipReducer);
@@ -78,17 +79,7 @@ const StoryTelling = () => {
   }, [book.rating, currentIndex]);
 
   React.useEffect(() => {
-    Orientation.getOrientation(orientation => {
-      if (isTablet) {
-        if (orientation === 'PORTRAIT') {
-          Orientation.lockToPortrait();
-        } else if (orientation === 'LANDSCAPE-RIGHT') {
-          Orientation.lockToLandscapeRight();
-        } else if (orientation === 'LANDSCAPE-LEFT') {
-          Orientation.lockToLandscapeLeft();
-        }
-      }
-    });
+    lockOrientation();
     return () => {
       if (isTablet) {
         Orientation.unlockAllOrientations();
