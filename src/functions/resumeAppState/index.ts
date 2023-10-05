@@ -37,7 +37,7 @@ const resetDirectoriesOfCachedData = () => {
     if (Platform.OS !== 'ios') {
       return;
     }
-    const {avatars, flush, places} = store.getState().cache;
+    const {avatars, flush, places, whatHappens, who} = store.getState().cache;
 
     const modifiedAvatars = avatars.map(val => {
       const file = JSON.parse(JSON.stringify(val.file));
@@ -54,12 +54,24 @@ const resetDirectoriesOfCachedData = () => {
       const newFile = 'file://' + currentDirectory + file.split('Documents')[1];
       return {...val, file: newFile};
     });
+    const modifiedWhatHappens = whatHappens.map(val => {
+      const file = JSON.parse(JSON.stringify(val.file));
+      const newFile = 'file://' + currentDirectory + file.split('Documents')[1];
+      return {...val, file: newFile};
+    });
+    const modifiedWho = who.map(val => {
+      const file = JSON.parse(JSON.stringify(val.file));
+      const newFile = 'file://' + currentDirectory + file.split('Documents')[1];
+      return {...val, file: newFile};
+    });
 
     store.dispatch(
       reinitialiseCacheDirectory({
         modifiedAvatars,
         modifiedFlush,
         modifiedPlaces,
+        modifiedWhatHappens,
+        modifiedWho,
       }),
     );
   }
