@@ -146,3 +146,20 @@ export const cacheWhatHappens = () => {
       });
   });
 };
+
+export const reCache = () => {
+  const flush = store.getState().cache.flush;
+
+  flush.forEach(item => {
+    try {
+      RNFetchBlob.fs.unlink(item);
+    } catch (error) {
+      console.log('#####', error);
+    }
+  });
+
+  cacheAvatars();
+  cachePlaces();
+  cacheWho();
+  cacheWhatHappens();
+};
