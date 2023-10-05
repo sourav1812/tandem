@@ -6,9 +6,14 @@ import RNEmojiWithText from '../RNEmojiWithText';
 import {MultipleChoiceProps} from './interface';
 import RNTooltip from '../RNTooltip';
 import {translation} from '@tandem/utils/methods';
-import {pushStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration.slice';
+import {
+  clearParticularState,
+  pushStoryGenerationResponse,
+} from '@tandem/redux/slices/storyGeneration.slice';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {store} from '@tandem/redux/store';
+import themeColor from '@tandem/theme/themeColor';
+import QuestionMark from '@tandem/assets/svg/QuestionMarkRed';
 
 const RNChoiceQuestions = ({
   data = [],
@@ -34,7 +39,13 @@ const RNChoiceQuestions = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const handlePress = (name: string) => {
-    if (maxSelections === 1) {
+    if (activeState.includes('Not sure')) {
+      store.dispatch(clearParticularState(type));
+      store.dispatch(pushStoryGenerationResponse({key: type, value: [name]}));
+      return;
+    }
+    if (maxSelections === 1 || name === 'Not sure') {
+      store.dispatch(clearParticularState(type));
       store.dispatch(pushStoryGenerationResponse({key: type, value: [name]}));
       setDisabled(false);
       return;
@@ -125,6 +136,14 @@ const RNChoiceQuestions = ({
           );
         }
       })}
+      <RNEmojiWithText
+        isSelected={activeState.includes('Not sure')}
+        onPress={() => handlePress('Not sure')}
+        heading={'Not sure'}
+        customStyle={[styles.optionsCustom, itemStyle && itemStyle]}
+        bgcColor={themeColor.pink}
+        Svgimg={QuestionMark}
+      />
     </ScrollView>
   );
 };

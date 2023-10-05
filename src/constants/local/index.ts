@@ -154,7 +154,6 @@ export const ATTRIBUTE: PlaceType[] = [
   {name: 'Watermelon', bgc: themeColor.gold, svgIcon: Watermelon},
   {name: 'Wheel Chair', bgc: themeColor.lightGreen, svgIcon: Wheelchair},
   {name: 'Ambulance', bgc: themeColor.pink, svgIcon: Ambulance},
-  {name: "I don't know", bgc: themeColor.lightGreen, svgIcon: QuestionMark},
 ];
 
 export const ILLUSTRATION = [
@@ -210,10 +209,6 @@ export const PLACE: OnlyImageType[] = [
   {
     name: 'Sunny Beach',
     url: 'https://tandem.geeky.dev/v1/images/locations/sunny_beach.png',
-  },
-  {
-    name: "I don't know",
-    url: 'https://tandem.geeky.dev/v1/images/locations/surprise_me.png',
   },
 ];
 
@@ -294,10 +289,6 @@ export const WHO: OnlyImageType[] = [
     name: 'Safari Animals',
     url: 'https://tandem.geeky.dev/v1/images/who/safari_animals.png',
   },
-  {
-    name: "I don't know",
-    url: 'https://tandem.geeky.dev/v1/images/locations/surprise_me.png',
-  },
 ];
 
 export const WHAT_HAPPENS: OnlyImageType[] = [
@@ -328,10 +319,6 @@ export const WHAT_HAPPENS: OnlyImageType[] = [
   {
     name: 'Spooky',
     url: 'https://tandem.geeky.dev/v1/images/whatHappens/spooky_tale.png',
-  },
-  {
-    name: "I don't know",
-    url: 'https://tandem.geeky.dev/v1/images/locations/surprise_me.png',
   },
 ];
 
