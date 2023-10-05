@@ -53,11 +53,19 @@ export const cacheSlice = createSlice({
       state.avatars.unshift(action.payload);
     },
     reinitialiseCacheDirectory: (state, action) => {
-      const {modifiedAvatars, modifiedFlush, modifiedPlaces} = action.payload;
+      const {
+        modifiedAvatars,
+        modifiedFlush,
+        modifiedPlaces,
+        modifiedWho,
+        modifiedWhatHappens,
+      } = action.payload;
       console.log({didChange: modifiedAvatars[0].file});
       state.avatars = modifiedAvatars;
       state.flush = modifiedFlush;
       state.places = modifiedPlaces;
+      state.who = modifiedWho;
+      state.whatHappens = modifiedWhatHappens;
     },
     clearAvatars: state => {
       if (
