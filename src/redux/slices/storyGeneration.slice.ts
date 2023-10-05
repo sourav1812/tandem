@@ -31,6 +31,11 @@ export const storyGeneration = createSlice({
         action.payload;
       state[key] = value;
     },
+    clearParticularState: (state, action) => {
+      console.log(action.payload);
+      const type: string = action.payload;
+      state[type] = [];
+    },
     // empty story gen reducer
     clearStoryGenerationResponse: state => {
       state[STORY_PARTS.WHO] = [];
@@ -44,7 +49,10 @@ export const storyGeneration = createSlice({
   },
 });
 
-export const {pushStoryGenerationResponse, clearStoryGenerationResponse} =
-  storyGeneration.actions;
+export const {
+  pushStoryGenerationResponse,
+  clearStoryGenerationResponse,
+  clearParticularState,
+} = storyGeneration.actions;
 
 export default storyGeneration.reducer;

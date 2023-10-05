@@ -12,6 +12,7 @@ export interface Props {
   isSelected?: boolean;
   Svgimg?: any;
   image?: any;
+  showBorderWhenPressed?: boolean;
 }
 
 export interface IconProps {

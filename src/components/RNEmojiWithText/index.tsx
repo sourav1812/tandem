@@ -10,6 +10,7 @@ import {
   withTiming,
 } from 'react-native-reanimated';
 import Animated from 'react-native-reanimated';
+import themeColor from '@tandem/theme/themeColor';
 
 const RNEmojiWithText = ({
   customStyle,
@@ -22,6 +23,7 @@ const RNEmojiWithText = ({
   onPress = () => {},
   isSelected,
   Svgimg,
+  showBorderWhenPressed = false,
 }: Props) => {
   const scaleButton = useSharedValue(1);
 
@@ -46,7 +48,12 @@ const RNEmojiWithText = ({
           {transform: [{scale: scaleButton}]},
           customStyle && customStyle,
           {
-            ...(isSelected && bgcColor && {backgroundColor: bgcColor}),
+            ...(isSelected &&
+              bgcColor && {
+                backgroundColor: bgcColor,
+                borderWidth: showBorderWhenPressed ? 3 : 0,
+                borderColor: themeColor.themeBlue,
+              }),
           },
         ]}>
         <IconRednerItem
