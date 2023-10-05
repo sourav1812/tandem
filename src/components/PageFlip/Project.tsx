@@ -141,8 +141,9 @@ export const Project = ({
   const [overlay, setOverlay] = React.useState<SkImage | null>(null);
   const [overlay2, setOverlay2] = React.useState<SkImage | null>(null);
   const ref = useRef(null);
+  const ref2 = useRef(null);
   const [bottomPageIndex, setBottomPageindex] = React.useState(activeIndex);
-  const [pageArray, setPageArray] = React.useState<(SkImage | null)[]>([]);
+  const [bottomPageIndex2, setBottomPageindex2] = React.useState(activeIndex);
   const onTouch = useTouchHandler(
     {
       onStart: async ({x}) => {
@@ -182,19 +183,21 @@ export const Project = ({
         setDisbaleTouch(false);
       },
     },
-    [disbaleTouch, activeIndex, overlay, pageArray],
+    [disbaleTouch, activeIndex, overlay],
   );
   const backTurn = async () => {
-    const lastPage = pageArray[pageArray.length - 1];
-    if (!lastPage) {
+    if (activeIndex + 1 === textArray.length) {
       return;
     }
-    setPageArray(prev => prev.slice(0, -1));
+    setBottomPageindex2(
+      activeIndex + 2 <= textArray.length ? activeIndex + 1 : activeIndex,
+    );
     setOverlay2(overlay);
     await wait(50);
+    const overlayBeforePage = await makeImageFromView(ref2);
 
     pointer.current = -wWidth;
-    setOverlay(lastPage);
+    setOverlay(overlayBeforePage);
 
     runTiming(pointer, wWidth, {
       duration: 800,
@@ -218,7 +221,6 @@ export const Project = ({
     });
     if (turnpage) {
       setActiveIndex(prev => (prev > 0 ? prev - 1 : 0));
-      setPageArray(prev => [...prev, overlay]);
       await wait(850);
       setOverlay(null);
       await wait(50);
@@ -304,6 +306,29 @@ export const Project = ({
             </Group>
           </Group>
         )}
+      </Canvas>
+      <Canvas
+        ref={ref2}
+        style={{
+          width: wWidth,
+          height: hHeight,
+        }}>
+        <RenderScene
+          hHeight={hHeight}
+          outer={outer}
+          page={bottomPageIndex2 + 1}
+          total={textArray.length}
+          image={textArray[bottomPageIndex2].img}
+          roundedRect={getRoundRect(
+            processSentences(textArray[bottomPageIndex2].text, wWidth).length,
+            wWidth,
+            hHeight,
+          )}
+          sentences={processSentences(textArray[bottomPageIndex2].text, wWidth)}
+          font={font}
+          // tooltipState={tooltipState}
+          tooltipArray={tooltipArray}
+        />
       </Canvas>
     </>
   );
