@@ -31,14 +31,25 @@
 			</array>
 		</dict>
 		<dict>
-  			<key>CFBundleURLSchemes</key>
-  		<array>
-    	<string>fb1461975321230004</string>
-  	</array>
-  </dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb1461975321230004</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>FacebookAppID</key>
+	<string>1461975321230004</string>
+	<key>FacebookClientToken</key>
+	<string>d57bc16ea1157324bf3a335c3783749d</string>
+	<key>FacebookDisplayName</key>
+	<string>Tandem</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>fbapi</string>
+		<string>fb-messenger-share-api</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -87,20 +98,8 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-<key>FacebookAppID</key>
-<string>1461975321230004</string>
-<key>FacebookClientToken</key>
-<string>d57bc16ea1157324bf3a335c3783749d</string>
-<key>FacebookDisplayName</key>
-<string>Tandem</string>
-<key>LSApplicationQueriesSchemes</key>
-<array>
-  <string>fbapi</string>
-  <string>fb-messenger-share-api</string>
-</array>
 </dict>
 </plist>

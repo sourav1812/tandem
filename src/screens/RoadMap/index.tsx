@@ -51,6 +51,8 @@ import {
   withTiming,
 } from 'react-native-reanimated';
 import wait from '@tandem/functions/wait';
+import Orientation from 'react-native-orientation-locker';
+import lockOrientation from '@tandem/functions/lockOrientation';
 
 const SCREEN = [
   SCREEN_NAME.GENERATE_STORY_WHO,
@@ -80,6 +82,7 @@ const RNRoadmap = () => {
   const currentChild = useAppSelector(
     (state: RootState) => state.createChild.currentChild,
   );
+  const isTablet = useAppSelector(state => state.deviceType.isTablet);
 
   const [hightlightFirst, setHighlight] = React.useState(
     snapshots.snapShot1 !== null,
@@ -137,6 +140,15 @@ const RNRoadmap = () => {
   React.useEffect(() => {
     setHeight(heightRef + (StatusBar.currentHeight || 0));
   }, [heightRef]);
+
+  React.useEffect(() => {
+    lockOrientation();
+    return () => {
+      if (isTablet) {
+        Orientation.unlockAllOrientations();
+      }
+    };
+  }, [isTablet]);
 
   const outer = Skia.XYWHRect(0, 0, wWidth, hHeight);
 
