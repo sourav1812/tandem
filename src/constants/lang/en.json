@@ -318,5 +318,12 @@
     "tip-three": "Once you add yourself, you can see your avatar here and tap on it to use the app next.",
     "tip-four": "When you are ready hit the 'start' button"
   },
-  "PASSWORD_DONT_MATCH": "Your password do not match."
+  "PASSWORD_DONT_MATCH": "Your password do not match.",
+
+  "TODAY": "Today",
+  "YESTERDAY": "Yesterday",
+  "THIS_WEEK": "This week",
+  "LAST_WEEK": "Last week",
+
+  "NO_RESULTS": "Could not find the story you were looking for?"
 }

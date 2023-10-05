@@ -28,32 +28,47 @@ import {
   addSnapShot1,
   addSnapShot2,
 } from '@tandem/redux/slices/animationSnapshots.slice';
+import bookshelfDays from '@tandem/functions/bookshelfDays';
 
 const Bookshelf = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const mode = useAppSelector(state => state.mode.mode);
   const [searchText, setText] = useState<ValidationError>({value: ''});
+  const [datesKeys, setDateKeys] = useState<string[]>([]);
   const books = useAppSelector((state: RootState) => state.bookShelf.books);
-  const data: BooksData[] = books?.map((book, index) => {
-    const isThisWeek =
-      ((new Date().getTime() - new Date(book.createdAt).getTime()) * 1.157) /
-        10_00_00_000 <
-      7; // ! are checking if the book is screated within a week
-    return {
-      id: book.bookId,
-      headerTitle: book.title || `Mock Story ${index + 1}`,
-      time: new Date(book.createdAt).toDateString() || 'Some Date',
-      image: book.thumbnail || require('../../assets/png/imageOne.png'),
-      readingTime: Math.ceil(book.story.split(' ').length / 100) || 10, //  ! avg reading speed is 200 to 300 wpm so we are calculating time in miniutes to read the whole story. using 100 wpm for children
-      isNew: isThisWeek, // ! langauge support?
-      emogi:
-        book.rating && book.rating !== 0
-          ? ratingList[book.rating - 1].name
-          : null,
-      week: isThisWeek ? 'This Week' : 'Last Week', // ! need langauge support
-      teaser: book.teaser,
-    };
-  });
+
+  const data: BooksData[] = React.useMemo(
+    () =>
+      books?.map((book, index) => {
+        const isThisWeek =
+          ((new Date().getTime() - new Date(book.createdAt).getTime()) *
+            1.157) /
+            10_00_00_000 <
+          7; // ! are checking if the book is screated within a week
+        let week: string = translation(bookshelfDays(new Date(book.createdAt)));
+        if (datesKeys.includes(week)) {
+          week = '';
+        } else {
+          setDateKeys(prev => [...prev, week]);
+        }
+        return {
+          id: book.bookId,
+          headerTitle: book.title || `Mock Story ${index + 1}`,
+          time: new Date(book.createdAt).toDateString() || 'Some Date',
+          image: book.thumbnail || require('../../assets/png/imageOne.png'),
+          readingTime: Math.ceil(book.story.split(' ').length / 100) || 10, //  ! avg reading speed is 200 to 300 wpm so we are calculating time in miniutes to read the whole story. using 100 wpm for children
+          isNew: isThisWeek, // ! langauge support?
+          emogi:
+            book.rating && book.rating !== 0
+              ? ratingList[book.rating - 1].name
+              : null,
+          week,
+          teaser: book.teaser,
+        };
+      }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [books],
+  );
 
   useEffect(() => {
     (async () => {
@@ -70,16 +85,23 @@ const Bookshelf = () => {
     return (
       <View style={styles.listEmptyComponentContainer}>
         <View style={styles.listEmptyComponentEmogiContainer}>
-          {/* <Text style={styles.listEmptyComponentEmoji}>{'\u{1F614}'}</Text> */}
           <SadFace />
         </View>
-        <RNTextComponent isSemiBold style={styles.nothingToSeeText}>
-          {mode === MODE.A ? currentChild.name + ' ' : null}
-          {translation(`bookshelf.${mode}.heading`)}
-        </RNTextComponent>
-        <RNTextComponent numberOfLines={2} style={styles.whyDontWriteStory}>
-          {translation(`bookshelf.${mode}.subHeading`)}
-        </RNTextComponent>
+        {searchText.value === '' ? (
+          <>
+            <RNTextComponent isSemiBold style={styles.nothingToSeeText}>
+              {mode === MODE.A ? currentChild.name + ' ' : null}
+              {translation(`bookshelf.${mode}.heading`)}
+            </RNTextComponent>
+            <RNTextComponent numberOfLines={2} style={styles.whyDontWriteStory}>
+              {translation(`bookshelf.${mode}.subHeading`)}
+            </RNTextComponent>
+          </>
+        ) : (
+          <RNTextComponent numberOfLines={2} style={styles.whyDontWriteStory}>
+            {translation('NO_RESULTS')}
+          </RNTextComponent>
+        )}
         <RNButton
           customStyle={{width: '40%', minWidth: '40%'}}
           title={translation('bookshelf.write-a-story')}
@@ -92,7 +114,7 @@ const Bookshelf = () => {
         />
       </View>
     );
-  }, [mode]);
+  }, [mode, searchText.value]);
 
   const renderItem = React.useCallback(({item}: {item: BooksData}) => {
     return (
@@ -168,7 +190,13 @@ const Bookshelf = () => {
             bounces={false}
             style={styles.flatListContatiner}
             contentContainerStyle={[styles.flatListContentContainer]}
-            data={data}
+            data={data.filter(obj =>
+              searchText.value
+                ? obj.headerTitle
+                    .toLowerCase()
+                    .includes(searchText.value.toLowerCase())
+                : true,
+            )}
             renderItem={renderItem}
             ListEmptyComponent={listEmptyComponent}
             showsVerticalScrollIndicator={false}

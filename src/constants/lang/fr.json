@@ -318,5 +318,11 @@
     "tip-three": "Une fois que vous vous êtes ajouté, vous pouvez voir votre avatar ici et appuyer dessus pour utiliser l'application.",
     "tip-four": "Quand vous êtes prêt, appuyez sur le bouton 'Démarrer'."
   },
-  "PASSWORD_DONT_MATCH": "Votre mot de passe ne correspond pas."
+  "PASSWORD_DONT_MATCH": "Votre mot de passe ne correspond pas.",
+
+  "TODAY": "Aujourd'hui",
+  "YESTERDAY": "Hier",
+  "THIS_WEEK": "Cette semaine",
+  "LAST_WEEK": "La semaine dernière",
+  "NO_RESULTS": "Impossible de trouver l'histoire que vous recherchiez ?"
 }

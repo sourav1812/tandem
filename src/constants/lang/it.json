@@ -317,5 +317,11 @@
     "tip-three": "Una volta che ti sei aggiunto, puoi vedere il tuo avatar qui e toccarlo per utilizzare l'app.",
     "tip-four": "Quando sei pronto, premi il pulsante 'Inizia'."
   },
-  "PASSWORD_DONT_MATCH": "La tua password non corrisponde."
+  "PASSWORD_DONT_MATCH": "La tua password non corrisponde.",
+
+  "TODAY": "Oggi",
+  "YESTERDAY": "Ieri",
+  "THIS_WEEK": "Questa settimana",
+  "LAST_WEEK": "La scorsa settimana",
+  "NO_RESULTS": "Non è stato possibile trovare la storia che cercavi."
 }
