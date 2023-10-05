@@ -67,7 +67,6 @@ import Card1 from '@tandem/assets/svg/illustrationTypes/card-1.svg';
 import Card2 from '@tandem/assets/svg/illustrationTypes/card-2.svg';
 import Card3 from '@tandem/assets/svg/illustrationTypes/card-3.svg';
 import Card4 from '@tandem/assets/svg/illustrationTypes/card-4.svg';
-import QuestionMark from '@tandem/assets/svg/QuestionMarkRed';
 import RedQuestionMark from '@tandem/assets/svg/storySvg/RedQuestionMark.svg';
 import {translation} from '@tandem/utils/methods';
 
