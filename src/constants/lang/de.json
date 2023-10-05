@@ -317,5 +317,11 @@
     "tip-three": "Sobald Sie sich hinzugefügt haben, können Sie hier Ihren Avatar sehen und darauf tippen, um die App zu verwenden.",
     "tip-four": "Wenn Sie bereit sind, drücken Sie die 'Start'-Taste."
   },
-  "PASSWORD_DONT_MATCH": "Ihr Passwort stimmt nicht überein."
+  "PASSWORD_DONT_MATCH": "Ihr Passwort stimmt nicht überein.",
+
+  "TODAY": "Heute",
+  "YESTERDAY": "Gestern",
+  "THIS_WEEK": "Diese Woche",
+  "LAST_WEEK": "Letzte Woche",
+  "NO_RESULTS": "Die gesuchte Geschichte konnte nicht gefunden werden."
 }
