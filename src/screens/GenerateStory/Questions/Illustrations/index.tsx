@@ -22,7 +22,7 @@ import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {useNavigation} from '@react-navigation/native';
 import RNEmojiWithText from '@tandem/components/RNEmojiWithText';
 import {store} from '@tandem/redux/store';
-import Person from '@tandem/assets/svg/Shrugging';
+import QuestionMark from '@tandem/assets/svg/QuestionMarkRed';
 
 export default () => {
   const navigation: any = useNavigation();
@@ -102,7 +102,7 @@ export default () => {
             heading={'Not sure'}
             customStyle={styles.illustration}
             bgcColor={'pink'}
-            Svgimg={Person}
+            Svgimg={QuestionMark}
           />
         </ScrollView>
       </>

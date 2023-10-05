@@ -99,14 +99,12 @@ const IconRednerItem = ({
         style={[
           styles.heading,
           {
-            fontSize:
-              heading.split(' ').length > 1
-                ? verticalScale(15)
-                : verticalScale(16),
+            fontSize: verticalScale(16) - heading.split(' ').length * 1.2,
           },
         ]}
         isSemiBold>
         {heading}
+        {/* {heading.split(' ').join('\n')} */}
       </RNTextComponent>
     )}
   </>

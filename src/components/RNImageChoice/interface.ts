@@ -5,7 +5,7 @@ export interface MultipleChoiceProps {
   data: {name: string; file: string}[];
   customStyle?: StyleProp<ViewStyle>;
   itemStyle?: StyleProp<ImageStyle>;
-  type: STORY_PARTS.WHERE;
+  type: STORY_PARTS.WHERE | STORY_PARTS.WHO | STORY_PARTS.WHAT_HAPPENS;
   maxSelections?: number;
   index?: number;
   setDisabled: React.Dispatch<React.SetStateAction<boolean>>;
