@@ -1,4 +1,4 @@
-import {AVATAR_ARRAY, PLACE} from '@tandem/constants/local';
+import {AVATAR_ARRAY, PLACE, WHAT_HAPPENS, WHO} from '@tandem/constants/local';
 import {
   addAvatarFile,
   addPlaceFile,
@@ -6,6 +6,10 @@ import {
   clearAvatars,
   clearPlaces,
   addFlush,
+  clearWho,
+  addWhoFile,
+  clearWhatHappens,
+  addWhatHappensFile,
 } from '@tandem/redux/slices/cache.slice';
 
 import {store} from '@tandem/redux/store';
@@ -79,6 +83,62 @@ export const cachePlaces = () => {
         store.dispatch(addFlush(pathLocal));
         store.dispatch(
           addPlaceFile({
+            file: 'file://' + pathLocal,
+            name: obj.name,
+          }),
+        );
+      });
+  });
+};
+
+export const cacheWho = () => {
+  console.log('cache who func');
+  store.dispatch(clearWho());
+  const isWhoArrayFull = store.getState().cache.isWhoArrayFull;
+  if (isWhoArrayFull) {
+    console.log('cacheing who array is maxed out');
+    return;
+  }
+  WHO.forEach((obj, index) => {
+    console.log('cacheing who: ', obj.url, '\n');
+    RNFetchBlob.config({
+      fileCache: true,
+      path: dirs.DocumentDir + '/who' + index.toString() + 'cache',
+    })
+      .fetch('GET', obj.url, {})
+      .then(res => {
+        const pathLocal = res.path();
+        store.dispatch(addFlush(pathLocal));
+        store.dispatch(
+          addWhoFile({
+            file: 'file://' + pathLocal,
+            name: obj.name,
+          }),
+        );
+      });
+  });
+};
+
+export const cacheWhatHappens = () => {
+  console.log('cache whatHappens func');
+  store.dispatch(clearWhatHappens());
+  const isWhoArrayFull = store.getState().cache.isWhoArrayFull;
+  if (isWhoArrayFull) {
+    console.log('cacheing what happens array is maxed out');
+    return;
+  }
+  WHAT_HAPPENS.forEach((obj, index) => {
+    console.log('cacheing what happens: ', obj.url, '\n');
+    RNFetchBlob.config({
+      fileCache: true,
+      path: dirs.DocumentDir + '/whatHappens' + index.toString() + 'cache',
+    })
+      .fetch('GET', obj.url, {})
+      .then(res => {
+        const pathLocal = res.path();
+        store.dispatch(addFlush(pathLocal));
+        store.dispatch(
+          addWhatHappensFile({
             file: 'file://' + pathLocal,
             name: obj.name,
           }),

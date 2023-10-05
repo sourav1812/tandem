@@ -1,7 +1,5 @@
-import RNChoiceQuestions from '@tandem/components/RNChoiceQuestions';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import {STORY_PARTS} from '@tandem/constants/enums';
-import {AUDIENCE} from '@tandem/constants/local';
 import {translation} from '@tandem/utils/methods';
 import {verticalScale} from 'react-native-size-matters';
 import {styles} from '../../styles';
@@ -12,12 +10,14 @@ import GenerateStory from '../..';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import removeQuestionData from '@tandem/functions/removeQuestionData';
 import {useNavigation} from '@react-navigation/native';
+import RNImageChoice from '@tandem/components/RNImageChoice';
 
 export default () => {
   const navigation: any = useNavigation();
   const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
+  const whoInStory = useAppSelector(state => state.cache.who);
 
   const [disabled, setDisabled] = React.useState(true);
 
@@ -47,12 +47,12 @@ export default () => {
             {translation('generate-story.is-in-story')}{' '}
           </RNTextComponent>
         </RNTextComponent>
-        <RNChoiceQuestions
+        <RNImageChoice
           setDisabled={setDisabled}
           type={STORY_PARTS.WHO}
           maxSelections={3}
           index={0}
-          data={AUDIENCE}
+          data={whoInStory}
         />
       </>
     </GenerateStory>

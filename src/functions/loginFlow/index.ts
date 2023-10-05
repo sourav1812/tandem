@@ -6,7 +6,7 @@ import {
   saveChildData,
 } from '@tandem/redux/slices/createChild.slice';
 import {saveUserData} from '@tandem/redux/slices/userData.slice';
-import {cacheAvatars, cachePlaces} from '../cache';
+import {cacheAvatars, cachePlaces, cacheWhatHappens, cacheWho} from '../cache';
 import {PEOPLE} from '@tandem/constants/enums';
 import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
@@ -32,6 +32,8 @@ export default async (loginResponse: LoginResponse) => {
 
   cacheAvatars();
   cachePlaces();
+  cacheWho();
+  cacheWhatHappens();
   storeKey(CACHE_DIR, RNFetchBlob.fs.dirs.DocumentDir);
 
   store.dispatch(
