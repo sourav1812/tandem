@@ -47,6 +47,7 @@ const RNChooseColor = ({
   const [clearTimeoutOfMixing, setClearTimoutOfMixing] = React.useState<
     number | undefined
   >();
+  const [tweleve, setTweleve] = React.useState<undefined | number>(undefined);
   const [controlPaintMixHz, setControlPaintMixHz] =
     React.useState<boolean>(false);
   const [usedColor, setUsedColor] = React.useState<string[]>([]);
@@ -87,7 +88,11 @@ const RNChooseColor = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paths.length, usedColor]);
-
+  React.useEffect(() => {
+    setTimeout(() => {
+      setTweleve(12);
+    }, 200);
+  }, []);
   React.useEffect(() => {
     if (palleteArray.length === 0) {
       setDisabled(true);
@@ -192,7 +197,7 @@ const RNChooseColor = ({
               topViewStyle={{
                 alignItems: 'center',
               }}
-              open={12}
+              open={tweleve}
               text={translation('ADD_COLORS')}
               textStyle={styles.tooltip}
               dimensionObject={positionRefs[0]}>
