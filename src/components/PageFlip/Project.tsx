@@ -193,7 +193,7 @@ export const Project = ({
       activeIndex + 2 <= textArray.length ? activeIndex + 1 : activeIndex,
     );
     setOverlay2(overlay);
-    await wait(50);
+    await wait(100);
     const overlayBeforePage = await makeImageFromView(ref2);
 
     pointer.current = -wWidth;
@@ -312,6 +312,8 @@ export const Project = ({
         style={{
           width: wWidth,
           height: hHeight,
+          position: 'absolute',
+          zIndex: -1,
         }}>
         <RenderScene
           hHeight={hHeight}
