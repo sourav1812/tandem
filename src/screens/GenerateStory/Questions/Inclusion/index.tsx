@@ -22,14 +22,18 @@ export default () => {
   const portrait = useAppSelector(state => state.orientation.isPortrait);
   const avatars = useAppSelector(state => state.cache.avatars);
   const [selected, setSelected] = React.useState<number>(0);
-
+  const [eleven, setEleven] = React.useState<number | undefined>(undefined);
   const currentChildAvatar = avatars.filter(
     obj => obj.path === currentChild?.avatar,
   )[0]?.file;
   const tooltipArray = useAppSelector(state => state.tooltipReducer);
 
   // const [tooltipFifth, setTooltipFifth] = React.useState(!tooltipArray?.[11]);
-
+  React.useEffect(() => {
+    setTimeout(() => {
+      setEleven(11);
+    }, 200);
+  }, []);
   const navigation: any = useNavigation();
   const nextQuestion = () => {
     navigation.push(SCREEN_NAME.ROADMAP);
@@ -74,7 +78,7 @@ export default () => {
             bottom={portrait ? 'South' : undefined}
             top={portrait ? undefined : 'SouthEast'}
             text={translation('YES_NO_SELECT')}
-            open={11}>
+            open={eleven}>
             <View
               style={[
                 styles.buttonContainer,
