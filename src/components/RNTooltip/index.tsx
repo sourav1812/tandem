@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {useEffect} from 'react';
 import Tooltip from 'react-native-walkthrough-tooltip';
 import {TooltipProps} from './interface';
 import {scale} from 'react-native-size-matters';
@@ -19,6 +19,8 @@ import {
 import wait from '@tandem/functions/wait';
 import {useDispatch} from 'react-redux';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import statusbar from '@tandem/functions/statusbar';
+import themeColor from '@tandem/theme/themeColor';
 
 const RNTooltip = ({
   children,
@@ -44,6 +46,16 @@ const RNTooltip = ({
   const toShowAllTooltip = Object.values(tooltipFromRedux).every(
     value => value,
   );
+
+  useEffect(() => {
+    if (toShowAllTooltip) return;
+    if (!open) return;
+    if (open && tooltipFromRedux?.[open]) return;
+    statusbar(themeColor.tooltipBgcColor);
+    return () => {
+      statusbar(undefined);
+    };
+  }, [open, toShowAllTooltip, tooltipFromRedux]);
 
   return (
     <Tooltip
