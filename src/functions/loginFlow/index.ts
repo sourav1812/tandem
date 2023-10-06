@@ -6,7 +6,7 @@ import {
   saveChildData,
 } from '@tandem/redux/slices/createChild.slice';
 import {saveUserData} from '@tandem/redux/slices/userData.slice';
-import {cacheAvatars, cachePlaces, cacheWhatHappens, cacheWho} from '../cache';
+import {reCache} from '../cache';
 import {PEOPLE} from '@tandem/constants/enums';
 import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
@@ -14,7 +14,6 @@ import {clearCacheForce} from '@tandem/redux/slices/cache.slice';
 import {storeKey} from '@tandem/helpers/encryptedStorage';
 import RNFetchBlob from 'rn-fetch-blob';
 import {CACHE_DIR} from '@tandem/constants/local';
-// import {storeKey} from '@tandem/helpers/encryptedStorage';
 
 export default async (loginResponse: LoginResponse) => {
   store.dispatch(clearCacheForce());
@@ -30,10 +29,7 @@ export default async (loginResponse: LoginResponse) => {
     ),
   );
 
-  cacheAvatars();
-  cachePlaces();
-  cacheWho();
-  cacheWhatHappens();
+  reCache();
   storeKey(CACHE_DIR, RNFetchBlob.fs.dirs.DocumentDir);
 
   store.dispatch(
