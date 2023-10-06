@@ -15,10 +15,10 @@ import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {MODE} from '@tandem/constants/mode';
 import {useRoute} from '@react-navigation/native';
 import {BooksData} from '../Bookshelf/interface';
-import {store} from '@tandem/redux/store';
-import {setImageForPage} from '@tandem/redux/slices/bookShelf.slice';
-import RNFetchBlob from 'rn-fetch-blob';
-import {addFlush} from '@tandem/redux/slices/cache.slice';
+// import {store} from '@tandem/redux/store';
+// import {setImageForPage} from '@tandem/redux/slices/bookShelf.slice';
+// import RNFetchBlob from 'rn-fetch-blob';
+// import {addFlush} from '@tandem/redux/slices/cache.slice';
 
 const Story = () => {
   const [visible, setVisible] = useState(false);
@@ -31,81 +31,82 @@ const Story = () => {
     setVisible(!visible);
   };
   const {val, len} = progress;
-  const shouldRedirect = () => {
-    if (val && len) {
-      if (val === len) {
-        return true;
-      }
-    }
-    return false;
-  };
+  // const shouldRedirect = () => {
+  //   if (val && len) {
+  //     if (val === len) {
+  //       return true;
+  //     }
+  //   }
+  //   return false;
+  // };
 
-  React.useEffect(() => {
-    setRedirect(shouldRedirect());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [val]);
+  // React.useEffect(() => {
+  //   setRedirect(shouldRedirect());
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [val]);
 
-  React.useEffect(() => {
-    const books = store.getState().bookShelf.books;
-    const bookIndex = books.findIndex(book => book.bookId === routeData.id);
-    const book = books[bookIndex];
-    const doWeHaveImage = book.pages.every(obj => obj.image);
+  // ! story book image caching is disabled until api is ready
+  // React.useEffect(() => {
+  //   const books = store.getState().bookShelf.books;
+  //   const bookIndex = books.findIndex(book => book.bookId === routeData.id);
+  //   const book = books[bookIndex];
+  //   const doWeHaveImage = book.pages.every(obj => obj.image);
 
-    if (doWeHaveImage) {
-      // ! reset Directories if they are changed
-      if (Platform.OS === 'ios') {
-        const currentDirectory = RNFetchBlob.fs.dirs.DocumentDir;
-        book.pages.forEach((page, pageIndex) => {
-          if (!page.image?.includes(currentDirectory)) {
-            store.dispatch(
-              setImageForPage({
-                bookIndex,
-                pageIndex,
-                image:
-                  'file://' +
-                  currentDirectory +
-                  page.image?.split('Documents')[1],
-              }),
-            );
-          }
-        });
-      }
-      setRedirect(true);
-      return;
-    }
-    setProgress(prev => ({...prev, len: book.pages.length}));
-    let dirs = RNFetchBlob.fs.dirs;
-    book.pages.forEach((page, pageIndex) => {
-      if (!page.image) {
-        RNFetchBlob.config({
-          fileCache: true,
-          path:
-            dirs.DocumentDir +
-            '/storybooks' +
-            book.bookId +
-            pageIndex.toString() +
-            'cache',
-        })
-          .fetch('GET', page.illustration_url, {})
-          .then(res => {
-            const pathLocal = res.path();
-            store.dispatch(
-              setImageForPage({
-                bookIndex,
-                pageIndex,
-                image: 'file://' + pathLocal,
-              }),
-            );
-            store.dispatch(addFlush(pathLocal));
-            setProgress(prev => ({...prev, val: prev.val + 1}));
-          })
-          .catch(error => {
-            console.log('error while caching story images', error);
-          });
-      }
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  //   if (doWeHaveImage) {
+  //     // ! reset Directories if they are changed
+  //     if (Platform.OS === 'ios') {
+  //       const currentDirectory = RNFetchBlob.fs.dirs.DocumentDir;
+  //       book.pages.forEach((page, pageIndex) => {
+  //         if (!page.image?.includes(currentDirectory)) {
+  //           store.dispatch(
+  //             setImageForPage({
+  //               bookIndex,
+  //               pageIndex,
+  //               image:
+  //                 'file://' +
+  //                 currentDirectory +
+  //                 page.image?.split('Documents')[1],
+  //             }),
+  //           );
+  //         }
+  //       });
+  //     }
+  //     setRedirect(true);
+  //     return;
+  //   }
+  //   setProgress(prev => ({...prev, len: book.pages.length}));
+  //   let dirs = RNFetchBlob.fs.dirs;
+  //   book.pages.forEach((page, pageIndex) => {
+  //     if (!page.image) {
+  //       RNFetchBlob.config({
+  //         fileCache: true,
+  //         path:
+  //           dirs.DocumentDir +
+  //           '/storybooks' +
+  //           book.bookId +
+  //           pageIndex.toString() +
+  //           'cache',
+  //       })
+  //         .fetch('GET', page.illustration_url, {})
+  //         .then(res => {
+  //           const pathLocal = res.path();
+  //           store.dispatch(
+  //             setImageForPage({
+  //               bookIndex,
+  //               pageIndex,
+  //               image: 'file://' + pathLocal,
+  //             }),
+  //           );
+  //           store.dispatch(addFlush(pathLocal));
+  //           setProgress(prev => ({...prev, val: prev.val + 1}));
+  //         })
+  //         .catch(error => {
+  //           console.log('error while caching story images', error);
+  //         });
+  //     }
+  //   });
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   return (
     <>

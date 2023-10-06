@@ -21,7 +21,7 @@ import getStories from '@tandem/api/getStories';
 import {RootState, store} from '@tandem/redux/store';
 import themeColor from '@tandem/theme/themeColor';
 import {BooksData} from './interface';
-import {ratingList} from '@tandem/components/RNRatingModal/interface';
+// import {ratingList} from '@tandem/components/RNRatingModal/interface';
 import {clearStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration.slice';
 import SadFace from '@tandem/assets/svg/Sad';
 import {
@@ -36,32 +36,42 @@ const Bookshelf = () => {
   const [searchText, setText] = useState<ValidationError>({value: ''});
   const [datesKeys, setDateKeys] = useState<string[]>([]);
   const books = useAppSelector((state: RootState) => state.bookShelf.books);
-
+  console.log(JSON.stringify(books));
   const data: BooksData[] = React.useMemo(
     () =>
       books?.map((book, index) => {
         const isThisWeek =
-          ((new Date().getTime() - new Date(book.createdAt).getTime()) *
+          ((new Date().getTime() -
+            new Date(book.storyInfo[0].createdAt).getTime()) *
             1.157) /
             10_00_00_000 <
           7; // ! are checking if the book is screated within a week
-        let week: string = translation(bookshelfDays(new Date(book.createdAt)));
+        let week: string = translation(
+          bookshelfDays(new Date(book.storyInfo[0].createdAt)),
+        );
         if (datesKeys.includes(week)) {
           week = '';
         } else {
           setDateKeys(prev => [...prev, week]);
         }
         return {
-          id: book.bookId,
+          id: book.storyInfo[0].bookId,
           headerTitle: book.title || `Mock Story ${index + 1}`,
-          time: new Date(book.createdAt).toDateString() || 'Some Date',
-          image: book.thumbnail || require('../../assets/png/imageOne.png'),
-          readingTime: Math.ceil(book.story.split(' ').length / 100) || 10, //  ! avg reading speed is 200 to 300 wpm so we are calculating time in miniutes to read the whole story. using 100 wpm for children
+          time:
+            new Date(book.storyInfo[0].createdAt).toDateString() || 'Some Date',
+          image: require('../../assets/png/imageOne.png'),
+          readingTime:
+            Math.ceil(
+              book.storyInfo[0].pages
+                .map(obj => obj.text)
+                .join()
+                .split(' ').length / 100,
+            ) || 10, //  ! avg reading speed is 200 to 300 wpm so we are calculating time in miniutes to read the whole story. using 100 wpm for children
           isNew: isThisWeek, // ! langauge support?
-          emogi:
-            book.rating && book.rating !== 0
-              ? ratingList[book.rating - 1].name
-              : null,
+          emogi: null,
+          // book.rating && book.rating !== 0
+          //   ? ratingList[book.rating - 1].name
+          //   : null,
           week,
           teaser: book.teaser,
         };

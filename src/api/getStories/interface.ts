@@ -46,3 +46,40 @@ export interface Prompt {
   readingAge: number;
   wordsPerPage: number;
 }
+
+export interface StoryData {
+  _id: string;
+  userId: string;
+  childId: string;
+  prompt: {
+    characters: string[];
+    location: string[];
+    plotElements: string[];
+    genre: string[];
+    illustrationStyle: string[];
+    illustrationColors: string[];
+    childInStory: boolean;
+    childName: string;
+    childAge: number;
+    childGender: string;
+    readingAge: number;
+  };
+  teaser: string;
+  title: string;
+  referenceId: string;
+  storyInfo: [
+    {
+      _id: string;
+      bookId: string;
+      userId: string;
+      pages: {text: string; _id: string}[];
+      comprehension_questions: {
+        question: string;
+        answer: string;
+        _id: string;
+      }[];
+      createdAt: string;
+      updatedAt: string;
+    },
+  ];
+}

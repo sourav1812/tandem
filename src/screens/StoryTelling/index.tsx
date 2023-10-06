@@ -24,7 +24,7 @@ import RNWellDoneModal from '@tandem/components/RNWellDoneModal';
 import RNMultipleChoice from '@tandem/components/RNMultipleChoice';
 import RNTooltip from '@tandem/components/RNTooltip';
 import {useRoute} from '@react-navigation/native';
-import Book from '@tandem/api/getStories/interface';
+import {StoryData} from '@tandem/api/getStories/interface';
 import {PageFlip} from '@tandem/components/PageFlip';
 import rateStory from '@tandem/api/rateStory';
 import {useDispatch} from 'react-redux';
@@ -39,8 +39,10 @@ const StoryTelling = () => {
   const routes: any = useRoute();
   const routesData = routes?.params;
   const books = useAppSelector((state: RootState) => state.bookShelf.books);
-  const book = books.filter((item: Book) => item?.bookId === routesData.id)[0];
-  const totalPages = book?.pages?.length - 1;
+  const book = books.filter(
+    (item: StoryData) => item?.storyInfo[0].bookId === routesData.id,
+  )[0];
+  const totalPages = book?.storyInfo[0].pages?.length - 1;
   const [currentIndex, setActiveIndex] = React.useState(totalPages);
   const [state, setState] = useState<StateObject>({
     ratingModal: true,
@@ -66,7 +68,10 @@ const StoryTelling = () => {
     });
   };
   React.useEffect(() => {
-    if (currentIndex === 1 && book.rating === 0) {
+    if (
+      currentIndex === 1
+      // && book.rating === 0
+    ) {
       updateState({ratingModal: true});
     }
     if (currentIndex === 0) {
@@ -74,7 +79,10 @@ const StoryTelling = () => {
         setRenderModal(true);
       }, 2000);
     }
-  }, [book.rating, currentIndex]);
+  }, [
+    // book.rating,
+    currentIndex,
+  ]);
 
   const toggleModal = () => {
     setRenderModal(!renderModal);
@@ -89,7 +97,7 @@ const StoryTelling = () => {
       return;
     }
     try {
-      await rateStory(book.bookId, rating);
+      await rateStory(book.storyInfo[0].bookId, rating);
     } catch (error) {
       console.log('error in rating story post', error);
     }
@@ -292,7 +300,8 @@ const StoryTelling = () => {
           nextClick={renderTipLevel}
         />
       )} */}
-      {currentIndex === 1 && book.rating === 0 && (
+      {currentIndex === 1 && (
+        //  book.rating === 0 &&
         <RNRatingModal
           visible={ratingModal}
           renderModal={renderRatingModal}
