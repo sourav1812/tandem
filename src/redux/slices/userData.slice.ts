@@ -5,7 +5,7 @@ import {AdultData, ChildData} from './createChild.slice';
 
 export interface TermsInterface {
   terms: string;
-  optiosns: {description: string; isRequired: boolean}[];
+  options: {description: string; isRequired: boolean}[];
 }
 interface UserDataState {
   userDataObject: {
@@ -39,7 +39,7 @@ const initialState: UserDataState = {
     adults: [],
     termsAndConditions: false,
     allowNotifications: false,
-    consentForm: {terms: '', optiosns: []},
+    consentForm: {terms: '', options: []},
   },
   socialDataObject: {
     email: '',
@@ -68,7 +68,7 @@ export const setUserData = createSlice({
         adults: [],
         termsAndConditions: false,
         allowNotifications: false,
-        consentForm: {terms: '', optiosns: []},
+        consentForm: {terms: '', options: []},
       };
     },
     saveSocialData: (state, action) => {

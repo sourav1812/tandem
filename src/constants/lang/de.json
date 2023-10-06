@@ -243,7 +243,7 @@
   },
   "otp-screen": {
     "enter-the-code": "Code eingeben",
-    "enter-four-digit-code": "Bitte geben Sie den 4-stelligen Code ein, der gesendet wurde an ",
+    "enter-six-digit-code": "Bitte geben Sie den 6-stelligen Code ein, der gesendet wurde an ",
     "you-can-resend-in": "Sie können erneut senden in",
     "resend": "Erneut senden",
     "did-not-get-code": "Den Code nicht erhalten?",
@@ -316,5 +316,12 @@
     "tip-two": "Ihre ausgewählten Avatare erscheinen hier. Tippen Sie erneut darauf, wenn Sie es sich anders überlegen.",
     "tip-three": "Sobald Sie sich hinzugefügt haben, können Sie hier Ihren Avatar sehen und darauf tippen, um die App zu verwenden.",
     "tip-four": "Wenn Sie bereit sind, drücken Sie die 'Start'-Taste."
-  }
+  },
+  "PASSWORD_DONT_MATCH": "Ihr Passwort stimmt nicht überein.",
+
+  "TODAY": "Heute",
+  "YESTERDAY": "Gestern",
+  "THIS_WEEK": "Diese Woche",
+  "LAST_WEEK": "Letzte Woche",
+  "NO_RESULTS": "Die gesuchte Geschichte konnte nicht gefunden werden."
 }

@@ -67,6 +67,7 @@ import Card1 from '@tandem/assets/svg/illustrationTypes/card-1.svg';
 import Card2 from '@tandem/assets/svg/illustrationTypes/card-2.svg';
 import Card3 from '@tandem/assets/svg/illustrationTypes/card-3.svg';
 import Card4 from '@tandem/assets/svg/illustrationTypes/card-4.svg';
+import RedQuestionMark from '@tandem/assets/svg/storySvg/RedQuestionMark.svg';
 import {translation} from '@tandem/utils/methods';
 
 export const TOOLTIP = 'ToolTip';
@@ -79,13 +80,14 @@ export const AUDIENCE: PlaceType[] = [
   {name: 'Jungle animals', icon: '🦁', bgc: themeColor.pink},
   {name: 'Space aliens', icon: '👽', bgc: themeColor.themeBlue},
   {name: 'Scientists', icon: '👨‍🔬', bgc: themeColor.gold},
+  {name: "I don't know", svgIcon: RedQuestionMark, bgc: themeColor.lightGreen},
 ];
 
 export const TYPE_OF_STORY: PlaceType[] = [
   {name: 'Fairy tale', icon: '✨', bgc: themeColor.pink},
   {name: 'Adventure', icon: '🏄', bgc: themeColor.themeBlue},
   {name: 'Silly/Comedy', icon: '🤣', bgc: themeColor.gold},
-  {name: "I don't know", icon: '☹️', bgc: themeColor.lightGreen},
+  {name: "I don't know", svgIcon: RedQuestionMark, bgc: themeColor.lightGreen},
 ];
 
 export const ATTRIBUTE: PlaceType[] = [
@@ -206,6 +208,116 @@ export const PLACE: OnlyImageType[] = [
   {
     name: 'Sunny Beach',
     url: 'https://tandem.geeky.dev/v1/images/locations/sunny_beach.png',
+  },
+];
+
+export const WHO: OnlyImageType[] = [
+  {
+    name: 'Astronaut',
+    url: 'https://tandem.geeky.dev/v1/images/who/astronaut.png',
+  },
+  {
+    name: 'Boy Who Plays The Drums',
+    url: 'https://tandem.geeky.dev/v1/images/who/boy_who_plays_the_drums.png',
+  },
+  {
+    name: 'Bunny Rabbit',
+    url: 'https://tandem.geeky.dev/v1/images/who/bunny_rabbit.png',
+  },
+  {
+    name: 'Cute Dinosaur',
+    url: 'https://tandem.geeky.dev/v1/images/who/cute_dinosaur.png',
+  },
+  {
+    name: 'Cute Duckling',
+    url: 'https://tandem.geeky.dev/v1/images/who/cute_duckling.png',
+  },
+  {
+    name: 'Cute Kitten',
+    url: 'https://tandem.geeky.dev/v1/images/who/cute_kitten.png',
+  },
+  {
+    name: 'Sea Monster',
+    url: 'https://tandem.geeky.dev/v1/images/who/cute_sea_monster.png',
+  },
+  {
+    name: 'Farm Animals',
+    url: 'https://tandem.geeky.dev/v1/images/who/farm_animals.png',
+  },
+  {
+    name: 'Female Doctor',
+    url: 'https://tandem.geeky.dev/v1/images/who/female_doctor.png',
+  },
+  {
+    name: 'Female Firefighter',
+    url: 'https://tandem.geeky.dev/v1/images/who/female_firefighter.png',
+  },
+  {
+    name: 'Female Runner',
+    url: 'https://tandem.geeky.dev/v1/images/who/female_runner.png',
+  },
+  {
+    name: 'Fisherman',
+    url: 'https://tandem.geeky.dev/v1/images/who/fisherman.png',
+  },
+  {
+    name: 'Happy Yeti',
+    url: 'https://tandem.geeky.dev/v1/images/who/happy_yeti.png',
+  },
+  {
+    name: 'Mad Professor',
+    url: 'https://tandem.geeky.dev/v1/images/who/mad_professor.png',
+  },
+  {
+    name: 'Male Runner',
+    url: 'https://tandem.geeky.dev/v1/images/who/male_runner.png',
+  },
+  {
+    name: 'Pet Dog',
+    url: 'https://tandem.geeky.dev/v1/images/who/pet_dog.png',
+  },
+  {
+    name: 'Policeman',
+    url: 'https://tandem.geeky.dev/v1/images/who/policeman.png',
+  },
+  {
+    name: 'Racing Cyclist',
+    url: 'https://tandem.geeky.dev/v1/images/who/racing_cyclist.png',
+  },
+  {
+    name: 'Safari Animals',
+    url: 'https://tandem.geeky.dev/v1/images/who/safari_animals.png',
+  },
+];
+
+export const WHAT_HAPPENS: OnlyImageType[] = [
+  {
+    name: 'Adventure',
+    url: 'https://tandem.geeky.dev/v1/images/whatHappens/adventure.png',
+  },
+  {
+    name: 'Fairy Tale',
+    url: 'https://tandem.geeky.dev/v1/images/whatHappens/fairy_tale.png',
+  },
+  {
+    name: 'Fantastic Mystery',
+    url: 'https://tandem.geeky.dev/v1/images/whatHappens/fantastic_mystery.png',
+  },
+  {
+    name: 'Friendship ',
+    url: 'https://tandem.geeky.dev/v1/images/whatHappens/friendship_story.png',
+  },
+  {
+    name: 'Funny ',
+    url: 'https://tandem.geeky.dev/v1/images/whatHappens/funny_story.png',
+  },
+  {
+    name: 'Love',
+    url: 'https://tandem.geeky.dev/v1/images/whatHappens/love_story.png',
+  },
+  {
+    name: 'Spooky',
+    url: 'https://tandem.geeky.dev/v1/images/whatHappens/spooky_tale.png',
   },
 ];
 

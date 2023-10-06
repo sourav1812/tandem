@@ -244,7 +244,7 @@
   },
   "otp-screen": {
     "enter-the-code": "Entrez le code",
-    "enter-four-digit-code": "Veuillez entrer le code à 4 chiffres envoyé à ",
+    "enter-six-digit-code": "Veuillez entrer le code à 6 chiffres envoyé à ",
     "you-can-resend-in": "Vous pouvez renvoyer dans",
     "resend": "Renvoyer",
     "did-not-get-code": "Vous n'avez pas reçu le code ?",
@@ -317,5 +317,12 @@
     "tip-two": "Vos avatars sélectionnés apparaissent ici. Appuyez à nouveau dessus si vous changez d'avis.",
     "tip-three": "Une fois que vous vous êtes ajouté, vous pouvez voir votre avatar ici et appuyer dessus pour utiliser l'application.",
     "tip-four": "Quand vous êtes prêt, appuyez sur le bouton 'Démarrer'."
-  }
+  },
+  "PASSWORD_DONT_MATCH": "Votre mot de passe ne correspond pas.",
+
+  "TODAY": "Aujourd'hui",
+  "YESTERDAY": "Hier",
+  "THIS_WEEK": "Cette semaine",
+  "LAST_WEEK": "La semaine dernière",
+  "NO_RESULTS": "Impossible de trouver l'histoire que vous recherchiez ?"
 }

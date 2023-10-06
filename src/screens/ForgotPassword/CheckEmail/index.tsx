@@ -20,8 +20,9 @@ import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
 import {verticalScale} from 'react-native-size-matters';
 import {translation} from '@tandem/utils/methods';
+import {CheckEmailInterface} from '@tandem/navigation/types';
 
-const CheckEmail = () => {
+const CheckEmail = ({route}: CheckEmailInterface) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -40,6 +41,7 @@ const CheckEmail = () => {
           width: width,
         }}>
         <ScrollView
+          bounces={false}
           contentContainerStyle={{
             height: height,
             width: width,
@@ -50,7 +52,6 @@ const CheckEmail = () => {
               justifyContent: 'center',
               alignItems: 'center',
               width: '100%',
-              height: '50%',
             }}>
             <Image
               style={{
@@ -75,7 +76,7 @@ const CheckEmail = () => {
               title={'Account Page'}
               customStyle={styles.button}
               onClick={() => {
-                navigateTo(SCREEN_NAME.OTP_SCREEN);
+                navigateTo(SCREEN_NAME.OTP_SCREEN, {email: route.params.email});
               }}
             />
           </View>

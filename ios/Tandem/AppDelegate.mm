@@ -1,7 +1,7 @@
 #import "AppDelegate.h"
 #import <Firebase.h>
 #import <FBSDKCoreKit/FBSDKCoreKit-swift.h>
-
+#import "Orientation.h"
 #import <React/RCTBundleURLProvider.h>
 #import <RNGoogleSignin/RNGoogleSignin.h>
 #import <AuthenticationServices/AuthenticationServices.h>
@@ -48,6 +48,10 @@
 - (BOOL)concurrentRootEnabled
 {
   return true;
+}
+
+- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
+  return [Orientation getOrientation];
 }
 
 @end

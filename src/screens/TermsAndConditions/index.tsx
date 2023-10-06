@@ -20,7 +20,7 @@ const TermsAndConditions = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const userData = useAppSelector(state => state.userData.userDataObject);
   const [state, setState] = useState<StateObject>({
-    terms: userData.consentForm?.optiosns.map(item => ({
+    terms: userData.consentForm?.options.map(item => ({
       ...item,
       isAgreed: false,
     })),
@@ -37,7 +37,7 @@ const TermsAndConditions = () => {
 
   useEffect(() => {
     updateState({
-      terms: userData.consentForm?.optiosns.map(item => ({
+      terms: userData.consentForm?.options.map(item => ({
         ...item,
         isAgreed: false,
       })),

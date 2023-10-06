@@ -3,7 +3,10 @@ import {Pressable, ScrollView, Image} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
 import {MultipleChoiceProps} from './interface';
-import {pushStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration.slice';
+import {
+  clearParticularState,
+  pushStoryGenerationResponse,
+} from '@tandem/redux/slices/storyGeneration.slice';
 import themeColor from '@tandem/theme/themeColor';
 import {
   useSharedValue,
@@ -13,6 +16,8 @@ import {
 import Animated from 'react-native-reanimated';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {store} from '@tandem/redux/store';
+import RNEmojiWithText from '../RNEmojiWithText';
+import QuestionMark from '@tandem/assets/svg/QuestionMarkRed';
 
 const RNImageChoice = ({
   data = [],
@@ -28,8 +33,15 @@ const RNImageChoice = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  console.log(activeState, 'activeStateactiveState');
   const handlePress = (name: string) => {
-    if (maxSelections === 1) {
+    if (activeState.includes('Not sure')) {
+      store.dispatch(clearParticularState(type));
+      store.dispatch(pushStoryGenerationResponse({key: type, value: [name]}));
+      return;
+    }
+    if (maxSelections === 1 || name === 'Not sure') {
+      store.dispatch(clearParticularState(type));
       store.dispatch(pushStoryGenerationResponse({key: type, value: [name]}));
       setDisabled(false);
       return;
@@ -76,6 +88,15 @@ const RNImageChoice = ({
           />
         );
       })}
+      <RNEmojiWithText
+        isSelected={activeState.includes('Not sure')}
+        onPress={() => handlePress('Not sure')}
+        heading={'Not sure'}
+        customStyle={styles.illustration}
+        bgcColor={'pink'}
+        Svgimg={QuestionMark}
+        showBorderWhenPressed
+      />
     </ScrollView>
   );
 };

@@ -12,6 +12,9 @@ export enum API {
   CHANGE_PASSWORD = 'user/password', //? PUT
   ADD_BIG_PEOPLE = 'big-people', //?POST
   AGREEMENT = 'user/profile/consent-form', //?POST
+  SEND_OTP_RESET_PASSWORD = 'user/forgot-password/send-email', //?POST
+  CONFIRM_OTP_RESET_PASSWORD = 'user/forgot-password/confirm-otp', //?POST
+  RESET_PASSWORD = 'user/forgot-password/reset-password', //?POST
 }
 
 export enum ENVIRONMENT {

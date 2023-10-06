@@ -1,11 +1,20 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {AVATAR_ARRAY, PLACE} from '@tandem/constants/local';
+import {AVATAR_ARRAY, PLACE, WHO, WHAT_HAPPENS} from '@tandem/constants/local';
+
+interface AvatarObject {
+  name: string;
+  file: string;
+}
 
 interface CacheState {
   avatars: {path: string; file: string; isPickerImg: boolean}[];
   isAvatarArrayFull: boolean;
-  places: {name: string; file: string}[];
+  places: AvatarObject[];
   isPlaceArrayFull: boolean;
+  who: AvatarObject[];
+  isWhoArrayFull: boolean;
+  whatHappens: AvatarObject[];
+  isWhatHappensArrayFull: boolean;
   flush: string[];
 }
 
@@ -14,6 +23,10 @@ const initialState: CacheState = {
   isAvatarArrayFull: false,
   places: [],
   isPlaceArrayFull: false,
+  who: [],
+  isWhoArrayFull: false,
+  whatHappens: [],
+  isWhatHappensArrayFull: false,
   flush: [],
 };
 
@@ -40,11 +53,19 @@ export const cacheSlice = createSlice({
       state.avatars.unshift(action.payload);
     },
     reinitialiseCacheDirectory: (state, action) => {
-      const {modifiedAvatars, modifiedFlush, modifiedPlaces} = action.payload;
+      const {
+        modifiedAvatars,
+        modifiedFlush,
+        modifiedPlaces,
+        modifiedWho,
+        modifiedWhatHappens,
+      } = action.payload;
       console.log({didChange: modifiedAvatars[0].file});
       state.avatars = modifiedAvatars;
       state.flush = modifiedFlush;
       state.places = modifiedPlaces;
+      state.who = modifiedWho;
+      state.whatHappens = modifiedWhatHappens;
     },
     clearAvatars: state => {
       if (
@@ -69,12 +90,49 @@ export const cacheSlice = createSlice({
         state.places = [];
       }
     },
+    addWhoFile: (state, action) => {
+      if (state.who.length < WHO.length) {
+        state.who.push(action.payload);
+      } else {
+        state.isWhoArrayFull = true;
+      }
+      if (state.who.length === WHO.length) {
+        state.isWhoArrayFull = true;
+      }
+    },
+    clearWho: state => {
+      if (state.who.length < WHO.length && state.isWhoArrayFull) {
+        state.who = [];
+      }
+    },
+    addWhatHappensFile: (state, action) => {
+      if (state.whatHappens.length < WHAT_HAPPENS.length) {
+        state.whatHappens.push(action.payload);
+      } else {
+        state.isWhatHappensArrayFull = true;
+      }
+      if (state.whatHappens.length === WHAT_HAPPENS.length) {
+        state.isWhatHappensArrayFull = true;
+      }
+    },
+    clearWhatHappens: state => {
+      if (
+        state.whatHappens.length < WHAT_HAPPENS.length &&
+        state.isWhatHappensArrayFull
+      ) {
+        state.whatHappens = [];
+      }
+    },
     clearCacheForce: state => {
       state.avatars = [];
       state.places = [];
       state.flush = [];
+      state.who = [];
+      state.whatHappens = [];
       state.isAvatarArrayFull = false;
       state.isPlaceArrayFull = false;
+      state.isWhoArrayFull = false;
+      state.isWhatHappensArrayFull = false;
     },
   },
 });
@@ -88,6 +146,10 @@ export const {
   replaceFirstElement,
   addFlush,
   reinitialiseCacheDirectory,
+  clearWho,
+  addWhoFile,
+  addWhatHappensFile,
+  clearWhatHappens,
 } = cacheSlice.actions;
 
 export default cacheSlice.reducer;

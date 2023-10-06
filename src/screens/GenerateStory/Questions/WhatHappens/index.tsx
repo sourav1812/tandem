@@ -1,7 +1,5 @@
-import RNChoiceQuestions from '@tandem/components/RNChoiceQuestions';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import {STORY_PARTS} from '@tandem/constants/enums';
-import {TYPE_OF_STORY} from '@tandem/constants/local';
 import {translation} from '@tandem/utils/methods';
 import {styles} from '../../styles';
 import React from 'react';
@@ -9,15 +7,22 @@ import GenerateStory from '../..';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {useNavigation} from '@react-navigation/native';
 import removeQuestionData from '@tandem/functions/removeQuestionData';
+import RNImageChoice from '@tandem/components/RNImageChoice';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 
 export default () => {
   const [disabled, setDisabled] = React.useState(true);
+  const whatHappens = useAppSelector(state => state.cache.whatHappens);
   const navigation: any = useNavigation();
+  console.log(whatHappens, 'whatHappensv');
   return (
     <GenerateStory
       type={STORY_PARTS.WHAT_HAPPENS}
       maxSelections={1}
       onBack={() => {
+        if (disabled) {
+          return;
+        }
         removeQuestionData(STORY_PARTS.WHAT_HAPPENS);
       }}
       questionNumber={5}
@@ -34,12 +39,12 @@ export default () => {
             {translation('generate-story.do-you-want-today')}
           </RNTextComponent>{' '}
         </RNTextComponent>
-        <RNChoiceQuestions
+        <RNImageChoice
           setDisabled={setDisabled}
           type={STORY_PARTS.WHAT_HAPPENS}
           maxSelections={1}
           index={4}
-          data={TYPE_OF_STORY}
+          data={whatHappens}
         />
       </>
     </GenerateStory>
