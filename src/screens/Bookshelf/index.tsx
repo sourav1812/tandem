@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {View, FlatList, Pressable} from 'react-native';
+import {View, FlatList, Pressable, RefreshControl, Alert} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
@@ -32,6 +32,8 @@ import bookshelfDays from '@tandem/functions/bookshelfDays';
 
 const Bookshelf = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const loader = useAppSelector(state => state.activityIndicator.isEnabled);
+  console.log(loader, 'loaderloader345tf');
   const mode = useAppSelector(state => state.mode.mode);
   const [searchText, setText] = useState<ValidationError>({value: ''});
   const [datesKeys, setDateKeys] = useState<string[]>([]);
@@ -81,14 +83,16 @@ const Bookshelf = () => {
   );
 
   useEffect(() => {
-    (async () => {
-      try {
-        getStories();
-      } catch (e) {
-        console.log(e);
-      }
-    })();
+    getAllStories();
   }, []);
+
+  const getAllStories = async () => {
+    try {
+      await getStories();
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const listEmptyComponent = React.useCallback(() => {
     const currentChild = store.getState().createChild.currentChild;
@@ -200,7 +204,7 @@ const Bookshelf = () => {
             bounces={false}
             style={styles.flatListContatiner}
             contentContainerStyle={[styles.flatListContentContainer]}
-            data={data.filter(obj =>
+            data={data?.filter(obj =>
               searchText.value
                 ? obj.headerTitle
                     .toLowerCase()
@@ -214,6 +218,13 @@ const Bookshelf = () => {
             ListFooterComponent={() => {
               return <View style={{height: '5%'}} />;
             }}
+            refreshControl={
+              <RefreshControl
+                refreshing={loader}
+                onRefresh={getAllStories}
+                colors={[themeColor.themeBlue]}
+              />
+            }
           />
         </View>
       </View>
