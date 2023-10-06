@@ -18,6 +18,10 @@ import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {store} from '@tandem/redux/store';
 import RNEmojiWithText from '../RNEmojiWithText';
 import QuestionMark from '@tandem/assets/svg/QuestionMarkRed';
+import RNTooltip from '../RNTooltip';
+import {DIRECTION_ARROWS} from '@tandem/constants/enums';
+import {translation} from '@tandem/utils/methods';
+import {scale} from 'react-native-size-matters';
 
 const RNImageChoice = ({
   data = [],
@@ -27,10 +31,16 @@ const RNImageChoice = ({
   setDisabled,
 }: MultipleChoiceProps) => {
   const activeState = useAppSelector(state => state.storyGeneration[type]);
+  const [nine, setNine] = React.useState<number | undefined>(undefined);
+  const isTablet = useAppSelector(state => state.deviceType.isTablet);
+
   React.useEffect(() => {
     if (activeState.length > 0) {
       setDisabled(false);
     }
+    setTimeout(() => {
+      setNine(9);
+    }, 200);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   console.log(activeState, 'activeStateactiveState');
@@ -80,12 +90,33 @@ const RNImageChoice = ({
       showsVerticalScrollIndicator={false}>
       {data.map((value, indexLocal) => {
         return (
-          <AnimatedImageChoice
-            value={value}
-            onPress={() => handlePress(value.name)}
-            activeState={activeState}
-            key={indexLocal.toString()}
-          />
+          <>
+            {indexLocal === 0 ? (
+              <RNTooltip
+                isTablet={isTablet}
+                top={DIRECTION_ARROWS.NORTH}
+                open={nine}
+                rotation={scale(-30)}
+                topViewStyle={{alignItems: 'center'}}
+                textContainerStyle={[styles.tooltipContainer]}
+                textStyle={styles.tooltip}
+                text={translation('CHOOSE_FROM_THE_GIVE_OPTIONS')}>
+                <AnimatedImageChoice
+                  value={value}
+                  onPress={() => handlePress(value.name)}
+                  activeState={activeState}
+                  key={indexLocal.toString()}
+                />
+              </RNTooltip>
+            ) : (
+              <AnimatedImageChoice
+                value={value}
+                onPress={() => handlePress(value.name)}
+                activeState={activeState}
+                key={indexLocal.toString()}
+              />
+            )}
+          </>
         );
       })}
       <RNEmojiWithText

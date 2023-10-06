@@ -51,7 +51,9 @@ const RNTooltip = ({
     if (toShowAllTooltip) return;
     if (!open) return;
     if (open && tooltipFromRedux?.[open]) return;
-    statusbar(themeColor.tooltipBgcColor);
+    setTimeout(() => {
+      statusbar(themeColor.tooltipBgcColor);
+    }, 75);
     return () => {
       statusbar(undefined);
     };
@@ -123,7 +125,7 @@ const RNTooltip = ({
           : async () => {
               dispatch(changeTooltipState(open));
               if (useWait) {
-                await wait(500);
+                await wait(200);
               }
               dispatch(changeTooltipStatePlusONe(open));
             }
