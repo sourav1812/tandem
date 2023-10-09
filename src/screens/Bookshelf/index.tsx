@@ -28,10 +28,13 @@ import {
   addSnapShot2,
 } from '@tandem/redux/slices/animationSnapshots.slice';
 import bookshelfDays from '@tandem/functions/bookshelfDays';
+import {changeStoryLevel} from '@tandem/redux/slices/storyLevel.slice';
+import {useDispatch} from 'react-redux';
 
 const Bookshelf = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const loader = useAppSelector(state => state.activityIndicator.isEnabled);
+  const dispatch = useDispatch();
   console.log(loader, 'loaderloader345tf');
   const mode = useAppSelector(state => state.mode.mode);
   const [searchText, setText] = useState<ValidationError>({value: ''});
@@ -77,6 +80,9 @@ const Bookshelf = () => {
     getAllStories();
   }, []);
 
+  const listFooterComponent = () => {
+    return <View style={{height: 25}} />;
+  };
   const getAllStories = async () => {
     try {
       await getStories();
@@ -124,7 +130,12 @@ const Bookshelf = () => {
   const renderItem = React.useCallback(({item}: {item: BooksData}) => {
     return (
       <>
-        <View style={[{marginHorizontal: isTablet ? verticalScale(30) : 0}]}>
+        <View
+          style={[
+            {
+              marginHorizontal: isTablet ? verticalScale(30) : 0,
+            },
+          ]}>
           {item.week && (
             <RNTextComponent
               style={styles.heading}
@@ -136,6 +147,7 @@ const Bookshelf = () => {
           <RNStoryCard
             item={item}
             onPress={() => {
+              dispatch(changeStoryLevel(2));
               navigateTo(SCREEN_NAME.STORY, {routeData: item});
             }}
           />
@@ -206,9 +218,7 @@ const Bookshelf = () => {
             ListEmptyComponent={listEmptyComponent}
             showsVerticalScrollIndicator={false}
             ItemSeparatorComponent={seperateComponent}
-            ListFooterComponent={() => {
-              return <View style={{height: '5%'}} />;
-            }}
+            ListFooterComponent={listFooterComponent}
             refreshControl={
               <RefreshControl
                 refreshing={loader}
