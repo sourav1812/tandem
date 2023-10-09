@@ -78,9 +78,7 @@ const RNButton = ({
             }
             if (handlePress) {
               runAnimation();
-              setTimeout(() => {
-                handlePress();
-              }, 300);
+              handlePress();
             }
           }}>
           <Animated.View

@@ -35,7 +35,6 @@ const Bookshelf = () => {
   console.log(loader, 'loaderloader345tf');
   const mode = useAppSelector(state => state.mode.mode);
   const [searchText, setText] = useState<ValidationError>({value: ''});
-  const [datesKeys, setDateKeys] = useState<string[]>([]);
   const books = useAppSelector((state: RootState) => state.bookShelf.books);
   const data: BooksData[] = React.useMemo(
     () =>
@@ -46,14 +45,9 @@ const Bookshelf = () => {
             1.157) /
             10_00_00_000 <
           7; // ! are checking if the book is screated within a week
-        let week: string = translation(
+        const week: string = translation(
           bookshelfDays(new Date(book.storyInfo[0].createdAt)),
         );
-        if (datesKeys.includes(week)) {
-          week = '';
-        } else {
-          setDateKeys(prev => [...prev, week]);
-        }
         return {
           id: book.storyInfo[0].bookId,
           headerTitle: book.title || `Mock Story ${index + 1}`,
@@ -76,7 +70,6 @@ const Bookshelf = () => {
           teaser: book.teaser,
         };
       }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [books],
   );
 
