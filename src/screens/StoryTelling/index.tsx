@@ -5,7 +5,6 @@ import {styles} from './style';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import RNButton from '@tandem/components/RNButton';
 import Close from '@tandem/assets/svg/Cross';
-import Speaker from '@tandem/assets/svg/VolumeDown';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import {StateObject} from './interface';
 import RNCongratsModal from '@tandem/components/RNCongratsModal';
@@ -29,6 +28,7 @@ import {PageFlip} from '@tandem/components/PageFlip';
 import rateStory from '@tandem/api/rateStory';
 import {useDispatch} from 'react-redux';
 import {changeTooltipState} from '@tandem/redux/slices/tooltip.slice';
+import Meter from '@tandem/assets/svg/Meter';
 
 const StoryTelling = () => {
   const tooltipArray = useAppSelector(state => state.tooltipReducer);
@@ -137,10 +137,11 @@ const StoryTelling = () => {
       <RNTooltip
         isTablet={isTablet}
         topViewStyle={{
-          alignItems: 'center',
+          alignItems: 'flex-end',
         }}
         open={13}
-        text={translation('READ_ALOUD')}
+        text={translation('STORY_LEVEL')}
+        // text={translation('READ_ALOUD')}
         textContainerStyle={styles.tooltipTwo}
         textStyle={[
           {
@@ -169,7 +170,14 @@ const StoryTelling = () => {
               },
             );
           }}>
-          <RNButton onlyIcon icon={<Speaker disabled />} onClick={() => {}} />
+          <RNButton
+            onlyIcon
+            // icon={<Speaker disabled />}
+            icon={<Meter />}
+            onClick={() => {
+              setReadingLevel(true);
+            }}
+          />
         </View>
       </RNTooltip>
     );
@@ -292,6 +300,7 @@ const StoryTelling = () => {
         visible={readingLevel}
         renderModal={renderReadingLevel}
         nextClick={renderReadingLevel}
+        setVissible={setReadingLevel}
       />
       {/* {currentIndex === 3 && (
         <RNReadingTipsModal

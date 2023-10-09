@@ -18,6 +18,7 @@ import cache from './slices/cache.slice';
 import setPermissions from './slices/permissions.slice';
 import tooltipSlice from './slices/tooltip.slice';
 import snapshotReducer from './slices/animationSnapshots.slice';
+import storyLevelSlice from './slices/storyLevel.slice';
 
 export const storage = new MMKV();
 
@@ -39,6 +40,7 @@ export const appReducer = combineReducers({
   cache,
   tooltipReducer: tooltipSlice,
   snapshotReducer,
+  storyLevel: storyLevelSlice,
 });
 
 export const reduxStorage: Storage = {

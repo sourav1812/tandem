@@ -28,10 +28,13 @@ import {
   addSnapShot2,
 } from '@tandem/redux/slices/animationSnapshots.slice';
 import bookshelfDays from '@tandem/functions/bookshelfDays';
+import {changeStoryLevel} from '@tandem/redux/slices/storyLevel.slice';
+import {useDispatch} from 'react-redux';
 
 const Bookshelf = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const loader = useAppSelector(state => state.activityIndicator.isEnabled);
+  const dispatch = useDispatch();
   console.log(loader, 'loaderloader345tf');
   const mode = useAppSelector(state => state.mode.mode);
   const [searchText, setText] = useState<ValidationError>({value: ''});
@@ -151,6 +154,7 @@ const Bookshelf = () => {
           <RNStoryCard
             item={item}
             onPress={() => {
+              dispatch(changeStoryLevel(2));
               navigateTo(SCREEN_NAME.STORY, {routeData: item});
             }}
           />
