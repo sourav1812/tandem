@@ -55,17 +55,19 @@ const Story = () => {
   React.useEffect(() => {
     const f = async () => {
       const books = store.getState().bookShelf.books;
+      const images = store.getState().bookShelf.images;
       const bookIndex = books.findIndex(book => book._id === routeData.id);
       const book = books[bookIndex];
+
       const doWeHaveImage =
-        book.images &&
-        book.images.length > 0 &&
-        book.images.every(item => item !== null);
+        images?.[book._id] &&
+        images?.[book._id]?.length > 0 &&
+        images?.[book._id].every(item => item !== null);
 
       if (doWeHaveImage) {
         const textArrayData = book.storyInfo[0].pages.map((page, i) => ({
           text: page.text,
-          img: 'data:image/png;base64,' + book.images[i],
+          img: 'data:image/png;base64,' + images[book._id][i],
         }));
         setTextArray(textArrayData.reverse());
       } else {
@@ -74,8 +76,10 @@ const Story = () => {
           img: null,
         }));
         setTextArray(textArrayData.reverse());
-        getIllustrations(book._id).then(images => {
-          store.dispatch(setImagesForBook({bookIndex, images}));
+        getIllustrations(book._id).then(imagesData => {
+          store.dispatch(
+            setImagesForBook({bookId: book._id, images: imagesData}),
+          );
         });
       }
 

@@ -3,8 +3,9 @@ import {StoryData} from '@tandem/api/getStories/interface';
 
 interface BookShelf {
   books: StoryData[];
+  images: {[bookId: string]: string[]};
 }
-const initialState: BookShelf = {books: []};
+const initialState: BookShelf = {books: [], images: {}};
 
 export const bookShelf = createSlice({
   name: 'bookShelf',
@@ -31,8 +32,8 @@ export const bookShelf = createSlice({
       state.books = [];
     },
     setImagesForBook: (state, action) => {
-      const {bookIndex, images} = action.payload;
-      state.books[bookIndex].images = images;
+      const {bookId, images} = action.payload;
+      state.images[bookId] = images;
     },
   },
 });
