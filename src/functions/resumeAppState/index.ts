@@ -11,7 +11,6 @@ import {Platform} from 'react-native';
 
 export default async () => {
   const {token, refreshToken} = getStoredTokens();
-  resetDirectoriesOfCachedData();
   setTimeout(() => {
     if (!token && !refreshToken) {
       navigateTo(SCREEN_NAME.SELECT_LANGUAGE, {}, true);
@@ -24,6 +23,7 @@ export default async () => {
     } else {
       navigateTo(SCREEN_NAME.TERMS_AND_CONDITIONS, {}, true);
     }
+    resetDirectoriesOfCachedData();
   }, 2000);
 };
 
@@ -37,42 +37,51 @@ const resetDirectoriesOfCachedData = () => {
     if (Platform.OS !== 'ios') {
       return;
     }
-    const {avatars, flush, places, whatHappens, who} = store.getState().cache;
+    try {
+      const {avatars, flush, places, whatHappens, who} = store.getState().cache;
 
-    const modifiedAvatars = avatars.map(val => {
-      const file = JSON.parse(JSON.stringify(val.file));
-      const newFile = 'file://' + currentDirectory + file.split('Documents')[1];
-      return {...val, file: newFile};
-    });
-    const modifiedFlush = flush.map(val => {
-      const file = JSON.parse(JSON.stringify(val));
-      const newFile = 'file://' + currentDirectory + file.split('Documents')[1];
-      return newFile;
-    });
-    const modifiedPlaces = places.map(val => {
-      const file = JSON.parse(JSON.stringify(val.file));
-      const newFile = 'file://' + currentDirectory + file.split('Documents')[1];
-      return {...val, file: newFile};
-    });
-    const modifiedWhatHappens = whatHappens.map(val => {
-      const file = JSON.parse(JSON.stringify(val.file));
-      const newFile = 'file://' + currentDirectory + file.split('Documents')[1];
-      return {...val, file: newFile};
-    });
-    const modifiedWho = who.map(val => {
-      const file = JSON.parse(JSON.stringify(val.file));
-      const newFile = 'file://' + currentDirectory + file.split('Documents')[1];
-      return {...val, file: newFile};
-    });
+      const modifiedAvatars = avatars.map(val => {
+        const file = JSON.parse(JSON.stringify(val.file));
+        const newFile =
+          'file://' + currentDirectory + file.split('Documents')[1];
+        return {...val, file: newFile};
+      });
+      const modifiedFlush = flush.map(val => {
+        const file = JSON.parse(JSON.stringify(val));
+        const newFile =
+          'file://' + currentDirectory + file.split('Documents')[1];
+        return newFile;
+      });
+      const modifiedPlaces = places.map(val => {
+        const file = JSON.parse(JSON.stringify(val.file));
+        const newFile =
+          'file://' + currentDirectory + file.split('Documents')[1];
+        return {...val, file: newFile};
+      });
+      const modifiedWhatHappens = whatHappens.map(val => {
+        const file = JSON.parse(JSON.stringify(val.file));
+        const newFile =
+          'file://' + currentDirectory + file.split('Documents')[1];
+        return {...val, file: newFile};
+      });
+      const modifiedWho = who.map(val => {
+        const file = JSON.parse(JSON.stringify(val.file));
+        const newFile =
+          'file://' + currentDirectory + file.split('Documents')[1];
+        return {...val, file: newFile};
+      });
 
-    store.dispatch(
-      reinitialiseCacheDirectory({
-        modifiedAvatars,
-        modifiedFlush,
-        modifiedPlaces,
-        modifiedWhatHappens,
-        modifiedWho,
-      }),
-    );
+      store.dispatch(
+        reinitialiseCacheDirectory({
+          modifiedAvatars,
+          modifiedFlush,
+          modifiedPlaces,
+          modifiedWhatHappens,
+          modifiedWho,
+        }),
+      );
+    } catch (error) {
+      console.log('error in changing cache directory', error);
+    }
   }
 };
