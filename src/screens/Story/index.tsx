@@ -1,4 +1,4 @@
-import {View, Image, ScrollView, Platform} from 'react-native';
+import {View, Image, ScrollView} from 'react-native';
 import React, {useState} from 'react';
 import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';

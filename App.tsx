@@ -2,11 +2,14 @@ import React, {FC, useEffect} from 'react';
 import AppNavigator from './src/navigation';
 import {Provider} from 'react-redux';
 import {store} from './src/redux/store';
-import {Alert, Platform, UIManager} from 'react-native';
+import {Platform, UIManager} from 'react-native';
 import messaging from '@react-native-firebase/messaging';
 import {PersistGate} from 'redux-persist/integration/react';
 import {persistStore} from 'redux-persist';
-import {clearAlertData} from '@tandem/redux/slices/alertBox.slice';
+import {
+  addAlertData,
+  clearAlertData,
+} from '@tandem/redux/slices/alertBox.slice';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import statusbar from '@tandem/functions/statusbar';
 import i18n from '@tandem/constants/lang/i18n';
@@ -24,7 +27,12 @@ const App: FC = () => {
     i18n.locale = setupLangauge();
     store.dispatch(clearAlertData());
     const unsubscribe = messaging().onMessage(async remoteMessage => {
-      Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+      store.dispatch(
+        addAlertData({
+          type: 'Alert',
+          message: remoteMessage.notification?.title,
+        }),
+      );
     });
 
     statusbar();

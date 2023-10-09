@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {View, FlatList, Pressable} from 'react-native';
+import {View, FlatList, Pressable, RefreshControl} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
@@ -21,7 +21,6 @@ import getStories from '@tandem/api/getStories';
 import {RootState, store} from '@tandem/redux/store';
 import themeColor from '@tandem/theme/themeColor';
 import {BooksData} from './interface';
-// import {ratingList} from '@tandem/components/RNRatingModal/interface';
 import {clearStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration.slice';
 import SadFace from '@tandem/assets/svg/Sad';
 import {
@@ -32,11 +31,12 @@ import bookshelfDays from '@tandem/functions/bookshelfDays';
 
 const Bookshelf = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const loader = useAppSelector(state => state.activityIndicator.isEnabled);
+  console.log(loader, 'loaderloader345tf');
   const mode = useAppSelector(state => state.mode.mode);
   const [searchText, setText] = useState<ValidationError>({value: ''});
   const [datesKeys, setDateKeys] = useState<string[]>([]);
   const books = useAppSelector((state: RootState) => state.bookShelf.books);
-  console.log(JSON.stringify(books));
   const data: BooksData[] = React.useMemo(
     () =>
       books?.map((book, index) => {
@@ -81,14 +81,16 @@ const Bookshelf = () => {
   );
 
   useEffect(() => {
-    (async () => {
-      try {
-        getStories();
-      } catch (e) {
-        console.log(e);
-      }
-    })();
+    getAllStories();
   }, []);
+
+  const getAllStories = async () => {
+    try {
+      await getStories();
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const listEmptyComponent = React.useCallback(() => {
     const currentChild = store.getState().createChild.currentChild;
@@ -200,7 +202,7 @@ const Bookshelf = () => {
             bounces={false}
             style={styles.flatListContatiner}
             contentContainerStyle={[styles.flatListContentContainer]}
-            data={data.filter(obj =>
+            data={data?.filter(obj =>
               searchText.value
                 ? obj.headerTitle
                     .toLowerCase()
@@ -214,6 +216,13 @@ const Bookshelf = () => {
             ListFooterComponent={() => {
               return <View style={{height: '5%'}} />;
             }}
+            refreshControl={
+              <RefreshControl
+                refreshing={loader}
+                onRefresh={getAllStories}
+                colors={[themeColor.themeBlue]}
+              />
+            }
           />
         </View>
       </View>
