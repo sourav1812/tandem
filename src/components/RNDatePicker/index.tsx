@@ -11,7 +11,6 @@ import RNTextComponent from '../RNTextComponent';
 import {translation} from '@tandem/utils/methods';
 import themeColor from '@tandem/theme/themeColor';
 import {YEARS_ARRAY} from '@tandem/constants/local';
-import {useOrientation} from '@tandem/hooks/useOrientation';
 
 const RNDatePicker = ({
   visible = false,
