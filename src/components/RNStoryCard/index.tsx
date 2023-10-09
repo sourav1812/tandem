@@ -60,13 +60,15 @@ const RNStoryCard = ({
         style={[styles.cardContainer, {transform: [{scale: scaleButton}]}]}>
         <View style={styles.imageViewContainer}>
           <View style={styles.emojiTextContainer}>
-            <View
-              style={[
-                styles.imageImojiContainer,
-                isTablet && {right: verticalScale(28)},
-              ]}>
-              {item.emogi && <Text style={styles.emojiText}>{item.emogi}</Text>}
-            </View>
+            {item.emogi && (
+              <View
+                style={[
+                  styles.imageImojiContainer,
+                  isTablet && {right: verticalScale(28)},
+                ]}>
+                <Text style={styles.emojiText}>{item.emogi}</Text>
+              </View>
+            )}
             <Image
               source={item.image}
               style={[styles.img]}
@@ -86,10 +88,7 @@ const RNStoryCard = ({
           </View>
           <View
             style={[styles.headerTitleContainer, isTablet && {maxWidth: 400}]}>
-            <RNTextComponent
-              numberOfLines={2}
-              isSemiBold
-              style={styles.heading}>
+            <RNTextComponent isSemiBold style={styles.heading}>
               {item.headerTitle}
             </RNTextComponent>
             <RNTextComponent style={[styles.time, isTablet && {fontSize: 22}]}>
