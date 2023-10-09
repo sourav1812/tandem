@@ -21,7 +21,6 @@ import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
 import {StateObject} from './interface';
 import {translation} from '@tandem/utils/methods';
 import {MODE} from '@tandem/constants/mode';
-import BlueButon from '@tandem/assets/svg/YellowButton';
 import BothButton from '@tandem/assets/svg/BothButton';
 import RNTooltip from '@tandem/components/RNTooltip';
 import {useNavigation} from '@react-navigation/native';
@@ -37,6 +36,7 @@ import {
   addSnapShot1,
   addSnapShot2,
 } from '@tandem/redux/slices/animationSnapshots.slice';
+import BlueButton from '@tandem/assets/svg/BlueButton';
 
 const Home = () => {
   const portrait = useAppSelector(
@@ -303,7 +303,7 @@ const Home = () => {
                 text={translation('SWITCH_MODE')}
                 // textContainerStyle={{marginRight: isTablet ? scale(100) : 0}}
                 dimensionObject={positionRefs[0]}>
-                {mode === MODE.B ? (
+                {mode === MODE.B && (
                   <View
                     ref={refOne}
                     onLayout={() => {
@@ -328,7 +328,8 @@ const Home = () => {
                     }}>
                     <BothButton />
                   </View>
-                ) : (
+                )}
+                {mode === MODE.A && (
                   <View
                     ref={refOne}
                     onLayout={() => {
@@ -351,7 +352,29 @@ const Home = () => {
                         },
                       );
                     }}>
-                    <BlueButon />
+                    <BlueButton />
+                  </View>
+                )}
+                {mode === MODE.C && (
+                  <View
+                    style={{
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      backgroundColor: 'white',
+                      height: scale(35),
+                      width: scale(35),
+                      borderRadius: scale(8),
+                      marginBottom: 10,
+                    }}>
+                    <View
+                      style={{
+                        backgroundColor: themeColor.gold,
+                        height: scale(15),
+                        width: scale(15),
+                        padding: scale(5),
+                        borderRadius: scale(8),
+                      }}
+                    />
                   </View>
                 )}
               </RNTooltip>
