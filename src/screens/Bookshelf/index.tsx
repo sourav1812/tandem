@@ -183,10 +183,30 @@ const Bookshelf = () => {
           <Pressable
             style={[styles.spaces, {alignItems: 'flex-end'}]}
             onPress={() => navigateTo(SCREEN_NAME.ACCOUNT)}>
-            {mode === MODE.B ? (
-              <BothButton style={styles.button} />
-            ) : (
-              <BlueBotton style={styles.button} />
+            {mode === MODE.B && <BothButton style={styles.button} />}
+            {mode === MODE.A && <BlueBotton style={styles.button} />}
+            {mode === MODE.C && (
+              <View
+                style={{
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  backgroundColor: 'white',
+                  height: scale(35),
+                  width: scale(35),
+                  borderRadius: scale(8),
+                  marginRight: scale(20),
+                  marginBottom: 10,
+                }}>
+                <View
+                  style={{
+                    backgroundColor: themeColor.gold,
+                    height: scale(15),
+                    width: scale(15),
+                    padding: scale(5),
+                    borderRadius: scale(8),
+                  }}
+                />
+              </View>
             )}
           </Pressable>
         </View>
