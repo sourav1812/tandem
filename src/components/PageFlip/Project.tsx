@@ -78,7 +78,7 @@ const processSentences = (text: string, wWidth: number) => {
   let wordsArray: string[] = [];
   const sentenceArray: string[] = [];
 
-  text.split(' ').forEach(word => {
+  text?.split(' ').forEach(word => {
     if (maxCharsReached + word.length <= numberOfChars) {
       wordsArray.push(word);
       maxCharsReached += word.length;
