@@ -4,7 +4,7 @@ import React, {useEffect, useState} from 'react';
 import RNModal from '../RNModal';
 import styles from './styles';
 import {congratsModalProps} from './interface';
-import {verticalScale} from 'react-native-size-matters';
+import {verticalScale, scale} from 'react-native-size-matters';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {MONTH_ARRAY} from '@tandem/constants/local';
 import RNTextComponent from '../RNTextComponent';
@@ -18,7 +18,10 @@ const RNDatePicker = ({
   getMonthYear = () => {},
 }: congratsModalProps) => {
   const date = new Date();
-  let isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const portrait = useAppSelector(
+    (state: RootState) => state.orientation.isPortrait,
+  );
   const yearRef = React.useRef(null);
   const monthRef = React.useRef(null);
   const [month, setMonth] = React.useState(date.getMonth());
@@ -53,6 +56,7 @@ const RNDatePicker = ({
       <View
         style={[
           styles.container,
+          {flex: portrait ? 0.74 : 1},
           isTablet && {width: verticalScale(320), alignSelf: 'center'},
         ]}>
         <View style={styles.top}>
@@ -60,7 +64,6 @@ const RNDatePicker = ({
             data={MONTH_ARRAY}
             initialNumToRender={MONTH_ARRAY.length + 1}
             contentContainerStyle={{alignItems: 'center'}}
-            decelerationRate={5}
             style={{width: '50%'}}
             renderItem={({item, index}) => (
               <Pressable
@@ -78,6 +81,8 @@ const RNDatePicker = ({
                 <RNTextComponent
                   style={[
                     styles.text,
+                    {fontSize: isTablet ? scale(10.5) : scale(13)},
+
                     month === index && {color: 'black', fontWeight: '700'},
                   ]}>
                   {item.month}
@@ -111,6 +116,7 @@ const RNDatePicker = ({
                   <RNTextComponent
                     style={[
                       styles.text,
+                      {fontSize: isTablet ? scale(10.5) : scale(13)},
                       year === item.index && {
                         color: 'black',
                         fontWeight: '700',
@@ -128,7 +134,10 @@ const RNDatePicker = ({
         </View>
         <View style={styles.bottom}>
           <Pressable onPress={renderModal} hitSlop={30}>
-            <RNTextComponent>{translation('CANCEL')}</RNTextComponent>
+            <RNTextComponent
+              style={{fontSize: isTablet ? scale(11) : scale(13)}}>
+              {translation('CANCEL')}
+            </RNTextComponent>
           </Pressable>
           <Pressable
             onPress={() => {
@@ -142,7 +151,10 @@ const RNDatePicker = ({
               renderModal();
             }}
             hitSlop={30}>
-            <RNTextComponent>{translation('OK')}</RNTextComponent>
+            <RNTextComponent
+              style={{fontSize: isTablet ? scale(11) : scale(13)}}>
+              {translation('OK')}
+            </RNTextComponent>
           </Pressable>
         </View>
       </View>
