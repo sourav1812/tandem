@@ -82,4 +82,5 @@ export interface StoryData {
       updatedAt: string;
     },
   ];
+  images: string[];
 }

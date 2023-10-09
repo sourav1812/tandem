@@ -278,8 +278,7 @@ const StoryTelling = () => {
         {headerButton()}
       </View>
       <PageFlip
-        readWithoutImages={routesData?.readWithoutImages}
-        book={book}
+        textArray={routesData?.textArray}
         activeIndex={currentIndex}
         setActiveIndex={setActiveIndex}
         tooltipState={state}
