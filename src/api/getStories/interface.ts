@@ -1,4 +1,4 @@
-import {STORIES_RESPONSE} from '@tandem/constants/enums';
+import {RATING_INFO, STORIES_RESPONSE} from '@tandem/constants/enums';
 
 export default interface Book {
   [STORIES_RESPONSE.BOOK_COVER]?: string;
@@ -19,6 +19,7 @@ export default interface Book {
   [STORIES_RESPONSE.THUMBNAIL]?: string;
   [STORIES_RESPONSE.TITLE]?: string;
   [STORIES_RESPONSE.USER_ID]: string;
+  [STORIES_RESPONSE.RATING_INFO]: RatingInfo[];
 }
 
 export interface Page {
@@ -82,4 +83,25 @@ export interface StoryData {
       updatedAt: string;
     },
   ];
+  ratingInfo: [
+    {
+      _id: string;
+      bookId: string;
+      userId: string;
+      storyRating: number;
+      createdAt: string;
+      updatedAt: string;
+      __v: number;
+    },
+  ];
+}
+
+export interface RatingInfo {
+  [RATING_INFO.ID]: string;
+  [RATING_INFO.BOOK_ID]: string;
+  [RATING_INFO.USER_ID]: string;
+  [RATING_INFO.STORY_RATING]: number;
+  [RATING_INFO.CREATED_AT]: string;
+  [RATING_INFO.UPDATED_AT]: string;
+  [RATING_INFO.V]: number;
 }

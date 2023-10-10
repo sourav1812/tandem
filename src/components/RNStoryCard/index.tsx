@@ -38,7 +38,7 @@ const RNStoryCard = ({
   onPress: () => void;
 }) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
-
+  const portrait = useAppSelector(state => state.orientation.isPortrait);
   const scaleButton = useSharedValue(1);
 
   const runAnimation = () => {
@@ -64,9 +64,18 @@ const RNStoryCard = ({
               <View
                 style={[
                   styles.imageImojiContainer,
-                  isTablet && {right: verticalScale(28)},
+                  isTablet && {
+                    right: verticalScale(10),
+                    padding: 3,
+                    marginTop: verticalScale(20),
+                  },
+                  !portrait && {
+                    right: verticalScale(25),
+                  },
                 ]}>
-                <Text style={styles.emojiText}>{item.emogi}</Text>
+                <Text style={[styles.emojiText, isTablet && {fontSize: 30}]}>
+                  {item.emogi}
+                </Text>
               </View>
             )}
             <Image

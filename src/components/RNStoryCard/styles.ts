@@ -1,4 +1,4 @@
-import {Platform, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {scale, verticalScale} from 'react-native-size-matters';
 
 export const styles = StyleSheet.create({
@@ -26,8 +26,7 @@ export const styles = StyleSheet.create({
     backgroundColor: '#F1F4F9',
     alignItems: 'center',
     padding: 3,
-    paddingLeft: Platform.OS === 'ios' ? 3 : 3.8,
-    marginTop: 5,
+    marginTop: 20,
   },
   emojiTextContainer: {
     maxWidth: '40%',

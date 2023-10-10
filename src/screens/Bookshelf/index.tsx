@@ -30,6 +30,7 @@ import {
 import bookshelfDays from '@tandem/functions/bookshelfDays';
 import {changeStoryLevel} from '@tandem/redux/slices/storyLevel.slice';
 import {useDispatch} from 'react-redux';
+import {ratingList} from '@tandem/components/RNRatingModal/interface';
 
 const Bookshelf = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -65,10 +66,11 @@ const Bookshelf = () => {
                 .split(' ').length / 100,
             ) || 10, //  ! avg reading speed is 200 to 300 wpm so we are calculating time in miniutes to read the whole story. using 100 wpm for children
           isNew: isThisWeek, // ! langauge support?
-          emogi: null,
-          // book.rating && book.rating !== 0
-          //   ? ratingList[book.rating - 1].name
-          //   : null,
+          emogi:
+            book.ratingInfo?.[0].storyRating &&
+            book.ratingInfo?.[0].storyRating !== 0
+              ? ratingList[book.ratingInfo?.[0].storyRating - 1].name
+              : null,
           week,
           teaser: book.teaser,
         };
