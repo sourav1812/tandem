@@ -4,7 +4,7 @@ import React from 'react';
 import {styles} from './styles';
 import RNTextComponent from '../RNTextComponent';
 import RightArrow from '@tandem/assets/svg/RightArrow';
-import {verticalScale} from 'react-native-size-matters';
+import {scale, verticalScale} from 'react-native-size-matters';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {translation} from '@tandem/utils/methods';
 import {BooksData} from '@tandem/screens/Bookshelf/interface';
@@ -38,7 +38,7 @@ const RNStoryCard = ({
   onPress: () => void;
 }) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
-
+  const portrait = useAppSelector(state => state.orientation.isPortrait);
   const scaleButton = useSharedValue(1);
 
   const runAnimation = () => {
@@ -59,20 +59,32 @@ const RNStoryCard = ({
       <Animated.View
         style={[styles.cardContainer, {transform: [{scale: scaleButton}]}]}>
         <View style={styles.imageViewContainer}>
-          <View style={styles.emojiTextContainer}>
+          <View style={[styles.emojiTextContainer, isTablet && {width: '37%'}]}>
             {item.emogi && (
               <View
                 style={[
                   styles.imageImojiContainer,
-                  isTablet && {right: verticalScale(28)},
+                  isTablet && {
+                    right: verticalScale(10),
+                    padding: 3,
+                    marginTop: verticalScale(20),
+                  },
+                  !portrait && {
+                    right: verticalScale(25),
+                  },
                 ]}>
-                <Text style={styles.emojiText}>{item.emogi}</Text>
+                <Text style={[styles.emojiText, isTablet && {fontSize: 30}]}>
+                  {item.emogi}
+                </Text>
               </View>
             )}
             <Image
               source={item.image}
-              style={[styles.img]}
-              resizeMode="contain"
+              style={[
+                styles.img,
+                isTablet && {width: scale(90), height: scale(100)},
+              ]}
+              // resizeMode="contain"
             />
             {item.isNew && (
               <View

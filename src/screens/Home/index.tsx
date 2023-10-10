@@ -286,10 +286,7 @@ const Home = () => {
               style={[
                 styles.blueButton,
                 {
-                  top:
-                    !isTablet && portrait
-                      ? verticalScale(50)
-                      : verticalScale(17),
+                  top: verticalScale(50),
                 },
               ]}>
               <RNTooltip
@@ -357,23 +354,22 @@ const Home = () => {
                 )}
                 {mode === MODE.C && (
                   <View
-                    style={{
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      backgroundColor: 'white',
-                      height: scale(35),
-                      width: scale(35),
-                      borderRadius: scale(8),
-                      marginBottom: 10,
-                    }}>
+                    style={[
+                      styles.accountbutton,
+                      {
+                        height: isTablet ? scale(22) : scale(30),
+                        width: isTablet ? scale(22) : scale(30),
+                        marginRight: isTablet ? scale(10) : 0,
+                      },
+                    ]}>
                     <View
-                      style={{
-                        backgroundColor: themeColor.gold,
-                        height: scale(15),
-                        width: scale(15),
-                        padding: scale(5),
-                        borderRadius: scale(8),
-                      }}
+                      style={[
+                        styles.dot,
+                        {
+                          height: isTablet ? scale(12) : scale(15),
+                          width: isTablet ? scale(12) : scale(15),
+                        },
+                      ]}
                     />
                   </View>
                 )}
