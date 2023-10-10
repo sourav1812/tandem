@@ -42,6 +42,7 @@ const StoryTelling = () => {
   const book = books.filter(
     (item: StoryData) => item?.storyInfo[0].bookId === routesData.id,
   )[0];
+  console.log(book.ratingInfo);
   const totalPages = book?.storyInfo[0].pages?.length - 1;
   const [currentIndex, setActiveIndex] = React.useState(totalPages);
   const [state, setState] = useState<StateObject>({
@@ -308,8 +309,7 @@ const StoryTelling = () => {
           nextClick={renderTipLevel}
         />
       )} */}
-      {currentIndex === 1 && (
-        //  book.rating === 0 &&
+      {currentIndex === 1 && !book?.ratingInfo?.[0]?._id && (
         <RNRatingModal
           visible={ratingModal}
           renderModal={renderRatingModal}
