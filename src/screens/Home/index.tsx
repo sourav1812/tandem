@@ -286,10 +286,7 @@ const Home = () => {
               style={[
                 styles.blueButton,
                 {
-                  top:
-                    !isTablet && portrait
-                      ? verticalScale(50)
-                      : verticalScale(17),
+                  top: verticalScale(50),
                 },
               ]}>
               <RNTooltip
