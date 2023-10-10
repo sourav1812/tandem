@@ -309,7 +309,7 @@ const StoryTelling = () => {
           nextClick={renderTipLevel}
         />
       )} */}
-      {currentIndex === 1 && !book?.ratingInfo?.[0]?._id && (
+      {currentIndex === 1 && (
         <RNRatingModal
           visible={ratingModal}
           renderModal={renderRatingModal}
