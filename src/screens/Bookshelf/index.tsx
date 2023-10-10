@@ -187,24 +187,22 @@ const Bookshelf = () => {
             {mode === MODE.A && <BlueBotton style={styles.button} />}
             {mode === MODE.C && (
               <View
-                style={{
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  backgroundColor: 'white',
-                  height: scale(35),
-                  width: scale(35),
-                  borderRadius: scale(8),
-                  marginRight: scale(20),
-                  marginBottom: 10,
-                }}>
+                style={[
+                  styles.accountbutton,
+                  {
+                    height: isTablet ? scale(22) : scale(30),
+                    width: isTablet ? scale(22) : scale(30),
+                    marginRight: isTablet ? scale(20) : scale(15),
+                  },
+                ]}>
                 <View
-                  style={{
-                    backgroundColor: themeColor.gold,
-                    height: scale(15),
-                    width: scale(15),
-                    padding: scale(5),
-                    borderRadius: scale(8),
-                  }}
+                  style={[
+                    styles.dot,
+                    {
+                      height: isTablet ? scale(12) : scale(15),
+                      width: isTablet ? scale(12) : scale(15),
+                    },
+                  ]}
                 />
               </View>
             )}
