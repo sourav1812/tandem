@@ -33,13 +33,14 @@ import {useDispatch} from 'react-redux';
 import {ratingList} from '@tandem/components/RNRatingModal/interface';
 
 const Bookshelf = () => {
+  const dispatch = useDispatch();
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const loader = useAppSelector(state => state.activityIndicator.isEnabled);
-  const dispatch = useDispatch();
-  console.log(loader, 'loaderloader345tf');
+  const currentChild = useAppSelector(state => state.createChild.currentChild);
   const mode = useAppSelector(state => state.mode.mode);
   const [searchText, setText] = useState<ValidationError>({value: ''});
   const books = useAppSelector((state: RootState) => state.bookShelf.books);
+
   const data: BooksData[] = React.useMemo(
     () =>
       books?.map((book, index) => {
@@ -227,13 +228,18 @@ const Bookshelf = () => {
             bounces={false}
             style={styles.flatListContatiner}
             contentContainerStyle={[styles.flatListContentContainer]}
-            data={data?.filter(obj =>
-              searchText.value
-                ? obj.headerTitle
-                    .toLowerCase()
-                    .includes(searchText.value.toLowerCase())
-                : true,
-            )}
+            data={
+              books.filter(book => book.childId === currentChild.childId)
+                .length > 0
+                ? data?.filter(obj =>
+                    searchText.value
+                      ? obj.headerTitle
+                          .toLowerCase()
+                          .includes(searchText.value.toLowerCase())
+                      : true,
+                  )
+                : []
+            }
             renderItem={renderItem}
             ListEmptyComponent={listEmptyComponent}
             showsVerticalScrollIndicator={false}
