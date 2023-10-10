@@ -40,6 +40,17 @@ export enum STORIES_RESPONSE {
   PAGE_NUMBER = 'page_number',
   SELECTED_ILLUSTRATION = 'selected_illustration',
   STORY_TEXT = 'story_text',
+  RATING_INFO = 'ratingInfo',
+}
+
+export enum RATING_INFO {
+  ID = '_id',
+  BOOK_ID = 'bookId',
+  USER_ID = 'userId',
+  STORY_RATING = 'storyRating',
+  CREATED_AT = 'createdAt',
+  UPDATED_AT = 'updatedAt',
+  V = '__V',
 }
 
 export enum PEOPLE {

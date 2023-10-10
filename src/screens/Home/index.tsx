@@ -21,7 +21,6 @@ import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
 import {StateObject} from './interface';
 import {translation} from '@tandem/utils/methods';
 import {MODE} from '@tandem/constants/mode';
-import BlueButon from '@tandem/assets/svg/YellowButton';
 import BothButton from '@tandem/assets/svg/BothButton';
 import RNTooltip from '@tandem/components/RNTooltip';
 import {useNavigation} from '@react-navigation/native';
@@ -37,6 +36,7 @@ import {
   addSnapShot1,
   addSnapShot2,
 } from '@tandem/redux/slices/animationSnapshots.slice';
+import BlueButton from '@tandem/assets/svg/BlueButton';
 
 const Home = () => {
   const portrait = useAppSelector(
@@ -286,10 +286,7 @@ const Home = () => {
               style={[
                 styles.blueButton,
                 {
-                  top:
-                    !isTablet && portrait
-                      ? verticalScale(50)
-                      : verticalScale(17),
+                  top: verticalScale(50),
                 },
               ]}>
               <RNTooltip
@@ -303,7 +300,7 @@ const Home = () => {
                 text={translation('SWITCH_MODE')}
                 // textContainerStyle={{marginRight: isTablet ? scale(100) : 0}}
                 dimensionObject={positionRefs[0]}>
-                {mode === MODE.B ? (
+                {mode === MODE.B && (
                   <View
                     ref={refOne}
                     onLayout={() => {
@@ -328,7 +325,8 @@ const Home = () => {
                     }}>
                     <BothButton />
                   </View>
-                ) : (
+                )}
+                {mode === MODE.A && (
                   <View
                     ref={refOne}
                     onLayout={() => {
@@ -351,7 +349,28 @@ const Home = () => {
                         },
                       );
                     }}>
-                    <BlueButon />
+                    <BlueButton />
+                  </View>
+                )}
+                {mode === MODE.C && (
+                  <View
+                    style={[
+                      styles.accountbutton,
+                      {
+                        height: isTablet ? scale(22) : scale(30),
+                        width: isTablet ? scale(22) : scale(30),
+                        marginRight: isTablet ? scale(10) : 0,
+                      },
+                    ]}>
+                    <View
+                      style={[
+                        styles.dot,
+                        {
+                          height: isTablet ? scale(12) : scale(15),
+                          width: isTablet ? scale(12) : scale(15),
+                        },
+                      ]}
+                    />
                   </View>
                 )}
               </RNTooltip>

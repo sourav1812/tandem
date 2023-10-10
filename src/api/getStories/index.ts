@@ -6,7 +6,7 @@ import {store} from '@tandem/redux/store';
 
 const getStories = async () => {
   try {
-    const response = await get<Book>({
+    const response = await get<Book[]>({
       path:
         API.STORIES + `/${store.getState().createChild.currentChild.childId}`,
       noLoader: true,
