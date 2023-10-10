@@ -419,7 +419,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
               <ScrollView
                 contentContainerStyle={styles.list}
                 showsVerticalScrollIndicator={false}>
-                {avatars.map(item => {
+                {avatars.map((item, index) => {
                   // if (index === 0) {
                   //   console.log(item, 'indexvsdff');
                   //   return (
@@ -477,6 +477,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
                       onPress={() => {
                         setAvatar(item.path);
                       }}
+                      key={index.toString()}
                     />
                   );
                 })}
@@ -527,7 +528,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
               {showRoles && (
                 <View style={styles.dropDown}>
                   <ScrollView showsVerticalScrollIndicator={false}>
-                    {RELATIONSHIP_ARRAY.map(item => {
+                    {RELATIONSHIP_ARRAY.map((item, index) => {
                       return (
                         <Pressable
                           style={[
@@ -549,7 +550,8 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
                               fontSize: isTablet
                                 ? verticalScale(14)
                                 : verticalScale(12),
-                            }}>
+                            }}
+                            key={index.toString()}>
                             {item.role}
                           </RNTextComponent>
                         </Pressable>
@@ -614,7 +616,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
               <ScrollView
                 contentContainerStyle={styles.list}
                 showsVerticalScrollIndicator={false}>
-                {avatars.map(item => {
+                {avatars.map((item, index) => {
                   // if (index === 0) {
                   //   console.log(item, 'indexvsdff');
                   //   return (
@@ -672,6 +674,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
                       onPress={() => {
                         setAvatar(item.path);
                       }}
+                      key={index.toString()}
                     />
                   );
                 })}
@@ -696,8 +699,12 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
         />
       </Pressable>
       <View style={styles.indicator}>
-        {bulletinArray.map(item => (
-          <RNNumericBulletin selected={item.isSelected} heading={item.index} />
+        {bulletinArray.map((item, index) => (
+          <RNNumericBulletin
+            selected={item.isSelected}
+            heading={item.index}
+            key={index.toString()}
+          />
         ))}
       </View>
       {fromAddAdult ? adultForm() : childForm()}

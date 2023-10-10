@@ -319,10 +319,11 @@
     "tip-four": "Wenn Sie bereit sind, drücken Sie die 'Start'-Taste."
   },
   "PASSWORD_DONT_MATCH": "Ihr Passwort stimmt nicht überein.",
-
   "TODAY": "Heute",
   "YESTERDAY": "Gestern",
   "THIS_WEEK": "Diese Woche",
   "LAST_WEEK": "Letzte Woche",
-  "NO_RESULTS": "Die gesuchte Geschichte konnte nicht gefunden werden."
+  "NO_RESULTS": "Die gesuchte Geschichte konnte nicht gefunden werden.",
+  "CANNOT_DELETE_THE_ONLY_CHILD": "Kan het enige kind niet verwijderen",
+  "CANNOT_DELETE_THE_ONLY_ADULT": "Kan de enige volwassene niet verwijderen"
 }
