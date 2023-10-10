@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {Pressable, ScrollView, Image} from 'react-native';
+import {Pressable, ScrollView, Image, View} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
 import {MultipleChoiceProps} from './interface';
@@ -90,7 +90,7 @@ const RNImageChoice = ({
       showsVerticalScrollIndicator={false}>
       {data.map((value, indexLocal) => {
         return (
-          <>
+          <View key={indexLocal.toString()}>
             {indexLocal === 0 ? (
               <RNTooltip
                 isTablet={isTablet}
@@ -105,7 +105,6 @@ const RNImageChoice = ({
                   value={value}
                   onPress={() => handlePress(value.name)}
                   activeState={activeState}
-                  key={indexLocal.toString()}
                 />
               </RNTooltip>
             ) : (
@@ -116,7 +115,7 @@ const RNImageChoice = ({
                 key={indexLocal.toString()}
               />
             )}
-          </>
+          </View>
         );
       })}
       <RNEmojiWithText

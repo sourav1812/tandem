@@ -246,6 +246,7 @@ const Bookshelf = () => {
                 colors={[themeColor.themeBlue]}
               />
             }
+            keyExtractor={item => item.id}
           />
         </View>
       </View>

@@ -324,5 +324,7 @@
   "YESTERDAY": "Ieri",
   "THIS_WEEK": "Questa settimana",
   "LAST_WEEK": "La scorsa settimana",
-  "NO_RESULTS": "Non è stato possibile trovare la storia che cercavi."
+  "NO_RESULTS": "Non è stato possibile trovare la storia che cercavi.",
+  "CANNOT_DELETE_THE_ONLY_CHILD": "Impossibile eliminare l'unico figlio",
+  "CANNOT_DELETE_THE_ONLY_ADULT": "Impossibile eliminare l'unico adulto"
 }

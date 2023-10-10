@@ -650,7 +650,7 @@ const Account = () => {
                 }
               }}
               disabled={childList.length === 0 || playerList.length === 0}>
-              {playerList.map(item => {
+              {playerList.map((item, index) => {
                 const circleType = [];
                 // const filePath = avatars.filter(
                 //   obj => obj.path === item.avatar,
@@ -685,6 +685,7 @@ const Account = () => {
                       !circleType.includes('A') && circleType.includes('C')
                     }
                     both={circleType.includes('A') && circleType.includes('C')}
+                    key={index.toString()}
                   />
                 );
               })}

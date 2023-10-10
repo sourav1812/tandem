@@ -29,6 +29,7 @@ import {editAdultProfile} from '@tandem/api/editAdultProfile';
 import {deleteAdultProfile} from '@tandem/api/deleteAdultProfile';
 import themeColor from '@tandem/theme/themeColor';
 import RNDatePicker from '@tandem/components/RNDatePicker';
+import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
 
 const EditChildProfile = ({route}: EditChildProfileProps) => {
   const dispatch = useAppDispatch();
@@ -82,7 +83,6 @@ const EditChildProfile = ({route}: EditChildProfileProps) => {
   };
 
   const getAvatar = (url: string | null) => {
-    console.log(url);
     updateState({localAvatarState: url});
   };
 
@@ -216,7 +216,6 @@ const EditChildProfile = ({route}: EditChildProfileProps) => {
           onPress={toggleDatePicker}
         />
       </View>
-      {console.log(currentChild, name.value)}
       <View
         style={[
           styles.footerButton,
@@ -251,7 +250,27 @@ const EditChildProfile = ({route}: EditChildProfileProps) => {
             marginTop: isTablet ? 0 : verticalScale(10),
           }}
           title={translation(editAdult ? 'DELETE_ADULT' : 'DELETE_CHILD')}
-          onClick={toggleModal}
+          onClick={() => {
+            if (childList.length === 1) {
+              dispatch(
+                addAlertData({
+                  type: 'Message',
+                  message: translation('CANNOT_DELETE_THE_ONLY_CHILD'),
+                  onSuccess: () => {},
+                }),
+              );
+            } else if (editAdult && adultList.length === 1) {
+              dispatch(
+                addAlertData({
+                  type: 'Message',
+                  message: translation('CANNOT_DELETE_THE_ONLY_ADULT'),
+                  onSuccess: () => {},
+                }),
+              );
+            } else {
+              toggleModal();
+            }
+          }}
         />
       </View>
       <RNDeleteAccount
