@@ -22,8 +22,8 @@ export const styles = StyleSheet.create({
     marginTop: verticalScale(22),
   },
   qr: {
-    height: verticalScale(280),
-    width: verticalScale(280),
+    height: verticalScale(150),
+    width: verticalScale(150),
     alignSelf: 'center',
     marginTop: verticalScale(8),
   },
@@ -44,7 +44,7 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   inputContainer: {
-    marginTop: verticalScale(15),
+    marginTop: verticalScale(10),
   },
   inputView: {
     borderWidth: 1.5,
