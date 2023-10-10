@@ -54,9 +54,6 @@ const RNTooltip = ({
     setTimeout(() => {
       statusbar(themeColor.tooltipBgcColor);
     }, 75);
-    return () => {
-      statusbar(undefined);
-    };
   }, [open, toShowAllTooltip, tooltipFromRedux]);
 
   return (
