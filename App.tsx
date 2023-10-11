@@ -35,7 +35,7 @@ const App: FC = () => {
           onSuccess: async () => {
             if (remoteMessage.notification?.title === 'Story generated.') {
               try {
-                await getStories();
+                getStories();
               } catch (e) {
                 console.log(e);
               }
