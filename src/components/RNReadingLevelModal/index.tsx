@@ -57,25 +57,27 @@ const RNReadingLevelModal = ({
             }}
           />
           <View style={[styles.content]}>
-            {indicators.map((item, index) => (
-              <View
-                key={index.toString()}
-                style={[
-                  styles.indicator,
-                  {
-                    height: verticalScale(12) + verticalScale(5.5) * index,
-                    backgroundColor:
-                      level >= index ? item.color : themeColor.lightGray,
-                  },
-                ]}
-              />
-            ))}
+            {indicators.map((item, index) =>
+              index >= bookLength ? null : (
+                <View
+                  key={index.toString()}
+                  style={[
+                    styles.indicator,
+                    {
+                      height: verticalScale(12) + verticalScale(5.5) * index,
+                      backgroundColor:
+                        level >= index ? item.color : themeColor.lightGray,
+                    },
+                  ]}
+                />
+              ),
+            )}
           </View>
           <RNButton
             onlyIcon
             icon={<More />}
             onClick={() => {
-              if (storyLevel < 5) {
+              if (storyLevel < bookLength) {
                 setLevel(level + 1);
               }
             }}
