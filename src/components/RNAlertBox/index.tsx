@@ -25,6 +25,11 @@ const RNAlertBox = ({
   );
 
   const dispatch = useAppDispatch();
+
+  if (!message) {
+    return null;
+  }
+
   return (
     <RNModal
       visible={visible}
