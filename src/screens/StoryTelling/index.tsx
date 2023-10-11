@@ -71,14 +71,18 @@ const StoryTelling = () => {
   };
   React.useEffect(() => {
     if (currentIndex === 0) {
-      setTimeout(() => {
-        updateState({ratingModal: true});
-      }, 2000);
+      if (book?.ratingInfo.length === 0) {
+        setTimeout(() => {
+          updateState({ratingModal: true});
+        }, 2000);
+      } else {
+        setTimeout(() => {
+          setRenderModal(true);
+        }, 2000);
+      }
     }
-  }, [
-    // book.rating,
-    currentIndex,
-  ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentIndex]);
 
   const toggleModal = () => {
     setRenderModal(!renderModal);
@@ -315,7 +319,8 @@ const StoryTelling = () => {
           nextClick={renderTipLevel}
         />
       )} */}
-      {currentIndex === 0 && book?.ratingInfo[0]?.storyRating < 1 && (
+
+      {currentIndex === 0 && book?.ratingInfo.length === 0 && (
         <RNRatingModal
           visible={ratingModal}
           renderModal={renderRatingModal}

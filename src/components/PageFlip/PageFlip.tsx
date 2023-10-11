@@ -27,8 +27,7 @@ export const PageFlip = ({
   const storyLevel = useAppSelector(state => state.storyLevel.level);
 
   React.useEffect(() => {
-    console.log({storyLevel});
-    const pages = book.storyInfo[storyLevel].pages;
+    const pages = book?.storyInfo[storyLevel]?.pages;
 
     const textArrayModified = (textArray || []).map((obj, index) => ({
       img: obj.img,

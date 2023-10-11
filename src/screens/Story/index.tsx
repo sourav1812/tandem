@@ -18,6 +18,7 @@ import {BooksData} from '../Bookshelf/interface';
 import {store} from '@tandem/redux/store';
 import getIllustrations from '@tandem/api/getIllustrations';
 import {setImagesForBook} from '@tandem/redux/slices/bookShelf.slice';
+import {changeStoryLevel} from '@tandem/redux/slices/storyLevel.slice';
 // import {store} from '@tandem/redux/store';
 // import {setImageForPage} from '@tandem/redux/slices/bookShelf.slice';
 // import RNFetchBlob from 'rn-fetch-blob';
@@ -62,10 +63,11 @@ const Story = () => {
         images?.[book._id] &&
         images?.[book._id]?.length > 0 &&
         images?.[book._id].every(item => item !== null);
+      const indexOfStoryComplexity = Math.floor(
+        (book.storyInfo.length - 1) / 2,
+      );
+      store.dispatch(changeStoryLevel(indexOfStoryComplexity));
       if (doWeHaveImage) {
-        const indexOfStoryComplexity = Math.floor(
-          (book.storyInfo.length - 1) / 2,
-        );
         const textArrayData = book.storyInfo[indexOfStoryComplexity].pages.map(
           (page, i) => ({
             text: page.text,
@@ -74,10 +76,12 @@ const Story = () => {
         );
         setTextArray(textArrayData);
       } else {
-        const textArrayData = book.storyInfo[0].pages.map(page => ({
-          text: page.text,
-          img: null,
-        }));
+        const textArrayData = book.storyInfo[indexOfStoryComplexity].pages.map(
+          page => ({
+            text: page.text,
+            img: null,
+          }),
+        );
         setTextArray(textArrayData);
         getIllustrations(book._id).then(imagesData => {
           store.dispatch(

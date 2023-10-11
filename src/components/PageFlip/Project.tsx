@@ -152,9 +152,7 @@ export const Project = ({
       if (overlay === null) {
         return;
       }
-      setBottomPageindex(
-        activeIndex + 2 <= textArray.length ? activeIndex + 1 : activeIndex,
-      );
+      setBottomPageindex(activeIndex);
     } else {
       setOverlay(null);
     }

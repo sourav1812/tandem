@@ -37,7 +37,15 @@ export const bookShelf = createSlice({
     },
     rateBookLocally: (state, action) => {
       const {bookIndex, rating} = action.payload;
-      state.books[bookIndex].ratingInfo[0].storyRating = rating;
+      state.books[bookIndex].ratingInfo.push({
+        _id: state.books[bookIndex]._id + 'rating',
+        bookId: state.books[bookIndex]._id,
+        userId: state.books[bookIndex].userId,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        __v: 0,
+        storyRating: rating,
+      });
     },
   },
 });
