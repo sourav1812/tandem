@@ -53,6 +53,7 @@ interface ProjectProps {
   setActiveIndex: React.Dispatch<React.SetStateAction<number>>;
   tooltipState: StateObject;
   setTooltipState: React.Dispatch<React.SetStateAction<StateObject>>;
+  readingLevel: boolean;
 }
 interface RenderSceneProps {
   image: any;
@@ -70,7 +71,7 @@ interface RenderSceneProps {
 const pd = PixelRatio.get();
 const cornerRadius = 0;
 const padding = verticalScale(70);
-const fontSize = verticalScale(20);
+const fontSize = verticalScale(14);
 
 const processSentences = (text: string, wWidth: number) => {
   const numberOfChars = Math.floor((wWidth * 1.35) / fontSize);
@@ -115,6 +116,7 @@ export const Project = ({
   textArray,
   activeIndex,
   setActiveIndex,
+  readingLevel,
 }: ProjectProps) => {
   const {width: wWidth, height: heightRef} = useWindowDimensions();
   const [hHeight, setHeight] = useState(
@@ -144,6 +146,19 @@ export const Project = ({
   const ref2 = useRef(null);
   const [bottomPageIndex, setBottomPageindex] = React.useState(activeIndex);
   const [bottomPageIndex2, setBottomPageindex2] = React.useState(activeIndex);
+
+  React.useEffect(() => {
+    if (readingLevel) {
+      if (overlay === null) {
+        return;
+      }
+      setBottomPageindex(activeIndex);
+    } else {
+      setOverlay(null);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [readingLevel]);
+
   const onTouch = useTouchHandler(
     {
       onStart: async ({x}) => {

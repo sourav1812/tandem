@@ -18,6 +18,7 @@ import {BooksData} from '../Bookshelf/interface';
 import {store} from '@tandem/redux/store';
 import getIllustrations from '@tandem/api/getIllustrations';
 import {setImagesForBook} from '@tandem/redux/slices/bookShelf.slice';
+import {changeStoryLevel} from '@tandem/redux/slices/storyLevel.slice';
 // import {store} from '@tandem/redux/store';
 // import {setImageForPage} from '@tandem/redux/slices/bookShelf.slice';
 // import RNFetchBlob from 'rn-fetch-blob';
@@ -54,28 +55,34 @@ const Story = () => {
   // ! story book image caching is disabled until api is ready
   React.useEffect(() => {
     const f = async () => {
-      const books = store.getState().bookShelf.books;
       const images = store.getState().bookShelf.images;
+      const books = store.getState().bookShelf.books;
       const bookIndex = books.findIndex(book => book._id === routeData.id);
       const book = books[bookIndex];
-
       const doWeHaveImage =
         images?.[book._id] &&
         images?.[book._id]?.length > 0 &&
         images?.[book._id].every(item => item !== null);
-
+      const indexOfStoryComplexity = Math.floor(
+        (book.storyInfo.length - 1) / 2,
+      );
+      store.dispatch(changeStoryLevel(indexOfStoryComplexity));
       if (doWeHaveImage) {
-        const textArrayData = book.storyInfo[0].pages.map((page, i) => ({
-          text: page.text,
-          img: 'data:image/png;base64,' + images[book._id][i],
-        }));
-        setTextArray(textArrayData.reverse());
+        const textArrayData = book.storyInfo[indexOfStoryComplexity].pages.map(
+          (page, i) => ({
+            text: page.text,
+            img: 'data:image/png;base64,' + images[book._id][i],
+          }),
+        );
+        setTextArray(textArrayData);
       } else {
-        const textArrayData = book.storyInfo[0].pages.map(page => ({
-          text: page.text,
-          img: null,
-        }));
-        setTextArray(textArrayData.reverse());
+        const textArrayData = book.storyInfo[indexOfStoryComplexity].pages.map(
+          page => ({
+            text: page.text,
+            img: null,
+          }),
+        );
+        setTextArray(textArrayData);
         getIllustrations(book._id).then(imagesData => {
           store.dispatch(
             setImagesForBook({bookId: book._id, images: imagesData}),

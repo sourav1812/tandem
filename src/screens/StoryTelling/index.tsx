@@ -29,6 +29,7 @@ import rateStory from '@tandem/api/rateStory';
 import {useDispatch} from 'react-redux';
 import {changeTooltipState} from '@tandem/redux/slices/tooltip.slice';
 import Meter from '@tandem/assets/svg/Meter';
+import {rateBookLocally} from '@tandem/redux/slices/bookShelf.slice';
 
 const StoryTelling = () => {
   const tooltipArray = useAppSelector(state => state.tooltipReducer);
@@ -42,6 +43,7 @@ const StoryTelling = () => {
   const book = books.filter(
     (item: StoryData) => item?.storyInfo[0].bookId === routesData.id,
   )[0];
+  console.log(book.ratingInfo);
   const totalPages = book?.storyInfo[0].pages?.length - 1;
   const [currentIndex, setActiveIndex] = React.useState(totalPages);
   const [state, setState] = useState<StateObject>({
@@ -68,21 +70,19 @@ const StoryTelling = () => {
     });
   };
   React.useEffect(() => {
-    if (
-      currentIndex === 1
-      // && book.rating === 0
-    ) {
-      updateState({ratingModal: true});
-    }
     if (currentIndex === 0) {
-      setTimeout(() => {
-        setRenderModal(true);
-      }, 2000);
+      if (book?.ratingInfo.length === 0) {
+        setTimeout(() => {
+          updateState({ratingModal: true});
+        }, 2000);
+      } else {
+        setTimeout(() => {
+          setRenderModal(true);
+        }, 2000);
+      }
     }
-  }, [
-    // book.rating,
-    currentIndex,
-  ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentIndex]);
 
   const toggleModal = () => {
     setRenderModal(!renderModal);
@@ -98,8 +98,16 @@ const StoryTelling = () => {
     }
     try {
       await rateStory(book.storyInfo[0].bookId, rating);
+      const bookIndex = books.findIndex(
+        bookObj => bookObj._id === routesData.id,
+      );
+      dispatch(rateBookLocally({bookIndex, rating}));
     } catch (error) {
       console.log('error in rating story post', error);
+    } finally {
+      setTimeout(() => {
+        setRenderModal(true);
+      }, 4000);
     }
   };
   const renderRatingModal = async () => {
@@ -286,16 +294,19 @@ const StoryTelling = () => {
         {headerButton()}
       </View>
       <PageFlip
+        readingLevel={readingLevel}
         textArray={routesData?.textArray}
         activeIndex={currentIndex}
         setActiveIndex={setActiveIndex}
         tooltipState={state}
         setTooltipState={setState}
+        book={book}
       />
 
       {showQuestion && renderQuestions()}
       <RNCongratsModal visible={renderModal} renderModal={toggleModal} />
       <RNReadingLevelModal
+        bookLength={book.storyInfo.length}
         visible={readingLevel}
         renderModal={renderReadingLevel}
         nextClick={renderReadingLevel}
@@ -308,8 +319,8 @@ const StoryTelling = () => {
           nextClick={renderTipLevel}
         />
       )} */}
-      {currentIndex === 1 && (
-        //  book.rating === 0 &&
+
+      {currentIndex === 0 && book?.ratingInfo.length === 0 && (
         <RNRatingModal
           visible={ratingModal}
           renderModal={renderRatingModal}

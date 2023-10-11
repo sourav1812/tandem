@@ -7,7 +7,7 @@ export default async (bookId: string) => {
       path: API.GET_STORY_ILLUSTRATIONS + '/' + bookId,
       noLoader: true,
     });
-    return response.images;
+    return response?.images;
   } catch (error) {
     throw error;
   }

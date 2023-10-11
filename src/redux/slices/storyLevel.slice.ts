@@ -2,7 +2,7 @@ import {createSlice} from '@reduxjs/toolkit';
 
 // Define a type for the slice state
 interface LevelInterface {
-  level: 0 | 1 | 2 | 3 | 4 | 5;
+  level: number;
 }
 
 // Define the initial state using that type

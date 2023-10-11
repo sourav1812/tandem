@@ -83,17 +83,15 @@ export interface StoryData {
       updatedAt: string;
     },
   ];
-  ratingInfo: [
-    {
-      _id: string;
-      bookId: string;
-      userId: string;
-      storyRating: number;
-      createdAt: string;
-      updatedAt: string;
-      __v: number;
-    },
-  ];
+  ratingInfo: {
+    _id: string;
+    bookId: string;
+    userId: string;
+    storyRating: number;
+    createdAt: string;
+    updatedAt: string;
+    __v: number;
+  }[];
 }
 
 export interface RatingInfo {

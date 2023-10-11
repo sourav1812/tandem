@@ -40,6 +40,7 @@ const RNTooltip = ({
   useWait,
 }: TooltipProps) => {
   const dispatch = useDispatch();
+  const token = useAppSelector(state => state.tokenReducer.token);
   const helperTop = top ? top : tooltipHelperTop(dimensionObject);
   const helperBottom = bottom ? bottom : tooltipHelperBottom(dimensionObject);
   const tooltipFromRedux = useAppSelector(state => state.tooltipReducer);
@@ -51,13 +52,12 @@ const RNTooltip = ({
     if (toShowAllTooltip) return;
     if (!open) return;
     if (open && tooltipFromRedux?.[open]) return;
-    setTimeout(() => {
-      statusbar(themeColor.tooltipBgcColor);
-    }, 75);
+    if (!token || token === '') return;
+    statusbar(themeColor.tooltipBgcColor);
     return () => {
       statusbar(undefined);
     };
-  }, [open, toShowAllTooltip, tooltipFromRedux]);
+  }, [open, toShowAllTooltip, token, tooltipFromRedux]);
 
   return (
     <Tooltip

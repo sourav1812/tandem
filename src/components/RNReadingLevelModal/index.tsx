@@ -18,6 +18,7 @@ const RNReadingLevelModal = ({
   visible = true,
   renderModal,
   setVissible,
+  bookLength,
 }: ReadingTipsModalProps) => {
   let isTablet = useAppSelector(state => state.deviceType.isTablet);
   const storyLevel = useAppSelector(state => state.storyLevel.level);
@@ -56,25 +57,27 @@ const RNReadingLevelModal = ({
             }}
           />
           <View style={[styles.content]}>
-            {indicators.map((item, index) => (
-              <View
-                key={index.toString()}
-                style={[
-                  styles.indicator,
-                  {
-                    height: verticalScale(12) + verticalScale(5.5) * index,
-                    backgroundColor:
-                      level >= index ? item.color : themeColor.lightGray,
-                  },
-                ]}
-              />
-            ))}
+            {indicators.map((item, index) =>
+              index >= bookLength ? null : (
+                <View
+                  key={index.toString()}
+                  style={[
+                    styles.indicator,
+                    {
+                      height: verticalScale(12) + verticalScale(5.5) * index,
+                      backgroundColor:
+                        level >= index ? item.color : themeColor.lightGray,
+                    },
+                  ]}
+                />
+              ),
+            )}
           </View>
           <RNButton
             onlyIcon
             icon={<More />}
             onClick={() => {
-              if (storyLevel < 5) {
+              if (storyLevel < bookLength) {
                 setLevel(level + 1);
               }
             }}
@@ -84,7 +87,11 @@ const RNReadingLevelModal = ({
           title={translation('UPDATE')}
           customStyle={styles.button}
           onClick={() => {
-            dispatch(changeStoryLevel(level));
+            let index = level;
+            if (level > bookLength - 1) {
+              index = bookLength - 1;
+            }
+            dispatch(changeStoryLevel(index));
             if (setVissible) {
               setVissible(false);
             }
