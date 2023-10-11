@@ -71,11 +71,7 @@ const StoryTelling = () => {
   };
   React.useEffect(() => {
     if (currentIndex === 0) {
-      if (book?.ratingInfo.length === 0) {
-        setTimeout(() => {
-          updateState({ratingModal: true});
-        }, 2000);
-      } else {
+      if (book?.ratingInfo.length !== 0) {
         setTimeout(() => {
           setRenderModal(true);
         }, 2000);
