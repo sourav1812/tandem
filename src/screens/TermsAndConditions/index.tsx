@@ -97,6 +97,7 @@ const TermsAndConditions = () => {
                   });
                 }}
                 isRequired={item.isRequired}
+                key={index.toString()}
               />
             );
           })}

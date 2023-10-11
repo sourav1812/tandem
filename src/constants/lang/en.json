@@ -325,6 +325,7 @@
   "YESTERDAY": "Yesterday",
   "THIS_WEEK": "This week",
   "LAST_WEEK": "Last week",
-
-  "NO_RESULTS": "Could not find the story you were looking for?"
+  "NO_RESULTS": "Could not find the story you were looking for?",
+  "CANNOT_DELETE_THE_ONLY_CHILD": "Cannot delete the only child",
+  "CANNOT_DELETE_THE_ONLY_ADULT": "Cannot delete the only adult"
 }
