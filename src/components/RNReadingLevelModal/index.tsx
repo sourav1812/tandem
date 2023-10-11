@@ -18,6 +18,7 @@ const RNReadingLevelModal = ({
   visible = true,
   renderModal,
   setVissible,
+  bookLength,
 }: ReadingTipsModalProps) => {
   let isTablet = useAppSelector(state => state.deviceType.isTablet);
   const storyLevel = useAppSelector(state => state.storyLevel.level);
@@ -84,7 +85,11 @@ const RNReadingLevelModal = ({
           title={translation('UPDATE')}
           customStyle={styles.button}
           onClick={() => {
-            dispatch(changeStoryLevel(level));
+            let index = level;
+            if (level > bookLength - 1) {
+              index = bookLength - 1;
+            }
+            dispatch(changeStoryLevel(index));
             if (setVissible) {
               setVissible(false);
             }

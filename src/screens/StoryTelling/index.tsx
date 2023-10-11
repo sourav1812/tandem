@@ -29,6 +29,7 @@ import rateStory from '@tandem/api/rateStory';
 import {useDispatch} from 'react-redux';
 import {changeTooltipState} from '@tandem/redux/slices/tooltip.slice';
 import Meter from '@tandem/assets/svg/Meter';
+import {rateBookLocally} from '@tandem/redux/slices/bookShelf.slice';
 
 const StoryTelling = () => {
   const tooltipArray = useAppSelector(state => state.tooltipReducer);
@@ -98,6 +99,10 @@ const StoryTelling = () => {
     }
     try {
       await rateStory(book.storyInfo[0].bookId, rating);
+      const bookIndex = books.findIndex(
+        bookObj => bookObj._id === routesData.id,
+      );
+      dispatch(rateBookLocally({bookIndex, rating}));
     } catch (error) {
       console.log('error in rating story post', error);
     }
@@ -286,16 +291,19 @@ const StoryTelling = () => {
         {headerButton()}
       </View>
       <PageFlip
+        readingLevel={readingLevel}
         textArray={routesData?.textArray}
         activeIndex={currentIndex}
         setActiveIndex={setActiveIndex}
         tooltipState={state}
         setTooltipState={setState}
+        book={book}
       />
 
       {showQuestion && renderQuestions()}
       <RNCongratsModal visible={renderModal} renderModal={toggleModal} />
       <RNReadingLevelModal
+        bookLength={book.storyInfo.length}
         visible={readingLevel}
         renderModal={renderReadingLevel}
         nextClick={renderReadingLevel}

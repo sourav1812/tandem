@@ -35,6 +35,10 @@ export const bookShelf = createSlice({
       const {bookId, images} = action.payload;
       state.images[bookId] = images;
     },
+    rateBookLocally: (state, action) => {
+      const {bookIndex, rating} = action.payload;
+      state.books[bookIndex].ratingInfo[0].storyRating = rating;
+    },
   },
 });
 
@@ -44,6 +48,7 @@ export const {
   removeLatestBook,
   clearbookShelf,
   addBooks,
+  rateBookLocally,
 } = bookShelf.actions;
 
 export default bookShelf.reducer;

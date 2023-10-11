@@ -3,4 +3,5 @@ export interface ReadingTipsModalProps {
   renderModal: () => void;
   nextClick: () => void;
   setVissible?: React.Dispatch<React.SetStateAction<boolean>>;
+  bookLength: number;
 }
