@@ -70,15 +70,9 @@ const StoryTelling = () => {
     });
   };
   React.useEffect(() => {
-    if (
-      currentIndex === 1
-      // && book.rating === 0
-    ) {
-      updateState({ratingModal: true});
-    }
     if (currentIndex === 0) {
       setTimeout(() => {
-        setRenderModal(true);
+        updateState({ratingModal: true});
       }, 2000);
     }
   }, [
@@ -106,6 +100,10 @@ const StoryTelling = () => {
       dispatch(rateBookLocally({bookIndex, rating}));
     } catch (error) {
       console.log('error in rating story post', error);
+    } finally {
+      setTimeout(() => {
+        setRenderModal(true);
+      }, 4000);
     }
   };
   const renderRatingModal = async () => {
@@ -317,7 +315,7 @@ const StoryTelling = () => {
           nextClick={renderTipLevel}
         />
       )} */}
-      {currentIndex === 1 && (
+      {currentIndex === 0 && book?.ratingInfo[0]?.storyRating < 1 && (
         <RNRatingModal
           visible={ratingModal}
           renderModal={renderRatingModal}
