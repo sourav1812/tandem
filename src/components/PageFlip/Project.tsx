@@ -363,7 +363,9 @@ const RenderScene = ({
   hHeight,
   tooltipArray,
 }: RenderSceneProps) => {
-  const imageRef = useImage(image || PAPER);
+  let imageRef = useImage(image);
+  const paperRef = useImage(PAPER);
+  imageRef = imageRef || paperRef;
   const [showBackdrop, setShowBackdrop] = React.useState(false);
   const arrowImage = useImage(require('../../assets/png/SouthArrow.png'));
   const {width: wWidth} = useWindowDimensions();

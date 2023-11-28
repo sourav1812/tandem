@@ -4,7 +4,7 @@
   "READING_TIPS": "Lesetipps",
   "WHO_IS_GOING_TO": "Wer spielt heute?",
   "ANSWER": "Antwort",
-  "SELECT_LANGUAGE": "Sprache auswählen",
+  "SELECT_LANGUAGE": "In welcher Sprache möchtest du arbeiten?",
   "YOU_CAN_CHANGE_IT": "Sie können es jederzeit in den Einstellungen ändern",
   "CREATE_AN_ACCOUNT": "Konto erstellen",
   "NAME": "Name",
@@ -30,7 +30,7 @@
   "HELP_CENTER": "Hilfezentrum",
   "FAQ": "FAQ",
   "CONTACT_US": "Kontaktiere uns",
-  "QUESTIONS_COMMENTS": "Fragen? Kommentare?",
+  "QUESTIONS_COMMENTS": "Haben Sie irgendwelche Kommentare oder Fragen?",
   "HOW_CAN_WE_HELP": "Wie können wir helfen?",
   "MESSAGE": "Nachricht",
   "SEND": "Senden",
@@ -102,7 +102,7 @@
   "LITTLE_PEOPLE": "Kinder",
   "PROFILE_SETTINGS": "Profil-Einstellungen",
   "CHANGE_PASSWORD": "Passwort ändern",
-  "ABOUT_APP": "Über die App",
+  "ABOUT_APP": "Über Tandem",
   "TERMS_OF_USE": "Nutzungsbedingungen",
   "PRIVACY_POLICY": "Datenschutzrichtlinie",
   "PLEASE_READ_THEM_CAREFULLY": "Bitte lesen Sie sie sorgfältig.",
@@ -202,14 +202,14 @@
       "heading": "Hier gibt es noch nichts zu sehen...!",
       "subHeading": "Warum schreiben wir nicht jetzt gemeinsam eine Geschichte?"
     },
-    "write-a-story": "Eine Geschichte schreiben"
+    "write-a-story": " Erzähle eine Geschichte"
   },
   "generate-story": {
     "is-in-story": " ist in unserer Geschichte?",
     "included-in-story": "Möchtest du in der Geschichte sein,",
     "where-shall-we": "Wo sollen wir ",
     "go-in-our-story": "in unserer Geschichte heute?",
-    "include-things": "Sollen wir einige dieser Dinge in die Geschichte aufnehmen?",
+    "include-things": "Wähle ein Objekt, das in der Geschichte vorkommen soll?",
     "what-sort-of": "Welche Art von Geschichte",
     "do-you-want-today": "möchtest du heute machen?",
     "what-style-illustration": "Welchen Illustrationsstil",

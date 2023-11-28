@@ -2,7 +2,7 @@ import React, {FC, useEffect} from 'react';
 import AppNavigator from './src/navigation';
 import {Provider} from 'react-redux';
 import {store} from './src/redux/store';
-import {Alert, Platform, UIManager} from 'react-native';
+import {Platform, UIManager} from 'react-native';
 import messaging from '@react-native-firebase/messaging';
 import {PersistGate} from 'redux-persist/integration/react';
 import {persistStore} from 'redux-persist';
@@ -33,12 +33,10 @@ const App: FC = () => {
           type: 'Alert',
           message: remoteMessage.notification?.title,
           onSuccess: async () => {
-            if (remoteMessage.notification?.title === 'Story generated.') {
-              try {
-                getStories();
-              } catch (e) {
-                console.log(e);
-              }
+            try {
+              getStories();
+            } catch (e) {
+              console.log(e);
             }
           },
         }),

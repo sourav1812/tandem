@@ -24,7 +24,7 @@ export default () => {
   return (
     <GenerateStory
       type={STORY_PARTS.WHO}
-      maxSelections={3}
+      maxSelections={2}
       onBack={() => {
         if (disabled) {
           return;
@@ -50,7 +50,7 @@ export default () => {
         <RNImageChoice
           setDisabled={setDisabled}
           type={STORY_PARTS.WHO}
-          maxSelections={3}
+          maxSelections={2}
           index={0}
           data={whoInStory}
         />

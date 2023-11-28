@@ -4,7 +4,7 @@
   "READING_TIPS": "Reading Tips",
   "WHO_IS_GOING_TO": "Who is going to play today?",
   "ANSWER": "Answer",
-  "SELECT_LANGUAGE": "Select Language",
+  "SELECT_LANGUAGE": "What language would you like to use?",
   "YOU_CAN_CHANGE_IT": "You can change it in the settings at any time",
   "CREATE_AN_ACCOUNT": "Create an account",
   "NAME": "Name",
@@ -30,7 +30,7 @@
   "HELP_CENTER": "Help Center",
   "FAQ": "FAQ",
   "CONTACT_US": "Contact Us",
-  "QUESTIONS_COMMENTS": "Questions? Comments?",
+  "QUESTIONS_COMMENTS": "Do you have any comments or questions?",
   "HOW_CAN_WE_HELP": "How can we help?",
   "MESSAGE": "Message",
   "SEND": "Send",
@@ -102,7 +102,7 @@
   "LITTLE_PEOPLE": "Little People",
   "PROFILE_SETTINGS": "Profile Settings",
   "CHANGE_PASSWORD": "Change Password",
-  "ABOUT_APP": "About App",
+  "ABOUT_APP": "About Tandem",
   "TERMS_OF_USE": "Terms of Use",
   "PRIVACY_POLICY": "Privacy Policy",
   "PLEASE_READ_THEM_CAREFULLY": "Please read them carefully.",
@@ -203,14 +203,14 @@
       "heading": "Nothing to see here... yet!",
       "subHeading": "Why don't we write a story together now?"
     },
-    "write-a-story": "Write a story"
+    "write-a-story": "Create a story"
   },
   "generate-story": {
     "is-in-story": " is going to be in our story?",
     "included-in-story": "Do you want to be included in the story,",
     "where-shall-we": "Where shall we ",
     "go-in-our-story": "go in our story today?",
-    "include-things": "Shall we include any of these things in the story?",
+    "include-things": "Pick an object to be in the story?",
     "what-sort-of": "What sort of story",
     "do-you-want-today": "do you want to make today?",
     "what-style-illustration": "What style of illustrations",

@@ -21,7 +21,9 @@ import QuestionMark from '@tandem/assets/svg/QuestionMarkRed';
 import RNTooltip from '../RNTooltip';
 import {DIRECTION_ARROWS} from '@tandem/constants/enums';
 import {translation} from '@tandem/utils/methods';
-import {scale} from 'react-native-size-matters';
+import {scale, verticalScale} from 'react-native-size-matters';
+import LinearGradient from 'react-native-linear-gradient';
+import RNTextComponent from '../RNTextComponent';
 
 const RNImageChoice = ({
   data = [],
@@ -160,17 +162,33 @@ const AnimatedImageChoice = ({
         onPress();
         runAnimation();
       }}>
-      <Animated.View style={[{transform: [{scale: scaleButton}]}]}>
-        <Image
-          source={{uri: value.file}}
-          style={[
-            styles.illustration,
-            activeState.includes(value.name) && {
-              borderWidth: 3,
-              borderColor: themeColor.themeBlue,
-            },
-          ]}
-        />
+      <Animated.View style={{transform: [{scale: scaleButton}]}}>
+        {activeState.includes(value.name) && (
+          <LinearGradient
+            colors={['transparent', '#00000095', '#000000e2']}
+            style={[
+              styles.illustration,
+              {
+                position: 'absolute',
+                zIndex: 1,
+                alignItems: 'center',
+                justifyContent: 'flex-end',
+                padding: 10,
+                backgroundColor: 'transparent',
+              },
+              activeState.includes(value.name) && {
+                borderWidth: 3,
+                borderColor: themeColor.themeBlue,
+              },
+            ]}>
+            <RNTextComponent
+              style={{color: 'white', fontSize: verticalScale(12)}}
+              isSemiBold>
+              {value.name}
+            </RNTextComponent>
+          </LinearGradient>
+        )}
+        <Image source={{uri: value.file}} style={[styles.illustration]} />
       </Animated.View>
     </Pressable>
   );

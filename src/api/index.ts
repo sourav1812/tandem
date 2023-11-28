@@ -222,7 +222,7 @@ const get = async <T>({
     if (!token && !refreshToken) {
       throw new Error('Your Session has expired. Please login to continue');
     }
-    const response = await axiosInstance.get<Api & T>(BASE_URL + path);
+    const response = await axiosInstance.get<Api & T>(path);
     store.dispatch(addGetResponse({path, response: response?.data}));
     return response?.data;
   } catch (error: any) {

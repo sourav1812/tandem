@@ -112,8 +112,7 @@ const RNRoadmap = () => {
       storyGenerationResponse[STORY_PARTS.WHAT_HAPPENS].length > 0) ||
     storyGenerationResponse[STORY_PARTS.STYLES].length > 0;
   const colors =
-    (illustration && storyGenerationResponse[STORY_PARTS.STYLES].length > 0) ||
-    storyGenerationResponse[STORY_PARTS.COLOR].length > 0;
+    illustration && storyGenerationResponse[STORY_PARTS.STYLES].length > 0;
 
   const checkIfClickable = [
     who,

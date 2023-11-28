@@ -71,7 +71,8 @@ export default () => {
       }}
       questionNumber={6}
       onNextQuestion={() => {
-        navigation.push(SCREEN_NAME.GENERATE_STORY_COLORS);
+        // navigation.push(SCREEN_NAME.GENERATE_STORY_COLORS);
+        navigation.push(SCREEN_NAME.ROADMAP);
       }}
       disabled={disabled}>
       <>

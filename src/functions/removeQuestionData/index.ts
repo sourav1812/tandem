@@ -14,10 +14,10 @@ export default (type: string) => {
 
 export const goBackInOrder = () => {
   const questionRef = store.getState().storyGeneration;
-  if (questionRef[STORY_PARTS.COLOR].length > 0) {
-    navigateTo(SCREEN_NAME.GENERATE_STORY_COLORS);
-    return;
-  }
+  // if (questionRef[STORY_PARTS.COLOR].length > 0 ) {
+  //   navigateTo(SCREEN_NAME.GENERATE_STORY_COLORS);
+  //   return;
+  // }
   if (questionRef[STORY_PARTS.STYLES].length > 0) {
     navigateTo(SCREEN_NAME.GENERATE_STORY_ILLUSTRATIONS);
     return;

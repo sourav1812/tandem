@@ -18,7 +18,7 @@ const initialState: StoryGenerateResponse = {
   [STORY_PARTS.WHAT_THINGS]: [],
   [STORY_PARTS.WHAT_HAPPENS]: [],
   [STORY_PARTS.STYLES]: [],
-  [STORY_PARTS.COLOR]: [],
+  [STORY_PARTS.COLOR]: ['#ffffff'],
 };
 
 export const storyGeneration = createSlice({
@@ -37,14 +37,8 @@ export const storyGeneration = createSlice({
       state[type] = [];
     },
     // empty story gen reducer
-    clearStoryGenerationResponse: state => {
-      state[STORY_PARTS.WHO] = [];
-      state[STORY_PARTS.INCLUSION] = null;
-      state[STORY_PARTS.WHERE] = [];
-      state[STORY_PARTS.WHAT_THINGS] = [];
-      state[STORY_PARTS.WHAT_HAPPENS] = [];
-      state[STORY_PARTS.STYLES] = [];
-      state[STORY_PARTS.COLOR] = [];
+    clearStoryGenerationResponse: () => {
+      return initialState;
     },
   },
 });
