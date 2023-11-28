@@ -6,7 +6,7 @@ import RNTextComponent from '@tandem/components/RNTextComponent';
 import RNLogoHeader from '@tandem/components/RNLogoHeader';
 import {verticalScale} from 'react-native-size-matters';
 import {translation} from '@tandem/utils/methods';
-
+import {getVersion} from 'react-native-device-info';
 const AboutApp = () => {
   return (
     <RNScreenWrapper style={styles.container}>
@@ -21,12 +21,18 @@ const AboutApp = () => {
           style={styles.img}
           resizeMode="contain"
         />
-        <RNTextComponent style={styles.version}>Version 1.0</RNTextComponent>
+        <RNTextComponent style={styles.version}>
+          Version {getVersion()}
+        </RNTextComponent>
       </View>
       <View>
         <RNTextComponent style={styles.license}>
-          ©️ 2023 TANDEM{'\n'}
-          MOBILE APPLICATION
+          ©️{' '}
+          {new Date().getFullYear() === 2023
+            ? new Date().getFullYear()
+            : '2023-' + new Date().getFullYear()}{' '}
+          TANDEM{'\n'}
+          EARLY IDEAS LIMITED
         </RNTextComponent>
         <RNTextComponent
           style={[
