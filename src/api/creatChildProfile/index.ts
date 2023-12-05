@@ -4,12 +4,10 @@ import {CreateChildProfile} from './interface';
 import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 
-export const addNewChild = async ({
-  name,
-  dob,
-  gender,
-  avatar,
-}: CreateChildProfile) => {
+export const addNewChild = async (
+  {name, dob, gender, avatar}: CreateChildProfile,
+  onSuccess?: () => void,
+) => {
   try {
     const response = await post<{childId: string}>({
       path: API.CREATE_CHILD_PROFILE,
@@ -21,6 +19,9 @@ export const addNewChild = async ({
       },
       onSuccess: () => {
         navigateTo(SCREEN_NAME.ACCOUNT);
+        if (onSuccess) {
+          onSuccess();
+        }
       },
     });
     return response;

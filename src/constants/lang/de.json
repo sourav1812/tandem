@@ -51,7 +51,7 @@
   "PEOPLE": "Leute",
   "HELLO": "Hallo",
   "WHAT_SHALL_WE_DO_TODAY": "Was werden wir heute tun?",
-  "WRITE_A_STORY": "Eine Geschichte schreiben",
+  "WRITE_A_STORY": "Erzähle eine Geschichte",
   "I_CANT_DECIDE": "Ich kann mich nicht entscheiden",
   "COMING_SOON": "BALD VERFÜGBAR",
   "SELECT": "Auswählen",
@@ -202,7 +202,7 @@
       "heading": "Hier gibt es noch nichts zu sehen...!",
       "subHeading": "Warum schreiben wir nicht jetzt gemeinsam eine Geschichte?"
     },
-    "write-a-story": " Erzähle eine Geschichte"
+    "write-a-story": "Erzähle eine Geschichte"
   },
   "generate-story": {
     "is-in-story": " ist in unserer Geschichte?",

@@ -60,8 +60,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
     state => state.userData.socialDataObject,
   );
   const fromAddAdult = route.params?.fromAddAdult;
-  const dispatch = useAppDispatch();
-  const [state, setState] = useState<ChildProfileStateObject>({
+  const initialState = {
     bulletinArray: [
       {index: 1, isSelected: true},
       {index: 2, isSelected: false},
@@ -72,7 +71,9 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
     imagePickerUrl: socialLoginData.image !== '' ? socialLoginData.image : null,
     showImageModal: false,
     showRoles: false,
-  });
+  };
+  const dispatch = useAppDispatch();
+  const [state, setState] = useState<ChildProfileStateObject>(initialState);
   const {bulletinArray, questionIndex, gender, showImageModal, showRoles} =
     state;
   const [name, setName] = useState<ValidationError>({value: ''});
@@ -91,7 +92,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
   };
 
   const nextQuestion = async () => {
-    if (questionIndex <= 2 && avatar === null) {
+    if (questionIndex <= 2) {
       let indexArry: IndicatorType[] = [...bulletinArray];
       bulletinArray.map((item, index) => {
         if (questionIndex + 1 > index) {
@@ -142,11 +143,14 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
       return;
     }
     try {
+      if (!avatar) {
+        return;
+      }
       const childObject: {
         name: string;
         dob: string;
         gender: string;
-        avatar: string | null;
+        avatar: string;
         type?: PEOPLE;
         childId?: string;
       } = {
@@ -155,7 +159,9 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
         gender,
         avatar,
       };
-      const response = await addNewChild(childObject);
+      const response = await addNewChild(childObject, () => {
+        setState(initialState);
+      });
       if (response) {
         childObject.type = PEOPLE.CHILD;
         childObject.childId = response?.childId;
@@ -179,14 +185,14 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
     ) {
       return;
     }
-    if (!role) {
+    if (!role || !avatar) {
       return;
     }
     try {
       const adultObject: {
         role: string;
         dob: string;
-        avatar: string | null;
+        avatar: string;
         type?: PEOPLE;
         profileId?: string;
       } = {
@@ -194,7 +200,9 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
         dob: dob.value,
         avatar,
       };
-      const response = await addNewAdult(adultObject);
+      const response = await addNewAdult(adultObject, () => {
+        setState(initialState);
+      });
       if (response) {
         adultObject.profileId = response?.profileId;
         adultObject.type = PEOPLE.ADULT;

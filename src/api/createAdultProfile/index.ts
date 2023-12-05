@@ -4,7 +4,10 @@ import {CreateAdultProfile} from './interface';
 import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 
-export const addNewAdult = async ({role, dob, avatar}: CreateAdultProfile) => {
+export const addNewAdult = async (
+  {role, dob, avatar}: CreateAdultProfile,
+  onSuccess?: () => void,
+) => {
   try {
     const response = await post<{profileId: string}>({
       path: API.ADD_BIG_PEOPLE,
@@ -15,6 +18,9 @@ export const addNewAdult = async ({role, dob, avatar}: CreateAdultProfile) => {
       },
       onSuccess: () => {
         navigateTo(SCREEN_NAME.ACCOUNT);
+        if (onSuccess) {
+          onSuccess();
+        }
       },
     });
     return response;
