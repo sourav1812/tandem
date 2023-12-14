@@ -17,7 +17,7 @@ import {RootState} from '@tandem/redux/store';
 const Onboarding = () => {
   const [remountKey, setRemountKey] = useState(0);
 
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex] = useState(0);
   const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
@@ -79,27 +79,27 @@ const Onboarding = () => {
     setRemountKey(remountKey + 1);
   };
 
-  const onViewableItemsChanged = useCallback(
-    ({viewableItems}: any) => {
-      if (viewableItems.length > 0) {
-        setCurrentIndex(viewableItems[0].index);
-      }
-    },
+  // const onViewableItemsChanged = useCallback(
+  //   ({viewableItems}: any) => {
+  //     if (viewableItems.length > 0) {
+  //       setCurrentIndex(viewableItems[0].index);
+  //     }
+  //   },
 
-    [],
-  );
+  //   [],
+  // );
 
-  const nextPage = () => {
-    // if (currentIndex < 2) {
-    //   // setCurrentIndex(currentIndex + 1);
-    //   flatlistRef?.current?.scrollToIndex({
-    //     animated: true,
-    //     index: currentIndex + 1,
-    //   });
-    // } else {
-    navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN);
-    // }
-  };
+  // const nextPage = () => {
+  //   // if (currentIndex < 2) {
+  //   //   // setCurrentIndex(currentIndex + 1);
+  //   //   flatlistRef?.current?.scrollToIndex({
+  //   //     animated: true,
+  //   //     index: currentIndex + 1,
+  //   //   });
+  //   // } else {
+  //   navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN);
+  //   // }
+  // };
 
   return (
     <RNScreenWrapper>
@@ -114,7 +114,7 @@ const Onboarding = () => {
         decelerationRate={0.3}
         bounces={false}
         showsHorizontalScrollIndicator={false}
-        onViewableItemsChanged={onViewableItemsChanged}
+        // onViewableItemsChanged={onViewableItemsChanged}
         viewabilityConfig={{
           itemVisiblePercentThreshold: 2, // adjust threshold as needed
         }}
@@ -153,7 +153,7 @@ const Onboarding = () => {
           <RNButton
             title={translation('GET_STARTED')}
             onClick={() => {
-              nextPage();
+              navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN);
             }}
             customStyle={[
               styles.button,
