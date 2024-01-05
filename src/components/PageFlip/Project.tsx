@@ -363,9 +363,9 @@ const RenderScene = ({
   hHeight,
   tooltipArray,
 }: RenderSceneProps) => {
-  let imageRef = useImage(image);
+  const imageRef = useImage(image);
+  console.log(image);
   const paperRef = useImage(PAPER);
-  imageRef = imageRef || paperRef;
   const [showBackdrop, setShowBackdrop] = React.useState(false);
   const arrowImage = useImage(require('../../assets/png/SouthArrow.png'));
   const {width: wWidth} = useWindowDimensions();
@@ -390,7 +390,7 @@ const RenderScene = ({
   }
   return (
     <Group>
-      <Image image={imageRef} rect={outer} fit="cover" />
+      <Image image={imageRef || paperRef} rect={outer} fit="cover" />
       {!tooltipArray?.[15] && (
         <>
           <BackdropBlur blur={0} clip={outer}>

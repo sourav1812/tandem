@@ -35,6 +35,9 @@ export const bookShelf = createSlice({
       const {bookId, images} = action.payload;
       state.images[bookId] = images;
     },
+    renewImages: (state, action) => {
+      state.images = action.payload;
+    },
     rateBookLocally: (state, action) => {
       const {bookIndex, rating} = action.payload;
       state.books[bookIndex].ratingInfo.push({
@@ -57,6 +60,7 @@ export const {
   clearbookShelf,
   addBooks,
   rateBookLocally,
+  renewImages,
 } = bookShelf.actions;
 
 export default bookShelf.reducer;

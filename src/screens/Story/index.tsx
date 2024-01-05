@@ -19,6 +19,8 @@ import {store} from '@tandem/redux/store';
 import getIllustrations from '@tandem/api/getIllustrations';
 import {setImagesForBook} from '@tandem/redux/slices/bookShelf.slice';
 import {changeStoryLevel} from '@tandem/redux/slices/storyLevel.slice';
+import RNFetchBlob from 'rn-fetch-blob';
+import {addFlush} from '@tandem/redux/slices/cache.slice';
 // import {store} from '@tandem/redux/store';
 // import {setImageForPage} from '@tandem/redux/slices/bookShelf.slice';
 // import RNFetchBlob from 'rn-fetch-blob';
@@ -26,8 +28,8 @@ import {changeStoryLevel} from '@tandem/redux/slices/storyLevel.slice';
 
 const Story = () => {
   const [visible, setVisible] = useState(false);
-  const [progress, setProgress] = useState({val: 0, len: 0});
-  const [redirect, setRedirect] = useState(true);
+  const [progress] = useState({val: 0, len: 0});
+  const [redirect] = useState(true);
   const mode = useAppSelector(state => state.mode.mode);
   const route: any = useRoute();
   const routeData: BooksData = route?.params?.routeData;
@@ -71,7 +73,7 @@ const Story = () => {
         const textArrayData = book.storyInfo[indexOfStoryComplexity].pages.map(
           (page, i) => ({
             text: page.text,
-            img: 'data:image/png;base64,' + images[book._id][i],
+            img: images[book._id][i],
           }),
         );
         setTextArray(textArrayData);
@@ -83,66 +85,31 @@ const Story = () => {
           }),
         );
         setTextArray(textArrayData);
-        getIllustrations(book._id).then(imagesData => {
+        getIllustrations(book._id).then(async imagesData => {
+          // here do the caching work
+          let dirs = RNFetchBlob.fs.dirs;
+          const cachedImage: string[] = await Promise.all(
+            imagesData.map(async imageObject => {
+              const res = await RNFetchBlob.config({
+                fileCache: true,
+                path:
+                  dirs.DocumentDir +
+                  '/storybooks' +
+                  book._id +
+                  imageObject.page.toString() +
+                  'cache',
+              }).fetch('GET', imageObject.img_url, {});
+              const pathLocal = res.path();
+              store.dispatch(addFlush(pathLocal));
+              return 'file://' + pathLocal;
+            }),
+          );
+          console.log({cachedImage});
           store.dispatch(
-            setImagesForBook({bookId: book._id, images: imagesData}),
+            setImagesForBook({bookId: book._id, images: cachedImage}),
           );
         });
       }
-
-      // if (doWeHaveImage) {
-      //   // ! reset Directories if they are changed
-      //   if (Platform.OS === 'ios') {
-      //     const currentDirectory = RNFetchBlob.fs.dirs.DocumentDir;
-      //     book.pages.forEach((page, pageIndex) => {
-      //       if (!page.image?.includes(currentDirectory)) {
-      //         store.dispatch(
-      //           setImageForPage({
-      //             bookIndex,
-      //             pageIndex,
-      //             image:
-      //               'file://' +
-      //               currentDirectory +
-      //               page.image?.split('Documents')[1],
-      //           }),
-      //         );
-      //       }
-      //     });
-      //   }
-      //   setRedirect(true);
-      //   return;
-      // }
-      // setProgress(prev => ({...prev, len: book.pages.length}));
-      // let dirs = RNFetchBlob.fs.dirs;
-      // book.pages.forEach((page, pageIndex) => {
-      //   if (!page.image) {
-      //     RNFetchBlob.config({
-      //       fileCache: true,
-      //       path:
-      //         dirs.DocumentDir +
-      //         '/storybooks' +
-      //         book.bookId +
-      //         pageIndex.toString() +
-      //         'cache',
-      //     })
-      //       .fetch('GET', page.illustration_url, {})
-      //       .then(res => {
-      //         const pathLocal = res.path();
-      //         store.dispatch(
-      //           setImageForPage({
-      //             bookIndex,
-      //             pageIndex,
-      //             image: 'file://' + pathLocal,
-      //           }),
-      //         );
-      //         store.dispatch(addFlush(pathLocal));
-      //         setProgress(prev => ({...prev, val: prev.val + 1}));
-      //       })
-      //       .catch(error => {
-      //         console.log('error while caching story images', error);
-      //       });
-      //   }
-      // });
     };
     f();
     // eslint-disable-next-line react-hooks/exhaustive-deps
