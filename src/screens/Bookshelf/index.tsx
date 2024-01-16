@@ -40,7 +40,7 @@ const Bookshelf = () => {
   const mode = useAppSelector(state => state.mode.mode);
   const [searchText, setText] = useState<ValidationError>({value: ''});
   const books = useAppSelector((state: RootState) => state.bookShelf.books);
-
+  // console.log(JSON.stringify(books));
   const data: BooksData[] = React.useMemo(
     () =>
       books?.map((book, index) => {
@@ -95,7 +95,7 @@ const Bookshelf = () => {
   };
 
   const listEmptyComponent = React.useCallback(() => {
-    const currentChild = store.getState().createChild.currentChild;
+    const currentChildLocal = store.getState().createChild.currentChild;
     return (
       <View style={styles.listEmptyComponentContainer}>
         <View style={styles.listEmptyComponentEmogiContainer}>
@@ -104,7 +104,7 @@ const Bookshelf = () => {
         {searchText.value === '' ? (
           <>
             <RNTextComponent isSemiBold style={styles.nothingToSeeText}>
-              {mode === MODE.A ? currentChild.name + ' ' : null}
+              {mode === MODE.A ? currentChildLocal.name + ' ' : null}
               {translation(`bookshelf.${mode}.heading`)}
             </RNTextComponent>
             <RNTextComponent numberOfLines={2} style={styles.whyDontWriteStory}>
