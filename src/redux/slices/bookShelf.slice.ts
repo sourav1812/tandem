@@ -4,8 +4,9 @@ import {StoryData} from '@tandem/api/getStories/interface';
 interface BookShelf {
   books: StoryData[];
   images: {[bookId: string]: string[]};
+  thumbnails: {[nameUrl: string]: string};
 }
-const initialState: BookShelf = {books: [], images: {}};
+const initialState: BookShelf = {books: [], images: {}, thumbnails: {}};
 
 export const bookShelf = createSlice({
   name: 'bookShelf',
@@ -35,8 +36,15 @@ export const bookShelf = createSlice({
       const {bookId, images} = action.payload;
       state.images[bookId] = images;
     },
+    setThumbnailForBook: (state, action) => {
+      const {url, image} = action.payload;
+      state.thumbnails[url] = image;
+    },
     renewImages: (state, action) => {
       state.images = action.payload;
+    },
+    renewThumbnails: (state, action) => {
+      state.thumbnails = action.payload;
     },
     rateBookLocally: (state, action) => {
       const {bookIndex, rating} = action.payload;
@@ -55,12 +63,14 @@ export const bookShelf = createSlice({
 
 export const {
   // addNewBook,
+  setThumbnailForBook,
   setImagesForBook,
   removeLatestBook,
   clearbookShelf,
   addBooks,
   rateBookLocally,
   renewImages,
+  renewThumbnails,
 } = bookShelf.actions;
 
 export default bookShelf.reducer;

@@ -68,6 +68,7 @@ export interface StoryData {
   teaser: string;
   title: string;
   referenceId: string;
+  thumbnail?: string;
   storyInfo: [
     {
       _id: string;

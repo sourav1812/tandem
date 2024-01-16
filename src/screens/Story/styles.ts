@@ -13,7 +13,7 @@ export const styles = StyleSheet.create({
   scrollView: {
     width: '100%',
     maxHeight: '60%',
-    minHeight: '50%',
+    minHeight: '45%',
     borderTopLeftRadius: verticalScale(16),
     borderTopRightRadius: verticalScale(16),
     marginTop: 'auto',

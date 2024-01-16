@@ -364,7 +364,6 @@ const RenderScene = ({
   tooltipArray,
 }: RenderSceneProps) => {
   const imageRef = useImage(image);
-  console.log(image);
   const paperRef = useImage(PAPER);
   const [showBackdrop, setShowBackdrop] = React.useState(false);
   const arrowImage = useImage(require('../../assets/png/SouthArrow.png'));

@@ -16,6 +16,7 @@ export enum API {
   CONFIRM_OTP_RESET_PASSWORD = 'user/forgot-password/confirm-otp', //?POST
   RESET_PASSWORD = 'user/forgot-password/reset-password', //?POST
   GET_STORY_ILLUSTRATIONS = 'story-books/illustrations', // * GET
+  GET_STORY_THUMBNAILS = 'story-books/{BOOK_ID_HERE}/thumbnail',
 }
 
 export enum ENVIRONMENT {

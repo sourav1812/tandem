@@ -31,6 +31,7 @@ import bookshelfDays from '@tandem/functions/bookshelfDays';
 import {changeStoryLevel} from '@tandem/redux/slices/storyLevel.slice';
 import {useDispatch} from 'react-redux';
 import {ratingList} from '@tandem/components/RNRatingModal/interface';
+import getStoryThumbnail, {cacheThumbnail} from '@tandem/api/getStoryThumbnail';
 
 const Bookshelf = () => {
   const dispatch = useDispatch();
@@ -53,12 +54,24 @@ const Bookshelf = () => {
         const week: string = translation(
           bookshelfDays(new Date(book.storyInfo[0].createdAt)),
         );
+        if (!book.thumbnail) {
+          getStoryThumbnail(book._id);
+        } else {
+          const thumbnailData =
+            store.getState().bookShelf.thumbnails?.[book.thumbnail];
+          if (!thumbnailData) {
+            cacheThumbnail(book._id, book.thumbnail);
+          }
+        }
+
         return {
           id: book.storyInfo[0].bookId,
           headerTitle: book.title || `Mock Story ${index + 1}`,
           time:
             new Date(book.storyInfo[0].createdAt).toDateString() || 'Some Date',
-          image: require('../../assets/png/imageOne.png'),
+          image: book.thumbnail
+            ? {uri: book.thumbnail}
+            : require('../../assets/png/imageOne.png'),
           readingTime:
             Math.ceil(
               book.storyInfo[0].pages

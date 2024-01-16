@@ -40,6 +40,8 @@ const Story = () => {
     setVisible(!visible);
   };
   const {val, len} = progress;
+  const thumbnails = useAppSelector(state => state.bookShelf.thumbnails);
+  const imageUrl = thumbnails?.[routeData?.image.uri];
   // const shouldRedirect = () => {
   //   if (val && len) {
   //     if (val === len) {
@@ -86,6 +88,10 @@ const Story = () => {
         );
         setTextArray(textArrayData);
         getIllustrations(book._id).then(async imagesData => {
+          if (!imagesData.every(obj => obj.img_url)) {
+            console.log('images still havent arrived');
+            return;
+          }
           // here do the caching work
           let dirs = RNFetchBlob.fs.dirs;
           const cachedImage: string[] = await Promise.all(
@@ -131,7 +137,10 @@ const Story = () => {
         </View>
 
         <View style={styles.container}>
-          <Image style={styles.poster} source={routeData?.image} />
+          <Image
+            style={styles.poster}
+            source={imageUrl ? {uri: imageUrl} : routeData?.image}
+          />
           <View style={styles.scrollView}>
             <View style={styles.midContent}>
               {routeData.emogi && (

@@ -1,4 +1,4 @@
-import {Pressable, View} from 'react-native';
+import {LayoutAnimation, Pressable, View} from 'react-native';
 import React from 'react';
 import {ratingList, ratingModalProps} from './interface';
 import {styles} from './styles';
@@ -31,6 +31,9 @@ const RNRatingModal = ({visible, renderModal, nextClick}: ratingModalProps) => {
             return (
               <Pressable
                 onPress={() => {
+                  LayoutAnimation.configureNext(
+                    LayoutAnimation.Presets.easeInEaseOut,
+                  );
                   setRating(index + 1);
                 }}
                 key={index.toString()}
@@ -50,13 +53,15 @@ const RNRatingModal = ({visible, renderModal, nextClick}: ratingModalProps) => {
             );
           })}
         </View>
-        <RNButton
-          customStyle={styles.button}
-          onClick={() => {
-            nextClick(rating);
-          }}
-          title={translation('RATE')}
-        />
+        {rating !== 0 && (
+          <RNButton
+            customStyle={styles.button}
+            onClick={() => {
+              nextClick(rating);
+            }}
+            title={translation('RATE')}
+          />
+        )}
       </View>
     </RNModal>
   );

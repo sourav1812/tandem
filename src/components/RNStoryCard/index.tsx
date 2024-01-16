@@ -39,6 +39,9 @@ const RNStoryCard = ({
 }) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const portrait = useAppSelector(state => state.orientation.isPortrait);
+  const thumbnails = useAppSelector(state => state.bookShelf.thumbnails);
+  const imageUrl = thumbnails?.[item.image.uri];
+
   const scaleButton = useSharedValue(1);
 
   const runAnimation = () => {
@@ -47,7 +50,6 @@ const RNStoryCard = ({
       withTiming(1),
     );
   };
-
   return (
     <Pressable
       onPress={() => {
@@ -79,9 +81,14 @@ const RNStoryCard = ({
               </View>
             )}
             <Image
-              source={item.image}
+              source={imageUrl ? {uri: imageUrl} : item.image}
               style={[
                 styles.img,
+                {
+                  width: scale(110),
+                  height: scale(110),
+                },
+
                 isTablet && {width: scale(90), height: scale(100)},
               ]}
               // resizeMode="contain"
