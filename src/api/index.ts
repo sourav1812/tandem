@@ -169,12 +169,13 @@ const executeRequest = async <T>(
   store.dispatch(startLoader());
   store.dispatch(buttonLoader());
   store.dispatch(clearParams());
-
+  console.log({path});
   try {
     const response: AxiosResponse<Api & T, any> = await requestFunction(
       path,
       data,
     );
+    console.log({response});
     if (response.data.message) {
       store.dispatch(
         addAlertData({

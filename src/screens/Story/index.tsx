@@ -21,18 +21,15 @@ import {setImagesForBook} from '@tandem/redux/slices/bookShelf.slice';
 import {changeStoryLevel} from '@tandem/redux/slices/storyLevel.slice';
 import RNFetchBlob from 'rn-fetch-blob';
 import {addFlush} from '@tandem/redux/slices/cache.slice';
-// import {store} from '@tandem/redux/store';
-// import {setImageForPage} from '@tandem/redux/slices/bookShelf.slice';
-// import RNFetchBlob from 'rn-fetch-blob';
-// import {addFlush} from '@tandem/redux/slices/cache.slice';
 
 const Story = () => {
   const [visible, setVisible] = useState(false);
-  const [progress] = useState({val: 0, len: 0});
+  const [progress, setProgress] = useState({val: 0, len: 0});
   const [redirect] = useState(true);
   const mode = useAppSelector(state => state.mode.mode);
   const route: any = useRoute();
   const routeData: BooksData = route?.params?.routeData;
+  const [thumbnail, setThumbnail] = useState(routeData?.image || undefined);
   const [textArray, setTextArray] = React.useState<
     {text: string; img: string | null}[]
   >([]);
@@ -40,46 +37,42 @@ const Story = () => {
     setVisible(!visible);
   };
   const {val, len} = progress;
-  const thumbnails = useAppSelector(state => state.bookShelf.thumbnails);
-  const imageUrl = thumbnails?.[routeData?.image.uri];
-  // const shouldRedirect = () => {
-  //   if (val && len) {
-  //     if (val === len) {
-  //       return true;
-  //     }
-  //   }
-  //   return false;
-  // };
-
-  // React.useEffect(() => {
-  //   setRedirect(shouldRedirect());
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [val]);
 
   // ! story book image caching is disabled until api is ready
   React.useEffect(() => {
     const f = async () => {
-      const images = store.getState().bookShelf.images;
       const books = store.getState().bookShelf.books;
       const bookIndex = books.findIndex(book => book._id === routeData.id);
       const book = books[bookIndex];
+      const images: string[] = JSON.parse(
+        JSON.stringify(store.getState().bookShelf.images?.[book._id] || []),
+      );
       const doWeHaveImage =
-        images?.[book._id] &&
-        images?.[book._id]?.length > 0 &&
-        images?.[book._id].every(item => item !== null);
+        images && images?.length > 0 && images.every(item => item !== null);
       const indexOfStoryComplexity = Math.floor(
         (book.storyInfo.length - 1) / 2,
       );
       store.dispatch(changeStoryLevel(indexOfStoryComplexity));
       if (doWeHaveImage) {
+        images.shift(); // ! removing thumbnail image from book
+        setProgress(prev => ({
+          ...prev,
+          len: book.storyInfo[indexOfStoryComplexity].pages.length,
+          val: book.storyInfo[indexOfStoryComplexity].pages.length,
+        }));
         const textArrayData = book.storyInfo[indexOfStoryComplexity].pages.map(
           (page, i) => ({
             text: page.text,
-            img: images[book._id][i],
+            img: images[i],
           }),
         );
         setTextArray(textArrayData);
       } else {
+        setProgress(prev => ({
+          ...prev,
+          len: book.storyInfo[indexOfStoryComplexity].pages.length,
+          val: 0,
+        }));
         const textArrayData = book.storyInfo[indexOfStoryComplexity].pages.map(
           page => ({
             text: page.text,
@@ -88,29 +81,45 @@ const Story = () => {
         );
         setTextArray(textArrayData);
         getIllustrations(book._id).then(async imagesData => {
-          if (!imagesData.every(obj => obj.img_url)) {
+          if (!imagesData || !imagesData.every(obj => obj.img_url)) {
             console.log('images still havent arrived');
             return;
           }
           // here do the caching work
           let dirs = RNFetchBlob.fs.dirs;
-          const cachedImage: string[] = await Promise.all(
-            imagesData.map(async imageObject => {
-              const res = await RNFetchBlob.config({
-                fileCache: true,
-                path:
-                  dirs.DocumentDir +
-                  '/storybooks' +
-                  book._id +
-                  imageObject.page.toString() +
-                  'cache',
-              }).fetch('GET', imageObject.img_url, {});
-              const pathLocal = res.path();
-              store.dispatch(addFlush(pathLocal));
-              return 'file://' + pathLocal;
-            }),
+          const cachedImageObject: {page: number; path: string}[] =
+            await Promise.all(
+              imagesData.map(async (imageObject, index) => {
+                const res = await RNFetchBlob.config({
+                  fileCache: true,
+                  path:
+                    dirs.DocumentDir +
+                    '/storybooks' +
+                    book._id +
+                    imageObject.page.toString() +
+                    'cache',
+                }).fetch('GET', imageObject.img_url, {});
+                const pathLocal = res.path();
+                store.dispatch(addFlush(pathLocal));
+                if (index !== 0) {
+                  setProgress(prev => ({
+                    ...prev,
+                    val: prev.val + 1,
+                  }));
+                }
+                return {page: imageObject.page, path: 'file://' + pathLocal};
+              }),
+            );
+          const cachedImage = cachedImageObject
+            .sort((a, b) => a.page - b.page)
+            .map(item => item.path);
+          setThumbnail(cachedImage[0]);
+          setTextArray(prev =>
+            prev.map((item, indexOfTextArray) => ({
+              ...item,
+              img: cachedImage[indexOfTextArray + 1],
+            })),
           );
-          console.log({cachedImage});
           store.dispatch(
             setImagesForBook({bookId: book._id, images: cachedImage}),
           );
@@ -137,10 +146,7 @@ const Story = () => {
         </View>
 
         <View style={styles.container}>
-          <Image
-            style={styles.poster}
-            source={imageUrl ? {uri: imageUrl} : routeData?.image}
-          />
+          <Image style={styles.poster} source={{uri: thumbnail}} />
           <View style={styles.scrollView}>
             <View style={styles.midContent}>
               {routeData.emogi && (
@@ -186,7 +192,7 @@ const Story = () => {
                 : translation('REREAD')
             }
             hitSlop={40}
-            loadPercentage={redirect ? undefined : (val * 100) / (len || 1)}
+            loadPercentage={(val * 100) / (len || 1)}
             customStyle={[styles.button]}
             textStyle={{fontSize: verticalScale(14)}}
             onClick={() => {

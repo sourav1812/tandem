@@ -8,10 +8,7 @@ import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
 import {CACHE_DIR} from '@tandem/constants/local';
 import {reinitialiseCacheDirectory} from '@tandem/redux/slices/cache.slice';
 import {Platform} from 'react-native';
-import {
-  renewImages,
-  renewThumbnails,
-} from '@tandem/redux/slices/bookShelf.slice';
+import {renewImages} from '@tandem/redux/slices/bookShelf.slice';
 
 export default async () => {
   const {token, refreshToken} = getStoredTokens();
@@ -86,19 +83,8 @@ const resetDirectoriesOfCachedData = () => {
         modifiedImages[key] = newArray;
       });
 
-      const thumbnails = store.getState().bookShelf.thumbnails;
-      const modifiedThumbnails: {[keyValue: string]: string} = {};
-      Object.keys(thumbnails).forEach(key => {
-        const file = JSON.parse(JSON.stringify(thumbnails[key]));
-        const modifiedThumbnail =
-          'file://' + currentDirectory + file.split('Documents')[1];
-        modifiedThumbnails[key] = modifiedThumbnail;
-      });
-      // ! //////////////////////////////////////////////////////////////////
-
       // ! dispatch new images
       store.dispatch(renewImages(modifiedImages));
-      store.dispatch(renewThumbnails(modifiedThumbnails));
       store.dispatch(
         reinitialiseCacheDirectory({
           modifiedAvatars,

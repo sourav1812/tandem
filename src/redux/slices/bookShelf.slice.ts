@@ -4,25 +4,13 @@ import {StoryData} from '@tandem/api/getStories/interface';
 interface BookShelf {
   books: StoryData[];
   images: {[bookId: string]: string[]};
-  thumbnails: {[nameUrl: string]: string};
 }
-const initialState: BookShelf = {books: [], images: {}, thumbnails: {}};
+const initialState: BookShelf = {books: [], images: {}};
 
 export const bookShelf = createSlice({
   name: 'bookShelf',
   initialState,
   reducers: {
-    // push a new book
-    // addNewBook: (state, action) => {
-    //   const isBookAlreadyAdded = state.books.findIndex(
-    //     book => book?.bookId === action.payload?.bookId,
-    //   );
-    //   if (isBookAlreadyAdded !== -1) {
-    //     console.log('this book already exists');
-    //     return;
-    //   }
-    //   state.books.push(action.payload);
-    // },
     addBooks: (state, action) => {
       state.books = action.payload;
     },
@@ -36,15 +24,8 @@ export const bookShelf = createSlice({
       const {bookId, images} = action.payload;
       state.images[bookId] = images;
     },
-    setThumbnailForBook: (state, action) => {
-      const {url, image} = action.payload;
-      state.thumbnails[url] = image;
-    },
     renewImages: (state, action) => {
       state.images = action.payload;
-    },
-    renewThumbnails: (state, action) => {
-      state.thumbnails = action.payload;
     },
     rateBookLocally: (state, action) => {
       const {bookIndex, rating} = action.payload;
@@ -62,15 +43,12 @@ export const bookShelf = createSlice({
 });
 
 export const {
-  // addNewBook,
-  setThumbnailForBook,
   setImagesForBook,
   removeLatestBook,
   clearbookShelf,
   addBooks,
   rateBookLocally,
   renewImages,
-  renewThumbnails,
 } = bookShelf.actions;
 
 export default bookShelf.reducer;

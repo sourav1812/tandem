@@ -39,8 +39,6 @@ const RNStoryCard = ({
 }) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const portrait = useAppSelector(state => state.orientation.isPortrait);
-  const thumbnails = useAppSelector(state => state.bookShelf.thumbnails);
-  const imageUrl = thumbnails?.[item.image.uri];
 
   const scaleButton = useSharedValue(1);
 
@@ -81,7 +79,7 @@ const RNStoryCard = ({
               </View>
             )}
             <Image
-              source={imageUrl ? {uri: imageUrl} : item.image}
+              source={{uri: item.image || undefined}}
               style={[
                 styles.img,
                 {

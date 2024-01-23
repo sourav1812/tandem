@@ -363,6 +363,7 @@ const RenderScene = ({
   hHeight,
   tooltipArray,
 }: RenderSceneProps) => {
+  // const images = useAppSelector(state => state.bookShelf.images);
   const imageRef = useImage(image);
   const paperRef = useImage(PAPER);
   const [showBackdrop, setShowBackdrop] = React.useState(false);

@@ -26,7 +26,7 @@ export enum ENVIRONMENT {
 
 const ENV_VARS = {
   [ENVIRONMENT.DEVELOPMENT]: {
-    API_URL: 'http://192.168.1.48:5000/v1/', // * LOCAL URL
+    API_URL: 'http://192.168.1.51:5000/v1/', // * LOCAL URL
   },
   [ENVIRONMENT.PRODUCTION]: {
     API_URL: 'https://tandem.geeky.dev/v1/', // * STAGING URL

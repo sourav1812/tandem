@@ -15,6 +15,7 @@ export const socialLogin = async ({
 }: SocialLoginAuth) => {
   try {
     const {deviceId, deviceType, fcmToken} = await fcm();
+    console.log('yayayaya', API.AUTH + type);
     const response = await post<LoginResponse>({
       path: API.AUTH + `/${type}`,
       data: {
@@ -28,6 +29,7 @@ export const socialLogin = async ({
         fcmToken,
       },
     });
+    console.log('yayayaya', response);
     await loginFlow(response);
   } catch (error) {
     throw error;
