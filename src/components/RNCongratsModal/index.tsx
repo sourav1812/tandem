@@ -12,10 +12,12 @@ import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {translation} from '@tandem/utils/methods';
 import navigateTo from '@tandem/navigation/navigate';
 import Emoji from '@tandem/assets/svg/Kissing';
+import markBookAsRead from '@tandem/api/markBookAsRead';
 
 const RNCongratsModal = ({
   visible = false,
   renderModal,
+  bookId,
 }: congratsModalProps) => {
   let isTablet = useAppSelector(state => state.deviceType.isTablet);
 
@@ -98,6 +100,7 @@ const RNCongratsModal = ({
             title={translation('HOME')}
             customStyle={styles.button}
             onClick={() => {
+              markBookAsRead(bookId);
               navigateTo(SCREEN_NAME.HOME);
             }}
           />

@@ -16,6 +16,7 @@ export enum API {
   CONFIRM_OTP_RESET_PASSWORD = 'user/forgot-password/confirm-otp', //?POST
   RESET_PASSWORD = 'user/forgot-password/reset-password', //?POST
   GET_STORY_ILLUSTRATIONS = 'story-books/illustrations', // * GET
+  MARK_BOOK_AS_READ = 'story-books/update-reading-status', // ? POST
   GET_STORY_THUMBNAILS = 'story-books/{BOOK_ID_HERE}/thumbnail',
 }
 
@@ -26,7 +27,7 @@ export enum ENVIRONMENT {
 
 const ENV_VARS = {
   [ENVIRONMENT.DEVELOPMENT]: {
-    API_URL: 'http://192.168.1.51:5000/v1/', // * LOCAL URL
+    API_URL: 'https://tandem-beta.geeky.dev/v1/', // * LOCAL URL
   },
   [ENVIRONMENT.PRODUCTION]: {
     API_URL: 'https://tandem.geeky.dev/v1/', // * STAGING URL
@@ -34,7 +35,7 @@ const ENV_VARS = {
 };
 
 // ! Select ENV from here
-export const SELECTED_ENVIRONMENT = ENVIRONMENT.PRODUCTION;
+export const SELECTED_ENVIRONMENT = ENVIRONMENT.DEVELOPMENT;
 // ! URLs
 export const BASE_URL = ENV_VARS[SELECTED_ENVIRONMENT].API_URL;
 

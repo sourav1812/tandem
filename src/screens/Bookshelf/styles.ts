@@ -60,6 +60,7 @@ export const styles = StyleSheet.create({
   flatListContentContainer: {
     marginTop: verticalScale(20),
     paddingHorizontal: verticalScale(16),
+    paddingBottom: 50,
   },
   heading: {
     fontSize: verticalScale(14),

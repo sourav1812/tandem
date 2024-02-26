@@ -16,11 +16,7 @@ import {MODE} from '@tandem/constants/mode';
 import {useRoute} from '@react-navigation/native';
 import {BooksData} from '../Bookshelf/interface';
 import {store} from '@tandem/redux/store';
-import getIllustrations from '@tandem/api/getIllustrations';
-import {setImagesForBook} from '@tandem/redux/slices/bookShelf.slice';
 import {changeStoryLevel} from '@tandem/redux/slices/storyLevel.slice';
-import RNFetchBlob from 'rn-fetch-blob';
-import {addFlush} from '@tandem/redux/slices/cache.slice';
 
 const Story = () => {
   const [visible, setVisible] = useState(false);
@@ -29,7 +25,7 @@ const Story = () => {
   const mode = useAppSelector(state => state.mode.mode);
   const route: any = useRoute();
   const routeData: BooksData = route?.params?.routeData;
-  const [thumbnail, setThumbnail] = useState(routeData?.image || undefined);
+  const [thumbnail] = useState(routeData?.image || undefined);
   const [textArray, setTextArray] = React.useState<
     {text: string; img: string | null}[]
   >([]);
@@ -38,93 +34,29 @@ const Story = () => {
   };
   const {val, len} = progress;
 
-  // ! story book image caching is disabled until api is ready
   React.useEffect(() => {
     const f = async () => {
-      const books = store.getState().bookShelf.books;
-      const bookIndex = books.findIndex(book => book._id === routeData.id);
-      const book = books[bookIndex];
+      const book = routeData.book;
       const images: string[] = JSON.parse(
         JSON.stringify(store.getState().bookShelf.images?.[book._id] || []),
       );
-      const doWeHaveImage =
-        images && images?.length > 0 && images.every(item => item !== null);
       const indexOfStoryComplexity = Math.floor(
         (book.storyInfo.length - 1) / 2,
       );
       store.dispatch(changeStoryLevel(indexOfStoryComplexity));
-      if (doWeHaveImage) {
-        images.shift(); // ! removing thumbnail image from book
-        setProgress(prev => ({
-          ...prev,
-          len: book.storyInfo[indexOfStoryComplexity].pages.length,
-          val: book.storyInfo[indexOfStoryComplexity].pages.length,
-        }));
-        const textArrayData = book.storyInfo[indexOfStoryComplexity].pages.map(
-          (page, i) => ({
-            text: page.text,
-            img: images[i],
-          }),
-        );
-        setTextArray(textArrayData);
-      } else {
-        setProgress(prev => ({
-          ...prev,
-          len: book.storyInfo[indexOfStoryComplexity].pages.length,
-          val: 0,
-        }));
-        const textArrayData = book.storyInfo[indexOfStoryComplexity].pages.map(
-          page => ({
-            text: page.text,
-            img: null,
-          }),
-        );
-        setTextArray(textArrayData);
-        getIllustrations(book._id).then(async imagesData => {
-          if (!imagesData || !imagesData.every(obj => obj.img_url)) {
-            console.log('images still havent arrived');
-            return;
-          }
-          // here do the caching work
-          let dirs = RNFetchBlob.fs.dirs;
-          const cachedImageObject: {page: number; path: string}[] =
-            await Promise.all(
-              imagesData.map(async (imageObject, index) => {
-                const res = await RNFetchBlob.config({
-                  fileCache: true,
-                  path:
-                    dirs.DocumentDir +
-                    '/storybooks' +
-                    book._id +
-                    imageObject.page.toString() +
-                    'cache',
-                }).fetch('GET', imageObject.img_url, {});
-                const pathLocal = res.path();
-                store.dispatch(addFlush(pathLocal));
-                if (index !== 0) {
-                  setProgress(prev => ({
-                    ...prev,
-                    val: prev.val + 1,
-                  }));
-                }
-                return {page: imageObject.page, path: 'file://' + pathLocal};
-              }),
-            );
-          const cachedImage = cachedImageObject
-            .sort((a, b) => a.page - b.page)
-            .map(item => item.path);
-          setThumbnail(cachedImage[0]);
-          setTextArray(prev =>
-            prev.map((item, indexOfTextArray) => ({
-              ...item,
-              img: cachedImage[indexOfTextArray + 1],
-            })),
-          );
-          store.dispatch(
-            setImagesForBook({bookId: book._id, images: cachedImage}),
-          );
-        });
-      }
+      images.shift(); // ! removing thumbnail image from book
+      setProgress(prev => ({
+        ...prev,
+        len: book.storyInfo[indexOfStoryComplexity].pages.length,
+        val: book.storyInfo[indexOfStoryComplexity].pages.length,
+      }));
+      const textArrayData = book.storyInfo[indexOfStoryComplexity].pages.map(
+        (page, i) => ({
+          text: page.text,
+          img: images[i],
+        }),
+      );
+      setTextArray(textArrayData);
     };
     f();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -200,6 +132,7 @@ const Story = () => {
                 id: routeData.id,
                 readWithoutImages: !redirect,
                 textArray: textArray,
+                book: routeData.book,
               });
             }}
           />

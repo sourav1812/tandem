@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import {styles} from './styles';
@@ -49,14 +49,6 @@ const HelpCenter = ({route}: HelpCenterProps) => {
   const rightTab = () => {
     updateState({firstTab: true});
   };
-
-  // useEffect(() => {
-  //   navigation.addListener('beforeRemove', e => {
-  //     e.preventDefault();
-  //     //clear setInterval here and go back
-  //   });
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
 
   return (
     <RNScreenWrapper

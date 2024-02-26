@@ -11,6 +11,7 @@ import RNTextComponent from '../RNTextComponent';
 import {translation} from '@tandem/utils/methods';
 import themeColor from '@tandem/theme/themeColor';
 import {YEARS_ARRAY} from '@tandem/constants/local';
+import {RootState} from '@tandem/redux/store';
 
 const RNDatePicker = ({
   visible = false,
@@ -39,7 +40,7 @@ const RNDatePicker = ({
           animated: true,
           index: year ? year : YEARS_ARRAY.length - 1,
         });
-      }, 300);
+      }, 100);
     }
     return () => {
       setMonth(date.getMonth());

@@ -14,7 +14,6 @@ import RNReadingLevelModal from '@tandem/components/RNReadingLevelModal';
 import RNRatingModal from '@tandem/components/RNRatingModal';
 import {scale, verticalScale} from 'react-native-size-matters';
 import navigateTo from '@tandem/navigation/navigate';
-import {RootState} from '@tandem/redux/store';
 import {translation} from '@tandem/utils/methods';
 import RNLogoHeader from '@tandem/components/RNLogoHeader';
 import RNVoiceQuesiton from '@tandem/components/RNVoiceQuesiton';
@@ -23,15 +22,13 @@ import RNWellDoneModal from '@tandem/components/RNWellDoneModal';
 import RNMultipleChoice from '@tandem/components/RNMultipleChoice';
 import RNTooltip from '@tandem/components/RNTooltip';
 import {useRoute} from '@react-navigation/native';
-import {StoryData} from '@tandem/api/getStories/interface';
 import {PageFlip} from '@tandem/components/PageFlip';
 import rateStory from '@tandem/api/rateStory';
 import {useDispatch} from 'react-redux';
 import {changeTooltipState} from '@tandem/redux/slices/tooltip.slice';
 import Meter from '@tandem/assets/svg/Meter';
-import {rateBookLocally} from '@tandem/redux/slices/bookShelf.slice';
 
-const StoryTelling = () => {
+const StoryTelling = ({navigation}: {navigation: any}) => {
   const tooltipArray = useAppSelector(state => state.tooltipReducer);
   const dispatch = useDispatch();
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -39,10 +36,7 @@ const StoryTelling = () => {
   const [readingLevel, setReadingLevel] = useState(false);
   const routes: any = useRoute();
   const routesData = routes?.params;
-  const books = useAppSelector((state: RootState) => state.bookShelf.books);
-  const book = books.filter(
-    (item: StoryData) => item?.storyInfo[0].bookId === routesData.id,
-  )[0];
+  const book = routesData.book;
   console.log(book.ratingInfo);
   const totalPages = book?.storyInfo[0].pages?.length - 1;
   const [currentIndex, setActiveIndex] = React.useState(totalPages);
@@ -55,7 +49,7 @@ const StoryTelling = () => {
 
   const refOne = useRef<any>(null);
   const refTwo = useRef<any>(null);
-
+  const [canGoBack, setGoBack] = React.useState(false);
   const [positionRefs, setPositionRefs] = React.useState({
     0: {height: 0, width: 0, x: 0, y: 0},
     1: {height: 0, width: 0, x: 0, y: 0},
@@ -77,8 +71,19 @@ const StoryTelling = () => {
         }, 2000);
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentIndex]);
+  }, [book?.ratingInfo.length, currentIndex]);
+
+  React.useEffect(() => {
+    navigation.addListener(
+      'beforeRemove',
+      (e: {preventDefault: () => void}) => {
+        if (canGoBack) {
+          return;
+        }
+        e.preventDefault();
+      },
+    );
+  }, [canGoBack, navigation]);
 
   const toggleModal = () => {
     setRenderModal(!renderModal);
@@ -94,10 +99,6 @@ const StoryTelling = () => {
     }
     try {
       await rateStory(book.storyInfo[0].bookId, rating);
-      const bookIndex = books.findIndex(
-        bookObj => bookObj._id === routesData.id,
-      );
-      dispatch(rateBookLocally({bookIndex, rating}));
     } catch (error) {
       console.log('error in rating story post', error);
     } finally {
@@ -278,6 +279,7 @@ const StoryTelling = () => {
               icon={<Close />}
               onClick={() => {
                 navigateTo(SCREEN_NAME.BOOKSHELF);
+                setGoBack(true);
               }}
             />
           </View>
@@ -300,7 +302,11 @@ const StoryTelling = () => {
       />
 
       {showQuestion && renderQuestions()}
-      <RNCongratsModal visible={renderModal} renderModal={toggleModal} />
+      <RNCongratsModal
+        bookId={book._id}
+        visible={renderModal}
+        renderModal={toggleModal}
+      />
       <RNReadingLevelModal
         bookLength={book.storyInfo.length}
         visible={readingLevel}

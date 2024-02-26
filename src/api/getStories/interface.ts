@@ -1,25 +1,41 @@
 import {RATING_INFO, STORIES_RESPONSE} from '@tandem/constants/enums';
 
 export default interface Book {
-  [STORIES_RESPONSE.BOOK_COVER]?: string;
-  [STORIES_RESPONSE.BOOK_ID]: string;
-  [STORIES_RESPONSE.CHILD_ID]: string;
-  [STORIES_RESPONSE.COMPREHENSION_QUESTIONS]: string;
-  [STORIES_RESPONSE.CREATED_AT]: string;
-  [STORIES_RESPONSE.LLM]?: {
-    [key: string]: string;
-  };
-  [STORIES_RESPONSE.ORGANIZATION_ID]: string;
-  [STORIES_RESPONSE.PAGES]: Page[];
-  [STORIES_RESPONSE.PROMPT]: Prompt;
-  [STORIES_RESPONSE.RATING]?: number;
-  [STORIES_RESPONSE.STATUS]: number;
-  [STORIES_RESPONSE.STORY]: string;
-  [STORIES_RESPONSE.TEASER]: string;
-  [STORIES_RESPONSE.THUMBNAIL]?: string;
-  [STORIES_RESPONSE.TITLE]?: string;
-  [STORIES_RESPONSE.USER_ID]: string;
-  [STORIES_RESPONSE.RATING_INFO]: RatingInfo[];
+  _id: string;
+  userId: string;
+  childId: string;
+  status: string;
+  read: boolean;
+  archived: boolean;
+  referenceId: string;
+  images: {
+    page: number;
+    img_url: string;
+    _id: string;
+  }[];
+  createdAt: string;
+  __v: number;
+  teaser: string;
+  title: string;
+  storyInfo: {
+    _id: string;
+    bookId: string;
+    userId: string;
+    pages: {
+      text: string;
+      _id: string;
+    }[];
+    comprehension_questions: {
+      question: string;
+      _id: string;
+      answer: string;
+    }[];
+    readingAge: number;
+    createdAt: string;
+    updatedAt: string;
+    __v: number;
+  }[];
+  ratingInfo: RatingInfo[];
 }
 
 export interface Page {

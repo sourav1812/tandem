@@ -1,3 +1,4 @@
+import Book from '@tandem/api/getStories/interface';
 import {ImageSourcePropType} from 'react-native';
 
 export interface ColorPalette {
@@ -27,4 +28,5 @@ export interface BooksData {
   emogi: string | null;
   week: string;
   teaser: string;
+  book: Book;
 }

@@ -1,6 +1,12 @@
 /* eslint-disable react-native/no-inline-styles */
-import {View, FlatList, Pressable, RefreshControl} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import {
+  View,
+  FlatList,
+  Pressable,
+  RefreshControl,
+  ActivityIndicator,
+} from 'react-native';
+import React, {useState} from 'react';
 import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import RNTextInputWithLabel from '@tandem/components/RNTextInputWithLabel';
@@ -18,7 +24,7 @@ import BothButton from '@tandem/assets/svg/BothButton';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {MODE} from '@tandem/constants/mode';
 import getStories from '@tandem/api/getStories';
-import {RootState, store} from '@tandem/redux/store';
+import {store} from '@tandem/redux/store';
 import themeColor from '@tandem/theme/themeColor';
 import {BooksData} from './interface';
 import {clearStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration.slice';
@@ -31,35 +37,35 @@ import bookshelfDays from '@tandem/functions/bookshelfDays';
 import {changeStoryLevel} from '@tandem/redux/slices/storyLevel.slice';
 import {useDispatch} from 'react-redux';
 import {ratingList} from '@tandem/components/RNRatingModal/interface';
+import Book from '@tandem/api/getStories/interface';
 
 const Bookshelf = () => {
   const dispatch = useDispatch();
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
-  const loader = useAppSelector(state => state.activityIndicator.isEnabled);
   const currentChild = useAppSelector(state => state.createChild.currentChild);
   const mode = useAppSelector(state => state.mode.mode);
   const [searchText, setText] = useState<ValidationError>({value: ''});
-  const books = useAppSelector((state: RootState) => state.bookShelf.books);
   const images = useAppSelector(state => state.bookShelf.images);
-
+  const [bookObjects, setBookObjects] = useState<{
+    endReached: boolean;
+    books: Book[];
+  }>({endReached: false, books: []});
   const data: BooksData[] = React.useMemo(
     () =>
-      books?.map((book, index) => {
+      bookObjects.books?.map((book, index) => {
         const isThisWeek =
-          ((new Date().getTime() -
-            new Date(book.storyInfo[0].createdAt).getTime()) *
+          ((new Date().getTime() - new Date(book.createdAt).getTime()) *
             1.157) /
             10_00_00_000 <
           7; // ! are checking if the book is screated within a week
         const week: string = translation(
-          bookshelfDays(new Date(book.storyInfo[0].createdAt)),
+          bookshelfDays(new Date(book.createdAt)),
         );
         return {
-          id: book.storyInfo[0].bookId,
+          id: book._id,
           headerTitle: book.title || `Mock Story ${index + 1}`,
-          time:
-            new Date(book.storyInfo[0].createdAt).toDateString() || 'Some Date',
-          image: images[book.storyInfo[0].bookId]?.[0] || null,
+          time: new Date(book.createdAt).toDateString() || 'Some Date',
+          image: images[book._id]?.[0] || null,
           readingTime:
             Math.ceil(
               book.storyInfo[0].pages
@@ -75,24 +81,15 @@ const Bookshelf = () => {
               : null,
           week,
           teaser: book.teaser,
+          book,
         };
       }),
-    [books, images],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [bookObjects.books.length, images],
   );
-
-  useEffect(() => {
-    getAllStories();
-  }, []);
 
   const listFooterComponent = () => {
     return <View style={{height: 25}} />;
-  };
-  const getAllStories = async () => {
-    try {
-      await getStories();
-    } catch (e) {
-      console.log(e);
-    }
   };
 
   const listEmptyComponent = React.useCallback(() => {
@@ -131,9 +128,12 @@ const Bookshelf = () => {
     );
   }, [mode, searchText.value]);
 
-  const renderItem = React.useCallback(({item}: {item: BooksData}) => {
-    return (
-      <>
+  const renderItem = React.useCallback(
+    ({item}: {item: BooksData}) => {
+      if (images[item.id] === undefined) {
+        return <ActivityIndicator />;
+      }
+      return (
         <View
           style={[
             {
@@ -156,11 +156,37 @@ const Bookshelf = () => {
             }}
           />
         </View>
-      </>
-    );
+      );
+    },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
+    [images],
+  );
+  const [page, setPage] = React.useState(1);
+  const [isLoading, setLoading] = React.useState(false);
+  const fetchMoreData = () => {
+    if (!bookObjects.endReached && !isLoading && !searchText.value) {
+      setPage(page + 1);
+    }
+  };
+  React.useEffect(() => {
+    const f = async () => {
+      try {
+        setLoading(true);
+        console.log('currentPage', page);
+        const response = await getStories(page);
+        setBookObjects(prev => ({
+          books:
+            page === 1 ? response.books : [...prev.books, ...response.books],
+          endReached: response.endReached,
+        }));
+      } catch (e) {
+        console.log(e);
+      } finally {
+        setLoading(false);
+      }
+    };
+    f();
+  }, [page]);
   const seperateComponent = () => {
     return <View style={{height: verticalScale(12)}} />;
   };
@@ -230,8 +256,9 @@ const Bookshelf = () => {
             style={styles.flatListContatiner}
             contentContainerStyle={[styles.flatListContentContainer]}
             data={
-              books.filter(book => book.childId === currentChild.childId)
-                .length > 0
+              bookObjects.books.filter(
+                book => book.childId === currentChild.childId,
+              ).length > 0
                 ? data?.filter(obj =>
                     searchText.value
                       ? obj.headerTitle
@@ -248,12 +275,16 @@ const Bookshelf = () => {
             ListFooterComponent={listFooterComponent}
             refreshControl={
               <RefreshControl
-                refreshing={loader}
-                onRefresh={getAllStories}
+                refreshing={isLoading}
+                onRefresh={() => {
+                  setPage(1);
+                }}
                 colors={[themeColor.themeBlue]}
               />
             }
             keyExtractor={item => item.id}
+            onEndReached={fetchMoreData}
+            onEndReachedThreshold={0.2}
           />
         </View>
       </View>
