@@ -14,7 +14,7 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import statusbar from '@tandem/functions/statusbar';
 import i18n from '@tandem/constants/lang/i18n';
 import setupLangauge from '@tandem/functions/language';
-import getStories from '@tandem/api/getStories';
+import {setForceReload} from '@tandem/redux/slices/activityIndicator.slice';
 
 const persistor = persistStore(store);
 
@@ -33,11 +33,7 @@ const App: FC = () => {
           type: 'Alert',
           message: remoteMessage.notification?.title,
           onSuccess: async () => {
-            try {
-              getStories();
-            } catch (e) {
-              console.log(e);
-            }
+            store.dispatch(setForceReload(true));
           },
         }),
       );

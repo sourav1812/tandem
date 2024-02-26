@@ -38,6 +38,7 @@ import {changeStoryLevel} from '@tandem/redux/slices/storyLevel.slice';
 import {useDispatch} from 'react-redux';
 import {ratingList} from '@tandem/components/RNRatingModal/interface';
 import Book from '@tandem/api/getStories/interface';
+import {setForceReload} from '@tandem/redux/slices/activityIndicator.slice';
 
 const Bookshelf = () => {
   const dispatch = useDispatch();
@@ -46,6 +47,9 @@ const Bookshelf = () => {
   const mode = useAppSelector(state => state.mode.mode);
   const [searchText, setText] = useState<ValidationError>({value: ''});
   const images = useAppSelector(state => state.bookShelf.images);
+  const forceReload = useAppSelector(
+    state => state.activityIndicator.forceReload,
+  );
   const [bookObjects, setBookObjects] = useState<{
     endReached: boolean;
     books: Book[];
@@ -163,11 +167,36 @@ const Bookshelf = () => {
   );
   const [page, setPage] = React.useState(1);
   const [isLoading, setLoading] = React.useState(false);
+  const [refreshing, setRefreshing] = React.useState(false);
   const fetchMoreData = () => {
     if (!bookObjects.endReached && !isLoading && !searchText.value) {
       setPage(page + 1);
     }
   };
+
+  React.useEffect(() => {
+    const f = async () => {
+      try {
+        setLoading(true);
+        console.log('this runs', page);
+
+        const response = await getStories(1);
+        setBookObjects(response);
+      } catch (e) {
+        console.log(e);
+      } finally {
+        setLoading(false);
+        setRefreshing(false);
+      }
+    };
+    if (forceReload || refreshing || page === 1) {
+      setPage(1);
+      dispatch(setForceReload(false));
+      f();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, forceReload, refreshing]);
+
   React.useEffect(() => {
     const f = async () => {
       try {
@@ -175,8 +204,7 @@ const Bookshelf = () => {
         console.log('currentPage', page);
         const response = await getStories(page);
         setBookObjects(prev => ({
-          books:
-            page === 1 ? response.books : [...prev.books, ...response.books],
+          books: [...prev.books, ...response.books],
           endReached: response.endReached,
         }));
       } catch (e) {
@@ -185,7 +213,9 @@ const Bookshelf = () => {
         setLoading(false);
       }
     };
-    f();
+    if (page > 1) {
+      f();
+    }
   }, [page]);
   const seperateComponent = () => {
     return <View style={{height: verticalScale(12)}} />;
@@ -275,9 +305,9 @@ const Bookshelf = () => {
             ListFooterComponent={listFooterComponent}
             refreshControl={
               <RefreshControl
-                refreshing={isLoading}
+                refreshing={refreshing}
                 onRefresh={() => {
-                  setPage(1);
+                  setRefreshing(true);
                 }}
                 colors={[themeColor.themeBlue]}
               />
