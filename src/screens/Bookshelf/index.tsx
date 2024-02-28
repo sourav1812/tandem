@@ -47,6 +47,9 @@ const Bookshelf = () => {
   const mode = useAppSelector(state => state.mode.mode);
   const [searchText, setText] = useState<ValidationError>({value: ''});
   const images = useAppSelector(state => state.bookShelf.images);
+  const [page, setPage] = React.useState(1);
+  const [isLoading, setLoading] = React.useState(false);
+  const [refreshing, setRefreshing] = React.useState(false);
   const forceReload = useAppSelector(
     state => state.activityIndicator.forceReload,
   );
@@ -93,11 +96,26 @@ const Bookshelf = () => {
   );
 
   const listFooterComponent = () => {
+    if (isLoading) {
+      return <ActivityIndicator />;
+    }
+    if (bookObjects.endReached) {
+      return (
+        <RNTextComponent
+          isMedium
+          style={{textAlign: 'center', fontSize: verticalScale(9)}}>
+          No more books
+        </RNTextComponent>
+      );
+    }
     return <View style={{height: 25}} />;
   };
 
   const listEmptyComponent = React.useCallback(() => {
     const currentChildLocal = store.getState().createChild.currentChild;
+    if (!bookObjects.endReached || isLoading) {
+      return null;
+    }
     return (
       <View style={styles.listEmptyComponentContainer}>
         <View style={styles.listEmptyComponentEmogiContainer}>
@@ -130,7 +148,7 @@ const Bookshelf = () => {
         />
       </View>
     );
-  }, [mode, searchText.value]);
+  }, [bookObjects.endReached, isLoading, mode, searchText.value]);
 
   const renderItem = React.useCallback(
     ({item}: {item: BooksData}) => {
@@ -165,9 +183,7 @@ const Bookshelf = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [images],
   );
-  const [page, setPage] = React.useState(1);
-  const [isLoading, setLoading] = React.useState(false);
-  const [refreshing, setRefreshing] = React.useState(false);
+
   const fetchMoreData = () => {
     if (!bookObjects.endReached && !isLoading && !searchText.value) {
       setPage(page + 1);

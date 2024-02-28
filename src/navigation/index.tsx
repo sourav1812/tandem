@@ -58,6 +58,7 @@ const AppNavigator = () => {
             name={SCREEN_NAME.SOCIAL_SIGN_IN}
           />
           <Stack.Screen
+            options={{gestureEnabled: false}}
             getComponent={() => require('@tandem/screens/StoryTelling').default}
             name={SCREEN_NAME.STORY_TELLING}
           />

@@ -5,7 +5,6 @@ import {styles} from './style';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import RNButton from '@tandem/components/RNButton';
 import Close from '@tandem/assets/svg/Cross';
-import RNTextComponent from '@tandem/components/RNTextComponent';
 import {StateObject} from './interface';
 import RNCongratsModal from '@tandem/components/RNCongratsModal';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
@@ -15,18 +14,21 @@ import RNRatingModal from '@tandem/components/RNRatingModal';
 import {scale, verticalScale} from 'react-native-size-matters';
 import navigateTo from '@tandem/navigation/navigate';
 import {translation} from '@tandem/utils/methods';
-import RNLogoHeader from '@tandem/components/RNLogoHeader';
 import RNVoiceQuesiton from '@tandem/components/RNVoiceQuesiton';
-import QuestionMark from '@tandem/assets/svg/QuestionMark';
 import RNWellDoneModal from '@tandem/components/RNWellDoneModal';
-import RNMultipleChoice from '@tandem/components/RNMultipleChoice';
 import RNTooltip from '@tandem/components/RNTooltip';
 import {useRoute} from '@react-navigation/native';
-import {PageFlip} from '@tandem/components/PageFlip';
 import rateStory from '@tandem/api/rateStory';
 import {useDispatch} from 'react-redux';
-import {changeTooltipState} from '@tandem/redux/slices/tooltip.slice';
 import Meter from '@tandem/assets/svg/Meter';
+import NewPageSwipe from './NewPageSwipe';
+import Book from '@tandem/api/getStories/interface';
+import RNTextComponent from '@tandem/components/RNTextComponent';
+import RNLogoHeader from '@tandem/components/RNLogoHeader';
+import QuestionMark from '@tandem/assets/svg/QuestionMark';
+import RNMultipleChoice from '@tandem/components/RNMultipleChoice';
+import {PageFlip} from '@tandem/components/PageFlip';
+import {changeTooltipState} from '@tandem/redux/slices/tooltip.slice';
 
 const StoryTelling = ({navigation}: {navigation: any}) => {
   const tooltipArray = useAppSelector(state => state.tooltipReducer);
@@ -36,20 +38,19 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
   const [readingLevel, setReadingLevel] = useState(false);
   const routes: any = useRoute();
   const routesData = routes?.params;
-  const book = routesData.book;
-  console.log(book.ratingInfo);
-  const totalPages = book?.storyInfo[0].pages?.length - 1;
-  const [currentIndex, setActiveIndex] = React.useState(totalPages);
+  const book: Book = routesData.book;
   const [state, setState] = useState<StateObject>({
-    ratingModal: true,
+    ratingModal: false,
     toggleMic: false,
     showQuestion: false,
     wellDoneModal: false,
+    isStoryRated: !!book.ratingInfo?.[0]?._id,
   });
 
   const refOne = useRef<any>(null);
   const refTwo = useRef<any>(null);
   const [canGoBack, setGoBack] = React.useState(false);
+  const [menu, setMenu] = React.useState(false);
   const [positionRefs, setPositionRefs] = React.useState({
     0: {height: 0, width: 0, x: 0, y: 0},
     1: {height: 0, width: 0, x: 0, y: 0},
@@ -58,20 +59,11 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
 
   const {ratingModal, showQuestion, wellDoneModal} = state;
 
-  const updateState = (date: any) => {
+  const updateState = (data: any) => {
     setState((previouState: any) => {
-      return {...previouState, ...date};
+      return {...previouState, ...data};
     });
   };
-  React.useEffect(() => {
-    if (currentIndex === 0) {
-      if (book?.ratingInfo.length !== 0) {
-        setTimeout(() => {
-          setRenderModal(true);
-        }, 2000);
-      }
-    }
-  }, [book?.ratingInfo.length, currentIndex]);
 
   React.useEffect(() => {
     navigation.addListener(
@@ -99,12 +91,9 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
     }
     try {
       await rateStory(book.storyInfo[0].bookId, rating);
+      updateState({isStoryRated: true});
     } catch (error) {
       console.log('error in rating story post', error);
-    } finally {
-      setTimeout(() => {
-        setRenderModal(true);
-      }, 4000);
     }
   };
   const renderRatingModal = async () => {
@@ -180,62 +169,107 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
             // icon={<Speaker disabled />}
             icon={<Meter />}
             onClick={() => {
-              setReadingLevel(true);
+              // setReadingLevel(true);
+              setMenu(p => !p);
             }}
           />
         </View>
       </RNTooltip>
     );
   };
-
+  const menuRenderItem = React.useCallback(() => {
+    return (
+      <View
+        style={{
+          position: 'absolute',
+          height: '100%',
+          width: '100%',
+          backgroundColor: '#000000c0',
+        }}>
+        <View
+          style={{
+            width: '70%',
+            backgroundColor: 'white',
+            borderRadius: 20,
+            right: '6%',
+            position: 'absolute',
+            top: '15%',
+            padding: 20,
+            justifyContent: 'center',
+          }}>
+          <RNTextComponent>Text Size</RNTextComponent>
+          <RNTextComponent>Reading Level</RNTextComponent>
+          <RNTextComponent>Read it to me</RNTextComponent>
+          <RNTextComponent>Smart Listen</RNTextComponent>
+        </View>
+      </View>
+    );
+  }, []);
   const renderQuestions = () => {
-    switch (currentIndex) {
-      case 2:
-        return (
-          <View style={styles.questionView}>
-            <RNLogoHeader
-              heading={translation('READ_A_STORY')}
-              textHeading
-              titleStyle={styles.headerTitle}
-              customStyle={styles.headerStyle}
-              rightIcon={
-                <RNButton onlyIcon icon={<QuestionMark />} onClick={() => {}} />
-              }
-            />
-            <RNVoiceQuesiton
-              onClick={renderWellDoneModal}
-              customStyle={{paddingHorizontal: scale(20)}}
-            />
-          </View>
-        );
-      case 3:
-        return (
-          <View style={styles.questionView}>
-            <RNLogoHeader
-              heading={translation('QUESTIONS_ABOUT_THE_STORY')}
-              textHeading
-              titleStyle={styles.headerTitle}
-              customStyle={styles.headerStyle}
-              rightIcon={
-                <RNButton onlyIcon icon={<QuestionMark />} onClick={() => {}} />
-              }
-            />
-            <RNMultipleChoice
-              onNextPress={() => {
-                updateState({showQuestion: false});
-                dispatch(changeTooltipState(16));
-              }}
-              customStyle={[styles.multiplechoice]}
-            />
-          </View>
-        );
-    }
-  };
+    return (
+      <View style={styles.questionView}>
+        {/* <RNLogoHeader
+          heading={translation('READ_A_STORY')}
+          textHeading
+          titleStyle={styles.headerTitle}
+          customStyle={styles.headerStyle}
+          rightIcon={
+            <RNButton onlyIcon icon={<QuestionMark />} onClick={() => {}} />
+          }
+        /> */}
+        <RNVoiceQuesiton
+          onClick={renderWellDoneModal}
+          customStyle={{paddingHorizontal: scale(20)}}
+        />
+      </View>
 
+      // switch (currentIndex) {
+      //   case 2:
+      //     return (
+      //       <View style={styles.questionView}>
+      //         <RNLogoHeader
+      //           heading={translation('READ_A_STORY')}
+      //           textHeading
+      //           titleStyle={styles.headerTitle}
+      //           customStyle={styles.headerStyle}
+      //           rightIcon={
+      //             <RNButton onlyIcon icon={<QuestionMark />} onClick={() => {}} />
+      //           }
+      //         />
+      //         <RNVoiceQuesiton
+      //           onClick={renderWellDoneModal}
+      //           customStyle={{paddingHorizontal: scale(20)}}
+      //         />
+      //       </View>
+      //     );
+      //   case 3:
+      //     return (
+      //       <View style={styles.questionView}>
+      //         <RNLogoHeader
+      //           heading={translation('QUESTIONS_ABOUT_THE_STORY')}
+      //           textHeading
+      //           titleStyle={styles.headerTitle}
+      //           customStyle={styles.headerStyle}
+      //           rightIcon={
+      //             <RNButton onlyIcon icon={<QuestionMark />} onClick={() => {}} />
+      //           }
+      //         />
+      //         <RNMultipleChoice
+      //           onNextPress={() => {
+      //             updateState({showQuestion: false});
+      //             dispatch(changeTooltipState(16));
+      //           }}
+      //           customStyle={[styles.multiplechoice]}
+      //         />
+      //       </View>
+      //     );
+      // }
+    );
+  };
   return (
     <RNScreenWrapper>
       <View
-        style={[styles.headingButton, {opacity: tooltipArray?.[15] ? 1 : 0.1}]}>
+        style={[styles.headingButton, {opacity: tooltipArray?.[15] ? 1 : 0.7}]}>
         <RNTooltip
           isTablet={isTablet}
           topViewStyle={{
@@ -284,14 +318,20 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
             />
           </View>
         </RNTooltip>
-        {currentIndex === totalPages && (
+        {/* {currentIndex === totalPages && (
           <RNTextComponent isSemiBold style={styles.summaryTitle}>
             {translation('SUMMARY')}
           </RNTextComponent>
-        )}
+        )} */}
         {headerButton()}
       </View>
-      <PageFlip
+      <NewPageSwipe
+        updateState={updateState}
+        state={state}
+        textArray={routesData?.textArray}
+        book={book}
+      />
+      {/* <PageFlip
         readingLevel={readingLevel}
         textArray={routesData?.textArray}
         activeIndex={currentIndex}
@@ -299,8 +339,7 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
         tooltipState={state}
         setTooltipState={setState}
         book={book}
-      />
-
+      /> */}
       {showQuestion && renderQuestions()}
       <RNCongratsModal
         bookId={book._id}
@@ -321,8 +360,7 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
           nextClick={renderTipLevel}
         />
       )} */}
-
-      {currentIndex === 0 && book?.ratingInfo.length === 0 && (
+      {book?.ratingInfo.length === 0 && (
         <RNRatingModal
           visible={ratingModal}
           renderModal={renderRatingModal}
@@ -342,6 +380,7 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
           // });
         }}
       />
+      {menu && menuRenderItem()}
     </RNScreenWrapper>
   );
 };
