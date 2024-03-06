@@ -1,4 +1,5 @@
-import {View, Image, ScrollView} from 'react-native';
+/* eslint-disable react-native/no-inline-styles */
+import {View, Image, ScrollView, Pressable, Switch} from 'react-native';
 import React, {useState} from 'react';
 import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
@@ -17,14 +18,18 @@ import {useRoute} from '@react-navigation/native';
 import {BooksData} from '../Bookshelf/interface';
 import {store} from '@tandem/redux/store';
 import {changeStoryLevel} from '@tandem/redux/slices/storyLevel.slice';
+import themeColor from '@tandem/theme/themeColor';
+import markBookAsArchived from '@tandem/api/markBookAsArchived';
 
 const Story = () => {
   const [visible, setVisible] = useState(false);
+  const [menu, setMenu] = useState(false);
   const [progress, setProgress] = useState({val: 0, len: 0});
   const [redirect] = useState(true);
   const mode = useAppSelector(state => state.mode.mode);
   const route: any = useRoute();
   const routeData: BooksData = route?.params?.routeData;
+  const [archive, setArchive] = useState(routeData.book.archived);
   const [thumbnail] = useState(routeData?.image || undefined);
   const [textArray, setTextArray] = React.useState<
     {text: string; img: string | null}[]
@@ -61,7 +66,54 @@ const Story = () => {
     f();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  const menuRenderItem = React.useCallback(() => {
+    return (
+      <Pressable
+        onPress={() => {
+          setMenu(false);
+        }}
+        style={{
+          position: 'absolute',
+          height: '100%',
+          width: '100%',
+          backgroundColor: '#000000c0',
+        }}>
+        <View
+          style={{
+            backgroundColor: 'white',
+            borderRadius: 20,
+            right: '6%',
+            position: 'absolute',
+            top: '13%',
+            padding: 20,
+            justifyContent: 'center',
+            width: '60%',
+          }}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <RNTextComponent style={{marginRight: 'auto'}}>
+              Archive Story
+            </RNTextComponent>
+            <Switch
+              trackColor={{false: '#474747', true: themeColor.green}}
+              thumbColor={themeColor.white}
+              ios_backgroundColor={'#474747'}
+              onValueChange={async () => {
+                // ! api req to toogle archive and update state
+                try {
+                  setArchive(!archive);
+                  await markBookAsArchived(routeData.book._id, !archive);
+                } catch (error) {
+                  setArchive(archive);
+                }
+              }}
+              value={archive}
+            />
+          </View>
+        </View>
+      </Pressable>
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [archive]);
   return (
     <>
       <RNScreenWrapper>
@@ -73,7 +125,13 @@ const Story = () => {
               navigateTo();
             }}
           />
-          <RNButton onlyIcon icon={<Options />} onClick={() => {}} />
+          <RNButton
+            onlyIcon
+            icon={<Options />}
+            onClick={() => {
+              setMenu(p => !p);
+            }}
+          />
           <RNMenuModal visible={visible} renderModal={toggelMenuBar} />
         </View>
 
@@ -137,6 +195,7 @@ const Story = () => {
             }}
           />
         </View>
+        {menu && menuRenderItem()}
       </RNScreenWrapper>
     </>
   );

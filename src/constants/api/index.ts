@@ -17,6 +17,7 @@ export enum API {
   RESET_PASSWORD = 'user/forgot-password/reset-password', //?POST
   GET_STORY_ILLUSTRATIONS = 'story-books/illustrations', // * GET
   MARK_BOOK_AS_READ = 'story-books/update-reading-status', // ? POST
+  MARK_BOOK_AS_ARCHIVED = 'story-books/archive-status', // ? POST
   GET_STORY_THUMBNAILS = 'story-books/{BOOK_ID_HERE}/thumbnail',
 }
 
