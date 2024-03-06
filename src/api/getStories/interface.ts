@@ -27,8 +27,9 @@ export default interface Book {
     }[];
     comprehension_questions: {
       question: string;
-      _id: string;
+      options: string[];
       answer: string;
+      _id: string;
     }[];
     readingAge: number;
     createdAt: string;

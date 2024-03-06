@@ -20,15 +20,9 @@ import RNTooltip from '@tandem/components/RNTooltip';
 import {useRoute} from '@react-navigation/native';
 import rateStory from '@tandem/api/rateStory';
 import {useDispatch} from 'react-redux';
-import Meter from '@tandem/assets/svg/Meter';
 import NewPageSwipe from './NewPageSwipe';
 import Book from '@tandem/api/getStories/interface';
 import RNTextComponent from '@tandem/components/RNTextComponent';
-import RNLogoHeader from '@tandem/components/RNLogoHeader';
-import QuestionMark from '@tandem/assets/svg/QuestionMark';
-import RNMultipleChoice from '@tandem/components/RNMultipleChoice';
-import {PageFlip} from '@tandem/components/PageFlip';
-import {changeTooltipState} from '@tandem/redux/slices/tooltip.slice';
 import Options from '@tandem/assets/svg/ThreeDots';
 import Add from '@tandem/assets/svg/Add';
 import Subtract from '@tandem/assets/svg/Subtract';
@@ -36,7 +30,6 @@ import {
   changeStoryLevel,
   changeTextSize,
 } from '@tandem/redux/slices/storyLevel.slice';
-import {size} from '@shopify/react-native-skia';
 import {FONT_SIZES} from '@tandem/constants/local';
 const StoryTelling = ({navigation}: {navigation: any}) => {
   const tooltipArray = useAppSelector(state => state.tooltipReducer);
@@ -287,6 +280,7 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
           }
         /> */}
         <RNVoiceQuesiton
+          questions={book.storyInfo[level].comprehension_questions}
           onClick={renderWellDoneModal}
           customStyle={{paddingHorizontal: scale(20)}}
         />

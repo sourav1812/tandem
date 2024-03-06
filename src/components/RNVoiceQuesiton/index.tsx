@@ -1,13 +1,9 @@
 /* eslint-disable react-native/no-inline-styles */
-import {View, TextInput, Pressable, ScrollView} from 'react-native';
+import {View, ScrollView} from 'react-native';
 import React, {useRef, useState} from 'react';
 import {styles} from './styles';
 import RNTextComponent from '../RNTextComponent';
-import {inputListState} from './interface';
 import RNButton from '../RNButton';
-import themeColor from '@tandem/theme/themeColor';
-import Mic from '@tandem/assets/svg/Mic';
-import MicOn from '@tandem/assets/svg/MinOn';
 import {scale, verticalScale} from 'react-native-size-matters';
 import {VoiceQuestionProps} from './interface';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
@@ -16,17 +12,20 @@ import RNTooltip from '../RNTooltip';
 import {RootState} from '@tandem/redux/store';
 import {DIRECTION_ARROWS} from '@tandem/constants/enums';
 
-const RNVoiceQuesiton = ({onClick, customStyle}: VoiceQuestionProps) => {
+const RNVoiceQuesiton = ({
+  onClick,
+  customStyle,
+  questions,
+}: VoiceQuestionProps) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
-  // const dispatch = useDispatch();
-  const [inputList, setInputList] = useState<inputListState[]>([{answer: ''}]);
-  const [micStatus, setMicStatus] = useState(false);
+  const [correctIndex, setCorrectIndex] = useState(-1);
+  const [nextQuestion, setNextQuestion] = useState(0);
+  const [incorrectAnswerIndex, pushToIncorrectAnswer] = useState<number[]>([]);
 
   const refOne = useRef<any>(null);
-  const refTwo = useRef<any>(null);
   const refThree = useRef<any>(null);
 
   const [positionRefs, setPositionRefs] = React.useState({
@@ -34,15 +33,6 @@ const RNVoiceQuesiton = ({onClick, customStyle}: VoiceQuestionProps) => {
     1: {height: 0, width: 0, x: 0, y: 0},
     2: {height: 0, width: 0, x: 0, y: 0},
   });
-
-  const toggleMic = () => {
-    setMicStatus(!micStatus);
-    if (inputList.length <= 5 && !micStatus) {
-      const answerArry = [...inputList];
-      answerArry.push({answer: ''});
-      setInputList(answerArry);
-    }
-  };
 
   return (
     <>
@@ -58,7 +48,6 @@ const RNVoiceQuesiton = ({onClick, customStyle}: VoiceQuestionProps) => {
         ]}>
         <View
           style={[
-            {maxHeight: verticalScale(425)},
             !portrait && {width: scale(320), marginBottom: verticalScale(25)},
           ]}>
           <RNTooltip
@@ -101,32 +90,41 @@ const RNVoiceQuesiton = ({onClick, customStyle}: VoiceQuestionProps) => {
                 <RNTextComponent style={styles.emoji}>🤔</RNTextComponent>
               </View>
               <RNTextComponent style={styles.heading} isSemiBold>
-                How many animals can you name that starts with the letter C?
+                {questions[nextQuestion].question}
               </RNTextComponent>
-              {inputList.map((item, index) => {
-                return (
-                  <View key={index.toString()} style={styles.answerField}>
-                    <View style={styles.bullitin}>
-                      <RNTextComponent style={styles.leftText} isMedium>
-                        {index + 1}
-                      </RNTextComponent>
-                    </View>
-                    <TextInput
-                      style={[styles.input]}
-                      onChangeText={e => {
-                        let answerArry = [...inputList];
-                        answerArry[index].answer = e;
-                        setInputList(answerArry);
-                      }}
-                      value={inputList[index].answer}
-                    />
-                  </View>
-                );
-              })}
+              {questions[nextQuestion].options.map((option, index) => (
+                <RNButton
+                  customStyle={
+                    correctIndex === index
+                      ? {
+                          backgroundColor: '#00cf00',
+                          borderColor: '#00cf00',
+                        }
+                      : incorrectAnswerIndex.includes(index)
+                      ? {backgroundColor: 'red', borderColor: 'red'}
+                      : {}
+                  }
+                  key={option}
+                  pressableStyle={{marginVertical: 5}}
+                  onClick={() => {
+                    if (correctIndex !== -1) {
+                      return;
+                    }
+                    if (option === questions[nextQuestion].answer) {
+                      setCorrectIndex(index);
+                    } else {
+                      pushToIncorrectAnswer(prev =>
+                        prev.includes(index) ? prev : [...prev, index],
+                      );
+                    }
+                  }}
+                  title={option}
+                />
+              ))}
             </ScrollView>
           </RNTooltip>
         </View>
-        <RNTooltip
+        {/* <RNTooltip
           isTablet={isTablet}
           topViewStyle={{alignItems: 'center'}}
           open={18}
@@ -164,7 +162,7 @@ const RNVoiceQuesiton = ({onClick, customStyle}: VoiceQuestionProps) => {
             style={styles.icon}>
             {micStatus ? <MicOn /> : <Mic />}
           </Pressable>
-        </RNTooltip>
+        </RNTooltip> */}
       </View>
       <RNTooltip
         isTablet={isTablet}
@@ -201,15 +199,25 @@ const RNVoiceQuesiton = ({onClick, customStyle}: VoiceQuestionProps) => {
               },
             );
           }}>
-          <RNButton
-            customStyle={[
-              styles.footerButton,
-              isTablet && {maxHeight: verticalScale(70)},
-            ]}
-            title={translation('I_DONT_KNOW')}
-            onClick={onClick}
-            textStyle={{color: themeColor.black, fontSize: verticalScale(16)}}
-          />
+          {correctIndex !== -1 && (
+            <RNButton
+              customStyle={[
+                styles.footerButton,
+                isTablet && {maxHeight: verticalScale(70)},
+              ]}
+              title={translation('NEXT')}
+              onClick={() => {
+                if (nextQuestion < questions.length - 1) {
+                  pushToIncorrectAnswer([]);
+                  setCorrectIndex(-1);
+                  setNextQuestion(prev => prev + 1);
+                } else {
+                  onClick();
+                }
+              }}
+              textStyle={{fontSize: verticalScale(16)}}
+            />
+          )}
         </View>
       </RNTooltip>
     </>
