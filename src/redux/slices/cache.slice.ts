@@ -1,4 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
+import {GenerateStoryData} from '@tandem/api/generateStory/interface';
 import {AVATAR_ARRAY, PLACE, WHO, WHAT_HAPPENS} from '@tandem/constants/local';
 
 interface AvatarObject {
@@ -16,6 +17,7 @@ interface CacheState {
   whatHappens: AvatarObject[];
   isWhatHappensArrayFull: boolean;
   flush: string[];
+  pendingStoryGeneration: GenerateStoryData[];
 }
 
 const initialState: CacheState = {
@@ -28,6 +30,7 @@ const initialState: CacheState = {
   whatHappens: [],
   isWhatHappensArrayFull: false,
   flush: [],
+  pendingStoryGeneration: [],
 };
 
 export const cacheSlice = createSlice({
@@ -129,10 +132,17 @@ export const cacheSlice = createSlice({
       state.flush = [];
       state.who = [];
       state.whatHappens = [];
+      state.pendingStoryGeneration = [];
       state.isAvatarArrayFull = false;
       state.isPlaceArrayFull = false;
       state.isWhoArrayFull = false;
       state.isWhatHappensArrayFull = false;
+    },
+    pushToPendingStoryGeneration: (state, action) => {
+      state.pendingStoryGeneration.push(action.payload);
+    },
+    clearPendingStoriesGen: state => {
+      state.pendingStoryGeneration = [];
     },
   },
 });
@@ -150,6 +160,8 @@ export const {
   addWhoFile,
   addWhatHappensFile,
   clearWhatHappens,
+  pushToPendingStoryGeneration,
+  clearPendingStoriesGen,
 } = cacheSlice.actions;
 
 export default cacheSlice.reducer;

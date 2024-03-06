@@ -17,17 +17,22 @@ import {
   PanGestureHandlerEventPayload,
   ScrollView,
 } from 'react-native-gesture-handler';
-import {width} from '@tandem/helpers/dimensions';
+import {height, width} from '@tandem/helpers/dimensions';
 import RNButton from '@tandem/components/RNButton';
 import themeColor from '@tandem/theme/themeColor';
 import {StateObject} from './interface';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import Orientation from 'react-native-orientation-locker';
+import {FONT_SIZES} from '@tandem/constants/local';
 interface IPage {
   text: string;
   img: string;
 }
+
 export default ({
   textArray,
   state,
+  book,
   updateState,
 }: {
   textArray: IPage[];
@@ -36,9 +41,27 @@ export default ({
   updateState: (data: any) => void;
 }) => {
   const [isClosed, setClosed] = React.useState(false);
+  const isTablet = useAppSelector(rootState => rootState.deviceType.isTablet);
+  const level = useAppSelector(rootState => rootState.storyLevel.level);
+  const size = useAppSelector(rootState => rootState.storyLevel.size);
+  React.useEffect(() => {
+    if (isTablet) {
+      Orientation.lockToLandscapeLeft();
+    }
+    return () => {
+      if (isTablet) {
+        Orientation.unlockAllOrientations();
+      }
+    };
+  }, [isTablet]);
+
   const pan = Gesture.Pan()
     .runOnJS(true)
     .onUpdate((g: GestureUpdateEvent<PanGestureHandlerEventPayload>) => {
+      if (isTablet) {
+        setClosed(false);
+        return;
+      }
       if (g.velocityY > 0 && !isClosed) {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
         setClosed(true);
@@ -48,7 +71,7 @@ export default ({
       }
     });
   const renderItem = React.useCallback(
-    ({item}: {item: IPage}) => {
+    ({item, index}: {item: IPage; index: number}) => {
       return (
         <ImageBackground source={{uri: item.img}} style={styles.imageBg}>
           <View
@@ -59,22 +82,54 @@ export default ({
               styles.bottomSheet,
             ]}>
             <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
-              <RNTextComponent style={{textAlign: 'center'}} isMedium>
-                {item.text}
+              <RNTextComponent
+                style={{textAlign: 'center', fontSize: FONT_SIZES[size]}}
+                isMedium>
+                {book.storyInfo[level].pages[index].text}
               </RNTextComponent>
             </ScrollView>
           </View>
         </ImageBackground>
       );
     },
-    [isClosed],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [isClosed, level, size],
   );
-
+  const renderItemLandscape = React.useCallback(
+    ({item, index}: {item: IPage; index: number}) => {
+      return (
+        <View
+          style={{width: height.hmax, height: '100%', flexDirection: 'row'}}>
+          <ImageBackground
+            source={{uri: item.img}}
+            style={{height: '100%', width: height.hmax / 2}}
+          />
+          <ScrollView
+            contentContainerStyle={{
+              height: '100%',
+              width: height.hmax / 2,
+              justifyContent: 'center',
+              padding: 20,
+            }}
+            showsVerticalScrollIndicator={false}
+            bounces={false}>
+            <RNTextComponent
+              style={{textAlign: 'center', fontSize: FONT_SIZES[size]}}
+              isMedium>
+              {book.storyInfo[level].pages[index].text}
+            </RNTextComponent>
+          </ScrollView>
+        </View>
+      );
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [level, size],
+  );
   const renderFooter = () => {
     return (
       <ImageBackground
         source={{uri: textArray[textArray.length - 1].img}}
-        style={styles.imageBg}>
+        style={[styles.imageBg, {width: isTablet ? height.hmax : width.wMax}]}>
         <View
           style={[
             {
@@ -142,7 +197,7 @@ export default ({
         showsHorizontalScrollIndicator={false}
         horizontal
         data={textArray}
-        renderItem={renderItem}
+        renderItem={isTablet ? renderItemLandscape : renderItem}
         ListFooterComponent={renderFooter}
       />
     </GestureDetector>

@@ -18,7 +18,7 @@ const initialState: StoryGenerateResponse = {
   [STORY_PARTS.WHAT_THINGS]: [],
   [STORY_PARTS.WHAT_HAPPENS]: [],
   [STORY_PARTS.STYLES]: [],
-  [STORY_PARTS.COLOR]: ['#ffffff'],
+  [STORY_PARTS.COLOR]: ['red'],
 };
 
 export const storyGeneration = createSlice({

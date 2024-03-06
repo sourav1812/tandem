@@ -1,11 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {
-  View,
-  FlatList,
-  Pressable,
-  RefreshControl,
-  ActivityIndicator,
-} from 'react-native';
+import {View, Pressable, RefreshControl, ActivityIndicator} from 'react-native';
 import React, {useState} from 'react';
 import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
@@ -39,6 +33,7 @@ import {useDispatch} from 'react-redux';
 import {ratingList} from '@tandem/components/RNRatingModal/interface';
 import Book from '@tandem/api/getStories/interface';
 import {setForceReload} from '@tandem/redux/slices/activityIndicator.slice';
+import {FlatList} from 'react-native-gesture-handler';
 
 const Bookshelf = () => {
   const dispatch = useDispatch();
@@ -57,6 +52,7 @@ const Bookshelf = () => {
     endReached: boolean;
     books: Book[];
   }>({endReached: false, books: []});
+  console.log(JSON.stringify(bookObjects.books[0]));
   const data: BooksData[] = React.useMemo(
     () =>
       bookObjects.books?.map((book, index) => {
@@ -99,7 +95,7 @@ const Bookshelf = () => {
     if (isLoading) {
       return <ActivityIndicator />;
     }
-    if (bookObjects.endReached) {
+    if (bookObjects.endReached && bookObjects.books.length !== 0) {
       return (
         <RNTextComponent
           isMedium
@@ -151,7 +147,7 @@ const Bookshelf = () => {
   }, [bookObjects.endReached, isLoading, mode, searchText.value]);
 
   const renderItem = React.useCallback(
-    ({item}: {item: BooksData}) => {
+    ({item}: {item: BooksData; index: number}) => {
       if (images[item.id] === undefined) {
         return <ActivityIndicator />;
       }
@@ -170,6 +166,7 @@ const Bookshelf = () => {
               {item.week}
             </RNTextComponent>
           )}
+
           <RNStoryCard
             item={item}
             onPress={() => {
@@ -180,8 +177,7 @@ const Bookshelf = () => {
         </View>
       );
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [images],
+    [dispatch, images, isTablet],
   );
 
   const fetchMoreData = () => {

@@ -156,11 +156,11 @@ export const ATTRIBUTE: PlaceType[] = [
 ];
 
 export const ILLUSTRATION = [
-  {name: 'dog', svg: Card},
-  {name: 'school', svg: Card1},
-  {name: 'camp', svg: Card2},
-  {name: 'art', svg: Card3},
-  {name: 'space', svg: Card4},
+  {name: 'style1-papercut', svg: Card},
+  {name: 'style2-blake', svg: Card1},
+  {name: 'style1-papercut', svg: Card2},
+  {name: 'style2-blake', svg: Card3},
+  {name: 'style1-papercut', svg: Card4},
 ];
 
 export const COLOR_PALETTE = [
@@ -359,3 +359,4 @@ export const YEARS_ARRAY = Array.from(
     };
   },
 );
+export const FONT_SIZES = [16, 20, 24, 28, 32, 40];

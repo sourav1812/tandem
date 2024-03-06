@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {View} from 'react-native';
+import {Pressable, View} from 'react-native';
 import React, {useState, useRef} from 'react';
 import {styles} from './style';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
@@ -29,7 +29,15 @@ import QuestionMark from '@tandem/assets/svg/QuestionMark';
 import RNMultipleChoice from '@tandem/components/RNMultipleChoice';
 import {PageFlip} from '@tandem/components/PageFlip';
 import {changeTooltipState} from '@tandem/redux/slices/tooltip.slice';
-
+import Options from '@tandem/assets/svg/ThreeDots';
+import Add from '@tandem/assets/svg/Add';
+import Subtract from '@tandem/assets/svg/Subtract';
+import {
+  changeStoryLevel,
+  changeTextSize,
+} from '@tandem/redux/slices/storyLevel.slice';
+import {size} from '@shopify/react-native-skia';
+import {FONT_SIZES} from '@tandem/constants/local';
 const StoryTelling = ({navigation}: {navigation: any}) => {
   const tooltipArray = useAppSelector(state => state.tooltipReducer);
   const dispatch = useDispatch();
@@ -39,6 +47,9 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
   const routes: any = useRoute();
   const routesData = routes?.params;
   const book: Book = routesData.book;
+  const level = useAppSelector(rootState => rootState.storyLevel.level);
+  const sizeIndex = useAppSelector(rootState => rootState.storyLevel.size);
+
   const [state, setState] = useState<StateObject>({
     ratingModal: false,
     toggleMic: false,
@@ -166,10 +177,8 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
           }}>
           <RNButton
             onlyIcon
-            // icon={<Speaker disabled />}
-            icon={<Meter />}
+            icon={<Options />}
             onClick={() => {
-              // setReadingLevel(true);
               setMenu(p => !p);
             }}
           />
@@ -179,7 +188,10 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
   };
   const menuRenderItem = React.useCallback(() => {
     return (
-      <View
+      <Pressable
+        onPress={() => {
+          setMenu(false);
+        }}
         style={{
           position: 'absolute',
           height: '100%',
@@ -188,7 +200,6 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
         }}>
         <View
           style={{
-            width: '70%',
             backgroundColor: 'white',
             borderRadius: 20,
             right: '6%',
@@ -196,15 +207,73 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
             top: '15%',
             padding: 20,
             justifyContent: 'center',
+            width: '60%',
           }}>
-          <RNTextComponent>Text Size</RNTextComponent>
-          <RNTextComponent>Reading Level</RNTextComponent>
-          <RNTextComponent>Read it to me</RNTextComponent>
-          <RNTextComponent>Smart Listen</RNTextComponent>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <RNTextComponent style={{marginRight: 'auto'}}>
+              Text Size
+            </RNTextComponent>
+            <Pressable
+              style={{paddingHorizontal: 5}}
+              onPress={() => {
+                dispatch(
+                  changeTextSize(
+                    sizeIndex < FONT_SIZES.length - 1
+                      ? sizeIndex + 1
+                      : sizeIndex,
+                  ),
+                );
+              }}>
+              <Add />
+            </Pressable>
+            <Pressable
+              style={{padding: 7, paddingVertical: 10}}
+              onPress={() => {
+                dispatch(
+                  changeTextSize(sizeIndex > 0 ? sizeIndex - 1 : sizeIndex),
+                );
+              }}>
+              <Subtract />
+            </Pressable>
+          </View>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <RNTextComponent style={{marginRight: 'auto'}}>
+              Reading Level
+            </RNTextComponent>
+            <Pressable
+              style={{paddingHorizontal: 5}}
+              onPress={() => {
+                dispatch(changeStoryLevel(level > 0 ? level - 1 : level));
+              }}>
+              <Add />
+            </Pressable>
+            <Pressable
+              style={{padding: 7, paddingVertical: 10}}
+              onPress={() => {
+                dispatch(
+                  changeStoryLevel(
+                    level < book.storyInfo.length - 1 ? level + 1 : level,
+                  ),
+                );
+              }}>
+              <Subtract />
+            </Pressable>
+          </View>
+          {/* <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <RNTextComponent style={{marginRight: 'auto'}}>
+              Read it to me
+            </RNTextComponent>
+          </View>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <RNTextComponent style={{marginRight: 'auto'}}>
+              Smart Listen
+            </RNTextComponent>
+          </View> */}
         </View>
-      </View>
+      </Pressable>
     );
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, level, sizeIndex]);
   const renderQuestions = () => {
     return (
       <View style={styles.questionView}>

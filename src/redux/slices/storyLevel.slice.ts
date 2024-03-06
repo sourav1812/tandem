@@ -3,11 +3,13 @@ import {createSlice} from '@reduxjs/toolkit';
 // Define a type for the slice state
 interface LevelInterface {
   level: number;
+  size: number;
 }
 
 // Define the initial state using that type
 const initialState: LevelInterface = {
   level: 0,
+  size: 0,
 };
 
 export const levelSlice = createSlice({
@@ -18,11 +20,14 @@ export const levelSlice = createSlice({
     changeStoryLevel: (state, action) => {
       state.level = action.payload;
     },
+    changeTextSize: (state, action) => {
+      state.size = action.payload;
+    },
     resetStoryLevelInitialState: _state => initialState,
   },
 });
 
-export const {changeStoryLevel, resetStoryLevelInitialState} =
+export const {changeStoryLevel, resetStoryLevelInitialState, changeTextSize} =
   levelSlice.actions;
 
 export default levelSlice.reducer;

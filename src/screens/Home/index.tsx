@@ -94,7 +94,7 @@ const Home = () => {
       emoji: '💡',
     },
     {
-      color: themeColor.lightGreen,
+      color: '#a9a9a9',
       title: translation('REDEEM_VOUCHER'),
       emoji: '🗒️',
     },
@@ -505,7 +505,7 @@ const Home = () => {
 
                             break;
                           case 3:
-                            navigateTo(SCREEN_NAME.REDEEM_VOUCHER);
+                            // navigateTo(SCREEN_NAME.REDEEM_VOUCHER);
                             break;
                         }
                       }}

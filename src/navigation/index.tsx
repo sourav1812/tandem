@@ -10,10 +10,12 @@ import SplashScreen from '@tandem/screens/SplashScreen';
 import {navigationRef} from './navigate';
 import {MODE} from '@tandem/constants/mode';
 import {Platform} from 'react-native';
-import {RootState} from '@tandem/redux/store';
+import {RootState, store} from '@tandem/redux/store';
 import {useOrientation} from '@tandem/hooks/useOrientation';
 import RNAlertBox from '@tandem/components/RNAlertBox';
 import resumeAppState from '@tandem/functions/resumeAppState';
+import {hitStoryGenApiStandalone} from '@tandem/api/generateStory';
+import {clearPendingStoriesGen} from '@tandem/redux/slices/cache.slice';
 
 const AppNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -29,6 +31,15 @@ const AppNavigator = () => {
 
   React.useEffect(() => {
     resumeAppState();
+
+    // ! logic to make post req for multiple pending posts
+    const pendingStory = store.getState().cache.pendingStoryGeneration;
+    if (pendingStory.length > 0) {
+      pendingStory.forEach(story => {
+        hitStoryGenApiStandalone(story);
+      });
+      store.dispatch(clearPendingStoriesGen());
+    }
   }, []);
 
   return (
