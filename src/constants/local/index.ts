@@ -351,11 +351,11 @@ export const MONTH_ARRAY: {month: string; monthKey: string}[] = [
 export const CACHE_DIR = 'tandemCacheDirectory';
 
 export const YEARS_ARRAY = Array.from(
-  {length: Math.abs(1945 - new Date().getFullYear()) + 1},
+  {length: Math.abs(1924 - new Date().getFullYear()) + 1},
   (_, i) => {
     return {
       index: i,
-      yearkey: 1945 + i,
+      yearkey: 1924 + i,
     };
   },
 );
