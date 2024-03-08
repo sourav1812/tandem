@@ -16,7 +16,7 @@ const getStories = async (page: number) => {
       noLoader: true,
       params: {page},
     });
-    console.log(response.books.length);
+    console.log('books with page: ', page, response);
     cacheStoryBookImages(response.books);
     return response;
   } catch (error) {

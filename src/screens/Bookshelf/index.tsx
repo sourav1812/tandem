@@ -52,7 +52,7 @@ const Bookshelf = () => {
     endReached: boolean;
     books: Book[];
   }>({endReached: false, books: []});
-  console.log(JSON.stringify(bookObjects.books[0]));
+
   const data: BooksData[] = React.useMemo(
     () =>
       bookObjects.books?.map((book, index) => {
@@ -195,7 +195,7 @@ const Bookshelf = () => {
         const response = await getStories(1);
         setBookObjects(response);
       } catch (e) {
-        console.log(e);
+        console.log('$$$$$$', e);
       } finally {
         setLoading(false);
         setRefreshing(false);
@@ -220,7 +220,7 @@ const Bookshelf = () => {
           endReached: response.endReached,
         }));
       } catch (e) {
-        console.log(e);
+        console.log('@@@@@@', e);
       } finally {
         setLoading(false);
       }
@@ -324,7 +324,7 @@ const Bookshelf = () => {
                 colors={[themeColor.themeBlue]}
               />
             }
-            keyExtractor={item => item.id}
+            keyExtractor={(_, index) => index.toString()}
             onEndReached={fetchMoreData}
             onEndReachedThreshold={0.2}
           />

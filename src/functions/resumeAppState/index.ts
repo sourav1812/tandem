@@ -39,7 +39,8 @@ const resetDirectoriesOfCachedData = () => {
       return;
     }
     try {
-      const {avatars, flush, places, whatHappens, who} = store.getState().cache;
+      const {avatars, flush, places, whatHappens, who, storyStyles} =
+        store.getState().cache;
 
       const modifiedAvatars = avatars.map(val => {
         const file = JSON.parse(JSON.stringify(val.file));
@@ -60,6 +61,12 @@ const resetDirectoriesOfCachedData = () => {
         return {...val, file: newFile};
       });
       const modifiedWhatHappens = whatHappens.map(val => {
+        const file = JSON.parse(JSON.stringify(val.file));
+        const newFile =
+          'file://' + currentDirectory + file.split('Documents')[1];
+        return {...val, file: newFile};
+      });
+      const modifiedStoryStyles = storyStyles.map(val => {
         const file = JSON.parse(JSON.stringify(val.file));
         const newFile =
           'file://' + currentDirectory + file.split('Documents')[1];
@@ -92,6 +99,7 @@ const resetDirectoriesOfCachedData = () => {
           modifiedPlaces,
           modifiedWhatHappens,
           modifiedWho,
+          modifiedStoryStyles,
         }),
       );
     } catch (error) {

@@ -14,7 +14,6 @@ export default () => {
   const [disabled, setDisabled] = React.useState(true);
   const whatHappens = useAppSelector(state => state.cache.whatHappens);
   const navigation: any = useNavigation();
-  console.log(whatHappens, 'whatHappensv');
   return (
     <GenerateStory
       type={STORY_PARTS.WHAT_HAPPENS}
