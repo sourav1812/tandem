@@ -28,7 +28,7 @@ import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
 import {changeMode} from '@tandem/redux/slices/mode.slice';
 import {MODE} from '@tandem/constants/mode';
 import themeColor from '@tandem/theme/themeColor';
-import {RootState} from '@tandem/redux/store';
+import {RootState, store} from '@tandem/redux/store';
 import RNTooltip from '@tandem/components/RNTooltip';
 import {
   AdultData,
@@ -39,6 +39,7 @@ import {
 import logout from '@tandem/functions/logout';
 import {DIRECTION_ARROWS, PEOPLE} from '@tandem/constants/enums';
 import {changeTooltipStateIfChildListNotEmpty} from '@tandem/redux/slices/tooltip.slice';
+import {postChildStats} from '@tandem/api/childAnalytics';
 // import {changeTooltipState} from '@tandem/redux/slices/tooltip.slice';
 
 const Account = () => {
@@ -87,6 +88,20 @@ const Account = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  React.useEffect(() => {
+    const allStats = store.getState().createChild.stats;
+    Object.keys(allStats).forEach(statsKey => {
+      console.log('uploading stats for child:', statsKey);
+      postChildStats({
+        childId: allStats[statsKey].childId,
+        stats: {
+          generation: allStats[statsKey].generation,
+          reading: allStats[statsKey].reading,
+        },
+      });
+    });
+  }, []);
+
   const CircleView = ({
     style,
     blue,

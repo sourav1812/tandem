@@ -13,6 +13,7 @@ import {translation} from '@tandem/utils/methods';
 import navigateTo from '@tandem/navigation/navigate';
 import Emoji from '@tandem/assets/svg/Kissing';
 import markBookAsRead from '@tandem/api/markBookAsRead';
+import {MODE} from '@tandem/constants/mode';
 
 const RNCongratsModal = ({
   visible = false,
@@ -20,7 +21,7 @@ const RNCongratsModal = ({
   bookId,
 }: congratsModalProps) => {
   let isTablet = useAppSelector(state => state.deviceType.isTablet);
-
+  const mode = useAppSelector(state => state.mode.mode);
   const onShare = async () => {
     try {
       const result = await Share.share({
@@ -100,7 +101,10 @@ const RNCongratsModal = ({
             title={translation('HOME')}
             customStyle={styles.button}
             onClick={() => {
-              markBookAsRead(bookId);
+              markBookAsRead(bookId, {
+                ...(mode === MODE.C && {solo: true}),
+                ...(mode === MODE.B && {tandem: true}),
+              });
               navigateTo(SCREEN_NAME.HOME);
             }}
           />

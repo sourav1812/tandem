@@ -24,6 +24,10 @@ import {StateObject} from './interface';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import Orientation from 'react-native-orientation-locker';
 import {FONT_SIZES} from '@tandem/constants/local';
+import markBookAsRead from '@tandem/api/markBookAsRead';
+import {MODE} from '@tandem/constants/mode';
+import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
+import navigateTo from '@tandem/navigation/navigate';
 interface IPage {
   text: string;
   img: string;
@@ -44,6 +48,8 @@ export default ({
   const isTablet = useAppSelector(rootState => rootState.deviceType.isTablet);
   const level = useAppSelector(rootState => rootState.storyLevel.level);
   const size = useAppSelector(rootState => rootState.storyLevel.size);
+  const mode = useAppSelector(rootState => rootState.mode.mode);
+
   React.useEffect(() => {
     if (isTablet) {
       Orientation.lockToLandscapeLeft();
@@ -181,6 +187,22 @@ export default ({
             }}
             onClick={() => {}}
             title="Have you thought about..."
+          />
+          <RNButton
+            customStyle={{
+              marginVertical: verticalScale(10),
+
+              backgroundColor: themeColor.themeBlue,
+              borderColor: themeColor.themeBlue,
+            }}
+            onClick={() => {
+              markBookAsRead(book._id, {
+                ...(mode === MODE.C && {solo: true}),
+                ...(mode === MODE.B && {tandem: true}),
+              });
+              navigateTo(SCREEN_NAME.HOME);
+            }}
+            title="Go to Home"
           />
         </View>
       </ImageBackground>

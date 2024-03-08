@@ -3,6 +3,7 @@ import {API} from '@tandem/constants/api';
 import {CreateChildProfile} from './interface';
 import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
+import {getChildStats} from '../childAnalytics';
 
 export const addNewChild = async (
   {name, dob, gender, avatar}: CreateChildProfile,
@@ -24,6 +25,7 @@ export const addNewChild = async (
         }
       },
     });
+    getChildStats();
     return response;
   } catch (error) {
     throw error;

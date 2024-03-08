@@ -314,23 +314,23 @@ export const WHO: OnlyImageType[] = [
 
 export const WHAT_HAPPENS: OnlyImageType[] = [
   {
-    name: 'An Adventure',
+    name: 'Takes you on an adventure or journey',
     url: BASE_URL + 'images/whatHappensNew/adventure.webp',
   },
   {
-    name: 'Laugh',
+    name: 'Makes you laugh',
     url: BASE_URL + 'images/whatHappensNew/laugh.webp',
   },
   {
-    name: 'make me Move',
+    name: 'Makes you move, dance, use silly words, sing or do something',
     url: BASE_URL + 'images/whatHappensNew/move.webp',
   },
   {
-    name: 'Sleep',
+    name: 'Gets you ready for bed, Sleepytime',
     url: BASE_URL + 'images/whatHappensNew/sleep.webp',
   },
   {
-    name: 'About STUFF',
+    name: 'Is about STUFF or things',
     url: BASE_URL + 'images/whatHappensNew/stuff.webp',
   },
 ];

@@ -23,7 +23,7 @@ import {translation} from '@tandem/utils/methods';
 import {MODE} from '@tandem/constants/mode';
 import BothButton from '@tandem/assets/svg/BothButton';
 import RNTooltip from '@tandem/components/RNTooltip';
-import {useNavigation} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {RootState, store} from '@tandem/redux/store';
 import {
   ChildData,
@@ -37,6 +37,7 @@ import {
   addSnapShot2,
 } from '@tandem/redux/slices/animationSnapshots.slice';
 import BlueButton from '@tandem/assets/svg/BlueButton';
+import {getChildStats} from '@tandem/api/childAnalytics';
 
 const Home = () => {
   const portrait = useAppSelector(
@@ -68,7 +69,40 @@ const Home = () => {
     {color: themeColor.gold, title: translation('LEARN_SOMETHING')},
     {color: themeColor.green, title: translation('HAVE_FUN')},
   ];
+  const stats = useAppSelector(state => state.createChild.stats);
+  const childStat = stats?.[currentChild.childId];
+  const calculateTotalReadingTime = (timeObject: {
+    solo: number;
+    tandem: number;
+  }) => {
+    if (!timeObject) {
+      return '0 hrs';
+    }
+    const totalTime = timeObject.solo + timeObject.tandem; // in seconds
+    return secondsToDhms(totalTime);
+  };
 
+  function secondsToDhms(seconds: number | undefined) {
+    if (!seconds) {
+      return '0 hrs';
+    }
+    seconds = Number(seconds);
+    var d = Math.floor(seconds / (3600 * 24));
+    var h = Math.floor((seconds % (3600 * 24)) / 3600);
+    var m = Math.floor((seconds % 3600) / 60);
+    var s = Math.floor(seconds % 60);
+
+    var dDisplay = d > 0 ? d + (d === 1 ? ' day, ' : ' days, ') : '';
+    var hDisplay = h > 0 ? h + (h === 1 ? ' hour, ' : ' hours, ') : '';
+    var mDisplay = m > 0 ? m + (m === 1 ? ' minute, ' : ' minutes, ') : '';
+    var sDisplay = s > 0 ? s + (s === 1 ? ' second' : ' seconds') : '';
+    return dDisplay + hDisplay + mDisplay + sDisplay;
+  }
+  useFocusEffect(
+    React.useCallback(() => {
+      getChildStats();
+    }, []),
+  );
   const modeA: {
     color: string;
     title: string;
@@ -77,19 +111,19 @@ const Home = () => {
   }[] = [
     {
       color: themeColor.themeBlue,
-      title: '4 h. 32 min',
+      title: calculateTotalReadingTime(childStat?.reading?.totalTime),
       subHeading: translation('READING_TIME'),
       emoji: '📖',
     },
     {
       color: themeColor.purple,
-      title: '4 Books',
+      title: (childStat?.booksCreated || 0).toString(),
       subHeading: translation('NUMBER_OF_BOOKS'),
       emoji: '📚',
     },
     {
       color: themeColor.pink,
-      title: '2h. 10 min',
+      title: secondsToDhms(childStat?.generation?.totalTime),
       subHeading: translation('TIME_CREATING'),
       emoji: '💡',
     },
@@ -544,6 +578,7 @@ const ChangeChild = ({
       easing: Easing.out(Easing.exp),
     }).start();
   });
+
   return (
     <Animated.View
       style={[

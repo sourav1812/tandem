@@ -21,7 +21,7 @@ import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import BackButton from '@tandem/assets/svg/LeftArrow';
 import {verticalScale} from 'react-native-size-matters';
-import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {RootState, store} from '@tandem/redux/store';
 import RNButton from '@tandem/components/RNButton';
@@ -53,6 +53,7 @@ import {
 import wait from '@tandem/functions/wait';
 import Orientation from 'react-native-orientation-locker';
 import lockOrientation from '@tandem/functions/lockOrientation';
+import {Stats, updateChildStats} from '@tandem/redux/slices/createChild.slice';
 
 const SCREEN = [
   SCREEN_NAME.GENERATE_STORY_WHO,
@@ -136,6 +137,7 @@ const RNRoadmap = () => {
   const [hHeight, setHeight] = React.useState(
     heightRef + (StatusBar.currentHeight || 0),
   );
+  const dispatch = useAppDispatch();
   React.useEffect(() => {
     setHeight(heightRef + (StatusBar.currentHeight || 0));
   }, [heightRef]);
@@ -200,6 +202,44 @@ const RNRoadmap = () => {
       setHighlight(true);
     };
     begin();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  React.useEffect(() => {
+    if (checkIfClickable[2]) {
+      console.log('wont be calling this useEffect again');
+      return;
+    }
+    // logic to calculate time spent reading story
+    const timeSpent = () => {
+      const stats: Stats = JSON.parse(
+        JSON.stringify(
+          store.getState().createChild.stats?.[currentChild.childId],
+        ),
+      );
+
+      const timeAlreadyPast = stats?.generation?.totalTime || 0;
+      // we will call this in an interval and add 5 sec to it
+      // ! we want to foundation object ready by now in slice
+      stats.generation.totalTime = timeAlreadyPast + 5;
+      console.log(
+        'current story generation time by child ',
+        currentChild.childId,
+        'is ',
+        timeAlreadyPast + 5,
+      );
+      dispatch(
+        updateChildStats({childId: currentChild.childId, stats: {...stats}}),
+      );
+
+      // calling timeSpent recursively after 5 seconds
+    };
+    const unsubscribe = setInterval(() => {
+      timeSpent();
+    }, 5000);
+    return () => {
+      clearInterval(unsubscribe);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

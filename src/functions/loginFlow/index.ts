@@ -14,6 +14,7 @@ import {clearCacheForce} from '@tandem/redux/slices/cache.slice';
 import {storeKey} from '@tandem/helpers/encryptedStorage';
 import RNFetchBlob from 'rn-fetch-blob';
 import {CACHE_DIR} from '@tandem/constants/local';
+import {getChildStats} from '@tandem/api/childAnalytics';
 
 export default async (loginResponse: LoginResponse) => {
   store.dispatch(clearCacheForce());
@@ -54,6 +55,7 @@ export default async (loginResponse: LoginResponse) => {
       })),
     }),
   );
+  getChildStats();
   if (loginResponse.userInfo.termsAndConditions) {
     // storeKey(TERMS_ACCEPTED, TERMS_ACCEPTED);
     navigateTo(SCREEN_NAME.ACCOUNT, {}, true);

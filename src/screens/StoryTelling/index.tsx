@@ -31,6 +31,10 @@ import {
   changeTextSize,
 } from '@tandem/redux/slices/storyLevel.slice';
 import {FONT_SIZES} from '@tandem/constants/local';
+import {store} from '@tandem/redux/store';
+import {MODE} from '@tandem/constants/mode';
+import {Stats, updateChildStats} from '@tandem/redux/slices/createChild.slice';
+
 const StoryTelling = ({navigation}: {navigation: any}) => {
   const tooltipArray = useAppSelector(state => state.tooltipReducer);
   const dispatch = useDispatch();
@@ -42,6 +46,36 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
   const book: Book = routesData.book;
   const level = useAppSelector(rootState => rootState.storyLevel.level);
   const sizeIndex = useAppSelector(rootState => rootState.storyLevel.size);
+  const mode = useAppSelector(state => state.mode.mode);
+  console.log({mode});
+  React.useEffect(() => {
+    // logic to calculate time spent reading story
+    const timeSpent = () => {
+      if (mode === MODE.A) {
+        return;
+      }
+      const modeState = mode === MODE.C ? 'solo' : 'tandem';
+      const stats: Stats = JSON.parse(
+        JSON.stringify(store.getState().createChild.stats?.[book.childId]),
+      );
+      const timeAlreadyPast = stats.reading?.totalTime?.[modeState];
+      // we will call this in an interval and add 5 sec to it
+      stats.reading.totalTime[modeState] = timeAlreadyPast + 5;
+      console.log(
+        'current book reading time by child ',
+        book.childId,
+        'is ',
+        timeAlreadyPast + 5,
+      );
+      dispatch(updateChildStats({childId: book.childId, stats: {...stats}}));
+    };
+    const unsubscribe = setInterval(() => {
+      timeSpent();
+    }, 5000);
+    return () => {
+      clearInterval(unsubscribe);
+    };
+  }, [book.childId, dispatch, mode]);
 
   const [state, setState] = useState<StateObject>({
     ratingModal: false,

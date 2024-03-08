@@ -19,6 +19,8 @@ export enum API {
   MARK_BOOK_AS_READ = 'story-books/update-reading-status', // ? POST
   MARK_BOOK_AS_ARCHIVED = 'story-books/archive-status', // ? POST
   GET_STORY_THUMBNAILS = 'story-books/{BOOK_ID_HERE}/thumbnail',
+  POST_CHILD_ANALYTICS = 'analytics/children',
+  GET_CHILD_ANALYTICS = 'analytics/children',
 }
 
 export enum ENVIRONMENT {
