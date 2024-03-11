@@ -1,19 +1,13 @@
 /* eslint-disable react-native/no-inline-styles */
-import {
-  ImageBackground,
-  LayoutAnimation,
-  StyleSheet,
-  FlatList,
-  View,
-} from 'react-native';
-import React from 'react';
+import {ImageBackground, StyleSheet, View} from 'react-native';
+import React, {useRef} from 'react';
 import Book from '@tandem/api/getStories/interface';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import {verticalScale} from 'react-native-size-matters';
 import {
-  Gesture,
-  GestureDetector,
-  GestureUpdateEvent,
+  FlatList,
+  GestureEvent,
+  PanGestureHandler,
   PanGestureHandlerEventPayload,
   ScrollView,
 } from 'react-native-gesture-handler';
@@ -28,6 +22,7 @@ import markBookAsRead from '@tandem/api/markBookAsRead';
 import {MODE} from '@tandem/constants/mode';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
+import Animated, {useSharedValue, withTiming} from 'react-native-reanimated';
 interface IPage {
   text: string;
   img: string;
@@ -45,11 +40,12 @@ export default ({
   updateState: (data: any) => void;
 }) => {
   const [isClosed, setClosed] = React.useState(false);
+  const [swipeEnabled, setSwipeEnabled] = React.useState(true);
   const isTablet = useAppSelector(rootState => rootState.deviceType.isTablet);
   const level = useAppSelector(rootState => rootState.storyLevel.level);
   const size = useAppSelector(rootState => rootState.storyLevel.size);
   const mode = useAppSelector(rootState => rootState.mode.mode);
-
+  const translateY = useSharedValue(0);
   React.useEffect(() => {
     if (isTablet) {
       Orientation.lockToLandscapeLeft();
@@ -61,29 +57,34 @@ export default ({
     };
   }, [isTablet]);
 
-  const pan = Gesture.Pan()
-    .runOnJS(true)
-    .onUpdate((g: GestureUpdateEvent<PanGestureHandlerEventPayload>) => {
-      if (isTablet) {
-        setClosed(false);
-        return;
-      }
-      if (g.velocityY > 0 && !isClosed) {
-        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-        setClosed(true);
-      } else if (g.velocityY < 0 && isClosed) {
-        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-        setClosed(false);
-      }
-    });
+  const onGestureEvent = (e: GestureEvent<PanGestureHandlerEventPayload>) => {
+    const nativeEvent = e.nativeEvent;
+    if (!swipeEnabled) {
+      return;
+    }
+    if (isTablet) {
+      setClosed(false);
+      return;
+    }
+    if (nativeEvent.velocityY > 0 && !isClosed) {
+      setClosed(true);
+      translateY.value = withTiming(1000);
+      setSwipeEnabled(false);
+    } else if (nativeEvent.velocityY < 0 && isClosed) {
+      setClosed(false);
+      translateY.value = withTiming(0);
+      setSwipeEnabled(false);
+    }
+  };
+  const flatListRef = useRef<FlatList>(null);
   const renderItem = React.useCallback(
     ({item, index}: {item: IPage; index: number}) => {
       return (
         <ImageBackground source={{uri: item.img}} style={styles.imageBg}>
-          <View
+          <Animated.View
             style={[
               {
-                maxHeight: isClosed ? 0 : '80%',
+                transform: [{translateY: translateY}],
               },
               styles.bottomSheet,
             ]}>
@@ -94,7 +95,7 @@ export default ({
                 {book.storyInfo[level].pages[index].text}
               </RNTextComponent>
             </ScrollView>
-          </View>
+          </Animated.View>
         </ImageBackground>
       );
     },
@@ -210,8 +211,15 @@ export default ({
   };
 
   return (
-    <GestureDetector gesture={pan}>
+    <PanGestureHandler
+      activeOffsetY={[-10, 10]}
+      simultaneousHandlers={[flatListRef]}
+      onEnded={() => {
+        setSwipeEnabled(true);
+      }}
+      onGestureEvent={onGestureEvent}>
       <FlatList
+        ref={flatListRef}
         pagingEnabled
         bounces={false}
         keyExtractor={item => item.text}
@@ -222,7 +230,7 @@ export default ({
         renderItem={isTablet ? renderItemLandscape : renderItem}
         ListFooterComponent={renderFooter}
       />
-    </GestureDetector>
+    </PanGestureHandler>
   );
 };
 
@@ -233,6 +241,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   bottomSheet: {
+    maxHeight: '80%',
     paddingHorizontal: verticalScale(15),
     paddingVertical: verticalScale(30),
     width: '100%',
