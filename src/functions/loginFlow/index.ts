@@ -55,7 +55,7 @@ export default async (loginResponse: LoginResponse) => {
       })),
     }),
   );
-  getChildStats();
+  await getChildStats();
   if (loginResponse.userInfo.termsAndConditions) {
     // storeKey(TERMS_ACCEPTED, TERMS_ACCEPTED);
     navigateTo(SCREEN_NAME.ACCOUNT, {}, true);

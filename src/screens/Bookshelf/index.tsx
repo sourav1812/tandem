@@ -195,7 +195,7 @@ const Bookshelf = () => {
         const response = await getStories(1);
         setBookObjects(response);
       } catch (e) {
-        console.log('$$$$$$', e);
+        console.log('error in bookshelf pagination for page 1', e);
       } finally {
         setLoading(false);
         setRefreshing(false);

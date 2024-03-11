@@ -23,7 +23,7 @@ import {translation} from '@tandem/utils/methods';
 import {MODE} from '@tandem/constants/mode';
 import BothButton from '@tandem/assets/svg/BothButton';
 import RNTooltip from '@tandem/components/RNTooltip';
-import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {RootState, store} from '@tandem/redux/store';
 import {
   ChildData,
@@ -37,7 +37,7 @@ import {
   addSnapShot2,
 } from '@tandem/redux/slices/animationSnapshots.slice';
 import BlueButton from '@tandem/assets/svg/BlueButton';
-import {getChildStats} from '@tandem/api/childAnalytics';
+import {setForceReload} from '@tandem/redux/slices/activityIndicator.slice';
 
 const Home = () => {
   const portrait = useAppSelector(
@@ -70,7 +70,7 @@ const Home = () => {
     {color: themeColor.green, title: translation('HAVE_FUN')},
   ];
   const stats = useAppSelector(state => state.createChild.stats);
-  const childStat = stats?.[currentChild.childId];
+  const childStat = stats?.[currentChild?.childId];
   const calculateTotalReadingTime = (timeObject: {
     solo: number;
     tandem: number;
@@ -92,17 +92,13 @@ const Home = () => {
     var m = Math.floor((seconds % 3600) / 60);
     var s = Math.floor(seconds % 60);
 
-    var dDisplay = d > 0 ? d + (d === 1 ? ' day, ' : ' days, ') : '';
-    var hDisplay = h > 0 ? h + (h === 1 ? ' hour, ' : ' hours, ') : '';
-    var mDisplay = m > 0 ? m + (m === 1 ? ' minute, ' : ' minutes, ') : '';
-    var sDisplay = s > 0 ? s + (s === 1 ? ' second' : ' seconds') : '';
+    var dDisplay = d > 0 ? d + 'd' : '';
+    var hDisplay = h > 0 ? h + (h === 1 ? ' hr, ' : ' hrs, ') : '';
+    var mDisplay = m > 0 ? m + 'min, ' : '';
+    var sDisplay = s > 0 ? s + 's' : '';
     return dDisplay + hDisplay + mDisplay + sDisplay;
   }
-  useFocusEffect(
-    React.useCallback(() => {
-      getChildStats();
-    }, []),
-  );
+
   const modeA: {
     color: string;
     title: string;
@@ -590,6 +586,7 @@ const ChangeChild = ({
       <Pressable
         onPress={() => {
           dispatch(saveCurrentChild(userProfile));
+          dispatch(setForceReload(true));
           toggleDrawer({changeUser: !changeUser});
         }}
         style={{alignItems: 'center'}}>

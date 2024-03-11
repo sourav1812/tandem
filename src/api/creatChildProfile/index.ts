@@ -25,7 +25,7 @@ export const addNewChild = async (
         }
       },
     });
-    getChildStats();
+    await getChildStats();
     return response;
   } catch (error) {
     throw error;
