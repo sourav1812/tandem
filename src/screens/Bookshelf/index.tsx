@@ -56,11 +56,12 @@ const Bookshelf = () => {
   const data: BooksData[] = React.useMemo(
     () =>
       bookObjects.books?.map((book, index) => {
+        console.log('archive status: bookId: ', book._id, book.archived);
         const isThisWeek =
           ((new Date().getTime() - new Date(book.createdAt).getTime()) *
             1.157) /
             10_00_00_000 <
-          7; // ! are checking if the book is screated within a week
+          7; // ! are checking if the book is created within a week
         const week: string = translation(
           bookshelfDays(new Date(book.createdAt)),
         );

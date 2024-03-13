@@ -21,6 +21,7 @@ export enum API {
   GET_STORY_THUMBNAILS = 'story-books/{BOOK_ID_HERE}/thumbnail',
   POST_CHILD_ANALYTICS = 'analytics/children',
   GET_CHILD_ANALYTICS = 'analytics/children',
+  CONTACT_US = 'user/contact-us',
 }
 
 export enum ENVIRONMENT {

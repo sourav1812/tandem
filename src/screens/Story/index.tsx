@@ -20,6 +20,7 @@ import {store} from '@tandem/redux/store';
 import {changeStoryLevel} from '@tandem/redux/slices/storyLevel.slice';
 import themeColor from '@tandem/theme/themeColor';
 import markBookAsArchived from '@tandem/api/markBookAsArchived';
+import {setForceReload} from '@tandem/redux/slices/activityIndicator.slice';
 
 const Story = () => {
   const [visible, setVisible] = useState(false);
@@ -102,6 +103,7 @@ const Story = () => {
                 try {
                   setArchive(!archive);
                   await markBookAsArchived(routeData.book._id, !archive);
+                  store.dispatch(setForceReload(true));
                 } catch (error) {
                   setArchive(archive);
                 }

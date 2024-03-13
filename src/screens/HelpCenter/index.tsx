@@ -16,9 +16,13 @@ import Add from '@tandem/assets/svg/Add';
 import navigateTo from '@tandem/navigation/navigate';
 import {translation} from '@tandem/utils/methods';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
-import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
+import validateForm, {
+  FORM_INPUT_TYPE,
+  ValidationError,
+} from '@tandem/utils/validations';
 import {RootState} from '@tandem/redux/store';
 import {HelpCenterProps} from '@tandem/navigation/types';
+import contactUs from '@tandem/api/contactUs';
 
 const HelpCenter = ({route}: HelpCenterProps) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -142,6 +146,7 @@ const HelpCenter = ({route}: HelpCenterProps) => {
             <RNTextInputWithLabel
               multiline
               label={translation('MESSAGE')}
+              validationType={FORM_INPUT_TYPE.NAME}
               backgroundColor={themeColor.lightGray}
               containerStyle={styles.input2}
               value={message}
@@ -159,7 +164,33 @@ const HelpCenter = ({route}: HelpCenterProps) => {
       <RNButton
         pressableStyle={styles.button}
         title={firstTab ? translation('SEND') : translation('CONTINUE')}
-        onClick={() => {
+        onClick={async () => {
+          if (firstTab) {
+            if (
+              name.message ||
+              email.message ||
+              message.message ||
+              name.value === '' ||
+              email.value === '' ||
+              message.value === ''
+            ) {
+              setEmail(validateForm(FORM_INPUT_TYPE.EMAIL, email.value));
+              setMessage(validateForm(FORM_INPUT_TYPE.NAME, message.value));
+              setName(validateForm(FORM_INPUT_TYPE.NAME, name.value));
+              return;
+            }
+            try {
+              await contactUs({
+                name: name.value,
+                email: email.value,
+                message: message.value,
+              });
+            } catch (error) {
+              console.log('error in contact us api', error);
+              return;
+            }
+          }
+
           if (fromPeople) {
             navigateTo();
           } else {

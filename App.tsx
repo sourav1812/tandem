@@ -15,6 +15,8 @@ import statusbar from '@tandem/functions/statusbar';
 import i18n from '@tandem/constants/lang/i18n';
 import setupLangauge from '@tandem/functions/language';
 import {setForceReload} from '@tandem/redux/slices/activityIndicator.slice';
+import {getChildStats} from '@tandem/api/childAnalytics';
+import pushChildStats from '@tandem/functions/pushChildStats';
 
 const persistor = persistStore(store);
 
@@ -33,6 +35,8 @@ const App: FC = () => {
           type: 'Alert',
           message: remoteMessage.notification?.title,
           onSuccess: async () => {
+            await pushChildStats();
+            await getChildStats();
             store.dispatch(setForceReload(true));
           },
         }),

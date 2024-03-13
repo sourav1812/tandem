@@ -10,7 +10,7 @@ export const getChildStats = async () => {
       path: API.GET_CHILD_ANALYTICS,
       noLoader: true,
     });
-    console.log(response);
+    console.log('child analytics api response', response);
     response.forEach(stats => {
       store.dispatch(updateChildStats({childId: stats.childId, stats}));
     });
