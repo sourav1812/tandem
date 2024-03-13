@@ -32,11 +32,11 @@ export default () => {
       disabled={disabled}>
       <>
         <RNTextComponent isSemiBold style={styles.question}>
-          {translation('what-style-illustration')}{' '}
+          {translation('generate-story.what-style-illustration')}{' '}
           <RNTextComponent
             isSemiBold
             style={{...styles.question, color: 'rgba(10, 8, 4, 0.6)'}}>
-            {translation('what-style-illustration-2')}
+            {translation('generate-story.what-style-illustration-2')}
           </RNTextComponent>{' '}
         </RNTextComponent>
         <RNImageChoice
