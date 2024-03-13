@@ -31,8 +31,8 @@ export enum ENVIRONMENT {
 
 const ENV_VARS = {
   [ENVIRONMENT.DEVELOPMENT]: {
-    // API_URL: 'https://tandem-beta.geeky.dev/v1/', // * LOCAL URL
-    API_URL: 'https://619d-223-178-212-85.ngrok-free.app/v1/', // * LOCAL URL
+    API_URL: 'https://tandem-beta.geeky.dev/v1/', // * LOCAL URL
+    // API_URL: 'https://619d-223-178-212-85.ngrok-free.app/v1/', // * LOCAL URL
   },
   [ENVIRONMENT.PRODUCTION]: {
     API_URL: 'https://tandem.geeky.dev/v1/', // * STAGING URL

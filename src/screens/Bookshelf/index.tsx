@@ -150,7 +150,16 @@ const Bookshelf = () => {
   const renderItem = React.useCallback(
     ({item}: {item: BooksData; index: number}) => {
       if (images[item.id] === undefined) {
-        return <ActivityIndicator />;
+        return (
+          <RNTextComponent
+            style={{
+              textAlign: 'center',
+              color: themeColor.themeBlue,
+              fontSize: verticalScale(8),
+            }}>
+            loading images...
+          </RNTextComponent>
+        );
       }
       return (
         <View

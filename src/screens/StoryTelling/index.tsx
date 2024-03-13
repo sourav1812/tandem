@@ -267,7 +267,7 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
                   ),
                 );
               }}>
-              <Add />
+              <Add size={30} />
             </Pressable>
             <Pressable
               style={{padding: 7, paddingVertical: 10}}
@@ -276,7 +276,7 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
                   changeTextSize(sizeIndex > 0 ? sizeIndex - 1 : sizeIndex),
                 );
               }}>
-              <Subtract />
+              <Subtract size={20} />
             </Pressable>
           </View>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -288,7 +288,7 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
               onPress={() => {
                 dispatch(changeStoryLevel(level > 0 ? level - 1 : level));
               }}>
-              <Add />
+              <Add size={30} />
             </Pressable>
             <Pressable
               style={{padding: 7, paddingVertical: 10}}
@@ -299,7 +299,7 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
                   ),
                 );
               }}>
-              <Subtract />
+              <Subtract size={20} />
             </Pressable>
           </View>
           {/* <View style={{flexDirection: 'row', alignItems: 'center'}}>
