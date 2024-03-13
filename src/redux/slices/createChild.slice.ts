@@ -37,7 +37,7 @@ export interface Stats {
   reading: {
     totalTime: {
       solo: number;
-      tandem: number;
+      tandem: {parentId: string; time: number}[];
     };
   };
   childId: string;

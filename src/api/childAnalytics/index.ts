@@ -30,13 +30,14 @@ export const postChildStats = async ({
     reading: {
       totalTime: {
         solo: number;
-        tandem: number;
+        tandem: {parentId: string; time: number}[];
       };
     };
   };
   childId: string;
 }) => {
   try {
+    console.log({stats: stats.reading.totalTime});
     await post({
       path: API.POST_CHILD_ANALYTICS + `/${childId}`,
       data: stats,

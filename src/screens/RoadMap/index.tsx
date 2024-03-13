@@ -56,11 +56,11 @@ import lockOrientation from '@tandem/functions/lockOrientation';
 import {Stats, updateChildStats} from '@tandem/redux/slices/createChild.slice';
 
 const SCREEN = [
+  SCREEN_NAME.GENERATE_STORY_WHAT_HAPPENS,
   SCREEN_NAME.GENERATE_STORY_WHO,
   SCREEN_NAME.GENERATE_STORY_INCLUSION,
-  SCREEN_NAME.GENERATE_STORY_WHERE,
   SCREEN_NAME.GENERATE_STORY_WHAT_THINGS,
-  SCREEN_NAME.GENERATE_STORY_WHAT_HAPPENS,
+  SCREEN_NAME.GENERATE_STORY_WHERE,
   SCREEN_NAME.GENERATE_STORY_ILLUSTRATIONS,
   SCREEN_NAME.GENERATE_STORY_COLORS,
 ];
@@ -94,36 +94,45 @@ const RNRoadmap = () => {
   );
   let scale = portrait ? 1 : 1.4;
 
-  const who = true;
+  const whatHappens = true;
+  const who =
+    storyGenerationResponse[STORY_PARTS.WHAT_HAPPENS].length > 0 ||
+    storyGenerationResponse[STORY_PARTS.WHO].length > 0;
   const inclusion =
-    storyGenerationResponse[STORY_PARTS.WHO].length > 0 ||
+    (who && storyGenerationResponse[STORY_PARTS.WHO].length > 0) ||
     storyGenerationResponse[STORY_PARTS.INCLUSION] !== null;
-  const where =
-    (inclusion && storyGenerationResponse[STORY_PARTS.INCLUSION] !== null) ||
-    storyGenerationResponse[STORY_PARTS.WHERE].length > 0;
   const whatThings =
-    (where && storyGenerationResponse[STORY_PARTS.WHERE].length > 0) ||
+    (inclusion && storyGenerationResponse[STORY_PARTS.INCLUSION] !== null) ||
     storyGenerationResponse[STORY_PARTS.WHAT_THINGS].length > 0;
-  const whatHappens =
+  const where =
     (whatThings &&
       storyGenerationResponse[STORY_PARTS.WHAT_THINGS].length > 0) ||
-    storyGenerationResponse[STORY_PARTS.WHAT_HAPPENS].length > 0;
+    storyGenerationResponse[STORY_PARTS.WHERE].length > 0;
   const illustration =
-    (whatHappens &&
-      storyGenerationResponse[STORY_PARTS.WHAT_HAPPENS].length > 0) ||
+    (where && storyGenerationResponse[STORY_PARTS.WHERE].length > 0) ||
     storyGenerationResponse[STORY_PARTS.STYLES].length > 0;
   const colors =
     illustration && storyGenerationResponse[STORY_PARTS.STYLES].length > 0;
 
   const checkIfClickable = [
+    whatHappens,
     who,
     inclusion,
-    where,
     whatThings,
-    whatHappens,
+    where,
     illustration,
     colors,
   ];
+  console.log({
+    whatHappens,
+    who,
+    inclusion,
+    whatThings,
+    where,
+    illustration,
+    colors,
+    checkIfClickable,
+  });
 
   const handleNavigate = (index: number) => {
     if (checkIfClickable[index]) {
@@ -356,7 +365,7 @@ const RNRoadmap = () => {
                   left: positionRefs[5].x + verticalScale(81) / scale,
                 },
               ]}>
-              <WhatHappens
+              <Where
                 scale={scale}
                 fillColor={
                   checkIfClickable[4]
@@ -415,7 +424,7 @@ const RNRoadmap = () => {
                 }));
               }}
               onPress={() => {
-                handleNavigate(2);
+                handleNavigate(1);
               }}
               style={[
                 styles.where,
@@ -424,13 +433,13 @@ const RNRoadmap = () => {
                   left: positionRefs[3].x + verticalScale(105) / scale,
                 },
               ]}>
-              <Where
+              <Who
                 scale={scale}
                 fillColor={
-                  checkIfClickable[2] ? themeColor.green : themeColor.lightGray
+                  checkIfClickable[1] ? themeColor.green : themeColor.lightGray
                 }
                 textColor={
-                  checkIfClickable[2] ? themeColor.white : themeColor.themeBlue
+                  checkIfClickable[1] ? themeColor.white : themeColor.themeBlue
                 }
               />
             </Pressable>
@@ -460,7 +469,7 @@ const RNRoadmap = () => {
                   left: positionRefs[2].x - verticalScale(81) / scale,
                 },
               ]}>
-              <Who
+              <WhatHappens
                 scale={scale}
                 fillColor={hightlightFirst ? '#9A00FF' : themeColor.lightGray}
                 textColor={

@@ -73,12 +73,14 @@ const Home = () => {
   const childStat = stats?.[currentChild?.childId];
   const calculateTotalReadingTime = (timeObject: {
     solo: number;
-    tandem: number;
+    tandem: {time: number; parentId: string}[];
   }) => {
     if (!timeObject) {
       return '0 hrs';
     }
-    const totalTime = timeObject.solo + timeObject.tandem; // in seconds
+    const totalTime =
+      timeObject.solo +
+      timeObject.tandem.reduce((accumulator, obj) => accumulator + obj.time, 0); // in seconds
     return secondsToDhms(totalTime);
   };
 

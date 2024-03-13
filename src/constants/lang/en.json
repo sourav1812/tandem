@@ -213,7 +213,8 @@
     "include-things": "Pick an object to be in the story?",
     "what-sort-of": "What sort of story",
     "do-you-want-today": "do you want to make today?",
-    "what-style-illustration": "What style of illustrations",
+    "what-style-illustration": "What style",
+    "what-style-illustration-2": "do you want the pictures to be?",
     "shall-we-use": "shall we use?"
   },
   "help-center": {

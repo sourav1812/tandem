@@ -181,7 +181,7 @@ const Story = () => {
             title={
               mode === MODE.B
                 ? translation('READ_TOGETHER')
-                : translation('REREAD')
+                : translation('READ_A_STORY')
             }
             hitSlop={40}
             loadPercentage={(val * 100) / (len || 1)}

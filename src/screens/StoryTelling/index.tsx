@@ -47,6 +47,8 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
   const level = useAppSelector(rootState => rootState.storyLevel.level);
   const sizeIndex = useAppSelector(rootState => rootState.storyLevel.size);
   const mode = useAppSelector(state => state.mode.mode);
+  const cuurentParent = useAppSelector(state => state.createChild.currentAdult);
+
   console.log({mode});
   React.useEffect(() => {
     // logic to calculate time spent reading story
@@ -58,15 +60,29 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
       const stats: Stats = JSON.parse(
         JSON.stringify(store.getState().createChild.stats?.[book.childId]),
       );
-      const timeAlreadyPast = stats.reading?.totalTime?.[modeState];
       // we will call this in an interval and add 5 sec to it
-      stats.reading.totalTime[modeState] = timeAlreadyPast + 5;
-      console.log(
-        'current book reading time by child ',
-        book.childId,
-        'is ',
-        timeAlreadyPast + 5,
-      );
+      if (modeState === 'tandem') {
+        // for tandem we will store a complex object
+        let parentReadingArray = stats.reading.totalTime[modeState];
+        const targetIndex = parentReadingArray.findIndex(
+          obj => obj.parentId === cuurentParent.profileId,
+        );
+        if (targetIndex === -1) {
+          parentReadingArray.push({
+            parentId: cuurentParent.profileId,
+            time: 5,
+          });
+        } else {
+          parentReadingArray[targetIndex] = {
+            ...parentReadingArray[targetIndex],
+            time: parentReadingArray[targetIndex].time + 5,
+          };
+        }
+        stats.reading.totalTime[modeState] = parentReadingArray;
+      } else {
+        const timeAlreadyPast = stats.reading?.totalTime?.[modeState];
+        stats.reading.totalTime[modeState] = timeAlreadyPast + 5;
+      }
       dispatch(updateChildStats({childId: book.childId, stats: {...stats}}));
     };
     const unsubscribe = setInterval(() => {
@@ -75,7 +91,7 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
     return () => {
       clearInterval(unsubscribe);
     };
-  }, [book.childId, dispatch, mode]);
+  }, [book.childId, cuurentParent.profileId, dispatch, mode]);
 
   const [state, setState] = useState<StateObject>({
     ratingModal: false,

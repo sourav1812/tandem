@@ -213,7 +213,8 @@
     "include-things": "Choisissez un objet à inclure dans l'histoire ?",
     "what-sort-of": "Quel genre d'histoire",
     "do-you-want-today": "voulez-vous faire aujourd'hui ?",
-    "what-style-illustration": "Quel style d'illustrations",
+    "what-style-illustration": "Quel style",
+    "what-style-illustration-2": "voulez-vous pour les images?",
     "shall-we-use": "devrions-nous utiliser ?"
   },
   "help-center": {
