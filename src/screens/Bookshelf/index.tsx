@@ -1,5 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
-import {View, Pressable, RefreshControl, ActivityIndicator} from 'react-native';
+import {
+  View,
+  Pressable,
+  RefreshControl,
+  ActivityIndicator,
+  SectionList,
+} from 'react-native';
 import React, {useState} from 'react';
 import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
@@ -33,18 +39,19 @@ import {useDispatch} from 'react-redux';
 import {ratingList} from '@tandem/components/RNRatingModal/interface';
 import Book from '@tandem/api/getStories/interface';
 import {setForceReload} from '@tandem/redux/slices/activityIndicator.slice';
-import {FlatList} from 'react-native-gesture-handler';
 
 const Bookshelf = () => {
   const dispatch = useDispatch();
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
-  const currentChild = useAppSelector(state => state.createChild.currentChild);
   const mode = useAppSelector(state => state.mode.mode);
   const [searchText, setText] = useState<ValidationError>({value: ''});
   const images = useAppSelector(state => state.bookShelf.images);
   const [page, setPage] = React.useState(1);
   const [isLoading, setLoading] = React.useState(false);
   const [refreshing, setRefreshing] = React.useState(false);
+  const [sectionList, setSectionList] = React.useState<
+    {title: string; data: BooksData[]}[]
+  >([]);
   const forceReload = useAppSelector(
     state => state.activityIndicator.forceReload,
   );
@@ -91,6 +98,29 @@ const Bookshelf = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [bookObjects.books.length, images],
   );
+  React.useEffect(() => {
+    const sectionListLocal: {title: string; data: BooksData[]}[] = [];
+
+    const dataRef = data.filter(dataObject =>
+      searchText.value
+        ? dataObject.headerTitle.includes(searchText.value)
+        : true,
+    );
+
+    dataRef.forEach(obj => {
+      const availableIndex = sectionListLocal.findIndex(
+        sl => sl.title === obj.week,
+      );
+      if (availableIndex === -1) {
+        // ! new entry is required
+        const newObjectToPush = {title: obj.week, data: [obj]};
+        sectionListLocal.push(newObjectToPush);
+        return;
+      }
+      sectionListLocal[availableIndex].data.push(obj);
+    });
+    setSectionList(sectionListLocal);
+  }, [data, searchText.value]);
 
   const listFooterComponent = () => {
     if (isLoading) {
@@ -168,15 +198,6 @@ const Bookshelf = () => {
               marginHorizontal: isTablet ? verticalScale(30) : 0,
             },
           ]}>
-          {item.week && (
-            <RNTextComponent
-              style={styles.heading}
-              numberOfLines={2}
-              isSemiBold>
-              {item.week}
-            </RNTextComponent>
-          )}
-
           <RNStoryCard
             item={item}
             onPress={() => {
@@ -303,28 +324,24 @@ const Bookshelf = () => {
           Icon={<SearchIcon />}
         />
         <View style={styles.bottomViewContainer}>
-          <FlatList
+          <SectionList
+            sections={sectionList}
             bounces={false}
             style={styles.flatListContatiner}
             contentContainerStyle={[styles.flatListContentContainer]}
-            data={
-              bookObjects.books.filter(
-                book => book.childId === currentChild.childId,
-              ).length > 0
-                ? data?.filter(obj =>
-                    searchText.value
-                      ? obj.headerTitle
-                          .toLowerCase()
-                          .includes(searchText.value.toLowerCase())
-                      : true,
-                  )
-                : []
-            }
             renderItem={renderItem}
             ListEmptyComponent={listEmptyComponent}
             showsVerticalScrollIndicator={false}
             ItemSeparatorComponent={seperateComponent}
             ListFooterComponent={listFooterComponent}
+            renderSectionHeader={({section: {title}}) => (
+              <RNTextComponent
+                style={styles.heading}
+                numberOfLines={2}
+                isSemiBold>
+                {title}
+              </RNTextComponent>
+            )}
             refreshControl={
               <RefreshControl
                 refreshing={refreshing}
