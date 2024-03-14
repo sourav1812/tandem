@@ -16,6 +16,7 @@ import RNAlertBox from '@tandem/components/RNAlertBox';
 import resumeAppState from '@tandem/functions/resumeAppState';
 import {hitStoryGenApiStandalone} from '@tandem/api/generateStory';
 import {clearPendingStoriesGen} from '@tandem/redux/slices/cache.slice';
+import {ConversationScreen} from '@tandem/screens/ConversationStaters';
 
 const AppNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -67,6 +68,16 @@ const AppNavigator = () => {
           <Stack.Screen
             getComponent={() => require('@tandem/screens/SocialSignIn').default}
             name={SCREEN_NAME.SOCIAL_SIGN_IN}
+          />
+          <Stack.Screen
+            getComponent={() =>
+              require('@tandem/screens/ConversationStaters').default
+            }
+            name={SCREEN_NAME.CONVERSATION_STARTERS}
+          />
+          <Stack.Screen
+            component={ConversationScreen}
+            name={SCREEN_NAME.CONVERSATION}
           />
           <Stack.Screen
             options={{gestureEnabled: false}}

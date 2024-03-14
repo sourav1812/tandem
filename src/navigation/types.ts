@@ -42,6 +42,8 @@ export type RootStackParamList = {
   WhatHappens: undefined;
   Illustrations: undefined;
   Colors: undefined;
+  ConversationStaters: undefined;
+  ConversationScreen: any;
 };
 
 export type RootTabParamList = {

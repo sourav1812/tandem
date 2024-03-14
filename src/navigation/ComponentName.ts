@@ -39,4 +39,6 @@ export enum SCREEN_NAME {
   GENERATE_STORY_WHAT_HAPPENS = 'WhatHappens',
   GENERATE_STORY_ILLUSTRATIONS = 'Illustrations',
   GENERATE_STORY_COLORS = 'Colors',
+  CONVERSATION_STARTERS = 'ConversationStaters',
+  CONVERSATION = 'ConversationScreen',
 }

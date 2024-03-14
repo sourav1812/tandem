@@ -186,7 +186,9 @@ export default ({
               backgroundColor: themeColor.gold,
               borderColor: themeColor.gold,
             }}
-            onClick={() => {}}
+            onClick={() => {
+              navigateTo(SCREEN_NAME.CONVERSATION_STARTERS);
+            }}
             title="Have you thought about..."
           />
           <RNButton
