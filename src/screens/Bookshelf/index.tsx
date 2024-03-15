@@ -327,6 +327,7 @@ const Bookshelf = () => {
           <SectionList
             sections={sectionList}
             bounces={false}
+            stickySectionHeadersEnabled={false}
             style={styles.flatListContatiner}
             contentContainerStyle={[styles.flatListContentContainer]}
             renderItem={renderItem}

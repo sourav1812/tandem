@@ -64,7 +64,6 @@ const AppNavigator = () => {
             getComponent={() => require('@tandem/screens/Story').default}
             name={SCREEN_NAME.STORY}
           />
-
           <Stack.Screen
             getComponent={() => require('@tandem/screens/SocialSignIn').default}
             name={SCREEN_NAME.SOCIAL_SIGN_IN}
@@ -76,6 +75,7 @@ const AppNavigator = () => {
             name={SCREEN_NAME.CONVERSATION_STARTERS}
           />
           <Stack.Screen
+            //@ts-expect-error
             component={ConversationScreen}
             name={SCREEN_NAME.CONVERSATION}
           />
