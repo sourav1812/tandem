@@ -67,7 +67,7 @@ const Home = () => {
     {color: themeColor.purple, title: translation('WRITE_A_STORY')},
     {color: themeColor.purple, title: translation('I_CANT_DECIDE')},
     {color: themeColor.gold, title: translation('LEARN_SOMETHING')},
-    {color: themeColor.green, title: translation('HAVE_FUN')},
+    // {color: themeColor.green, title: translation('HAVE_FUN')},
   ];
   const stats = useAppSelector(state => state.createChild.stats);
   const childStat = stats?.[currentChild?.childId];
@@ -490,6 +490,7 @@ const Home = () => {
                       }}
                       borderIconColor={item.color}
                       showIcon={index === 0}
+                      large={index === 0}
                       showSubheading={index !== 0}
                       heading={item.title}
                       subHeading={translation('COMING_SOON')}

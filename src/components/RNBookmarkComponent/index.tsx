@@ -24,6 +24,7 @@ const RNBookmarkComponent = ({
   emoji,
   headingStyle,
   onPress,
+  large,
 }: Props) => {
   const scaleButton = useSharedValue(1);
 
@@ -54,6 +55,10 @@ const RNBookmarkComponent = ({
             }),
           },
           {...(!showIcon && {justifyContent: 'center'})},
+          {
+            width: large ? 2 * verticalScale(140) + 10 : verticalScale(140),
+            maxWidth: large ? 2 * verticalScale(190) + 10 : verticalScale(190),
+          },
           customStyle && customStyle,
         ]}
         {...props}>

@@ -6,9 +6,7 @@ export const styles = StyleSheet.create({
   container: {
     borderWidth: 1,
     height: verticalScale(140),
-    width: verticalScale(140),
     maxHeight: verticalScale(190),
-    maxWidth: verticalScale(190),
     borderRadius: 16,
     justifyContent: 'space-around',
     alignItems: 'center',
