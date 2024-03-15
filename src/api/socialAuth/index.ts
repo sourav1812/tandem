@@ -29,7 +29,6 @@ export const socialLogin = async ({
         fcmToken,
       },
     });
-    console.log('yayayaya', response);
     await loginFlow(response);
   } catch (error) {
     throw error;

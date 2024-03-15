@@ -17,6 +17,7 @@ import resumeAppState from '@tandem/functions/resumeAppState';
 import {hitStoryGenApiStandalone} from '@tandem/api/generateStory';
 import {clearPendingStoriesGen} from '@tandem/redux/slices/cache.slice';
 import {ConversationScreen} from '@tandem/screens/ConversationStaters';
+import BuildingTandem from '@tandem/screens/BuildingTandem';
 
 const AppNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -80,6 +81,10 @@ const AppNavigator = () => {
             name={SCREEN_NAME.CONVERSATION}
           />
           <Stack.Screen
+            component={BuildingTandem}
+            name={SCREEN_NAME.BUILDING_TANDEM}
+          />
+          <Stack.Screen
             options={{gestureEnabled: false}}
             getComponent={() => require('@tandem/screens/StoryTelling').default}
             name={SCREEN_NAME.STORY_TELLING}
@@ -106,6 +111,7 @@ const AppNavigator = () => {
                 }
                 name={SCREEN_NAME.GENERATE_STORY_WHERE}
               />
+
               <Stack.Screen
                 getComponent={() =>
                   require('@tandem/screens/GenerateStory/Questions/WhatThings')

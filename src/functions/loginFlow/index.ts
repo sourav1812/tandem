@@ -17,6 +17,7 @@ import {CACHE_DIR} from '@tandem/constants/local';
 import {getChildStats} from '@tandem/api/childAnalytics';
 
 export default async (loginResponse: LoginResponse) => {
+  navigateTo(SCREEN_NAME.BUILDING_TANDEM);
   store.dispatch(clearCacheForce());
   storeTokens(loginResponse.accessToken, loginResponse.refreshToken);
   // ! other logic related to navigation flow , modes ,family here

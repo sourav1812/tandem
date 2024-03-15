@@ -41,4 +41,5 @@ export enum SCREEN_NAME {
   GENERATE_STORY_COLORS = 'Colors',
   CONVERSATION_STARTERS = 'ConversationStaters',
   CONVERSATION = 'ConversationScreen',
+  BUILDING_TANDEM = 'BuildingTandem',
 }
