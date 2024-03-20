@@ -57,10 +57,12 @@ export default async (loginResponse: LoginResponse) => {
     }),
   );
   await getChildStats();
-  if (loginResponse.userInfo.termsAndConditions) {
-    // storeKey(TERMS_ACCEPTED, TERMS_ACCEPTED);
-    navigateTo(SCREEN_NAME.ACCOUNT, {}, true);
-  } else {
-    navigateTo(SCREEN_NAME.TERMS_AND_CONDITIONS, {}, true);
-  }
+  setTimeout(() => {
+    if (loginResponse.userInfo.termsAndConditions) {
+      // storeKey(TERMS_ACCEPTED, TERMS_ACCEPTED);
+      navigateTo(SCREEN_NAME.ACCOUNT, {}, true);
+    } else {
+      navigateTo(SCREEN_NAME.TERMS_AND_CONDITIONS, {}, true);
+    }
+  }, 5000);
 };

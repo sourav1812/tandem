@@ -20,9 +20,8 @@ const RNAlertBox = ({
   possibleResolution,
 }: AlertBoxInterface) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
-  const {onSuccess, onDestructive} = useAppSelector(
-    state => state.alertBoxReducer.data,
-  );
+  const {onSuccess, onDestructive, successText, destructiveText} =
+    useAppSelector(state => state.alertBoxReducer.data);
 
   const dispatch = useAppDispatch();
 
@@ -70,11 +69,15 @@ const RNAlertBox = ({
               }
               dispatch(clearAlertData());
             }}
-            title={'OK'}
+            title={successText || 'OK'}
             customStyle={[
               styles.button2,
-              {minWidth: onDestructive ? '60%' : '90%'},
+              {
+                maxWidth: onDestructive ? '70%' : '90%',
+                minWidth: onDestructive ? '60%' : '90%',
+              },
             ]}
+            textStyle={successText ? {fontSize: verticalScale(10)} : {}}
           />
           {onDestructive ? (
             <RNButton
@@ -84,15 +87,17 @@ const RNAlertBox = ({
                 }
                 dispatch(clearAlertData());
               }}
-              title={'NO'}
+              title={destructiveText || 'NO'}
               customStyle={[
                 styles.button2,
                 {
                   backgroundColor: themeColor.red,
                   borderColor: themeColor.red,
                   minWidth: '60%',
+                  maxWidth: '70%',
                 },
               ]}
+              textStyle={destructiveText ? {fontSize: verticalScale(10)} : {}}
             />
           ) : null}
         </View>

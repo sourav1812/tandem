@@ -54,6 +54,7 @@ import wait from '@tandem/functions/wait';
 import Orientation from 'react-native-orientation-locker';
 import lockOrientation from '@tandem/functions/lockOrientation';
 import {Stats, updateChildStats} from '@tandem/redux/slices/createChild.slice';
+import {setStoryGenTracking} from '@tandem/redux/slices/activityIndicator.slice';
 
 const SCREEN = [
   SCREEN_NAME.GENERATE_STORY_WHAT_HAPPENS,
@@ -80,6 +81,9 @@ const RNRoadmap = () => {
     (state: RootState) => state.storyGeneration,
   );
   const snapshots = useAppSelector((state: RootState) => state.snapshotReducer);
+  const isStoryGenTracking = useAppSelector(
+    (state: RootState) => state.activityIndicator.isStoryGenTracking,
+  );
   const currentChild = useAppSelector(
     (state: RootState) => state.createChild.currentChild,
   );
@@ -215,7 +219,7 @@ const RNRoadmap = () => {
   }, []);
 
   React.useEffect(() => {
-    if (checkIfClickable[2]) {
+    if (isStoryGenTracking) {
       console.log('wont be calling this useEffect again');
       return;
     }
@@ -243,11 +247,14 @@ const RNRoadmap = () => {
 
       // calling timeSpent recursively after 5 seconds
     };
+    // set someReduxState to true
+    dispatch(setStoryGenTracking(true));
     const unsubscribe = setInterval(() => {
       timeSpent();
     }, 5000);
     return () => {
       clearInterval(unsubscribe);
+      dispatch(setStoryGenTracking(false));
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

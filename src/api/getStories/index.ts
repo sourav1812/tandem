@@ -5,6 +5,11 @@ import {setImagesForBook} from '@tandem/redux/slices/bookShelf.slice';
 import {store} from '@tandem/redux/store';
 import RNFetchBlob from 'rn-fetch-blob';
 import {addFlush} from '@tandem/redux/slices/cache.slice';
+import {setStoryBookNotification} from '@tandem/redux/slices/activityIndicator.slice';
+import {
+  addAlertData,
+  clearAlertData,
+} from '@tandem/redux/slices/alertBox.slice';
 
 const getStories = async (page: number) => {
   try {
@@ -28,7 +33,7 @@ export default getStories;
 
 const cacheStoryBookImages = (books: Book[]) => {
   let dirs = RNFetchBlob.fs.dirs;
-  books.forEach(async book => {
+  books.forEach(async (book, index) => {
     const cacheBookRef = store.getState().bookShelf.images[book._id];
     if (
       Array.isArray(cacheBookRef) &&
@@ -49,5 +54,21 @@ const cacheStoryBookImages = (books: Book[]) => {
       }),
     );
     store.dispatch(setImagesForBook({bookId: book._id, images: imagePages}));
+
+    if (
+      index === 0 &&
+      store.getState().activityIndicator.storyBookNotification
+    ) {
+      store.dispatch(
+        addAlertData({
+          type: 'Alert',
+          message: 'Your new book is now available to read',
+          onSuccess: async () => {
+            store.dispatch(setStoryBookNotification(false));
+            store.dispatch(clearAlertData());
+          },
+        }),
+      );
+    }
   });
 };

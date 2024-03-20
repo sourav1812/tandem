@@ -6,15 +6,15 @@ import {Platform, UIManager} from 'react-native';
 import messaging from '@react-native-firebase/messaging';
 import {PersistGate} from 'redux-persist/integration/react';
 import {persistStore} from 'redux-persist';
-import {
-  addAlertData,
-  clearAlertData,
-} from '@tandem/redux/slices/alertBox.slice';
+import {clearAlertData} from '@tandem/redux/slices/alertBox.slice';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import statusbar from '@tandem/functions/statusbar';
 import i18n from '@tandem/constants/lang/i18n';
 import setupLangauge from '@tandem/functions/language';
-import {setForceReload} from '@tandem/redux/slices/activityIndicator.slice';
+import {
+  setForceReload,
+  setStoryBookNotification,
+} from '@tandem/redux/slices/activityIndicator.slice';
 import {getChildStats} from '@tandem/api/childAnalytics';
 import pushChildStats from '@tandem/functions/pushChildStats';
 
@@ -29,18 +29,11 @@ const App: FC = () => {
     }
     i18n.locale = setupLangauge();
     store.dispatch(clearAlertData());
-    const unsubscribe = messaging().onMessage(async remoteMessage => {
-      store.dispatch(
-        addAlertData({
-          type: 'Alert',
-          message: remoteMessage.notification?.title,
-          onSuccess: async () => {
-            await pushChildStats();
-            await getChildStats();
-            store.dispatch(setForceReload(true));
-          },
-        }),
-      );
+    const unsubscribe = messaging().onMessage(async () => {
+      await pushChildStats();
+      await getChildStats();
+      store.dispatch(setForceReload(true));
+      store.dispatch(setStoryBookNotification(true));
     });
 
     statusbar();

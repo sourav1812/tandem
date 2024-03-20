@@ -5,12 +5,46 @@ import {Image} from 'react-native';
 import {RNConfettiAnimation} from '@tandem/components/RNConfettiAnimation';
 import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
+import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
+import {RootState, store} from '@tandem/redux/store';
+import {
+  addSnapShot1,
+  addSnapShot2,
+} from '@tandem/redux/slices/animationSnapshots.slice';
+import {clearStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration.slice';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 
 const Congratulation = () => {
+  const notificationScreenPermissions = useAppSelector(
+    (state: RootState) => state.permissions,
+  );
   React.useEffect(() => {
     setTimeout(() => {
-      navigateTo(SCREEN_NAME.HOME);
+      store.dispatch(
+        addAlertData({
+          type: 'Alert',
+          message: "While you wait for the story to be built, why don't you...",
+          onSuccess: () => {
+            navigateTo(SCREEN_NAME.HOME);
+            navigateTo(
+              !notificationScreenPermissions.isFirstTime ||
+                notificationScreenPermissions.notificationStatus
+                ? SCREEN_NAME.BOOKSHELF
+                : SCREEN_NAME.NOTIFICATION_SCREEN,
+            );
+          },
+          onDestructive: () => {
+            store.dispatch(clearStoryGenerationResponse());
+            store.dispatch(addSnapShot1(null));
+            store.dispatch(addSnapShot2(null));
+            navigateTo(SCREEN_NAME.ROADMAP);
+          },
+          successText: 'Read a story we made earlier',
+          destructiveText: 'Create another story',
+        }),
+      );
     }, 4000);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

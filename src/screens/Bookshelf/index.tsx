@@ -251,7 +251,6 @@ const Bookshelf = () => {
           endReached: response.endReached,
         }));
       } catch (e) {
-        console.log('@@@@@@', e);
       } finally {
         setLoading(false);
       }
