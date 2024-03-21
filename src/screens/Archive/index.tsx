@@ -32,6 +32,7 @@ import {useDispatch} from 'react-redux';
 import {ratingList} from '@tandem/components/RNRatingModal/interface';
 import Book from '@tandem/api/getStories/interface';
 import {setForceReload} from '@tandem/redux/slices/activityIndicator.slice';
+import RNButton from '@tandem/components/RNButton';
 
 const Archive = () => {
   const dispatch = useDispatch();
@@ -247,22 +248,26 @@ const Archive = () => {
         style={[
           styles.container,
           {
-            backgroundColor:
-              mode === MODE.A
-                ? themeColor.themeBlue
-                : mode === MODE.B
-                ? themeColor.lightGreen
-                : themeColor.gold,
+            backgroundColor: themeColor.purple,
           },
         ]}>
         <View style={styles.headingView}>
-          <View style={styles.spaces} />
+          <RNButton
+            customStyle={{
+              backgroundColor: 'transparent',
+              borderColor: 'transparent',
+              marginLeft: verticalScale(15),
+            }}
+            textStyle={{color: themeColor.white}}
+            onClick={() => {
+              navigateTo();
+            }}
+            title="< Back"
+          />
           <RNTextComponent style={styles.bookshelfHeaderText} isSemiBold>
             Archive
           </RNTextComponent>
-          <Pressable
-            style={[styles.spaces, {alignItems: 'flex-end'}]}
-            onPress={() => navigateTo(SCREEN_NAME.ACCOUNT)}>
+          <Pressable onPress={() => navigateTo(SCREEN_NAME.ACCOUNT)}>
             {mode === MODE.B && <BothButton style={styles.button} />}
             {mode === MODE.A && <BlueBotton style={styles.button} />}
             {mode === MODE.C && (

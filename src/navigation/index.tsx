@@ -19,11 +19,12 @@ import {clearPendingStoriesGen} from '@tandem/redux/slices/cache.slice';
 import {ConversationScreen} from '@tandem/screens/ConversationStaters';
 import BuildingTandem from '@tandem/screens/BuildingTandem';
 import Archive from '@tandem/screens/Archive';
+import analytics from '@react-native-firebase/analytics';
 
 const AppNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
   const mode = useAppSelector((state: RootState) => state.mode.mode);
-
+  const routeNameRef = React.useRef<any>(null);
   const isTablet = useAppSelector(
     (state: RootState) => state.deviceType.isTablet,
   );
@@ -47,7 +48,25 @@ const AppNavigator = () => {
 
   return (
     <>
-      <NavigationContainer ref={navigationRef}>
+      <NavigationContainer
+        onReady={() => {
+          routeNameRef.current =
+            navigationRef?.current?.getCurrentRoute()?.name;
+        }}
+        onStateChange={async () => {
+          const previousRouteName = routeNameRef.current;
+          const currentRouteName =
+            navigationRef?.current?.getCurrentRoute()?.name;
+
+          if (previousRouteName !== currentRouteName) {
+            await analytics().logScreenView({
+              screen_name: currentRouteName,
+              screen_class: currentRouteName,
+            });
+          }
+          routeNameRef.current = currentRouteName;
+        }}
+        ref={navigationRef}>
         <Stack.Navigator
           initialRouteName={SCREEN_NAME.SPLASH_SCREEN}
           screenOptions={{

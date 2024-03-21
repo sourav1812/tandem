@@ -71,6 +71,7 @@ export const styles = StyleSheet.create({
     marginBottom: verticalScale(14),
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
   },
   spaces: {
     flex: 1,
