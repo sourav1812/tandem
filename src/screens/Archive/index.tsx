@@ -11,7 +11,6 @@ import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import RNTextInputWithLabel from '@tandem/components/RNTextInputWithLabel';
 import SearchIcon from '@tandem/assets/svg/SearchIcon';
-import RNButton from '@tandem/components/RNButton';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import RNStoryCard from '@tandem/components/RNStoryCard';
 import {scale, verticalScale} from 'react-native-size-matters';
@@ -23,16 +22,10 @@ import BlueBotton from '@tandem/assets/svg/BlueButton';
 import BothButton from '@tandem/assets/svg/BothButton';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {MODE} from '@tandem/constants/mode';
-import getStories from '@tandem/api/getStories';
-import {store} from '@tandem/redux/store';
+import getArchivedStories from '@tandem/api/getArchivedStories';
 import themeColor from '@tandem/theme/themeColor';
 import {BooksData} from './interface';
-import {clearStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration.slice';
 import SadFace from '@tandem/assets/svg/Sad';
-import {
-  addSnapShot1,
-  addSnapShot2,
-} from '@tandem/redux/slices/animationSnapshots.slice';
 import bookshelfDays from '@tandem/functions/bookshelfDays';
 import {changeStoryLevel} from '@tandem/redux/slices/storyLevel.slice';
 import {useDispatch} from 'react-redux';
@@ -40,7 +33,7 @@ import {ratingList} from '@tandem/components/RNRatingModal/interface';
 import Book from '@tandem/api/getStories/interface';
 import {setForceReload} from '@tandem/redux/slices/activityIndicator.slice';
 
-const Bookshelf = () => {
+const Archive = () => {
   const dispatch = useDispatch();
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const mode = useAppSelector(state => state.mode.mode);
@@ -139,7 +132,6 @@ const Bookshelf = () => {
   };
 
   const listEmptyComponent = React.useCallback(() => {
-    const currentChildLocal = store.getState().createChild.currentChild;
     if (!bookObjects.endReached || isLoading) {
       return null;
     }
@@ -150,12 +142,8 @@ const Bookshelf = () => {
         </View>
         {searchText.value === '' ? (
           <>
-            <RNTextComponent isSemiBold style={styles.nothingToSeeText}>
-              {mode === MODE.A ? currentChildLocal.name + ' ' : null}
-              {translation(`bookshelf.${mode}.heading`)}
-            </RNTextComponent>
             <RNTextComponent numberOfLines={2} style={styles.whyDontWriteStory}>
-              {translation(`bookshelf.${mode}.subHeading`)}
+              No books in Archive
             </RNTextComponent>
           </>
         ) : (
@@ -163,19 +151,9 @@ const Bookshelf = () => {
             {translation('NO_RESULTS')}
           </RNTextComponent>
         )}
-        <RNButton
-          customStyle={{width: '40%', minWidth: '40%'}}
-          title={translation('bookshelf.write-a-story')}
-          onClick={() => {
-            store.dispatch(clearStoryGenerationResponse());
-            store.dispatch(addSnapShot1(null));
-            store.dispatch(addSnapShot2(null));
-            navigateTo(SCREEN_NAME.ROADMAP);
-          }}
-        />
       </View>
     );
-  }, [bookObjects.endReached, isLoading, mode, searchText.value]);
+  }, [bookObjects.endReached, isLoading, searchText.value]);
 
   const renderItem = React.useCallback(
     ({item}: {item: BooksData; index: number}) => {
@@ -223,7 +201,7 @@ const Bookshelf = () => {
         setLoading(true);
         console.log('this runs', page);
 
-        const response = await getStories(1);
+        const response = await getArchivedStories(1);
         setBookObjects(response);
       } catch (e) {
         console.log('error in bookshelf pagination for page 1', e);
@@ -245,7 +223,7 @@ const Bookshelf = () => {
       try {
         setLoading(true);
         console.log('currentPage', page);
-        const response = await getStories(page);
+        const response = await getArchivedStories(page);
         setBookObjects(prev => ({
           books: [...prev.books, ...response.books],
           endReached: response.endReached,
@@ -278,22 +256,13 @@ const Bookshelf = () => {
           },
         ]}>
         <View style={styles.headingView}>
-          <RNButton
-            customStyle={{
-              backgroundColor: 'transparent',
-              borderColor: 'transparent',
-              marginLeft: verticalScale(15),
-            }}
-            textStyle={{color: themeColor.themeBlue}}
-            onClick={() => {
-              navigateTo(SCREEN_NAME.ARCHIVE);
-            }}
-            title="Archive"
-          />
+          <View style={styles.spaces} />
           <RNTextComponent style={styles.bookshelfHeaderText} isSemiBold>
-            {translation('BOOKSHELF')}
+            Archive
           </RNTextComponent>
-          <Pressable onPress={() => navigateTo(SCREEN_NAME.ACCOUNT)}>
+          <Pressable
+            style={[styles.spaces, {alignItems: 'flex-end'}]}
+            onPress={() => navigateTo(SCREEN_NAME.ACCOUNT)}>
             {mode === MODE.B && <BothButton style={styles.button} />}
             {mode === MODE.A && <BlueBotton style={styles.button} />}
             {mode === MODE.C && (
@@ -370,4 +339,4 @@ const Bookshelf = () => {
   );
 };
 
-export default Bookshelf;
+export default Archive;

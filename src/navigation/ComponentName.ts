@@ -42,4 +42,5 @@ export enum SCREEN_NAME {
   CONVERSATION_STARTERS = 'ConversationStaters',
   CONVERSATION = 'ConversationScreen',
   BUILDING_TANDEM = 'BuildingTandem',
+  ARCHIVE = 'Archive',
 }

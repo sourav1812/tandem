@@ -18,6 +18,7 @@ import {hitStoryGenApiStandalone} from '@tandem/api/generateStory';
 import {clearPendingStoriesGen} from '@tandem/redux/slices/cache.slice';
 import {ConversationScreen} from '@tandem/screens/ConversationStaters';
 import BuildingTandem from '@tandem/screens/BuildingTandem';
+import Archive from '@tandem/screens/Archive';
 
 const AppNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -55,6 +56,7 @@ const AppNavigator = () => {
             animation:
               Platform.OS === 'android' ? 'slide_from_right' : 'default',
           }}>
+          <Stack.Screen component={Archive} name={SCREEN_NAME.ARCHIVE} />
           <Stack.Screen
             component={SplashScreen}
             name={SCREEN_NAME.SPLASH_SCREEN}

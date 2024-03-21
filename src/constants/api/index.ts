@@ -22,6 +22,7 @@ export enum API {
   POST_CHILD_ANALYTICS = 'analytics/children',
   GET_CHILD_ANALYTICS = 'analytics/children',
   CONTACT_US = 'user/contact-us',
+  ARCHIVED_STORIES = 'story-books/archive',
 }
 
 export enum ENVIRONMENT {

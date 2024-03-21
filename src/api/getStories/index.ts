@@ -31,7 +31,7 @@ const getStories = async (page: number) => {
 
 export default getStories;
 
-const cacheStoryBookImages = (books: Book[]) => {
+export const cacheStoryBookImages = (books: Book[]) => {
   let dirs = RNFetchBlob.fs.dirs;
   books.forEach(async (book, index) => {
     const cacheBookRef = store.getState().bookShelf.images[book._id];
