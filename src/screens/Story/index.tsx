@@ -21,6 +21,7 @@ import {changeStoryLevel} from '@tandem/redux/slices/storyLevel.slice';
 import themeColor from '@tandem/theme/themeColor';
 import markBookAsArchived from '@tandem/api/markBookAsArchived';
 import {setForceReload} from '@tandem/redux/slices/activityIndicator.slice';
+import analytics from '@react-native-firebase/analytics';
 
 const Story = () => {
   const [visible, setVisible] = useState(false);
@@ -188,6 +189,12 @@ const Story = () => {
             customStyle={[styles.button]}
             textStyle={{fontSize: verticalScale(14)}}
             onClick={() => {
+              analytics().logEvent('readBook', {
+                bookId: routeData.book._id,
+                childId: routeData.book.childId,
+                bookTitle: routeData.book.title,
+                userId: routeData.book.userId,
+              });
               navigateTo(SCREEN_NAME.STORY_TELLING, {
                 id: routeData.id,
                 readWithoutImages: !redirect,

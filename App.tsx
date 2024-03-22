@@ -37,7 +37,6 @@ const App: FC = () => {
     });
 
     statusbar();
-
     return unsubscribe;
   }, []);
 

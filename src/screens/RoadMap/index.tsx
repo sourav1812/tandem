@@ -55,6 +55,7 @@ import Orientation from 'react-native-orientation-locker';
 import lockOrientation from '@tandem/functions/lockOrientation';
 import {Stats, updateChildStats} from '@tandem/redux/slices/createChild.slice';
 import {setStoryGenTracking} from '@tandem/redux/slices/activityIndicator.slice';
+import analytics from '@react-native-firebase/analytics';
 
 const SCREEN = [
   SCREEN_NAME.GENERATE_STORY_WHAT_HAPPENS,
@@ -308,6 +309,23 @@ const RNRoadmap = () => {
                 await generateStory({
                   childId: currentChild.childId,
                   storyPromptData: storyGenerationResponse,
+                });
+                analytics().logEvent('newStoryGenerated', {
+                  childId: currentChild.childId,
+                  characters: JSON.stringify(
+                    storyGenerationResponse.characters,
+                  ),
+                  childInStory: JSON.stringify(
+                    storyGenerationResponse.childInStory,
+                  ),
+                  genre: JSON.stringify(storyGenerationResponse.genre),
+                  illustrationStyle: JSON.stringify(
+                    storyGenerationResponse.illustrationStyle,
+                  ),
+                  location: JSON.stringify(storyGenerationResponse.location),
+                  plotElements: JSON.stringify(
+                    storyGenerationResponse.plotElements,
+                  ),
                 });
               } catch (error) {
                 console.log('error generating story', error);

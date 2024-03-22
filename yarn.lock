@@ -1743,23 +1743,28 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/netinfo/-/netinfo-9.4.1.tgz#7b880758adca65fe47ee866cf7b00416b9dcc192"
   integrity sha512-dAbY5mfw+6Kas/GJ6QX9AZyY+K+eq9ad4Su6utoph/nxyH3whp5cMSgRNgE2VhGQVRZ/OG0qq3IaD3+wzoqJXw==
 
-"@react-native-firebase/analytics@^18.3.0":
-  version "18.3.2"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/analytics/-/analytics-18.3.2.tgz#82d3672936dfd178b95e5c46121f5487b0c5b275"
-  integrity sha512-svLYJbAUCJ1MqRwvHefqQu1DxWLJJtfEuBE9G+5p1UgDrXEk06uUDApYK26LnatzNkS7Oq3S0Slklv6nnh/vfg==
+"@react-native-firebase/analytics@^19.0.1":
+  version "19.0.1"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/analytics/-/analytics-19.0.1.tgz#5855d56d3ffc06953eab5f08bed0f3ccb6465351"
+  integrity sha512-j3tgH24nXSSAq21t+PKcpAxVVV+mKFbiBMkqrI29xKok/63fui5+6E3vSMhIT8xPau7YxzihKAWvD/Qa9LH3PA==
 
-"@react-native-firebase/app@^18.3.0":
-  version "18.3.2"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-18.3.2.tgz#c08da9f01b3642c3f4c10832fbd078012f65e736"
-  integrity sha512-2yX1PtpcVQirLDfnZiBU44vRr4jeIuvAf2oAAaf+/zBcDApU5cwPfyFoCCANfqR8W3w8zs9h9UyhRYdnksM4sQ==
+"@react-native-firebase/app@^19.0.1":
+  version "19.0.1"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-19.0.1.tgz#49ffbfc7853ebf93520a167a359b4deeac78d77c"
+  integrity sha512-opwy3mQfu0Vg7Fz07EzNCuRI6Wr8U3n6wp0IIwDbNg5zJWQN7ALa9OSN1SA16RhPepIXO1fFWbwmRsL2nOgrIw==
   dependencies:
-    opencollective-postinstall "^2.0.1"
+    opencollective-postinstall "^2.0.3"
     superstruct "^0.6.2"
 
-"@react-native-firebase/messaging@^18.3.0":
-  version "18.3.2"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/messaging/-/messaging-18.3.2.tgz#f61d10648afed567a488ef37ac6af8242509daa0"
-  integrity sha512-An8cRsYjpUdE5S9NU1d/8+pc8mGxqsPEB7yGbRps2JzaJsII8I63LdT/j2P2QYMx4a3RVQN4Nauw4Y07rrVVhA==
+"@react-native-firebase/in-app-messaging@^19.0.1":
+  version "19.0.1"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/in-app-messaging/-/in-app-messaging-19.0.1.tgz#1ede99f4f1e5585b30bf7276f4a8accb633efdcc"
+  integrity sha512-Xx4A2SmmI2E3jkRYdoXUKW1/A4zPKjYkNBcv4RYJAlXv0jbRRyCmI18c3Brb8V8gxm/Et8MPtMmKm7DGSNbMzg==
+
+"@react-native-firebase/messaging@^19.0.1":
+  version "19.0.1"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/messaging/-/messaging-19.0.1.tgz#97f0473e68d2886db27ceeb64ca3ff055615c946"
+  integrity sha512-aoSDHghthkUYFzGMlrwuRh/mIhJcNTPyMUNGdAW04lOY2gGeHYEyPGMXLAUDa9N7wC5wyVKNZl+1072l/VHjKA==
 
 "@react-native-google-signin/google-signin@^10.0.1":
   version "10.0.1"
@@ -6375,7 +6380,7 @@ open@^6.2.0:
   dependencies:
     is-wsl "^1.1.0"
 
-opencollective-postinstall@^2.0.1:
+opencollective-postinstall@^2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/opencollective-postinstall/-/opencollective-postinstall-2.0.3.tgz#7a0fff978f6dbfa4d006238fbac98ed4198c3259"
   integrity sha512-8AV/sCtuzUeTo8gQK5qDZzARrulB3egtLzFgteqB2tcT4Mw7B8Kt7JcDHmltjz6FOAHsvTevk70gZEbhM4ZS9Q==
