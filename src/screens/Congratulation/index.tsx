@@ -39,8 +39,12 @@ const Congratulation = () => {
             store.dispatch(addSnapShot2(null));
             navigateTo(SCREEN_NAME.ROADMAP);
           },
+          onThirdOption: () => {
+            navigateTo(SCREEN_NAME.ACCOUNT);
+          },
           successText: 'Read a story we made earlier',
           destructiveText: 'Create another story',
+          thirdOptionText: 'Go to Home',
         }),
       );
     }, 4000);

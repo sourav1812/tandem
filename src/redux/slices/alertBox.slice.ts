@@ -6,9 +6,11 @@ interface InitialState {
     message: string;
     onSuccess: () => void | Promise<void>;
     onDestructive?: () => void | Promise<void>;
+    onThirdOption?: () => void | Promise<void>;
     possibleResolution: string;
     successText?: string;
     destructiveText?: string;
+    thirdOptionText?: string;
   };
 }
 
