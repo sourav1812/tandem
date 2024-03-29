@@ -17,7 +17,10 @@ import {MODE} from '@tandem/constants/mode';
 import {useRoute} from '@react-navigation/native';
 import {BooksData} from '../Bookshelf/interface';
 import {store} from '@tandem/redux/store';
-import {changeStoryLevel} from '@tandem/redux/slices/storyLevel.slice';
+import {
+  changeStoryLevel,
+  changeTextSize,
+} from '@tandem/redux/slices/storyLevel.slice';
 import themeColor from '@tandem/theme/themeColor';
 import markBookAsArchived from '@tandem/api/markBookAsArchived';
 import {setForceReload} from '@tandem/redux/slices/activityIndicator.slice';
@@ -47,9 +50,11 @@ const Story = () => {
       const images: string[] = JSON.parse(
         JSON.stringify(store.getState().bookShelf.images?.[book._id] || []),
       );
-      const indexOfStoryComplexity = Math.floor(
-        (book.storyInfo.length - 1) / 2,
-      );
+      const indexOfStoryComplexity = 0;
+      // Math.floor(
+      //   (book.storyInfo.length - 1) / 2,
+      // );
+      store.dispatch(changeTextSize(2));
       store.dispatch(changeStoryLevel(indexOfStoryComplexity));
       images.shift(); // ! removing thumbnail image from book
       setProgress(prev => ({

@@ -32,6 +32,7 @@ const App: FC = () => {
     const unsubscribe = messaging().onMessage(async () => {
       await pushChildStats();
       await getChildStats();
+      store.dispatch(setForceReload(false)); // forcing a change to trigger useEffect
       store.dispatch(setForceReload(true));
       store.dispatch(setStoryBookNotification(true));
     });

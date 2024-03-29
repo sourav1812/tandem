@@ -5,7 +5,7 @@ import RNTextComponent from '@tandem/components/RNTextComponent';
 import {styles} from './styles';
 import themeColor from '@tandem/theme/themeColor';
 import {verticalScale} from 'react-native-size-matters';
-import {Pressable, ScrollView, View} from 'react-native';
+import {Keyboard, Pressable, ScrollView, View} from 'react-native';
 import RNButton from '@tandem/components/RNButton';
 import RNLogoHeader from '@tandem/components/RNLogoHeader';
 import RNTextInputWithLabel from '@tandem/components/RNTextInputWithLabel';
@@ -108,8 +108,11 @@ const HelpCenter = ({route}: HelpCenterProps) => {
           ]}
         />
       </View>
-
       <ScrollView
+        onScroll={() => {
+          Keyboard.dismiss();
+        }}
+        scrollEventThrottle={1}
         style={{flex: 1}}
         contentContainerStyle={[
           styles.scrollView,
@@ -143,6 +146,7 @@ const HelpCenter = ({route}: HelpCenterProps) => {
               hint={translation('ENTER_YOUR_EMAIL')}
               inputStyle={styles.inputText}
             />
+
             <RNTextInputWithLabel
               multiline
               label={translation('MESSAGE')}

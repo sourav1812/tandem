@@ -36,6 +36,23 @@ export const cacheStoryBookImages = (books: Book[]) => {
   books.forEach(async (book, index) => {
     const cacheBookRef = store.getState().bookShelf.images[book._id];
     if (
+      index === books.length - 1 &&
+      store.getState().activityIndicator.storyBookNotification
+    ) {
+      setTimeout(() => {
+        store.dispatch(
+          addAlertData({
+            type: 'Alert',
+            message: 'Your new book is now available to read',
+            onSuccess: async () => {
+              store.dispatch(setStoryBookNotification(false));
+              store.dispatch(clearAlertData());
+            },
+          }),
+        );
+      }, 3000);
+    }
+    if (
       Array.isArray(cacheBookRef) &&
       cacheBookRef.length === book.storyInfo[0].pages.length + 1 // ! making sure if all images are downloaded along with the thumbnail
     ) {
@@ -54,21 +71,5 @@ export const cacheStoryBookImages = (books: Book[]) => {
       }),
     );
     store.dispatch(setImagesForBook({bookId: book._id, images: imagePages}));
-
-    if (
-      index === 0 &&
-      store.getState().activityIndicator.storyBookNotification
-    ) {
-      store.dispatch(
-        addAlertData({
-          type: 'Alert',
-          message: 'Your new book is now available to read',
-          onSuccess: async () => {
-            store.dispatch(setStoryBookNotification(false));
-            store.dispatch(clearAlertData());
-          },
-        }),
-      );
-    }
   });
 };

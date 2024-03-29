@@ -9,7 +9,7 @@ interface LevelInterface {
 // Define the initial state using that type
 const initialState: LevelInterface = {
   level: 0,
-  size: 0,
+  size: 2,
 };
 
 export const levelSlice = createSlice({

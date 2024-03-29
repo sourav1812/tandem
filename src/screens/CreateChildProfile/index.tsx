@@ -92,6 +92,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
   };
 
   const nextQuestion = async () => {
+    Keyboard.dismiss();
     if (questionIndex <= 2) {
       let indexArry: IndicatorType[] = [...bulletinArray];
       bulletinArray.map((item, index) => {

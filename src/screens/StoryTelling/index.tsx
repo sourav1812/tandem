@@ -286,18 +286,18 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
             <Pressable
               style={{paddingHorizontal: 5}}
               onPress={() => {
-                dispatch(changeStoryLevel(level > 0 ? level - 1 : level));
+                dispatch(
+                  changeStoryLevel(
+                    level < book.storyInfo.length - 1 ? level + 1 : level,
+                  ),
+                );
               }}>
               <Add size={30} />
             </Pressable>
             <Pressable
               style={{padding: 7, paddingVertical: 10}}
               onPress={() => {
-                dispatch(
-                  changeStoryLevel(
-                    level < book.storyInfo.length - 1 ? level + 1 : level,
-                  ),
-                );
+                dispatch(changeStoryLevel(level > 0 ? level - 1 : level));
               }}>
               <Subtract size={20} />
             </Pressable>
