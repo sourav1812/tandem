@@ -187,7 +187,10 @@ export default ({
               borderColor: themeColor.gold,
             }}
             onClick={() => {
-              navigateTo(SCREEN_NAME.CONVERSATION_STARTERS);
+              navigateTo(SCREEN_NAME.CONVERSATION_STARTERS, {
+                conversationStarters:
+                  book.storyInfo[level].conversationStarters,
+              });
             }}
             title="Have you thought about..."
           />

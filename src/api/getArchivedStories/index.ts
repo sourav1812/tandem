@@ -1,8 +1,8 @@
 import {API} from '@tandem/constants/api';
 import {get} from '@tandem/api/index';
-import Book from './interface';
 import {store} from '@tandem/redux/store';
 import {cacheStoryBookImages} from '../getStories';
+import Book from '../getStories/interface';
 
 const getArchivedStories = async (page: number) => {
   try {

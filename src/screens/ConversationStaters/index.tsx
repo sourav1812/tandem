@@ -9,7 +9,23 @@ import themeColor from '@tandem/theme/themeColor';
 import React from 'react';
 import {scale, verticalScale} from 'react-native-size-matters';
 
-export default () => {
+export default ({
+  route,
+}: {
+  route: {params: {conversationStarters: string[]}};
+}) => {
+  const conversationStarters = route.params.conversationStarters;
+  const COLOR_ARRAY = [
+    themeColor.green,
+    themeColor.gold,
+    themeColor.purple,
+    themeColor.themeBlue,
+    themeColor.lightGreen,
+    themeColor.pink,
+  ];
+  const getColorIndex = (index: number) => {
+    return index % COLOR_ARRAY.length;
+  };
   return (
     <RNScreenWrapper
       style={{
@@ -32,43 +48,22 @@ export default () => {
         titleStyle={{marginLeft: scale(35)}}
         heading={'Conversation Starters'}
       />
-      <RNButton
-        customStyle={{
-          backgroundColor: themeColor.green,
-          borderColor: themeColor.green,
-        }}
-        onClick={() => {
-          navigateTo(SCREEN_NAME.CONVERSATION, {
-            text: 'Have you ever thought about...',
-          });
-        }}
-        title={'1 💬'}
-      />
-      <RNButton
-        customStyle={{
-          marginVertical: verticalScale(20),
-          backgroundColor: themeColor.pink,
-          borderColor: themeColor.pink,
-        }}
-        onClick={() => {
-          navigateTo(SCREEN_NAME.CONVERSATION, {
-            text: 'Have you ever thought about...',
-          });
-        }}
-        title={'2 💬'}
-      />
-      <RNButton
-        customStyle={{
-          backgroundColor: themeColor.purple,
-          borderColor: themeColor.purple,
-        }}
-        onClick={() => {
-          navigateTo(SCREEN_NAME.CONVERSATION, {
-            text: 'Have you ever had a small adventure in an unexpected place?\nWhat was it like?',
-          });
-        }}
-        title={'3 💬'}
-      />
+
+      {conversationStarters.map((text, index) => (
+        <RNButton
+          key={text + index}
+          customStyle={{
+            backgroundColor: COLOR_ARRAY[getColorIndex(index)],
+            borderColor: COLOR_ARRAY[getColorIndex(index)],
+          }}
+          onClick={() => {
+            navigateTo(SCREEN_NAME.CONVERSATION, {
+              text,
+            });
+          }}
+          title={`${index + 1} 💬`}
+        />
+      ))}
     </RNScreenWrapper>
   );
 };

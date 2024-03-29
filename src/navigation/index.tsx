@@ -20,6 +20,7 @@ import {ConversationScreen} from '@tandem/screens/ConversationStaters';
 import BuildingTandem from '@tandem/screens/BuildingTandem';
 import Archive from '@tandem/screens/Archive';
 import analytics from '@react-native-firebase/analytics';
+import BlowWindMill from '@tandem/screens/BlowWindMill';
 
 const AppNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -76,6 +77,10 @@ const AppNavigator = () => {
               Platform.OS === 'android' ? 'slide_from_right' : 'default',
           }}>
           <Stack.Screen component={Archive} name={SCREEN_NAME.ARCHIVE} />
+          <Stack.Screen
+            component={BlowWindMill}
+            name={SCREEN_NAME.BLOW_WINDMILL}
+          />
           <Stack.Screen
             component={SplashScreen}
             name={SCREEN_NAME.SPLASH_SCREEN}

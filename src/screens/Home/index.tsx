@@ -501,7 +501,9 @@ const Home = () => {
                           store.dispatch(addSnapShot1(null));
                           store.dispatch(addSnapShot2(null));
                           navigateTo(SCREEN_NAME.ROADMAP);
+                          return;
                         }
+                        navigateTo(SCREEN_NAME.BLOW_WINDMILL);
                       }}
                     />
                   ))

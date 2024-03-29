@@ -43,4 +43,5 @@ export enum SCREEN_NAME {
   CONVERSATION = 'ConversationScreen',
   BUILDING_TANDEM = 'BuildingTandem',
   ARCHIVE = 'Archive',
+  BLOW_WINDMILL = 'BlowWindMill',
 }

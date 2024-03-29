@@ -25,6 +25,7 @@ export default interface Book {
       text: string;
       _id: string;
     }[];
+    conversationStarters: string[];
     comprehension_questions: {
       question: string;
       options: string[];

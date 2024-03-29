@@ -46,6 +46,7 @@ export type RootStackParamList = {
   ConversationScreen: any;
   BuildingTandem: undefined;
   Archive: undefined;
+  BlowWindMill: undefined;
 };
 
 export type RootTabParamList = {

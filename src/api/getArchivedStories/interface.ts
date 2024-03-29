@@ -1,44 +1,5 @@
 import {RATING_INFO, STORIES_RESPONSE} from '@tandem/constants/enums';
 
-export default interface Book {
-  _id: string;
-  userId: string;
-  childId: string;
-  status: string;
-  read: boolean;
-  archived: boolean;
-  referenceId: string;
-  images: {
-    page: number;
-    img_url: string;
-    _id: string;
-  }[];
-  createdAt: string;
-  __v: number;
-  teaser: string;
-  title: string;
-  storyInfo: {
-    _id: string;
-    bookId: string;
-    userId: string;
-    pages: {
-      text: string;
-      _id: string;
-    }[];
-    comprehension_questions: {
-      question: string;
-      options: string[];
-      answer: string;
-      _id: string;
-    }[];
-    readingAge: number;
-    createdAt: string;
-    updatedAt: string;
-    __v: number;
-  }[];
-  ratingInfo: RatingInfo[];
-}
-
 export interface Page {
   [STORIES_RESPONSE.ILLUSTRATION_PROMPT]: string;
   [STORIES_RESPONSE.ILLUSTRATION_URL]: string;
