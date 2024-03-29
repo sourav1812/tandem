@@ -181,19 +181,21 @@ export default ({
             }}
             title="Answer these questions..."
           />
-          <RNButton
-            customStyle={{
-              backgroundColor: themeColor.gold,
-              borderColor: themeColor.gold,
-            }}
-            onClick={() => {
-              navigateTo(SCREEN_NAME.CONVERSATION_STARTERS, {
-                conversationStarters:
-                  book.storyInfo[level].conversationStarters,
-              });
-            }}
-            title="Have you thought about..."
-          />
+          {book.storyInfo[level]?.conversationStarters && (
+            <RNButton
+              customStyle={{
+                backgroundColor: themeColor.gold,
+                borderColor: themeColor.gold,
+              }}
+              onClick={() => {
+                navigateTo(SCREEN_NAME.CONVERSATION_STARTERS, {
+                  conversationStarters:
+                    book.storyInfo[level].conversationStarters,
+                });
+              }}
+              title="Have you thought about..."
+            />
+          )}
           <RNButton
             customStyle={{
               marginVertical: verticalScale(10),
