@@ -620,7 +620,14 @@ const Account = () => {
           open={6}
           topViewStyle={{alignItems: 'center'}}
           text={translation('account-screen-tooltip.tip-four')}>
-          <View
+          <Pressable
+            onPress={() => {
+              if (playerList.length !== 0) {
+                buttonPress();
+                navigateTo(SCREEN_NAME.BOTTOM_TAB, {}, true);
+              }
+            }}
+            disabled={childList.length === 0 || playerList.length === 0}
             style={[
               styles.footer,
               playerList.length === 0 &&
@@ -646,15 +653,7 @@ const Account = () => {
               ]}>
               {buttonHeading()}
             </RNTextComponent>
-            <Pressable
-              style={[styles.button, isTablet && {width: scale(90)}]}
-              onPress={() => {
-                if (playerList.length !== 0) {
-                  buttonPress();
-                  navigateTo(SCREEN_NAME.BOTTOM_TAB, {}, true);
-                }
-              }}
-              disabled={childList.length === 0 || playerList.length === 0}>
+            <View style={[styles.button, isTablet && {width: scale(90)}]}>
               {playerList.map((item, index) => {
                 const circleType = [];
                 // const filePath = avatars.filter(
@@ -694,8 +693,8 @@ const Account = () => {
                   />
                 );
               })}
-            </Pressable>
-          </View>
+            </View>
+          </Pressable>
         </RNTooltip>
       </View>
       <RNSignoutModal
