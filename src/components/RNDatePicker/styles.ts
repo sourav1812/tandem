@@ -21,9 +21,12 @@ export default StyleSheet.create({
     fontSize: scale(13),
   },
   button: {
+    height: verticalScale(30), // ! thios height needs to match get item layout
     paddingVertical: verticalScale(4),
     paddingHorizontal: 10,
     borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
     borderColor: 'transparent',
     borderRadius: 6,
   },

@@ -30,7 +30,7 @@ const RNBookmarkComponent = ({
 
   const runAnimation = () => {
     scaleButton.value = withSequence(
-      withTiming(1.2, {duration: 200}),
+      withTiming(0.9, {duration: 200}),
       withTiming(1),
     );
   };

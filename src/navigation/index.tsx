@@ -49,7 +49,7 @@ const AppNavigator = () => {
     }
     const subscription = RNShake.addListener(() => {
       // ! shake detect logic
-      console.log('User shook the device');
+      console.log('Bro shook the device');
     });
 
     // ! x:0, y:0, z-1 should mix the colors as it is the orientation for flat device

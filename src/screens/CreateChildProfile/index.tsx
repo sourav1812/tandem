@@ -90,6 +90,9 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
       return {...previouState, ...date};
     });
   };
+  React.useEffect(() => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+  }, [dateModal]);
 
   const nextQuestion = async () => {
     Keyboard.dismiss();
