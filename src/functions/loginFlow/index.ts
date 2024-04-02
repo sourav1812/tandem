@@ -64,5 +64,5 @@ export default async (loginResponse: LoginResponse) => {
     } else {
       navigateTo(SCREEN_NAME.TERMS_AND_CONDITIONS, {}, true);
     }
-  }, 5000);
+  }, 6000);
 };

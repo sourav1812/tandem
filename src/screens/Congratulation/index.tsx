@@ -2,7 +2,6 @@ import React from 'react';
 import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {Image} from 'react-native';
-import {RNConfettiAnimation} from '@tandem/components/RNConfettiAnimation';
 import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
@@ -13,6 +12,8 @@ import {
 } from '@tandem/redux/slices/animationSnapshots.slice';
 import {clearStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration.slice';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import LottieView from 'lottie-react-native';
+import LottieAnimationFile from './animation.json';
 
 const Congratulation = () => {
   const notificationScreenPermissions = useAppSelector(
@@ -47,7 +48,7 @@ const Congratulation = () => {
           thirdOptionText: 'Go to Home',
         }),
       );
-    }, 4000);
+    }, 2000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -60,7 +61,19 @@ const Congratulation = () => {
         }}
         resizeMode="contain"
       />
-      <RNConfettiAnimation />
+      <LottieView
+        // eslint-disable-next-line react-native/no-inline-styles
+        style={{
+          flex: 1,
+          width: '100%',
+          height: '100%',
+          position: 'absolute',
+          backgroundColor: 'transparent',
+        }}
+        source={LottieAnimationFile}
+        autoPlay
+        loop
+      />
     </RNScreenWrapper>
   );
 };

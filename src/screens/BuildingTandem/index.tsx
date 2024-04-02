@@ -2,7 +2,7 @@
 import LottieView from 'lottie-react-native';
 import LottieAnimationFile from './animation.json';
 import React from 'react';
-import {View} from 'react-native';
+import {Image, View} from 'react-native';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import {verticalScale} from 'react-native-size-matters';
 
@@ -17,20 +17,33 @@ const BuildingTandem = () => {
         justifyContent: 'center',
       }}>
       <LottieView
-        style={{flex: 1, width: '100%', height: '100%'}}
+        style={{flex: 1, width: '100%', height: '100%', position: 'absolute'}}
         source={LottieAnimationFile}
         autoPlay
         loop
       />
-      <RNTextComponent
-        isSemiBold
+      <View
         style={{
           position: 'absolute',
-          bottom: verticalScale(50),
-          textAlign: 'center',
+          bottom: verticalScale(90),
         }}>
-        Building Tandem...
-      </RNTextComponent>
+        <RNTextComponent
+          isSemiBold
+          style={{
+            textAlign: 'center',
+            marginBottom: 5,
+          }}>
+          Building
+        </RNTextComponent>
+        <Image
+          source={require('@tandem/assets/png/logo.png')}
+          style={{
+            height: verticalScale(40),
+            width: verticalScale(150),
+          }}
+          resizeMode="contain"
+        />
+      </View>
     </View>
   );
 };

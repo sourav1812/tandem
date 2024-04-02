@@ -482,7 +482,7 @@ PODS:
     - React-Core
   - react-native-shake (5.3.2):
     - React
-  - react-native-skia (0.1.241):
+  - react-native-skia (1.0.4):
     - RCT-Folly (= 2021.07.22.00)
     - React
     - React-callinvoker
@@ -907,7 +907,7 @@ SPEC CHECKSUMS:
   react-native-orientation-locker: 4409c5b12b65f942e75449872b4f078b6f27af81
   react-native-safe-area-context: b97eb6f9e3b7f437806c2ce5983f479f8eb5de4b
   react-native-shake: 62aa5681863203090a087842da70183c442b97f8
-  react-native-skia: aeff17a013e73142ec8f2518bffae005f2b5fb1c
+  react-native-skia: 69482406004911464f57cfb901348ddf3c4032bb
   React-perflogger: d21f182895de9d1b077f8a3cd00011095c8c9100
   React-RCTActionSheet: 0151f83ef92d2a7139bba7dfdbc8066632a6d47b
   React-RCTAnimation: 5ec9c0705bb2297549c120fe6473aa3e4a01e215
@@ -939,6 +939,6 @@ SPEC CHECKSUMS:
   TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
   Yoga: 065f0b74dba4832d6e328238de46eb72c5de9556
 
-PODFILE CHECKSUM: 9080ada7418b7753b2a2af50fea9d0fa2430661c
+PODFILE CHECKSUM: 5110a04fc94b2053f6979f68e7ca1e3b75509bba
 
 COCOAPODS: 1.15.2

@@ -1,4 +1,4 @@
-import {Easing, runTiming, useValue} from '@shopify/react-native-skia';
+import {Easing, withTiming, useSharedValue} from 'react-native-reanimated';
 import React from 'react';
 
 import {DonutChart} from './Donut';
@@ -10,10 +10,10 @@ export const DonutChartContainer = ({
   total: number;
   current: number;
 }) => {
-  const animationState = useValue(0);
+  const animationState = useSharedValue(0);
 
   React.useEffect(() => {
-    runTiming(animationState, current / total, {
+    animationState.value = withTiming(current / total, {
       duration: 500,
       easing: Easing.out(Easing.exp),
     });

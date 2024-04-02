@@ -56,7 +56,34 @@ target 'Tandem' do
     inherit! :complete
     # Pods for testing
   end
+  $static_library = [
+    'React',
+    'react-native-skia/Api',
+    'react-native-skia/Jsi',
+    'react-native-skia/RNSkia',
+    'react-native-skia/SkiaHeaders',
+    'react-native-skia/Utils',
+    'react-native-skia',
+ ]
 
+ pre_install do |installer|
+   Pod::Installer::Xcode::TargetValidator.send(:define_method, :verify_no_static_framework_transitive_dependencies) {}
+
+   installer.pod_targets.each do |pod|
+     ## Skia pod correction
+     if $static_library.include?(pod.name)
+       puts "Overriding the build_type to static_library from static_framework for #{pod.name}"
+       def pod.build_type;
+         Pod::BuildType.static_library
+       end
+     end
+
+     ## Firebase
+     bt = pod.send(:build_type)
+     puts "#{pod.name} (#{bt})"
+     puts "  linkage: #{bt.send(:linkage)} packaging: #{bt.send(:packaging)}"
+   end
+ end
   post_install do |installer|
     react_native_post_install(
       installer,
