@@ -54,6 +54,7 @@ export type RootTabParamList = {
   Bookshelf: undefined;
   People: undefined;
   NotificationScreen: undefined;
+  PublicLib: undefined;
 };
 
 export type AllStackScreenParamList = RootStackParamList & RootTabParamList;

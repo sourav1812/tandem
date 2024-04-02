@@ -7,6 +7,7 @@ export enum API {
   GENERATE_STORY = 'story-books', //? POST
   RATE_STORY = 'story-books/rate-book', //? POST
   STORIES = 'story-books', //* GET
+  PUBLIC_STORIES = 'story-books/public', //* GET
   LOGOUT = 'user/log-out', //? POST
   USER_PROFILE = 'user/profile', //* GET
   CHANGE_PASSWORD = 'user/password', //? PUT
@@ -18,6 +19,7 @@ export enum API {
   GET_STORY_ILLUSTRATIONS = 'story-books/illustrations', // * GET
   MARK_BOOK_AS_READ = 'story-books/update-reading-status', // ? POST
   MARK_BOOK_AS_ARCHIVED = 'story-books/archive-status', // ? POST
+  MARK_BOOK_AS_PUBLIC = 'story-books/public-status', // ? POST
   GET_STORY_THUMBNAILS = 'story-books/{BOOK_ID_HERE}/thumbnail',
   POST_CHILD_ANALYTICS = 'analytics/children',
   GET_CHILD_ANALYTICS = 'analytics/children',

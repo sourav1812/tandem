@@ -44,4 +44,5 @@ export enum SCREEN_NAME {
   BUILDING_TANDEM = 'BuildingTandem',
   ARCHIVE = 'Archive',
   BLOW_WINDMILL = 'BlowWindMill',
+  PUBLIC_LIB = 'PublicLib',
 }

@@ -18,6 +18,7 @@ import {MODE} from '@tandem/constants/mode';
 import {translation} from '@tandem/utils/methods';
 import {RootState} from '@tandem/redux/store';
 import NotificationScreen from '@tandem/screens/NotificationScreen';
+import PublicLib from '@tandem/screens/PublicLib';
 
 const BottomTab = () => {
   const Tab = createBottomTabNavigator<RootTabParamList>();
@@ -113,6 +114,42 @@ const BottomTab = () => {
                     }),
                   }}>
                   {translation('HOME')}
+                </RNTextComponent>
+              </View>
+            );
+          },
+        }}
+      />
+      <Tab.Screen
+        component={PublicLib}
+        name={SCREEN_NAME.PUBLIC_LIB}
+        options={{
+          tabBarIcon: ({focused}: any) => {
+            return (
+              <View
+                style={[
+                  styles.iconContainer,
+                  {
+                    ...(focused && {
+                      borderTopWidth: verticalScale(2),
+                      borderColor: themeColor.themeBlue,
+                    }),
+                  },
+                ]}>
+                <BookmarkActive focused={focused} />
+
+                <RNTextComponent
+                  isMedium
+                  style={[
+                    styles.title,
+                    {
+                      fontSize: verticalScale(9.5),
+                      ...(focused && {
+                        color: themeColor.themeBlue,
+                      }),
+                    },
+                  ]}>
+                  Public Library
                 </RNTextComponent>
               </View>
             );

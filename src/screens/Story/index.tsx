@@ -25,6 +25,7 @@ import themeColor from '@tandem/theme/themeColor';
 import markBookAsArchived from '@tandem/api/markBookAsArchived';
 import {setForceReload} from '@tandem/redux/slices/activityIndicator.slice';
 import analytics from '@react-native-firebase/analytics';
+import markBookAsPublic from '@tandem/api/markBookAsPublic';
 
 const Story = () => {
   const [visible, setVisible] = useState(false);
@@ -35,6 +36,7 @@ const Story = () => {
   const route: any = useRoute();
   const routeData: BooksData = route?.params?.routeData;
   const [archive, setArchive] = useState(routeData.book.archived);
+  const [publicBook, setPublicBook] = useState(false);
   const [thumbnail] = useState(routeData?.image || undefined);
   const [textArray, setTextArray] = React.useState<
     {text: string; img: string | null}[]
@@ -94,7 +96,7 @@ const Story = () => {
             top: '13%',
             padding: 20,
             justifyContent: 'center',
-            width: '60%',
+            width: '65%',
           }}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <RNTextComponent style={{marginRight: 'auto'}}>
@@ -115,6 +117,27 @@ const Story = () => {
                 }
               }}
               value={archive}
+            />
+          </View>
+          <View
+            style={{flexDirection: 'row', alignItems: 'center', marginTop: 10}}>
+            <RNTextComponent style={{marginRight: 'auto'}}>
+              Make story public
+            </RNTextComponent>
+            <Switch
+              trackColor={{false: '#474747', true: themeColor.green}}
+              thumbColor={themeColor.white}
+              ios_backgroundColor={'#474747'}
+              onValueChange={async () => {
+                // ! api req to toogle archive and update state
+                try {
+                  setPublicBook(!publicBook);
+                  await markBookAsPublic(routeData.book._id, !publicBook);
+                } catch (error) {
+                  setPublicBook(publicBook);
+                }
+              }}
+              value={publicBook}
             />
           </View>
         </View>
