@@ -35,8 +35,11 @@ const Story = () => {
   const mode = useAppSelector(state => state.mode.mode);
   const route: any = useRoute();
   const routeData: BooksData = route?.params?.routeData;
+  const publicRoute: boolean = !!route?.params?.publicRoute;
   const [archive, setArchive] = useState(routeData.book.archived);
-  const [publicBook, setPublicBook] = useState(false);
+  const [publicBook, setPublicBook] = useState(
+    !!routeData.book?.isPubliclyAvailable,
+  );
   const [thumbnail] = useState(routeData?.image || undefined);
   const [textArray, setTextArray] = React.useState<
     {text: string; img: string | null}[]
@@ -119,32 +122,39 @@ const Story = () => {
               value={archive}
             />
           </View>
-          <View
-            style={{flexDirection: 'row', alignItems: 'center', marginTop: 10}}>
-            <RNTextComponent style={{marginRight: 'auto'}}>
-              Make story public
-            </RNTextComponent>
-            <Switch
-              trackColor={{false: '#474747', true: themeColor.green}}
-              thumbColor={themeColor.white}
-              ios_backgroundColor={'#474747'}
-              onValueChange={async () => {
-                // ! api req to toogle archive and update state
-                try {
-                  setPublicBook(!publicBook);
-                  await markBookAsPublic(routeData.book._id, !publicBook);
-                } catch (error) {
-                  setPublicBook(publicBook);
-                }
-              }}
-              value={publicBook}
-            />
-          </View>
+          {routeData.book?.isPubliclyAvailable !== undefined && (
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginTop: 10,
+              }}>
+              <RNTextComponent style={{marginRight: 'auto'}}>
+                Make story public
+              </RNTextComponent>
+              <Switch
+                trackColor={{false: '#474747', true: themeColor.green}}
+                thumbColor={themeColor.white}
+                ios_backgroundColor={'#474747'}
+                onValueChange={async () => {
+                  // ! api req to toogle archive and update state
+                  try {
+                    setPublicBook(!publicBook);
+                    await markBookAsPublic(routeData.book._id, !publicBook);
+                    store.dispatch(setForceReload(true));
+                  } catch (error) {
+                    setPublicBook(publicBook);
+                  }
+                }}
+                value={publicBook}
+              />
+            </View>
+          )}
         </View>
       </Pressable>
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [archive]);
+  }, [archive, publicBook]);
   return (
     <>
       <RNScreenWrapper>
@@ -156,13 +166,15 @@ const Story = () => {
               navigateTo();
             }}
           />
-          <RNButton
-            onlyIcon
-            icon={<Options />}
-            onClick={() => {
-              setMenu(p => !p);
-            }}
-          />
+          {!publicRoute && (
+            <RNButton
+              onlyIcon
+              icon={<Options />}
+              onClick={() => {
+                setMenu(p => !p);
+              }}
+            />
+          )}
           <RNMenuModal visible={visible} renderModal={toggelMenuBar} />
         </View>
 
@@ -222,12 +234,14 @@ const Story = () => {
                 childId: routeData.book.childId,
                 bookTitle: routeData.book.title,
                 userId: routeData.book.userId,
+                isUserReadingPublicBook: publicRoute,
               });
               navigateTo(SCREEN_NAME.STORY_TELLING, {
                 id: routeData.id,
                 readWithoutImages: !redirect,
                 textArray: textArray,
                 book: routeData.book,
+                publicRoute,
               });
             }}
           />

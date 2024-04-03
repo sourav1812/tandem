@@ -33,11 +33,13 @@ export default ({
   state,
   book,
   updateState,
+  publicRoute,
 }: {
   textArray: IPage[];
   book: Book;
   state: StateObject;
   updateState: (data: any) => void;
+  publicRoute: boolean;
 }) => {
   const [isClosed, setClosed] = React.useState(false);
   const [swipeEnabled, setSwipeEnabled] = React.useState(true);
@@ -162,7 +164,7 @@ export default ({
             isMedium>
             Great work. Now why don't you...
           </RNTextComponent>
-          {!state.isStoryRated && (
+          {!publicRoute && !state.isStoryRated && (
             <RNButton
               onClick={() => {
                 updateState({ratingModal: true});
@@ -204,10 +206,12 @@ export default ({
               borderColor: themeColor.themeBlue,
             }}
             onClick={() => {
-              markBookAsRead(book._id, {
-                ...(mode === MODE.C && {solo: true}),
-                ...(mode === MODE.B && {tandem: true}),
-              });
+              if (!publicRoute) {
+                markBookAsRead(book._id, {
+                  ...(mode === MODE.C && {solo: true}),
+                  ...(mode === MODE.B && {tandem: true}),
+                });
+              }
               navigateTo(SCREEN_NAME.HOME);
             }}
             title="Go to Home"

@@ -198,7 +198,10 @@ const PublicLib = () => {
             item={item}
             onPress={() => {
               dispatch(changeStoryLevel(2));
-              navigateTo(SCREEN_NAME.STORY, {routeData: item});
+              navigateTo(SCREEN_NAME.STORY, {
+                routeData: item,
+                publicRoute: true,
+              });
             }}
           />
         </View>

@@ -7,6 +7,7 @@ export default interface Book {
   status: string;
   read: boolean;
   archived: boolean;
+  isPubliclyAvailable: boolean;
   referenceId: string;
   images: {
     page: number;

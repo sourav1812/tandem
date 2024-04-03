@@ -1,7 +1,7 @@
 import {API} from '@tandem/constants/api';
 import {get} from '@tandem/api/index';
-import Book from './interface';
 import {cacheStoryBookImages} from '../getStories';
+import Book from '../getStories/interface';
 
 const getPublicStories = async (page: number) => {
   try {

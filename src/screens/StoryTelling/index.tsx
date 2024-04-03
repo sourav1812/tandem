@@ -44,16 +44,16 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
   const routes: any = useRoute();
   const routesData = routes?.params;
   const book: Book = routesData.book;
+  const publicRoute: boolean = routesData.publicRoute;
   const level = useAppSelector(rootState => rootState.storyLevel.level);
   const sizeIndex = useAppSelector(rootState => rootState.storyLevel.size);
   const mode = useAppSelector(state => state.mode.mode);
   const cuurentParent = useAppSelector(state => state.createChild.currentAdult);
 
-  console.log({mode});
   React.useEffect(() => {
     // logic to calculate time spent reading story
     const timeSpent = () => {
-      if (mode === MODE.A) {
+      if (mode === MODE.A || publicRoute) {
         return;
       }
       const modeState = mode === MODE.C ? 'solo' : 'tandem';
@@ -91,7 +91,7 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
     return () => {
       clearInterval(unsubscribe);
     };
-  }, [book.childId, cuurentParent.profileId, dispatch, mode]);
+  }, [book.childId, cuurentParent.profileId, dispatch, mode, publicRoute]);
 
   const [state, setState] = useState<StateObject>({
     ratingModal: false,
@@ -443,6 +443,7 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
         state={state}
         textArray={routesData?.textArray}
         book={book}
+        publicRoute={publicRoute}
       />
       {/* <PageFlip
         readingLevel={readingLevel}

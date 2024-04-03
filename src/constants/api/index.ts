@@ -7,7 +7,7 @@ export enum API {
   GENERATE_STORY = 'story-books', //? POST
   RATE_STORY = 'story-books/rate-book', //? POST
   STORIES = 'story-books', //* GET
-  PUBLIC_STORIES = 'story-books/public', //* GET
+  PUBLIC_STORIES = 'story-books/public/books', //* GET
   LOGOUT = 'user/log-out', //? POST
   USER_PROFILE = 'user/profile', //* GET
   CHANGE_PASSWORD = 'user/password', //? PUT

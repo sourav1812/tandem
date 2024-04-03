@@ -53,6 +53,7 @@ export default ({
         <RNButton
           key={text + index}
           customStyle={{
+            marginVertical: verticalScale(5),
             backgroundColor: COLOR_ARRAY[getColorIndex(index)],
             borderColor: COLOR_ARRAY[getColorIndex(index)],
           }}
