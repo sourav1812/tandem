@@ -35,7 +35,7 @@ export enum ENVIRONMENT {
 const ENV_VARS = {
   [ENVIRONMENT.DEVELOPMENT]: {
     API_URL: 'https://tandem-app-backend-beta.azurewebsites.net/v1/', // * LOCAL URL
-    // API_URL: 'http://192.168.1.64:5000/v1/', // * LOCAL URL
+    // API_URL: 'http://192.168.1.66:5000/v1/', // * LOCAL URL
   },
   [ENVIRONMENT.PRODUCTION]: {
     API_URL: 'https://tandem-app-backend-prod.azurewebsites.net/v1/', // * STAGING URL

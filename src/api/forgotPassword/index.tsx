@@ -36,6 +36,7 @@ export const resetPassword = async ({
   onSuccess: () => void;
 }) => {
   try {
+    console.log({resetToken});
     await post({
       path: API.RESET_PASSWORD,
       data: {newPassword, resetToken},

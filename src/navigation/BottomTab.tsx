@@ -143,7 +143,6 @@ const BottomTab = () => {
                   style={[
                     styles.title,
                     {
-                      fontSize: verticalScale(9.5),
                       ...(focused && {
                         color: themeColor.themeBlue,
                       }),
@@ -208,11 +207,11 @@ const styles = StyleSheet.create({
     borderTopWidth: verticalScale(2),
     borderColor: 'transparent',
     height: '100%',
-    width: '70%',
+    width: '90%',
     paddingTop: verticalScale(7),
   },
   title: {
-    fontSize: verticalScale(11.5),
+    fontSize: verticalScale(9),
     color: 'rgba(2, 4, 8, 0.6)',
     width: '100%',
     textAlign: 'center',

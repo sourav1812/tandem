@@ -83,10 +83,18 @@ export const setUserData = createSlice({
         image: '',
       };
     },
+    changeNotifications: (state, action) => {
+      state.userDataObject.allowNotifications = action.payload;
+    },
   },
 });
 
-export const {saveUserData, resetUserData, saveSocialData, resetSocialData} =
-  setUserData.actions;
+export const {
+  saveUserData,
+  resetUserData,
+  saveSocialData,
+  resetSocialData,
+  changeNotifications,
+} = setUserData.actions;
 
 export default setUserData.reducer;

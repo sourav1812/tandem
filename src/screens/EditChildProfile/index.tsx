@@ -251,7 +251,7 @@ const EditChildProfile = ({route}: EditChildProfileProps) => {
           }}
           title={translation(editAdult ? 'DELETE_ADULT' : 'DELETE_CHILD')}
           onClick={() => {
-            if (childList.length === 1) {
+            if (!editAdult && childList.length === 1) {
               dispatch(
                 addAlertData({
                   type: 'Message',
@@ -280,7 +280,9 @@ const EditChildProfile = ({route}: EditChildProfileProps) => {
           editAdult ? handleDeleteAdultRequest : handleDeleteChildRequest
         }
         heading={translation('DELETE_MY_ACCOUNT')}
-        content={translation('IF_YOU_DELETE_CHILD_ACCOUNT')}
+        content={translation(
+          editAdult ? 'IF_YOU_DELETE_ACCOUNT' : 'IF_YOU_DELETE_CHILD_ACCOUNT',
+        )}
       />
       <RNChangeAvatarModal
         visible={showAvatarModal}

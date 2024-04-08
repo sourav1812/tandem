@@ -4,12 +4,14 @@ import {CreateChildProfile} from './interface';
 import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {store} from '@tandem/redux/store';
+import userProfile from '../userProfile';
 
 export const editUserProfile = async ({
   firstName,
   lastName,
 }: CreateChildProfile) => {
-  const allowNotifications = store.getState().language.notification;
+  const allowNotifications =
+    store.getState().userData.userDataObject.allowNotifications;
   const response = await patch({
     path: API.USER_PROFILE,
     data: {
@@ -18,6 +20,7 @@ export const editUserProfile = async ({
       allowNotifications,
     },
     onSuccess: () => {
+      userProfile();
       navigateTo(SCREEN_NAME.BOTTOM_TAB);
     },
   });
