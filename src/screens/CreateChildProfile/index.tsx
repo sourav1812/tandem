@@ -402,7 +402,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
               <LanguageDropDown
                 customStyle={styles.date}
                 heading={translation('DATE_OF_BIRTH')}
-                text={dayjs(dob.value?.toString()).format('MMM-YYYY')}
+                text={dayjs(dob.value?.toString()).format('YYYY')}
                 onPress={() => {
                   Keyboard.dismiss();
                   selectDate();
@@ -602,7 +602,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
               <LanguageDropDown
                 customStyle={styles.date}
                 heading={translation('DATE_OF_BIRTH')}
-                text={dayjs(dob.value?.toString()).format('MMM-YYYY')}
+                text={dayjs(dob.value?.toString()).format('YYYY')}
                 onPress={selectDate}
               />
             </View>

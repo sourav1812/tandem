@@ -39,7 +39,7 @@ const RNDatePicker = ({
           isTablet && {width: verticalScale(320), alignSelf: 'center'},
         ]}>
         <View style={styles.top}>
-          <FlatList
+          {/* <FlatList
             data={MONTH_ARRAY}
             initialNumToRender={MONTH_ARRAY.length}
             initialScrollIndex={month - 2 >= 0 ? month - 2 : month}
@@ -76,8 +76,8 @@ const RNDatePicker = ({
             )}
             keyExtractor={i => i.monthKey}
             showsVerticalScrollIndicator={false}
-          />
-          <View style={styles.line} />
+          /> */}
+          {/* <View style={styles.line} /> */}
           <FlatList
             data={YEARS_ARRAY}
             initialNumToRender={YEARS_ARRAY.length}

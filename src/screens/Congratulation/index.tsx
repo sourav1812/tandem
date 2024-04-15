@@ -41,7 +41,7 @@ const Congratulation = () => {
             navigateTo(SCREEN_NAME.ROADMAP);
           },
           onThirdOption: () => {
-            navigateTo(SCREEN_NAME.ACCOUNT);
+            navigateTo(SCREEN_NAME.ACCOUNT, {}, true);
           },
           successText: 'Read a story we made earlier',
           destructiveText: 'Create another story',

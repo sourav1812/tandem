@@ -610,6 +610,8 @@ PODS:
     - React-Core
     - React-RCTImage
     - TOCropViewController
+  - RNPermissions (4.1.5):
+    - React-Core
   - RNReanimated (3.8.1):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
@@ -686,6 +688,7 @@ DEPENDENCIES:
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - "RNGoogleSignin (from `../node_modules/@react-native-google-signin/google-signin`)"
   - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
+  - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSensors (from `../node_modules/react-native-sensors`)
@@ -836,6 +839,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-google-signin/google-signin"
   RNImageCropPicker:
     :path: "../node_modules/react-native-image-crop-picker"
+  RNPermissions:
+    :path: "../node_modules/react-native-permissions"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
@@ -932,6 +937,7 @@ SPEC CHECKSUMS:
   RNGestureHandler: 69d0a928253547ef857a7be4f453220b9c472e07
   RNGoogleSignin: 9d0ecc3bff939ccef83cb3a26b874130b06a6e81
   RNImageCropPicker: 44e2807bc410741f35d4c45b6586aedfe3da39d2
+  RNPermissions: f9a0380dad4d370b6b983acaf4f9bff07aba9a21
   RNReanimated: 4943d1e286130877c0539f053c3f36a22d8c66f5
   RNScreens: bb06f14b5c352e603f2527caac02ca0d6398c6e5
   RNSensors: 117ba71c7eeeea0407ea0c0bb79e3495d602049b
@@ -939,6 +945,6 @@ SPEC CHECKSUMS:
   TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
   Yoga: 065f0b74dba4832d6e328238de46eb72c5de9556
 
-PODFILE CHECKSUM: 5110a04fc94b2053f6979f68e7ca1e3b75509bba
+PODFILE CHECKSUM: 34bfd721b993192a57794def84e67151cf0ae02a
 
 COCOAPODS: 1.15.2

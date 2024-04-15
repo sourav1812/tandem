@@ -1,11 +1,12 @@
 import {
   LayoutAnimation,
+  Platform,
   Pressable,
   StatusBar,
   View,
   useWindowDimensions,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {styles} from './styles';
 import YellowButton from '@tandem/assets/svg/YellowButton';
 import RNTextComponent from '@tandem/components/RNTextComponent';
@@ -172,11 +173,11 @@ const RNRoadmap = () => {
 
     if (!checkIfClickable[2]) {
       // ! depending upon when .. the dispatched action will change
-      store.dispatch(addSnapShot1(overlay));
+      dispatch(addSnapShot1(overlay));
       return;
     }
     if (checkIfClickable[6]) {
-      store.dispatch(addSnapShot2(overlay));
+      dispatch(addSnapShot2(overlay));
     }
   };
 
@@ -186,7 +187,10 @@ const RNRoadmap = () => {
     return mix(transition.value, 0, circle.value.r);
   });
 
+  const [zIndex, setZindex] = useState(-1);
+
   const performAnimation = async () => {
+    setZindex(1);
     const y = positionRefs[1].y + verticalScale(120) / scale;
     const x = positionRefs[1].x + verticalScale(105) / scale;
     const corners = [
@@ -197,13 +201,20 @@ const RNRoadmap = () => {
     ];
     const radius = Math.max(...corners.map(corner => dist(corner, {x, y})));
     circle.value = {x, y, r: radius};
+    if (Platform.OS === 'android') {
+      await wait(500);
+    }
     await saveSnapShot();
+    if (Platform.OS === 'android') {
+      await wait(500);
+    }
     transition.value = 0;
-    transition.value = withTiming(1, {duration: 3000});
-    await wait(3000);
-
-    store.dispatch(addSnapShot1(null));
-    store.dispatch(addSnapShot2(null));
+    transition.value = withTiming(1, {duration: 3000}, async () => {
+      await wait(500);
+      dispatch(addSnapShot1(null));
+      dispatch(addSnapShot2(null));
+      setZindex(-1);
+    });
   };
 
   React.useEffect(() => {
@@ -261,9 +272,9 @@ const RNRoadmap = () => {
   }, []);
 
   return (
-    <View ref={ref} style={{flex: 1}}>
+    <View ref={ref} collapsable={false} style={{flex: 1}}>
       <RNScreenWrapper style={styles.container}>
-        <View style={styles.header}>
+        <View collapsable={false} style={styles.header}>
           <RNButton
             onlyIcon
             icon={<BackButton />}
@@ -278,8 +289,9 @@ const RNRoadmap = () => {
             <YellowButton />
           </Pressable>
         </View>
-        <View style={[styles.roadmap]}>
+        <View collapsable={false} style={[styles.roadmap]}>
           <Pressable
+            collapsable={false}
             onLayout={event => {
               const layout = event.nativeEvent?.layout;
               LayoutAnimation.configureNext(
@@ -305,7 +317,9 @@ const RNRoadmap = () => {
               }
 
               try {
-                performAnimation();
+                if (Platform.OS === 'ios') {
+                  performAnimation();
+                }
                 await generateStory({
                   childId: currentChild.childId,
                   storyPromptData: storyGenerationResponse,
@@ -335,6 +349,7 @@ const RNRoadmap = () => {
           </Pressable>
           {positionRefs[6].y !== 0 && (
             <Pressable
+              collapsable={false}
               onLayout={event => {
                 const layout = event.nativeEvent?.layout;
                 LayoutAnimation.configureNext(
@@ -370,6 +385,7 @@ const RNRoadmap = () => {
           )}
           {positionRefs[5].y !== 0 && (
             <Pressable
+              collapsable={false}
               onLayout={event => {
                 const layout = event.nativeEvent?.layout;
                 LayoutAnimation.configureNext(
@@ -405,6 +421,7 @@ const RNRoadmap = () => {
           )}
           {positionRefs[4].y !== 0 && (
             <Pressable
+              collapsable={false}
               onLayout={event => {
                 const layout = event.nativeEvent?.layout;
                 LayoutAnimation.configureNext(
@@ -438,6 +455,7 @@ const RNRoadmap = () => {
           )}
           {positionRefs[3].y !== 0 && (
             <Pressable
+              collapsable={false}
               onLayout={event => {
                 const layout = event.nativeEvent?.layout;
                 LayoutAnimation.configureNext(
@@ -471,6 +489,7 @@ const RNRoadmap = () => {
           )}
           {positionRefs[2].y !== 0 && (
             <Pressable
+              collapsable={false}
               onLayout={event => {
                 const layout = event.nativeEvent?.layout;
                 LayoutAnimation.configureNext(
@@ -505,6 +524,7 @@ const RNRoadmap = () => {
           )}
           {positionRefs[1].y !== 0 && (
             <Pressable
+              collapsable={false}
               onLayout={event => {
                 const layout = event.nativeEvent?.layout;
                 LayoutAnimation.configureNext(
@@ -540,10 +560,11 @@ const RNRoadmap = () => {
           )}
         </View>
         <Canvas
-          pointerEvents="none"
           style={{
             height: hHeight,
             width: wWidth,
+            position: 'absolute',
+            zIndex,
           }}>
           {snapshots.snapShot1 && snapshots.snapShot2 && (
             <Group>

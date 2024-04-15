@@ -14,6 +14,8 @@ import {
   withTiming,
 } from 'react-native-reanimated';
 import Animated from 'react-native-reanimated';
+import RNButton from '../RNButton';
+import themeColor from '@tandem/theme/themeColor';
 
 const ProgressIndicator = ({progress}: {progress: number}) => {
   const progressPercentage = `${progress * 10}%`;
@@ -115,6 +117,23 @@ const RNStoryCard = ({
               style={[styles.minReading, isTablet && {fontSize: 22}]}>
               {`${item.readingTime} ${translation('MIN_READING')}`}
             </RNTextComponent>
+            {item.book.isPubliclyAvailable && (
+              <RNButton
+                isDisabled
+                title="Public"
+                customStyle={{
+                  backgroundColor: 'transparent',
+                  width: verticalScale(50),
+                  height: verticalScale(30),
+                  marginBottom: 10,
+                }}
+                textStyle={{
+                  color: themeColor.themeBlue,
+                  fontSize: verticalScale(10),
+                }}
+                onClick={() => {}}
+              />
+            )}
             <ProgressIndicator progress={item.readingTime} />
           </View>
         </View>
