@@ -115,7 +115,7 @@ const Home = () => {
     },
     {
       color: themeColor.purple,
-      title: (childStat?.booksCreated || 0).toString(),
+      title: (childStat?.totalBooksCreated || 0).toString(),
       subHeading: translation('NUMBER_OF_BOOKS'),
       emoji: '📚',
     },
@@ -503,7 +503,7 @@ const Home = () => {
                           navigateTo(SCREEN_NAME.ROADMAP);
                           return;
                         }
-                        navigateTo(SCREEN_NAME.BLOW_WINDMILL);
+                        // navigateTo(SCREEN_NAME.BLOW_WINDMILL);
                       }}
                     />
                   ))

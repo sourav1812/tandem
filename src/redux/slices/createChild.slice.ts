@@ -30,7 +30,7 @@ interface ChildState {
 }
 export interface Stats {
   _id: string;
-  booksCreated: number;
+  totalBooksCreated: number;
   generation: {
     totalTime: number;
   };

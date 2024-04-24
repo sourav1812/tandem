@@ -55,10 +55,9 @@ const Story = () => {
       const images: string[] = JSON.parse(
         JSON.stringify(store.getState().bookShelf.images?.[book._id] || []),
       );
-      const indexOfStoryComplexity = 0;
-      // Math.floor(
-      //   (book.storyInfo.length - 1) / 2,
-      // );
+      const indexOfStoryComplexity = Math.floor(
+        (book.storyInfo.length - 1) / 2,
+      );
       store.dispatch(changeTextSize(2));
       store.dispatch(changeStoryLevel(indexOfStoryComplexity));
       images.shift(); // ! removing thumbnail image from book

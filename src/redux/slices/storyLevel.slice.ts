@@ -8,7 +8,7 @@ interface LevelInterface {
 
 // Define the initial state using that type
 const initialState: LevelInterface = {
-  level: 0,
+  level: 1,
   size: 2,
 };
 
