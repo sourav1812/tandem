@@ -24,6 +24,13 @@ import RNButton from '@tandem/components/RNButton';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import {scale, verticalScale} from 'react-native-size-matters';
 import * as permissions from 'react-native-permissions';
+import {
+  Gesture,
+  GestureDetector,
+  GestureUpdateEvent,
+  PanGestureChangeEventPayload,
+  PanGestureHandlerEventPayload,
+} from 'react-native-gesture-handler';
 const permissionsType = Platform.select({
   ios: permissions.PERMISSIONS.IOS.MICROPHONE,
   android: permissions.PERMISSIONS.ANDROID.RECORD_AUDIO,
@@ -140,7 +147,16 @@ const BlowWindMill = () => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  const onChange = (
+    e: GestureUpdateEvent<
+      PanGestureHandlerEventPayload & PanGestureChangeEventPayload
+    >,
+  ) => {
+    console.log(e.absoluteX);
+  };
+  const pan1 = Gesture.Pan().onChange(onChange);
+  const pan2 = Gesture.Pan().onChange(onChange);
+  const pan3 = Gesture.Pan().onChange(onChange);
   return (
     <RNScreenWrapper
       style={{
@@ -176,6 +192,46 @@ const BlowWindMill = () => {
           alignItems: 'center',
           justifyContent: 'center',
         }}>
+        <GestureDetector gesture={pan1}>
+          <View
+            style={{
+              height: 150,
+              width: 70,
+              backgroundColor: 'white',
+              position: 'absolute',
+              top: 0,
+              zIndex: 30,
+            }}
+          />
+        </GestureDetector>
+        <GestureDetector gesture={pan2}>
+          <View
+            style={{
+              height: 150,
+              width: 70,
+              backgroundColor: 'red',
+              position: 'absolute',
+              bottom: 45,
+              left: 45,
+              transform: [{rotate: '60deg'}],
+              zIndex: 30,
+            }}
+          />
+        </GestureDetector>
+        <GestureDetector gesture={pan3}>
+          <View
+            style={{
+              height: 150,
+              width: 70,
+              backgroundColor: 'yellow',
+              position: 'absolute',
+              bottom: 45,
+              right: 45,
+              transform: [{rotate: '120deg'}],
+              zIndex: 30,
+            }}
+          />
+        </GestureDetector>
         <WindmillBlades />
       </Animated.View>
       <Windmill />

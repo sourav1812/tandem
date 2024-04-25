@@ -503,7 +503,7 @@ const Home = () => {
                           navigateTo(SCREEN_NAME.ROADMAP);
                           return;
                         }
-                        // navigateTo(SCREEN_NAME.BLOW_WINDMILL);
+                        navigateTo(SCREEN_NAME.BLOW_WINDMILL);
                       }}
                     />
                   ))
