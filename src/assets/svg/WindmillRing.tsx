@@ -5,6 +5,7 @@ import Svg, {G, Path, Circle, Mask, Ellipse} from 'react-native-svg';
 function SvgComponent() {
   return (
     <Svg
+      pointerEvents="none"
       style={{position: 'absolute', zIndex: 10}}
       width={959}
       height={766}
