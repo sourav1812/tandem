@@ -21,7 +21,7 @@ import BuildingTandem from '@tandem/screens/BuildingTandem';
 import Archive from '@tandem/screens/Archive';
 import analytics from '@react-native-firebase/analytics';
 import BlowWindMill from '@tandem/screens/BlowWindMill';
-import RNShake from 'react-native-shake';
+import MatchingPairs from '@tandem/screens/MatchingPairs';
 // import {accelerometer} from 'react-native-sensors';
 
 const AppNavigator = () => {
@@ -47,18 +47,6 @@ const AppNavigator = () => {
       });
       store.dispatch(clearPendingStoriesGen());
     }
-    const subscription = RNShake.addListener(() => {
-      // ! shake detect logic
-      console.log('Bro shook the device');
-    });
-
-    // ! x:0, y:0, z-1 should mix the colors as it is the orientation for flat device
-    // accelerometer.subscribe(({x, y, z}) =>
-    //   console.log({x: x.toFixed(0), y: y.toFixed(0), z: z.toFixed(0)}),
-    // );
-    return () => {
-      subscription.remove();
-    };
   }, []);
 
   return (
@@ -94,6 +82,10 @@ const AppNavigator = () => {
           <Stack.Screen
             component={BlowWindMill}
             name={SCREEN_NAME.BLOW_WINDMILL}
+          />
+          <Stack.Screen
+            component={MatchingPairs}
+            name={SCREEN_NAME.MATCHING_PAIRS}
           />
           <Stack.Screen
             component={SplashScreen}

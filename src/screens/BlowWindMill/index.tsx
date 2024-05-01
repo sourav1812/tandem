@@ -45,23 +45,18 @@ const checkMicrophonePermission = async () => {
   const result = await permissions.request(permissionsType);
   if (result === 'granted') {
     Loudness.start();
+    return;
   }
   // ! if we are not using loudness then in interval we will have to make sure we adjust power
-  // store.dispatch(
-  //   addAlertData({
-  //     type: 'Alert',
-  //     message: 'You need microphone permission to play the game.',
-  //     possibleResolution:
-  //       'You can enable microphone permission from the settings or you can wait for story to get ready on its own',
-  //     onSuccess: () => {
-  //       Linking.openSettings();
-  //       navigateTo(SCREEN_NAME.HOME);
-  //     },
-  //     onDestructive: () => {
-  //       navigateTo(SCREEN_NAME.HOME);
-  //     },
-  //   }),
-  // );
+  store.dispatch(
+    addAlertData({
+      type: 'Alert',
+      message: 'You need microphone permission to play the game.',
+      possibleResolution:
+        'You can enable microphone permission from the settings or you can rotate the windmill by swiping the blades with your finger.',
+      onSuccess: () => {},
+    }),
+  );
 };
 
 const BlowWindMill = () => {
@@ -106,7 +101,9 @@ const BlowWindMill = () => {
 
     const interval = setInterval(() => {
       Loudness.getLoudness((loudness: any) => {
-        console.log({loudness});
+        if (loudness === 1) {
+          return;
+        }
         const level = 160 + loudness;
 
         if (level > mark) {

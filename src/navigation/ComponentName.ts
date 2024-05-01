@@ -45,4 +45,5 @@ export enum SCREEN_NAME {
   ARCHIVE = 'Archive',
   BLOW_WINDMILL = 'BlowWindMill',
   PUBLIC_LIB = 'PublicLib',
+  MATCHING_PAIRS = 'MatchingPairs',
 }
