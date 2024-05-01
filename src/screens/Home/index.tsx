@@ -65,7 +65,10 @@ const Home = () => {
   const widthDimention = useWindowDimensions().width;
   const modeBC: {color: string; title: string}[] = [
     {color: themeColor.purple, title: translation('WRITE_A_STORY')},
-    {color: themeColor.purple, title: translation('I_CANT_DECIDE')},
+    {
+      color: themeColor.purple,
+      title: 'Total Credits',
+    },
     {color: themeColor.gold, title: translation('LEARN_SOMETHING')},
     // {color: themeColor.green, title: translation('HAVE_FUN')},
   ];
@@ -493,7 +496,11 @@ const Home = () => {
                       large={index === 0}
                       showSubheading={index !== 0}
                       heading={item.title}
-                      subHeading={translation('COMING_SOON')}
+                      subHeading={
+                        index === 1
+                          ? user.plan.usageDetails.totalCredits.toString()
+                          : translation('COMING_SOON')
+                      }
                       emoji="🪄"
                       onPress={() => {
                         if (index === 0) {

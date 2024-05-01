@@ -45,7 +45,6 @@ const RNImageChoice = ({
     }, 200);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log(activeState, 'activeStateactiveState');
   const handlePress = (name: string) => {
     if (activeState.includes('Not sure')) {
       store.dispatch(clearParticularState(type));
@@ -163,31 +162,34 @@ const AnimatedImageChoice = ({
         runAnimation();
       }}>
       <Animated.View style={{transform: [{scale: scaleButton}]}}>
-        {activeState.includes(value.name) && (
-          <LinearGradient
-            colors={['transparent', '#00000095', '#000000e2']}
-            style={[
-              styles.illustration,
-              {
-                position: 'absolute',
-                zIndex: 1,
-                alignItems: 'center',
-                justifyContent: 'flex-end',
-                padding: 10,
-                backgroundColor: 'transparent',
-              },
-              activeState.includes(value.name) && {
-                borderWidth: 3,
-                borderColor: themeColor.themeBlue,
-              },
-            ]}>
-            <RNTextComponent
-              style={{color: 'white', fontSize: verticalScale(12)}}
-              isSemiBold>
-              {value.name}
-            </RNTextComponent>
-          </LinearGradient>
-        )}
+        <LinearGradient
+          colors={
+            activeState.includes(value.name)
+              ? ['transparent', '#00000095', '#000000']
+              : ['transparent', 'transparent', '#000000b8']
+          }
+          style={[
+            styles.illustration,
+            {
+              position: 'absolute',
+              zIndex: 1,
+              alignItems: 'center',
+              justifyContent: 'flex-end',
+              padding: 10,
+              backgroundColor: 'transparent',
+              borderWidth: 3,
+              borderColor: activeState.includes(value.name)
+                ? themeColor.themeBlue
+                : 'transparent',
+            },
+          ]}>
+          <RNTextComponent
+            style={{color: 'white', fontSize: verticalScale(12)}}
+            isSemiBold>
+            {value.name}
+          </RNTextComponent>
+        </LinearGradient>
+
         <Image source={{uri: value.file}} style={[styles.illustration]} />
       </Animated.View>
     </Pressable>

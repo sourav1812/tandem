@@ -1,5 +1,4 @@
-/* eslint-disable react-native/no-inline-styles */
-import {Pressable, View} from 'react-native';
+import {LayoutAnimation, Pressable, View} from 'react-native';
 import React, {useState, useRef} from 'react';
 import {styles} from './style';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
@@ -34,6 +33,8 @@ import {FONT_SIZES} from '@tandem/constants/local';
 import {store} from '@tandem/redux/store';
 import {MODE} from '@tandem/constants/mode';
 import {Stats, updateChildStats} from '@tandem/redux/slices/createChild.slice';
+import themeColor from '@tandem/theme/themeColor';
+import reportImage from '@tandem/api/reportImage';
 
 const StoryTelling = ({navigation}: {navigation: any}) => {
   const tooltipArray = useAppSelector(state => state.tooltipReducer);
@@ -49,6 +50,9 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
   const sizeIndex = useAppSelector(rootState => rootState.storyLevel.size);
   const mode = useAppSelector(state => state.mode.mode);
   const cuurentParent = useAppSelector(state => state.createChild.currentAdult);
+  const activePageNumber = useAppSelector(
+    state => state.bookShelf.activePageNumber,
+  );
 
   React.useEffect(() => {
     // logic to calculate time spent reading story
@@ -110,7 +114,13 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
     1: {height: 0, width: 0, x: 0, y: 0},
     2: {height: 0, width: 0, x: 0, y: 0},
   });
+  const [selectedReason, setReason] = React.useState('');
+  const [openReportModal, setReportModal] = React.useState(false);
 
+  const REASONS = [
+    'Inappropriate for children (graphic/violence, etc)',
+    "Picture isn't good enough!",
+  ];
   const {ratingModal, showQuestion, wellDoneModal} = state;
 
   const updateState = (data: any) => {
@@ -302,12 +312,26 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
               <Subtract size={20} />
             </Pressable>
           </View>
+
+          <RNButton
+            customStyle={{
+              marginTop: 10,
+              height: verticalScale(40),
+              marginHorizontal: -7,
+            }}
+            textStyle={{fontSize: verticalScale(12)}}
+            title="Report/Flag image"
+            onClick={() => {
+              setReason('');
+              setTimeout(() => {
+                // Some way to report image
+                setReportModal(true);
+                setMenu(false);
+              }, 200);
+            }}
+          />
+
           {/* <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <RNTextComponent style={{marginRight: 'auto'}}>
-              Read it to me
-            </RNTextComponent>
-          </View>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <RNTextComponent style={{marginRight: 'auto'}}>
               Smart Listen
             </RNTextComponent>
@@ -317,6 +341,109 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, level, sizeIndex]);
+
+  React.useEffect(() => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+  }, [menu, openReportModal, selectedReason]);
+
+  const reportImageRenderModal = React.useCallback(() => {
+    return (
+      <Pressable
+        onPress={() => {
+          setMenu(false);
+        }}
+        style={{
+          position: 'absolute',
+          height: '100%',
+          width: '100%',
+          backgroundColor: '#000000c0',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+        <View
+          style={{
+            backgroundColor: 'white',
+            borderRadius: 20,
+            alignSelf: 'center',
+            position: 'absolute',
+            padding: 25,
+            justifyContent: 'center',
+            width: '90%',
+          }}>
+          <RNTextComponent
+            isSemiBold
+            style={{
+              marginBottom: verticalScale(20),
+              fontSize: verticalScale(13),
+              textAlign: 'center',
+            }}>
+            We're sorry about that! Please can you tell us what the problem is?
+          </RNTextComponent>
+
+          {REASONS.map(reason => (
+            <View
+              key={reason}
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginVertical: 10,
+              }}>
+              <RNTextComponent style={{marginRight: 'auto'}}>
+                {reason}
+              </RNTextComponent>
+              <Pressable
+                style={{
+                  borderWidth: 2,
+                  borderRadius: 100,
+                  width: verticalScale(20),
+                  height: verticalScale(20),
+                  borderColor: themeColor.themeBlue,
+                  backgroundColor:
+                    selectedReason === reason
+                      ? themeColor.themeBlue
+                      : 'transparent',
+                }}
+                onPress={() => {
+                  setReason(prev => (prev === reason ? '' : reason));
+                }}
+              />
+            </View>
+          ))}
+
+          {selectedReason && (
+            <RNButton
+              customStyle={{marginVertical: verticalScale(10)}}
+              title="Submit"
+              onClick={async () => {
+                // POST req
+                try {
+                  setReportModal(false);
+                  await reportImage({
+                    bookId: book._id,
+                    reason: selectedReason,
+                    page: activePageNumber + 1,
+                  });
+                } catch (error) {
+                  console.log('error in reporting image', error);
+                }
+              }}
+            />
+          )}
+          <RNButton
+            onlyBorder
+            title="Cancel"
+            onClick={() => {
+              setTimeout(() => {
+                setReportModal(false);
+              }, 200);
+            }}
+          />
+        </View>
+      </Pressable>
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activePageNumber, selectedReason]);
+
   const renderQuestions = () => {
     return (
       <View style={styles.questionView}>
@@ -495,6 +622,7 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
         }}
       />
       {menu && menuRenderItem()}
+      {openReportModal && reportImageRenderModal()}
     </RNScreenWrapper>
   );
 };

@@ -34,7 +34,6 @@ import {
   addSnapShot2,
 } from '@tandem/redux/slices/animationSnapshots.slice';
 import bookshelfDays from '@tandem/functions/bookshelfDays';
-import {changeStoryLevel} from '@tandem/redux/slices/storyLevel.slice';
 import {useDispatch} from 'react-redux';
 import {ratingList} from '@tandem/components/RNRatingModal/interface';
 import Book from '@tandem/api/getStories/interface';
@@ -201,14 +200,13 @@ const Bookshelf = () => {
           <RNStoryCard
             item={item}
             onPress={() => {
-              dispatch(changeStoryLevel(2));
               navigateTo(SCREEN_NAME.STORY, {routeData: item});
             }}
           />
         </View>
       );
     },
-    [dispatch, images, isTablet],
+    [images, isTablet],
   );
 
   const fetchMoreData = () => {

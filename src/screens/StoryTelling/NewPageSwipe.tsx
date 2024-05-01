@@ -23,6 +23,8 @@ import {MODE} from '@tandem/constants/mode';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
 import Animated, {useSharedValue, withTiming} from 'react-native-reanimated';
+import {updatePage} from '@tandem/redux/slices/bookShelf.slice';
+import {store} from '@tandem/redux/store';
 interface IPage {
   text: string;
   img: string;
@@ -221,7 +223,9 @@ export default ({
       </ImageBackground>
     );
   };
-
+  const onViewableItemsChanged = React.useCallback(({changed}) => {
+    store.dispatch(updatePage(changed[0].index));
+  }, []);
   return (
     <PanGestureHandler
       activeOffsetY={[-10, 10]}
@@ -231,6 +235,10 @@ export default ({
       }}
       onGestureEvent={onGestureEvent}>
       <FlatList
+        onViewableItemsChanged={onViewableItemsChanged}
+        viewabilityConfig={{
+          itemVisiblePercentThreshold: 70,
+        }}
         ref={flatListRef}
         pagingEnabled
         bounces={false}

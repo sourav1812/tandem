@@ -1,5 +1,9 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {AdultData, ChildData} from './createChild.slice';
+import {
+  ServicePlansType,
+  SubscriptionPlanStatus,
+  UserDataResponse,
+} from '@tandem/api/userProfile/interface';
 
 // Define a type for the slice state
 
@@ -8,17 +12,7 @@ export interface TermsInterface {
   options: {description: string; isRequired: boolean}[];
 }
 interface UserDataState {
-  userDataObject: {
-    email: string;
-    firstName: string;
-    lastName: string;
-    userId: string;
-    children?: ChildData[];
-    adults?: AdultData[];
-    termsAndConditions: boolean;
-    allowNotifications: boolean;
-    consentForm: TermsInterface;
-  };
+  userDataObject: UserDataResponse;
   socialDataObject: {
     email: string;
     firstName: string;
@@ -40,6 +34,19 @@ const initialState: UserDataState = {
     termsAndConditions: false,
     allowNotifications: false,
     consentForm: {terms: '', options: []},
+    name: '',
+    plan: {
+      _id: '',
+      currentSubscriptionCycle: '',
+      status: SubscriptionPlanStatus.EXPIRED,
+      type: ServicePlansType.TRIAL,
+      startDate: '',
+      endDate: null,
+      usageDetails: {
+        totalCredits: 0,
+        usedCredits: 0,
+      },
+    },
   },
   socialDataObject: {
     email: '',
@@ -69,6 +76,19 @@ export const setUserData = createSlice({
         termsAndConditions: false,
         allowNotifications: false,
         consentForm: {terms: '', options: []},
+        name: '',
+        plan: {
+          _id: '',
+          currentSubscriptionCycle: '',
+          status: SubscriptionPlanStatus.EXPIRED,
+          type: ServicePlansType.TRIAL,
+          startDate: '',
+          endDate: null,
+          usageDetails: {
+            totalCredits: 0,
+            usedCredits: 0,
+          },
+        },
       };
     },
     saveSocialData: (state, action) => {

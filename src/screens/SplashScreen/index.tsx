@@ -25,6 +25,7 @@ const SplashScreen = () => {
         style={styles.img}
         resizeMode="contain"
       />
+      <RNTextComponent>TANDEM | Reading time with your child!</RNTextComponent>
       <RNTextComponent style={styles.license}>
         ©️ Early Ideas Limted 2023
       </RNTextComponent>

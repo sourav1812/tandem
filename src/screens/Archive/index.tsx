@@ -27,7 +27,6 @@ import themeColor from '@tandem/theme/themeColor';
 import {BooksData} from './interface';
 import SadFace from '@tandem/assets/svg/Sad';
 import bookshelfDays from '@tandem/functions/bookshelfDays';
-import {changeStoryLevel} from '@tandem/redux/slices/storyLevel.slice';
 import {useDispatch} from 'react-redux';
 import {ratingList} from '@tandem/components/RNRatingModal/interface';
 import Book from '@tandem/api/getStories/interface';
@@ -180,14 +179,13 @@ const Archive = () => {
           <RNStoryCard
             item={item}
             onPress={() => {
-              dispatch(changeStoryLevel(2));
               navigateTo(SCREEN_NAME.STORY, {routeData: item});
             }}
           />
         </View>
       );
     },
-    [dispatch, images, isTablet],
+    [images, isTablet],
   );
 
   const fetchMoreData = () => {

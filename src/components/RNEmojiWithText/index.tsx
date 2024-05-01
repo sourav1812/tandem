@@ -101,12 +101,13 @@ const IconRednerItem = ({
         ]}
       />
     )}
-    {heading && isSelected && (
+    {heading && (
       <RNTextComponent
         style={[
           styles.heading,
           {
             fontSize: verticalScale(16) - heading.split(' ').length * 1.2,
+            color: !isSelected ? 'gray' : 'white',
           },
         ]}
         isSemiBold>

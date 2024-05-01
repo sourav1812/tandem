@@ -26,6 +26,7 @@ import markBookAsArchived from '@tandem/api/markBookAsArchived';
 import {setForceReload} from '@tandem/redux/slices/activityIndicator.slice';
 import analytics from '@react-native-firebase/analytics';
 import markBookAsPublic from '@tandem/api/markBookAsPublic';
+import {updatePage} from '@tandem/redux/slices/bookShelf.slice';
 
 const Story = () => {
   const [visible, setVisible] = useState(false);
@@ -51,13 +52,12 @@ const Story = () => {
 
   React.useEffect(() => {
     const f = async () => {
+      store.dispatch(updatePage(-1));
       const book = routeData.book;
       const images: string[] = JSON.parse(
         JSON.stringify(store.getState().bookShelf.images?.[book._id] || []),
       );
-      const indexOfStoryComplexity = Math.floor(
-        (book.storyInfo.length - 1) / 2,
-      );
+      const indexOfStoryComplexity = book.storyInfo.length - 1;
       store.dispatch(changeTextSize(2));
       store.dispatch(changeStoryLevel(indexOfStoryComplexity));
       images.shift(); // ! removing thumbnail image from book
