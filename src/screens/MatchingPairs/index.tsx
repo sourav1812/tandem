@@ -8,22 +8,43 @@ import RNShake from 'react-native-shake';
 import {verticalScale} from 'react-native-size-matters';
 import {PlaceType} from '../GenerateStory/interface';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import Orientation from 'react-native-orientation-locker';
 
 const MatchingPairs = () => {
   const [matchingPairsArray, setArray] = React.useState<PlaceType[]>([]);
   const [matchedIndexes, setMatchedIndex] = React.useState<number[]>([]);
   const [checkIfPairArray, setIfPairArray] = React.useState<number[]>([]);
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const [enableMask, setMask] = React.useState(false);
 
   const handlePress = (index: number) => {
-    if (matchedIndexes.includes(index)) {
+    if (
+      matchedIndexes.includes(index) ||
+      !enableMask ||
+      checkIfPairArray.includes(index)
+    ) {
       return;
     }
     setIfPairArray(prev => (prev.length === 1 ? [...prev, index] : [index]));
   };
 
+  React.useEffect(() => {
+    if (!enableMask) {
+      setTimeout(() => {
+        setMask(true);
+      }, 1000);
+    }
+  }, [enableMask]);
+
+  React.useEffect(() => {
+    Orientation.lockToPortrait();
+    return () => {
+      Orientation.unlockAllOrientations();
+    };
+  }, []);
+
   const refreshMatching = () => {
-    const numberOfUniqueElements = isTablet ? 5 : 4;
+    const numberOfUniqueElements = isTablet ? 6 : 3;
     const MATCHES_ARRAY = [...new Array(numberOfUniqueElements).keys()].map(
       () => ATTRIBUTE[Math.trunc(Math.random() * (ATTRIBUTE.length - 1))],
     );
@@ -38,6 +59,7 @@ const MatchingPairs = () => {
     setMatchedIndex([]);
     setIfPairArray([]);
     setArray(RANDOMISED_PLAYING_ARRAY);
+    setMask(false);
   };
 
   React.useEffect(() => {
@@ -60,19 +82,28 @@ const MatchingPairs = () => {
       ) {
         // ! meaning a match add it to matchedIndexes
         setMatchedIndex(prev => [...prev, ...checkIfPairArray]);
+        setIfPairArray([]);
+        return;
       }
-      setIfPairArray([]);
+      setTimeout(() => {
+        setIfPairArray([]);
+      }, 1000);
     }
   }, [checkIfPairArray, matchingPairsArray]);
 
   return (
     <RNScreenWrapper style={styles.screenWrapper}>
       <>
-        <View style={styles.cardWrapper}>
+        <View style={[styles.cardWrapper]}>
           {matchingPairsArray.map((item, index) => (
             <RNEmojiWithText
+              disabled={checkIfPairArray.length === 2}
               // create masking functionality
-              isSelected={matchedIndexes.includes(index)}
+              mask={enableMask}
+              isSelected={
+                matchedIndexes.includes(index) ||
+                checkIfPairArray.includes(index)
+              }
               onPress={() => handlePress(index)}
               key={index.toString()}
               heading={item.name}
@@ -104,7 +135,7 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'space-around',
     alignItems: 'center',
-    marginTop: verticalScale(50),
+    marginTop: 'auto',
   },
   buttonCustom: {
     backgroundColor: 'red',

@@ -13,6 +13,8 @@ export interface Props {
   Svgimg?: any;
   image?: any;
   showBorderWhenPressed?: boolean;
+  mask?: boolean;
+  disabled?: boolean;
 }
 
 export interface IconProps {

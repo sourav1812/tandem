@@ -381,7 +381,10 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
           </RNTextComponent>
 
           {REASONS.map(reason => (
-            <View
+            <Pressable
+              onPress={() => {
+                setReason(prev => (prev === reason ? '' : reason));
+              }}
               key={reason}
               style={{
                 flexDirection: 'row',
@@ -391,7 +394,7 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
               <RNTextComponent style={{marginRight: 'auto'}}>
                 {reason}
               </RNTextComponent>
-              <Pressable
+              <View
                 style={{
                   borderWidth: 2,
                   borderRadius: 100,
@@ -403,11 +406,8 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
                       ? themeColor.themeBlue
                       : 'transparent',
                 }}
-                onPress={() => {
-                  setReason(prev => (prev === reason ? '' : reason));
-                }}
               />
-            </View>
+            </Pressable>
           ))}
 
           {selectedReason && (

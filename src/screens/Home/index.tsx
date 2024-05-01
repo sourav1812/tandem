@@ -67,7 +67,7 @@ const Home = () => {
     {color: themeColor.purple, title: translation('WRITE_A_STORY')},
     {
       color: themeColor.purple,
-      title: 'Total Credits',
+      title: `Used Credits: ${user?.plan?.usageDetails?.usedCredits || 0}`,
     },
     {color: themeColor.gold, title: translation('LEARN_SOMETHING')},
     // {color: themeColor.green, title: translation('HAVE_FUN')},
@@ -498,7 +498,9 @@ const Home = () => {
                       heading={item.title}
                       subHeading={
                         index === 1
-                          ? user.plan.usageDetails.totalCredits.toString()
+                          ? `Total Credits: ${
+                              user?.plan?.usageDetails?.totalCredits || 0
+                            }`
                           : translation('COMING_SOON')
                       }
                       emoji="🪄"

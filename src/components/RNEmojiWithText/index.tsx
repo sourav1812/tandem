@@ -24,6 +24,8 @@ const RNEmojiWithText = ({
   isSelected,
   Svgimg,
   showBorderWhenPressed = false,
+  mask,
+  disabled,
 }: Props) => {
   const scaleButton = useSharedValue(1);
 
@@ -36,7 +38,11 @@ const RNEmojiWithText = ({
 
   return (
     <Pressable
+      disabled={disabled}
       onPress={() => {
+        if (disabled) {
+          return;
+        }
         runAnimation();
         onPress();
       }}>
@@ -54,15 +60,24 @@ const RNEmojiWithText = ({
                 borderWidth: showBorderWhenPressed ? 3 : 0,
                 borderColor: themeColor.themeBlue,
               }),
+            backgroundColor: mask
+              ? isSelected
+                ? bgcColor
+                : 'purple'
+              : isSelected
+              ? bgcColor
+              : themeColor.lightGray,
           },
         ]}>
-        <IconRednerItem
-          icon={icon}
-          heading={heading}
-          isSelected={isSelected}
-          emoji={emoji}
-          Svgimg={Svgimg}
-        />
+        {mask && !isSelected ? null : (
+          <IconRednerItem
+            icon={icon}
+            heading={heading}
+            isSelected={isSelected}
+            emoji={emoji}
+            Svgimg={Svgimg}
+          />
+        )}
       </Animated.View>
     </Pressable>
   );
