@@ -46,4 +46,5 @@ export enum SCREEN_NAME {
   BLOW_WINDMILL = 'BlowWindMill',
   PUBLIC_LIB = 'PublicLib',
   MATCHING_PAIRS = 'MatchingPairs',
+  MIX_COLORS = 'MixColors',
 }

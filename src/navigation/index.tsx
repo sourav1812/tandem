@@ -22,6 +22,7 @@ import Archive from '@tandem/screens/Archive';
 import analytics from '@react-native-firebase/analytics';
 import BlowWindMill from '@tandem/screens/BlowWindMill';
 import MatchingPairs from '@tandem/screens/MatchingPairs';
+import MixColors from '@tandem/screens/MixColors';
 // import {accelerometer} from 'react-native-sensors';
 
 const AppNavigator = () => {
@@ -83,6 +84,7 @@ const AppNavigator = () => {
             component={BlowWindMill}
             name={SCREEN_NAME.BLOW_WINDMILL}
           />
+          <Stack.Screen component={MixColors} name={SCREEN_NAME.MIX_COLORS} />
           <Stack.Screen
             component={MatchingPairs}
             name={SCREEN_NAME.MATCHING_PAIRS}

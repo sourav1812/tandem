@@ -48,6 +48,7 @@ export type RootStackParamList = {
   Archive: undefined;
   BlowWindMill: undefined;
   MatchingPairs: undefined;
+  MixColors: undefined;
 };
 
 export type RootTabParamList = {
