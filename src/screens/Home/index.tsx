@@ -512,7 +512,7 @@ const Home = () => {
                           navigateTo(SCREEN_NAME.ROADMAP);
                           return;
                         }
-                        navigateTo(SCREEN_NAME.MIX_COLORS);
+                        navigateTo(SCREEN_NAME.MATCHING_PAIRS);
                       }}
                     />
                   ))

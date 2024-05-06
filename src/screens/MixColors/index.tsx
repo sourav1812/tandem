@@ -26,30 +26,21 @@ export default function App() {
   const acc = useAnimatedSensor(SensorType.ACCELEROMETER);
   const cx = useSharedValue(windowWidth / 2);
   const cy = useSharedValue(windowHeight / 2);
-
+  const springConfig = {
+    mass: 1,
+    damping: 10,
+    stiffness: 300,
+    overshootClamping: false,
+    restDisplacementThreshold: 0.01,
+    restSpeedThreshold: 2,
+    reduceMotion: ReduceMotion.System,
+  };
   useDerivedValue(() => {
-    const {x, y, z} = acc.sensor.value;
-    console.log({x: x.toFixed(1), y: y.toFixed(1), z: z.toFixed(1)});
-    cx.value = withSpring(windowWidth / 2 + 15 * x, {
-      mass: 1,
-      damping: 10,
-      stiffness: 300,
-      overshootClamping: false,
-      restDisplacementThreshold: 0.01,
-      restSpeedThreshold: 2,
-      reduceMotion: ReduceMotion.System,
-    });
-    cy.value = withSpring(windowHeight / 2 - 30 * y, {
-      mass: 1,
-      damping: 10,
-      stiffness: 300,
-      overshootClamping: false,
-      restDisplacementThreshold: 0.01,
-      restSpeedThreshold: 2,
-      reduceMotion: ReduceMotion.System,
-    });
+    const {x, y} = acc.sensor.value;
+    cx.value = withSpring(windowWidth / 2 + 15 * x, springConfig);
+    cy.value = withSpring(windowHeight / 2 - 30 * y, springConfig);
   }, []);
-
+  //! 5, 1 ,2 ,4, 3, 6
   const layer = useMemo(() => {
     return (
       <Paint>
