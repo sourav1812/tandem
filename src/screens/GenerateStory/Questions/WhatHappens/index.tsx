@@ -24,7 +24,7 @@ export default () => {
         }
         removeQuestionData(STORY_PARTS.WHAT_HAPPENS);
       }}
-      questionNumber={5}
+      questionNumber={1}
       onNextQuestion={() => {
         navigation.push(SCREEN_NAME.ROADMAP);
       }}

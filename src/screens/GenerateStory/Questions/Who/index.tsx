@@ -31,7 +31,7 @@ export default () => {
         }
         removeQuestionData(STORY_PARTS.WHO);
       }}
-      questionNumber={1}
+      questionNumber={2}
       onNextQuestion={() => {
         navigation.push(SCREEN_NAME.GENERATE_STORY_INCLUSION);
       }}

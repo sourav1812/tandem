@@ -15,6 +15,7 @@ export interface Props {
   showBorderWhenPressed?: boolean;
   mask?: boolean;
   disabled?: boolean;
+  halfRotationDuration?: number;
 }
 
 export interface IconProps {

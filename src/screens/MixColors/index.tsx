@@ -40,7 +40,6 @@ export default function App() {
     cx.value = withSpring(windowWidth / 2 + 15 * x, springConfig);
     cy.value = withSpring(windowHeight / 2 - 30 * y, springConfig);
   }, []);
-  //! 5, 1 ,2 ,4, 3, 6
   const layer = useMemo(() => {
     return (
       <Paint>

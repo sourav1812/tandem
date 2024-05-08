@@ -26,8 +26,13 @@ const RNEmojiWithText = ({
   showBorderWhenPressed = false,
   mask,
   disabled,
+  halfRotationDuration = 0,
 }: Props) => {
   const scaleButton = useSharedValue(1);
+  const rotation = useSharedValue('180deg');
+  const [isSelectedAnimation, setSelectedAnimation] = React.useState(
+    !!isSelected,
+  );
 
   const runAnimation = () => {
     scaleButton.value = withSequence(
@@ -35,6 +40,20 @@ const RNEmojiWithText = ({
       withTiming(1),
     );
   };
+  const runRotation = (toggle: boolean) => {
+    rotation.value = withSequence(
+      withTiming('90deg', {duration: halfRotationDuration}),
+      withTiming(toggle ? '0deg' : '180deg', {duration: halfRotationDuration}),
+    );
+  };
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      setSelectedAnimation(!!isSelected);
+    }, halfRotationDuration);
+    runRotation(!!isSelected);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSelected]);
 
   return (
     <Pressable
@@ -43,7 +62,9 @@ const RNEmojiWithText = ({
         if (disabled) {
           return;
         }
-        runAnimation();
+        if (!mask) {
+          runAnimation();
+        }
         onPress();
       }}>
       <Animated.View
@@ -51,29 +72,34 @@ const RNEmojiWithText = ({
         onLayout={onLayout && onLayout}
         style={[
           styles.container,
-          {transform: [{scale: scaleButton}]},
+          {
+            transform: [
+              {scale: scaleButton},
+              {rotateY: mask ? rotation : '0deg'},
+            ],
+          },
           customStyle && customStyle,
           {
-            ...(isSelected &&
+            ...(isSelectedAnimation &&
               bgcColor && {
                 backgroundColor: bgcColor,
                 borderWidth: showBorderWhenPressed ? 3 : 0,
                 borderColor: themeColor.themeBlue,
               }),
             backgroundColor: mask
-              ? isSelected
+              ? isSelectedAnimation
                 ? bgcColor
                 : 'purple'
-              : isSelected
+              : isSelectedAnimation
               ? bgcColor
               : themeColor.lightGray,
           },
         ]}>
-        {mask && !isSelected ? null : (
+        {mask && !isSelectedAnimation ? null : (
           <IconRednerItem
             icon={icon}
             heading={heading}
-            isSelected={isSelected}
+            isSelected={isSelectedAnimation}
             emoji={emoji}
             Svgimg={Svgimg}
           />

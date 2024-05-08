@@ -9,32 +9,21 @@ import {verticalScale} from 'react-native-size-matters';
 import {PlaceType} from '../GenerateStory/interface';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import Orientation from 'react-native-orientation-locker';
+import navigateTo from '@tandem/navigation/navigate';
 
 const MatchingPairs = () => {
   const [matchingPairsArray, setArray] = React.useState<PlaceType[]>([]);
   const [matchedIndexes, setMatchedIndex] = React.useState<number[]>([]);
   const [checkIfPairArray, setIfPairArray] = React.useState<number[]>([]);
+  const [gameCompleted, setGameCompleted] = React.useState(false);
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
-  const [enableMask, setMask] = React.useState(false);
-
+  const halfRotationDuration = 150; // ! time of full rotation animation = 2 * halfRotationDuration
   const handlePress = (index: number) => {
-    if (
-      matchedIndexes.includes(index) ||
-      !enableMask ||
-      checkIfPairArray.includes(index)
-    ) {
+    if (matchedIndexes.includes(index) || checkIfPairArray.includes(index)) {
       return;
     }
     setIfPairArray(prev => (prev.length === 1 ? [...prev, index] : [index]));
   };
-
-  React.useEffect(() => {
-    if (!enableMask) {
-      setTimeout(() => {
-        setMask(true);
-      }, 1000);
-    }
-  }, [enableMask]);
 
   React.useEffect(() => {
     Orientation.lockToPortrait();
@@ -44,22 +33,25 @@ const MatchingPairs = () => {
   }, []);
 
   const refreshMatching = () => {
-    const numberOfUniqueElements = isTablet ? 6 : 3;
+    const numberOfUniqueElements = isTablet ? 6 : 4;
     const MATCHES_ARRAY = [...new Array(numberOfUniqueElements).keys()].map(
       () => ATTRIBUTE[Math.trunc(Math.random() * (ATTRIBUTE.length - 1))],
     );
     const RANDOMISED_PLAYING_ARRAY: PlaceType[] = [];
-    MATCHES_ARRAY.forEach((item, index) => {
+    MATCHES_ARRAY.forEach(item => {
       RANDOMISED_PLAYING_ARRAY.push(item);
       // ! come up with a better randomising algorithm
-      index % 2 !== 0
+      const number = Math.random() * 10;
+      number < 5
         ? RANDOMISED_PLAYING_ARRAY.unshift(item)
         : RANDOMISED_PLAYING_ARRAY.push(item);
     });
+    setGameCompleted(false);
     setMatchedIndex([]);
     setIfPairArray([]);
-    setArray(RANDOMISED_PLAYING_ARRAY);
-    setMask(false);
+    setTimeout(() => {
+      setArray(RANDOMISED_PLAYING_ARRAY);
+    }, halfRotationDuration);
   };
 
   React.useEffect(() => {
@@ -91,15 +83,26 @@ const MatchingPairs = () => {
     }
   }, [checkIfPairArray, matchingPairsArray]);
 
+  React.useEffect(() => {
+    if (
+      matchedIndexes.length > 0 &&
+      matchedIndexes.length === matchingPairsArray.length
+    ) {
+      //! game completed
+      setGameCompleted(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [matchedIndexes.length]);
+
   return (
     <RNScreenWrapper style={styles.screenWrapper}>
       <>
         <View style={[styles.cardWrapper]}>
           {matchingPairsArray.map((item, index) => (
             <RNEmojiWithText
+              halfRotationDuration={halfRotationDuration}
               disabled={checkIfPairArray.length === 2}
-              // create masking functionality
-              mask={enableMask}
+              mask={true}
               isSelected={
                 matchedIndexes.includes(index) ||
                 checkIfPairArray.includes(index)
@@ -107,17 +110,19 @@ const MatchingPairs = () => {
               onPress={() => handlePress(index)}
               key={index.toString()}
               heading={item.name}
-              customStyle={{marginVertical: verticalScale(5)}}
+              customStyle={{margin: verticalScale(5)}}
               icon={item?.icon}
               bgcColor={item.bgc}
               Svgimg={item.svgIcon}
             />
           ))}
         </View>
+
         <RNButton
-          onClick={refreshMatching}
-          title="Try Again"
-          customStyle={styles.buttonCustom}
+          isDisabled={!gameCompleted}
+          onClick={navigateTo}
+          title={gameCompleted ? 'Proceed' : 'Shake the device to try again'}
+          customStyle={gameCompleted ? {} : styles.buttonCustom}
           pressableStyle={styles.buttonPressable}
         />
       </>
@@ -128,18 +133,18 @@ const MatchingPairs = () => {
 export default MatchingPairs;
 
 const styles = StyleSheet.create({
-  screenWrapper: {padding: verticalScale(10), backgroundColor: 'black'},
+  screenWrapper: {padding: verticalScale(15), backgroundColor: 'black'},
   cardWrapper: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     width: '100%',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 'auto',
+    marginTop: verticalScale(50),
   },
   buttonCustom: {
-    backgroundColor: 'red',
-    borderColor: 'red',
+    backgroundColor: 'darkred',
+    borderColor: 'darkred',
   },
   buttonPressable: {marginTop: 'auto', marginBottom: verticalScale(20)},
 });
