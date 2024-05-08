@@ -26,6 +26,7 @@ export enum API {
   CONTACT_US = 'user/contact-us',
   ARCHIVED_STORIES = 'story-books/archive',
   REPORT_IMAGE = 'story-books/{BOOK_ID_HERE}/report-image',
+  PUSH_VOICE_DATA = 'story-books/{BOOK_ID_HERE}/reading-session',
 }
 
 export enum ENVIRONMENT {
@@ -35,8 +36,8 @@ export enum ENVIRONMENT {
 
 const ENV_VARS = {
   [ENVIRONMENT.DEVELOPMENT]: {
-    API_URL: 'https://tandem-app-backend-beta.azurewebsites.net/v1/', // * LOCAL URL
-    // API_URL: 'https://c6c8-38-183-10-125.ngrok-free.app/v1/', // * LOCAL URL
+    // API_URL: 'https://tandem-app-backend-beta.azurewebsites.net/v1/', // * LOCAL URL
+    API_URL: 'http://192.168.1.66:5000/v1/', // * LOCAL URL
   },
   [ENVIRONMENT.PRODUCTION]: {
     API_URL: 'https://tandem-app-backend-prod.azurewebsites.net/v1/', // * STAGING URL
