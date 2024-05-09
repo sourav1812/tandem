@@ -10,12 +10,17 @@ import {PlaceType} from '../GenerateStory/interface';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import Orientation from 'react-native-orientation-locker';
 import navigateTo from '@tandem/navigation/navigate';
-
+import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
+const shakeText =
+  'You can shake the device at any time to shuffle the deck again';
 const MatchingPairs = () => {
   const [matchingPairsArray, setArray] = React.useState<PlaceType[]>([]);
   const [matchedIndexes, setMatchedIndex] = React.useState<number[]>([]);
   const [checkIfPairArray, setIfPairArray] = React.useState<number[]>([]);
   const [gameCompleted, setGameCompleted] = React.useState(false);
+  const [buttonText, setButtonText] = React.useState(
+    'Flip over two cards at a time to find pairs.\nFind all pairs to win the game!',
+  );
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const halfRotationDuration = 150; // ! time of full rotation animation = 2 * halfRotationDuration
   const handlePress = (index: number) => {
@@ -78,6 +83,7 @@ const MatchingPairs = () => {
         return;
       }
       setTimeout(() => {
+        setButtonText(shakeText);
         setIfPairArray([]);
       }, 1000);
     }
@@ -120,10 +126,13 @@ const MatchingPairs = () => {
 
         <RNButton
           isDisabled={!gameCompleted}
-          onClick={navigateTo}
-          title={gameCompleted ? 'Proceed' : 'Shake the device to try again'}
+          onClick={() => {
+            navigateTo(SCREEN_NAME.BLOW_WINDMILL);
+          }}
+          title={gameCompleted ? 'Proceed to Blow the Windmill' : buttonText}
           customStyle={gameCompleted ? {} : styles.buttonCustom}
           pressableStyle={styles.buttonPressable}
+          textStyle={{fontSize: verticalScale(12)}}
         />
       </>
     </RNScreenWrapper>
@@ -145,6 +154,8 @@ const styles = StyleSheet.create({
   buttonCustom: {
     backgroundColor: 'darkred',
     borderColor: 'darkred',
+    height: 'auto',
+    padding: verticalScale(10),
   },
-  buttonPressable: {marginTop: 'auto', marginBottom: verticalScale(20)},
+  buttonPressable: {marginTop: 'auto', marginBottom: verticalScale(15)},
 });

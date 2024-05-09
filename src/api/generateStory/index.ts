@@ -33,7 +33,7 @@ export default async ({childId, storyPromptData}: GenerateStoryData) => {
       path: API.GENERATE_STORY + `/${childId}`,
       data: {...storyPromptData},
       onSuccess: () => {
-        navigateTo(SCREEN_NAME.BLOW_WINDMILL);
+        navigateTo(SCREEN_NAME.MATCHING_PAIRS);
       },
     });
   } catch (error) {

@@ -82,19 +82,30 @@ const AppNavigator = () => {
           <Stack.Screen component={Archive} name={SCREEN_NAME.ARCHIVE} />
           <Stack.Screen
             component={BlowWindMill}
+            options={{gestureEnabled: false}}
             name={SCREEN_NAME.BLOW_WINDMILL}
           />
           <Stack.Screen component={MixColors} name={SCREEN_NAME.MIX_COLORS} />
           <Stack.Screen
             component={MatchingPairs}
+            options={{gestureEnabled: false}}
             name={SCREEN_NAME.MATCHING_PAIRS}
           />
           <Stack.Screen
             component={SplashScreen}
+            options={{gestureEnabled: false}}
             name={SCREEN_NAME.SPLASH_SCREEN}
           />
-          <Stack.Screen component={BottomTab} name={SCREEN_NAME.BOTTOM_TAB} />
-          <Stack.Screen component={Account} name={SCREEN_NAME.ACCOUNT} />
+          <Stack.Screen
+            options={{gestureEnabled: false}}
+            component={BottomTab}
+            name={SCREEN_NAME.BOTTOM_TAB}
+          />
+          <Stack.Screen
+            options={{gestureEnabled: false}}
+            component={Account}
+            name={SCREEN_NAME.ACCOUNT}
+          />
           <Stack.Screen
             getComponent={() => require('@tandem/screens/Story').default}
             name={SCREEN_NAME.STORY}
@@ -116,6 +127,7 @@ const AppNavigator = () => {
           />
           <Stack.Screen
             component={BuildingTandem}
+            options={{gestureEnabled: false}}
             name={SCREEN_NAME.BUILDING_TANDEM}
           />
           <Stack.Screen
@@ -175,6 +187,7 @@ const AppNavigator = () => {
                 name={SCREEN_NAME.GENERATE_STORY_COLORS}
               />
               <Stack.Screen
+                options={{gestureEnabled: false}}
                 getComponent={() =>
                   require('@tandem/screens/Congratulation').default
                 }
