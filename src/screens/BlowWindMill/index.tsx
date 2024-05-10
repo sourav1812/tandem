@@ -32,6 +32,7 @@ import {
   PanGestureChangeEventPayload,
   PanGestureHandlerEventPayload,
 } from 'react-native-gesture-handler';
+import themeColor from '@tandem/theme/themeColor';
 const {width: xMax, height: yMax} = Dimensions.get('screen');
 
 const permissionsType = Platform.select({
@@ -320,15 +321,21 @@ const AlertPopupModal = () => {
           position: 'absolute',
           top: verticalScale(50),
           left: scale(10) + verticalScale(36) + 10,
-          padding: 20,
+          padding: verticalScale(20),
         }}>
         <RNTextComponent style={{marginBottom: 10}} isSemiBold>
           Mini Game
         </RNTextComponent>
-        <RNTextComponent>
-          Blow wind into your phone's Microphone to rotate the windmill.
+        <RNTextComponent style={{fontSize: verticalScale(12)}}>
+          Blow wind into your phone's Microphone to rotate the windmill
         </RNTextComponent>
-        <RNTextComponent>
+        <RNTextComponent
+          style={{fontSize: verticalScale(12), color: themeColor.themeBlue}}>
+          {
+            '\nYou can also use you fingers to rotate the blades of the windmill\n'
+          }
+        </RNTextComponent>
+        <RNTextComponent style={{fontSize: verticalScale(12)}}>
           Generate enough energy to create your story book
         </RNTextComponent>
       </View>

@@ -47,4 +47,5 @@ export enum SCREEN_NAME {
   PUBLIC_LIB = 'PublicLib',
   MATCHING_PAIRS = 'MatchingPairs',
   MIX_COLORS = 'MixColors',
+  STORY_LANGAUGE = 'StoryLanguage',
 }

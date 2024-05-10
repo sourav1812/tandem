@@ -23,6 +23,7 @@ import analytics from '@react-native-firebase/analytics';
 import BlowWindMill from '@tandem/screens/BlowWindMill';
 import MatchingPairs from '@tandem/screens/MatchingPairs';
 import MixColors from '@tandem/screens/MixColors';
+import StoryLanguage from '@tandem/screens/GenerateStory/Questions/StoryLangauge';
 // import {accelerometer} from 'react-native-sensors';
 
 const AppNavigator = () => {
@@ -80,6 +81,10 @@ const AppNavigator = () => {
               Platform.OS === 'android' ? 'slide_from_right' : 'default',
           }}>
           <Stack.Screen component={Archive} name={SCREEN_NAME.ARCHIVE} />
+          <Stack.Screen
+            component={StoryLanguage}
+            name={SCREEN_NAME.STORY_LANGAUGE}
+          />
           <Stack.Screen
             component={BlowWindMill}
             options={{gestureEnabled: false}}

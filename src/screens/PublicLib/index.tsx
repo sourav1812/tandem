@@ -4,6 +4,7 @@ import {
   RefreshControl,
   ActivityIndicator,
   SectionList,
+  LayoutAnimation,
 } from 'react-native';
 import React, {useState} from 'react';
 import {styles} from './styles';
@@ -45,6 +46,7 @@ const PublicLib = () => {
   const [page, setPage] = React.useState(1);
   const [isLoading, setLoading] = React.useState(false);
   const [refreshing, setRefreshing] = React.useState(false);
+  const [isImageLoading, setIsImageLoading] = React.useState(false);
   const [sectionList, setSectionList] = React.useState<
     {title: string; data: BooksData[]}[]
   >([]);
@@ -121,7 +123,11 @@ const PublicLib = () => {
     if (isLoading) {
       return <ActivityIndicator />;
     }
-    if (bookObjects.endReached && bookObjects.books.length !== 0) {
+    if (
+      bookObjects.endReached &&
+      bookObjects.books.length !== 0 &&
+      !isImageLoading
+    ) {
       return (
         <RNTextComponent
           isMedium
@@ -175,16 +181,7 @@ const PublicLib = () => {
   const renderItem = React.useCallback(
     ({item}: {item: BooksData; index: number}) => {
       if (images[item.id] === undefined) {
-        return (
-          <RNTextComponent
-            style={{
-              textAlign: 'center',
-              color: themeColor.themeBlue,
-              fontSize: verticalScale(8),
-            }}>
-            loading images...
-          </RNTextComponent>
-        );
+        return null;
       }
       return (
         <View
@@ -237,6 +234,11 @@ const PublicLib = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, forceReload, refreshing]);
 
+  React.useLayoutEffect(() => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    setIsImageLoading(data.some(obj => obj.image === null));
+  }, [images, data]);
+
   React.useEffect(() => {
     const f = async () => {
       try {
@@ -287,6 +289,7 @@ const PublicLib = () => {
           Icon={<SearchIcon />}
         />
         <View style={styles.bottomViewContainer}>
+          {isImageLoading && <ImageLoading />}
           <SectionList
             sections={sectionList}
             bounces={false}
@@ -326,3 +329,11 @@ const PublicLib = () => {
 };
 
 export default PublicLib;
+
+export const ImageLoading = () => {
+  return (
+    <RNTextComponent isMedium style={styles.loadImage}>
+      Loading Images
+    </RNTextComponent>
+  );
+};

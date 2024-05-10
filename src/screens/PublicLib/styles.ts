@@ -3,6 +3,21 @@ import themeColor from '@tandem/theme/themeColor';
 import {scale, verticalScale} from 'react-native-size-matters';
 
 export const styles = StyleSheet.create({
+  loadImage: {
+    textAlign: 'center',
+    color: themeColor.themeBlue,
+    backgroundColor: '#fff',
+    position: 'absolute',
+    alignSelf: 'center',
+    padding: verticalScale(7),
+    borderRadius: verticalScale(10),
+    top: verticalScale(5),
+    zIndex: 2,
+    overflow: 'hidden',
+    fontSize: verticalScale(12),
+    borderWidth: 2,
+    borderColor: themeColor.themeBlue,
+  },
   container: {
     width: '100%',
     height: '100%',

@@ -5,6 +5,7 @@ import {
   RefreshControl,
   ActivityIndicator,
   SectionList,
+  LayoutAnimation,
 } from 'react-native';
 import React, {useState} from 'react';
 import {styles} from './styles';
@@ -38,10 +39,12 @@ import {useDispatch} from 'react-redux';
 import {ratingList} from '@tandem/components/RNRatingModal/interface';
 import Book from '@tandem/api/getStories/interface';
 import {setForceReload} from '@tandem/redux/slices/activityIndicator.slice';
+import {ImageLoading} from '../PublicLib';
 
 const Bookshelf = () => {
   const dispatch = useDispatch();
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const [isImageLoading, setIsImageLoading] = React.useState(false);
   const mode = useAppSelector(state => state.mode.mode);
   const [searchText, setText] = useState<ValidationError>({value: ''});
   const images = useAppSelector(state => state.bookShelf.images);
@@ -125,7 +128,11 @@ const Bookshelf = () => {
     if (isLoading) {
       return <ActivityIndicator />;
     }
-    if (bookObjects.endReached && bookObjects.books.length !== 0) {
+    if (
+      bookObjects.endReached &&
+      bookObjects.books.length !== 0 &&
+      !isImageLoading
+    ) {
       return (
         <RNTextComponent
           isMedium
@@ -179,16 +186,7 @@ const Bookshelf = () => {
   const renderItem = React.useCallback(
     ({item}: {item: BooksData; index: number}) => {
       if (images[item.id] === undefined) {
-        return (
-          <RNTextComponent
-            style={{
-              textAlign: 'center',
-              color: themeColor.themeBlue,
-              fontSize: verticalScale(8),
-            }}>
-            loading images...
-          </RNTextComponent>
-        );
+        return null;
       }
       return (
         <View
@@ -237,6 +235,11 @@ const Bookshelf = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, forceReload, refreshing]);
+
+  React.useLayoutEffect(() => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    setIsImageLoading(data.some(obj => obj.image === null));
+  }, [images, data]);
 
   React.useEffect(() => {
     const f = async () => {
@@ -330,6 +333,7 @@ const Bookshelf = () => {
           Icon={<SearchIcon />}
         />
         <View style={styles.bottomViewContainer}>
+          {isImageLoading && <ImageLoading />}
           <SectionList
             sections={sectionList}
             bounces={false}

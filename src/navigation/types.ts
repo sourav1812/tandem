@@ -49,6 +49,7 @@ export type RootStackParamList = {
   BlowWindMill: undefined;
   MatchingPairs: undefined;
   MixColors: undefined;
+  StoryLanguage: undefined;
 };
 
 export type RootTabParamList = {

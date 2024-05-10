@@ -5,6 +5,7 @@ import {
   RefreshControl,
   ActivityIndicator,
   SectionList,
+  LayoutAnimation,
 } from 'react-native';
 import React, {useState} from 'react';
 import {styles} from './styles';
@@ -32,6 +33,7 @@ import {ratingList} from '@tandem/components/RNRatingModal/interface';
 import Book from '@tandem/api/getStories/interface';
 import {setForceReload} from '@tandem/redux/slices/activityIndicator.slice';
 import RNButton from '@tandem/components/RNButton';
+import {ImageLoading} from '../PublicLib';
 
 const Archive = () => {
   const dispatch = useDispatch();
@@ -41,6 +43,7 @@ const Archive = () => {
   const images = useAppSelector(state => state.bookShelf.images);
   const [page, setPage] = React.useState(1);
   const [isLoading, setLoading] = React.useState(false);
+  const [isImageLoading, setIsImageLoading] = React.useState(false);
   const [refreshing, setRefreshing] = React.useState(false);
   const [sectionList, setSectionList] = React.useState<
     {title: string; data: BooksData[]}[]
@@ -119,7 +122,11 @@ const Archive = () => {
     if (isLoading) {
       return <ActivityIndicator />;
     }
-    if (bookObjects.endReached && bookObjects.books.length !== 0) {
+    if (
+      bookObjects.endReached &&
+      bookObjects.books.length !== 0 &&
+      !isImageLoading
+    ) {
       return (
         <RNTextComponent
           isMedium
@@ -155,19 +162,15 @@ const Archive = () => {
     );
   }, [bookObjects.endReached, isLoading, searchText.value]);
 
+  React.useLayoutEffect(() => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    setIsImageLoading(data.some(obj => obj.image === null));
+  }, [images, data]);
+
   const renderItem = React.useCallback(
     ({item}: {item: BooksData; index: number}) => {
       if (images[item.id] === undefined) {
-        return (
-          <RNTextComponent
-            style={{
-              textAlign: 'center',
-              color: themeColor.themeBlue,
-              fontSize: verticalScale(8),
-            }}>
-            loading images...
-          </RNTextComponent>
-        );
+        return null;
       }
       return (
         <View
@@ -304,6 +307,7 @@ const Archive = () => {
           Icon={<SearchIcon />}
         />
         <View style={styles.bottomViewContainer}>
+          {isImageLoading && <ImageLoading />}
           <SectionList
             sections={sectionList}
             bounces={false}
