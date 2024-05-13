@@ -39,6 +39,7 @@ import {
 import logout from '@tandem/functions/logout';
 import {DIRECTION_ARROWS, PEOPLE} from '@tandem/constants/enums';
 import {changeTooltipStateIfChildListNotEmpty} from '@tandem/redux/slices/tooltip.slice';
+import pushChildStats from '@tandem/functions/pushChildStats';
 // import {changeTooltipState} from '@tandem/redux/slices/tooltip.slice';
 
 const Account = () => {
@@ -87,6 +88,10 @@ const Account = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  React.useEffect(() => {
+    pushChildStats();
+  }, []);
+
   const CircleView = ({
     style,
     blue,
@@ -615,7 +620,14 @@ const Account = () => {
           open={6}
           topViewStyle={{alignItems: 'center'}}
           text={translation('account-screen-tooltip.tip-four')}>
-          <View
+          <Pressable
+            onPress={() => {
+              if (playerList.length !== 0) {
+                buttonPress();
+                navigateTo(SCREEN_NAME.BOTTOM_TAB, {}, true);
+              }
+            }}
+            disabled={childList.length === 0 || playerList.length === 0}
             style={[
               styles.footer,
               playerList.length === 0 &&
@@ -641,16 +653,8 @@ const Account = () => {
               ]}>
               {buttonHeading()}
             </RNTextComponent>
-            <Pressable
-              style={[styles.button, isTablet && {width: scale(90)}]}
-              onPress={() => {
-                if (playerList.length !== 0) {
-                  buttonPress();
-                  navigateTo(SCREEN_NAME.BOTTOM_TAB, {}, true);
-                }
-              }}
-              disabled={childList.length === 0 || playerList.length === 0}>
-              {playerList.map(item => {
+            <View style={[styles.button, isTablet && {width: scale(90)}]}>
+              {playerList.map((item, index) => {
                 const circleType = [];
                 // const filePath = avatars.filter(
                 //   obj => obj.path === item.avatar,
@@ -685,11 +689,12 @@ const Account = () => {
                       !circleType.includes('A') && circleType.includes('C')
                     }
                     both={circleType.includes('A') && circleType.includes('C')}
+                    key={index.toString()}
                   />
                 );
               })}
-            </Pressable>
-          </View>
+            </View>
+          </Pressable>
         </RNTooltip>
       </View>
       <RNSignoutModal

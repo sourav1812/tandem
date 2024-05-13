@@ -51,8 +51,8 @@ const RedeemVoucher = () => {
             style={[
               styles.qr,
               isTablet && {
-                height: verticalScale(200),
-                width: verticalScale(200),
+                height: verticalScale(170),
+                width: verticalScale(170),
               },
             ]}
           />

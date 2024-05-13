@@ -1,4 +1,4 @@
-import {Platform, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {scale, verticalScale} from 'react-native-size-matters';
 
 export const styles = StyleSheet.create({
@@ -9,7 +9,6 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: verticalScale(10),
   },
   progressIndicatorTop: {
     width: '100%',
@@ -26,21 +25,30 @@ export const styles = StyleSheet.create({
     backgroundColor: '#F1F4F9',
     alignItems: 'center',
     padding: 3,
-    paddingLeft: Platform.OS === 'ios' ? 3 : 3.8,
-    marginTop: 5,
+    marginTop: 20,
   },
-  emojiTextContainer: {maxWidth: '40%', alignItems: 'center'},
+  emojiTextContainer: {
+    maxWidth: '40%',
+    alignItems: 'center',
+    paddingVertical: scale(12),
+  },
+
   emojiText: {fontSize: 15},
   newTextComponentContainer: {
     backgroundColor: '#9A00FF',
     zIndex: 1,
-    marginTop: -30,
-    width: '70%',
+    marginTop: scale(-25),
+    width: '60%',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 16,
   },
-  newText: {color: 'white', padding: 10, fontSize: verticalScale(12)},
+  newText: {
+    color: 'white',
+    padding: scale(10),
+    fontSize: scale(12),
+    fontFamily: 'Poppins-Bold',
+  },
   headerTitleContainer: {
     width: '60%',
     padding: 10,
@@ -57,8 +65,6 @@ export const styles = StyleSheet.create({
     fontSize: scale(13),
   },
   img: {
-    height: verticalScale(110),
-    width: scale(105),
     borderRadius: 16,
   },
   heading: {

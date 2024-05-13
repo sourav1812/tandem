@@ -9,6 +9,7 @@ export interface StoryGenerateResponse {
   [STORY_PARTS.WHAT_HAPPENS]: string[];
   [STORY_PARTS.STYLES]: string[];
   [STORY_PARTS.COLOR]: string[];
+  [STORY_PARTS.LANGAUGE]: string;
 }
 
 const initialState: StoryGenerateResponse = {
@@ -18,7 +19,8 @@ const initialState: StoryGenerateResponse = {
   [STORY_PARTS.WHAT_THINGS]: [],
   [STORY_PARTS.WHAT_HAPPENS]: [],
   [STORY_PARTS.STYLES]: [],
-  [STORY_PARTS.COLOR]: [],
+  [STORY_PARTS.COLOR]: ['red'],
+  [STORY_PARTS.LANGAUGE]: 'en',
 };
 
 export const storyGeneration = createSlice({
@@ -27,24 +29,26 @@ export const storyGeneration = createSlice({
   reducers: {
     // push responses
     pushStoryGenerationResponse: (state, action) => {
-      const {key, value}: {key: STORY_PARTS; value: string[] & boolean} =
+      const {
+        key,
+        value,
+      }: {key: STORY_PARTS; value: string[] & boolean & string} =
         action.payload;
       state[key] = value;
     },
     clearParticularState: (state, action) => {
-      console.log(action.payload);
-      const type: string = action.payload;
+      const type:
+        | STORY_PARTS.WHO
+        | STORY_PARTS.WHERE
+        | STORY_PARTS.COLOR
+        | STORY_PARTS.WHAT_THINGS
+        | STORY_PARTS.WHAT_HAPPENS
+        | STORY_PARTS.STYLES = action.payload;
       state[type] = [];
     },
     // empty story gen reducer
-    clearStoryGenerationResponse: state => {
-      state[STORY_PARTS.WHO] = [];
-      state[STORY_PARTS.INCLUSION] = null;
-      state[STORY_PARTS.WHERE] = [];
-      state[STORY_PARTS.WHAT_THINGS] = [];
-      state[STORY_PARTS.WHAT_HAPPENS] = [];
-      state[STORY_PARTS.STYLES] = [];
-      state[STORY_PARTS.COLOR] = [];
+    clearStoryGenerationResponse: () => {
+      return initialState;
     },
   },
 });

@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {LayoutAnimation, Pressable, View} from 'react-native';
+import {LayoutAnimation, View} from 'react-native';
 import React from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {styles} from './styles';
@@ -14,7 +14,7 @@ import {translation} from '@tandem/utils/methods';
 import RNTooltip from '@tandem/components/RNTooltip';
 import navigateTo from '@tandem/navigation/navigate';
 import {DIRECTION_ARROWS, STORY_PARTS} from '@tandem/constants/enums';
-import Pie from '@tandem/components/Pie';
+// import Pie from '@tandem/components/Pie';
 
 export default ({
   onNextQuestion,
@@ -135,17 +135,17 @@ export default ({
               onClick={onNextQuestion}
               textStyle={[
                 styles.buttonText,
-                {marginTop: disabled || !maxSelections ? 0 : verticalScale(30)},
+                // {marginTop: disabled || !maxSelections ? 0 : verticalScale(30)},
               ]}
             />
           </View>
         </RNTooltip>
       )}
-      {!disabled && activeState && maxSelections && (
+      {/* {!disabled && activeState && maxSelections && (
         <Pressable onPress={onNextQuestion}>
           <Pie current={activeState.length} total={maxSelections} />
         </Pressable>
-      )}
+      )} */}
     </RNScreenWrapper>
   );
 };

@@ -24,20 +24,47 @@ const RNEmojiWithText = ({
   isSelected,
   Svgimg,
   showBorderWhenPressed = false,
+  mask,
+  disabled,
+  halfRotationDuration = 0,
 }: Props) => {
   const scaleButton = useSharedValue(1);
+  const rotation = useSharedValue('180deg');
+  const [isSelectedAnimation, setSelectedAnimation] = React.useState(
+    !!isSelected,
+  );
 
   const runAnimation = () => {
     scaleButton.value = withSequence(
-      withTiming(1.2, {duration: 200}),
+      withTiming(0.9, {duration: 200}),
       withTiming(1),
     );
   };
+  const runRotation = (toggle: boolean) => {
+    rotation.value = withSequence(
+      withTiming('90deg', {duration: halfRotationDuration}),
+      withTiming(toggle ? '0deg' : '180deg', {duration: halfRotationDuration}),
+    );
+  };
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      setSelectedAnimation(!!isSelected);
+    }, halfRotationDuration);
+    runRotation(!!isSelected);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSelected]);
 
   return (
     <Pressable
+      disabled={disabled}
       onPress={() => {
-        runAnimation();
+        if (disabled) {
+          return;
+        }
+        if (!mask) {
+          runAnimation();
+        }
         onPress();
       }}>
       <Animated.View
@@ -45,24 +72,38 @@ const RNEmojiWithText = ({
         onLayout={onLayout && onLayout}
         style={[
           styles.container,
-          {transform: [{scale: scaleButton}]},
+          {
+            transform: [
+              {scale: scaleButton},
+              {rotateY: mask ? rotation : '0deg'},
+            ],
+          },
           customStyle && customStyle,
           {
-            ...(isSelected &&
+            ...(isSelectedAnimation &&
               bgcColor && {
                 backgroundColor: bgcColor,
                 borderWidth: showBorderWhenPressed ? 3 : 0,
                 borderColor: themeColor.themeBlue,
               }),
+            backgroundColor: mask
+              ? isSelectedAnimation
+                ? bgcColor
+                : 'purple'
+              : isSelectedAnimation
+              ? bgcColor
+              : themeColor.lightGray,
           },
         ]}>
-        <IconRednerItem
-          icon={icon}
-          heading={heading}
-          isSelected={isSelected}
-          emoji={emoji}
-          Svgimg={Svgimg}
-        />
+        {mask && !isSelectedAnimation ? null : (
+          <IconRednerItem
+            icon={icon}
+            heading={heading}
+            isSelected={isSelectedAnimation}
+            emoji={emoji}
+            Svgimg={Svgimg}
+          />
+        )}
       </Animated.View>
     </Pressable>
   );
@@ -101,12 +142,13 @@ const IconRednerItem = ({
         ]}
       />
     )}
-    {heading && isSelected && (
+    {heading && (
       <RNTextComponent
         style={[
           styles.heading,
           {
             fontSize: verticalScale(16) - heading.split(' ').length * 1.2,
+            color: !isSelected ? 'gray' : 'white',
           },
         ]}
         isSemiBold>

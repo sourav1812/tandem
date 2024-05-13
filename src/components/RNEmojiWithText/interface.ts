@@ -13,6 +13,9 @@ export interface Props {
   Svgimg?: any;
   image?: any;
   showBorderWhenPressed?: boolean;
+  mask?: boolean;
+  disabled?: boolean;
+  halfRotationDuration?: number;
 }
 
 export interface IconProps {

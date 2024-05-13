@@ -35,13 +35,14 @@ const RNMultipleChoice = ({onNextPress, customStyle}: multipleChoiceProps) => {
             <ScrollView
               contentContainerStyle={styles.scroll}
               showsVerticalScrollIndicator={false}>
-              {place.map(value => {
+              {place.map((value, index) => {
                 return (
                   <RNEmojiWithText
                     heading={value.name}
                     customStyle={styles.optionsCustom}
                     icon={value.icon}
                     bgcColor={value.bgc}
+                    key={index}
                   />
                 );
               })}

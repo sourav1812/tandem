@@ -1,4 +1,10 @@
-import {AVATAR_ARRAY, PLACE, WHAT_HAPPENS, WHO} from '@tandem/constants/local';
+import {
+  AVATAR_ARRAY,
+  ILLUSTRATION,
+  PLACE,
+  WHAT_HAPPENS,
+  WHO,
+} from '@tandem/constants/local';
 import {
   addAvatarFile,
   addPlaceFile,
@@ -10,6 +16,8 @@ import {
   addWhoFile,
   clearWhatHappens,
   addWhatHappensFile,
+  clearStoryStyles,
+  addStoryStylesFile,
 } from '@tandem/redux/slices/cache.slice';
 
 import {store} from '@tandem/redux/store';
@@ -44,7 +52,9 @@ export const cacheAvatars = (file?: string | null, path?: string | null) => {
         });
     });
   } else {
-    if (!path) return;
+    if (!path) {
+      return;
+    }
     RNFetchBlob.config({
       fileCache: true,
       path: dirs.DocumentDir + '/avatarsocialimagecache',
@@ -122,8 +132,8 @@ export const cacheWho = () => {
 export const cacheWhatHappens = () => {
   console.log('cache whatHappens func');
   store.dispatch(clearWhatHappens());
-  const isWhoArrayFull = store.getState().cache.isWhoArrayFull;
-  if (isWhoArrayFull) {
+  const isWhatHappensArrayFull = store.getState().cache.isWhatHappensArrayFull;
+  if (isWhatHappensArrayFull) {
     console.log('cacheing what happens array is maxed out');
     return;
   }
@@ -147,6 +157,34 @@ export const cacheWhatHappens = () => {
   });
 };
 
+export const cacheStoryStyles = () => {
+  console.log('cacheStoryStyles func');
+  store.dispatch(clearStoryStyles());
+  const isStoryStylesArrayFull = store.getState().cache.isStoryStylesArrayFull;
+  if (isStoryStylesArrayFull) {
+    console.log('cacheing what happens array is maxed out');
+    return;
+  }
+  ILLUSTRATION.forEach((obj, index) => {
+    console.log('caching StoryStyles: ', obj.url, '\n');
+    RNFetchBlob.config({
+      fileCache: true,
+      path: dirs.DocumentDir + '/storyStyles' + index.toString() + 'cache',
+    })
+      .fetch('GET', obj.url, {})
+      .then(res => {
+        const pathLocal = res.path();
+        store.dispatch(addFlush(pathLocal));
+        store.dispatch(
+          addStoryStylesFile({
+            file: 'file://' + pathLocal,
+            name: obj.name,
+          }),
+        );
+      });
+  });
+};
+
 export const reCache = () => {
   const flush = store.getState().cache.flush;
 
@@ -162,4 +200,5 @@ export const reCache = () => {
   cachePlaces();
   cacheWho();
   cacheWhatHappens();
+  cacheStoryStyles();
 };

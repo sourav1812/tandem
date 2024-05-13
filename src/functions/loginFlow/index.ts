@@ -14,8 +14,10 @@ import {clearCacheForce} from '@tandem/redux/slices/cache.slice';
 import {storeKey} from '@tandem/helpers/encryptedStorage';
 import RNFetchBlob from 'rn-fetch-blob';
 import {CACHE_DIR} from '@tandem/constants/local';
+import {getChildStats} from '@tandem/api/childAnalytics';
 
 export default async (loginResponse: LoginResponse) => {
+  navigateTo(SCREEN_NAME.BUILDING_TANDEM);
   store.dispatch(clearCacheForce());
   storeTokens(loginResponse.accessToken, loginResponse.refreshToken);
   // ! other logic related to navigation flow , modes ,family here
@@ -54,10 +56,13 @@ export default async (loginResponse: LoginResponse) => {
       })),
     }),
   );
-  if (loginResponse.userInfo.termsAndConditions) {
-    // storeKey(TERMS_ACCEPTED, TERMS_ACCEPTED);
-    navigateTo(SCREEN_NAME.ACCOUNT, {}, true);
-  } else {
-    navigateTo(SCREEN_NAME.TERMS_AND_CONDITIONS, {}, true);
-  }
+  await getChildStats();
+  setTimeout(() => {
+    if (loginResponse.userInfo.termsAndConditions) {
+      // storeKey(TERMS_ACCEPTED, TERMS_ACCEPTED);
+      navigateTo(SCREEN_NAME.ACCOUNT, {}, true);
+    } else {
+      navigateTo(SCREEN_NAME.TERMS_AND_CONDITIONS, {}, true);
+    }
+  }, 6000);
 };

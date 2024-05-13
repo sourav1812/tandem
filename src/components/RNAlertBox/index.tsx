@@ -20,11 +20,21 @@ const RNAlertBox = ({
   possibleResolution,
 }: AlertBoxInterface) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
-  const {onSuccess, onDestructive} = useAppSelector(
-    state => state.alertBoxReducer.data,
-  );
+  const {
+    onSuccess,
+    onDestructive,
+    onThirdOption,
+    successText,
+    destructiveText,
+    thirdOptionText,
+  } = useAppSelector(state => state.alertBoxReducer.data);
 
   const dispatch = useAppDispatch();
+
+  if (!message) {
+    return null;
+  }
+
   return (
     <RNModal
       visible={visible}
@@ -57,6 +67,7 @@ const RNAlertBox = ({
             justifyContent: onDestructive ? 'space-around' : 'center',
             alignSelf: 'center',
             width: '100%',
+            flexWrap: onThirdOption ? 'wrap' : undefined,
           }}>
           <RNButton
             onClick={async () => {
@@ -65,11 +76,15 @@ const RNAlertBox = ({
               }
               dispatch(clearAlertData());
             }}
-            title={'OK'}
+            title={successText || 'OK'}
             customStyle={[
               styles.button2,
-              {minWidth: onDestructive ? '60%' : '90%'},
+              {
+                maxWidth: onThirdOption ? '90%' : onDestructive ? '70%' : '90%',
+                minWidth: onThirdOption ? '90%' : onDestructive ? '60%' : '90%',
+              },
             ]}
+            textStyle={successText ? {fontSize: verticalScale(10)} : {}}
           />
           {onDestructive ? (
             <RNButton
@@ -79,15 +94,38 @@ const RNAlertBox = ({
                 }
                 dispatch(clearAlertData());
               }}
-              title={'NO'}
+              title={destructiveText || 'NO'}
               customStyle={[
                 styles.button2,
                 {
                   backgroundColor: themeColor.red,
                   borderColor: themeColor.red,
-                  minWidth: '60%',
+                  minWidth: onThirdOption ? '90%' : '60%',
+                  maxWidth: onThirdOption ? '90%' : '70%',
                 },
               ]}
+              textStyle={destructiveText ? {fontSize: verticalScale(10)} : {}}
+            />
+          ) : null}
+          {onThirdOption ? (
+            <RNButton
+              onClick={() => {
+                if (onThirdOption) {
+                  onThirdOption();
+                }
+                dispatch(clearAlertData());
+              }}
+              title={thirdOptionText || ''}
+              customStyle={[
+                styles.button2,
+                {
+                  backgroundColor: themeColor.gold,
+                  borderColor: themeColor.gold,
+                  minWidth: '90%',
+                  maxWidth: '90%',
+                },
+              ]}
+              textStyle={destructiveText ? {fontSize: verticalScale(10)} : {}}
             />
           ) : null}
         </View>

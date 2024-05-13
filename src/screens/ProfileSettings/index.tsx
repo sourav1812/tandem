@@ -17,7 +17,10 @@ import {LanguageDropDown} from '@tandem/components/LanguageDropDown';
 import {RootState} from '@tandem/redux/store';
 import {editUserProfile} from '@tandem/api/editUserProfile';
 import validationFunction from '@tandem/functions/validationFunction';
-import {saveUserData} from '@tandem/redux/slices/userData.slice';
+import {
+  changeNotifications,
+  saveUserData,
+} from '@tandem/redux/slices/userData.slice';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
 import {languages} from '../SelectLanguage/interface';
@@ -229,6 +232,7 @@ const NotificationSwitch = () => {
       return;
     }
     dispatch(setNotificationStatus(!isEnabled.fromBackend));
+    dispatch(changeNotifications(!isEnabled.fromBackend));
     setIsEnabled(prev => {
       return {...prev, fromBackend: !prev.fromBackend};
     });

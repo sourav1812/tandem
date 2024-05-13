@@ -18,6 +18,7 @@ import {MODE} from '@tandem/constants/mode';
 import {translation} from '@tandem/utils/methods';
 import {RootState} from '@tandem/redux/store';
 import NotificationScreen from '@tandem/screens/NotificationScreen';
+import PublicLib from '@tandem/screens/PublicLib';
 
 const BottomTab = () => {
   const Tab = createBottomTabNavigator<RootTabParamList>();
@@ -119,6 +120,41 @@ const BottomTab = () => {
           },
         }}
       />
+      <Tab.Screen
+        component={PublicLib}
+        name={SCREEN_NAME.PUBLIC_LIB}
+        options={{
+          tabBarIcon: ({focused}: any) => {
+            return (
+              <View
+                style={[
+                  styles.iconContainer,
+                  {
+                    ...(focused && {
+                      borderTopWidth: verticalScale(2),
+                      borderColor: themeColor.themeBlue,
+                    }),
+                  },
+                ]}>
+                <BookmarkActive focused={focused} />
+
+                <RNTextComponent
+                  isMedium
+                  style={[
+                    styles.title,
+                    {
+                      ...(focused && {
+                        color: themeColor.themeBlue,
+                      }),
+                    },
+                  ]}>
+                  Public Library
+                </RNTextComponent>
+              </View>
+            );
+          },
+        }}
+      />
       {mode === MODE.A && (
         <Tab.Screen
           component={People}
@@ -171,11 +207,11 @@ const styles = StyleSheet.create({
     borderTopWidth: verticalScale(2),
     borderColor: 'transparent',
     height: '100%',
-    width: '70%',
+    width: '90%',
     paddingTop: verticalScale(7),
   },
   title: {
-    fontSize: verticalScale(11.5),
+    fontSize: verticalScale(9),
     color: 'rgba(2, 4, 8, 0.6)',
     width: '100%',
     textAlign: 'center',

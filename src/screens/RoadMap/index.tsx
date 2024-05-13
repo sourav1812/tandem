@@ -1,11 +1,12 @@
 import {
   LayoutAnimation,
+  Platform,
   Pressable,
   StatusBar,
   View,
   useWindowDimensions,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {styles} from './styles';
 import YellowButton from '@tandem/assets/svg/YellowButton';
 import RNTextComponent from '@tandem/components/RNTextComponent';
@@ -21,7 +22,7 @@ import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import BackButton from '@tandem/assets/svg/LeftArrow';
 import {verticalScale} from 'react-native-size-matters';
-import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {RootState, store} from '@tandem/redux/store';
 import RNButton from '@tandem/components/RNButton';
@@ -53,13 +54,16 @@ import {
 import wait from '@tandem/functions/wait';
 import Orientation from 'react-native-orientation-locker';
 import lockOrientation from '@tandem/functions/lockOrientation';
+import {Stats, updateChildStats} from '@tandem/redux/slices/createChild.slice';
+import {setStoryGenTracking} from '@tandem/redux/slices/activityIndicator.slice';
+import analytics from '@react-native-firebase/analytics';
 
 const SCREEN = [
+  SCREEN_NAME.GENERATE_STORY_WHAT_HAPPENS,
   SCREEN_NAME.GENERATE_STORY_WHO,
   SCREEN_NAME.GENERATE_STORY_INCLUSION,
-  SCREEN_NAME.GENERATE_STORY_WHERE,
   SCREEN_NAME.GENERATE_STORY_WHAT_THINGS,
-  SCREEN_NAME.GENERATE_STORY_WHAT_HAPPENS,
+  SCREEN_NAME.GENERATE_STORY_WHERE,
   SCREEN_NAME.GENERATE_STORY_ILLUSTRATIONS,
   SCREEN_NAME.GENERATE_STORY_COLORS,
 ];
@@ -79,6 +83,9 @@ const RNRoadmap = () => {
     (state: RootState) => state.storyGeneration,
   );
   const snapshots = useAppSelector((state: RootState) => state.snapshotReducer);
+  const isStoryGenTracking = useAppSelector(
+    (state: RootState) => state.activityIndicator.isStoryGenTracking,
+  );
   const currentChild = useAppSelector(
     (state: RootState) => state.createChild.currentChild,
   );
@@ -93,37 +100,45 @@ const RNRoadmap = () => {
   );
   let scale = portrait ? 1 : 1.4;
 
-  const who = true;
+  const whatHappens = true;
+  const who =
+    storyGenerationResponse[STORY_PARTS.WHAT_HAPPENS].length > 0 ||
+    storyGenerationResponse[STORY_PARTS.WHO].length > 0;
   const inclusion =
-    storyGenerationResponse[STORY_PARTS.WHO].length > 0 ||
+    (who && storyGenerationResponse[STORY_PARTS.WHO].length > 0) ||
     storyGenerationResponse[STORY_PARTS.INCLUSION] !== null;
-  const where =
-    (inclusion && storyGenerationResponse[STORY_PARTS.INCLUSION] !== null) ||
-    storyGenerationResponse[STORY_PARTS.WHERE].length > 0;
   const whatThings =
-    (where && storyGenerationResponse[STORY_PARTS.WHERE].length > 0) ||
+    (inclusion && storyGenerationResponse[STORY_PARTS.INCLUSION] !== null) ||
     storyGenerationResponse[STORY_PARTS.WHAT_THINGS].length > 0;
-  const whatHappens =
+  const where =
     (whatThings &&
       storyGenerationResponse[STORY_PARTS.WHAT_THINGS].length > 0) ||
-    storyGenerationResponse[STORY_PARTS.WHAT_HAPPENS].length > 0;
+    storyGenerationResponse[STORY_PARTS.WHERE].length > 0;
   const illustration =
-    (whatHappens &&
-      storyGenerationResponse[STORY_PARTS.WHAT_HAPPENS].length > 0) ||
+    (where && storyGenerationResponse[STORY_PARTS.WHERE].length > 0) ||
     storyGenerationResponse[STORY_PARTS.STYLES].length > 0;
   const colors =
-    (illustration && storyGenerationResponse[STORY_PARTS.STYLES].length > 0) ||
-    storyGenerationResponse[STORY_PARTS.COLOR].length > 0;
+    illustration && storyGenerationResponse[STORY_PARTS.STYLES].length > 0;
 
   const checkIfClickable = [
+    whatHappens,
     who,
     inclusion,
-    where,
     whatThings,
-    whatHappens,
+    where,
     illustration,
     colors,
   ];
+  console.log({
+    whatHappens,
+    who,
+    inclusion,
+    whatThings,
+    where,
+    illustration,
+    colors,
+    checkIfClickable,
+  });
 
   const handleNavigate = (index: number) => {
     if (checkIfClickable[index]) {
@@ -137,6 +152,7 @@ const RNRoadmap = () => {
   const [hHeight, setHeight] = React.useState(
     heightRef + (StatusBar.currentHeight || 0),
   );
+  const dispatch = useAppDispatch();
   React.useEffect(() => {
     setHeight(heightRef + (StatusBar.currentHeight || 0));
   }, [heightRef]);
@@ -157,11 +173,11 @@ const RNRoadmap = () => {
 
     if (!checkIfClickable[2]) {
       // ! depending upon when .. the dispatched action will change
-      store.dispatch(addSnapShot1(overlay));
+      dispatch(addSnapShot1(overlay));
       return;
     }
     if (checkIfClickable[6]) {
-      store.dispatch(addSnapShot2(overlay));
+      dispatch(addSnapShot2(overlay));
     }
   };
 
@@ -171,7 +187,10 @@ const RNRoadmap = () => {
     return mix(transition.value, 0, circle.value.r);
   });
 
+  const [zIndex, setZindex] = useState(-1);
+
   const performAnimation = async () => {
+    setZindex(1);
     const y = positionRefs[1].y + verticalScale(120) / scale;
     const x = positionRefs[1].x + verticalScale(105) / scale;
     const corners = [
@@ -182,13 +201,20 @@ const RNRoadmap = () => {
     ];
     const radius = Math.max(...corners.map(corner => dist(corner, {x, y})));
     circle.value = {x, y, r: radius};
+    if (Platform.OS === 'android') {
+      await wait(500);
+    }
     await saveSnapShot();
+    if (Platform.OS === 'android') {
+      await wait(500);
+    }
     transition.value = 0;
-    transition.value = withTiming(1, {duration: 3000});
-    await wait(3000);
-
-    store.dispatch(addSnapShot1(null));
-    store.dispatch(addSnapShot2(null));
+    transition.value = withTiming(1, {duration: 3000}, async () => {
+      await wait(500);
+      dispatch(addSnapShot1(null));
+      dispatch(addSnapShot2(null));
+      setZindex(-1);
+    });
   };
 
   React.useEffect(() => {
@@ -204,10 +230,51 @@ const RNRoadmap = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  React.useEffect(() => {
+    if (isStoryGenTracking) {
+      console.log('wont be calling this useEffect again');
+      return;
+    }
+    // logic to calculate time spent reading story
+    const timeSpent = () => {
+      const stats: Stats = JSON.parse(
+        JSON.stringify(
+          store.getState().createChild.stats?.[currentChild.childId],
+        ),
+      );
+
+      const timeAlreadyPast = stats?.generation?.totalTime || 0;
+      // we will call this in an interval and add 5 sec to it
+      // ! we want to foundation object ready by now in slice
+      stats.generation.totalTime = timeAlreadyPast + 5;
+      console.log(
+        'current story generation time by child ',
+        currentChild.childId,
+        'is ',
+        timeAlreadyPast + 5,
+      );
+      dispatch(
+        updateChildStats({childId: currentChild.childId, stats: {...stats}}),
+      );
+
+      // calling timeSpent recursively after 5 seconds
+    };
+    // set someReduxState to true
+    dispatch(setStoryGenTracking(true));
+    const unsubscribe = setInterval(() => {
+      timeSpent();
+    }, 5000);
+    return () => {
+      clearInterval(unsubscribe);
+      dispatch(setStoryGenTracking(false));
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
-    <View ref={ref} style={{flex: 1}}>
+    <View ref={ref} collapsable={false} style={{flex: 1}}>
       <RNScreenWrapper style={styles.container}>
-        <View style={styles.header}>
+        <View collapsable={false} style={styles.header}>
           <RNButton
             onlyIcon
             icon={<BackButton />}
@@ -222,8 +289,9 @@ const RNRoadmap = () => {
             <YellowButton />
           </Pressable>
         </View>
-        <View style={[styles.roadmap]}>
+        <View collapsable={false} style={[styles.roadmap]}>
           <Pressable
+            collapsable={false}
             onLayout={event => {
               const layout = event.nativeEvent?.layout;
               LayoutAnimation.configureNext(
@@ -249,10 +317,29 @@ const RNRoadmap = () => {
               }
 
               try {
-                performAnimation();
+                if (Platform.OS === 'ios') {
+                  performAnimation();
+                }
                 await generateStory({
                   childId: currentChild.childId,
                   storyPromptData: storyGenerationResponse,
+                });
+                analytics().logEvent('newStoryGenerated', {
+                  childId: currentChild.childId,
+                  characters: JSON.stringify(
+                    storyGenerationResponse.characters,
+                  ),
+                  childInStory: JSON.stringify(
+                    storyGenerationResponse.childInStory,
+                  ),
+                  genre: JSON.stringify(storyGenerationResponse.genre),
+                  illustrationStyle: JSON.stringify(
+                    storyGenerationResponse.illustrationStyle,
+                  ),
+                  location: JSON.stringify(storyGenerationResponse.location),
+                  plotElements: JSON.stringify(
+                    storyGenerationResponse.plotElements,
+                  ),
                 });
               } catch (error) {
                 console.log('error generating story', error);
@@ -262,6 +349,7 @@ const RNRoadmap = () => {
           </Pressable>
           {positionRefs[6].y !== 0 && (
             <Pressable
+              collapsable={false}
               onLayout={event => {
                 const layout = event.nativeEvent?.layout;
                 LayoutAnimation.configureNext(
@@ -297,6 +385,7 @@ const RNRoadmap = () => {
           )}
           {positionRefs[5].y !== 0 && (
             <Pressable
+              collapsable={false}
               onLayout={event => {
                 const layout = event.nativeEvent?.layout;
                 LayoutAnimation.configureNext(
@@ -317,7 +406,7 @@ const RNRoadmap = () => {
                   left: positionRefs[5].x + verticalScale(81) / scale,
                 },
               ]}>
-              <WhatHappens
+              <Where
                 scale={scale}
                 fillColor={
                   checkIfClickable[4]
@@ -332,6 +421,7 @@ const RNRoadmap = () => {
           )}
           {positionRefs[4].y !== 0 && (
             <Pressable
+              collapsable={false}
               onLayout={event => {
                 const layout = event.nativeEvent?.layout;
                 LayoutAnimation.configureNext(
@@ -365,6 +455,7 @@ const RNRoadmap = () => {
           )}
           {positionRefs[3].y !== 0 && (
             <Pressable
+              collapsable={false}
               onLayout={event => {
                 const layout = event.nativeEvent?.layout;
                 LayoutAnimation.configureNext(
@@ -376,7 +467,7 @@ const RNRoadmap = () => {
                 }));
               }}
               onPress={() => {
-                handleNavigate(2);
+                handleNavigate(1);
               }}
               style={[
                 styles.where,
@@ -385,19 +476,20 @@ const RNRoadmap = () => {
                   left: positionRefs[3].x + verticalScale(105) / scale,
                 },
               ]}>
-              <Where
+              <Who
                 scale={scale}
                 fillColor={
-                  checkIfClickable[2] ? themeColor.green : themeColor.lightGray
+                  checkIfClickable[1] ? themeColor.green : themeColor.lightGray
                 }
                 textColor={
-                  checkIfClickable[2] ? themeColor.white : themeColor.themeBlue
+                  checkIfClickable[1] ? themeColor.white : themeColor.themeBlue
                 }
               />
             </Pressable>
           )}
           {positionRefs[2].y !== 0 && (
             <Pressable
+              collapsable={false}
               onLayout={event => {
                 const layout = event.nativeEvent?.layout;
                 LayoutAnimation.configureNext(
@@ -421,7 +513,7 @@ const RNRoadmap = () => {
                   left: positionRefs[2].x - verticalScale(81) / scale,
                 },
               ]}>
-              <Who
+              <WhatHappens
                 scale={scale}
                 fillColor={hightlightFirst ? '#9A00FF' : themeColor.lightGray}
                 textColor={
@@ -432,6 +524,7 @@ const RNRoadmap = () => {
           )}
           {positionRefs[1].y !== 0 && (
             <Pressable
+              collapsable={false}
               onLayout={event => {
                 const layout = event.nativeEvent?.layout;
                 LayoutAnimation.configureNext(
@@ -467,10 +560,11 @@ const RNRoadmap = () => {
           )}
         </View>
         <Canvas
-          pointerEvents="none"
           style={{
             height: hHeight,
             width: wWidth,
+            position: 'absolute',
+            zIndex,
           }}>
           {snapshots.snapShot1 && snapshots.snapShot2 && (
             <Group>

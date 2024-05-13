@@ -7,4 +7,10 @@ export interface inputListState {
 export interface VoiceQuestionProps {
   onClick: () => void;
   customStyle?: StyleProp<ViewStyle>;
+  questions: {
+    question: string;
+    options: string[];
+    answer: string;
+    _id: string;
+  }[];
 }

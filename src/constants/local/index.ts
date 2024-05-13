@@ -61,14 +61,9 @@ import {
   OnlyImageType,
   PlaceType,
 } from '@tandem/screens/GenerateStory/interface';
-
-import Card from '@tandem/assets/svg/illustrationTypes/card.svg';
-import Card1 from '@tandem/assets/svg/illustrationTypes/card-1.svg';
-import Card2 from '@tandem/assets/svg/illustrationTypes/card-2.svg';
-import Card3 from '@tandem/assets/svg/illustrationTypes/card-3.svg';
-import Card4 from '@tandem/assets/svg/illustrationTypes/card-4.svg';
 import RedQuestionMark from '@tandem/assets/svg/storySvg/RedQuestionMark.svg';
 import {translation} from '@tandem/utils/methods';
+import {BASE_URL} from '@tandem/constants/api';
 
 export const TOOLTIP = 'ToolTip';
 // export const TERMS_ACCEPTED = 'TERMS_ACCEPTED';
@@ -156,11 +151,38 @@ export const ATTRIBUTE: PlaceType[] = [
 ];
 
 export const ILLUSTRATION = [
-  {name: 'dog', svg: Card},
-  {name: 'school', svg: Card1},
-  {name: 'camp', svg: Card2},
-  {name: 'art', svg: Card3},
-  {name: 'space', svg: Card4},
+  {
+    name: 'style1-papercut',
+    url: BASE_URL + 'images/illustration-styles/papercut.webp',
+  },
+  {
+    name: 'style2-scrappy',
+    url: BASE_URL + 'images/illustration-styles/scrappy.webp',
+  },
+  {
+    name: 'style3-wonder',
+    url: BASE_URL + 'images/illustration-styles/wonder.webp',
+  },
+  {
+    name: 'style4-sleepy',
+    url: BASE_URL + 'images/illustration-styles/sleepy.webp',
+  },
+  {
+    name: 'style5-busy',
+    url: BASE_URL + 'images/illustration-styles/busy.webp',
+  },
+  {
+    name: 'style6-anthro',
+    url: BASE_URL + 'images/illustration-styles/anthro.webp',
+  },
+  {
+    name: 'style7-flat',
+    url: BASE_URL + 'images/illustration-styles/flat.webp',
+  },
+  {
+    name: 'style8-nature',
+    url: BASE_URL + 'images/illustration-styles/nature.webp',
+  },
 ];
 
 export const COLOR_PALETTE = [
@@ -173,151 +195,143 @@ export const COLOR_PALETTE = [
 ];
 
 export const AVATAR_ARRAY = [...new Array(29).keys()].map(
-  key => `https://tandem.geeky.dev/v1/images/avatars/avatar${key + 1}.png`,
+  key => BASE_URL + `images/avatars/avatar${key + 1}.webp`,
 );
 
 export const PLACE: OnlyImageType[] = [
   {
     name: 'Outer Space',
-    url: 'https://tandem.geeky.dev/v1/images/locations/outer_space.png',
+    url: BASE_URL + 'images/locations/outer_space.webp',
   },
   {
     name: 'Camping in tents',
-    url: 'https://tandem.geeky.dev/v1/images/locations/camping_in_tents.png',
+    url: BASE_URL + 'images/locations/camping_in_tents.webp',
   },
   {
     name: 'City',
-    url: 'https://tandem.geeky.dev/v1/images/locations/city.png',
+    url: BASE_URL + 'images/locations/city.webp',
   },
   {
     name: 'Dark Forest',
-    url: 'https://tandem.geeky.dev/v1/images/locations/dark_forest.png',
+    url: BASE_URL + 'images/locations/dark_forest.webp',
   },
   {
     name: 'Fair Ground',
-    url: 'https://tandem.geeky.dev/v1/images/locations/fair_ground.png',
+    url: BASE_URL + 'images/locations/fair_ground.webp',
   },
   {
     name: 'Farm Yard',
-    url: 'https://tandem.geeky.dev/v1/images/locations/farm_yard.png',
+    url: BASE_URL + 'images/locations/farm_yard.webp',
   },
   {
     name: 'Snowy Mountain',
-    url: 'https://tandem.geeky.dev/v1/images/locations/snowy_mountain.png',
+    url: BASE_URL + 'images/locations/snowy_mountain.webp',
   },
   {
     name: 'Sunny Beach',
-    url: 'https://tandem.geeky.dev/v1/images/locations/sunny_beach.png',
+    url: BASE_URL + 'images/locations/sunny_beach.webp',
   },
 ];
 
 export const WHO: OnlyImageType[] = [
   {
     name: 'Astronaut',
-    url: 'https://tandem.geeky.dev/v1/images/who/astronaut.png',
+    url: BASE_URL + 'images/who/astronaut.webp',
   },
   {
     name: 'Boy Who Plays The Drums',
-    url: 'https://tandem.geeky.dev/v1/images/who/boy_who_plays_the_drums.png',
+    url: BASE_URL + 'images/who/boy_who_plays_the_drums.webp',
   },
   {
     name: 'Bunny Rabbit',
-    url: 'https://tandem.geeky.dev/v1/images/who/bunny_rabbit.png',
+    url: BASE_URL + 'images/who/bunny_rabbit.webp',
   },
   {
     name: 'Cute Dinosaur',
-    url: 'https://tandem.geeky.dev/v1/images/who/cute_dinosaur.png',
+    url: BASE_URL + 'images/who/cute_dinosaur.webp',
   },
   {
     name: 'Cute Duckling',
-    url: 'https://tandem.geeky.dev/v1/images/who/cute_duckling.png',
+    url: BASE_URL + 'images/who/cute_duckling.webp',
   },
   {
     name: 'Cute Kitten',
-    url: 'https://tandem.geeky.dev/v1/images/who/cute_kitten.png',
+    url: BASE_URL + 'images/who/cute_kitten.webp',
   },
   {
     name: 'Sea Monster',
-    url: 'https://tandem.geeky.dev/v1/images/who/cute_sea_monster.png',
+    url: BASE_URL + 'images/who/cute_sea_monster.webp',
   },
   {
     name: 'Farm Animals',
-    url: 'https://tandem.geeky.dev/v1/images/who/farm_animals.png',
+    url: BASE_URL + 'images/who/farm_animals.webp',
   },
   {
     name: 'Female Doctor',
-    url: 'https://tandem.geeky.dev/v1/images/who/female_doctor.png',
+    url: BASE_URL + 'images/who/female_doctor.webp',
   },
   {
     name: 'Female Firefighter',
-    url: 'https://tandem.geeky.dev/v1/images/who/female_firefighter.png',
+    url: BASE_URL + 'images/who/female_firefighter.webp',
   },
   {
     name: 'Female Runner',
-    url: 'https://tandem.geeky.dev/v1/images/who/female_runner.png',
+    url: BASE_URL + 'images/who/female_runner.webp',
   },
   {
     name: 'Fisherman',
-    url: 'https://tandem.geeky.dev/v1/images/who/fisherman.png',
+    url: BASE_URL + 'images/who/fisherman.webp',
   },
   {
     name: 'Happy Yeti',
-    url: 'https://tandem.geeky.dev/v1/images/who/happy_yeti.png',
+    url: BASE_URL + 'images/who/happy_yeti.webp',
   },
   {
     name: 'Mad Professor',
-    url: 'https://tandem.geeky.dev/v1/images/who/mad_professor.png',
+    url: BASE_URL + 'images/who/mad_professor.webp',
   },
   {
     name: 'Male Runner',
-    url: 'https://tandem.geeky.dev/v1/images/who/male_runner.png',
+    url: BASE_URL + 'images/who/male_runner.webp',
   },
   {
     name: 'Pet Dog',
-    url: 'https://tandem.geeky.dev/v1/images/who/pet_dog.png',
+    url: BASE_URL + 'images/who/pet_dog.webp',
   },
   {
     name: 'Policeman',
-    url: 'https://tandem.geeky.dev/v1/images/who/policeman.png',
+    url: BASE_URL + 'images/who/policeman.webp',
   },
   {
     name: 'Racing Cyclist',
-    url: 'https://tandem.geeky.dev/v1/images/who/racing_cyclist.png',
+    url: BASE_URL + 'images/who/racing_cyclist.webp',
   },
   {
     name: 'Safari Animals',
-    url: 'https://tandem.geeky.dev/v1/images/who/safari_animals.png',
+    url: BASE_URL + 'images/who/safari_animals.webp',
   },
 ];
 
 export const WHAT_HAPPENS: OnlyImageType[] = [
   {
-    name: 'Adventure',
-    url: 'https://tandem.geeky.dev/v1/images/whatHappens/adventure.png',
+    name: 'An adventure',
+    url: BASE_URL + 'images/whatHappensNew/adventure.webp',
   },
   {
-    name: 'Fairy Tale',
-    url: 'https://tandem.geeky.dev/v1/images/whatHappens/fairy_tale.png',
+    name: 'Makes you laugh',
+    url: BASE_URL + 'images/whatHappensNew/laugh.webp',
   },
   {
-    name: 'Fantastic Mystery',
-    url: 'https://tandem.geeky.dev/v1/images/whatHappens/fantastic_mystery.png',
+    name: 'Move, dance, sing or be silly',
+    url: BASE_URL + 'images/whatHappensNew/move.webp',
   },
   {
-    name: 'Friendship ',
-    url: 'https://tandem.geeky.dev/v1/images/whatHappens/friendship_story.png',
+    name: 'Bedtime story',
+    url: BASE_URL + 'images/whatHappensNew/sleep.webp',
   },
   {
-    name: 'Funny ',
-    url: 'https://tandem.geeky.dev/v1/images/whatHappens/funny_story.png',
-  },
-  {
-    name: 'Love',
-    url: 'https://tandem.geeky.dev/v1/images/whatHappens/love_story.png',
-  },
-  {
-    name: 'Spooky',
-    url: 'https://tandem.geeky.dev/v1/images/whatHappens/spooky_tale.png',
+    name: 'A story about things',
+    url: BASE_URL + 'images/whatHappensNew/stuff.webp',
   },
 ];
 
@@ -351,11 +365,43 @@ export const MONTH_ARRAY: {month: string; monthKey: string}[] = [
 export const CACHE_DIR = 'tandemCacheDirectory';
 
 export const YEARS_ARRAY = Array.from(
-  {length: Math.abs(1985 - new Date().getFullYear()) + 1},
+  {length: Math.abs(1924 - new Date().getFullYear()) + 1},
   (_, i) => {
     return {
       index: i,
-      yearkey: 1985 + i,
+      yearkey: 1924 + i,
     };
   },
 );
+export const FONT_SIZES = [16, 20, 24, 28, 32, 40];
+
+// export const WHAT_HAPPENS: OnlyImageType[] = [
+//   {
+//     name: 'Adventure',
+//     url: BASE_URL+'images/whatHappens/adventure.webp',
+//   },
+//   {
+//     name: 'Fairy Tale',
+//     url: BASE_URL+'images/whatHappens/fairy_tale.webp',
+//   },
+//   {
+//     name: 'Fantastic Mystery',
+//     url: BASE_URL+'images/whatHappens/fantastic_mystery.webp',
+//   },
+//   {
+//     name: 'Friendship ',
+//     url: BASE_URL+'images/whatHappens/friendship_story.webp',
+//   },
+//   {
+//     name: 'Funny ',
+//     url: BASE_URL+'images/whatHappens/funny_story.webp',
+//   },
+//   {
+//     name: 'Love',
+//     url: BASE_URL+'images/whatHappens/love_story.webp',
+//   },
+//   {
+//     name: 'Spooky',
+//     url: BASE_URL+'images/whatHappens/spooky_tale.webp',
+//   },
+// ];

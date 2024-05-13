@@ -1,25 +1,19 @@
 import {createSlice} from '@reduxjs/toolkit';
-import Book from '@tandem/api/getStories/interface';
+import {StoryData} from '@tandem/api/getStories/interface';
 
 interface BookShelf {
-  books: Book[];
+  books: StoryData[];
+  images: {[bookId: string]: string[]};
+  activePageNumber: number;
 }
-const initialState: BookShelf = {books: []};
+const initialState: BookShelf = {books: [], images: {}, activePageNumber: -1};
 
 export const bookShelf = createSlice({
   name: 'bookShelf',
   initialState,
   reducers: {
-    // push a new book
-    addNewBook: (state, action) => {
-      const isBookAlreadyAdded = state.books.findIndex(
-        book => book?.bookId === action.payload?.bookId,
-      );
-      if (isBookAlreadyAdded !== -1) {
-        console.log('this book already exists');
-        return;
-      }
-      state.books.push(action.payload);
+    addBooks: (state, action) => {
+      state.books = action.payload;
     },
     removeLatestBook: state => {
       state.books.pop();
@@ -27,17 +21,39 @@ export const bookShelf = createSlice({
     clearbookShelf: state => {
       state.books = [];
     },
-    setImageForPage: (state, action) => {
-      const {bookIndex, pageIndex, image} = action.payload;
-      if (bookIndex === -1) {
-        return;
-      }
-      state.books[bookIndex].pages[pageIndex].image = image;
+    setImagesForBook: (state, action) => {
+      const {bookId, images} = action.payload;
+      state.images[bookId] = images;
+    },
+    renewImages: (state, action) => {
+      state.images = action.payload;
+    },
+    updatePage: (state, action) => {
+      state.activePageNumber = action.payload;
+    },
+    rateBookLocally: (state, action) => {
+      const {bookIndex, rating} = action.payload;
+      state.books[bookIndex].ratingInfo.push({
+        _id: state.books[bookIndex]._id + 'rating',
+        bookId: state.books[bookIndex]._id,
+        userId: state.books[bookIndex].userId,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        __v: 0,
+        storyRating: rating,
+      });
     },
   },
 });
 
-export const {addNewBook, removeLatestBook, clearbookShelf, setImageForPage} =
-  bookShelf.actions;
+export const {
+  setImagesForBook,
+  removeLatestBook,
+  clearbookShelf,
+  addBooks,
+  rateBookLocally,
+  renewImages,
+  updatePage,
+} = bookShelf.actions;
 
 export default bookShelf.reducer;

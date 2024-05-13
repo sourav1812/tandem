@@ -1,13 +1,13 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {FC} from 'react';
-import {Canvas, Path, Skia, SkiaMutableValue} from '@shopify/react-native-skia';
+import {Canvas, Path, Skia} from '@shopify/react-native-skia';
 import RNTextComponent from '../RNTextComponent';
 import {StyleSheet, View, useWindowDimensions} from 'react-native';
 import themeColor from '@tandem/theme/themeColor';
 import {verticalScale} from 'react-native-size-matters';
 
 interface CircularProgressProps {
-  percentageComplete: SkiaMutableValue<number>;
+  percentageComplete: any;
   current: number;
   total: number;
 }

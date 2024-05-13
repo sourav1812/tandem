@@ -1,5 +1,12 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {AVATAR_ARRAY, PLACE, WHO, WHAT_HAPPENS} from '@tandem/constants/local';
+import {GenerateStoryData} from '@tandem/api/generateStory/interface';
+import {
+  AVATAR_ARRAY,
+  PLACE,
+  WHO,
+  WHAT_HAPPENS,
+  ILLUSTRATION,
+} from '@tandem/constants/local';
 
 interface AvatarObject {
   name: string;
@@ -14,8 +21,11 @@ interface CacheState {
   who: AvatarObject[];
   isWhoArrayFull: boolean;
   whatHappens: AvatarObject[];
+  storyStyles: AvatarObject[];
   isWhatHappensArrayFull: boolean;
+  isStoryStylesArrayFull: boolean;
   flush: string[];
+  pendingStoryGeneration: GenerateStoryData[];
 }
 
 const initialState: CacheState = {
@@ -26,8 +36,11 @@ const initialState: CacheState = {
   who: [],
   isWhoArrayFull: false,
   whatHappens: [],
+  storyStyles: [],
   isWhatHappensArrayFull: false,
+  isStoryStylesArrayFull: false,
   flush: [],
+  pendingStoryGeneration: [],
 };
 
 export const cacheSlice = createSlice({
@@ -59,6 +72,7 @@ export const cacheSlice = createSlice({
         modifiedPlaces,
         modifiedWho,
         modifiedWhatHappens,
+        modifiedStoryStyles,
       } = action.payload;
       console.log({didChange: modifiedAvatars[0].file});
       state.avatars = modifiedAvatars;
@@ -66,6 +80,7 @@ export const cacheSlice = createSlice({
       state.places = modifiedPlaces;
       state.who = modifiedWho;
       state.whatHappens = modifiedWhatHappens;
+      state.storyStyles = modifiedStoryStyles;
     },
     clearAvatars: state => {
       if (
@@ -123,16 +138,43 @@ export const cacheSlice = createSlice({
         state.whatHappens = [];
       }
     },
+    addStoryStylesFile: (state, action) => {
+      if (state.storyStyles.length < ILLUSTRATION.length) {
+        state.storyStyles.push(action.payload);
+      } else {
+        state.isStoryStylesArrayFull = true;
+      }
+      if (state.storyStyles.length === ILLUSTRATION.length) {
+        state.isStoryStylesArrayFull = true;
+      }
+    },
+    clearStoryStyles: state => {
+      if (
+        state.storyStyles.length < ILLUSTRATION.length &&
+        state.isStoryStylesArrayFull
+      ) {
+        state.storyStyles = [];
+      }
+    },
     clearCacheForce: state => {
       state.avatars = [];
       state.places = [];
       state.flush = [];
       state.who = [];
       state.whatHappens = [];
+      state.storyStyles = [];
+      state.pendingStoryGeneration = [];
       state.isAvatarArrayFull = false;
       state.isPlaceArrayFull = false;
       state.isWhoArrayFull = false;
       state.isWhatHappensArrayFull = false;
+      state.isStoryStylesArrayFull = false;
+    },
+    pushToPendingStoryGeneration: (state, action) => {
+      state.pendingStoryGeneration.push(action.payload);
+    },
+    clearPendingStoriesGen: state => {
+      state.pendingStoryGeneration = [];
     },
   },
 });
@@ -150,6 +192,10 @@ export const {
   addWhoFile,
   addWhatHappensFile,
   clearWhatHappens,
+  pushToPendingStoryGeneration,
+  clearPendingStoriesGen,
+  addStoryStylesFile,
+  clearStoryStyles,
 } = cacheSlice.actions;
 
 export default cacheSlice.reducer;

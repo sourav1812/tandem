@@ -29,6 +29,7 @@ const RNTextInputWithLabel = ({
   multiline = undefined,
   labelStyle,
   editable = true,
+  scrollEnabled,
 }: Props) => {
   const [highlight, setHighlight] = useState(false);
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -85,6 +86,7 @@ const RNTextInputWithLabel = ({
           editable={editable}
           multiline={multiline}
           autoCapitalize={autoCapitalize}
+          scrollEnabled={scrollEnabled}
           style={[
             styles.textinput,
             isTablet && {paddingHorizontal: 12, paddingVertical: 16},

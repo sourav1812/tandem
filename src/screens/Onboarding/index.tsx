@@ -8,7 +8,7 @@ import RNTextComponent from '@tandem/components/RNTextComponent';
 import {translation} from '@tandem/utils/methods';
 import RNButton from '@tandem/components/RNButton';
 import {scale, verticalScale} from 'react-native-size-matters';
-import themeColor from '@tandem/theme/themeColor';
+// import themeColor from '@tandem/theme/themeColor';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
@@ -17,7 +17,7 @@ import {RootState} from '@tandem/redux/store';
 const Onboarding = () => {
   const [remountKey, setRemountKey] = useState(0);
 
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex] = useState(0);
   const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
@@ -32,20 +32,20 @@ const Onboarding = () => {
         ? require('@tandem/assets/png/onboarding1.png')
         : require('@tandem/assets/png/onboardingLandscape1.png'),
     },
-    {
-      id: 1,
-      description: translation('WITH_TANDEM_YOU_WILL_THE_POWER'),
-      url: portrait
-        ? require('@tandem/assets/png/onboarding2.png')
-        : require('@tandem/assets/png/onboardingLandscape2.png'),
-    },
-    {
-      id: 2,
-      description: translation('YOUR_CHILD_CAN_CHOOSE_FROM_A_VARIETY'),
-      url: portrait
-        ? require('@tandem/assets/png/onboarding3.png')
-        : require('@tandem/assets/png/onboardingLandscape3.png'),
-    },
+    // {
+    //   id: 1,
+    //   description: translation('WITH_TANDEM_YOU_WILL_THE_POWER'),
+    //   url: portrait
+    //     ? require('@tandem/assets/png/onboarding2.png')
+    //     : require('@tandem/assets/png/onboardingLandscape2.png'),
+    // },
+    // {
+    //   id: 2,
+    //   description: translation('YOUR_CHILD_CAN_CHOOSE_FROM_A_VARIETY'),
+    //   url: portrait
+    //     ? require('@tandem/assets/png/onboarding3.png')
+    //     : require('@tandem/assets/png/onboardingLandscape3.png'),
+    // },
   ];
   const height = Dimensions.get('screen').height;
   const width = Dimensions.get('screen').width;
@@ -79,27 +79,27 @@ const Onboarding = () => {
     setRemountKey(remountKey + 1);
   };
 
-  const onViewableItemsChanged = useCallback(
-    ({viewableItems}: any) => {
-      if (viewableItems.length > 0) {
-        setCurrentIndex(viewableItems[0].index);
-      }
-    },
+  // const onViewableItemsChanged = useCallback(
+  //   ({viewableItems}: any) => {
+  //     if (viewableItems.length > 0) {
+  //       setCurrentIndex(viewableItems[0].index);
+  //     }
+  //   },
 
-    [],
-  );
+  //   [],
+  // );
 
-  const nextPage = () => {
-    if (currentIndex < 2) {
-      // setCurrentIndex(currentIndex + 1);
-      flatlistRef?.current?.scrollToIndex({
-        animated: true,
-        index: currentIndex + 1,
-      });
-    } else {
-      navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN);
-    }
-  };
+  // const nextPage = () => {
+  //   // if (currentIndex < 2) {
+  //   //   // setCurrentIndex(currentIndex + 1);
+  //   //   flatlistRef?.current?.scrollToIndex({
+  //   //     animated: true,
+  //   //     index: currentIndex + 1,
+  //   //   });
+  //   // } else {
+  //   navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN);
+  //   // }
+  // };
 
   return (
     <RNScreenWrapper>
@@ -114,7 +114,7 @@ const Onboarding = () => {
         decelerationRate={0.3}
         bounces={false}
         showsHorizontalScrollIndicator={false}
-        onViewableItemsChanged={onViewableItemsChanged}
+        // onViewableItemsChanged={onViewableItemsChanged}
         viewabilityConfig={{
           itemVisiblePercentThreshold: 2, // adjust threshold as needed
         }}
@@ -136,7 +136,7 @@ const Onboarding = () => {
             height: !portrait ? verticalScale(50) : 'auto',
             width: '100%',
           }}>
-          <View style={styles.indicator}>
+          {/* <View style={styles.indicator}>
             {Array.from({length: 3}, (_, i) => (
               <View
                 key={i.toString()}
@@ -149,11 +149,11 @@ const Onboarding = () => {
                 ]}
               />
             ))}
-          </View>
+          </View> */}
           <RNButton
             title={translation('GET_STARTED')}
             onClick={() => {
-              nextPage();
+              navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN);
             }}
             customStyle={[
               styles.button,

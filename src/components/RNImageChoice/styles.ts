@@ -19,7 +19,7 @@ export const styles = StyleSheet.create({
     height: verticalScale(126),
     width: verticalScale(126),
     borderRadius: 16,
-    margin: scale(13),
+    margin: scale(10),
     backgroundColor: themeColor.lightGray,
   },
   tooltipContainer: {

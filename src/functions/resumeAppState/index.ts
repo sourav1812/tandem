@@ -8,10 +8,10 @@ import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
 import {CACHE_DIR} from '@tandem/constants/local';
 import {reinitialiseCacheDirectory} from '@tandem/redux/slices/cache.slice';
 import {Platform} from 'react-native';
+import {renewImages} from '@tandem/redux/slices/bookShelf.slice';
 
 export default async () => {
   const {token, refreshToken} = getStoredTokens();
-  resetDirectoriesOfCachedData();
   setTimeout(() => {
     if (!token && !refreshToken) {
       navigateTo(SCREEN_NAME.SELECT_LANGUAGE, {}, true);
@@ -24,6 +24,7 @@ export default async () => {
     } else {
       navigateTo(SCREEN_NAME.TERMS_AND_CONDITIONS, {}, true);
     }
+    resetDirectoriesOfCachedData();
   }, 2000);
 };
 
@@ -37,42 +38,72 @@ const resetDirectoriesOfCachedData = () => {
     if (Platform.OS !== 'ios') {
       return;
     }
-    const {avatars, flush, places, whatHappens, who} = store.getState().cache;
+    try {
+      const {avatars, flush, places, whatHappens, who, storyStyles} =
+        store.getState().cache;
 
-    const modifiedAvatars = avatars.map(val => {
-      const file = JSON.parse(JSON.stringify(val.file));
-      const newFile = 'file://' + currentDirectory + file.split('Documents')[1];
-      return {...val, file: newFile};
-    });
-    const modifiedFlush = flush.map(val => {
-      const file = JSON.parse(JSON.stringify(val));
-      const newFile = 'file://' + currentDirectory + file.split('Documents')[1];
-      return newFile;
-    });
-    const modifiedPlaces = places.map(val => {
-      const file = JSON.parse(JSON.stringify(val.file));
-      const newFile = 'file://' + currentDirectory + file.split('Documents')[1];
-      return {...val, file: newFile};
-    });
-    const modifiedWhatHappens = whatHappens.map(val => {
-      const file = JSON.parse(JSON.stringify(val.file));
-      const newFile = 'file://' + currentDirectory + file.split('Documents')[1];
-      return {...val, file: newFile};
-    });
-    const modifiedWho = who.map(val => {
-      const file = JSON.parse(JSON.stringify(val.file));
-      const newFile = 'file://' + currentDirectory + file.split('Documents')[1];
-      return {...val, file: newFile};
-    });
+      const modifiedAvatars = avatars.map(val => {
+        const file = JSON.parse(JSON.stringify(val.file));
+        const newFile =
+          'file://' + currentDirectory + file.split('Documents')[1];
+        return {...val, file: newFile};
+      });
+      const modifiedFlush = flush.map(val => {
+        const file = JSON.parse(JSON.stringify(val));
+        const newFile =
+          'file://' + currentDirectory + file.split('Documents')[1];
+        return newFile;
+      });
+      const modifiedPlaces = places.map(val => {
+        const file = JSON.parse(JSON.stringify(val.file));
+        const newFile =
+          'file://' + currentDirectory + file.split('Documents')[1];
+        return {...val, file: newFile};
+      });
+      const modifiedWhatHappens = whatHappens.map(val => {
+        const file = JSON.parse(JSON.stringify(val.file));
+        const newFile =
+          'file://' + currentDirectory + file.split('Documents')[1];
+        return {...val, file: newFile};
+      });
+      const modifiedStoryStyles = storyStyles.map(val => {
+        const file = JSON.parse(JSON.stringify(val.file));
+        const newFile =
+          'file://' + currentDirectory + file.split('Documents')[1];
+        return {...val, file: newFile};
+      });
+      const modifiedWho = who.map(val => {
+        const file = JSON.parse(JSON.stringify(val.file));
+        const newFile =
+          'file://' + currentDirectory + file.split('Documents')[1];
+        return {...val, file: newFile};
+      });
 
-    store.dispatch(
-      reinitialiseCacheDirectory({
-        modifiedAvatars,
-        modifiedFlush,
-        modifiedPlaces,
-        modifiedWhatHappens,
-        modifiedWho,
-      }),
-    );
+      // ! //////////////////////////////////////////////////////////////////
+      const images = store.getState().bookShelf.images;
+      const modifiedImages: {[keyValue: string]: string[]} = {};
+      Object.keys(images).forEach(key => {
+        const newArray = images[key].map(image => {
+          const file = JSON.parse(JSON.stringify(image));
+          return 'file://' + currentDirectory + file.split('Documents')[1];
+        });
+        modifiedImages[key] = newArray;
+      });
+
+      // ! dispatch new images
+      store.dispatch(renewImages(modifiedImages));
+      store.dispatch(
+        reinitialiseCacheDirectory({
+          modifiedAvatars,
+          modifiedFlush,
+          modifiedPlaces,
+          modifiedWhatHappens,
+          modifiedWho,
+          modifiedStoryStyles,
+        }),
+      );
+    } catch (error) {
+      console.log('error in changing cache directory', error);
+    }
   }
 };

@@ -10,15 +10,26 @@ import SplashScreen from '@tandem/screens/SplashScreen';
 import {navigationRef} from './navigate';
 import {MODE} from '@tandem/constants/mode';
 import {Platform} from 'react-native';
-import {RootState} from '@tandem/redux/store';
+import {RootState, store} from '@tandem/redux/store';
 import {useOrientation} from '@tandem/hooks/useOrientation';
 import RNAlertBox from '@tandem/components/RNAlertBox';
 import resumeAppState from '@tandem/functions/resumeAppState';
+import {hitStoryGenApiStandalone} from '@tandem/api/generateStory';
+import {clearPendingStoriesGen} from '@tandem/redux/slices/cache.slice';
+import {ConversationScreen} from '@tandem/screens/ConversationStaters';
+import BuildingTandem from '@tandem/screens/BuildingTandem';
+import Archive from '@tandem/screens/Archive';
+import analytics from '@react-native-firebase/analytics';
+import BlowWindMill from '@tandem/screens/BlowWindMill';
+import MatchingPairs from '@tandem/screens/MatchingPairs';
+import MixColors from '@tandem/screens/MixColors';
+import StoryLanguage from '@tandem/screens/GenerateStory/Questions/StoryLangauge';
+// import {accelerometer} from 'react-native-sensors';
 
 const AppNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
   const mode = useAppSelector((state: RootState) => state.mode.mode);
-
+  const routeNameRef = React.useRef<any>(null);
   const isTablet = useAppSelector(
     (state: RootState) => state.deviceType.isTablet,
   );
@@ -29,11 +40,38 @@ const AppNavigator = () => {
 
   React.useEffect(() => {
     resumeAppState();
+
+    // ! logic to make post req for multiple pending posts
+    const pendingStory = store.getState().cache.pendingStoryGeneration;
+    if (pendingStory.length > 0) {
+      pendingStory.forEach(story => {
+        hitStoryGenApiStandalone(story);
+      });
+      store.dispatch(clearPendingStoriesGen());
+    }
   }, []);
 
   return (
     <>
-      <NavigationContainer ref={navigationRef}>
+      <NavigationContainer
+        onReady={() => {
+          routeNameRef.current =
+            navigationRef?.current?.getCurrentRoute()?.name;
+        }}
+        onStateChange={async () => {
+          const previousRouteName = routeNameRef.current;
+          const currentRouteName =
+            navigationRef?.current?.getCurrentRoute()?.name;
+
+          if (previousRouteName !== currentRouteName) {
+            await analytics().logScreenView({
+              screen_name: currentRouteName,
+              screen_class: currentRouteName,
+            });
+          }
+          routeNameRef.current = currentRouteName;
+        }}
+        ref={navigationRef}>
         <Stack.Navigator
           initialRouteName={SCREEN_NAME.SPLASH_SCREEN}
           screenOptions={{
@@ -42,22 +80,63 @@ const AppNavigator = () => {
             animation:
               Platform.OS === 'android' ? 'slide_from_right' : 'default',
           }}>
+          <Stack.Screen component={Archive} name={SCREEN_NAME.ARCHIVE} />
+          <Stack.Screen
+            component={StoryLanguage}
+            name={SCREEN_NAME.STORY_LANGAUGE}
+          />
+          <Stack.Screen
+            component={BlowWindMill}
+            options={{gestureEnabled: false}}
+            name={SCREEN_NAME.BLOW_WINDMILL}
+          />
+          <Stack.Screen component={MixColors} name={SCREEN_NAME.MIX_COLORS} />
+          <Stack.Screen
+            component={MatchingPairs}
+            options={{gestureEnabled: false}}
+            name={SCREEN_NAME.MATCHING_PAIRS}
+          />
           <Stack.Screen
             component={SplashScreen}
+            options={{gestureEnabled: false}}
             name={SCREEN_NAME.SPLASH_SCREEN}
           />
-          <Stack.Screen component={BottomTab} name={SCREEN_NAME.BOTTOM_TAB} />
-          <Stack.Screen component={Account} name={SCREEN_NAME.ACCOUNT} />
+          <Stack.Screen
+            options={{gestureEnabled: false}}
+            component={BottomTab}
+            name={SCREEN_NAME.BOTTOM_TAB}
+          />
+          <Stack.Screen
+            options={{gestureEnabled: false}}
+            component={Account}
+            name={SCREEN_NAME.ACCOUNT}
+          />
           <Stack.Screen
             getComponent={() => require('@tandem/screens/Story').default}
             name={SCREEN_NAME.STORY}
           />
-
           <Stack.Screen
             getComponent={() => require('@tandem/screens/SocialSignIn').default}
             name={SCREEN_NAME.SOCIAL_SIGN_IN}
           />
           <Stack.Screen
+            getComponent={() =>
+              require('@tandem/screens/ConversationStaters').default
+            }
+            name={SCREEN_NAME.CONVERSATION_STARTERS}
+          />
+          <Stack.Screen
+            //@ts-expect-error
+            component={ConversationScreen}
+            name={SCREEN_NAME.CONVERSATION}
+          />
+          <Stack.Screen
+            component={BuildingTandem}
+            options={{gestureEnabled: false}}
+            name={SCREEN_NAME.BUILDING_TANDEM}
+          />
+          <Stack.Screen
+            options={{gestureEnabled: false}}
             getComponent={() => require('@tandem/screens/StoryTelling').default}
             name={SCREEN_NAME.STORY_TELLING}
           />
@@ -83,6 +162,7 @@ const AppNavigator = () => {
                 }
                 name={SCREEN_NAME.GENERATE_STORY_WHERE}
               />
+
               <Stack.Screen
                 getComponent={() =>
                   require('@tandem/screens/GenerateStory/Questions/WhatThings')
@@ -112,6 +192,7 @@ const AppNavigator = () => {
                 name={SCREEN_NAME.GENERATE_STORY_COLORS}
               />
               <Stack.Screen
+                options={{gestureEnabled: false}}
                 getComponent={() =>
                   require('@tandem/screens/Congratulation').default
                 }

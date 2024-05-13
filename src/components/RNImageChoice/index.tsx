@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {Pressable, ScrollView, Image} from 'react-native';
+import {Pressable, ScrollView, Image, View} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
 import {MultipleChoiceProps} from './interface';
@@ -21,7 +21,9 @@ import QuestionMark from '@tandem/assets/svg/QuestionMarkRed';
 import RNTooltip from '../RNTooltip';
 import {DIRECTION_ARROWS} from '@tandem/constants/enums';
 import {translation} from '@tandem/utils/methods';
-import {scale} from 'react-native-size-matters';
+import {scale, verticalScale} from 'react-native-size-matters';
+import LinearGradient from 'react-native-linear-gradient';
+import RNTextComponent from '../RNTextComponent';
 
 const RNImageChoice = ({
   data = [],
@@ -43,7 +45,6 @@ const RNImageChoice = ({
     }, 200);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log(activeState, 'activeStateactiveState');
   const handlePress = (name: string) => {
     if (activeState.includes('Not sure')) {
       store.dispatch(clearParticularState(type));
@@ -90,7 +91,7 @@ const RNImageChoice = ({
       showsVerticalScrollIndicator={false}>
       {data.map((value, indexLocal) => {
         return (
-          <>
+          <View key={indexLocal.toString()}>
             {indexLocal === 0 ? (
               <RNTooltip
                 isTablet={isTablet}
@@ -105,7 +106,6 @@ const RNImageChoice = ({
                   value={value}
                   onPress={() => handlePress(value.name)}
                   activeState={activeState}
-                  key={indexLocal.toString()}
                 />
               </RNTooltip>
             ) : (
@@ -116,7 +116,7 @@ const RNImageChoice = ({
                 key={indexLocal.toString()}
               />
             )}
-          </>
+          </View>
         );
       })}
       <RNEmojiWithText
@@ -150,7 +150,7 @@ const AnimatedImageChoice = ({
 
   const runAnimation = () => {
     scaleButton.value = withSequence(
-      withTiming(1.2, {duration: 200}),
+      withTiming(0.9, {duration: 200}),
       withTiming(1),
     );
   };
@@ -161,17 +161,36 @@ const AnimatedImageChoice = ({
         onPress();
         runAnimation();
       }}>
-      <Animated.View style={[{transform: [{scale: scaleButton}]}]}>
-        <Image
-          source={{uri: value.file}}
+      <Animated.View style={{transform: [{scale: scaleButton}]}}>
+        <LinearGradient
+          colors={
+            activeState.includes(value.name)
+              ? ['transparent', '#00000095', '#000000']
+              : ['transparent', 'transparent', '#000000b8']
+          }
           style={[
             styles.illustration,
-            activeState.includes(value.name) && {
+            {
+              position: 'absolute',
+              zIndex: 1,
+              alignItems: 'center',
+              justifyContent: 'flex-end',
+              padding: 10,
+              backgroundColor: 'transparent',
               borderWidth: 3,
-              borderColor: themeColor.themeBlue,
+              borderColor: activeState.includes(value.name)
+                ? themeColor.themeBlue
+                : 'transparent',
             },
-          ]}
-        />
+          ]}>
+          <RNTextComponent
+            style={{color: 'white', fontSize: verticalScale(12)}}
+            isSemiBold>
+            {value.name}
+          </RNTextComponent>
+        </LinearGradient>
+
+        <Image source={{uri: value.file}} style={[styles.illustration]} />
       </Animated.View>
     </Pressable>
   );

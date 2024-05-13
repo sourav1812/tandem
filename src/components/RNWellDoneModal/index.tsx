@@ -43,7 +43,7 @@ const RNWellDoneModal = ({
           {translation('WELL_DONE')}
         </RNTextComponent>
         <RNTextComponent style={styles.info}>
-          you named 2 animals beginning with the letter C!
+          You answered all the questions
         </RNTextComponent>
         <RNButton
           customStyle={styles.button}
@@ -51,7 +51,7 @@ const RNWellDoneModal = ({
             renderModal();
             nextClick();
           }}
-          title={translation('NEXT')}
+          title={translation('OK')}
         />
       </View>
     </RNModal>

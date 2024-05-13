@@ -2,7 +2,7 @@ import {API} from '@tandem/constants/api';
 import {get} from '@tandem/api/index';
 import {saveUserData} from '@tandem/redux/slices/userData.slice';
 import {store} from '@tandem/redux/store';
-import {userDataResponse} from './interface';
+import {UserDataResponse} from './interface';
 import {
   saveAdultData,
   saveChildData,
@@ -10,18 +10,18 @@ import {
 import {PEOPLE} from '@tandem/constants/enums';
 
 export default async () => {
-  const response = await get<userDataResponse>({
+  const response = await get<UserDataResponse>({
     path: API.USER_PROFILE,
     noLoader: false,
   });
   if (!response) {
     return;
   }
-  const children = response.children.map(child => ({
+  const children = response.children?.map(child => ({
     ...child,
     type: PEOPLE.CHILD,
   }));
-  const adults = response.adults.map(adult => ({
+  const adults = response.adults?.map(adult => ({
     ...adult,
     type: PEOPLE.ADULT,
   }));

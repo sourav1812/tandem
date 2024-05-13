@@ -44,7 +44,7 @@ export default () => {
       onBack={() => {
         removeQuestionData(STORY_PARTS.INCLUSION);
       }}
-      questionNumber={2}>
+      questionNumber={3}>
       <>
         <RNTextComponent isSemiBold style={styles.question}>
           {translation('generate-story.included-in-story')} {currentChild.name}?

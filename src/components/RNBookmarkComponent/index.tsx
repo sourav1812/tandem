@@ -24,12 +24,13 @@ const RNBookmarkComponent = ({
   emoji,
   headingStyle,
   onPress,
+  large,
 }: Props) => {
   const scaleButton = useSharedValue(1);
 
   const runAnimation = () => {
     scaleButton.value = withSequence(
-      withTiming(1.2, {duration: 200}),
+      withTiming(0.9, {duration: 200}),
       withTiming(1),
     );
   };
@@ -54,6 +55,10 @@ const RNBookmarkComponent = ({
             }),
           },
           {...(!showIcon && {justifyContent: 'center'})},
+          {
+            width: large ? 2 * verticalScale(140) + 10 : verticalScale(140),
+            maxWidth: large ? 2 * verticalScale(190) + 10 : verticalScale(190),
+          },
           customStyle && customStyle,
         ]}
         {...props}>

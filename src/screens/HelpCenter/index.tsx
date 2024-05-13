@@ -1,11 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import {styles} from './styles';
 import themeColor from '@tandem/theme/themeColor';
 import {verticalScale} from 'react-native-size-matters';
-import {Pressable, ScrollView, View} from 'react-native';
+import {Keyboard, Pressable, ScrollView, View} from 'react-native';
 import RNButton from '@tandem/components/RNButton';
 import RNLogoHeader from '@tandem/components/RNLogoHeader';
 import RNTextInputWithLabel from '@tandem/components/RNTextInputWithLabel';
@@ -16,9 +16,13 @@ import Add from '@tandem/assets/svg/Add';
 import navigateTo from '@tandem/navigation/navigate';
 import {translation} from '@tandem/utils/methods';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
-import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
+import validateForm, {
+  FORM_INPUT_TYPE,
+  ValidationError,
+} from '@tandem/utils/validations';
 import {RootState} from '@tandem/redux/store';
 import {HelpCenterProps} from '@tandem/navigation/types';
+import contactUs from '@tandem/api/contactUs';
 
 const HelpCenter = ({route}: HelpCenterProps) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -49,14 +53,6 @@ const HelpCenter = ({route}: HelpCenterProps) => {
   const rightTab = () => {
     updateState({firstTab: true});
   };
-
-  // useEffect(() => {
-  //   navigation.addListener('beforeRemove', e => {
-  //     e.preventDefault();
-  //     //clear setInterval here and go back
-  //   });
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
 
   return (
     <RNScreenWrapper
@@ -112,8 +108,11 @@ const HelpCenter = ({route}: HelpCenterProps) => {
           ]}
         />
       </View>
-
       <ScrollView
+        onScroll={() => {
+          Keyboard.dismiss();
+        }}
+        scrollEventThrottle={1}
         style={{flex: 1}}
         contentContainerStyle={[
           styles.scrollView,
@@ -147,9 +146,11 @@ const HelpCenter = ({route}: HelpCenterProps) => {
               hint={translation('ENTER_YOUR_EMAIL')}
               inputStyle={styles.inputText}
             />
+
             <RNTextInputWithLabel
               multiline
               label={translation('MESSAGE')}
+              validationType={FORM_INPUT_TYPE.NAME}
               backgroundColor={themeColor.lightGray}
               containerStyle={styles.input2}
               value={message}
@@ -167,7 +168,33 @@ const HelpCenter = ({route}: HelpCenterProps) => {
       <RNButton
         pressableStyle={styles.button}
         title={firstTab ? translation('SEND') : translation('CONTINUE')}
-        onClick={() => {
+        onClick={async () => {
+          if (firstTab) {
+            if (
+              name.message ||
+              email.message ||
+              message.message ||
+              name.value === '' ||
+              email.value === '' ||
+              message.value === ''
+            ) {
+              setEmail(validateForm(FORM_INPUT_TYPE.EMAIL, email.value));
+              setMessage(validateForm(FORM_INPUT_TYPE.NAME, message.value));
+              setName(validateForm(FORM_INPUT_TYPE.NAME, name.value));
+              return;
+            }
+            try {
+              await contactUs({
+                name: name.value,
+                email: email.value,
+                message: message.value,
+              });
+            } catch (error) {
+              console.log('error in contact us api', error);
+              return;
+            }
+          }
+
           if (fromPeople) {
             navigateTo();
           } else {
@@ -182,24 +209,57 @@ const HelpCenter = ({route}: HelpCenterProps) => {
 const FAQScreen = () => {
   return (
     <>
-      <ExpandDetails />
-      <ExpandDetails />
-      <ExpandDetails />
-      <ExpandDetails />
-      {/* <RNButton
-        customStyle={styles.button}
-        title={'Continue'}
-        onClick={() => {
-          navigateTo(SCREEN_NAME.CREATE_CHILD_PROFILE);
-        }}
-      /> */}
+      <ExpandDetails
+        title={translation('FAQ_QA.Q1')}
+        text={translation('FAQ_QA.A1')}
+      />
+      <ExpandDetails
+        title={translation('FAQ_QA.Q2')}
+        text={translation('FAQ_QA.A2')}
+      />
+      <ExpandDetails
+        title={translation('FAQ_QA.Q3')}
+        text={translation('FAQ_QA.A3')}
+      />
+      <ExpandDetails
+        title={translation('FAQ_QA.Q4')}
+        text={translation('FAQ_QA.A4')}
+      />
+      <ExpandDetails
+        title={translation('FAQ_QA.Q5')}
+        text={translation('FAQ_QA.A5')}
+      />
+      <ExpandDetails
+        title={translation('FAQ_QA.Q6')}
+        text={translation('FAQ_QA.A6')}
+      />
+      <ExpandDetails
+        title={translation('FAQ_QA.Q7')}
+        text={translation('FAQ_QA.A7')}
+      />
+      <ExpandDetails
+        title={translation('FAQ_QA.Q8')}
+        text={translation('FAQ_QA.A8')}
+      />
+      <ExpandDetails
+        title={translation('FAQ_QA.Q9')}
+        text={translation('FAQ_QA.A9')}
+      />
+      <ExpandDetails
+        title={translation('FAQ_QA.Q10')}
+        text={translation('FAQ_QA.A10')}
+      />
+      <ExpandDetails
+        title={translation('FAQ_QA.Q11')}
+        text={translation('FAQ_QA.A11')}
+      />
     </>
   );
 };
 
 export default HelpCenter;
 
-const ExpandDetails = () => {
+const ExpandDetails = ({title, text}: {title: string; text: string}) => {
   const [open, setOpen] = React.useState(false);
 
   const handleSwitching = () => {
@@ -212,12 +272,10 @@ const ExpandDetails = () => {
         <RNTextComponent
           isSemiBold
           style={{fontSize: verticalScale(13), color: '#000'}}>
-          {translation('help-center.alright-text')}
+          {title}
         </RNTextComponent>
         {open && (
-          <RNTextComponent style={styles.expandedText}>
-            {translation('help-center.as-a-creative-agency')}
-          </RNTextComponent>
+          <RNTextComponent style={styles.expandedText}>{text}</RNTextComponent>
         )}
       </View>
       <Pressable

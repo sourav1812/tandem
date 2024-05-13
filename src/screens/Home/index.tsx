@@ -21,7 +21,6 @@ import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
 import {StateObject} from './interface';
 import {translation} from '@tandem/utils/methods';
 import {MODE} from '@tandem/constants/mode';
-import BlueButon from '@tandem/assets/svg/YellowButton';
 import BothButton from '@tandem/assets/svg/BothButton';
 import RNTooltip from '@tandem/components/RNTooltip';
 import {useNavigation} from '@react-navigation/native';
@@ -37,6 +36,8 @@ import {
   addSnapShot1,
   addSnapShot2,
 } from '@tandem/redux/slices/animationSnapshots.slice';
+import BlueButton from '@tandem/assets/svg/BlueButton';
+import {setForceReload} from '@tandem/redux/slices/activityIndicator.slice';
 
 const Home = () => {
   const portrait = useAppSelector(
@@ -64,10 +65,44 @@ const Home = () => {
   const widthDimention = useWindowDimensions().width;
   const modeBC: {color: string; title: string}[] = [
     {color: themeColor.purple, title: translation('WRITE_A_STORY')},
-    {color: themeColor.purple, title: translation('I_CANT_DECIDE')},
+    {
+      color: themeColor.purple,
+      title: `Used Credits: ${user?.plan?.usageDetails?.usedCredits || 0}`,
+    },
     {color: themeColor.gold, title: translation('LEARN_SOMETHING')},
-    {color: themeColor.green, title: translation('HAVE_FUN')},
+    // {color: themeColor.green, title: translation('HAVE_FUN')},
   ];
+  const stats = useAppSelector(state => state.createChild.stats);
+  const childStat = stats?.[currentChild?.childId];
+  const calculateTotalReadingTime = (timeObject: {
+    solo: number;
+    tandem: {time: number; parentId: string}[];
+  }) => {
+    if (!timeObject) {
+      return '0 hrs';
+    }
+    const totalTime =
+      timeObject.solo +
+      timeObject.tandem.reduce((accumulator, obj) => accumulator + obj.time, 0); // in seconds
+    return secondsToDhms(totalTime);
+  };
+
+  function secondsToDhms(seconds: number | undefined) {
+    if (!seconds) {
+      return '0 hrs';
+    }
+    seconds = Number(seconds);
+    var d = Math.floor(seconds / (3600 * 24));
+    var h = Math.floor((seconds % (3600 * 24)) / 3600);
+    var m = Math.floor((seconds % 3600) / 60);
+    var s = Math.floor(seconds % 60);
+
+    var dDisplay = d > 0 ? d + 'd' : '';
+    var hDisplay = h > 0 ? h + (h === 1 ? ' hr, ' : ' hrs, ') : '';
+    var mDisplay = m > 0 ? m + 'min, ' : '';
+    var sDisplay = s > 0 ? s + 's' : '';
+    return dDisplay + hDisplay + mDisplay + sDisplay;
+  }
 
   const modeA: {
     color: string;
@@ -77,24 +112,24 @@ const Home = () => {
   }[] = [
     {
       color: themeColor.themeBlue,
-      title: '4 h. 32 min',
+      title: calculateTotalReadingTime(childStat?.reading?.totalTime),
       subHeading: translation('READING_TIME'),
       emoji: '📖',
     },
     {
       color: themeColor.purple,
-      title: '4 Books',
+      title: (childStat?.totalBooksCreated || 0).toString(),
       subHeading: translation('NUMBER_OF_BOOKS'),
       emoji: '📚',
     },
     {
       color: themeColor.pink,
-      title: '2h. 10 min',
+      title: secondsToDhms(childStat?.generation?.totalTime),
       subHeading: translation('TIME_CREATING'),
       emoji: '💡',
     },
     {
-      color: themeColor.lightGreen,
+      color: '#a9a9a9',
       title: translation('REDEEM_VOUCHER'),
       emoji: '🗒️',
     },
@@ -286,10 +321,7 @@ const Home = () => {
               style={[
                 styles.blueButton,
                 {
-                  top:
-                    !isTablet && portrait
-                      ? verticalScale(50)
-                      : verticalScale(17),
+                  top: verticalScale(50),
                 },
               ]}>
               <RNTooltip
@@ -303,7 +335,7 @@ const Home = () => {
                 text={translation('SWITCH_MODE')}
                 // textContainerStyle={{marginRight: isTablet ? scale(100) : 0}}
                 dimensionObject={positionRefs[0]}>
-                {mode === MODE.B ? (
+                {mode === MODE.B && (
                   <View
                     ref={refOne}
                     onLayout={() => {
@@ -328,7 +360,8 @@ const Home = () => {
                     }}>
                     <BothButton />
                   </View>
-                ) : (
+                )}
+                {mode === MODE.A && (
                   <View
                     ref={refOne}
                     onLayout={() => {
@@ -351,7 +384,28 @@ const Home = () => {
                         },
                       );
                     }}>
-                    <BlueButon />
+                    <BlueButton />
+                  </View>
+                )}
+                {mode === MODE.C && (
+                  <View
+                    style={[
+                      styles.accountbutton,
+                      {
+                        height: isTablet ? scale(22) : scale(30),
+                        width: isTablet ? scale(22) : scale(30),
+                        marginRight: isTablet ? scale(10) : 0,
+                      },
+                    ]}>
+                    <View
+                      style={[
+                        styles.dot,
+                        {
+                          height: isTablet ? scale(12) : scale(15),
+                          width: isTablet ? scale(12) : scale(15),
+                        },
+                      ]}
+                    />
                   </View>
                 )}
               </RNTooltip>
@@ -439,16 +493,24 @@ const Home = () => {
                       }}
                       borderIconColor={item.color}
                       showIcon={index === 0}
+                      large={index === 0}
                       showSubheading={index !== 0}
                       heading={item.title}
-                      subHeading={translation('COMING_SOON')}
+                      subHeading={
+                        index === 1
+                          ? `Total Credits: ${
+                              user?.plan?.usageDetails?.totalCredits || 0
+                            }`
+                          : translation('COMING_SOON')
+                      }
                       emoji="🪄"
                       onPress={() => {
                         if (index === 0) {
                           store.dispatch(clearStoryGenerationResponse());
                           store.dispatch(addSnapShot1(null));
                           store.dispatch(addSnapShot2(null));
-                          navigateTo(SCREEN_NAME.ROADMAP);
+                          navigateTo(SCREEN_NAME.STORY_LANGAUGE);
+                          return;
                         }
                       }}
                     />
@@ -486,7 +548,7 @@ const Home = () => {
 
                             break;
                           case 3:
-                            navigateTo(SCREEN_NAME.REDEEM_VOUCHER);
+                            // navigateTo(SCREEN_NAME.REDEEM_VOUCHER);
                             break;
                         }
                       }}
@@ -525,6 +587,7 @@ const ChangeChild = ({
       easing: Easing.out(Easing.exp),
     }).start();
   });
+
   return (
     <Animated.View
       style={[
@@ -536,6 +599,7 @@ const ChangeChild = ({
       <Pressable
         onPress={() => {
           dispatch(saveCurrentChild(userProfile));
+          dispatch(setForceReload(true));
           toggleDrawer({changeUser: !changeUser});
         }}
         style={{alignItems: 'center'}}>

@@ -13,17 +13,20 @@ export default StyleSheet.create({
     marginHorizontal: scale(40),
     borderRadius: verticalScale(12),
     backgroundColor: 'white',
-    maxHeight: 220,
     overflow: 'hidden',
   },
   text: {
     textAlign: 'center',
     color: 'rgba(0, 0, 0, 0.6)',
+    fontSize: scale(13),
   },
   button: {
-    paddingVertical: 4,
+    height: verticalScale(30), // ! thios height needs to match get item layout
+    paddingVertical: verticalScale(4),
     paddingHorizontal: 10,
     borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
     borderColor: 'transparent',
     borderRadius: 6,
   },
@@ -36,9 +39,9 @@ export default StyleSheet.create({
   bottom: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    borderTopWidth: 0.2,
+    borderTopWidth: 0.5,
     borderTopColor: 'gray',
     padding: 8,
   },
-  line: {borderLeftWidth: 0.2, height: '100%', borderColor: 'gray'},
+  line: {borderLeftWidth: 0.5, height: '100%', borderColor: 'gray'},
 });

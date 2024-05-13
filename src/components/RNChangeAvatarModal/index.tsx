@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import RNModal from '../RNModal';
-import {View} from 'react-native';
+import {Keyboard, View} from 'react-native';
 import styles from './styles';
 import RNTextComponent from '../RNTextComponent';
 import {translation} from '@tandem/utils/methods';
@@ -31,6 +31,11 @@ const RNChangeAvatarModal = ({
   //   socialLoginData.image !== '' ? socialLoginData.image : null,
   // );
   const avatars = useAppSelector(state => state.cache.avatars);
+
+  React.useEffect(() => {
+    Keyboard.dismiss();
+  }, [visible]);
+
   return (
     <RNModal visible={visible} renderModal={renderModal}>
       <View style={styles.container}>

@@ -42,6 +42,14 @@ export type RootStackParamList = {
   WhatHappens: undefined;
   Illustrations: undefined;
   Colors: undefined;
+  ConversationStaters: undefined;
+  ConversationScreen: any;
+  BuildingTandem: undefined;
+  Archive: undefined;
+  BlowWindMill: undefined;
+  MatchingPairs: undefined;
+  MixColors: undefined;
+  StoryLanguage: undefined;
 };
 
 export type RootTabParamList = {
@@ -49,6 +57,7 @@ export type RootTabParamList = {
   Bookshelf: undefined;
   People: undefined;
   NotificationScreen: undefined;
+  PublicLib: undefined;
 };
 
 export type AllStackScreenParamList = RootStackParamList & RootTabParamList;

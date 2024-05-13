@@ -17,7 +17,7 @@ export default () => {
   return (
     <GenerateStory
       type={STORY_PARTS.WHAT_THINGS}
-      maxSelections={5}
+      maxSelections={1}
       onBack={() => {
         if (disabled) {
           return;
@@ -38,7 +38,7 @@ export default () => {
         <RNChoiceQuestions
           setDisabled={setDisabled}
           type={STORY_PARTS.WHAT_THINGS}
-          maxSelections={5}
+          maxSelections={1}
           index={3}
           data={ATTRIBUTE}
         />

@@ -6,12 +6,23 @@ interface InitialState {
     message: string;
     onSuccess: () => void | Promise<void>;
     onDestructive?: () => void | Promise<void>;
+    onThirdOption?: () => void | Promise<void>;
     possibleResolution: string;
+    successText?: string;
+    destructiveText?: string;
+    thirdOptionText?: string;
   };
 }
 
 const initialState: InitialState = {
-  data: {type: '', message: '', onSuccess: () => {}, possibleResolution: ''},
+  data: {
+    type: '',
+    message: '',
+    onSuccess: () => {},
+    possibleResolution: '',
+    successText: '',
+    destructiveText: '',
+  },
 };
 
 const alertBoxSlice = createSlice({

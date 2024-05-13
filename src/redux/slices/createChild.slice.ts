@@ -24,8 +24,28 @@ interface ChildState {
   currentChild: ChildData;
   currentAdult: AdultData;
   adultList: AdultData[];
+  stats: {
+    [key: string]: Stats;
+  };
 }
-
+export interface Stats {
+  _id: string;
+  totalBooksCreated: number;
+  generation: {
+    totalTime: number;
+  };
+  reading: {
+    totalTime: {
+      solo: number;
+      tandem: {parentId: string; time: number}[];
+    };
+  };
+  childId: string;
+  userId: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
 // Define the initial state using that type
 const initialState: ChildState = {
   childList: [],
@@ -45,6 +65,7 @@ const initialState: ChildState = {
     profileId: '',
     type: PEOPLE.ADULT,
   },
+  stats: {},
 };
 
 export const createChildSlice = createSlice({
@@ -80,6 +101,11 @@ export const createChildSlice = createSlice({
     resetChildData: state => {
       state.childList = [];
     },
+    updateChildStats: (state, action) => {
+      const childId: string = action.payload.childId;
+      const stats: Stats = action.payload.stats;
+      state.stats[childId] = stats;
+    },
   },
 });
 
@@ -90,6 +116,7 @@ export const {
   saveCurrentChild,
   resetAdultData,
   resetChildData,
+  updateChildStats,
 } = createChildSlice.actions;
 
 export default createChildSlice.reducer;

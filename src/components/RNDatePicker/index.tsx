@@ -1,16 +1,17 @@
 /* eslint-disable react-native/no-inline-styles */
 import {View, FlatList, Pressable} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import RNModal from '../RNModal';
 import styles from './styles';
 import {congratsModalProps} from './interface';
-import {verticalScale} from 'react-native-size-matters';
+import {verticalScale, scale} from 'react-native-size-matters';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {MONTH_ARRAY} from '@tandem/constants/local';
 import RNTextComponent from '../RNTextComponent';
 import {translation} from '@tandem/utils/methods';
 import themeColor from '@tandem/theme/themeColor';
 import {YEARS_ARRAY} from '@tandem/constants/local';
+import {RootState} from '@tandem/redux/store';
 
 const RNDatePicker = ({
   visible = false,
@@ -18,32 +19,13 @@ const RNDatePicker = ({
   getMonthYear = () => {},
 }: congratsModalProps) => {
   const date = new Date();
-  let isTablet = useAppSelector(state => state.deviceType.isTablet);
-  const yearRef = React.useRef(null);
-  const monthRef = React.useRef(null);
+  const isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const portrait = useAppSelector(
+    (state: RootState) => state.orientation.isPortrait,
+  );
   const [month, setMonth] = React.useState(date.getMonth());
   const [year, setYear] = React.useState<number>(YEARS_ARRAY.length - 1);
   const [isDatePickerUsed, setIsDatePickerUsed] = useState(false);
-
-  useEffect(() => {
-    if (visible) {
-      setTimeout(() => {
-        monthRef.current?.scrollToIndex({
-          animated: true,
-          index: month === 0 ? 0 : month - 1,
-        });
-        yearRef.current?.scrollToIndex({
-          animated: true,
-          index: year ? year : YEARS_ARRAY.length - 1,
-        });
-      }, 300);
-    }
-    return () => {
-      setMonth(date.getMonth());
-      setYear(YEARS_ARRAY.length - 1);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [visible]);
 
   return (
     <RNModal
@@ -53,14 +35,20 @@ const RNDatePicker = ({
       <View
         style={[
           styles.container,
+          {flex: portrait ? 0.74 : 1},
           isTablet && {width: verticalScale(320), alignSelf: 'center'},
         ]}>
         <View style={styles.top}>
-          <FlatList
+          {/* <FlatList
             data={MONTH_ARRAY}
-            initialNumToRender={MONTH_ARRAY.length + 1}
+            initialNumToRender={MONTH_ARRAY.length}
+            initialScrollIndex={month - 2 >= 0 ? month - 2 : month}
+            getItemLayout={(_, index) => ({
+              length: verticalScale(30),
+              offset: verticalScale(30) * index,
+              index,
+            })}
             contentContainerStyle={{alignItems: 'center'}}
-            decelerationRate={5}
             style={{width: '50%'}}
             renderItem={({item, index}) => (
               <Pressable
@@ -78,6 +66,8 @@ const RNDatePicker = ({
                 <RNTextComponent
                   style={[
                     styles.text,
+                    {fontSize: isTablet ? scale(10.5) : scale(13)},
+
                     month === index && {color: 'black', fontWeight: '700'},
                   ]}>
                   {item.month}
@@ -86,12 +76,17 @@ const RNDatePicker = ({
             )}
             keyExtractor={i => i.monthKey}
             showsVerticalScrollIndicator={false}
-            ref={monthRef}
-          />
-          <View style={styles.line} />
+          /> */}
+          {/* <View style={styles.line} /> */}
           <FlatList
             data={YEARS_ARRAY}
-            initialNumToRender={YEARS_ARRAY.length + 1}
+            initialNumToRender={YEARS_ARRAY.length}
+            getItemLayout={(_, index) => ({
+              length: verticalScale(30),
+              offset: verticalScale(30) * index,
+              index,
+            })}
+            initialScrollIndex={year - 2 >= 0 ? year - 2 : year}
             contentContainerStyle={{alignItems: 'center'}}
             style={{width: '50%'}}
             renderItem={({item, index}) => {
@@ -111,6 +106,7 @@ const RNDatePicker = ({
                   <RNTextComponent
                     style={[
                       styles.text,
+                      {fontSize: isTablet ? scale(10.5) : scale(13)},
                       year === item.index && {
                         color: 'black',
                         fontWeight: '700',
@@ -123,12 +119,14 @@ const RNDatePicker = ({
             }}
             keyExtractor={i => i.yearkey.toString()}
             showsVerticalScrollIndicator={false}
-            ref={yearRef}
           />
         </View>
         <View style={styles.bottom}>
           <Pressable onPress={renderModal} hitSlop={30}>
-            <RNTextComponent>{translation('CANCEL')}</RNTextComponent>
+            <RNTextComponent
+              style={{fontSize: isTablet ? scale(11) : scale(13)}}>
+              {translation('CANCEL')}
+            </RNTextComponent>
           </Pressable>
           <Pressable
             onPress={() => {
@@ -142,7 +140,10 @@ const RNDatePicker = ({
               renderModal();
             }}
             hitSlop={30}>
-            <RNTextComponent>{translation('OK')}</RNTextComponent>
+            <RNTextComponent
+              style={{fontSize: isTablet ? scale(11) : scale(13)}}>
+              {translation('OK')}
+            </RNTextComponent>
           </Pressable>
         </View>
       </View>

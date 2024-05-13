@@ -24,14 +24,14 @@ export default () => {
   return (
     <GenerateStory
       type={STORY_PARTS.WHO}
-      maxSelections={3}
+      maxSelections={1}
       onBack={() => {
         if (disabled) {
           return;
         }
         removeQuestionData(STORY_PARTS.WHO);
       }}
-      questionNumber={1}
+      questionNumber={2}
       onNextQuestion={() => {
         navigation.push(SCREEN_NAME.GENERATE_STORY_INCLUSION);
       }}
@@ -50,7 +50,7 @@ export default () => {
         <RNImageChoice
           setDisabled={setDisabled}
           type={STORY_PARTS.WHO}
-          maxSelections={3}
+          maxSelections={1}
           index={0}
           data={whoInStory}
         />

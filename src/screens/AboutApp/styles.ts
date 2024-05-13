@@ -13,6 +13,8 @@ export const styles = StyleSheet.create({
   img: {
     height: verticalScale(67),
     width: scale(210),
+    alignSelf: 'center',
+    marginTop: verticalScale(10),
   },
   license: {
     fontSize: verticalScale(11.5),

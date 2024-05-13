@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   voiceQuestion: {
-    marginTop: verticalScale(24),
+    marginTop: verticalScale(100),
     backgroundColor: themeColor.lightGray,
     paddingVertical: verticalScale(14),
     paddingHorizontal: verticalScale(16),
@@ -31,7 +31,7 @@ export const styles = StyleSheet.create({
   heading: {
     fontSize: verticalScale(18),
     textAlign: 'center',
-    marginTop: verticalScale(14),
+    marginVertical: verticalScale(15),
   },
   answerField: {
     flexDirection: 'row',
@@ -65,7 +65,7 @@ export const styles = StyleSheet.create({
     height: verticalScale(80),
     paddingTop: verticalScale(20),
     justifyContent: 'flex-start',
-    backgroundColor: themeColor.lightGray,
+
     borderWidth: 0,
   },
   icon: {

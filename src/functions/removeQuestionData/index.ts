@@ -14,24 +14,20 @@ export default (type: string) => {
 
 export const goBackInOrder = () => {
   const questionRef = store.getState().storyGeneration;
-  if (questionRef[STORY_PARTS.COLOR].length > 0) {
-    navigateTo(SCREEN_NAME.GENERATE_STORY_COLORS);
-    return;
-  }
+  // if (questionRef[STORY_PARTS.COLOR].length > 0 ) {
+  //   navigateTo(SCREEN_NAME.GENERATE_STORY_COLORS);
+  //   return;
+  // }
   if (questionRef[STORY_PARTS.STYLES].length > 0) {
     navigateTo(SCREEN_NAME.GENERATE_STORY_ILLUSTRATIONS);
     return;
   }
-  if (questionRef[STORY_PARTS.WHAT_HAPPENS].length > 0) {
-    navigateTo(SCREEN_NAME.GENERATE_STORY_WHAT_HAPPENS);
+  if (questionRef[STORY_PARTS.WHERE].length > 0) {
+    navigateTo(SCREEN_NAME.GENERATE_STORY_WHERE);
     return;
   }
   if (questionRef[STORY_PARTS.WHAT_THINGS].length > 0) {
     navigateTo(SCREEN_NAME.GENERATE_STORY_WHAT_THINGS);
-    return;
-  }
-  if (questionRef[STORY_PARTS.WHERE].length > 0) {
-    navigateTo(SCREEN_NAME.GENERATE_STORY_WHERE);
     return;
   }
   if (questionRef[STORY_PARTS.INCLUSION] !== null) {
@@ -40,6 +36,10 @@ export const goBackInOrder = () => {
   }
   if (questionRef[STORY_PARTS.WHO].length > 0) {
     navigateTo(SCREEN_NAME.GENERATE_STORY_WHO);
+    return;
+  }
+  if (questionRef[STORY_PARTS.WHAT_HAPPENS].length > 0) {
+    navigateTo(SCREEN_NAME.GENERATE_STORY_WHAT_HAPPENS);
     return;
   }
   navigateTo(SCREEN_NAME.HOME);

@@ -7,6 +7,7 @@ export const styles = StyleSheet.create({
     fontSize: verticalScale(21.3),
     alignSelf: 'center',
     marginTop: verticalScale(50),
+    textAlign: 'center',
   },
   info: {
     fontSize: verticalScale(14),

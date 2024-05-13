@@ -12,17 +12,20 @@ import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {translation} from '@tandem/utils/methods';
 import navigateTo from '@tandem/navigation/navigate';
 import Emoji from '@tandem/assets/svg/Kissing';
+import markBookAsRead from '@tandem/api/markBookAsRead';
+import {MODE} from '@tandem/constants/mode';
 
 const RNCongratsModal = ({
   visible = false,
   renderModal,
+  bookId,
 }: congratsModalProps) => {
   let isTablet = useAppSelector(state => state.deviceType.isTablet);
-
+  const mode = useAppSelector(state => state.mode.mode);
   const onShare = async () => {
     try {
       const result = await Share.share({
-        message: 'Hi , thanks for using tandem.',
+        message: 'Hi , thanks for using Tandem.',
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
@@ -55,18 +58,24 @@ const RNCongratsModal = ({
           </RNTextComponent>
           <View style={styles.info}>
             <View style={[styles.box, isTablet && {width: scale(60)}]}>
-              <RNTextComponent style={styles.title} isSemiBold>
+              <RNTextComponent
+                style={[styles.title, {color: 'grey'}]}
+                isSemiBold>
                 100%
               </RNTextComponent>
-              <RNTextComponent style={styles.stat}>
+              <RNTextComponent style={[styles.stat, {color: 'grey'}]}>
                 {translation('ACCURACY')}
               </RNTextComponent>
             </View>
             <View style={[styles.box, isTablet && {width: scale(60)}]}>
-              <RNTextComponent style={styles.title} isSemiBold>
+              <RNTextComponent
+                style={[styles.title, {color: 'grey'}]}
+                isSemiBold>
                 80
               </RNTextComponent>
-              <RNTextComponent style={styles.stat} numberOfLines={1}>
+              <RNTextComponent
+                style={[styles.stat, {color: 'grey'}]}
+                numberOfLines={1}>
                 {translation('SPEED')}
               </RNTextComponent>
             </View>
@@ -92,6 +101,10 @@ const RNCongratsModal = ({
             title={translation('HOME')}
             customStyle={styles.button}
             onClick={() => {
+              markBookAsRead(bookId, {
+                ...(mode === MODE.C && {solo: true}),
+                ...(mode === MODE.B && {tandem: true}),
+              });
               navigateTo(SCREEN_NAME.HOME);
             }}
           />

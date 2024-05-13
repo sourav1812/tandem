@@ -9,6 +9,7 @@ export interface Props {
   subHeading: string | undefined;
   showIcon?: boolean;
   showSubheading?: boolean;
+  large?: boolean;
   emoji?: string;
   headingStyle?: StyleProp<TextStyle>;
   onPress?: () => void | undefined;

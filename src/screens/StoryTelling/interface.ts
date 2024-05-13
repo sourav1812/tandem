@@ -13,4 +13,5 @@ export interface StateObject {
   toggleMic: boolean;
   showQuestion: boolean;
   wellDoneModal: boolean;
+  isStoryRated: boolean;
 }

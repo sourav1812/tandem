@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {verticalScale} from 'react-native-size-matters';
+import {scale, verticalScale} from 'react-native-size-matters';
 import themeColor from '@tandem/theme/themeColor';
 
 export const styles = StyleSheet.create({
@@ -113,5 +113,19 @@ export const styles = StyleSheet.create({
     height: verticalScale(59),
     width: verticalScale(59),
     borderRadius: 100,
+  },
+  accountbutton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'white',
+    borderRadius: 10,
+    marginBottom: 10,
+  },
+  dot: {
+    backgroundColor: themeColor.gold,
+    height: scale(12),
+    width: scale(12),
+    padding: scale(2),
+    borderRadius: scale(8),
   },
 });

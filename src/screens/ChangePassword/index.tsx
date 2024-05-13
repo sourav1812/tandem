@@ -16,6 +16,7 @@ import validationFunction from '@tandem/functions/validationFunction';
 import {changePassword} from '@tandem/api/changePassword';
 import {store} from '@tandem/redux/store';
 import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
+import logout from '@tandem/functions/logout';
 
 const ChangePassword = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -89,6 +90,9 @@ const ChangePassword = () => {
         newPassword: newPassword.value,
         logoutFromAllDevices,
       });
+      if (logoutFromAllDevices) {
+        logout({api: false});
+      }
     } catch (error) {
       console.log('error in reset password', error);
     }

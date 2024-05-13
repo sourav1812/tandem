@@ -9,4 +9,7 @@ export const languages: languageType[] = [
   {name: 'Deutsch', flag: '🇩🇪', code: 'de'},
   {name: 'Italiano', flag: '🇮🇹', code: 'it'},
   {name: 'Français', flag: '🇫🇷', code: 'fr'},
+  {name: 'Polish', flag: '🇵🇱', code: 'po'},
+  {name: 'Urdu', flag: '🇮🇳', code: 'ur'},
+  {name: 'Punjabi', flag: '🇮🇳', code: 'pu'},
 ];

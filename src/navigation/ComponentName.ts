@@ -39,4 +39,13 @@ export enum SCREEN_NAME {
   GENERATE_STORY_WHAT_HAPPENS = 'WhatHappens',
   GENERATE_STORY_ILLUSTRATIONS = 'Illustrations',
   GENERATE_STORY_COLORS = 'Colors',
+  CONVERSATION_STARTERS = 'ConversationStaters',
+  CONVERSATION = 'ConversationScreen',
+  BUILDING_TANDEM = 'BuildingTandem',
+  ARCHIVE = 'Archive',
+  BLOW_WINDMILL = 'BlowWindMill',
+  PUBLIC_LIB = 'PublicLib',
+  MATCHING_PAIRS = 'MatchingPairs',
+  MIX_COLORS = 'MixColors',
+  STORY_LANGAUGE = 'StoryLanguage',
 }
