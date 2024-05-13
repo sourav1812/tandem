@@ -6,9 +6,12 @@ import RNLanguageComponent from '@tandem/components/RNLanguageComponent';
 import themeColor from '@tandem/theme/themeColor';
 import {scale, verticalScale} from 'react-native-size-matters';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
-import {RootState} from '@tandem/redux/store';
+import {RootState, store} from '@tandem/redux/store';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
+import {pushStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration.slice';
+import {STORY_PARTS} from '@tandem/constants/enums';
+import Orientation from 'react-native-orientation-locker';
 
 const languages = [
   {name: 'English', flag: '🇬🇧', code: 'en'},
@@ -29,7 +32,17 @@ const SelectLanguage = () => {
   const [lan, setLang] = React.useState('');
 
   React.useEffect(() => {
+    Orientation.lockToPortrait();
+    return () => {
+      Orientation.unlockAllOrientations();
+    };
+  }, []);
+
+  React.useEffect(() => {
     if (lan) {
+      store.dispatch(
+        pushStoryGenerationResponse({key: STORY_PARTS.LANGAUGE, value: lan}),
+      );
       setTimeout(() => {
         navigateTo(SCREEN_NAME.ROADMAP);
       }, 300);
