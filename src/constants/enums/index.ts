@@ -15,6 +15,7 @@ export enum STORY_PARTS {
   WHAT_HAPPENS = 'genre',
   STYLES = 'illustrationStyle',
   COLOR = 'illustrationColors',
+  LANGAUGE = 'langauge',
 }
 
 export enum STORIES_RESPONSE {

@@ -509,10 +509,9 @@ const Home = () => {
                           store.dispatch(clearStoryGenerationResponse());
                           store.dispatch(addSnapShot1(null));
                           store.dispatch(addSnapShot2(null));
-                          navigateTo(SCREEN_NAME.ROADMAP);
+                          navigateTo(SCREEN_NAME.STORY_LANGAUGE);
                           return;
                         }
-                        navigateTo(SCREEN_NAME.BLOW_WINDMILL);
                       }}
                     />
                   ))

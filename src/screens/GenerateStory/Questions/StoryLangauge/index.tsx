@@ -7,6 +7,8 @@ import themeColor from '@tandem/theme/themeColor';
 import {scale, verticalScale} from 'react-native-size-matters';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {RootState} from '@tandem/redux/store';
+import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
+import navigateTo from '@tandem/navigation/navigate';
 
 const languages = [
   {name: 'English', flag: '🇬🇧', code: 'en'},
@@ -25,6 +27,14 @@ const SelectLanguage = () => {
     (state: RootState) => state.orientation.isPortrait,
   );
   const [lan, setLang] = React.useState('');
+
+  React.useEffect(() => {
+    if (lan) {
+      setTimeout(() => {
+        navigateTo(SCREEN_NAME.ROADMAP);
+      }, 300);
+    }
+  }, [lan]);
   return (
     <RNScreenWrapper style={{backgroundColor: themeColor.white}}>
       <RNTextComponent style={styles.heading} isSemiBold>
