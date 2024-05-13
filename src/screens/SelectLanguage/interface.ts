@@ -12,4 +12,5 @@ export const languages: languageType[] = [
   {name: 'Polish', flag: '🇵🇱', code: 'po'},
   {name: 'Urdu', flag: '🇮🇳', code: 'ur'},
   {name: 'Punjabi', flag: '🇮🇳', code: 'pu'},
+  {name: 'Turkish', flag: '🇹🇷', code: 'tr'},
 ];
