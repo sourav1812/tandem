@@ -9,6 +9,7 @@ import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {RootState} from '@tandem/redux/store';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
+import {translation} from '@tandem/utils/methods';
 
 const languages = [
   {name: 'English', flag: '🇬🇧', code: 'en'},
@@ -38,10 +39,10 @@ const SelectLanguage = () => {
   return (
     <RNScreenWrapper style={{backgroundColor: themeColor.white}}>
       <RNTextComponent style={styles.heading} isSemiBold>
-        Story Language
+        {translation('STORY_LANGUAGE')}
       </RNTextComponent>
       <RNTextComponent style={styles.info}>
-        What language do you want this story to be written in?
+        {translation('WHICH_LANGUAGE')}
       </RNTextComponent>
       <View style={[!portrait && {marginHorizontal: scale(100)}]}>
         {languages.map((item, index) => {
@@ -67,8 +68,7 @@ const SelectLanguage = () => {
         })}
       </View>
       <RNTextComponent style={[styles.info, styles.footer]}>
-        Note: non-English languages are still in testing… please do rate your
-        stories when you’ve read them so we can keep improving
+        {translation('NOTE')}
       </RNTextComponent>
     </RNScreenWrapper>
   );

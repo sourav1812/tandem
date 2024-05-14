@@ -25,6 +25,7 @@ import navigateTo from '@tandem/navigation/navigate';
 import Animated, {useSharedValue, withTiming} from 'react-native-reanimated';
 import {updatePage} from '@tandem/redux/slices/bookShelf.slice';
 import {store} from '@tandem/redux/store';
+import {translation} from '@tandem/utils/methods';
 interface IPage {
   text: string;
   img: string;
@@ -171,7 +172,7 @@ export default ({
               onClick={() => {
                 updateState({ratingModal: true});
               }}
-              title="Rate this story..."
+              title={translation('RATE_THIS_STORY')}
             />
           )}
           <RNButton
@@ -183,7 +184,7 @@ export default ({
             onClick={() => {
               updateState({showQuestion: true});
             }}
-            title="Answer these questions..."
+            title={translation('ANSWER_THESE_QUESTION')}
           />
           {book.storyInfo[level]?.conversationStarters &&
             book.storyInfo[level]?.conversationStarters.length > 0 && (
@@ -198,7 +199,7 @@ export default ({
                       book.storyInfo[level].conversationStarters,
                   });
                 }}
-                title="Have you thought about..."
+                title={translation('HAVE_YOU_THOUGHT_ABOUT')}
               />
             )}
           <RNButton
@@ -217,7 +218,7 @@ export default ({
               }
               navigateTo(SCREEN_NAME.HOME);
             }}
-            title="Go to Home"
+            title={translation('GO_TO_HOME')}
           />
         </View>
       </ImageBackground>

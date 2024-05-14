@@ -352,5 +352,27 @@
     "A10": "Wir hoffen, dass Sie nicht gehen möchten, aber Sie finden die Option, Ihr Konto und alle darin enthaltenen Informationen zu löschen, auf der Einstellungsseite der App.",
     "Q11": "Welche technischen Anforderungen gibt es für die Nutzung von TANDEM?",
     "A11": "Tandem ist mit den meisten modernen Smartphones und Tablets kompatibel. Überprüfen Sie die Download-Seite der App im App Store für spezifische Betriebssystemanforderungen."
-  }
+  },
+  "BUILDING": "Gebäude",
+  "USED_CREDITS": "verwendete Credits",
+  "PUBLIC_LIBRARY": "Öffentliche Bibliothek",
+  "TOTAL_CREDITS": "Gesamtcredits",
+  "NO_MORE_BOOKS": "Keine weiteren Bücher",
+  "Public": "öffentlich",
+  "ARCHIVE_STORY": "Archivgeschichte",
+  "NO_BOOKS_IN_ARCHIVE": "Keine Bücher im Archiv",
+  "BACK": "Zurück",
+  "TEXT_SIZE": "Textgröße",
+  "READING_LEVEL": "Leseniveau",
+  "REPORT_FLAT_IMAGE": "Bild melden/Kennzeichnen",
+  "RATE_THIS_STORY": "Bewerten Sie diese Geschichte",
+  "ANSWER_THESE_QUESTION": "Beantworten Sie diese Fragen...",
+  "HAVE_YOU_THOUGHT_ABOUT": "Haben Sie darüber nachgedacht...",
+  "GO_TO_HOME": "Zur Startseite gehen",
+  "STORY_LANGUAGE": "Geschichtssprache",
+  "WHICH_LANGUAGE": "In welcher Sprache möchten Sie diese Geschichte geschrieben haben?",
+  "NOTE": "Hinweis: Nicht-englische Sprachen befinden sich noch im Test... Bitte bewerten Sie Ihre Geschichten, wenn Sie sie gelesen haben, damit wir die Qualität verbessern können.",
+  "READING_TIME_WITH_CHILD": "TANDEM | Lesezeit mit Ihrem Kind!",
+  "MAKE_STORY_PUBLIC": "Geschichte öffentlich machen",
+  "ARCHIVE": "آرکائیو"
 }
