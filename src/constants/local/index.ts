@@ -65,6 +65,12 @@ import RedQuestionMark from '@tandem/assets/svg/storySvg/RedQuestionMark.svg';
 import {translation} from '@tandem/utils/methods';
 import {BASE_URL} from '@tandem/constants/api';
 
+import Ayran from '@tandem/assets/svg/storySvg/ayran.svg';
+import Baklava from '@tandem/assets/svg/storySvg/baklava.svg';
+import DonerKebab from '@tandem/assets/svg/storySvg/doner-kebab.svg';
+import Lahmacun from '@tandem/assets/svg/storySvg/lahmacun.svg';
+import Pide from '@tandem/assets/svg/storySvg/pide.svg';
+
 export const TOOLTIP = 'ToolTip';
 // export const TERMS_ACCEPTED = 'TERMS_ACCEPTED';
 
@@ -148,41 +154,55 @@ export const ATTRIBUTE: PlaceType[] = [
   {name: 'Watermelon', bgc: themeColor.gold, svgIcon: Watermelon},
   {name: 'Wheel Chair', bgc: themeColor.lightGreen, svgIcon: Wheelchair},
   {name: 'Ambulance', bgc: themeColor.pink, svgIcon: Ambulance},
+  // ! new food items
+  {name: 'Ayran', bgc: themeColor.lightGreen, svgIcon: Ayran},
+  {name: 'Baklava', bgc: themeColor.pink, svgIcon: Baklava},
+  {name: 'Doner Kebab', bgc: themeColor.themeBlue, svgIcon: DonerKebab},
+  {name: 'Lahmacun', bgc: themeColor.yellow, svgIcon: Lahmacun},
+  {name: 'Pide', bgc: themeColor.gold, svgIcon: Pide},
 ];
 
 export const ILLUSTRATION = [
   {
-    name: 'style1-papercut',
-    url: BASE_URL + 'images/illustration-styles/papercut.webp',
+    name: 'pixar',
+    url: BASE_URL + 'images/illustration-styles/pixar.webp',
   },
   {
-    name: 'style2-scrappy',
-    url: BASE_URL + 'images/illustration-styles/scrappy.webp',
+    name: 'low-poly',
+    url: BASE_URL + 'images/illustration-styles/low_poly.webp',
   },
-  {
-    name: 'style3-wonder',
-    url: BASE_URL + 'images/illustration-styles/wonder.webp',
-  },
-  {
-    name: 'style4-sleepy',
-    url: BASE_URL + 'images/illustration-styles/sleepy.webp',
-  },
-  {
-    name: 'style5-busy',
-    url: BASE_URL + 'images/illustration-styles/busy.webp',
-  },
-  {
-    name: 'style6-anthro',
-    url: BASE_URL + 'images/illustration-styles/anthro.webp',
-  },
-  {
-    name: 'style7-flat',
-    url: BASE_URL + 'images/illustration-styles/flat.webp',
-  },
-  {
-    name: 'style8-nature',
-    url: BASE_URL + 'images/illustration-styles/nature.webp',
-  },
+  // {
+  //   name: 'style1-papercut',
+  //   url: BASE_URL + 'images/illustration-styles/papercut.webp',
+  // },
+  // {
+  //   name: 'style2-scrappy',
+  //   url: BASE_URL + 'images/illustration-styles/scrappy.webp',
+  // },
+  // {
+  //   name: 'style3-wonder',
+  //   url: BASE_URL + 'images/illustration-styles/wonder.webp',
+  // },
+  // {
+  //   name: 'style4-sleepy',
+  //   url: BASE_URL + 'images/illustration-styles/sleepy.webp',
+  // },
+  // {
+  //   name: 'style5-busy',
+  //   url: BASE_URL + 'images/illustration-styles/busy.webp',
+  // },
+  // {
+  //   name: 'style6-anthro',
+  //   url: BASE_URL + 'images/illustration-styles/anthro.webp',
+  // },
+  // {
+  //   name: 'style7-flat',
+  //   url: BASE_URL + 'images/illustration-styles/flat.webp',
+  // },
+  // {
+  //   name: 'style8-nature',
+  //   url: BASE_URL + 'images/illustration-styles/nature.webp',
+  // },
 ];
 
 export const COLOR_PALETTE = [
