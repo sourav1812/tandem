@@ -351,7 +351,9 @@
     "Q10": "Wie kann ich mein Konto löschen und alle meine Informationen löschen?",
     "A10": "Wir hoffen, dass Sie nicht gehen möchten, aber Sie finden die Option, Ihr Konto und alle darin enthaltenen Informationen zu löschen, auf der Einstellungsseite der App.",
     "Q11": "Welche technischen Anforderungen gibt es für die Nutzung von TANDEM?",
-    "A11": "Tandem ist mit den meisten modernen Smartphones und Tablets kompatibel. Überprüfen Sie die Download-Seite der App im App Store für spezifische Betriebssystemanforderungen."
+    "A11": "Tandem ist mit den meisten modernen Smartphones und Tablets kompatibel. Überprüfen Sie die Download-Seite der App im App Store für spezifische Betriebssystemanforderungen.",
+    "Q12": "Welche KI befindet sich im Backend der App?",
+    "A12": "Tandem wird von OpenAIs GPT-4o, gpt-3.5-turbo und dall-e 3 angetrieben."
   },
   "BUILDING": "Gebäude",
   "USED_CREDITS": "verwendete Credits",
@@ -374,5 +376,7 @@
   "NOTE": "Hinweis: Nicht-englische Sprachen befinden sich noch im Test... Bitte bewerten Sie Ihre Geschichten, wenn Sie sie gelesen haben, damit wir die Qualität verbessern können.",
   "READING_TIME_WITH_CHILD": "TANDEM | Lesezeit mit Ihrem Kind!",
   "MAKE_STORY_PUBLIC": "Geschichte öffentlich machen",
-  "ARCHIVE": "Archiv"
+  "ARCHIVE": "Archive",
+  "ROBOT_TEXT_CONFETTI": "Buch an die Roboter gesendet, um hergestellt zu werden. Bitte haben Sie Geduld, es dauert ein oder zwei Minuten, um es herzustellen.",
+  "ROBOT_CREATING_BOOK": "Der Roboter erstellt Ihr Buch."
 }
