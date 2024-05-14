@@ -146,7 +146,7 @@ const People = ({}: PeopleScreenProps) => {
                       item.param && {fromPeople: item.param},
                     )
                   }
-                  title={item.name}
+                  title={translation(item.name)}
                   customStyle={[
                     styles.menu,
                     isTablet && {marginHorizontal: 36},
