@@ -353,5 +353,28 @@
     "A10": "Nous espérons que vous ne voulez pas partir, mais vous pouvez trouver l'option pour supprimer votre compte et toutes les informations que nous y avons dans la page des paramètres de l'application.",
     "Q11": "Quelles sont les exigences techniques pour utiliser TANDEM?",
     "A11": "Tandem est compatible avec la plupart des smartphones et tablettes modernes. Consultez la page de téléchargement de l'application dans le magasin d'applications pour connaître les exigences spécifiques du système d'exploitation."
-  }
+  },
+
+  "BUILDING": "Bâtiment",
+  "USED_CREDITS": "Crédits utilisés",
+  "PUBLIC_LIBRARY": "Bibliothèque publique",
+  "TOTAL_CREDITS": "Total des crédits",
+  "NO_MORE_BOOKS": "Plus de livres",
+  "Public": "public",
+  "ARCHIVE_STORY": "Archiver l'histoire",
+  "NO_BOOKS_IN_ARCHIVE": "Aucun livre dans les archives",
+  "BACK": "retour",
+  "TEXT_SIZE": "Taille du texte",
+  "READING_LEVEL": "Niveau de lecture",
+  "REPORT_FLAG_IMAGE": "Signaler/Signaler l'image",
+  "RATE_THIS_STORY": "Évaluer cette histoire",
+  "ANSWER_THESE_QUESTION": "Répondez à ces questions...",
+  "HAVE_YOU_THOUGHT_ABOUT": "Avez-vous pensé à...",
+  "GO_TO_HOME": "Aller à l'accueil",
+  "STORY_LANGUAGE": "Langue de l'histoire",
+  "WHICH_LANGUAGE": "Dans quelle langue voulez-vous que cette histoire soit écrite ?",
+  "NOTE": "Remarque : les langues autres que l'anglais sont encore en phase de test... veuillez évaluer vos histoires une fois que vous les avez lues afin que nous puissions continuer à nous améliorer",
+  "READING_TIME_WITH_CHILD": "TANDEM | Temps de lecture avec votre enfant !",
+  "MAKE_STORY_PUBLIC": "Rendre l'histoire publique",
+  "ARCHIVE": "Archives"
 }

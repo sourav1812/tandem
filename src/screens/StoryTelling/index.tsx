@@ -264,7 +264,7 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
           }}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <RNTextComponent style={{marginRight: 'auto'}}>
-              Text Size
+              {translation('TEXT_SIZE')}
             </RNTextComponent>
             <Pressable
               style={{paddingHorizontal: 5}}
@@ -291,7 +291,7 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
           </View>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <RNTextComponent style={{marginRight: 'auto'}}>
-              Reading Level
+              {translation('READING_LEVEL')}
             </RNTextComponent>
             <Pressable
               style={{paddingHorizontal: 5}}
@@ -320,7 +320,7 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
               marginHorizontal: -7,
             }}
             textStyle={{fontSize: verticalScale(12)}}
-            title="Report/Flag image"
+            title={translation('REPORT_FLAG_IMAGE')}
             onClick={() => {
               setReason('');
               setTimeout(() => {

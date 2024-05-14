@@ -353,5 +353,27 @@
     "A10": "We hope you don’t want to leave, but you can find the option to delete your account, and all the information we hold in it, in the settings page of the app.",
     "Q11": "What are the technical requirements for using TANDEM?",
     "A11": "Tandem is compatible with most modern smartphones and tablets. Check the app’s download page in the app store for specific operating system requirements."
-  }
+  },
+  "BUILDING": "Building",
+  "USED_CREDITS": "used Credits",
+  "PUBLIC_LIBRARY": "Public Library",
+  "TOTAL_CREDITS": "Total Credits",
+  "NO_MORE_BOOKS": " No more books",
+  "Public": "public",
+  "ARCHIVE_STORY": "Archive Story",
+  "NO_BOOKS_IN_ARCHIVE": "No books in Archive",
+  "BACK": "back",
+  "TEXT_SIZE": "Text size",
+  "READING_LEVEL": "Reading Level",
+  "REPORT_FLAG_IMAGE": "Report/Flag Image",
+  "RATE_THIS_STORY": "Rate this story",
+  "ANSWER_THESE_QUESTION": "Answer these questions...",
+  "HAVE_YOU_THOUGHT_ABOUT": "Have you thought about...",
+  "GO_TO_HOME": "Go to Home",
+  "STORY_LANGUAGE": "Story Language",
+  "WHICH_LANGUAGE": "What language do you want this story to be written in?",
+  "NOTE": "Note: non-English languages are still in testing… please do rate your stories when you’ve read them so we can keep improving",
+  "READING_TIME_WITH_CHILD": "TANDEM | Reading time with your child!",
+  "MAKE_STORY_PUBLIC": "Make story public",
+  "ARCHIVE": "Archive"
 }

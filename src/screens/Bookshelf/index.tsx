@@ -289,7 +289,7 @@ const Bookshelf = () => {
             onClick={() => {
               navigateTo(SCREEN_NAME.ARCHIVE);
             }}
-            title="Archive"
+            title={translation('ARCHIVE')}
           />
           <RNTextComponent style={styles.bookshelfHeaderText} isSemiBold>
             {translation('BOOKSHELF')}

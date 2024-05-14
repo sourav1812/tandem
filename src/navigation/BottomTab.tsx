@@ -148,7 +148,7 @@ const BottomTab = () => {
                       }),
                     },
                   ]}>
-                  Public Library
+                  {translation('PUBLIC_LIBRARY')}
                 </RNTextComponent>
               </View>
             );

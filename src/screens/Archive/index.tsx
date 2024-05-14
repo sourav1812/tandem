@@ -131,7 +131,7 @@ const Archive = () => {
         <RNTextComponent
           isMedium
           style={{textAlign: 'center', fontSize: verticalScale(9)}}>
-          No more books
+          {translation('NO_MORE_BOOKS')}
         </RNTextComponent>
       );
     }
@@ -150,7 +150,7 @@ const Archive = () => {
         {searchText.value === '' ? (
           <>
             <RNTextComponent numberOfLines={2} style={styles.whyDontWriteStory}>
-              No books in Archive
+              {translation('NO_BOOKS_IN_ARCHIVE')}
             </RNTextComponent>
           </>
         ) : (
@@ -263,10 +263,10 @@ const Archive = () => {
             onClick={() => {
               navigateTo();
             }}
-            title="< Back"
+            title={translation('BACK')}
           />
           <RNTextComponent style={styles.bookshelfHeaderText} isSemiBold>
-            Archive
+            {translation('ARCHIVE')}
           </RNTextComponent>
           <Pressable onPress={() => navigateTo(SCREEN_NAME.ACCOUNT)}>
             {mode === MODE.B && <BothButton style={styles.button} />}
