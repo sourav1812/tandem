@@ -39,7 +39,7 @@ const FloatingProgressBar = () => {
   }, []);
   return (
     <Animated.View style={[styles.floatingView, {top: top}]}>
-      <RNTextComponent>Story Book Generation Progress</RNTextComponent>
+      <RNTextComponent>Robot is creating your book</RNTextComponent>
       <View style={styles.progressBorder}>
         <Animated.View
           style={[
