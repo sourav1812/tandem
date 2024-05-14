@@ -351,7 +351,9 @@
     "Q10": "Come posso lasciare e cancellare tutte le mie informazioni?",
     "A10": "Speriamo che tu non voglia andartene, ma puoi trovare l'opzione per eliminare il tuo account e tutte le informazioni che abbiamo su di te nella pagina delle impostazioni dell'app.",
     "Q11": "Quali sono i requisiti tecnici per utilizzare TANDEM?",
-    "A11": "Tandem è compatibile con la maggior parte degli smartphone e tablet moderni. Controlla la pagina di download dell'app nello store per conoscere i requisiti specifici del sistema operativo."
+    "A11": "Tandem è compatibile con la maggior parte degli smartphone e tablet moderni. Controlla la pagina di download dell'app nello store per conoscere i requisiti specifici del sistema operativo.",
+    "Q12": "Quali IA sono nel backend dell'app?",
+    "A12": "Tandem è alimentato da OpenAI's GPT-4o, gpt-3.5-turbo e dall-e 3."
   },
   "BUILDING": "Edificio",
   "USED_CREDITS": "Crediti utilizzati",
@@ -374,5 +376,7 @@
   "NOTE": "Nota: le lingue diverse dall'inglese sono ancora in fase di test... ti preghiamo di valutare le tue storie dopo averle lette in modo che possiamo continuare a migliorare",
   "READING_TIME_WITH_CHILD": "TANDEM | Tempo di lettura con tuo figlio!",
   "MAKE_STORY_PUBLIC": "Pubblica la storia",
-  "ARCHIVE": "Archivio"
+  "ARCHIVE": "Archivio",
+  "ROBOT_TEXT_CONFETTI": "Libro inviato ai robot per essere realizzato. Abbiate pazienza, ci vorrà un minuto o due per realizzarlo.",
+  "ROBOT_CREATING_BOOK": "Il robot sta creando il tuo libro."
 }

@@ -352,7 +352,9 @@
     "Q10": "Tüm bilgilerimi nasıl bırakıp silebilirim?",
     "A10": "Umarız ayrılmak istemezsiniz, ancak hesabınızı ve içinde bulunan tüm bilgileri silme seçeneğini uygulamanın ayarlar sayfasında bulabilirsiniz.",
     "Q11": "TANDEM'i kullanmanın teknik gereksinimleri nelerdir?",
-    "A11": "Tandem, çoğu modern akıllı telefon ve tablet ile uyumludur. Belirli işletim sistemi gereksinimleri için uygulama mağazasındaki indirme sayfasını kontrol edin."
+    "A11": "Tandem, çoğu modern akıllı telefon ve tablet ile uyumludur. Belirli işletim sistemi gereksinimleri için uygulama mağazasındaki indirme sayfasını kontrol edin.",
+    "Q12": "Uygulamanın arka planında hangi yapay zeka bulunuyor?",
+    "A12": "Tandem, OpenAI'nin GPT-4o, gpt-3.5-turbo ve dall-e 3 tarafından desteklenmektedir."
   },
   "BUILDING": "Bina",
   "USED_CREDITS": "Kullanılan Krediler",
@@ -375,5 +377,7 @@
   "NOTE": "Not: İngilizce olmayan diller hala test aşamasında... Lütfen hikayelerinizi okuduktan sonra değerlendirin, böylece geliştirmeye devam edebiliriz",
   "READING_TIME_WITH_CHILD": "TANDEM | Çocuğunuzla Okuma Zamanı!",
   "MAKE_STORY_PUBLIC": "Hikayeyi genel yapın",
-  "ARCHIVE": "Arşiv"
+  "ARCHIVE": "Arşiv",
+  "ROBOT_TEXT_CONFETTI": "Kitap, yapılması için robotlara gönderildi. Lütfen sabırlı olun, yapılması bir dakika veya iki sürebilir.",
+  "ROBOT_CREATING_BOOK": "Robot kitabınızı oluşturuyor."
 }

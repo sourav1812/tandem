@@ -378,5 +378,6 @@
   "READING_TIME_WITH_CHILD": "TANDEM | Reading time with your child!",
   "MAKE_STORY_PUBLIC": "Make story public",
   "ARCHIVE": "Archive",
-  "ROBOT_TEXT_CONFETTI": "Book sent to the robots to be made. Be patient it will take a minute or two to make."
+  "ROBOT_TEXT_CONFETTI": "Book sent to the robots to be made. Be patient it will take a minute or two to make.",
+  "ROBOT_CREATING_BOOK": "Robot is creating your book"
 }

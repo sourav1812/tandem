@@ -11,6 +11,7 @@ import Animated, {
 import {verticalScale} from 'react-native-size-matters';
 import RNTextComponent from '../RNTextComponent';
 import {StyleSheet, View} from 'react-native';
+import {translation} from '@tandem/utils/methods';
 
 const FloatingProgressBar = () => {
   const progress = useSharedValue('20%');
@@ -39,7 +40,7 @@ const FloatingProgressBar = () => {
   }, []);
   return (
     <Animated.View style={[styles.floatingView, {top: top}]}>
-      <RNTextComponent>Robot is creating your book</RNTextComponent>
+      <RNTextComponent>{translation('ROBOT_CREATING_BOOK')}</RNTextComponent>
       <View style={styles.progressBorder}>
         <Animated.View
           style={[
