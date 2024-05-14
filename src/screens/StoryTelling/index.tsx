@@ -320,7 +320,7 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
               marginHorizontal: -7,
             }}
             textStyle={{fontSize: verticalScale(12)}}
-            title={REPORT_FLAT_IMAGE}
+            title={translation('REPORT_FLAT_IMAGE')}
             onClick={() => {
               setReason('');
               setTimeout(() => {
