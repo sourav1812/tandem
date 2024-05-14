@@ -6,6 +6,7 @@ import RNTextComponent from '@tandem/components/RNTextComponent';
 import DeviceInfo from 'react-native-device-info';
 import {changeDevice} from '@tandem/redux/slices/tablet.slice';
 import {useAppDispatch} from '@tandem/hooks/navigationHooks';
+import {translation} from '@tandem/utils/methods';
 
 const SplashScreen = () => {
   const dispatch = useAppDispatch();
@@ -25,7 +26,9 @@ const SplashScreen = () => {
         style={styles.img}
         resizeMode="contain"
       />
-      <RNTextComponent>TANDEM | Reading time with your child!</RNTextComponent>
+      <RNTextComponent>
+        {translation('READING_TIME_WITH_CHILD')}
+      </RNTextComponent>
       <RNTextComponent style={styles.license}>
         ©️ Early Ideas Limted 2023
       </RNTextComponent>

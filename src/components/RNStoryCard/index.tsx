@@ -120,7 +120,7 @@ const RNStoryCard = ({
             {item.book.isPubliclyAvailable && (
               <RNButton
                 isDisabled
-                title="Public"
+                title={translation('PUBLIC')}
                 customStyle={{
                   backgroundColor: 'transparent',
                   width: verticalScale(50),

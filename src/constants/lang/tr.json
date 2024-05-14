@@ -353,5 +353,27 @@
     "A10": "Umarız ayrılmak istemezsiniz, ancak hesabınızı ve içinde bulunan tüm bilgileri silme seçeneğini uygulamanın ayarlar sayfasında bulabilirsiniz.",
     "Q11": "TANDEM'i kullanmanın teknik gereksinimleri nelerdir?",
     "A11": "Tandem, çoğu modern akıllı telefon ve tablet ile uyumludur. Belirli işletim sistemi gereksinimleri için uygulama mağazasındaki indirme sayfasını kontrol edin."
-  }
+  },
+  "BUILDING": "Bina",
+  "USED_CREDITS": "Kullanılan Krediler",
+  "PUBLIC_LIBRARY": "Halk Kütüphanesi",
+  "TOTAL_CREDITS": "Toplam Krediler",
+  "NO_MORE_BOOKS": "Daha fazla kitap yok",
+  "Public": "genel",
+  "ARCHIVE_STORY": "Hikayeyi Arşivle",
+  "NO_BOOKS_IN_ARCHIVE": "Arşivde kitap yok",
+  "BACK": "geri",
+  "TEXT_SIZE": "Metin boyutu",
+  "READING_LEVEL": "Okuma Seviyesi",
+  "REPORT_FLAG_IMAGE": "Resmi Bildir/İşaretle",
+  "RATE_THIS_STORY": "Bu hikayeyi değerlendir",
+  "ANSWER_THESE_QUESTION": "Bu soruları cevaplayın...",
+  "HAVE_YOU_THOUGHT_ABOUT": "Düşündünüz mü...",
+  "GO_TO_HOME": "Ana sayfaya git",
+  "STORY_LANGUAGE": "Hikaye Dili",
+  "WHICH_LANGUAGE": "Bu hikayenin hangi dilde yazılmasını istersiniz?",
+  "NOTE": "Not: İngilizce olmayan diller hala test aşamasında... Lütfen hikayelerinizi okuduktan sonra değerlendirin, böylece geliştirmeye devam edebiliriz",
+  "READING_TIME_WITH_CHILD": "TANDEM | Çocuğunuzla Okuma Zamanı!",
+  "MAKE_STORY_PUBLIC": "Hikayeyi genel yapın",
+  "ARCHIVE": "Arşiv"
 }
