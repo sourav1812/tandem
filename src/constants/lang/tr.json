@@ -383,5 +383,15 @@
   "EXISTING_STORY_TEXT": "Daha önce oluşturduğumuz bir hikayeyi oku",
   "FORGE_NEW_STORY_TEXT": "Başka bir hikaye oluştur",
   "NAVIGATE_HOME_TEXT": "Ana Sayfa'ya git",
-  "STORY_PROGRESS_ALERT": "Hikaye oluşturulurken, neden şunları denemiyorsun..."
+  "STORY_PROGRESS_ALERT": "Hikaye oluşturulurken, neden şunları denemiyorsun...",
+  "FLIP_CARD_TEXT": "Çiftler bulmak için bir seferde iki kart çevirin.\nOyunu kazanmak için tüm çiftleri bulun!",
+  "MICROPHONE_PERMISSION_TEXT": "Oyunu oynamak için mikrofon iznine ihtiyacınız var.",
+  "MICROPHONE_ENABLE_TEXT": "Mikrofon iznini ayarlardan etkinleştirebilir veya parmaklarınızla kanatları çevirebilirsiniz.",
+  "GENERATED_ENOUGH_ENERGY": "Yay! Yeterli enerji ürettiniz!",
+  "STORY_AVAILABLE_TEXT": "Hikayeniz yakında kullanıma hazır olacak.",
+  "MINI_GAME_TEXT": "Mini Oyun",
+  "BLOW_WIND_PHONE": "Rüzgarı telefonunuzun mikrofonuna üfleyerek yel değirmenini döndürebilirsiniz.",
+  "GENERATE_ENOUGH_ENERGY_TEXT": "Hikaye kitabınızı oluşturmak için yeterli enerji üretin.",
+  "ROTATE_WITH_FINGERS_TEXT": "Ayrıca kanatları parmaklarınızla çevirebilirsiniz.",
+  "SHAKE_TEXT": "Herhangi bir zamanda cihazı sallayarak desteyi yeniden karıştırabilirsiniz."
 }

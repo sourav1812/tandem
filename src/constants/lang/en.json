@@ -383,5 +383,15 @@
   "EXISTING_STORY_TEXT": "Read a story we made earlier",
   "FORGE_NEW_STORY_TEXT": "Create another story",
   "NAVIGATE_HOME_TEXT": "Go to Home",
-  "STORY_PROGRESS_ALERT": "While you wait for the story to be built, why don't you..."
+  "STORY_PROGRESS_ALERT": "While you wait for the story to be built, why don't you...",
+  "FLIP_CARD_TEXT": "Flip over two cards at a time to find pairs.\nFind all pairs to win the game!' give a value pair",
+  "MICROPHONE_PERMISSION_TEXT": "You need microphone permission to play the game.",
+  "MICROPHONE_ENABLE_TEXT": "You can enable microphone permission from the settings or you can rotate the windmill by swiping the blades with your finger.",
+  "GENERATED_ENOUGH_ENERGY": "Yay! You have generated enough energy!",
+  "STORY_AVAILABLE_TEXT": "Your Story will be available soon",
+  "MINI_GAME_TEXT": "Mini Game",
+  "BLOW_WIND_PHONE": "Blow wind into your phone's Microphone to rotate the windmill",
+  "GENERATE_ENOUGH_ENERGY_TEXT": "Generate enough energy to create your story book",
+  "ROTATE_WITH_FINGERS_TEXT": "'\nYou can also use you fingers to rotate the blades of the windmill\n'",
+  "SHAKE_TEXT": "You can shake the device at any time to shuffle the deck again"
 }
