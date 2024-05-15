@@ -379,8 +379,8 @@
   "ARCHIVE": "Archive",
   "ROBOT_TEXT_CONFETTI": "Buch an die Roboter gesendet, um hergestellt zu werden. Bitte haben Sie Geduld, es dauert ein oder zwei Minuten, um es herzustellen.",
   "ROBOT_CREATING_BOOK": "Der Roboter erstellt Ihr Buch.",
-  "SUCESS_TEXT": "Lies eine Geschichte, die wir früher gemacht haben.",
-  "DESTRUCTIVE_TEXT": "Erstelle eine andere Geschichte.",
-  "THIRD_OPTION_TEXT": "Gehe zum Startbildschirm.",
-  "ALERT_MESSAGE": "Während du darauf wartest, dass die Geschichte erstellt wird, warum gehst du nicht..."
+  "EXISTING_STORY_TEXT": "Lese eine Geschichte, die wir früher gemacht haben",
+  "FORGE_NEW_STORY_TEXT": "Erstelle eine neue Geschichte",
+  "NAVIGATE_HOME_TEXT": "Gehe zum Startbildschirm",
+  "STORY_PROGRESS_ALERT": "Während du auf die Erstellung der Geschichte wartest, warum versuchst du nicht..."
 }

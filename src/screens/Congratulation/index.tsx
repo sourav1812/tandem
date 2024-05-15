@@ -25,7 +25,7 @@ const Congratulation = () => {
       store.dispatch(
         addAlertData({
           type: 'Alert',
-          message: translation('ALERT_MESSAGE'),
+          message: translation('STORY_PROGRESS_ALERT'),
           onSuccess: () => {
             navigateTo(SCREEN_NAME.HOME);
             navigateTo(
@@ -44,9 +44,9 @@ const Congratulation = () => {
           onThirdOption: () => {
             navigateTo(SCREEN_NAME.ACCOUNT, {}, true);
           },
-          successText: translation('SUCESS_TEXT'),
-          destructiveText: translation('DESTRUCTIVE_TEXT'),
-          thirdOptionText: translation('THIRD_OPTION_TEXT'),
+          successText: translation('EXISTING_STORY_TEXT'),
+          destructiveText: translation('FORGE_NEW_STORY_TEXT'),
+          thirdOptionText: translation('NAVIGATE_HOME_TEXT'),
         }),
       );
     }, 2000);

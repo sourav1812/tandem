@@ -380,8 +380,8 @@
   "ARCHIVE": "Arşiv",
   "ROBOT_TEXT_CONFETTI": "Kitap, yapılması için robotlara gönderildi. Lütfen sabırlı olun, yapılması bir dakika veya iki sürebilir.",
   "ROBOT_CREATING_BOOK": "Robot kitabınızı oluşturuyor.",
-  "SUCESS_TEXT": "Daha önce hazırladığımız bir hikayeyi okuyun",
-  "DESTRUCTIVE_TEXT": "Başka bir hikaye oluştur",
-  "THIRD_OPTION_TEXT": "Ana sayfaya git",
-  "ALERT_MESSAGE": "Hikaye oluşturulurken beklerken neden şunu yapmıyorsunuz..."
+  "EXISTING_STORY_TEXT": "Daha önce oluşturduğumuz bir hikayeyi oku",
+  "FORGE_NEW_STORY_TEXT": "Başka bir hikaye oluştur",
+  "NAVIGATE_HOME_TEXT": "Ana Sayfa'ya git",
+  "STORY_PROGRESS_ALERT": "Hikaye oluşturulurken, neden şunları denemiyorsun..."
 }

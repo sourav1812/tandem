@@ -380,5 +380,9 @@
   "MAKE_STORY_PUBLIC": "Rendre l'histoire publique",
   "ARCHIVE": "Archives",
   "ROBOT_TEXT_CONFETTI": "Livre envoyé aux robots pour être fabriqué. Soyez patients, cela prendra une minute ou deux pour le faire.",
-  "ROBOT_CREATING_BOOK": "Le robot est en train de créer votre livre."
+  "ROBOT_CREATING_BOOK": "Le robot est en train de créer votre livre.",
+  "EXISTING_STORY_TEXT": "Lisez une histoire que nous avons créée précédemment",
+  "FORGE_NEW_STORY_TEXT": "Créez une autre histoire",
+  "NAVIGATE_HOME_TEXT": "Aller à la page d'accueil",
+  "STORY_PROGRESS_ALERT": "Pendant que vous attendez que l'histoire soit construite, pourquoi ne pas..."
 }

@@ -386,8 +386,8 @@
   "ARCHIVE": "Archiwum",
   "ROBOT_TEXT_CONFETTI": "Książka wysłana do robotów w celu wykonania. Proszę o cierpliwość, zajmie to minutę lub dwie.",
   "ROBOT_CREATING_BOOK": "Robot tworzy Twoją książkę.",
-  "SUCESS_TEXT": "Przeczytaj historię, którą wcześniej stworzyliśmy.",
-  "DESTRUCTIVE_TEXT": "Stwórz inną historię.",
-  "THIRD_OPTION_TEXT": "Przejdź do strony głównej.",
-  "ALERT_MESSAGE": "Podczas oczekiwania na zbudowanie historii, dlaczego by nie..."
+  "EXISTING_STORY_TEXT": "Przeczytaj historię, którą wcześniej stworzyliśmy",
+  "FORGE_NEW_STORY_TEXT": "Stwórz inną historię",
+  "NAVIGATE_HOME_TEXT": "Przejdź do strony głównej",
+  "STORY_PROGRESS_ALERT": "Podczas gdy czekasz na stworzenie historii, dlaczego by nie..."
 }

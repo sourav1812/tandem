@@ -380,8 +380,8 @@
   "ARCHIVE": "Archive",
   "ROBOT_TEXT_CONFETTI": "Book sent to the robots to be made. Be patient it will take a minute or two to make.",
   "ROBOT_CREATING_BOOK": "Robot is creating your book",
-  "SUCESS_TEXT": "Read a story we made earlier",
-  "DESTRUCTIVE_TEXT": "Create another story",
-  "THIRD_OPTION_TEXT": "Go to Home",
-  "ALERT_MESSAGE": "While you wait for the story to be built, why don't you..."
+  "EXISTING_STORY_TEXT": "Read a story we made earlier",
+  "FORGE_NEW_STORY_TEXT": "Create another story",
+  "NAVIGATE_HOME_TEXT": "Go to Home",
+  "STORY_PROGRESS_ALERT": "While you wait for the story to be built, why don't you..."
 }
