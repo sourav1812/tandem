@@ -360,7 +360,7 @@
   "PUBLIC_LIBRARY": "Biblioteca pubblica",
   "TOTAL_CREDITS": "Crediti totali",
   "NO_MORE_BOOKS": " Nessun altro libro",
-  "Public": "pubblico",
+  "PUBLIC": "pubblico",
   "ARCHIVE_STORY": "Archivia storia",
   "NO_BOOKS_IN_ARCHIVE": "Nessun libro nell'archivio",
   "BACK": "indietro",
@@ -378,5 +378,9 @@
   "MAKE_STORY_PUBLIC": "Pubblica la storia",
   "ARCHIVE": "Archivio",
   "ROBOT_TEXT_CONFETTI": "Libro inviato ai robot per essere realizzato. Abbiate pazienza, ci vorrà un minuto o due per realizzarlo.",
-  "ROBOT_CREATING_BOOK": "Il robot sta creando il tuo libro."
+  "ROBOT_CREATING_BOOK": "Il robot sta creando il tuo libro.",
+  "EXISTING_STORY_TEXT": "Leggi una storia che abbiamo creato in precedenza",
+  "FORGE_NEW_STORY_TEXT": "Crea un'altra storia",
+  "NAVIGATE_HOME_TEXT": "Vai alla Home",
+  "STORY_PROGRESS_ALERT": "Mentre aspetti che la storia venga costruita, perché non..."
 }

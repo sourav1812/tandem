@@ -367,7 +367,7 @@
   "PUBLIC_LIBRARY": "Biblioteka publiczna",
   "TOTAL_CREDITS": "Łączna liczba kredytów",
   "NO_MORE_BOOKS": "Koniec książek",
-  "Public": "publiczny",
+  "PUBLIC": "publiczny",
   "ARCHIVE_STORY": "Archiwizuj historię",
   "NO_BOOKS_IN_ARCHIVE": "Brak książek w archiwum",
   "BACK": "powrót",
@@ -385,5 +385,9 @@
   "MAKE_STORY_PUBLIC": "Udostępnij historię",
   "ARCHIVE": "Archiwum",
   "ROBOT_TEXT_CONFETTI": "Książka wysłana do robotów w celu wykonania. Proszę o cierpliwość, zajmie to minutę lub dwie.",
-  "ROBOT_CREATING_BOOK": "Robot tworzy Twoją książkę."
+  "ROBOT_CREATING_BOOK": "Robot tworzy Twoją książkę.",
+  "EXISTING_STORY_TEXT": "Przeczytaj historię, którą wcześniej stworzyliśmy",
+  "FORGE_NEW_STORY_TEXT": "Stwórz inną historię",
+  "NAVIGATE_HOME_TEXT": "Przejdź do strony głównej",
+  "STORY_PROGRESS_ALERT": "Podczas gdy czekasz na stworzenie historii, dlaczego by nie..."
 }
