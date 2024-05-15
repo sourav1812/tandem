@@ -11,15 +11,15 @@ import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import Orientation from 'react-native-orientation-locker';
 import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
-const shakeText =
-  'You can shake the device at any time to shuffle the deck again';
+import {translation} from '@tandem/utils/methods';
+const shakeText = translation('SHAKE_TEXT');
 const MatchingPairs = () => {
   const [matchingPairsArray, setArray] = React.useState<PlaceType[]>([]);
   const [matchedIndexes, setMatchedIndex] = React.useState<number[]>([]);
   const [checkIfPairArray, setIfPairArray] = React.useState<number[]>([]);
   const [gameCompleted, setGameCompleted] = React.useState(false);
   const [buttonText, setButtonText] = React.useState(
-    'Flip over two cards at a time to find pairs.\nFind all pairs to win the game!',
+    translation('FLIP_CARD_TEXT'),
   );
   const progressRef = useAppSelector(
     state => state.activityIndicator.progressRef,

@@ -34,6 +34,7 @@ import {
 } from 'react-native-gesture-handler';
 import themeColor from '@tandem/theme/themeColor';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {translation} from '@tandem/utils/methods';
 const {width: xMax, height: yMax} = Dimensions.get('screen');
 
 const permissionsType = Platform.select({
@@ -53,9 +54,8 @@ const checkMicrophonePermission = async () => {
   store.dispatch(
     addAlertData({
       type: 'Alert',
-      message: 'You need microphone permission to play the game.',
-      possibleResolution:
-        'You can enable microphone permission from the settings or you can rotate the windmill by swiping the blades with your finger.',
+      message: translation('MICROPHONE_PERMISSION_TEXT'),
+      possibleResolution: translation('MICROPHONE_ENABLE_TEXT'),
       onSuccess: () => {},
     }),
   );
@@ -80,11 +80,11 @@ const BlowWindMill = () => {
     store.dispatch(
       addAlertData({
         type: 'Alert',
-        message: 'Yay! You have generated enough energy!',
-        possibleResolution: 'Your Story will be available soon',
+        message: translation('GENERATED_ENOUGH_ENERGY'),
+        possibleResolution: translation('STORY_AVAILABLE_TEXT'),
         onSuccess: () => {
           if (permissionsType !== undefined) {
-            permissions.request(permissionsType).then(result => {
+            permissions.check(permissionsType).then(result => {
               if (result === 'granted') {
                 Loudness.stop();
               }
@@ -342,19 +342,17 @@ const AlertPopupModal = () => {
           padding: verticalScale(20),
         }}>
         <RNTextComponent style={{marginBottom: 10}} isSemiBold>
-          Mini Game
+          {translation('MINI_GAME_TEXT')}
         </RNTextComponent>
         <RNTextComponent style={{fontSize: verticalScale(12)}}>
-          Blow wind into your phone's Microphone to rotate the windmill
+          {translation('BLOW_WIND_PHONE')}
         </RNTextComponent>
         <RNTextComponent
           style={{fontSize: verticalScale(12), color: themeColor.themeBlue}}>
-          {
-            '\nYou can also use you fingers to rotate the blades of the windmill\n'
-          }
+          {translation('ROTATE_WITH_FINGERS_TEXT')}
         </RNTextComponent>
         <RNTextComponent style={{fontSize: verticalScale(12)}}>
-          Generate enough energy to create your story book
+          {translation('GENERATE_ENOUGH_ENERGY_TEXT')}
         </RNTextComponent>
       </View>
     </View>
