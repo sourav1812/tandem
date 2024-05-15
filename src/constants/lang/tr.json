@@ -361,7 +361,7 @@
   "PUBLIC_LIBRARY": "Halk Kütüphanesi",
   "TOTAL_CREDITS": "Toplam Krediler",
   "NO_MORE_BOOKS": "Daha fazla kitap yok",
-  "Public": "genel",
+  "PUBLIC": "genel",
   "ARCHIVE_STORY": "Hikayeyi Arşivle",
   "NO_BOOKS_IN_ARCHIVE": "Arşivde kitap yok",
   "BACK": "geri",
@@ -379,5 +379,9 @@
   "MAKE_STORY_PUBLIC": "Hikayeyi genel yapın",
   "ARCHIVE": "Arşiv",
   "ROBOT_TEXT_CONFETTI": "Kitap, yapılması için robotlara gönderildi. Lütfen sabırlı olun, yapılması bir dakika veya iki sürebilir.",
-  "ROBOT_CREATING_BOOK": "Robot kitabınızı oluşturuyor."
+  "ROBOT_CREATING_BOOK": "Robot kitabınızı oluşturuyor.",
+  "SUCESS_TEXT": "Daha önce hazırladığımız bir hikayeyi okuyun",
+  "DESTRUCTIVE_TEXT": "Başka bir hikaye oluştur",
+  "THIRD_OPTION_TEXT": "Ana sayfaya git",
+  "ALERT_MESSAGE": "Hikaye oluşturulurken beklerken neden şunu yapmıyorsunuz..."
 }

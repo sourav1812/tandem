@@ -360,7 +360,7 @@
   "PUBLIC_LIBRARY": "Öffentliche Bibliothek",
   "TOTAL_CREDITS": "Gesamtcredits",
   "NO_MORE_BOOKS": "Keine weiteren Bücher",
-  "Public": "öffentlich",
+  "PUBLIC": "öffentlich",
   "ARCHIVE_STORY": "Archivgeschichte",
   "NO_BOOKS_IN_ARCHIVE": "Keine Bücher im Archiv",
   "BACK": "Zurück",
@@ -378,5 +378,9 @@
   "MAKE_STORY_PUBLIC": "Geschichte öffentlich machen",
   "ARCHIVE": "Archive",
   "ROBOT_TEXT_CONFETTI": "Buch an die Roboter gesendet, um hergestellt zu werden. Bitte haben Sie Geduld, es dauert ein oder zwei Minuten, um es herzustellen.",
-  "ROBOT_CREATING_BOOK": "Der Roboter erstellt Ihr Buch."
+  "ROBOT_CREATING_BOOK": "Der Roboter erstellt Ihr Buch.",
+  "SUCESS_TEXT": "Lies eine Geschichte, die wir früher gemacht haben.",
+  "DESTRUCTIVE_TEXT": "Erstelle eine andere Geschichte.",
+  "THIRD_OPTION_TEXT": "Gehe zum Startbildschirm.",
+  "ALERT_MESSAGE": "Während du darauf wartest, dass die Geschichte erstellt wird, warum gehst du nicht..."
 }

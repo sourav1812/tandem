@@ -132,7 +132,7 @@ const PublicLib = () => {
         <RNTextComponent
           isMedium
           style={{textAlign: 'center', fontSize: verticalScale(9)}}>
-          {translation('NO_MORE_BOOK')}
+          {translation('NO_MORE_BOOKS')}
         </RNTextComponent>
       );
     }

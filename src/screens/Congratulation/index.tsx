@@ -14,6 +14,7 @@ import {clearStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import LottieView from 'lottie-react-native';
 import LottieAnimationFile from './animation.json';
+import {translation} from '@tandem/utils/methods';
 
 const Congratulation = () => {
   const notificationScreenPermissions = useAppSelector(
@@ -24,7 +25,7 @@ const Congratulation = () => {
       store.dispatch(
         addAlertData({
           type: 'Alert',
-          message: "While you wait for the story to be built, why don't you...",
+          message: translation('ALERT_MESSAGE'),
           onSuccess: () => {
             navigateTo(SCREEN_NAME.HOME);
             navigateTo(
@@ -43,9 +44,9 @@ const Congratulation = () => {
           onThirdOption: () => {
             navigateTo(SCREEN_NAME.ACCOUNT, {}, true);
           },
-          successText: 'Read a story we made earlier',
-          destructiveText: 'Create another story',
-          thirdOptionText: 'Go to Home',
+          successText: translation('SUCESS_TEXT'),
+          destructiveText: translation('DESTRUCTIVE_TEXT'),
+          thirdOptionText: translation('THIRD_OPTION_TEXT'),
         }),
       );
     }, 2000);
