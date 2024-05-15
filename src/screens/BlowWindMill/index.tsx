@@ -33,6 +33,7 @@ import {
   PanGestureHandlerEventPayload,
 } from 'react-native-gesture-handler';
 import themeColor from '@tandem/theme/themeColor';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 const {width: xMax, height: yMax} = Dimensions.get('screen');
 
 const permissionsType = Platform.select({
@@ -67,7 +68,9 @@ const BlowWindMill = () => {
   const [notificationDispatched, setNotificationDispatched] =
     React.useState(false);
   const mark = Platform.select({ios: 140, android: 130, default: 125});
-
+  const progressRef = useAppSelector(
+    state => state.activityIndicator.progressRef,
+  );
   const wrapper = () => {
     // ! WRAPPER NEEDS TO BE DECLARED BEFORE USEDERIVEDVALUE LOL
     if (notificationDispatched) {
@@ -80,6 +83,13 @@ const BlowWindMill = () => {
         message: 'Yay! You have generated enough energy!',
         possibleResolution: 'Your Story will be available soon',
         onSuccess: () => {
+          if (permissionsType !== undefined) {
+            permissions.request(permissionsType).then(result => {
+              if (result === 'granted') {
+                Loudness.stop();
+              }
+            });
+          }
           navigateTo(SCREEN_NAME.CONGRATULATION);
         },
       }),
@@ -98,6 +108,16 @@ const BlowWindMill = () => {
     setTimeout(() => {
       LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
       setShowInstructions(false);
+      setTimeout(() => {
+        if (progressRef !== null) {
+          progressRef.animateProgress(60);
+        }
+        setTimeout(() => {
+          if (progressRef !== null) {
+            progressRef.animateProgress(90);
+          }
+        }, 12000);
+      }, 3000);
     }, 3000);
 
     const interval = setInterval(() => {
@@ -117,7 +137,6 @@ const BlowWindMill = () => {
     return () => {
       clearInterval(interval);
       Orientation.unlockAllOrientations();
-      Loudness.stop();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -216,7 +235,6 @@ const BlowWindMill = () => {
         backgroundColor: '#211934',
       }}>
       {showInstructions && <AlertPopupModal />}
-
       <View
         style={{
           position: 'absolute',

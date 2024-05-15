@@ -21,6 +21,9 @@ const MatchingPairs = () => {
   const [buttonText, setButtonText] = React.useState(
     'Flip over two cards at a time to find pairs.\nFind all pairs to win the game!',
   );
+  const progressRef = useAppSelector(
+    state => state.activityIndicator.progressRef,
+  );
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const halfRotationDuration = 150; // ! time of full rotation animation = 2 * halfRotationDuration
   const handlePress = (index: number) => {
@@ -31,10 +34,16 @@ const MatchingPairs = () => {
   };
 
   React.useEffect(() => {
+    setTimeout(() => {
+      if (progressRef !== null) {
+        progressRef.animateProgress(40);
+      }
+    }, 8000);
     Orientation.lockToPortrait();
     return () => {
       Orientation.unlockAllOrientations();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const refreshMatching = () => {

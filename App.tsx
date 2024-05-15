@@ -35,6 +35,10 @@ const App: FC = () => {
       store.dispatch(setForceReload(false)); // forcing a change to trigger useEffect
       store.dispatch(setForceReload(true));
       store.dispatch(setStoryBookNotification(true));
+      const progressRef = store.getState().activityIndicator.progressRef;
+      if (progressRef !== null) {
+        progressRef.animateProgress(100);
+      }
     });
 
     statusbar();

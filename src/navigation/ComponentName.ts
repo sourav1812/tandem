@@ -48,4 +48,5 @@ export enum SCREEN_NAME {
   MATCHING_PAIRS = 'MatchingPairs',
   MIX_COLORS = 'MixColors',
   STORY_LANGAUGE = 'StoryLanguage',
+  ROBOT_BUILDING_BOOK = 'RobotBuildingBook',
 }

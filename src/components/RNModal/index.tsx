@@ -1,7 +1,8 @@
-import {Pressable, Animated, Dimensions} from 'react-native';
-import React, {useEffect, useRef} from 'react';
+import {Pressable, Dimensions} from 'react-native';
+import React, {useEffect} from 'react';
 import {RNModalProps} from './interface';
 import {styles} from './styles';
+import Animated, {useSharedValue, withTiming} from 'react-native-reanimated';
 
 const RNModal = ({
   visible = true,
@@ -9,7 +10,7 @@ const RNModal = ({
   children,
   customStyle,
 }: RNModalProps) => {
-  const opacity = useRef(new Animated.Value(0)).current;
+  const opacity = useSharedValue(0);
   const height = Dimensions.get('screen').height;
   const width = Dimensions.get('screen').width;
 
@@ -23,11 +24,7 @@ const RNModal = ({
 
   const fadeIn = () => {
     // Will change fadeAnim value to 1 in 5 seconds
-    Animated.timing(opacity, {
-      toValue: 1,
-      duration: 400,
-      useNativeDriver: true,
-    }).start();
+    opacity.value = withTiming(1, {duration: 400});
   };
 
   return (

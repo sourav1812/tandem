@@ -66,6 +66,15 @@ const Account = () => {
   const {width} = Dimensions.get('window');
   const dispatch = useAppDispatch();
   const tooltipArray = useAppSelector(state => state.tooltipReducer);
+  const progressRef = useAppSelector(
+    state => state.activityIndicator.progressRef,
+  );
+  React.useEffect(() => {
+    if (progressRef !== null) {
+      progressRef?.animateProgress(0);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // const mode = useAppSelector(state => state.mode.mode);
   const [state, setState] = useState<StateObject>({

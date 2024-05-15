@@ -92,6 +92,12 @@ export const TYPE_OF_STORY: PlaceType[] = [
 ];
 
 export const ATTRIBUTE: PlaceType[] = [
+  // ! new food items
+  {name: 'Ayran', bgc: themeColor.lightGreen, svgIcon: Ayran},
+  {name: 'Baklava', bgc: themeColor.pink, svgIcon: Baklava},
+  {name: 'Doner Kebab', bgc: themeColor.themeBlue, svgIcon: DonerKebab},
+  {name: 'Lahmacun', bgc: themeColor.yellow, svgIcon: Lahmacun},
+  {name: 'Pide', bgc: themeColor.gold, svgIcon: Pide},
   {name: 'Moon', bgc: themeColor.pink, svgIcon: Moon},
   {name: 'Aeroplane', bgc: themeColor.themeBlue, svgIcon: Aeroplane},
   {name: 'Wind Turbine', bgc: themeColor.gold, svgIcon: WindTurbine},
@@ -154,12 +160,6 @@ export const ATTRIBUTE: PlaceType[] = [
   {name: 'Watermelon', bgc: themeColor.gold, svgIcon: Watermelon},
   {name: 'Wheel Chair', bgc: themeColor.lightGreen, svgIcon: Wheelchair},
   {name: 'Ambulance', bgc: themeColor.pink, svgIcon: Ambulance},
-  // ! new food items
-  {name: 'Ayran', bgc: themeColor.lightGreen, svgIcon: Ayran},
-  {name: 'Baklava', bgc: themeColor.pink, svgIcon: Baklava},
-  {name: 'Doner Kebab', bgc: themeColor.themeBlue, svgIcon: DonerKebab},
-  {name: 'Lahmacun', bgc: themeColor.yellow, svgIcon: Lahmacun},
-  {name: 'Pide', bgc: themeColor.gold, svgIcon: Pide},
 ];
 
 export const ILLUSTRATION = [

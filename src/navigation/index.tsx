@@ -24,6 +24,9 @@ import BlowWindMill from '@tandem/screens/BlowWindMill';
 import MatchingPairs from '@tandem/screens/MatchingPairs';
 import MixColors from '@tandem/screens/MixColors';
 import StoryLanguage from '@tandem/screens/GenerateStory/Questions/StoryLangauge';
+import RobotBuildingBook from '@tandem/screens/RobotBuildingBook';
+import FloatingProgressBar from '@tandem/components/FloatingProgressBar';
+import {setProgressRef} from '@tandem/redux/slices/activityIndicator.slice';
 // import {accelerometer} from 'react-native-sensors';
 
 const AppNavigator = () => {
@@ -33,10 +36,18 @@ const AppNavigator = () => {
   const isTablet = useAppSelector(
     (state: RootState) => state.deviceType.isTablet,
   );
+  const progressRef = React.useRef<any>(null);
   useOrientation();
   const alertData = useAppSelector(
     (state: RootState) => state.alertBoxReducer.data,
   );
+
+  React.useEffect(() => {
+    if (progressRef.current) {
+      // progressRef.current;
+      store.dispatch(setProgressRef(progressRef.current));
+    }
+  }, []);
 
   React.useEffect(() => {
     resumeAppState();
@@ -81,6 +92,10 @@ const AppNavigator = () => {
               Platform.OS === 'android' ? 'slide_from_right' : 'default',
           }}>
           <Stack.Screen component={Archive} name={SCREEN_NAME.ARCHIVE} />
+          <Stack.Screen
+            component={RobotBuildingBook}
+            name={SCREEN_NAME.ROBOT_BUILDING_BOOK}
+          />
           <Stack.Screen
             component={StoryLanguage}
             name={SCREEN_NAME.STORY_LANGAUGE}
@@ -360,6 +375,7 @@ const AppNavigator = () => {
         message={alertData?.message}
         possibleResolution={alertData?.possibleResolution}
       />
+      <FloatingProgressBar ref={progressRef} />
     </>
   );
 };
