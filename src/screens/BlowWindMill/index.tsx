@@ -53,7 +53,7 @@ const checkMicrophonePermission = async () => {
   // ! if we are not using loudness then in interval we will have to make sure we adjust power
   throw new Error('permission denied');
 };
-
+let interval: number | null = null;
 const BlowWindMill = () => {
   const rotation = useSharedValue('0deg');
   const points = useSharedValue(0);
@@ -64,6 +64,7 @@ const BlowWindMill = () => {
   const progressRef = useAppSelector(
     state => state.activityIndicator.progressRef,
   );
+  const [permissionDenied, setPermissionDenied] = React.useState(false);
   const dispatch = useDispatch();
   const wrapper = () => {
     // ! WRAPPER NEEDS TO BE DECLARED BEFORE USEDERIVEDVALUE LOL
@@ -122,6 +123,7 @@ const BlowWindMill = () => {
         startFlow();
       })
       .catch(() => {
+        setPermissionDenied(true);
         dispatch(
           addAlertData({
             type: 'Alert',
@@ -133,7 +135,7 @@ const BlowWindMill = () => {
           }),
         );
       });
-    const interval = setInterval(() => {
+    interval = setInterval(() => {
       Loudness.getLoudness((loudness: any) => {
         if (loudness === 1) {
           return;
@@ -148,11 +150,20 @@ const BlowWindMill = () => {
       });
     }, 200);
     return () => {
-      clearInterval(interval);
+      if (interval) {
+        clearInterval(interval);
+      }
       Orientation.unlockAllOrientations();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  React.useEffect(() => {
+    if (permissionDenied && interval) {
+      console.log('mic permission denied');
+      clearInterval(interval);
+    }
+  }, [permissionDenied]);
 
   const rotateBlade = (
     power: number,
