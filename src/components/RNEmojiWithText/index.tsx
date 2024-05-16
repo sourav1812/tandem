@@ -3,7 +3,7 @@ import React from 'react';
 import {IconProps, Props} from './interface';
 import {styles} from './styles';
 import RNTextComponent from '@tandem/components/RNTextComponent';
-import {verticalScale} from 'react-native-size-matters';
+import {scale, verticalScale} from 'react-native-size-matters';
 import {
   useSharedValue,
   withSequence,
@@ -147,13 +147,12 @@ const IconRednerItem = ({
         style={[
           styles.heading,
           {
-            fontSize: verticalScale(16) - heading.split(' ').length * 1.2,
+            fontSize: scale(15),
             color: !isSelected ? 'gray' : 'white',
           },
         ]}
         isSemiBold>
         {heading}
-        {/* {heading.split(' ').join('\n')} */}
       </RNTextComponent>
     )}
   </>

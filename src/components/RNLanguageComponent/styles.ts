@@ -4,17 +4,17 @@ import themeColor from '../../theme/themeColor';
 
 export const styles = StyleSheet.create({
   container: {
-    paddingTop: verticalScale(6),
-    paddingBottom: verticalScale(2),
+    paddingTop: 5,
+    paddingBottom: 2,
     paddingHorizontal: verticalScale(16),
     marginHorizontal: verticalScale(20),
-    borderRadius: verticalScale(14),
+    borderRadius: 14,
     backgroundColor: themeColor.lightGray,
     flexDirection: 'row',
     alignItems: 'center',
   },
   flag: {
-    fontSize: verticalScale(23),
+    fontSize: 28,
   },
   label: {
     fontSize: verticalScale(14),

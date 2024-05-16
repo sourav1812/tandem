@@ -392,6 +392,6 @@
   "MINI_GAME_TEXT": "Mini Game",
   "BLOW_WIND_PHONE": "Blow wind into your phone's Microphone to rotate the windmill",
   "GENERATE_ENOUGH_ENERGY_TEXT": "Generate enough energy to create your story book",
-  "ROTATE_WITH_FINGERS_TEXT": "'\nYou can also use you fingers to rotate the blades of the windmill\n'",
+  "ROTATE_WITH_FINGERS_TEXT": "You can also use you fingers to rotate the blades of the windmill",
   "SHAKE_TEXT": "You can shake the device at any time to shuffle the deck again"
 }

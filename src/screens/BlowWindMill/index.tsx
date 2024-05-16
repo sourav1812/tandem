@@ -373,7 +373,7 @@ const AlertPopupModal = () => {
         </RNTextComponent>
         <RNTextComponent
           style={{fontSize: verticalScale(12), color: themeColor.themeBlue}}>
-          {translation('ROTATE_WITH_FINGERS_TEXT')}
+          {'\n' + translation('ROTATE_WITH_FINGERS_TEXT') + '\n'}
         </RNTextComponent>
         <RNTextComponent style={{fontSize: verticalScale(12)}}>
           {translation('GENERATE_ENOUGH_ENERGY_TEXT')}
