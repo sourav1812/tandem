@@ -2,7 +2,6 @@ import {Pressable, Text} from 'react-native';
 import React from 'react';
 import {IconProps, Props} from './interface';
 import {styles} from './styles';
-import RNTextComponent from '@tandem/components/RNTextComponent';
 import {scale, verticalScale} from 'react-native-size-matters';
 import {
   useSharedValue,
@@ -132,28 +131,23 @@ const IconRednerItem = ({
       <Svgimg
         style={[
           styles.svgIcon,
-          isSelected &&
-            (heading && heading.split(' ').length > 1
-              ? {
-                  height: verticalScale(55),
-                  width: verticalScale(55),
-                }
-              : {height: verticalScale(65), width: verticalScale(65)}),
+          {height: verticalScale(65), width: verticalScale(65)},
         ]}
       />
     )}
     {heading && (
-      <RNTextComponent
+      <Text
         style={[
           styles.heading,
+          // eslint-disable-next-line react-native/no-inline-styles
           {
             fontSize: scale(15),
             color: !isSelected ? 'gray' : 'white',
+            fontFamily: 'Poppins-SemiBold',
           },
-        ]}
-        isSemiBold>
+        ]}>
         {heading}
-      </RNTextComponent>
+      </Text>
     )}
   </>
 );

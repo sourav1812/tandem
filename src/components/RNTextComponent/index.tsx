@@ -1,9 +1,8 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Text} from 'react-native';
 import {Props} from './interface';
 import {scale} from 'react-native-size-matters';
-import Animated from 'react-native-reanimated';
 
 const RNTextComponent = ({
   props,
@@ -16,7 +15,7 @@ const RNTextComponent = ({
   handleOnPress,
 }: Props) => {
   return (
-    <Animated.Text
+    <Text
       numberOfLines={numberOfLines}
       style={[
         styles.text,
@@ -31,7 +30,7 @@ const RNTextComponent = ({
       onPress={handleOnPress}
       {...props}>
       {children}
-    </Animated.Text>
+    </Text>
   );
 };
 
