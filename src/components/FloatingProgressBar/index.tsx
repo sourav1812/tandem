@@ -29,6 +29,10 @@ const FloatingProgressBar = React.forwardRef((_, ref) => {
     },
 
     animateProgress: (percentage: number) => {
+      const currentPercentage = +progress.value.split('%')[0];
+      if (currentPercentage > percentage) {
+        return;
+      }
       const stringPer = `${percentage}%`;
       zIndex.value = 100;
 

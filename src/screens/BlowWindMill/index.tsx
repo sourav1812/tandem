@@ -361,17 +361,21 @@ const AlertPopupModal = () => {
           padding: verticalScale(20),
         }}>
         <RNTextComponent style={{marginBottom: 10}} isSemiBold>
-          {translation('MINI_GAME_TEXT')}
+          {'Power up the story engine!'}
         </RNTextComponent>
         <RNTextComponent style={{fontSize: verticalScale(12)}}>
-          {translation('BLOW_WIND_PHONE')}
+          {
+            'Make some wind to spin the wind turbine! Blow into your phone’s microphone.'
+          }
         </RNTextComponent>
         <RNTextComponent
           style={{fontSize: verticalScale(12), color: themeColor.themeBlue}}>
-          {'\n' + translation('ROTATE_WITH_FINGERS_TEXT') + '\n'}
+          {'\n' +
+            'You can also use your fingers to spin the blades of the wind turbine.' +
+            '\n'}
         </RNTextComponent>
         <RNTextComponent style={{fontSize: verticalScale(12)}}>
-          {translation('GENERATE_ENOUGH_ENERGY_TEXT')}
+          {'We’ll let you know when you’ve generated enough power!'}
         </RNTextComponent>
       </View>
     </View>
