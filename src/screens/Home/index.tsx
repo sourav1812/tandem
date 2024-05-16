@@ -513,7 +513,7 @@ const Home = () => {
                           navigateTo(SCREEN_NAME.STORY_LANGAUGE);
                           return;
                         }
-                        navigateTo(SCREEN_NAME.MATCHING_PAIRS);
+                        // navigateTo(SCREEN_NAME.MATCHING_PAIRS);
                       }}
                     />
                   ))
