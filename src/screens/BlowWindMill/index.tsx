@@ -17,7 +17,6 @@ import {Dimensions, LayoutAnimation, Platform, View} from 'react-native';
 import Orientation from 'react-native-orientation-locker';
 import WindmillRing from '@tandem/assets/svg/WindmillRing';
 import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
-import {store} from '@tandem/redux/store';
 import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import QuestionMark from '@tandem/assets/svg/QuestionMark';
@@ -35,6 +34,7 @@ import {
 import themeColor from '@tandem/theme/themeColor';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {translation} from '@tandem/utils/methods';
+import {useDispatch} from 'react-redux';
 const {width: xMax, height: yMax} = Dimensions.get('screen');
 
 const permissionsType = Platform.select({
@@ -51,33 +51,27 @@ const checkMicrophonePermission = async () => {
     return;
   }
   // ! if we are not using loudness then in interval we will have to make sure we adjust power
-  store.dispatch(
-    addAlertData({
-      type: 'Alert',
-      message: translation('MICROPHONE_PERMISSION_TEXT'),
-      possibleResolution: translation('MICROPHONE_ENABLE_TEXT'),
-      onSuccess: () => {},
-    }),
-  );
+  throw new Error('permission denied');
 };
 
 const BlowWindMill = () => {
   const rotation = useSharedValue('0deg');
   const points = useSharedValue(0);
-  const [showInstructions, setShowInstructions] = React.useState(true);
+  const [showInstructions, setShowInstructions] = React.useState(false);
   const [notificationDispatched, setNotificationDispatched] =
     React.useState(false);
   const mark = Platform.select({ios: 140, android: 130, default: 125});
   const progressRef = useAppSelector(
     state => state.activityIndicator.progressRef,
   );
+  const dispatch = useDispatch();
   const wrapper = () => {
     // ! WRAPPER NEEDS TO BE DECLARED BEFORE USEDERIVEDVALUE LOL
     if (notificationDispatched) {
       return;
     }
     setNotificationDispatched(true);
-    store.dispatch(
+    dispatch(
       addAlertData({
         type: 'Alert',
         message: translation('GENERATED_ENOUGH_ENERGY'),
@@ -101,25 +95,44 @@ const BlowWindMill = () => {
       runOnJS(wrapper)();
     }
   }, []);
-
-  React.useEffect(() => {
-    Orientation.lockToPortrait();
-    checkMicrophonePermission();
+  const progressAnimation = () => {
+    setTimeout(() => {
+      if (progressRef !== null) {
+        progressRef.animateProgress(60);
+      }
+      setTimeout(() => {
+        if (progressRef !== null) {
+          progressRef.animateProgress(90);
+        }
+      }, 7000);
+    }, 8000);
+  };
+  const startFlow = () => {
+    setShowInstructions(true);
     setTimeout(() => {
       LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
       setShowInstructions(false);
-      setTimeout(() => {
-        if (progressRef !== null) {
-          progressRef.animateProgress(60);
-        }
-        setTimeout(() => {
-          if (progressRef !== null) {
-            progressRef.animateProgress(90);
-          }
-        }, 12000);
-      }, 3000);
-    }, 3000);
-
+      progressAnimation();
+    }, 4000);
+  };
+  React.useEffect(() => {
+    Orientation.lockToPortrait();
+    checkMicrophonePermission()
+      .then(() => {
+        startFlow();
+      })
+      .catch(() => {
+        dispatch(
+          addAlertData({
+            type: 'Alert',
+            message: translation('MICROPHONE_PERMISSION_TEXT'),
+            possibleResolution: translation('MICROPHONE_ENABLE_TEXT'),
+            onSuccess: () => {
+              startFlow();
+            },
+          }),
+        );
+      });
     const interval = setInterval(() => {
       Loudness.getLoudness((loudness: any) => {
         if (loudness === 1) {

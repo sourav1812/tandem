@@ -17,7 +17,8 @@ const RobotBuildingBook = () => {
   );
   React.useEffect(() => {
     if (progressRef !== null) {
-      progressRef.animateProgress(0);
+      progressRef.resetProgressStatus();
+      // progressRef.animateProgress(0);
     }
     setTimeout(() => {
       LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);

@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {View} from 'react-native';
+import {LayoutAnimation, View} from 'react-native';
 import React from 'react';
 import RNTextComponent from '../RNTextComponent';
 import RNModal from '../RNModal';
@@ -13,7 +13,6 @@ import themeColor from '@tandem/theme/themeColor';
 import {translation} from '@tandem/utils/methods';
 
 const RNAlertBox = ({
-  visible,
   renderModal,
   type,
   message,
@@ -28,8 +27,20 @@ const RNAlertBox = ({
     destructiveText,
     thirdOptionText,
   } = useAppSelector(state => state.alertBoxReducer.data);
-
+  const progressRef = useAppSelector(
+    state => state.activityIndicator.progressRef,
+  );
   const dispatch = useAppDispatch();
+
+  React.useLayoutEffect(() => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+  }, [message]);
+
+  const fixProgressbarState = () => {
+    if (progressRef !== null) {
+      progressRef.forceSetPercentage();
+    }
+  };
 
   if (!message) {
     return null;
@@ -37,7 +48,7 @@ const RNAlertBox = ({
 
   return (
     <RNModal
-      visible={visible}
+      visible={true}
       customStyle={styles.modal}
       renderModal={renderModal}>
       <View
@@ -75,6 +86,7 @@ const RNAlertBox = ({
                 await onSuccess();
               }
               dispatch(clearAlertData());
+              fixProgressbarState();
             }}
             title={successText || 'OK'}
             customStyle={[
@@ -93,6 +105,7 @@ const RNAlertBox = ({
                   onDestructive();
                 }
                 dispatch(clearAlertData());
+                fixProgressbarState();
               }}
               title={destructiveText || 'NO'}
               customStyle={[
@@ -114,6 +127,7 @@ const RNAlertBox = ({
                   onThirdOption();
                 }
                 dispatch(clearAlertData());
+                fixProgressbarState();
               }}
               title={thirdOptionText || ''}
               customStyle={[

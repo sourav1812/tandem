@@ -71,7 +71,7 @@ const Account = () => {
   );
   React.useEffect(() => {
     if (progressRef !== null) {
-      progressRef?.animateProgress(0);
+      progressRef?.resetProgressStatus();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

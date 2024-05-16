@@ -15,41 +15,38 @@ import RobotAnimation from '@tandem/screens/RobotBuildingBook/robotAnimation.jso
 const FloatingProgressBar = React.forwardRef((_, ref) => {
   const top = useSharedValue(-400);
   const zIndex = useSharedValue(-1);
-  const progress = useSharedValue('0%');
+  const progress = useSharedValue('5%');
+
   useImperativeHandle(ref, () => ({
+    forceSetPercentage: () => {
+      progress.value = `${+progress.value.split('%')[0] - 1}%`;
+    },
+
+    resetProgressStatus: () => {
+      top.value = -400;
+      progress.value = '5%';
+      zIndex.value = -1;
+    },
+
     animateProgress: (percentage: number) => {
-      if (percentage === 0) {
-        console.log('percentage passed is 0');
-        top.value = -400;
-        progress.value = '0%';
-        zIndex.value = -1;
-        return;
-      }
-      if (percentage < +progress.value.split('%')[0]) {
-        console.log('progress calue is greater than percentage passed');
-        top.value = -400;
-        progress.value = '0%';
-        zIndex.value = -1;
-      }
+      const stringPer = `${percentage}%`;
       zIndex.value = 100;
+
       setTimeout(() => {
-        top.value = withTiming(
-          verticalScale(40),
-          {
-            duration: 2000,
-          },
-          () => {
-            progress.value = withTiming(
-              `${percentage}%`,
-              {duration: 1000},
-              () => {
-                top.value = withDelay(1000, withTiming(-400));
-                zIndex.value = withDelay(1000, withTiming(-1));
-              },
-            );
-          },
-        );
-      }, 1000);
+        zIndex.value = -1;
+      }, 4100);
+
+      top.value = withTiming(
+        verticalScale(40),
+        {
+          duration: 2000,
+        },
+        () => {
+          progress.value = withTiming(stringPer, {duration: 1000}, () => {
+            top.value = withDelay(1000, withTiming(-400));
+          });
+        },
+      );
     },
   }));
 
@@ -122,9 +119,9 @@ const styles = StyleSheet.create({
   },
   progress: {
     backgroundColor: themeColor.themeBlue,
-    flex: 1,
     borderRadius: 20,
     overflow: 'hidden',
+    height: '100%',
   },
   progressWrapper: {width: '80%'},
 });

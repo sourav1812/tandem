@@ -513,7 +513,6 @@ const Home = () => {
                           navigateTo(SCREEN_NAME.STORY_LANGAUGE);
                           return;
                         }
-                        navigateTo(SCREEN_NAME.ROBOT_BUILDING_BOOK);
                       }}
                     />
                   ))

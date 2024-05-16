@@ -38,7 +38,7 @@ const MatchingPairs = () => {
       if (progressRef !== null) {
         progressRef.animateProgress(40);
       }
-    }, 8000);
+    }, 4000);
     Orientation.lockToPortrait();
     return () => {
       Orientation.unlockAllOrientations();
@@ -141,7 +141,7 @@ const MatchingPairs = () => {
           title={gameCompleted ? 'Proceed to Blow the Windmill' : buttonText}
           customStyle={gameCompleted ? {} : styles.buttonCustom}
           pressableStyle={styles.buttonPressable}
-          textStyle={{fontSize: verticalScale(12)}}
+          textStyle={{fontSize: verticalScale(10)}}
         />
       </>
     </RNScreenWrapper>
