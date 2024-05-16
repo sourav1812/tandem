@@ -13,6 +13,7 @@ const RNTextComponent = ({
   isSemiBold,
   numberOfLines,
   handleOnPress,
+  caps,
 }: Props) => {
   return (
     <Text
@@ -26,6 +27,9 @@ const RNTextComponent = ({
         isSemiBold && {fontSize: scale(16), fontFamily: 'Poppins-SemiBold'},
         isBold && {fontSize: scale(16), fontFamily: 'Poppins-Bold'},
         style && style,
+        caps && {
+          textTransform: 'capitalize',
+        },
       ]}
       onPress={handleOnPress}
       {...props}>

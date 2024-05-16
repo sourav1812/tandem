@@ -36,7 +36,7 @@ const MatchingPairs = () => {
   React.useEffect(() => {
     setTimeout(() => {
       if (progressRef !== null) {
-        progressRef.animateProgress(40);
+        progressRef.animateProgress(50);
       }
     }, 4000);
     Orientation.lockToPortrait();

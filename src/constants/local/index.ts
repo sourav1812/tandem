@@ -160,7 +160,7 @@ export const ATTRIBUTE: PlaceType[] = [
   {name: 'Watermelon', bgc: themeColor.gold, svgIcon: Watermelon},
   {name: 'Wheel Chair', bgc: themeColor.lightGreen, svgIcon: Wheelchair},
   {name: 'Ambulance', bgc: themeColor.pink, svgIcon: Ambulance},
-];
+].sort((a, b) => a.name.localeCompare(b.name));
 
 export const ILLUSTRATION = [
   {

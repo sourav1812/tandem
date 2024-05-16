@@ -99,14 +99,9 @@ const BlowWindMill = () => {
   const progressAnimation = () => {
     setTimeout(() => {
       if (progressRef !== null) {
-        progressRef.animateProgress(60);
+        progressRef.animateProgress(80);
       }
-      setTimeout(() => {
-        if (progressRef !== null) {
-          progressRef.animateProgress(90);
-        }
-      }, 7000);
-    }, 8000);
+    }, 3000);
   };
   const startFlow = () => {
     setShowInstructions(true);
@@ -183,7 +178,7 @@ const BlowWindMill = () => {
       },
       () => {
         if (points.value < 170) {
-          points.value = withTiming(points.value + 2);
+          points.value = withTiming(points.value + 10);
         } else {
           points.value = 170;
         }

@@ -33,11 +33,15 @@ export default getStories;
 
 export const cacheStoryBookImages = (books: Book[]) => {
   let dirs = RNFetchBlob.fs.dirs;
+  const notificationScreenPermissions = store.getState().permissions;
+
   books.forEach(async (book, index) => {
     const cacheBookRef = store.getState().bookShelf.images[book._id];
     if (
       index === books.length - 1 &&
-      store.getState().activityIndicator.storyBookNotification
+      store.getState().activityIndicator.storyBookNotification &&
+      (!notificationScreenPermissions.isFirstTime ||
+        notificationScreenPermissions.notificationStatus)
     ) {
       setTimeout(() => {
         store.dispatch(
