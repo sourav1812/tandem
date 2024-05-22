@@ -61,7 +61,7 @@ const App: FC = () => {
               },
               successText: 'Go to Bookshelf',
               onDestructive: () => {},
-              destructiveText: 'Cancel',
+              destructiveText: 'Later',
             }),
           );
         }, 4100);
