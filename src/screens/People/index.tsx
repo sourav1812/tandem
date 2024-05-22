@@ -121,7 +121,7 @@ const People = ({}: PeopleScreenProps) => {
                   },
                 ]}
               />
-              <RNTextComponent style={styles.name} isSemiBold>
+              <RNTextComponent caps style={styles.name} isSemiBold>
                 {currentAdult.role}
               </RNTextComponent>
             </Pressable>
@@ -184,7 +184,7 @@ const People = ({}: PeopleScreenProps) => {
                         },
                       ]}
                     />
-                    <RNTextComponent style={styles.name} isSemiBold>
+                    <RNTextComponent caps style={styles.name} isSemiBold>
                       {child.name}
                     </RNTextComponent>
                   </Pressable>

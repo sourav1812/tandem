@@ -249,7 +249,7 @@ const Home = () => {
                 uri: filePath?.file || currentChild?.avatar,
               }}
             />
-            <RNTextComponent style={styles.tooltipUserName} isSemiBold>
+            <RNTextComponent caps style={styles.tooltipUserName} isSemiBold>
               {currentChild?.name?.split(' ')[0]}
             </RNTextComponent>
           </View>
@@ -304,6 +304,7 @@ const Home = () => {
                   !isTablet && portrait ? verticalScale(60) : verticalScale(20),
               }}>
               <RNTextComponent
+                caps
                 isSemiBold
                 style={{
                   ...styles.heading,
@@ -513,6 +514,7 @@ const Home = () => {
                           navigateTo(SCREEN_NAME.STORY_LANGAUGE);
                           return;
                         }
+                        // navigateTo(SCREEN_NAME.ROBOT_BUILDING_BOOK);
                       }}
                     />
                   ))
@@ -612,6 +614,7 @@ const ChangeChild = ({
           style={{
             fontSize: verticalScale(16),
           }}
+          caps
           isSemiBold>
           {name}
         </RNTextComponent>

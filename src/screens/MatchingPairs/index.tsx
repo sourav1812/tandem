@@ -9,10 +9,12 @@ import {verticalScale} from 'react-native-size-matters';
 import {PlaceType} from '../GenerateStory/interface';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import Orientation from 'react-native-orientation-locker';
-import navigateTo from '@tandem/navigation/navigate';
-import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {translation} from '@tandem/utils/methods';
+import animateProgressBar from '@tandem/functions/animateProgressBar';
+import gotoBookshelf from '@tandem/functions/gotoBookshelf';
+
 const shakeText = translation('SHAKE_TEXT');
+
 const MatchingPairs = () => {
   const [matchingPairsArray, setArray] = React.useState<PlaceType[]>([]);
   const [matchedIndexes, setMatchedIndex] = React.useState<number[]>([]);
@@ -31,6 +33,7 @@ const MatchingPairs = () => {
   };
 
   React.useEffect(() => {
+    animateProgressBar({delay: 4000, percentage: 80});
     Orientation.lockToPortrait();
     return () => {
       Orientation.unlockAllOrientations();
@@ -127,12 +130,12 @@ const MatchingPairs = () => {
         <RNButton
           isDisabled={!gameCompleted}
           onClick={() => {
-            navigateTo(SCREEN_NAME.BLOW_WINDMILL);
+            gotoBookshelf();
           }}
-          title={gameCompleted ? 'Proceed to Blow the Windmill' : buttonText}
+          title={gameCompleted ? 'Go to the Bookshelf' : buttonText}
           customStyle={gameCompleted ? {} : styles.buttonCustom}
           pressableStyle={styles.buttonPressable}
-          textStyle={{fontSize: verticalScale(12)}}
+          textStyle={{fontSize: verticalScale(10)}}
         />
       </>
     </RNScreenWrapper>

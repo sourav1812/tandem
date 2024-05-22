@@ -6,6 +6,8 @@ interface InitialState {
   forceReload: boolean;
   storyBookNotification: boolean;
   isStoryGenTracking: boolean;
+  progressRef: any;
+  isEnergyGenerated: boolean;
 }
 
 const initialState: InitialState = {
@@ -14,6 +16,8 @@ const initialState: InitialState = {
   forceReload: false,
   storyBookNotification: false,
   isStoryGenTracking: false,
+  progressRef: null,
+  isEnergyGenerated: false,
 };
 const activityIndicatorSlice = createSlice({
   name: 'activityIndicator',
@@ -38,6 +42,12 @@ const activityIndicatorSlice = createSlice({
     setStoryGenTracking: (state, action) => {
       state.isStoryGenTracking = action.payload;
     },
+    setProgressRef: (state, action) => {
+      state.progressRef = action.payload;
+    },
+    setEnergyGenerated: (state, action) => {
+      state.isEnergyGenerated = action.payload;
+    },
   },
 });
 export const {
@@ -47,5 +57,7 @@ export const {
   setForceReload,
   setStoryBookNotification,
   setStoryGenTracking,
+  setProgressRef,
+  setEnergyGenerated,
 } = activityIndicatorSlice.actions;
 export default activityIndicatorSlice.reducer;

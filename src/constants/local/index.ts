@@ -71,6 +71,25 @@ import DonerKebab from '@tandem/assets/svg/storySvg/doner-kebab.svg';
 import Lahmacun from '@tandem/assets/svg/storySvg/lahmacun.svg';
 import Pide from '@tandem/assets/svg/storySvg/pide.svg';
 
+export const shuffle = (originalArray: any) => {
+  let array = originalArray;
+  let currentIndex = array.length;
+
+  // While there remain elements to shuffle...
+  while (currentIndex !== 0) {
+    // Pick a remaining element...
+    let randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex],
+      array[currentIndex],
+    ];
+  }
+  return array;
+};
+
 export const TOOLTIP = 'ToolTip';
 // export const TERMS_ACCEPTED = 'TERMS_ACCEPTED';
 
@@ -91,7 +110,13 @@ export const TYPE_OF_STORY: PlaceType[] = [
   {name: "I don't know", svgIcon: RedQuestionMark, bgc: themeColor.lightGreen},
 ];
 
-export const ATTRIBUTE: PlaceType[] = [
+export const ATTRIBUTE: PlaceType[] = shuffle([
+  // ! new food items
+  {name: 'Ayran', bgc: themeColor.lightGreen, svgIcon: Ayran},
+  {name: 'Baklava', bgc: themeColor.pink, svgIcon: Baklava},
+  {name: 'Doner Kebab', bgc: themeColor.themeBlue, svgIcon: DonerKebab},
+  {name: 'Lahmacun', bgc: themeColor.yellow, svgIcon: Lahmacun},
+  {name: 'Pide', bgc: themeColor.gold, svgIcon: Pide},
   {name: 'Moon', bgc: themeColor.pink, svgIcon: Moon},
   {name: 'Aeroplane', bgc: themeColor.themeBlue, svgIcon: Aeroplane},
   {name: 'Wind Turbine', bgc: themeColor.gold, svgIcon: WindTurbine},
@@ -154,13 +179,7 @@ export const ATTRIBUTE: PlaceType[] = [
   {name: 'Watermelon', bgc: themeColor.gold, svgIcon: Watermelon},
   {name: 'Wheel Chair', bgc: themeColor.lightGreen, svgIcon: Wheelchair},
   {name: 'Ambulance', bgc: themeColor.pink, svgIcon: Ambulance},
-  // ! new food items
-  {name: 'Ayran', bgc: themeColor.lightGreen, svgIcon: Ayran},
-  {name: 'Baklava', bgc: themeColor.pink, svgIcon: Baklava},
-  {name: 'Doner Kebab', bgc: themeColor.themeBlue, svgIcon: DonerKebab},
-  {name: 'Lahmacun', bgc: themeColor.yellow, svgIcon: Lahmacun},
-  {name: 'Pide', bgc: themeColor.gold, svgIcon: Pide},
-];
+]);
 
 export const ILLUSTRATION = [
   {

@@ -9,8 +9,8 @@ export const languages: languageType[] = [
   {name: 'Deutsch', flag: '🇩🇪', code: 'de'},
   {name: 'Italiano', flag: '🇮🇹', code: 'it'},
   {name: 'Français', flag: '🇫🇷', code: 'fr'},
-  {name: 'Polish', flag: '🇵🇱', code: 'po'},
-  {name: 'Urdu', flag: '🇮🇳', code: 'ur'},
-  {name: 'Punjabi', flag: '🇮🇳', code: 'pu'},
-  {name: 'Turkish', flag: '🇹🇷', code: 'tr'},
+  {name: 'Polski', flag: '🇵🇱', code: 'po'},
+  {name: 'اردو', flag: '🇮🇳', code: 'ur'},
+  {name: 'ਪੰਜਾਬੀ', flag: '🇮🇳', code: 'pu'},
+  {name: 'Türkçe', flag: '🇹🇷', code: 'tr'},
 ];

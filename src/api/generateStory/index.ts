@@ -33,10 +33,11 @@ export default async ({childId, storyPromptData}: GenerateStoryData) => {
       path: API.GENERATE_STORY + `/${childId}`,
       data: {...storyPromptData},
       onSuccess: () => {
-        navigateTo(SCREEN_NAME.MATCHING_PAIRS);
+        navigateTo(SCREEN_NAME.ROBOT_BUILDING_BOOK);
       },
     });
   } catch (error) {
+    navigateTo(SCREEN_NAME.HOME);
     throw error;
   }
 };

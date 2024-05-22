@@ -35,7 +35,7 @@ const RNKidsProfile = ({
         source={{uri: filePath || avatar}}
         style={[styles.profile, style]}
       />
-      <RNTextComponent style={styles.name} isMedium>
+      <RNTextComponent caps style={styles.name} isMedium>
         {data && data?.name}
       </RNTextComponent>
     </Animated.View>

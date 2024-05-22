@@ -30,17 +30,20 @@ export enum API {
 }
 
 export enum ENVIRONMENT {
+  LOCAL = 'LOCAL',
   DEVELOPMENT = 'DEVELOPMENT',
   PRODUCTION = 'PRODUCTION',
 }
 
 const ENV_VARS = {
+  [ENVIRONMENT.LOCAL]: {
+    API_URL: 'https://174a-38-137-52-237.ngrok-free.app/v1/', // * LOCAL URL
+  },
   [ENVIRONMENT.DEVELOPMENT]: {
-    API_URL: 'https://tandem-app-backend-beta.azurewebsites.net/v1/', // * LOCAL URL
-    // API_URL: 'http://192.168.1.66:5000/v1/', // * LOCAL URL
+    API_URL: 'https://tandem-app-backend-beta.azurewebsites.net/v1/', // * DEV URL
   },
   [ENVIRONMENT.PRODUCTION]: {
-    API_URL: 'https://tandem-app-backend-prod.azurewebsites.net/v1/', // * STAGING URL
+    API_URL: 'https://tandem-app-backend-prod.azurewebsites.net/v1/', // * PROD URL
   },
 };
 
