@@ -22,6 +22,7 @@ import {getChildStats} from '@tandem/api/childAnalytics';
 import pushChildStats from '@tandem/functions/pushChildStats';
 import getStories from '@tandem/api/getStories';
 import gotoBookshelf from '@tandem/functions/gotoBookshelf';
+import {translation} from '@tandem/utils/methods';
 
 const persistor = persistStore(store);
 
@@ -52,16 +53,15 @@ const App: FC = () => {
           store.dispatch(
             addAlertData({
               type: 'Alert',
-              message:
-                'Your book is ready - please flick through the book and make sure you are happy with it before reading with your child.',
+              message: translation('REVIEW_BOOK_BEFORE_READING_TO_CHILD'),
               onSuccess: async () => {
                 store.dispatch(setStoryBookNotification(false));
                 store.dispatch(clearAlertData());
                 gotoBookshelf();
               },
-              successText: 'Go to Bookshelf',
+              successText: translation('GO_TO_BOOKSHELF'),
               onDestructive: () => {},
-              destructiveText: 'Later',
+              destructiveText: translation('LATER'),
             }),
           );
         }, 4100);

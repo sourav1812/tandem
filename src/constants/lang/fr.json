@@ -394,5 +394,17 @@
   "BLOW_WIND_PHONE": "Soufflez dans le microphone de votre téléphone pour faire tourner le moulin à vent.",
   "GENERATE_ENOUGH_ENERGY_TEXT": "Générez assez d'énergie pour créer votre livre d'histoires.",
   "ROTATE_WITH_FINGERS_TEXT": "Vous pouvez également utiliser vos doigts pour faire tourner les pales du moulin à vent.",
-  "SHAKE_TEXT": "Vous pouvez secouer l'appareil à tout moment pour mélanger à nouveau le jeu de cartes."
+  "SHAKE_TEXT": "Vous pouvez secouer l'appareil à tout moment pour mélanger à nouveau le jeu de cartes.",
+  "REVIEW_BOOK_BEFORE_READING_TO_CHILD": "Votre livre est prêt - veuillez le feuilleter et vous assurer qu'il vous satisfait avant de le lire à votre enfant.",
+  "GO_TO_BOOKSHELF": "Aller à la bibliothèque",
+  "LATER": "Plus tard",
+  "BLOW_SWIPE_WINDMILL": "Vous pouvez souffler ou balayer sur le moulin à vent pour générer de l'énergie pour le moteur de l'histoire.",
+  "POWER_GENERATION": "Bon travail ! Vous avez généré suffisamment d'énergie pour alimenter le moteur de l'histoire !",
+  "STORY_AVAILABLE_SOON": "Votre histoire sera bientôt disponible.",
+  "POWER_UP_STORY": "Alimentez le moteur de l'histoire !",
+  "BLOW_WIND_MICROPHONE": "Faites du vent pour faire tourner l'éolienne ! Soufflez dans le microphone de votre téléphone.",
+  "FIGURE_SPIN_BLADE": "Vous pouvez également utiliser vos doigts pour faire tourner les pales de l'éolienne.",
+  "ENOUGH_POWER_TEXT": "Nous vous informerons lorsque vous aurez généré suffisamment d'énergie !",
+  "TANDOM_ROBOT_STORY": "Vos idées sont en route vers les robots d'histoire TANDEM, qui les transforment en une toute nouvelle histoire.",
+  "Activate_Engine!": "Mais d'abord... vous devez alimenter le moteur de l'histoire !"
 }

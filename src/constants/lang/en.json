@@ -393,5 +393,17 @@
   "BLOW_WIND_PHONE": "Blow wind into your phone's Microphone to rotate the windmill",
   "GENERATE_ENOUGH_ENERGY_TEXT": "Generate enough energy to create your story book",
   "ROTATE_WITH_FINGERS_TEXT": "You can also use you fingers to rotate the blades of the windmill",
-  "SHAKE_TEXT": "You can shake the device at any time to shuffle the deck again"
+  "SHAKE_TEXT": "You can shake the device at any time to shuffle the deck again",
+  "REVIEW_BOOK_BEFORE_READING_TO_CHILD": "Your book is ready - please flick through the book and make sure you are happy with it before reading with your child.",
+  "GO_TO_BOOKSHELF": "Go to Bookshelf",
+  "LATER": "Later",
+  "BLOW_SWIPE_WINDMILL": "You can either blow or swipe on the windmill to generate power for the story engine",
+  "POWER_GENERATION": "Great work! You have generated enough energy to power the story engine!",
+  "STORY_AVAILABLE_SOON": "Your story will be available soon.",
+  "POWER_UP_STORY": "Power up the story engine!",
+  "BLOW_WIND_MICROPHONE": "Make some wind to spin the wind turbine! Blow into your phone’s microphone.",
+  "FIGURE_SPIN_BLADE": "You can also use your fingers to spin the blades of the wind turbine.",
+  "ENOUGH_POWER_TEXT": "We’ll let you know when you’ve generated enough power!",
+  "TANDOM_ROBOT_STORY": "Your ideas are on their way to the TANDEM story robots, who are turning them into a band new story.",
+  "Activate_Engine!": "But first… you’ll need to power up the story engine!"
 }

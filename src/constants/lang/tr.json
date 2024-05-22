@@ -393,5 +393,17 @@
   "BLOW_WIND_PHONE": "Rüzgarı telefonunuzun mikrofonuna üfleyerek yel değirmenini döndürebilirsiniz.",
   "GENERATE_ENOUGH_ENERGY_TEXT": "Hikaye kitabınızı oluşturmak için yeterli enerji üretin.",
   "ROTATE_WITH_FINGERS_TEXT": "Ayrıca kanatları parmaklarınızla çevirebilirsiniz.",
-  "SHAKE_TEXT": "Herhangi bir zamanda cihazı sallayarak desteyi yeniden karıştırabilirsiniz."
+  "SHAKE_TEXT": "Herhangi bir zamanda cihazı sallayarak desteyi yeniden karıştırabilirsiniz.",
+  "REVIEW_BOOK_BEFORE_READING_TO_CHILD": "Kitabınız hazır - lütfen çocuğunuzla okumadan önce kitabı gözden geçirin ve memnun olduğunuzdan emin olun.",
+  "GO_TO_BOOKSHELF": "Kitaplığa Git",
+  "LATER": "Daha Sonra",
+  "BLOW_SWIPE_WINDMILL": "Hikaye motorunu güçlendirmek için rüzgar değirmenine üfleyebilir veya silebilirsiniz.",
+  "POWER_GENERATION": "Harika iş! Hikaye motorunu çalıştırmak için yeterli enerjiyi ürettiniz!",
+  "STORY_AVAILABLE_SOON": "Hikayeniz yakında kullanıma hazır olacak.",
+  "POWER_UP_STORY": "Hikaye motorunu güçlendir!",
+  "BLOW_WIND_MICROPHONE": "Rüzgar türbinini döndürmek için biraz rüzgar yapın! Telefonun mikrofonuna üfleyin.",
+  "FIGURE_SPIN_BLADE": "Rüzgar türbininin bıçaklarını döndürmek için parmaklarınızı da kullanabilirsiniz.",
+  "ENOUGH_POWER_TEXT": "Yeterli enerji ürettiğinizde size haber vereceğiz!",
+  "TANDOM_ROBOT_STORY": "Fikirleriniz TANDEM hikaye robotlarına gidiyor, onlar da bunları yeni bir hikayeye dönüştürüyorlar.",
+  "Activate_Engine!": "Ama önce... hikaye motorunu çalıştırmanız gerekecek!"
 }
