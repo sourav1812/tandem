@@ -43,10 +43,17 @@ const App: FC = () => {
       store.dispatch(setForceReload(true));
       store.dispatch(setStoryBookNotification(true));
       const progressRef = store.getState().activityIndicator.progressRef;
+      const notificationScreenPermissions = store.getState().permissions;
+
       const isEnergyGenerated =
         store.getState().activityIndicator.isEnergyGenerated;
 
-      if (progressRef !== null && isEnergyGenerated) {
+      if (
+        progressRef !== null &&
+        isEnergyGenerated &&
+        (!notificationScreenPermissions.isFirstTime ||
+          notificationScreenPermissions.notificationStatus)
+      ) {
         progressRef.animateProgress(100);
         setTimeout(() => {
           // ! alert to show book is ready with new text

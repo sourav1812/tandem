@@ -47,8 +47,9 @@ const RobotBuildingBook = () => {
       {showText && (
         <>
           <RNTextComponent isSemiBold style={styles.text}>
-            {translation('TANDOM_ROBOT_STORY')} + \n\n +
-            {translation('Activate_Engine')}
+            {translation('TANDOM_ROBOT_STORY') +
+              '\n\n ' +
+              translation('Activate_Engine')}
           </RNTextComponent>
 
           <RNButton

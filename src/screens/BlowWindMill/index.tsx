@@ -83,6 +83,7 @@ const BlowWindMill = () => {
       return;
     }
     setNotificationDispatched(true);
+    dispatch(setEnergyGenerated(true));
     dispatch(
       addAlertData({
         type: 'Alert',
@@ -97,7 +98,6 @@ const BlowWindMill = () => {
               }
             });
           }
-          dispatch(setEnergyGenerated(true));
           navigateTo(SCREEN_NAME.MATCHING_PAIRS);
         },
       }),
@@ -270,7 +270,9 @@ const BlowWindMill = () => {
         alignItems: 'center',
         backgroundColor: '#211934',
       }}>
-      {showInstructions && <AlertPopupModal />}
+      {showInstructions && (
+        <AlertPopupModal permissionState={permissionState} />
+      )}
       <View
         style={{
           position: 'absolute',
@@ -356,7 +358,11 @@ const BlowWindMill = () => {
 
 export default BlowWindMill;
 
-const AlertPopupModal = () => {
+const AlertPopupModal = ({
+  permissionState,
+}: {
+  permissionState: null | permissions.PermissionStatus;
+}) => {
   return (
     <View
       style={{
@@ -368,8 +374,7 @@ const AlertPopupModal = () => {
       }}>
       <View
         style={{
-          width: '70%',
-          // height: '20%',
+          width: '80%',
           backgroundColor: 'white',
           borderRadius: 20,
           position: 'absolute',
@@ -380,8 +385,12 @@ const AlertPopupModal = () => {
         <RNTextComponent style={{marginBottom: 10}} isSemiBold>
           {translation('POWER_UP_STORY')}
         </RNTextComponent>
-        <RNTextComponent style={{fontSize: verticalScale(12)}}>
-          {translation('BLOW_WIND_MICROPHONE')}
+        <RNTextComponent style={{fontSize: verticalScale(11)}}>
+          {translation('BLOW_WIND_MICROPHONE') +
+            (permissionState === 'blocked'
+              ? '\n\n' +
+                'You will need to enable microphone permissions from the settings.'
+              : '')}
         </RNTextComponent>
         <RNTextComponent
           style={{fontSize: verticalScale(12), color: themeColor.themeBlue}}>
