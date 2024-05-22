@@ -23,4 +23,9 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     alignSelf: 'center',
   },
+  button: {
+    position: 'absolute',
+    width: '93%',
+    bottom: verticalScale(40),
+  },
 });

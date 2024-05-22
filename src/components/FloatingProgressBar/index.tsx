@@ -38,6 +38,9 @@ const FloatingProgressBar = React.forwardRef((_, ref) => {
 
       setTimeout(() => {
         zIndex.value = -1;
+        if (percentage === 100) {
+          progress.value = '5%';
+        }
       }, 4100);
 
       top.value = withTiming(

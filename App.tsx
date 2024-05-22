@@ -6,7 +6,10 @@ import {Platform, UIManager} from 'react-native';
 import messaging from '@react-native-firebase/messaging';
 import {PersistGate} from 'redux-persist/integration/react';
 import {persistStore} from 'redux-persist';
-import {clearAlertData} from '@tandem/redux/slices/alertBox.slice';
+import {
+  addAlertData,
+  clearAlertData,
+} from '@tandem/redux/slices/alertBox.slice';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import statusbar from '@tandem/functions/statusbar';
 import i18n from '@tandem/constants/lang/i18n';
@@ -17,6 +20,8 @@ import {
 } from '@tandem/redux/slices/activityIndicator.slice';
 import {getChildStats} from '@tandem/api/childAnalytics';
 import pushChildStats from '@tandem/functions/pushChildStats';
+import getStories from '@tandem/api/getStories';
+import gotoBookshelf from '@tandem/functions/gotoBookshelf';
 
 const persistor = persistStore(store);
 
@@ -30,14 +35,36 @@ const App: FC = () => {
     i18n.locale = setupLangauge();
     store.dispatch(clearAlertData());
     const unsubscribe = messaging().onMessage(async () => {
+      await getStories(1);
       await pushChildStats();
       await getChildStats();
       store.dispatch(setForceReload(false)); // forcing a change to trigger useEffect
       store.dispatch(setForceReload(true));
       store.dispatch(setStoryBookNotification(true));
       const progressRef = store.getState().activityIndicator.progressRef;
-      if (progressRef !== null) {
+      const isEnergyGenerated =
+        store.getState().activityIndicator.isEnergyGenerated;
+
+      if (progressRef !== null && isEnergyGenerated) {
         progressRef.animateProgress(100);
+        setTimeout(() => {
+          // ! alert to show book is ready with new text
+          store.dispatch(
+            addAlertData({
+              type: 'Alert',
+              message:
+                'Your book is ready - please flick through the book and make sure you are happy with it before reading with your child.',
+              onSuccess: async () => {
+                store.dispatch(setStoryBookNotification(false));
+                store.dispatch(clearAlertData());
+                gotoBookshelf();
+              },
+              successText: 'Go to Bookshelf',
+              onDestructive: () => {},
+              destructiveText: 'Cancel',
+            }),
+          );
+        }, 4100);
       }
     });
 

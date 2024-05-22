@@ -26,7 +26,10 @@ import MixColors from '@tandem/screens/MixColors';
 import StoryLanguage from '@tandem/screens/GenerateStory/Questions/StoryLangauge';
 import RobotBuildingBook from '@tandem/screens/RobotBuildingBook';
 import FloatingProgressBar from '@tandem/components/FloatingProgressBar';
-import {setProgressRef} from '@tandem/redux/slices/activityIndicator.slice';
+import {
+  setEnergyGenerated,
+  setProgressRef,
+} from '@tandem/redux/slices/activityIndicator.slice';
 // import {accelerometer} from 'react-native-sensors';
 
 const AppNavigator = () => {
@@ -51,7 +54,7 @@ const AppNavigator = () => {
 
   React.useEffect(() => {
     resumeAppState();
-
+    store.dispatch(setEnergyGenerated(true)); // ! on App open we do want to show notification
     // ! logic to make post req for multiple pending posts
     const pendingStory = store.getState().cache.pendingStoryGeneration;
     if (pendingStory.length > 0) {

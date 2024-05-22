@@ -9,10 +9,12 @@ import {verticalScale} from 'react-native-size-matters';
 import {PlaceType} from '../GenerateStory/interface';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import Orientation from 'react-native-orientation-locker';
-import navigateTo from '@tandem/navigation/navigate';
-import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {translation} from '@tandem/utils/methods';
+import animateProgressBar from '@tandem/functions/animateProgressBar';
+import gotoBookshelf from '@tandem/functions/gotoBookshelf';
+
 const shakeText = translation('SHAKE_TEXT');
+
 const MatchingPairs = () => {
   const [matchingPairsArray, setArray] = React.useState<PlaceType[]>([]);
   const [matchedIndexes, setMatchedIndex] = React.useState<number[]>([]);
@@ -20,9 +22,6 @@ const MatchingPairs = () => {
   const [gameCompleted, setGameCompleted] = React.useState(false);
   const [buttonText, setButtonText] = React.useState(
     translation('FLIP_CARD_TEXT'),
-  );
-  const progressRef = useAppSelector(
-    state => state.activityIndicator.progressRef,
   );
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const halfRotationDuration = 150; // ! time of full rotation animation = 2 * halfRotationDuration
@@ -34,16 +33,11 @@ const MatchingPairs = () => {
   };
 
   React.useEffect(() => {
-    setTimeout(() => {
-      if (progressRef !== null) {
-        progressRef.animateProgress(50);
-      }
-    }, 4000);
+    animateProgressBar({delay: 4000, percentage: 80});
     Orientation.lockToPortrait();
     return () => {
       Orientation.unlockAllOrientations();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const refreshMatching = () => {
@@ -136,9 +130,9 @@ const MatchingPairs = () => {
         <RNButton
           isDisabled={!gameCompleted}
           onClick={() => {
-            navigateTo(SCREEN_NAME.BLOW_WINDMILL);
+            gotoBookshelf();
           }}
-          title={gameCompleted ? 'Proceed to Blow the Windmill' : buttonText}
+          title={gameCompleted ? 'Go to the Bookshelf' : buttonText}
           customStyle={gameCompleted ? {} : styles.buttonCustom}
           pressableStyle={styles.buttonPressable}
           textStyle={{fontSize: verticalScale(10)}}

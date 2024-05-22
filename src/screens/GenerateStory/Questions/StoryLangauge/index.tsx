@@ -17,14 +17,11 @@ import {translation} from '@tandem/utils/methods';
 const languages = [
   {name: 'English', flag: '🇬🇧', code: 'en'},
   {name: 'Türkçe', flag: '🇹🇷', code: 'tr'},
-  {name: 'বাংলা', flag: '🇧🇩', code: 'bn'},
   {name: 'Polski', flag: '🇵🇱', code: 'pl'},
-  {name: 'ગુજરાતી', flag: '🇮🇳', code: 'gu'},
-  {name: 'ਪੰਜਾਬੀ', flag: '🇮🇳', code: 'pa'},
   {name: 'اردو', flag: '🇵🇰', code: 'ur'},
-  {name: 'Français', flag: '🇫🇷', code: 'fr'},
+  {name: 'বাংলা', flag: '🇧🇩', code: 'bn'},
+  {name: 'Russian', flag: '🇷🇺', code: 'ru'},
 ];
-
 const SelectLanguage = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const portrait = useAppSelector(
@@ -57,7 +54,11 @@ const SelectLanguage = () => {
       <RNTextComponent style={styles.info}>
         {translation('WHICH_LANGUAGE')}
       </RNTextComponent>
-      <View style={[!portrait && {marginHorizontal: scale(100)}]}>
+      <View
+        style={[
+          !portrait && {marginHorizontal: scale(100)},
+          {marginTop: verticalScale(20)},
+        ]}>
         {languages.map((item, index) => {
           return (
             <Pressable
@@ -94,7 +95,7 @@ const styles = StyleSheet.create({
   heading: {
     fontSize: verticalScale(21.3),
     alignSelf: 'center',
-    marginTop: verticalScale(45),
+    marginTop: verticalScale(55),
     textAlign: 'center',
   },
   info: {
@@ -105,7 +106,6 @@ const styles = StyleSheet.create({
   },
   footer: {
     fontSize: verticalScale(10),
-    marginTop: 'auto',
-    marginBottom: verticalScale(40),
+    marginTop: verticalScale(30),
   },
 });
