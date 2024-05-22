@@ -66,8 +66,7 @@ const BlowWindMill = () => {
       dispatch(
         addAlertData({
           type: 'Alert',
-          message:
-            'You can either blow or swipe on the windmill to generate power for the story engine',
+          message: translation('BLOW_SWIPE_WINDMILL'),
           onSuccess: async () => {
             const result = await permissions.request(permissionsType);
             setPermissionState(result);
@@ -87,9 +86,8 @@ const BlowWindMill = () => {
     dispatch(
       addAlertData({
         type: 'Alert',
-        message:
-          'Great work! You have generated enough energy to power the story engine!',
-        possibleResolution: 'Your story will be available soon.',
+        message: translation('POWER_GENERATION'),
+        possibleResolution: translation('STORY_AVAILABLE_SOON'),
         successText: translation('NEXT'),
         onSuccess: () => {
           if (permissionsType) {
@@ -380,21 +378,17 @@ const AlertPopupModal = () => {
           padding: verticalScale(20),
         }}>
         <RNTextComponent style={{marginBottom: 10}} isSemiBold>
-          {'Power up the story engine!'}
+          {translation('POWER_UP_STORY')}
         </RNTextComponent>
         <RNTextComponent style={{fontSize: verticalScale(12)}}>
-          {
-            'Make some wind to spin the wind turbine! Blow into your phone’s microphone.'
-          }
+          {translation('BLOW_WIND_MICROPHONE')}
         </RNTextComponent>
         <RNTextComponent
           style={{fontSize: verticalScale(12), color: themeColor.themeBlue}}>
-          {'\n' +
-            'You can also use your fingers to spin the blades of the wind turbine.' +
-            '\n'}
+          {'\n' + translation('FIGURE_SPIN_BLADE') + '\n'}
         </RNTextComponent>
         <RNTextComponent style={{fontSize: verticalScale(12)}}>
-          {'We’ll let you know when you’ve generated enough power!'}
+          {translation('ENOUGH_POWER_TEXT')}
         </RNTextComponent>
       </View>
     </View>
