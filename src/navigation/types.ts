@@ -51,6 +51,7 @@ export type RootStackParamList = {
   MixColors: undefined;
   StoryLanguage: undefined;
   RobotBuildingBook: undefined;
+  Disclaimer: undefined;
 };
 
 export type RootTabParamList = {

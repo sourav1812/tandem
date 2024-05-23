@@ -1,6 +1,5 @@
 import {post} from '@tandem/api';
 import {API} from '@tandem/constants/api';
-
 interface ReadingStatus {
   solo?: boolean;
   tandem?: boolean;

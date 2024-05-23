@@ -7,6 +7,8 @@ import NetInfo from '@react-native-community/netinfo';
 import {pushToPendingStoryGeneration} from '@tandem/redux/slices/cache.slice';
 import {store} from '@tandem/redux/store';
 import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
+import notifee from '@notifee/react-native';
+import {NOTIFICATION_PROMPTS} from '@tandem/constants/local';
 export default async ({childId, storyPromptData}: GenerateStoryData) => {
   try {
     const netInfo = await NetInfo.fetch();
@@ -33,6 +35,7 @@ export default async ({childId, storyPromptData}: GenerateStoryData) => {
       path: API.GENERATE_STORY + `/${childId}`,
       data: {...storyPromptData},
       onSuccess: () => {
+        notifee.cancelNotification(NOTIFICATION_PROMPTS[0].id); // ! removing trigger 1
         navigateTo(SCREEN_NAME.ROBOT_BUILDING_BOOK);
       },
     });

@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {LayoutAnimation, Pressable, View} from 'react-native';
 import React, {useState, useRef} from 'react';
 import {styles} from './style';
@@ -103,6 +104,7 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
     showQuestion: false,
     wellDoneModal: false,
     isStoryRated: !!book.ratingInfo?.[0]?._id,
+    endPage: false,
   });
 
   const refOne = useRef<any>(null);
@@ -510,60 +512,62 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
     <RNScreenWrapper>
       <View
         style={[styles.headingButton, {opacity: tooltipArray?.[15] ? 1 : 0.7}]}>
-        <RNTooltip
-          isTablet={isTablet}
-          topViewStyle={{
-            alignItems: 'center',
-          }}
-          open={14}
-          text={translation('EXIT')}
-          textContainerStyle={[
-            styles.tooltipTwo,
-            {marginRight: 0, marginLeft: 24},
-          ]}
-          textStyle={[
-            {
-              textAlign: 'center',
-              fontSize: verticalScale(16),
-              marginTop: 10,
-            },
-          ]}
-          dimensionObject={positionRefs[1]}>
-          <View
-            ref={refTwo}
-            onLayout={() => {
-              refTwo?.current?.measure(
-                (
-                  x: number,
-                  y: number,
-                  width: number,
-                  height: number,
-                  pageX: number,
-                  pageY: number,
-                ) => {
-                  setPositionRefs(prev => ({
-                    ...prev,
-                    1: {height: width, width: height, x: pageX, y: pageY},
-                  }));
-                },
-              );
-            }}>
-            <RNButton
-              onlyIcon
-              icon={<Close />}
-              onClick={() => {
-                navigateTo(SCREEN_NAME.BOOKSHELF);
-                setGoBack(true);
-              }}
-            />
-          </View>
-        </RNTooltip>
+        {!state.endPage && (
+          <RNTooltip
+            isTablet={isTablet}
+            topViewStyle={{
+              alignItems: 'center',
+            }}
+            open={14}
+            text={translation('EXIT')}
+            textContainerStyle={[
+              styles.tooltipTwo,
+              {marginRight: 0, marginLeft: 24},
+            ]}
+            textStyle={[
+              {
+                textAlign: 'center',
+                fontSize: verticalScale(16),
+                marginTop: 10,
+              },
+            ]}
+            dimensionObject={positionRefs[1]}>
+            <View
+              ref={refTwo}
+              onLayout={() => {
+                refTwo?.current?.measure(
+                  (
+                    x: number,
+                    y: number,
+                    width: number,
+                    height: number,
+                    pageX: number,
+                    pageY: number,
+                  ) => {
+                    setPositionRefs(prev => ({
+                      ...prev,
+                      1: {height: width, width: height, x: pageX, y: pageY},
+                    }));
+                  },
+                );
+              }}>
+              <RNButton
+                onlyIcon
+                icon={<Close />}
+                onClick={() => {
+                  navigateTo(SCREEN_NAME.BOOKSHELF);
+                  setGoBack(true);
+                }}
+              />
+            </View>
+          </RNTooltip>
+        )}
         {/* {currentIndex === totalPages && (
           <RNTextComponent isSemiBold style={styles.summaryTitle}>
             {translation('SUMMARY')}
           </RNTextComponent>
         )} */}
-        {headerButton()}
+        {!state.endPage && headerButton()}
       </View>
       <NewPageSwipe
         updateState={updateState}

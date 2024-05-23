@@ -404,5 +404,8 @@
   "FIGURE_SPIN_BLADE": "Sie können auch Ihre Finger benutzen, um die Flügel des Windrads zu drehen.",
   "ENOUGH_POWER_TEXT": "Wir lassen Sie wissen, wenn Sie genug Energie erzeugt haben!",
   "TANDOM_ROBOT_STORY": "Ihre Ideen sind auf dem Weg zu den TANDEM-Geschichtsrobotern, die daraus eine brandneue Geschichte machen.",
-  "Activate_Engine": "Aber zuerst... müssen Sie die Geschichtserzählmaschine betreiben!"
+  "Activate_Engine": "Aber zuerst... müssen Sie die Geschichtserzählmaschine betreiben!",
+  "AI_INSTRUCTIONS": "Diese Geschichte wurde mit KI erstellt. Bevor Sie sie mit Ihrem Kind lesen, schauen Sie sich bitte schnell die Bilder an, um sie zu überprüfen. Wenn Sie ein Bild finden, das nicht für ein Kinderbuch geeignet ist, klicken Sie oben auf der Seite auf die drei Punkte, um es zu melden. Dann können Sie zurückgehen und eine neue Geschichte mit anderen Bildern erstellen.",
+  "BOOK_IS_READY": "Ihr Buch ist fertig.",
+  "SHAKE_DEVICE": "Schütteln Sie das Gerät, um erneut zu spielen."
 }

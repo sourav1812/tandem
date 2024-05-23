@@ -5,12 +5,33 @@ import userProfile from '@tandem/api/userProfile';
 import {store} from '@tandem/redux/store';
 import RNFetchBlob from 'rn-fetch-blob';
 import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
-import {CACHE_DIR} from '@tandem/constants/local';
+import {CACHE_DIR, NAVIGATE_TO_BOOKSHELF} from '@tandem/constants/local';
 import {reinitialiseCacheDirectory} from '@tandem/redux/slices/cache.slice';
 import {Platform} from 'react-native';
 import {renewImages} from '@tandem/redux/slices/bookShelf.slice';
+import {resetReadStoryBookNumber} from '@tandem/redux/slices/activityIndicator.slice';
+import {inactiveTriggerNotifications} from '../notifee';
+import gotoBookshelf from '../gotoBookshelf';
+import {MODE} from '@tandem/constants/mode';
+import {changeMode} from '@tandem/redux/slices/mode.slice';
 
 export default async () => {
+  // ! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  const storyBooksThisWeek =
+    store.getState().activityIndicator.storyBooksReadThisWeek;
+  if (isNaN(storyBooksThisWeek)) {
+    store.dispatch(resetReadStoryBookNumber());
+  }
+  const weekDate = store.getState().activityIndicator.weekMark;
+  const isMoreThanWeek =
+    (new Date().getTime() - new Date(weekDate || Date.now()).getTime()) /
+      (1000 * 60 * 60 * 24) >=
+    7;
+  if (isMoreThanWeek) {
+    store.dispatch(resetReadStoryBookNumber());
+  }
+  inactiveTriggerNotifications();
+  // ! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   const {token, refreshToken} = getStoredTokens();
   setTimeout(() => {
     if (!token && !refreshToken) {
@@ -20,7 +41,18 @@ export default async () => {
       userProfile();
     }
     if (store.getState().userData.userDataObject.termsAndConditions) {
-      navigateTo(SCREEN_NAME.ACCOUNT, {}, true);
+      const shouldNavigateToBookShelf = getValueFromKey(NAVIGATE_TO_BOOKSHELF);
+      console.log({shouldNavigateToBookShelf});
+      if (shouldNavigateToBookShelf === NAVIGATE_TO_BOOKSHELF) {
+        storeKey(NAVIGATE_TO_BOOKSHELF, null);
+        store.dispatch(changeMode(MODE.A));
+        navigateTo(SCREEN_NAME.BOTTOM_TAB, {}, true);
+        setTimeout(() => {
+          gotoBookshelf();
+        }, 100);
+      } else {
+        navigateTo(SCREEN_NAME.ACCOUNT, {}, true);
+      }
     } else {
       navigateTo(SCREEN_NAME.TERMS_AND_CONDITIONS, {}, true);
     }

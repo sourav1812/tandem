@@ -30,6 +30,7 @@ import {
   setEnergyGenerated,
   setProgressRef,
 } from '@tandem/redux/slices/activityIndicator.slice';
+import Disclaimer from '@tandem/screens/Disclaimer';
 // import {accelerometer} from 'react-native-sensors';
 
 const AppNavigator = () => {
@@ -103,6 +104,7 @@ const AppNavigator = () => {
             component={StoryLanguage}
             name={SCREEN_NAME.STORY_LANGAUGE}
           />
+          <Stack.Screen component={Disclaimer} name={SCREEN_NAME.DISCLAIMER} />
           <Stack.Screen
             component={BlowWindMill}
             options={{gestureEnabled: false}}

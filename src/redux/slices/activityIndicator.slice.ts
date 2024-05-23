@@ -8,6 +8,8 @@ interface InitialState {
   isStoryGenTracking: boolean;
   progressRef: any;
   isEnergyGenerated: boolean;
+  storyBooksReadThisWeek: number;
+  weekMark: Date;
 }
 
 const initialState: InitialState = {
@@ -18,6 +20,8 @@ const initialState: InitialState = {
   isStoryGenTracking: false,
   progressRef: null,
   isEnergyGenerated: false,
+  storyBooksReadThisWeek: 0,
+  weekMark: new Date(),
 };
 const activityIndicatorSlice = createSlice({
   name: 'activityIndicator',
@@ -48,6 +52,13 @@ const activityIndicatorSlice = createSlice({
     setEnergyGenerated: (state, action) => {
       state.isEnergyGenerated = action.payload;
     },
+    incrementReadStoryBookNumber: state => {
+      state.storyBooksReadThisWeek += 1;
+    },
+    resetReadStoryBookNumber: state => {
+      state.storyBooksReadThisWeek = 0;
+      state.weekMark = new Date();
+    },
   },
 });
 export const {
@@ -59,5 +70,7 @@ export const {
   setStoryGenTracking,
   setProgressRef,
   setEnergyGenerated,
+  incrementReadStoryBookNumber,
+  resetReadStoryBookNumber,
 } = activityIndicatorSlice.actions;
 export default activityIndicatorSlice.reducer;

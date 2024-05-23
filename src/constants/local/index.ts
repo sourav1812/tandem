@@ -444,3 +444,58 @@ export const FONT_SIZES = [16, 20, 24, 28, 32, 40];
 //     url: BASE_URL+'images/whatHappens/spooky_tale.webp',
 //   },
 // ];
+
+export const NOTIFICATION_PROMPTS = [
+  {
+    id: '1',
+    key1: 'User registers but does not create a story within 24 hours',
+    body: 'It’s time to create your first story!',
+  },
+  {
+    id: '2',
+    key1: 'User has not opened the app between 10:00-13:00 local time. Triggered once every 5 days.',
+    body: 'Your next magical story awaits! Create a story with your child now.',
+  },
+  {
+    id: '3',
+    key1: 'User reads 1 story this week.',
+    body: "Fantastic, you've read your first story this week! Keep it up!",
+  },
+  {
+    id: '4',
+    key1: 'User reads 3 stories this week',
+    body: "You’re on a roll. You've read your third story this week! Keep it up!",
+  },
+  {
+    id: '5',
+    key1: 'User reads 5 stories this week',
+    body: "Full steam ahead! You've read your fifth story this week! Keep it up!",
+  },
+  {
+    id: '6',
+    key1: 'User reads 10 stories this week',
+    body: 'Ten stories! You’re unstoppable!',
+  },
+  {
+    id: '7',
+    key1: 'User has been inactive for 3 days',
+    body: "We've missed you yesterday! Take 5 minutes to create an enchanting story with your little one today!",
+  },
+  {
+    id: '8',
+    key1: 'User has been inactive for 1 week',
+    body: "It's been a while! An adventure story awaits for you and your children. Create one now!",
+  },
+  {
+    id: '9',
+    key1: 'User reads 100 pages',
+    body: "Woohoo! You've hit 100 pages! Awesome milestone for you and your children.",
+  },
+  {
+    id: '10',
+    key1: 'Story generated but never opened',
+    body: 'The Tandem Robots were hard at work and now your personalised story is ready to read!',
+  },
+];
+
+export const NAVIGATE_TO_BOOKSHELF = 'NAVIGATE_TO_BOOKSHELF';

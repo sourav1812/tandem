@@ -405,5 +405,8 @@
   "FIGURE_SPIN_BLADE": "Rüzgar türbininin bıçaklarını döndürmek için parmaklarınızı da kullanabilirsiniz.",
   "ENOUGH_POWER_TEXT": "Yeterli enerji ürettiğinizde size haber vereceğiz!",
   "TANDOM_ROBOT_STORY": "Fikirleriniz TANDEM hikaye robotlarına gidiyor, onlar da bunları yeni bir hikayeye dönüştürüyorlar.",
-  "Activate_Engine": "Ama önce... hikaye motorunu çalıştırmanız gerekecek!"
+  "Activate_Engine": "Ama önce... hikaye motorunu çalıştırmanız gerekecek!",
+  "AI_INSTRUCTIONS": "Bu hikaye yapay zeka ile oluşturuldu. Çocuğunuzla okumadan önce, resimleri hızlıca gözden geçirin. Bir çocuk kitabı için uygun olmayan bir resim bulursanız, sayfanın üst kısmındaki üç noktaya tıklayarak bunu bildirin. Sonra geri dönüp farklı resimlerle yeni bir hikaye oluşturabilirsiniz.",
+  "BOOK_IS_READY": "Kitabınız hazır.",
+  "SHAKE_DEVICE": "Tekrar oynamak için cihazı sallayın."
 }

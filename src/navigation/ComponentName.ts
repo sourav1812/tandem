@@ -49,4 +49,5 @@ export enum SCREEN_NAME {
   MIX_COLORS = 'MixColors',
   STORY_LANGAUGE = 'StoryLanguage',
   ROBOT_BUILDING_BOOK = 'RobotBuildingBook',
+  DISCLAIMER = 'Disclaimer',
 }

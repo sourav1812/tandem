@@ -10,8 +10,6 @@ import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {LayoutAnimation} from 'react-native';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import RNButton from '@tandem/components/RNButton';
-import {setEnergyGenerated} from '@tandem/redux/slices/activityIndicator.slice';
-import {store} from '@tandem/redux/store';
 
 const RobotBuildingBook = () => {
   const [showText, setShow] = React.useState(false);
@@ -19,7 +17,7 @@ const RobotBuildingBook = () => {
     state => state.activityIndicator.progressRef,
   );
   React.useEffect(() => {
-    store.dispatch(setEnergyGenerated(false)); // ! setting energy to false so that we can recreate it
+    // store.dispatch(setEnergyGenerated(false)); // ! setting energy to false so that we can recreate it
     if (progressRef !== null) {
       progressRef.resetProgressStatus();
     }
@@ -55,9 +53,9 @@ const RobotBuildingBook = () => {
           <RNButton
             pressableStyle={styles.button}
             onClick={() => {
-              navigateTo(SCREEN_NAME.BLOW_WINDMILL);
+              navigateTo(SCREEN_NAME.MATCHING_PAIRS);
             }}
-            title={translation('NEXT')}
+            title={translation('SEND')}
           />
         </>
       )}

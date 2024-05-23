@@ -406,5 +406,8 @@
   "FIGURE_SPIN_BLADE": "Vous pouvez également utiliser vos doigts pour faire tourner les pales de l'éolienne.",
   "ENOUGH_POWER_TEXT": "Nous vous informerons lorsque vous aurez généré suffisamment d'énergie !",
   "TANDOM_ROBOT_STORY": "Vos idées sont en route vers les robots d'histoire TANDEM, qui les transforment en une toute nouvelle histoire.",
-  "Activate_Engine": "Mais d'abord... vous devez alimenter le moteur de l'histoire !"
+  "Activate_Engine": "Mais d'abord... vous devez alimenter le moteur de l'histoire !",
+  "AI_INSTRUCTIONS": "Cette histoire a été créée avec l'IA. Avant de la lire avec votre enfant, veuillez vérifier rapidement les images. Si vous trouvez une image qui ne convient pas à un livre pour enfants, cliquez sur les trois points en haut de la page pour la signaler. Ensuite, vous pouvez revenir en arrière et créer une nouvelle histoire avec des images différentes.",
+  "BOOK_IS_READY": "Votre livre est prêt.",
+  "SHAKE_DEVICE": "Secouez l'appareil pour rejouer."
 }

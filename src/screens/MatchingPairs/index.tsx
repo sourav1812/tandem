@@ -12,7 +12,10 @@ import Orientation from 'react-native-orientation-locker';
 import {translation} from '@tandem/utils/methods';
 import animateProgressBar from '@tandem/functions/animateProgressBar';
 import gotoBookshelf from '@tandem/functions/gotoBookshelf';
-
+import LottieView from 'lottie-react-native';
+import Animation from './animation.json';
+import {setStoryBookNotification} from '@tandem/redux/slices/activityIndicator.slice';
+import {store} from '@tandem/redux/store';
 const shakeText = translation('SHAKE_TEXT');
 
 const MatchingPairs = () => {
@@ -31,9 +34,11 @@ const MatchingPairs = () => {
     }
     setIfPairArray(prev => (prev.length === 1 ? [...prev, index] : [index]));
   };
-
+  const storyBookNotification = useAppSelector(
+    state => state.activityIndicator.storyBookNotification,
+  );
   React.useEffect(() => {
-    animateProgressBar({delay: 4000, percentage: 80});
+    animateProgressBar({delay: 5000, percentage: 50});
     Orientation.lockToPortrait();
     return () => {
       Orientation.unlockAllOrientations();
@@ -54,7 +59,6 @@ const MatchingPairs = () => {
         ? RANDOMISED_PLAYING_ARRAY.unshift(item)
         : RANDOMISED_PLAYING_ARRAY.push(item);
     });
-    setGameCompleted(false);
     setMatchedIndex([]);
     setIfPairArray([]);
     setTimeout(() => {
@@ -95,13 +99,21 @@ const MatchingPairs = () => {
   React.useEffect(() => {
     if (
       matchedIndexes.length > 0 &&
-      matchedIndexes.length === matchingPairsArray.length
+      matchedIndexes.length === matchingPairsArray.length &&
+      !gameCompleted
     ) {
       //! game completed
-      setGameCompleted(true);
+      setButtonText(translation('SHAKE_DEVICE'));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [matchedIndexes.length]);
+
+  React.useEffect(() => {
+    if (storyBookNotification) {
+      setGameCompleted(true);
+      store.dispatch(setStoryBookNotification(false));
+    }
+  }, [storyBookNotification]);
 
   return (
     <RNScreenWrapper style={styles.screenWrapper}>
@@ -126,13 +138,29 @@ const MatchingPairs = () => {
             />
           ))}
         </View>
-
+        {gameCompleted && (
+          <LottieView
+            // eslint-disable-next-line react-native/no-inline-styles
+            style={{
+              flex: 1,
+              width: verticalScale(120),
+              height: verticalScale(120),
+              alignSelf: 'center',
+              position: 'absolute',
+              bottom: verticalScale(80),
+              transform: [{rotate: '90deg'}],
+            }}
+            source={Animation}
+            autoPlay
+            loop
+          />
+        )}
         <RNButton
           isDisabled={!gameCompleted}
           onClick={() => {
             gotoBookshelf();
           }}
-          title={gameCompleted ? 'Go to the Bookshelf' : buttonText}
+          title={gameCompleted ? translation('BOOK_IS_READY') : buttonText}
           customStyle={gameCompleted ? {} : styles.buttonCustom}
           pressableStyle={styles.buttonPressable}
           textStyle={{fontSize: verticalScale(10)}}

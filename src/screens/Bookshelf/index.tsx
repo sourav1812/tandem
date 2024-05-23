@@ -198,7 +198,7 @@ const Bookshelf = () => {
           <RNStoryCard
             item={item}
             onPress={() => {
-              navigateTo(SCREEN_NAME.STORY, {routeData: item});
+              navigateTo(SCREEN_NAME.DISCLAIMER, {routeData: item});
             }}
           />
         </View>

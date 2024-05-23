@@ -14,4 +14,5 @@ export interface StateObject {
   showQuestion: boolean;
   wellDoneModal: boolean;
   isStoryRated: boolean;
+  endPage: boolean;
 }

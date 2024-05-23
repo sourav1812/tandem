@@ -411,5 +411,8 @@
   "FIGURE_SPIN_BLADE": "Możesz także użyć palców, aby obrócić łopaty turbiny wiatrowej.",
   "ENOUGH_POWER_TEXT": "Poinformujemy Cię, kiedy wygenerujesz wystarczającą ilość energii!",
   "TANDOM_ROBOT_STORY": "Twoje pomysły są w drodze do robotów opowieści TANDEM, które przekształcają je w zupełnie nową historię.",
-  "Activate_Engine": "Ale najpierw... musisz uruchomić silnik opowieści!"
+  "Activate_Engine": "Ale najpierw... musisz uruchomić silnik opowieści!",
+  "AI_INSTRUCTIONS": "Ta historia została stworzona przez AI. Przed przeczytaniem jej z dzieckiem, szybko przejrzyj obrazy, aby je sprawdzić. Jeśli znajdziesz obraz, który nie jest odpowiedni dla książki dla dzieci, kliknij trzy kropki u góry strony, aby go oznaczyć. Następnie możesz wrócić i stworzyć nową historię z innymi obrazami.",
+  "BOOK_IS_READY": "Twoja książka jest gotowa.",
+  "SHAKE_DEVICE": "Potrząśnij urządzeniem, aby zagrać ponownie."
 }

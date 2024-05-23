@@ -405,5 +405,8 @@
   "FIGURE_SPIN_BLADE": "You can also use your fingers to spin the blades of the wind turbine.",
   "ENOUGH_POWER_TEXT": "We’ll let you know when you’ve generated enough power!",
   "TANDOM_ROBOT_STORY": "Your ideas are on their way to the TANDEM story robots, who are turning them into a brand new story.",
-  "Activate_Engine": "But first… you’ll need to power up the story engine!"
+  "Activate_Engine": "But first… you’ll need to power up the story engine!",
+  "AI_INSTRUCTIONS": "This story was made with AI. Before reading it with your child, please quickly look at the pictures to check them. If you find an image that isn’t right for a children’s book, click on the three dots at the top of the page to flag it. Then, you can go back and make a new story with different pictures.",
+  "BOOK_IS_READY": "Your Book is ready",
+  "SHAKE_DEVICE": "Shake the device to play again"
 }

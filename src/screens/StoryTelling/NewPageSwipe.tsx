@@ -26,6 +26,8 @@ import Animated, {useSharedValue, withTiming} from 'react-native-reanimated';
 import {updatePage} from '@tandem/redux/slices/bookShelf.slice';
 import {store} from '@tandem/redux/store';
 import {translation} from '@tandem/utils/methods';
+import {readBookNotification} from '@tandem/functions/notifee';
+import {incrementReadStoryBookNumber} from '@tandem/redux/slices/activityIndicator.slice';
 interface IPage {
   text: string;
   img: string;
@@ -216,6 +218,8 @@ export default ({
                   ...(mode === MODE.B && {tandem: true}),
                 });
               }
+              store.dispatch(incrementReadStoryBookNumber());
+              readBookNotification();
               navigateTo(SCREEN_NAME.HOME);
             }}
             title={translation('GO_TO_HOME')}
@@ -225,7 +229,14 @@ export default ({
     );
   };
   const onViewableItemsChanged = React.useCallback(({changed}) => {
+    const lastPage = book.storyInfo[0].pages.length - 1 === changed[0].index;
+    if (lastPage && !changed[0].isViewable) {
+      updateState({endPage: true});
+    } else {
+      updateState({endPage: false});
+    }
     store.dispatch(updatePage(changed[0].index));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <PanGestureHandler
