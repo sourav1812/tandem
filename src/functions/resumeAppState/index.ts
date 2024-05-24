@@ -14,6 +14,8 @@ import {inactiveTriggerNotifications} from '../notifee';
 import gotoBookshelf from '../gotoBookshelf';
 import {MODE} from '@tandem/constants/mode';
 import {changeMode} from '@tandem/redux/slices/mode.slice';
+import selfAnalytics from '@tandem/api/selfAnalytics';
+import {UsersAnalyticsEvents} from '@tandem/api/selfAnalytics/interface';
 
 export default async () => {
   // ! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -42,15 +44,22 @@ export default async () => {
     }
     if (store.getState().userData.userDataObject.termsAndConditions) {
       const shouldNavigateToBookShelf = getValueFromKey(NAVIGATE_TO_BOOKSHELF);
-      console.log({shouldNavigateToBookShelf});
       if (shouldNavigateToBookShelf === NAVIGATE_TO_BOOKSHELF) {
         storeKey(NAVIGATE_TO_BOOKSHELF, null);
+        selfAnalytics({
+          eventType: UsersAnalyticsEvents.APP_OPENED,
+          details: {isNotificationTapped: true},
+        });
         store.dispatch(changeMode(MODE.A));
         navigateTo(SCREEN_NAME.BOTTOM_TAB, {}, true);
         setTimeout(() => {
           gotoBookshelf();
         }, 100);
       } else {
+        selfAnalytics({
+          eventType: UsersAnalyticsEvents.APP_OPENED,
+          details: {isNotificationTapped: false},
+        });
         navigateTo(SCREEN_NAME.ACCOUNT, {}, true);
       }
     } else {

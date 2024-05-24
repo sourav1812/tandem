@@ -1,7 +1,7 @@
 import RNButton from '@tandem/components/RNButton';
 import RNEmojiWithText from '@tandem/components/RNEmojiWithText';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
-import {ATTRIBUTE} from '@tandem/constants/local';
+import {ATTRIBUTE, shuffle} from '@tandem/constants/local';
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import RNShake from 'react-native-shake';
@@ -73,7 +73,7 @@ const MatchingPairs = () => {
     setMatchedIndex([]);
     setIfPairArray([]);
     setTimeout(() => {
-      setArray(RANDOMISED_PLAYING_ARRAY);
+      setArray(shuffle(RANDOMISED_PLAYING_ARRAY));
     }, halfRotationDuration);
   };
 

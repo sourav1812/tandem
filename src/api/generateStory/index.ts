@@ -10,6 +10,8 @@ import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
 import notifee from '@notifee/react-native';
 import {NOTIFICATION_PROMPTS} from '@tandem/constants/local';
 import {translation} from '@tandem/utils/methods';
+import selfAnalytics from '../selfAnalytics';
+import {UsersAnalyticsEvents} from '../selfAnalytics/interface';
 export default async ({childId, storyPromptData}: GenerateStoryData) => {
   try {
     const netInfo = await NetInfo.fetch();
@@ -36,9 +38,17 @@ export default async ({childId, storyPromptData}: GenerateStoryData) => {
       path: API.GENERATE_STORY + `/${childId}`,
       data: {...storyPromptData},
     });
+    selfAnalytics({
+      eventType: UsersAnalyticsEvents.BOOK_REQUESTED,
+      details: {
+        mode: store.getState().mode,
+        childId: childId,
+        storyPromptData,
+      },
+    });
     store.dispatch(
       addAlertData({
-        type: translation('GREAT_WORK'),
+        type: 'GREAT_WORK',
         successText: translation('NEXT'),
         message: translation('WELL_DONE_GREAT_IDEAS'),
         onSuccess: () => {
@@ -62,6 +72,15 @@ export const hitStoryGenApiStandalone = async ({
       path: API.GENERATE_STORY + `/${childId}`,
       data: {
         ...storyPromptData,
+      },
+    });
+    selfAnalytics({
+      eventType: UsersAnalyticsEvents.BOOK_REQUESTED,
+      details: {
+        mode: store.getState().mode,
+        childId: childId,
+        storyPromptData,
+        NOTE: 'This request was made later when internet connection was available',
       },
     });
   } catch (error) {

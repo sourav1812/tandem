@@ -28,6 +28,8 @@ import {store} from '@tandem/redux/store';
 import {translation} from '@tandem/utils/methods';
 import {readBookNotification} from '@tandem/functions/notifee';
 import {incrementReadStoryBookNumber} from '@tandem/redux/slices/activityIndicator.slice';
+import selfAnalytics from '@tandem/api/selfAnalytics';
+import {UsersAnalyticsEvents} from '@tandem/api/selfAnalytics/interface';
 interface IPage {
   text: string;
   img: string;
@@ -184,6 +186,15 @@ export default ({
               borderColor: themeColor.purple,
             }}
             onClick={() => {
+              selfAnalytics({
+                eventType: UsersAnalyticsEvents.COMPREHENSION_QUESTIONS_VISITED,
+                details: {
+                  level,
+                  mode,
+                  bookId: book._id,
+                  childId: book.childId,
+                },
+              });
               updateState({showQuestion: true});
             }}
             title={translation('ANSWER_THESE_QUESTION')}
@@ -196,6 +207,16 @@ export default ({
                   borderColor: themeColor.gold,
                 }}
                 onClick={() => {
+                  selfAnalytics({
+                    eventType:
+                      UsersAnalyticsEvents.CONVERSATION_STARTERS_VISITED,
+                    details: {
+                      level,
+                      mode,
+                      bookId: book._id,
+                      childId: book.childId,
+                    },
+                  });
                   navigateTo(SCREEN_NAME.CONVERSATION_STARTERS, {
                     conversationStarters:
                       book.storyInfo[level].conversationStarters,
@@ -232,6 +253,14 @@ export default ({
     const lastPage = book.storyInfo[0].pages.length - 1 === changed[0].index;
     if (lastPage && !changed[0].isViewable) {
       updateState({endPage: true});
+      selfAnalytics({
+        eventType: UsersAnalyticsEvents.BOOK_END_REACHED,
+        details: {
+          mode,
+          bookId: book._id,
+          childId: book.childId,
+        },
+      });
     } else {
       updateState({endPage: false});
     }

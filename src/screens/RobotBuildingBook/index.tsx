@@ -10,6 +10,8 @@ import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {LayoutAnimation} from 'react-native';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import RNButton from '@tandem/components/RNButton';
+import selfAnalytics from '@tandem/api/selfAnalytics';
+import {UsersAnalyticsEvents} from '@tandem/api/selfAnalytics/interface';
 
 const RobotBuildingBook = () => {
   const [showText, setShow] = React.useState(false);
@@ -60,6 +62,10 @@ const RobotBuildingBook = () => {
             pressableStyle={styles.button}
             onClick={() => {
               navigateTo(SCREEN_NAME.MATCHING_PAIRS);
+              selfAnalytics({
+                eventType: UsersAnalyticsEvents.SEND_TO_ROBOT,
+                details: {},
+              });
             }}
             title={translation('SEND')}
           />

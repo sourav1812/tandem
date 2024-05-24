@@ -110,7 +110,7 @@ export const TYPE_OF_STORY: PlaceType[] = [
   {name: "I don't know", svgIcon: RedQuestionMark, bgc: themeColor.lightGreen},
 ];
 
-export const ATTRIBUTE: PlaceType[] = shuffle([
+export const ATTRIBUTE: PlaceType[] = [
   // ! new food items
   {name: 'Ayran', bgc: themeColor.lightGreen, svgIcon: Ayran},
   {name: 'Baklava', bgc: themeColor.pink, svgIcon: Baklava},
@@ -179,7 +179,7 @@ export const ATTRIBUTE: PlaceType[] = shuffle([
   {name: 'Watermelon', bgc: themeColor.gold, svgIcon: Watermelon},
   {name: 'Wheel Chair', bgc: themeColor.lightGreen, svgIcon: Wheelchair},
   {name: 'Ambulance', bgc: themeColor.pink, svgIcon: Ambulance},
-]);
+];
 
 export const ILLUSTRATION = [
   {

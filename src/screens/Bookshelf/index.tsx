@@ -40,6 +40,9 @@ import {ratingList} from '@tandem/components/RNRatingModal/interface';
 import Book from '@tandem/api/getStories/interface';
 import {setForceReload} from '@tandem/redux/slices/activityIndicator.slice';
 import {ImageLoading} from '../PublicLib';
+import selfAnalytics from '@tandem/api/selfAnalytics';
+import {UsersAnalyticsEvents} from '@tandem/api/selfAnalytics/interface';
+import {useFocusEffect} from '@react-navigation/native';
 
 const Bookshelf = () => {
   const dispatch = useDispatch();
@@ -61,6 +64,16 @@ const Bookshelf = () => {
     endReached: boolean;
     books: Book[];
   }>({endReached: false, books: []});
+
+  useFocusEffect(
+    React.useCallback(() => {
+      selfAnalytics({
+        eventType: UsersAnalyticsEvents.BOOKSHELF_VISITED,
+        details: {mode},
+      });
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []),
+  );
 
   const data: BooksData[] = React.useMemo(
     () =>
