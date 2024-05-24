@@ -25,7 +25,6 @@ import MatchingPairs from '@tandem/screens/MatchingPairs';
 import MixColors from '@tandem/screens/MixColors';
 import StoryLanguage from '@tandem/screens/GenerateStory/Questions/StoryLangauge';
 import RobotBuildingBook from '@tandem/screens/RobotBuildingBook';
-import FloatingProgressBar from '@tandem/components/FloatingProgressBar';
 import {
   setEnergyGenerated,
   setProgressRef,
@@ -40,18 +39,11 @@ const AppNavigator = () => {
   const isTablet = useAppSelector(
     (state: RootState) => state.deviceType.isTablet,
   );
-  const progressRef = React.useRef<any>(null);
+
   useOrientation();
   const alertData = useAppSelector(
     (state: RootState) => state.alertBoxReducer.data,
   );
-
-  React.useEffect(() => {
-    if (progressRef.current) {
-      // progressRef.current;
-      store.dispatch(setProgressRef(progressRef.current));
-    }
-  }, []);
 
   React.useEffect(() => {
     resumeAppState();
@@ -380,7 +372,6 @@ const AppNavigator = () => {
         message={alertData?.message}
         possibleResolution={alertData?.possibleResolution}
       />
-      <FloatingProgressBar ref={progressRef} />
     </>
   );
 };

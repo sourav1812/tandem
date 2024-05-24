@@ -9,6 +9,7 @@ import {store} from '@tandem/redux/store';
 import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
 import notifee from '@notifee/react-native';
 import {NOTIFICATION_PROMPTS} from '@tandem/constants/local';
+import {translation} from '@tandem/utils/methods';
 export default async ({childId, storyPromptData}: GenerateStoryData) => {
   try {
     const netInfo = await NetInfo.fetch();
@@ -34,11 +35,18 @@ export default async ({childId, storyPromptData}: GenerateStoryData) => {
     await post({
       path: API.GENERATE_STORY + `/${childId}`,
       data: {...storyPromptData},
-      onSuccess: () => {
-        notifee.cancelNotification(NOTIFICATION_PROMPTS[0].id); // ! removing trigger 1
-        navigateTo(SCREEN_NAME.ROBOT_BUILDING_BOOK);
-      },
     });
+    store.dispatch(
+      addAlertData({
+        type: translation('GREAT_WORK'),
+        successText: translation('NEXT'),
+        message: translation('WELL_DONE_GREAT_IDEAS'),
+        onSuccess: () => {
+          notifee.cancelNotification(NOTIFICATION_PROMPTS[0].id); // ! removing trigger 1
+          navigateTo(SCREEN_NAME.ROBOT_BUILDING_BOOK);
+        },
+      }),
+    );
   } catch (error) {
     navigateTo(SCREEN_NAME.HOME);
     throw error;

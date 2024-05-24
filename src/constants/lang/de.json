@@ -392,7 +392,6 @@
   "BLOW_WIND_PHONE": "Blasen Sie Wind in das Mikrofon Ihres Telefons, um die Windmühle zu drehen.",
   "GENERATE_ENOUGH_ENERGY_TEXT": "Erzeugen Sie genug Energie, um Ihr Geschichtenbuch zu erstellen.",
   "ROTATE_WITH_FINGERS_TEXT": "Sie können auch Ihre Finger verwenden, um die Windmühlenflügel zu drehen.",
-  "SHAKE_TEXT": "Sie können das Gerät jederzeit schütteln, um das Deck erneut zu mischen.",
   "REVIEW_BOOK_BEFORE_READING_TO_CHILD": "Ihr Buch ist fertig - bitte blättern Sie es durch und stellen Sie sicher, dass Sie damit zufrieden sind, bevor Sie es Ihrem Kind vorlesen.",
   "GO_TO_BOOKSHELF": "Zum Bücherregal",
   "LATER": "Später",
@@ -407,5 +406,8 @@
   "Activate_Engine": "Aber zuerst... müssen Sie die Geschichtserzählmaschine betreiben!",
   "AI_INSTRUCTIONS": "Diese Geschichte wurde mit KI erstellt. Bevor Sie sie mit Ihrem Kind lesen, schauen Sie sich bitte schnell die Bilder an, um sie zu überprüfen. Wenn Sie ein Bild finden, das nicht für ein Kinderbuch geeignet ist, klicken Sie oben auf der Seite auf die drei Punkte, um es zu melden. Dann können Sie zurückgehen und eine neue Geschichte mit anderen Bildern erstellen.",
   "BOOK_IS_READY": "Ihr Buch ist fertig.",
-  "SHAKE_DEVICE": "Schütteln Sie das Gerät, um erneut zu spielen."
+  "SHAKE_TEXT": "Sie können jederzeit auf die Schaltfläche tippen oder das Gerät schütteln, um das Deck erneut zu mischen.",
+  "SHAKE_DEVICE": "Tippen Sie auf die Schaltfläche oder schütteln Sie das Gerät, um erneut zu spielen.",
+  "GREAT_WORK": "Großartige Arbeit!",
+  "WELL_DONE_GREAT_IDEAS": "Gut gemacht! Tolle Ideen."
 }

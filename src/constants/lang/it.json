@@ -392,7 +392,6 @@
   "BLOW_WIND_PHONE": "Soffia il vento nel microfono del tuo telefono per far ruotare il mulino a vento.",
   "GENERATE_ENOUGH_ENERGY_TEXT": "Genera abbastanza energia per creare il tuo libro di storie.",
   "ROTATE_WITH_FINGERS_TEXT": "Puoi anche usare le dita per ruotare le pale del mulino a vento.",
-  "SHAKE_TEXT": "Puoi agitare il dispositivo in qualsiasi momento per mescolare di nuovo il mazzo.",
   "REVIEW_BOOK_BEFORE_READING_TO_CHILD": "Il tuo libro è pronto - per favore sfoglialo e assicurati che ti piaccia prima di leggerlo con il tuo bambino.",
   "GO_TO_BOOKSHELF": "Vai alla libreria",
   "LATER": "Più tardi",
@@ -407,5 +406,8 @@
   "Activate_Engine": "Ma prima... devi accendere il motore della storia!",
   "AI_INSTRUCTIONS": "Questa storia è stata creata con l'IA. Prima di leggerla con il tuo bambino, guarda rapidamente le immagini per controllarle. Se trovi un'immagine che non è adatta a un libro per bambini, fai clic sui tre puntini in alto alla pagina per segnalarla. Poi, puoi tornare indietro e creare una nuova storia con immagini diverse.",
   "BOOK_IS_READY": "Il tuo libro è pronto.",
-  "SHAKE_DEVICE": "Scuoti il dispositivo per giocare di nuovo."
+  "SHAKE_TEXT": "Puoi toccare il pulsante o scuotere il dispositivo in qualsiasi momento per mescolare di nuovo il mazzo.",
+  "SHAKE_DEVICE": "Tocca il pulsante o scuoti il dispositivo per giocare di nuovo.",
+  "GREAT_WORK": "Ottimo lavoro!",
+  "WELL_DONE_GREAT_IDEAS": "Ben fatto! Ottime idee."
 }

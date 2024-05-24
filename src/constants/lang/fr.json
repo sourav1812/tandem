@@ -394,7 +394,6 @@
   "BLOW_WIND_PHONE": "Soufflez dans le microphone de votre téléphone pour faire tourner le moulin à vent.",
   "GENERATE_ENOUGH_ENERGY_TEXT": "Générez assez d'énergie pour créer votre livre d'histoires.",
   "ROTATE_WITH_FINGERS_TEXT": "Vous pouvez également utiliser vos doigts pour faire tourner les pales du moulin à vent.",
-  "SHAKE_TEXT": "Vous pouvez secouer l'appareil à tout moment pour mélanger à nouveau le jeu de cartes.",
   "REVIEW_BOOK_BEFORE_READING_TO_CHILD": "Votre livre est prêt - veuillez le feuilleter et vous assurer qu'il vous satisfait avant de le lire à votre enfant.",
   "GO_TO_BOOKSHELF": "Aller à la bibliothèque",
   "LATER": "Plus tard",
@@ -409,5 +408,8 @@
   "Activate_Engine": "Mais d'abord... vous devez alimenter le moteur de l'histoire !",
   "AI_INSTRUCTIONS": "Cette histoire a été créée avec l'IA. Avant de la lire avec votre enfant, veuillez vérifier rapidement les images. Si vous trouvez une image qui ne convient pas à un livre pour enfants, cliquez sur les trois points en haut de la page pour la signaler. Ensuite, vous pouvez revenir en arrière et créer une nouvelle histoire avec des images différentes.",
   "BOOK_IS_READY": "Votre livre est prêt.",
-  "SHAKE_DEVICE": "Secouez l'appareil pour rejouer."
+  "SHAKE_TEXT": "Vous pouvez appuyer sur le bouton ou secouer l'appareil à tout moment pour mélanger à nouveau le deck.",
+  "SHAKE_DEVICE": "Appuyez sur le bouton ou secouez l'appareil pour rejouer.",
+  "GREAT_WORK": "Excellent travail!",
+  "WELL_DONE_GREAT_IDEAS": "Bien joué! Excellentes idées."
 }

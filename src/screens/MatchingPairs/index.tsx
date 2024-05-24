@@ -14,8 +14,12 @@ import animateProgressBar from '@tandem/functions/animateProgressBar';
 import gotoBookshelf from '@tandem/functions/gotoBookshelf';
 import LottieView from 'lottie-react-native';
 import Animation from './animation.json';
-import {setStoryBookNotification} from '@tandem/redux/slices/activityIndicator.slice';
+import {
+  setProgressRef,
+  setStoryBookNotification,
+} from '@tandem/redux/slices/activityIndicator.slice';
 import {store} from '@tandem/redux/store';
+import FloatingProgressBar from '@tandem/components/FloatingProgressBar';
 const shakeText = translation('SHAKE_TEXT');
 
 const MatchingPairs = () => {
@@ -27,6 +31,7 @@ const MatchingPairs = () => {
     translation('FLIP_CARD_TEXT'),
   );
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const progressRef = React.useRef<any>(null);
   const halfRotationDuration = 150; // ! time of full rotation animation = 2 * halfRotationDuration
   const handlePress = (index: number) => {
     if (matchedIndexes.includes(index) || checkIfPairArray.includes(index)) {
@@ -37,6 +42,12 @@ const MatchingPairs = () => {
   const storyBookNotification = useAppSelector(
     state => state.activityIndicator.storyBookNotification,
   );
+  React.useEffect(() => {
+    if (progressRef.current) {
+      // progressRef.current;
+      store.dispatch(setProgressRef(progressRef.current));
+    }
+  }, []);
   React.useEffect(() => {
     animateProgressBar({delay: 5000, percentage: 50});
     Orientation.lockToPortrait();
@@ -115,6 +126,12 @@ const MatchingPairs = () => {
     }
   }, [storyBookNotification]);
 
+  React.useEffect(() => {
+    setTimeout(() => {
+      setGameCompleted(true);
+    }, 90 * 1000); // ! after 90 sec we want to go to bookshelf regardless
+  }, []);
+
   return (
     <RNScreenWrapper style={styles.screenWrapper}>
       <>
@@ -156,15 +173,19 @@ const MatchingPairs = () => {
           />
         )}
         <RNButton
-          isDisabled={!gameCompleted}
           onClick={() => {
-            gotoBookshelf();
+            if (gameCompleted) {
+              gotoBookshelf();
+              return;
+            }
+            refreshMatching();
           }}
           title={gameCompleted ? translation('BOOK_IS_READY') : buttonText}
           customStyle={gameCompleted ? {} : styles.buttonCustom}
           pressableStyle={styles.buttonPressable}
           textStyle={{fontSize: verticalScale(10)}}
         />
+        <FloatingProgressBar ref={progressRef} />
       </>
     </RNScreenWrapper>
   );
@@ -183,8 +204,8 @@ const styles = StyleSheet.create({
     marginTop: verticalScale(50),
   },
   buttonCustom: {
-    backgroundColor: 'darkred',
-    borderColor: 'darkred',
+    backgroundColor: 'red',
+    borderColor: 'red',
     height: 'auto',
     padding: verticalScale(10),
   },

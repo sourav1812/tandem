@@ -37,7 +37,11 @@ const RNAlertBox = ({
   }, [message]);
 
   const fixProgressbarState = () => {
-    if (progressRef !== null) {
+    if (
+      progressRef !== undefined &&
+      progressRef !== null &&
+      Object.keys(progressRef).length !== 0
+    ) {
       progressRef.forceSetPercentage();
     }
   };

@@ -393,7 +393,6 @@
   "BLOW_WIND_PHONE": "Blow wind into your phone's Microphone to rotate the windmill",
   "GENERATE_ENOUGH_ENERGY_TEXT": "Generate enough energy to create your story book",
   "ROTATE_WITH_FINGERS_TEXT": "You can also use you fingers to rotate the blades of the windmill",
-  "SHAKE_TEXT": "You can shake the device at any time to shuffle the deck again",
   "REVIEW_BOOK_BEFORE_READING_TO_CHILD": "Your book is ready - please flick through the book and make sure you are happy with it before reading with your child.",
   "GO_TO_BOOKSHELF": "Go to Bookshelf",
   "LATER": "Later",
@@ -408,5 +407,8 @@
   "Activate_Engine": "But first… you’ll need to power up the story engine!",
   "AI_INSTRUCTIONS": "This story was made with AI. Before reading it with your child, please quickly look at the pictures to check them. If you find an image that isn’t right for a children’s book, click on the three dots at the top of the page to flag it. Then, you can go back and make a new story with different pictures.",
   "BOOK_IS_READY": "Your Book is ready",
-  "SHAKE_DEVICE": "Shake the device to play again"
+  "SHAKE_TEXT": "You can tap the button or shake the device at any time to shuffle the deck again",
+  "SHAKE_DEVICE": "Tap the button or Shake the device to play again",
+  "GREAT_WORK": "Great work!",
+  "WELL_DONE_GREAT_IDEAS": "Well done! Great ideas"
 }

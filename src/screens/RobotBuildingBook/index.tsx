@@ -18,7 +18,11 @@ const RobotBuildingBook = () => {
   );
   React.useEffect(() => {
     // store.dispatch(setEnergyGenerated(false)); // ! setting energy to false so that we can recreate it
-    if (progressRef !== null) {
+    if (
+      progressRef !== undefined &&
+      progressRef !== null &&
+      Object.keys(progressRef).length !== 0
+    ) {
       progressRef.resetProgressStatus();
     }
     setTimeout(() => {
@@ -45,9 +49,11 @@ const RobotBuildingBook = () => {
       {showText && (
         <>
           <RNTextComponent isSemiBold style={styles.text}>
-            {translation('TANDOM_ROBOT_STORY') +
-              '\n\n ' +
-              translation('Activate_Engine')}
+            {
+              translation('TANDOM_ROBOT_STORY')
+              //  +'\n\n ' +
+              //   translation('Activate_Engine')
+            }
           </RNTextComponent>
 
           <RNButton

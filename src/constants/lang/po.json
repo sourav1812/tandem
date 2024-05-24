@@ -399,7 +399,6 @@
   "BLOW_WIND_PHONE": "Dmuchaj w mikrofon telefonu, aby obrócić wiatrak.",
   "GENERATE_ENOUGH_ENERGY_TEXT": "Wygeneruj wystarczającą ilość energii, aby stworzyć książkę ze swoimi historiami.",
   "ROTATE_WITH_FINGERS_TEXT": "Możesz również obracać łopatkami wiatraka palcami.",
-  "SHAKE_TEXT": "Możesz wstrząsnąć urządzeniem w dowolnym momencie, aby ponownie potasować talie.",
   "REVIEW_BOOK_BEFORE_READING_TO_CHILD": "Twoja książka jest gotowa - proszę przewiń przez książkę i upewnij się, że jesteś zadowolony z niej przed przeczytaniem jej z dzieckiem.",
   "GO_TO_BOOKSHELF": "Przejdź do półki z książkami",
   "LATER": "Później",
@@ -414,5 +413,8 @@
   "Activate_Engine": "Ale najpierw... musisz uruchomić silnik opowieści!",
   "AI_INSTRUCTIONS": "Ta historia została stworzona przez AI. Przed przeczytaniem jej z dzieckiem, szybko przejrzyj obrazy, aby je sprawdzić. Jeśli znajdziesz obraz, który nie jest odpowiedni dla książki dla dzieci, kliknij trzy kropki u góry strony, aby go oznaczyć. Następnie możesz wrócić i stworzyć nową historię z innymi obrazami.",
   "BOOK_IS_READY": "Twoja książka jest gotowa.",
-  "SHAKE_DEVICE": "Potrząśnij urządzeniem, aby zagrać ponownie."
+  "SHAKE_TEXT": "Możesz w każdej chwili dotknąć przycisku lub potrząsnąć urządzeniem, aby ponownie przetasować talię.",
+  "SHAKE_DEVICE": "Dotknij przycisku lub potrząśnij urządzeniem, aby zagrać ponownie.",
+  "GREAT_WORK": "Świetna robota!",
+  "WELL_DONE_GREAT_IDEAS": "Dobra robota! Świetne pomysły."
 }

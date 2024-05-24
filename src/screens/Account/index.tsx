@@ -70,7 +70,12 @@ const Account = () => {
     state => state.activityIndicator.progressRef,
   );
   React.useEffect(() => {
-    if (progressRef !== null) {
+    console.log(progressRef);
+    if (
+      progressRef !== undefined &&
+      progressRef !== null &&
+      Object.keys(progressRef).length !== 0
+    ) {
       progressRef?.resetProgressStatus();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

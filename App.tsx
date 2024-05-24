@@ -23,6 +23,7 @@ import {askPermissionNotifee} from '@tandem/functions/notifee';
 import notifee, {EventType} from '@notifee/react-native';
 import {NAVIGATE_TO_BOOKSHELF} from '@tandem/constants/local';
 import {storeKey} from '@tandem/helpers/encryptedStorage';
+import userProfile from '@tandem/api/userProfile';
 
 const persistor = persistStore(store);
 
@@ -61,6 +62,7 @@ const App: FC = () => {
       await getStories(1);
       await pushChildStats();
       await getChildStats();
+      userProfile();
       store.dispatch(setForceReload(false)); // forcing a change to trigger useEffect
       store.dispatch(setForceReload(true));
       store.dispatch(setStoryBookNotification(true));
@@ -70,7 +72,9 @@ const App: FC = () => {
         store.getState().activityIndicator.isEnergyGenerated;
 
       if (
+        progressRef !== undefined &&
         progressRef !== null &&
+        Object.keys(progressRef).length !== 0 &&
         isEnergyGenerated &&
         (!notificationScreenPermissions.isFirstTime ||
           notificationScreenPermissions.notificationStatus)
