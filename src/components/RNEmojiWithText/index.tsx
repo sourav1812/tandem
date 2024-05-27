@@ -2,7 +2,7 @@ import {Pressable, Text} from 'react-native';
 import React from 'react';
 import {IconProps, Props} from './interface';
 import {styles} from './styles';
-import {scale, verticalScale} from 'react-native-size-matters';
+import {verticalScale} from 'react-native-size-matters';
 import {
   useSharedValue,
   withSequence,
@@ -141,7 +141,7 @@ const IconRednerItem = ({
           styles.heading,
           // eslint-disable-next-line react-native/no-inline-styles
           {
-            fontSize: scale(15),
+            fontSize: verticalScale(13),
             color: !isSelected ? 'gray' : 'white',
             fontFamily: 'Poppins-SemiBold',
           },

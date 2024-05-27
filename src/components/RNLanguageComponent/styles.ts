@@ -4,8 +4,8 @@ import themeColor from '../../theme/themeColor';
 
 export const styles = StyleSheet.create({
   container: {
-    paddingTop: 5,
-    paddingBottom: 2,
+    paddingTop: verticalScale(5),
+    paddingBottom: verticalScale(2),
     paddingHorizontal: verticalScale(16),
     marginHorizontal: verticalScale(20),
     borderRadius: 14,
@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   flag: {
-    fontSize: 28,
+    fontSize: verticalScale(23),
   },
   label: {
     fontSize: verticalScale(14),

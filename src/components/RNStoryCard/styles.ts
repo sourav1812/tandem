@@ -46,12 +46,12 @@ export const styles = StyleSheet.create({
   newText: {
     color: 'white',
     padding: scale(10),
-    fontSize: scale(12),
+    fontSize: verticalScale(10),
     fontFamily: 'Poppins-Bold',
   },
   headerTitleContainer: {
     width: '60%',
-    padding: 10,
+    padding: verticalScale(10),
     justifyContent: 'space-between',
   },
   time: {

@@ -2,7 +2,7 @@
 import React from 'react';
 import {StyleSheet, Text} from 'react-native';
 import {Props} from './interface';
-import {scale} from 'react-native-size-matters';
+import {scale, verticalScale} from 'react-native-size-matters';
 
 const RNTextComponent = ({
   props,
@@ -21,11 +21,14 @@ const RNTextComponent = ({
       style={[
         styles.text,
         isMedium && {
-          fontSize: scale(16),
+          fontSize: verticalScale(14),
           fontFamily: 'Poppins-Medium',
         },
-        isSemiBold && {fontSize: scale(16), fontFamily: 'Poppins-SemiBold'},
-        isBold && {fontSize: scale(16), fontFamily: 'Poppins-Bold'},
+        isSemiBold && {
+          fontSize: verticalScale(14),
+          fontFamily: 'Poppins-SemiBold',
+        },
+        isBold && {fontSize: verticalScale(14), fontFamily: 'Poppins-Bold'},
         style && style,
         caps && {
           textTransform: 'capitalize',

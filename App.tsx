@@ -19,11 +19,11 @@ import {getChildStats} from '@tandem/api/childAnalytics';
 import pushChildStats from '@tandem/functions/pushChildStats';
 import getStories from '@tandem/api/getStories';
 import gotoBookshelf from '@tandem/functions/gotoBookshelf';
-import {askPermissionNotifee} from '@tandem/functions/notifee';
 import notifee, {EventType} from '@notifee/react-native';
 import {NAVIGATE_TO_BOOKSHELF} from '@tandem/constants/local';
 import {storeKey} from '@tandem/helpers/encryptedStorage';
 import userProfile from '@tandem/api/userProfile';
+import {requestInitialPermission} from '@tandem/functions/permissions';
 
 const persistor = persistStore(store);
 
@@ -50,7 +50,7 @@ const App: FC = () => {
   }, []);
 
   useEffect(() => {
-    askPermissionNotifee();
+    requestInitialPermission();
     if (Platform.OS === 'android') {
       if (UIManager.setLayoutAnimationEnabledExperimental) {
         UIManager.setLayoutAnimationEnabledExperimental(true);

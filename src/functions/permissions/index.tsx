@@ -28,6 +28,27 @@ export const requestPermission = async () => {
   }
   Linking.openSettings();
 };
+export const requestInitialPermission = async () => {
+  let status = false;
+  if (Platform.OS === 'android') {
+    const statusAndroid = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+    );
+    if (statusAndroid === 'granted') {
+      status = true;
+    }
+  } else if (Platform.OS === 'ios') {
+    const statusIOS = await messaging().requestPermission();
+    if (statusIOS === messaging.AuthorizationStatus.AUTHORIZED) {
+      status = true;
+    }
+  }
+  if (status) {
+    store.dispatch(setNotificationStatus(true));
+    store.dispatch(setIsFirstTime(false));
+    return;
+  }
+};
 
 export const notificationActiveStatus = async () => {
   const fromBackend: boolean =
