@@ -17,7 +17,6 @@ import {Dimensions, LayoutAnimation, Platform, View} from 'react-native';
 import Orientation from 'react-native-orientation-locker';
 import WindmillRing from '@tandem/assets/svg/WindmillRing';
 import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
-import {store} from '@tandem/redux/store';
 import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import QuestionMark from '@tandem/assets/svg/QuestionMark';
@@ -33,74 +32,113 @@ import {
   PanGestureHandlerEventPayload,
 } from 'react-native-gesture-handler';
 import themeColor from '@tandem/theme/themeColor';
+import {translation} from '@tandem/utils/methods';
+import {useDispatch} from 'react-redux';
+import animateProgressBar from '@tandem/functions/animateProgressBar';
+import {setEnergyGenerated} from '@tandem/redux/slices/activityIndicator.slice';
 const {width: xMax, height: yMax} = Dimensions.get('screen');
 
 const permissionsType = Platform.select({
   ios: permissions.PERMISSIONS.IOS.MICROPHONE,
   android: permissions.PERMISSIONS.ANDROID.RECORD_AUDIO,
 });
-const checkMicrophonePermission = async () => {
-  if (!permissionsType) {
-    return;
-  }
-  const result = await permissions.request(permissionsType);
-  if (result === 'granted') {
-    Loudness.start();
-    return;
-  }
-  // ! if we are not using loudness then in interval we will have to make sure we adjust power
-  store.dispatch(
-    addAlertData({
-      type: 'Alert',
-      message: 'You need microphone permission to play the game.',
-      possibleResolution:
-        'You can enable microphone permission from the settings or you can rotate the windmill by swiping the blades with your finger.',
-      onSuccess: () => {},
-    }),
-  );
-};
 
+let interval: number | null = null;
 const BlowWindMill = () => {
   const rotation = useSharedValue('0deg');
   const points = useSharedValue(0);
-  const [showInstructions, setShowInstructions] = React.useState(true);
+  const [showInstructions, setShowInstructions] = React.useState(false);
+  const [canShowProgress, setCanShowProgress] = React.useState(false);
   const [notificationDispatched, setNotificationDispatched] =
     React.useState(false);
   const mark = Platform.select({ios: 140, android: 130, default: 125});
+  const [permissionState, setPermissionState] =
+    React.useState<permissions.PermissionStatus | null>(null);
+
+  const dispatch = useDispatch();
+
+  const checkMicrophonePermission = async () => {
+    if (!permissionsType) {
+      return;
+    }
+    const status = await permissions.check(permissionsType);
+    if (status === 'denied') {
+      dispatch(
+        addAlertData({
+          type: 'Alert',
+          message: translation('BLOW_SWIPE_WINDMILL'),
+          onSuccess: async () => {
+            const result = await permissions.request(permissionsType);
+            setPermissionState(result);
+          },
+        }),
+      );
+      return;
+    }
+    setPermissionState(status);
+  };
 
   const wrapper = () => {
-    // ! WRAPPER NEEDS TO BE DECLARED BEFORE USEDERIVEDVALUE LOL
     if (notificationDispatched) {
       return;
     }
     setNotificationDispatched(true);
-    store.dispatch(
+    dispatch(setEnergyGenerated(true));
+    dispatch(
       addAlertData({
         type: 'Alert',
-        message: 'Yay! You have generated enough energy!',
-        possibleResolution: 'Your Story will be available soon',
+        message: translation('POWER_GENERATION'),
+        possibleResolution: translation('STORY_AVAILABLE_SOON'),
+        successText: translation('NEXT'),
         onSuccess: () => {
-          navigateTo(SCREEN_NAME.CONGRATULATION);
+          if (permissionsType) {
+            permissions.check(permissionsType).then(result => {
+              if (result === 'granted') {
+                Loudness.stop();
+              }
+            });
+          }
+          navigateTo(SCREEN_NAME.MATCHING_PAIRS);
         },
       }),
     );
   };
 
+  React.useEffect(() => {
+    if (canShowProgress) {
+      animateProgressBar({delay: 3000, percentage: 50});
+    }
+  }, [canShowProgress]);
+
+  const allowProgressBar = () => {
+    if (canShowProgress) {
+      return;
+    }
+    setCanShowProgress(true);
+  };
+
   useDerivedValue(() => {
+    if (points.value > 10) {
+      runOnJS(allowProgressBar)();
+    }
     if (points.value === 170) {
       runOnJS(wrapper)();
     }
   }, []);
 
-  React.useEffect(() => {
-    Orientation.lockToPortrait();
-    checkMicrophonePermission();
+  const startFlow = () => {
+    setShowInstructions(true);
     setTimeout(() => {
       LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
       setShowInstructions(false);
-    }, 3000);
+    }, 4000);
+  };
 
-    const interval = setInterval(() => {
+  React.useEffect(() => {
+    Orientation.lockToPortrait();
+    checkMicrophonePermission();
+
+    interval = setInterval(() => {
       Loudness.getLoudness((loudness: any) => {
         if (loudness === 1) {
           return;
@@ -111,16 +149,33 @@ const BlowWindMill = () => {
           rotateBlade(level * 5);
           return;
         }
-        // rotation.value = withDecay({}) + 'deg';
       });
     }, 200);
+
     return () => {
-      clearInterval(interval);
+      if (interval) {
+        clearInterval(interval);
+      }
       Orientation.unlockAllOrientations();
-      Loudness.stop();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  React.useEffect(() => {
+    if (permissionState === null) {
+      return;
+    }
+    if (permissionState === 'granted' || permissionState === 'limited') {
+      Loudness.start();
+      startFlow();
+      return;
+    }
+    if (interval) {
+      clearInterval(interval);
+      startFlow();
+      return;
+    }
+  }, [permissionState]);
 
   const rotateBlade = (
     power: number,
@@ -140,7 +195,7 @@ const BlowWindMill = () => {
       },
       () => {
         if (points.value < 170) {
-          points.value = withTiming(points.value + 2);
+          points.value = withTiming(points.value + 10);
         } else {
           points.value = 170;
         }
@@ -215,8 +270,9 @@ const BlowWindMill = () => {
         alignItems: 'center',
         backgroundColor: '#211934',
       }}>
-      {showInstructions && <AlertPopupModal />}
-
+      {showInstructions && (
+        <AlertPopupModal permissionState={permissionState} />
+      )}
       <View
         style={{
           position: 'absolute',
@@ -302,7 +358,11 @@ const BlowWindMill = () => {
 
 export default BlowWindMill;
 
-const AlertPopupModal = () => {
+const AlertPopupModal = ({
+  permissionState,
+}: {
+  permissionState: null | permissions.PermissionStatus;
+}) => {
   return (
     <View
       style={{
@@ -314,8 +374,7 @@ const AlertPopupModal = () => {
       }}>
       <View
         style={{
-          width: '70%',
-          // height: '20%',
+          width: '80%',
           backgroundColor: 'white',
           borderRadius: 20,
           position: 'absolute',
@@ -324,19 +383,21 @@ const AlertPopupModal = () => {
           padding: verticalScale(20),
         }}>
         <RNTextComponent style={{marginBottom: 10}} isSemiBold>
-          Mini Game
+          {translation('POWER_UP_STORY')}
         </RNTextComponent>
-        <RNTextComponent style={{fontSize: verticalScale(12)}}>
-          Blow wind into your phone's Microphone to rotate the windmill
+        <RNTextComponent style={{fontSize: verticalScale(11)}}>
+          {translation('BLOW_WIND_MICROPHONE') +
+            (permissionState === 'blocked'
+              ? '\n\n' +
+                'You will need to enable microphone permissions from the settings.'
+              : '')}
         </RNTextComponent>
         <RNTextComponent
           style={{fontSize: verticalScale(12), color: themeColor.themeBlue}}>
-          {
-            '\nYou can also use you fingers to rotate the blades of the windmill\n'
-          }
+          {'\n' + translation('FIGURE_SPIN_BLADE') + '\n'}
         </RNTextComponent>
         <RNTextComponent style={{fontSize: verticalScale(12)}}>
-          Generate enough energy to create your story book
+          {translation('ENOUGH_POWER_TEXT')}
         </RNTextComponent>
       </View>
     </View>

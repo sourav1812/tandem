@@ -5,6 +5,7 @@ import React from 'react';
 import {Image, View} from 'react-native';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import {verticalScale} from 'react-native-size-matters';
+import {translation} from '@tandem/utils/methods';
 
 const BuildingTandem = () => {
   return (
@@ -33,7 +34,7 @@ const BuildingTandem = () => {
             textAlign: 'center',
             marginBottom: 5,
           }}>
-          Building
+          {translation('BUILDING')}
         </RNTextComponent>
         <Image
           source={require('@tandem/assets/png/logo.png')}

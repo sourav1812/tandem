@@ -132,7 +132,7 @@ const PublicLib = () => {
         <RNTextComponent
           isMedium
           style={{textAlign: 'center', fontSize: verticalScale(9)}}>
-          No more books
+          {translation('NO_MORE_BOOKS')}
         </RNTextComponent>
       );
     }
@@ -273,7 +273,7 @@ const PublicLib = () => {
         ]}>
         <View style={styles.headingView}>
           <RNTextComponent style={styles.bookshelfHeaderText} isSemiBold>
-            Public Library
+            {translation('PUBLIC_LIBRARY')}
           </RNTextComponent>
         </View>
         <RNTextInputWithLabel

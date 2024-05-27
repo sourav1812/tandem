@@ -24,6 +24,12 @@ import BlowWindMill from '@tandem/screens/BlowWindMill';
 import MatchingPairs from '@tandem/screens/MatchingPairs';
 import MixColors from '@tandem/screens/MixColors';
 import StoryLanguage from '@tandem/screens/GenerateStory/Questions/StoryLangauge';
+import RobotBuildingBook from '@tandem/screens/RobotBuildingBook';
+import {
+  setEnergyGenerated,
+  setProgressRef,
+} from '@tandem/redux/slices/activityIndicator.slice';
+import Disclaimer from '@tandem/screens/Disclaimer';
 // import {accelerometer} from 'react-native-sensors';
 
 const AppNavigator = () => {
@@ -33,6 +39,7 @@ const AppNavigator = () => {
   const isTablet = useAppSelector(
     (state: RootState) => state.deviceType.isTablet,
   );
+
   useOrientation();
   const alertData = useAppSelector(
     (state: RootState) => state.alertBoxReducer.data,
@@ -40,7 +47,7 @@ const AppNavigator = () => {
 
   React.useEffect(() => {
     resumeAppState();
-
+    store.dispatch(setEnergyGenerated(true)); // ! on App open we do want to show notification
     // ! logic to make post req for multiple pending posts
     const pendingStory = store.getState().cache.pendingStoryGeneration;
     if (pendingStory.length > 0) {
@@ -82,9 +89,14 @@ const AppNavigator = () => {
           }}>
           <Stack.Screen component={Archive} name={SCREEN_NAME.ARCHIVE} />
           <Stack.Screen
+            component={RobotBuildingBook}
+            name={SCREEN_NAME.ROBOT_BUILDING_BOOK}
+          />
+          <Stack.Screen
             component={StoryLanguage}
             name={SCREEN_NAME.STORY_LANGAUGE}
           />
+          <Stack.Screen component={Disclaimer} name={SCREEN_NAME.DISCLAIMER} />
           <Stack.Screen
             component={BlowWindMill}
             options={{gestureEnabled: false}}

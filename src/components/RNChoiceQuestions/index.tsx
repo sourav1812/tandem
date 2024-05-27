@@ -61,14 +61,20 @@ const RNChoiceQuestions = ({
       setDisabled(true);
     }
   };
-
+  const [maxIndex, setMaxIndex] = React.useState(10);
+  React.useEffect(() => {
+    setTimeout(() => {
+      setMaxIndex(data.length);
+    }, 1000);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <ScrollView
       style={{flex: 1}}
       contentContainerStyle={[styles.scrollView, customStyle && customStyle]}
       scrollEnabled
       showsVerticalScrollIndicator={false}>
-      {data.map((value, indexLocal) => {
+      {data.slice(0, maxIndex).map((value, indexLocal) => {
         return (
           <RNEmojiWithText
             isSelected={activeState.includes(value.name)}
@@ -82,14 +88,16 @@ const RNChoiceQuestions = ({
           />
         );
       })}
-      <RNEmojiWithText
-        isSelected={activeState.includes('Not sure')}
-        onPress={() => handlePress('Not sure')}
-        heading={'Not sure'}
-        customStyle={[styles.optionsCustom, itemStyle && itemStyle]}
-        bgcColor={themeColor.pink}
-        Svgimg={QuestionMark}
-      />
+      {maxIndex === data.length && (
+        <RNEmojiWithText
+          isSelected={activeState.includes('Not sure')}
+          onPress={() => handlePress('Not sure')}
+          heading={'Not sure'}
+          customStyle={[styles.optionsCustom, itemStyle && itemStyle]}
+          bgcColor={themeColor.pink}
+          Svgimg={QuestionMark}
+        />
+      )}
     </ScrollView>
   );
 };

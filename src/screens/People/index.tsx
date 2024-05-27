@@ -121,7 +121,7 @@ const People = ({}: PeopleScreenProps) => {
                   },
                 ]}
               />
-              <RNTextComponent style={styles.name} isSemiBold>
+              <RNTextComponent caps style={styles.name} isSemiBold>
                 {currentAdult.role}
               </RNTextComponent>
             </Pressable>
@@ -146,7 +146,7 @@ const People = ({}: PeopleScreenProps) => {
                       item.param && {fromPeople: item.param},
                     )
                   }
-                  title={item.name}
+                  title={translation(item.name)}
                   customStyle={[
                     styles.menu,
                     isTablet && {marginHorizontal: 36},
@@ -184,7 +184,7 @@ const People = ({}: PeopleScreenProps) => {
                         },
                       ]}
                     />
-                    <RNTextComponent style={styles.name} isSemiBold>
+                    <RNTextComponent caps style={styles.name} isSemiBold>
                       {child.name}
                     </RNTextComponent>
                   </Pressable>

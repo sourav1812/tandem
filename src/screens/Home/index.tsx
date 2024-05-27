@@ -67,7 +67,9 @@ const Home = () => {
     {color: themeColor.purple, title: translation('WRITE_A_STORY')},
     {
       color: themeColor.purple,
-      title: `Used Credits: ${user?.plan?.usageDetails?.usedCredits || 0}`,
+      title:
+        translation('USED_CREDITS') +
+        `: ${user?.plan?.usageDetails?.usedCredits || 0}`,
     },
     {color: themeColor.gold, title: translation('LEARN_SOMETHING')},
     // {color: themeColor.green, title: translation('HAVE_FUN')},
@@ -247,7 +249,7 @@ const Home = () => {
                 uri: filePath?.file || currentChild?.avatar,
               }}
             />
-            <RNTextComponent style={styles.tooltipUserName} isSemiBold>
+            <RNTextComponent caps style={styles.tooltipUserName} isSemiBold>
               {currentChild?.name?.split(' ')[0]}
             </RNTextComponent>
           </View>
@@ -302,6 +304,7 @@ const Home = () => {
                   !isTablet && portrait ? verticalScale(60) : verticalScale(20),
               }}>
               <RNTextComponent
+                caps
                 isSemiBold
                 style={{
                   ...styles.heading,
@@ -498,9 +501,8 @@ const Home = () => {
                       heading={item.title}
                       subHeading={
                         index === 1
-                          ? `Total Credits: ${
-                              user?.plan?.usageDetails?.totalCredits || 0
-                            }`
+                          ? translation('TOTAL_CREDITS') +
+                            `: ${user?.plan?.usageDetails?.totalCredits || 0}`
                           : translation('COMING_SOON')
                       }
                       emoji="🪄"
@@ -512,6 +514,7 @@ const Home = () => {
                           navigateTo(SCREEN_NAME.STORY_LANGAUGE);
                           return;
                         }
+                        // navigateTo(SCREEN_NAME.MATCHING_PAIRS);
                       }}
                     />
                   ))
@@ -611,6 +614,7 @@ const ChangeChild = ({
           style={{
             fontSize: verticalScale(16),
           }}
+          caps
           isSemiBold>
           {name}
         </RNTextComponent>

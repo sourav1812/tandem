@@ -46,10 +46,12 @@ export type RootStackParamList = {
   ConversationScreen: any;
   BuildingTandem: undefined;
   Archive: undefined;
-  BlowWindMill: undefined;
-  MatchingPairs: undefined;
+  BlowWindMill: any;
+  MatchingPairs: any;
   MixColors: undefined;
   StoryLanguage: undefined;
+  RobotBuildingBook: undefined;
+  Disclaimer: undefined;
 };
 
 export type RootTabParamList = {

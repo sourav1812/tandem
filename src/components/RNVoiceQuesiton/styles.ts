@@ -8,7 +8,6 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   voiceQuestion: {
-    marginTop: verticalScale(100),
     backgroundColor: themeColor.lightGray,
     paddingVertical: verticalScale(14),
     paddingHorizontal: verticalScale(16),

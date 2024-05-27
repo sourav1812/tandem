@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {View, ScrollView} from 'react-native';
+import {View, ScrollView, LayoutAnimation} from 'react-native';
 import React, {useRef, useState} from 'react';
 import {styles} from './styles';
 import RNTextComponent from '../RNTextComponent';
@@ -33,7 +33,9 @@ const RNVoiceQuesiton = ({
     1: {height: 0, width: 0, x: 0, y: 0},
     2: {height: 0, width: 0, x: 0, y: 0},
   });
-
+  React.useLayoutEffect(() => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+  }, [correctIndex]);
   return (
     <>
       <View
@@ -65,6 +67,7 @@ const RNVoiceQuesiton = ({
             ]}
             dimensionObject={positionRefs[0]}>
             <ScrollView
+              bounces={false}
               ref={refOne}
               onLayout={() => {
                 refOne?.current?.measure(
@@ -83,15 +86,26 @@ const RNVoiceQuesiton = ({
                   },
                 );
               }}
-              style={styles.voiceQuestion}
+              style={[
+                styles.voiceQuestion,
+                {
+                  marginTop: isTablet ? 50 : verticalScale(100),
+                },
+              ]}
               showsVerticalScrollIndicator={false}
               contentContainerStyle={{paddingBottom: verticalScale(30)}}>
-              <View style={styles.emojiView}>
-                <RNTextComponent style={styles.emoji}>🤔</RNTextComponent>
+              <View
+                style={{
+                  flexDirection: isTablet ? 'row' : 'column',
+                  marginBottom: isTablet ? verticalScale(10) : 0,
+                }}>
+                <View style={styles.emojiView}>
+                  <RNTextComponent style={styles.emoji}>🤔</RNTextComponent>
+                </View>
+                <RNTextComponent style={styles.heading} isSemiBold>
+                  {questions[nextQuestion].question}
+                </RNTextComponent>
               </View>
-              <RNTextComponent style={styles.heading} isSemiBold>
-                {questions[nextQuestion].question}
-              </RNTextComponent>
               {questions[nextQuestion].options.map((option, index) => (
                 <RNButton
                   customStyle={

@@ -25,6 +25,11 @@ import navigateTo from '@tandem/navigation/navigate';
 import Animated, {useSharedValue, withTiming} from 'react-native-reanimated';
 import {updatePage} from '@tandem/redux/slices/bookShelf.slice';
 import {store} from '@tandem/redux/store';
+import {translation} from '@tandem/utils/methods';
+import {readBookNotification} from '@tandem/functions/notifee';
+import {incrementReadStoryBookNumber} from '@tandem/redux/slices/activityIndicator.slice';
+import selfAnalytics from '@tandem/api/selfAnalytics';
+import {UsersAnalyticsEvents} from '@tandem/api/selfAnalytics/interface';
 interface IPage {
   text: string;
   img: string;
@@ -171,7 +176,7 @@ export default ({
               onClick={() => {
                 updateState({ratingModal: true});
               }}
-              title="Rate this story..."
+              title={translation('RATE_THIS_STORY')}
             />
           )}
           <RNButton
@@ -181,9 +186,18 @@ export default ({
               borderColor: themeColor.purple,
             }}
             onClick={() => {
+              selfAnalytics({
+                eventType: UsersAnalyticsEvents.COMPREHENSION_QUESTIONS_VISITED,
+                details: {
+                  level,
+                  mode,
+                  bookId: book._id,
+                  childId: book.childId,
+                },
+              });
               updateState({showQuestion: true});
             }}
-            title="Answer these questions..."
+            title={translation('ANSWER_THESE_QUESTION')}
           />
           {book.storyInfo[level]?.conversationStarters &&
             book.storyInfo[level]?.conversationStarters.length > 0 && (
@@ -193,12 +207,22 @@ export default ({
                   borderColor: themeColor.gold,
                 }}
                 onClick={() => {
+                  selfAnalytics({
+                    eventType:
+                      UsersAnalyticsEvents.CONVERSATION_STARTERS_VISITED,
+                    details: {
+                      level,
+                      mode,
+                      bookId: book._id,
+                      childId: book.childId,
+                    },
+                  });
                   navigateTo(SCREEN_NAME.CONVERSATION_STARTERS, {
                     conversationStarters:
                       book.storyInfo[level].conversationStarters,
                   });
                 }}
-                title="Have you thought about..."
+                title={translation('HAVE_YOU_THOUGHT_ABOUT')}
               />
             )}
           <RNButton
@@ -215,16 +239,33 @@ export default ({
                   ...(mode === MODE.B && {tandem: true}),
                 });
               }
+              store.dispatch(incrementReadStoryBookNumber());
+              readBookNotification();
               navigateTo(SCREEN_NAME.HOME);
             }}
-            title="Go to Home"
+            title={translation('GO_TO_HOME')}
           />
         </View>
       </ImageBackground>
     );
   };
   const onViewableItemsChanged = React.useCallback(({changed}) => {
+    const lastPage = book.storyInfo[0].pages.length - 1 === changed[0].index;
+    if (lastPage && !changed[0].isViewable) {
+      updateState({endPage: true});
+      selfAnalytics({
+        eventType: UsersAnalyticsEvents.BOOK_END_REACHED,
+        details: {
+          mode,
+          bookId: book._id,
+          childId: book.childId,
+        },
+      });
+    } else {
+      updateState({endPage: false});
+    }
     store.dispatch(updatePage(changed[0].index));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <PanGestureHandler

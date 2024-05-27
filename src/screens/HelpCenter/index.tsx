@@ -253,6 +253,10 @@ const FAQScreen = () => {
         title={translation('FAQ_QA.Q11')}
         text={translation('FAQ_QA.A11')}
       />
+      <ExpandDetails
+        title={translation('FAQ_QA.Q12')}
+        text={translation('FAQ_QA.A12')}
+      />
     </>
   );
 };

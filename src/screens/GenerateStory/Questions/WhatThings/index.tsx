@@ -1,7 +1,7 @@
 import RNChoiceQuestions from '@tandem/components/RNChoiceQuestions';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import {STORY_PARTS} from '@tandem/constants/enums';
-import {ATTRIBUTE} from '@tandem/constants/local';
+import {ATTRIBUTE, shuffle} from '@tandem/constants/local';
 import {translation} from '@tandem/utils/methods';
 import {verticalScale} from 'react-native-size-matters';
 import {styles} from '../../styles';
@@ -14,6 +14,7 @@ import removeQuestionData from '@tandem/functions/removeQuestionData';
 export default () => {
   const [disabled, setDisabled] = React.useState(true);
   const navigation: any = useNavigation();
+  const data = React.useMemo(() => shuffle(ATTRIBUTE), []);
   return (
     <GenerateStory
       type={STORY_PARTS.WHAT_THINGS}
@@ -40,7 +41,7 @@ export default () => {
           type={STORY_PARTS.WHAT_THINGS}
           maxSelections={1}
           index={3}
-          data={ATTRIBUTE}
+          data={data}
         />
       </>
     </GenerateStory>

@@ -9,6 +9,7 @@ export interface Props {
   props?: TextProps;
   children: any;
   isBold?: boolean;
+  caps?: boolean;
   isSemiBold?: boolean;
   isMedium?: boolean;
   style?: StyleProp<TextStyle>;

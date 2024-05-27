@@ -1,9 +1,8 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Text} from 'react-native';
 import {Props} from './interface';
-import {scale} from 'react-native-size-matters';
-import Animated from 'react-native-reanimated';
+import {scale, verticalScale} from 'react-native-size-matters';
 
 const RNTextComponent = ({
   props,
@@ -14,24 +13,31 @@ const RNTextComponent = ({
   isSemiBold,
   numberOfLines,
   handleOnPress,
+  caps,
 }: Props) => {
   return (
-    <Animated.Text
+    <Text
       numberOfLines={numberOfLines}
       style={[
         styles.text,
         isMedium && {
-          fontSize: scale(16),
+          fontSize: verticalScale(14),
           fontFamily: 'Poppins-Medium',
         },
-        isSemiBold && {fontSize: scale(16), fontFamily: 'Poppins-SemiBold'},
-        isBold && {fontSize: scale(16), fontFamily: 'Poppins-Bold'},
+        isSemiBold && {
+          fontSize: verticalScale(14),
+          fontFamily: 'Poppins-SemiBold',
+        },
+        isBold && {fontSize: verticalScale(14), fontFamily: 'Poppins-Bold'},
         style && style,
+        caps && {
+          textTransform: 'capitalize',
+        },
       ]}
       onPress={handleOnPress}
       {...props}>
       {children}
-    </Animated.Text>
+    </Text>
   );
 };
 

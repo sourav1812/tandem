@@ -27,6 +27,8 @@ import {setForceReload} from '@tandem/redux/slices/activityIndicator.slice';
 import analytics from '@react-native-firebase/analytics';
 import markBookAsPublic from '@tandem/api/markBookAsPublic';
 import {updatePage} from '@tandem/redux/slices/bookShelf.slice';
+import selfAnalytics from '@tandem/api/selfAnalytics';
+import {UsersAnalyticsEvents} from '@tandem/api/selfAnalytics/interface';
 
 const Story = () => {
   const [visible, setVisible] = useState(false);
@@ -102,7 +104,7 @@ const Story = () => {
           }}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <RNTextComponent style={{marginRight: 'auto'}}>
-              Archive Story
+              {translation('ARCHIVE_STORY')}
             </RNTextComponent>
             <Switch
               trackColor={{false: '#474747', true: themeColor.green}}
@@ -129,7 +131,7 @@ const Story = () => {
                 marginTop: 10,
               }}>
               <RNTextComponent style={{marginRight: 'auto'}}>
-                Make story public
+                {translation('MAKE_STORY_PUBLIC')}
               </RNTextComponent>
               <Switch
                 trackColor={{false: '#474747', true: themeColor.green}}
@@ -206,7 +208,7 @@ const Story = () => {
                 </RNTextComponent>
                 <RNTextComponent
                   style={[styles.date, {color: 'rgba(0, 0, 0, 0.6)'}]}>
-                  {`${routeData.readingTime} min reading`}
+                  {`${routeData.readingTime} ` + translation('MIN_READING')}
                 </RNTextComponent>
               </View>
               <RNTextComponent isSemiBold style={styles.heading}>
@@ -228,12 +230,20 @@ const Story = () => {
             customStyle={[styles.button]}
             textStyle={{fontSize: verticalScale(14)}}
             onClick={() => {
-              analytics().logEvent('readBook', {
+              analytics().logEvent('bookOpen', {
                 bookId: routeData.book._id,
                 childId: routeData.book.childId,
                 bookTitle: routeData.book.title,
                 userId: routeData.book.userId,
                 isUserReadingPublicBook: publicRoute,
+              });
+              selfAnalytics({
+                eventType: UsersAnalyticsEvents.BOOK_OPENED,
+                details: {
+                  mode,
+                  bookId: routeData.book._id,
+                  childId: routeData.book.childId,
+                },
               });
               navigateTo(SCREEN_NAME.STORY_TELLING, {
                 id: routeData.id,

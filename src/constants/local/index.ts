@@ -65,6 +65,31 @@ import RedQuestionMark from '@tandem/assets/svg/storySvg/RedQuestionMark.svg';
 import {translation} from '@tandem/utils/methods';
 import {BASE_URL} from '@tandem/constants/api';
 
+import Ayran from '@tandem/assets/svg/storySvg/ayran.svg';
+import Baklava from '@tandem/assets/svg/storySvg/baklava.svg';
+import DonerKebab from '@tandem/assets/svg/storySvg/doner-kebab.svg';
+import Lahmacun from '@tandem/assets/svg/storySvg/lahmacun.svg';
+import Pide from '@tandem/assets/svg/storySvg/pide.svg';
+
+export const shuffle = (originalArray: any) => {
+  let array = originalArray;
+  let currentIndex = array.length;
+
+  // While there remain elements to shuffle...
+  while (currentIndex !== 0) {
+    // Pick a remaining element...
+    let randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex],
+      array[currentIndex],
+    ];
+  }
+  return array;
+};
+
 export const TOOLTIP = 'ToolTip';
 // export const TERMS_ACCEPTED = 'TERMS_ACCEPTED';
 
@@ -86,6 +111,12 @@ export const TYPE_OF_STORY: PlaceType[] = [
 ];
 
 export const ATTRIBUTE: PlaceType[] = [
+  // ! new food items
+  {name: 'Ayran', bgc: themeColor.lightGreen, svgIcon: Ayran},
+  {name: 'Baklava', bgc: themeColor.pink, svgIcon: Baklava},
+  {name: 'Doner Kebab', bgc: themeColor.themeBlue, svgIcon: DonerKebab},
+  {name: 'Lahmacun', bgc: themeColor.yellow, svgIcon: Lahmacun},
+  {name: 'Pide', bgc: themeColor.gold, svgIcon: Pide},
   {name: 'Moon', bgc: themeColor.pink, svgIcon: Moon},
   {name: 'Aeroplane', bgc: themeColor.themeBlue, svgIcon: Aeroplane},
   {name: 'Wind Turbine', bgc: themeColor.gold, svgIcon: WindTurbine},
@@ -152,37 +183,45 @@ export const ATTRIBUTE: PlaceType[] = [
 
 export const ILLUSTRATION = [
   {
-    name: 'style1-papercut',
-    url: BASE_URL + 'images/illustration-styles/papercut.webp',
+    name: 'pixar',
+    url: BASE_URL + 'images/illustration-styles/pixar.webp',
   },
   {
-    name: 'style2-scrappy',
-    url: BASE_URL + 'images/illustration-styles/scrappy.webp',
+    name: 'low-poly',
+    url: BASE_URL + 'images/illustration-styles/low_poly.webp',
   },
-  {
-    name: 'style3-wonder',
-    url: BASE_URL + 'images/illustration-styles/wonder.webp',
-  },
-  {
-    name: 'style4-sleepy',
-    url: BASE_URL + 'images/illustration-styles/sleepy.webp',
-  },
-  {
-    name: 'style5-busy',
-    url: BASE_URL + 'images/illustration-styles/busy.webp',
-  },
-  {
-    name: 'style6-anthro',
-    url: BASE_URL + 'images/illustration-styles/anthro.webp',
-  },
-  {
-    name: 'style7-flat',
-    url: BASE_URL + 'images/illustration-styles/flat.webp',
-  },
-  {
-    name: 'style8-nature',
-    url: BASE_URL + 'images/illustration-styles/nature.webp',
-  },
+  // {
+  //   name: 'style1-papercut',
+  //   url: BASE_URL + 'images/illustration-styles/papercut.webp',
+  // },
+  // {
+  //   name: 'style2-scrappy',
+  //   url: BASE_URL + 'images/illustration-styles/scrappy.webp',
+  // },
+  // {
+  //   name: 'style3-wonder',
+  //   url: BASE_URL + 'images/illustration-styles/wonder.webp',
+  // },
+  // {
+  //   name: 'style4-sleepy',
+  //   url: BASE_URL + 'images/illustration-styles/sleepy.webp',
+  // },
+  // {
+  //   name: 'style5-busy',
+  //   url: BASE_URL + 'images/illustration-styles/busy.webp',
+  // },
+  // {
+  //   name: 'style6-anthro',
+  //   url: BASE_URL + 'images/illustration-styles/anthro.webp',
+  // },
+  // {
+  //   name: 'style7-flat',
+  //   url: BASE_URL + 'images/illustration-styles/flat.webp',
+  // },
+  // {
+  //   name: 'style8-nature',
+  //   url: BASE_URL + 'images/illustration-styles/nature.webp',
+  // },
 ];
 
 export const COLOR_PALETTE = [
@@ -405,3 +444,58 @@ export const FONT_SIZES = [16, 20, 24, 28, 32, 40];
 //     url: BASE_URL+'images/whatHappens/spooky_tale.webp',
 //   },
 // ];
+
+export const NOTIFICATION_PROMPTS = [
+  {
+    id: '1',
+    key1: 'User registers but does not create a story within 24 hours',
+    body: 'It’s time to create your first story!',
+  },
+  {
+    id: '2',
+    key1: 'User has not opened the app between 10:00-13:00 local time. Triggered once every 5 days.',
+    body: 'Your next magical story awaits! Create a story with your child now.',
+  },
+  {
+    id: '3',
+    key1: 'User reads 1 story this week.',
+    body: "Fantastic, you've read your first story this week! Keep it up!",
+  },
+  {
+    id: '4',
+    key1: 'User reads 3 stories this week',
+    body: "You’re on a roll. You've read your third story this week! Keep it up!",
+  },
+  {
+    id: '5',
+    key1: 'User reads 5 stories this week',
+    body: "Full steam ahead! You've read your fifth story this week! Keep it up!",
+  },
+  {
+    id: '6',
+    key1: 'User reads 10 stories this week',
+    body: 'Ten stories! You’re unstoppable!',
+  },
+  {
+    id: '7',
+    key1: 'User has been inactive for 3 days',
+    body: "We've missed you yesterday! Take 5 minutes to create an enchanting story with your little one today!",
+  },
+  {
+    id: '8',
+    key1: 'User has been inactive for 1 week',
+    body: "It's been a while! An adventure story awaits for you and your children. Create one now!",
+  },
+  {
+    id: '9',
+    key1: 'User reads 100 pages',
+    body: "Woohoo! You've hit 100 pages! Awesome milestone for you and your children.",
+  },
+  {
+    id: '10',
+    key1: 'Story generated but never opened',
+    body: 'The Tandem Robots were hard at work and now your personalised story is ready to read!',
+  },
+];
+
+export const NAVIGATE_TO_BOOKSHELF = 'NAVIGATE_TO_BOOKSHELF';

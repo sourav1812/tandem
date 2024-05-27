@@ -1,7 +1,7 @@
 import RNButton from '@tandem/components/RNButton';
 import RNEmojiWithText from '@tandem/components/RNEmojiWithText';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
-import {ATTRIBUTE} from '@tandem/constants/local';
+import {ATTRIBUTE, shuffle} from '@tandem/constants/local';
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import RNShake from 'react-native-shake';
@@ -9,19 +9,29 @@ import {verticalScale} from 'react-native-size-matters';
 import {PlaceType} from '../GenerateStory/interface';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import Orientation from 'react-native-orientation-locker';
-import navigateTo from '@tandem/navigation/navigate';
-import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
-const shakeText =
-  'You can shake the device at any time to shuffle the deck again';
+import {translation} from '@tandem/utils/methods';
+import animateProgressBar from '@tandem/functions/animateProgressBar';
+import gotoBookshelf from '@tandem/functions/gotoBookshelf';
+import LottieView from 'lottie-react-native';
+import Animation from './animation.json';
+import {
+  setProgressRef,
+  setStoryBookNotification,
+} from '@tandem/redux/slices/activityIndicator.slice';
+import {store} from '@tandem/redux/store';
+import FloatingProgressBar from '@tandem/components/FloatingProgressBar';
+const shakeText = translation('SHAKE_TEXT');
+
 const MatchingPairs = () => {
   const [matchingPairsArray, setArray] = React.useState<PlaceType[]>([]);
   const [matchedIndexes, setMatchedIndex] = React.useState<number[]>([]);
   const [checkIfPairArray, setIfPairArray] = React.useState<number[]>([]);
   const [gameCompleted, setGameCompleted] = React.useState(false);
   const [buttonText, setButtonText] = React.useState(
-    'Flip over two cards at a time to find pairs.\nFind all pairs to win the game!',
+    translation('FLIP_CARD_TEXT'),
   );
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const progressRef = React.useRef<any>(null);
   const halfRotationDuration = 150; // ! time of full rotation animation = 2 * halfRotationDuration
   const handlePress = (index: number) => {
     if (matchedIndexes.includes(index) || checkIfPairArray.includes(index)) {
@@ -29,8 +39,17 @@ const MatchingPairs = () => {
     }
     setIfPairArray(prev => (prev.length === 1 ? [...prev, index] : [index]));
   };
-
+  const storyBookNotification = useAppSelector(
+    state => state.activityIndicator.storyBookNotification,
+  );
   React.useEffect(() => {
+    if (progressRef.current) {
+      // progressRef.current;
+      store.dispatch(setProgressRef(progressRef.current));
+    }
+  }, []);
+  React.useEffect(() => {
+    animateProgressBar({delay: 5000, percentage: 50});
     Orientation.lockToPortrait();
     return () => {
       Orientation.unlockAllOrientations();
@@ -51,11 +70,10 @@ const MatchingPairs = () => {
         ? RANDOMISED_PLAYING_ARRAY.unshift(item)
         : RANDOMISED_PLAYING_ARRAY.push(item);
     });
-    setGameCompleted(false);
     setMatchedIndex([]);
     setIfPairArray([]);
     setTimeout(() => {
-      setArray(RANDOMISED_PLAYING_ARRAY);
+      setArray(shuffle(RANDOMISED_PLAYING_ARRAY));
     }, halfRotationDuration);
   };
 
@@ -92,13 +110,27 @@ const MatchingPairs = () => {
   React.useEffect(() => {
     if (
       matchedIndexes.length > 0 &&
-      matchedIndexes.length === matchingPairsArray.length
+      matchedIndexes.length === matchingPairsArray.length &&
+      !gameCompleted
     ) {
       //! game completed
-      setGameCompleted(true);
+      setButtonText(translation('SHAKE_DEVICE'));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [matchedIndexes.length]);
+
+  React.useEffect(() => {
+    if (storyBookNotification) {
+      setGameCompleted(true);
+      store.dispatch(setStoryBookNotification(false));
+    }
+  }, [storyBookNotification]);
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      setGameCompleted(true);
+    }, 90 * 1000); // ! after 90 sec we want to go to bookshelf regardless
+  }, []);
 
   return (
     <RNScreenWrapper style={styles.screenWrapper}>
@@ -123,17 +155,37 @@ const MatchingPairs = () => {
             />
           ))}
         </View>
-
+        {gameCompleted && (
+          <LottieView
+            // eslint-disable-next-line react-native/no-inline-styles
+            style={{
+              flex: 1,
+              width: verticalScale(120),
+              height: verticalScale(120),
+              alignSelf: 'center',
+              position: 'absolute',
+              bottom: verticalScale(80),
+              transform: [{rotate: '90deg'}],
+            }}
+            source={Animation}
+            autoPlay
+            loop
+          />
+        )}
         <RNButton
-          isDisabled={!gameCompleted}
           onClick={() => {
-            navigateTo(SCREEN_NAME.BLOW_WINDMILL);
+            if (gameCompleted) {
+              gotoBookshelf();
+              return;
+            }
+            refreshMatching();
           }}
-          title={gameCompleted ? 'Proceed to Blow the Windmill' : buttonText}
+          title={gameCompleted ? translation('BOOK_IS_READY') : buttonText}
           customStyle={gameCompleted ? {} : styles.buttonCustom}
           pressableStyle={styles.buttonPressable}
-          textStyle={{fontSize: verticalScale(12)}}
+          textStyle={{fontSize: verticalScale(10)}}
         />
+        <FloatingProgressBar ref={progressRef} />
       </>
     </RNScreenWrapper>
   );
@@ -152,8 +204,8 @@ const styles = StyleSheet.create({
     marginTop: verticalScale(50),
   },
   buttonCustom: {
-    backgroundColor: 'darkred',
-    borderColor: 'darkred',
+    backgroundColor: 'red',
+    borderColor: 'red',
     height: 'auto',
     padding: verticalScale(10),
   },

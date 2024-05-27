@@ -6,21 +6,22 @@ import RNLanguageComponent from '@tandem/components/RNLanguageComponent';
 import themeColor from '@tandem/theme/themeColor';
 import {scale, verticalScale} from 'react-native-size-matters';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
-import {RootState} from '@tandem/redux/store';
+import {RootState, store} from '@tandem/redux/store';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
+import {pushStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration.slice';
+import {STORY_PARTS} from '@tandem/constants/enums';
+import Orientation from 'react-native-orientation-locker';
+import {translation} from '@tandem/utils/methods';
 
 const languages = [
   {name: 'English', flag: '🇬🇧', code: 'en'},
   {name: 'Türkçe', flag: '🇹🇷', code: 'tr'},
-  {name: 'বাংলা', flag: '🇧🇩', code: 'bn'},
   {name: 'Polski', flag: '🇵🇱', code: 'pl'},
-  {name: 'ગુજરાતી', flag: '🇮🇳', code: 'gu'},
-  {name: 'ਪੰਜਾਬੀ', flag: '🇮🇳', code: 'pa'},
   {name: 'اردو', flag: '🇵🇰', code: 'ur'},
-  {name: 'Français', flag: '🇫🇷', code: 'fr'},
+  {name: 'বাংলা', flag: '🇧🇩', code: 'bn'},
+  {name: 'Russian', flag: '🇷🇺', code: 'ru'},
 ];
-
 const SelectLanguage = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const portrait = useAppSelector(
@@ -29,7 +30,17 @@ const SelectLanguage = () => {
   const [lan, setLang] = React.useState('');
 
   React.useEffect(() => {
+    Orientation.lockToPortrait();
+    return () => {
+      Orientation.unlockAllOrientations();
+    };
+  }, []);
+
+  React.useEffect(() => {
     if (lan) {
+      store.dispatch(
+        pushStoryGenerationResponse({key: STORY_PARTS.LANGAUGE, value: lan}),
+      );
       setTimeout(() => {
         navigateTo(SCREEN_NAME.ROADMAP);
       }, 300);
@@ -38,12 +49,16 @@ const SelectLanguage = () => {
   return (
     <RNScreenWrapper style={{backgroundColor: themeColor.white}}>
       <RNTextComponent style={styles.heading} isSemiBold>
-        Story Language
+        {translation('STORY_LANGUAGE')}
       </RNTextComponent>
       <RNTextComponent style={styles.info}>
-        What language do you want this story to be written in?
+        {translation('WHICH_LANGUAGE')}
       </RNTextComponent>
-      <View style={[!portrait && {marginHorizontal: scale(100)}]}>
+      <View
+        style={[
+          !portrait && {marginHorizontal: scale(100)},
+          {marginTop: verticalScale(20)},
+        ]}>
         {languages.map((item, index) => {
           return (
             <Pressable
@@ -67,8 +82,7 @@ const SelectLanguage = () => {
         })}
       </View>
       <RNTextComponent style={[styles.info, styles.footer]}>
-        Note: non-English languages are still in testing… please do rate your
-        stories when you’ve read them so we can keep improving
+        {translation('NOTE')}
       </RNTextComponent>
     </RNScreenWrapper>
   );
@@ -81,18 +95,17 @@ const styles = StyleSheet.create({
   heading: {
     fontSize: verticalScale(21.3),
     alignSelf: 'center',
-    marginTop: verticalScale(50),
+    marginTop: verticalScale(55),
     textAlign: 'center',
   },
   info: {
     fontSize: verticalScale(14),
     textAlign: 'center',
     marginHorizontal: scale(40),
-    marginVertical: verticalScale(12),
+    marginTop: verticalScale(10),
   },
   footer: {
     fontSize: verticalScale(10),
-    marginTop: 'auto',
-    marginBottom: verticalScale(40),
+    marginTop: verticalScale(30),
   },
 });

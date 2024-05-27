@@ -27,25 +27,29 @@ export enum API {
   ARCHIVED_STORIES = 'story-books/archive',
   REPORT_IMAGE = 'story-books/{BOOK_ID_HERE}/report-image',
   PUSH_VOICE_DATA = 'story-books/{BOOK_ID_HERE}/reading-session',
+  ANALYTICS_SELF = 'analytics/users/self',
 }
 
 export enum ENVIRONMENT {
+  LOCAL = 'LOCAL',
   DEVELOPMENT = 'DEVELOPMENT',
   PRODUCTION = 'PRODUCTION',
 }
 
 const ENV_VARS = {
+  [ENVIRONMENT.LOCAL]: {
+    API_URL: 'https://39a0-38-137-53-168.ngrok-free.app/v1/', // * LOCAL URL
+  },
   [ENVIRONMENT.DEVELOPMENT]: {
-    API_URL: 'https://tandem-app-backend-beta.azurewebsites.net/v1/', // * LOCAL URL
-    // API_URL: 'http://192.168.1.66:5000/v1/', // * LOCAL URL
+    API_URL: 'https://tandem-app-backend-beta.azurewebsites.net/v1/', // * DEV URL
   },
   [ENVIRONMENT.PRODUCTION]: {
-    API_URL: 'https://tandem-app-backend-prod.azurewebsites.net/v1/', // * STAGING URL
+    API_URL: 'https://tandem-app-backend-prod.azurewebsites.net/v1/', // * PROD URL
   },
 };
 
 // ! Select ENV from here
-export const SELECTED_ENVIRONMENT = ENVIRONMENT.DEVELOPMENT;
+export const SELECTED_ENVIRONMENT = ENVIRONMENT.PRODUCTION;
 // ! URLs
 export const BASE_URL = ENV_VARS[SELECTED_ENVIRONMENT].API_URL;
 
