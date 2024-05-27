@@ -50,7 +50,7 @@ export default function RecordAudio() {
       allowsRecordingIOS: false,
     });
     const uri = recording.getURI();
-    await pushVoiceData({audio: uri, bookId: 'RAAND'});
+    await pushVoiceData({audio: uri, bookId: 'MockId'});
     console.log('Recording stopped and stored at', uri);
   }
 
