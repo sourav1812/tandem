@@ -27,7 +27,10 @@ import {updatePage} from '@tandem/redux/slices/bookShelf.slice';
 import {store} from '@tandem/redux/store';
 import {translation} from '@tandem/utils/methods';
 import {readBookNotification} from '@tandem/functions/notifee';
-import {incrementReadStoryBookNumber} from '@tandem/redux/slices/activityIndicator.slice';
+import {
+  incrementReadStoryBookNumber,
+  incrementStoryPageNumber,
+} from '@tandem/redux/slices/activityIndicator.slice';
 import selfAnalytics from '@tandem/api/selfAnalytics';
 import {UsersAnalyticsEvents} from '@tandem/api/selfAnalytics/interface';
 interface IPage {
@@ -265,6 +268,10 @@ export default ({
       updateState({endPage: false});
     }
     store.dispatch(updatePage(changed[0].index));
+    if (changed[0].isViewable) {
+      store.dispatch(incrementStoryPageNumber());
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (

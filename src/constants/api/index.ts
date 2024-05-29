@@ -34,11 +34,15 @@ export enum ENVIRONMENT {
   LOCAL = 'LOCAL',
   DEVELOPMENT = 'DEVELOPMENT',
   PRODUCTION = 'PRODUCTION',
+  TESTING = 'TESTING',
 }
 
 const ENV_VARS = {
   [ENVIRONMENT.LOCAL]: {
-    API_URL: 'https://39a0-38-137-53-168.ngrok-free.app/v1/', // * LOCAL URL
+    API_URL: 'https://83f2-38-137-51-190.ngrok-free.app/v1/', // * LOCAL URL
+  },
+  [ENVIRONMENT.TESTING]: {
+    API_URL: 'https://tandem-app-backend-beta.azurewebsites.net/v1/', // * TESTING URL
   },
   [ENVIRONMENT.DEVELOPMENT]: {
     API_URL: 'https://tandem-app-backend-beta.azurewebsites.net/v1/', // * DEV URL
@@ -49,7 +53,7 @@ const ENV_VARS = {
 };
 
 // ! Select ENV from here
-export const SELECTED_ENVIRONMENT = ENVIRONMENT.PRODUCTION;
+export const SELECTED_ENVIRONMENT = ENVIRONMENT.TESTING;
 // ! URLs
 export const BASE_URL = ENV_VARS[SELECTED_ENVIRONMENT].API_URL;
 
