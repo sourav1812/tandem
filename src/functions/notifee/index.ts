@@ -69,12 +69,23 @@ export async function onCreateTriggerNotification({
 export const readBookNotification = () => {
   const numberOfStoryBooks =
     store.getState().activityIndicator.storyBooksReadThisWeek;
+  const numberOfPages = store.getState().activityIndicator.pagesReadInBooks;
   const notification1 = NOTIFICATION_PROMPTS[2];
   const notification2 = NOTIFICATION_PROMPTS[3];
   const notification3 = NOTIFICATION_PROMPTS[4];
   const notification4 = NOTIFICATION_PROMPTS[5];
+  const notification5 = NOTIFICATION_PROMPTS[8];
 
-  const date = new Date(Date.now() + 1000 * 10);
+  const date = new Date(Date.now() + 1000 * 1 * 60 * 60); // ! 1 hr from now
+  console.log({numberOfPages});
+  if (numberOfPages === 100) {
+    onCreateTriggerNotification({
+      body: notification5.body,
+      title: 'Tandem',
+      id: notification5.id,
+      date,
+    });
+  }
 
   switch (numberOfStoryBooks) {
     case 1:

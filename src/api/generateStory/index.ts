@@ -1,5 +1,5 @@
 import {post} from '@tandem/api';
-import {API} from '@tandem/constants/api';
+import {API, ENVIRONMENT, SELECTED_ENVIRONMENT} from '@tandem/constants/api';
 import {GenerateStoryData} from './interface';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
@@ -12,6 +12,12 @@ import {NOTIFICATION_PROMPTS} from '@tandem/constants/local';
 import {translation} from '@tandem/utils/methods';
 import selfAnalytics from '../selfAnalytics';
 import {UsersAnalyticsEvents} from '../selfAnalytics/interface';
+
+//@ts-ignore
+const testing =
+  SELECTED_ENVIRONMENT === ENVIRONMENT.TESTING ||
+  SELECTED_ENVIRONMENT === ENVIRONMENT.LOCAL;
+
 export default async ({childId, storyPromptData}: GenerateStoryData) => {
   try {
     const netInfo = await NetInfo.fetch();
@@ -35,7 +41,7 @@ export default async ({childId, storyPromptData}: GenerateStoryData) => {
       return;
     }
     await post({
-      path: API.GENERATE_STORY + `/${childId}`,
+      path: API.GENERATE_STORY + `/${childId}?testing=${testing}`,
       data: {...storyPromptData},
     });
     selfAnalytics({
@@ -69,7 +75,7 @@ export const hitStoryGenApiStandalone = async ({
 }: GenerateStoryData) => {
   try {
     await post({
-      path: API.GENERATE_STORY + `/${childId}`,
+      path: API.GENERATE_STORY + `/${childId}?testing=${testing}`,
       data: {
         ...storyPromptData,
       },

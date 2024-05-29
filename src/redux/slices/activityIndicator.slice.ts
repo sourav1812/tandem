@@ -10,6 +10,7 @@ interface InitialState {
   isEnergyGenerated: boolean;
   storyBooksReadThisWeek: number;
   weekMark: Date;
+  pagesReadInBooks: number;
 }
 
 const initialState: InitialState = {
@@ -22,6 +23,7 @@ const initialState: InitialState = {
   isEnergyGenerated: false,
   storyBooksReadThisWeek: 0,
   weekMark: new Date(),
+  pagesReadInBooks: 0,
 };
 const activityIndicatorSlice = createSlice({
   name: 'activityIndicator',
@@ -55,6 +57,12 @@ const activityIndicatorSlice = createSlice({
     incrementReadStoryBookNumber: state => {
       state.storyBooksReadThisWeek += 1;
     },
+    incrementStoryPageNumber: state => {
+      state.pagesReadInBooks += 1;
+    },
+    resetStoryPageNumber: state => {
+      state.pagesReadInBooks = 0;
+    },
     resetReadStoryBookNumber: state => {
       state.storyBooksReadThisWeek = 0;
       state.weekMark = new Date();
@@ -72,5 +80,7 @@ export const {
   setEnergyGenerated,
   incrementReadStoryBookNumber,
   resetReadStoryBookNumber,
+  incrementStoryPageNumber,
+  resetStoryPageNumber,
 } = activityIndicatorSlice.actions;
 export default activityIndicatorSlice.reducer;

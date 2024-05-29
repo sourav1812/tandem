@@ -9,7 +9,10 @@ import {CACHE_DIR, NAVIGATE_TO_BOOKSHELF} from '@tandem/constants/local';
 import {reinitialiseCacheDirectory} from '@tandem/redux/slices/cache.slice';
 import {Platform} from 'react-native';
 import {renewImages} from '@tandem/redux/slices/bookShelf.slice';
-import {resetReadStoryBookNumber} from '@tandem/redux/slices/activityIndicator.slice';
+import {
+  resetReadStoryBookNumber,
+  resetStoryPageNumber,
+} from '@tandem/redux/slices/activityIndicator.slice';
 import {inactiveTriggerNotifications} from '../notifee';
 import gotoBookshelf from '../gotoBookshelf';
 import {MODE} from '@tandem/constants/mode';
@@ -21,8 +24,12 @@ export default async () => {
   // ! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   const storyBooksThisWeek =
     store.getState().activityIndicator.storyBooksReadThisWeek;
+  const pageNumber = store.getState().activityIndicator.pagesReadInBooks;
   if (isNaN(storyBooksThisWeek)) {
     store.dispatch(resetReadStoryBookNumber());
+  }
+  if (isNaN(pageNumber)) {
+    store.dispatch(resetStoryPageNumber());
   }
   const weekDate = store.getState().activityIndicator.weekMark;
   const isMoreThanWeek =
