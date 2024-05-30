@@ -33,6 +33,9 @@ import {
 } from '@tandem/redux/slices/activityIndicator.slice';
 import selfAnalytics from '@tandem/api/selfAnalytics';
 import {UsersAnalyticsEvents} from '@tandem/api/selfAnalytics/interface';
+import {stopRecording} from '@tandem/functions/RecordButton';
+import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
+import {resetRecordingState} from '@tandem/redux/slices/recordingButton.slice';
 interface IPage {
   text: string;
   img: string;
@@ -176,8 +179,9 @@ export default ({
           </RNTextComponent>
           {!publicRoute && !state.isStoryRated && (
             <RNButton
-              onClick={() => {
+              onClick={async () => {
                 updateState({ratingModal: true});
+                await stopRecording();
               }}
               title={translation('RATE_THIS_STORY')}
             />
@@ -188,7 +192,7 @@ export default ({
               backgroundColor: themeColor.purple,
               borderColor: themeColor.purple,
             }}
-            onClick={() => {
+            onClick={async () => {
               selfAnalytics({
                 eventType: UsersAnalyticsEvents.COMPREHENSION_QUESTIONS_VISITED,
                 details: {
@@ -199,6 +203,7 @@ export default ({
                 },
               });
               updateState({showQuestion: true});
+              await stopRecording();
             }}
             title={translation('ANSWER_THESE_QUESTION')}
           />
@@ -209,7 +214,7 @@ export default ({
                   backgroundColor: themeColor.gold,
                   borderColor: themeColor.gold,
                 }}
-                onClick={() => {
+                onClick={async () => {
                   selfAnalytics({
                     eventType:
                       UsersAnalyticsEvents.CONVERSATION_STARTERS_VISITED,
@@ -224,6 +229,7 @@ export default ({
                     conversationStarters:
                       book.storyInfo[level].conversationStarters,
                   });
+                  await stopRecording();
                 }}
                 title={translation('HAVE_YOU_THOUGHT_ABOUT')}
               />
@@ -235,7 +241,7 @@ export default ({
               backgroundColor: themeColor.themeBlue,
               borderColor: themeColor.themeBlue,
             }}
-            onClick={() => {
+            onClick={async () => {
               if (!publicRoute) {
                 markBookAsRead(book._id, {
                   ...(mode === MODE.C && {solo: true}),
@@ -244,7 +250,22 @@ export default ({
               }
               store.dispatch(incrementReadStoryBookNumber());
               readBookNotification();
-              navigateTo(SCREEN_NAME.HOME);
+              store.dispatch(
+                addAlertData({
+                  type: 'Alert',
+                  message: 'Are You Sure  you want to save recording',
+                  onSuccess: async () => {
+                    await stopRecording(book._id);
+                    store.dispatch(resetRecordingState());
+                    navigateTo(SCREEN_NAME.HOME);
+                  },
+                  successText: 'Yes',
+                  destructiveText: 'No',
+                  onDestructive: () => {
+                    stopRecording();
+                  },
+                }),
+              );
             }}
             title={translation('GO_TO_HOME')}
           />

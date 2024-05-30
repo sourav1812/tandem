@@ -1,6 +1,13 @@
 /* eslint-disable react-native/no-inline-styles */
-import {View, Image, ScrollView, Pressable, Switch} from 'react-native';
-import React, {useState} from 'react';
+import {
+  View,
+  Image,
+  ScrollView,
+  Pressable,
+  Switch,
+  Platform,
+} from 'react-native';
+import React, {useCallback, useState} from 'react';
 import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import RNTextComponent from '@tandem/components/RNTextComponent';
@@ -14,9 +21,10 @@ import {verticalScale} from 'react-native-size-matters';
 import {translation} from '@tandem/utils/methods';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {MODE} from '@tandem/constants/mode';
-import {useRoute} from '@react-navigation/native';
+import {useFocusEffect, useRoute} from '@react-navigation/native';
 import {BooksData} from '../Bookshelf/interface';
 import {store} from '@tandem/redux/store';
+import * as permissions from 'react-native-permissions';
 import {
   changeStoryLevel,
   changeTextSize,
@@ -29,6 +37,12 @@ import markBookAsPublic from '@tandem/api/markBookAsPublic';
 import {updatePage} from '@tandem/redux/slices/bookShelf.slice';
 import selfAnalytics from '@tandem/api/selfAnalytics';
 import {UsersAnalyticsEvents} from '@tandem/api/selfAnalytics/interface';
+import {
+  recordingPermissionAlert,
+  toggleButton,
+} from '@tandem/redux/slices/recordingButton.slice';
+import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
+import LearnMore from '@tandem/components/RNLearnMoreModal';
 
 const Story = () => {
   const [visible, setVisible] = useState(false);
@@ -40,6 +54,7 @@ const Story = () => {
   const routeData: BooksData = route?.params?.routeData;
   const publicRoute: boolean = !!route?.params?.publicRoute;
   const [archive, setArchive] = useState(routeData.book.archived);
+  const [learnMore, setLearnMore] = useState(false);
   const [publicBook, setPublicBook] = useState(
     !!routeData.book?.isPubliclyAvailable,
   );
@@ -47,10 +62,41 @@ const Story = () => {
   const [textArray, setTextArray] = React.useState<
     {text: string; img: string | null}[]
   >([]);
+  const toggle = useAppSelector(state => state.recording.toogleButton);
   const toggelMenuBar = () => {
     setVisible(!visible);
   };
   const {val, len} = progress;
+  useFocusEffect(
+    useCallback(() => {
+      store.dispatch(toggleButton(false));
+    }, []),
+  );
+
+  const [permissionGranted, setPermissionGranted] = useState(false);
+
+  const permissionsType = Platform.select({
+    ios: permissions.PERMISSIONS.IOS.MICROPHONE,
+    android: permissions.PERMISSIONS.ANDROID.RECORD_AUDIO,
+  });
+
+  React.useEffect(() => {
+    const checkPermission = async () => {
+      const permissionStatus = await permissions.check(permissionsType);
+      if (permissionStatus === permissions.RESULTS.GRANTED) {
+        setPermissionGranted(true);
+      } else {
+        const permissionResult = await permissions.request(permissionsType);
+        if (permissionResult === permissions.RESULTS.GRANTED) {
+          setPermissionGranted(true);
+        } else {
+          setPermissionGranted(false);
+        }
+      }
+    };
+
+    checkPermission();
+  }, [permissionsType, toggle]);
 
   React.useEffect(() => {
     const f = async () => {
@@ -111,7 +157,7 @@ const Story = () => {
               thumbColor={themeColor.white}
               ios_backgroundColor={'#474747'}
               onValueChange={async () => {
-                // ! api req to toogle archive and update state
+                // // ! api req to toogle archive and update state
                 try {
                   setArchive(!archive);
                   await markBookAsArchived(routeData.book._id, !archive);
@@ -159,6 +205,18 @@ const Story = () => {
   return (
     <>
       <RNScreenWrapper>
+        {learnMore && (
+          <LearnMore
+            visible={learnMore}
+            renderModal={function (): void {
+              throw new Error('Function not implemented.');
+            }}
+            nextClick={function (): void {
+              throw new Error('Function not implemented.');
+            }}
+          />
+        )}
+
         <View style={styles.headerButtons}>
           <RNButton
             onlyIcon
@@ -217,6 +275,40 @@ const Story = () => {
               <RNTextComponent style={styles.story}>
                 {routeData.teaser}
               </RNTextComponent>
+              <View style={styles.recordingButtonContainer}>
+                <RNTextComponent style={{alignSelf: 'center'}}>
+                  Record this Reading Session
+                </RNTextComponent>
+                <Switch
+                  trackColor={{false: '#474747', true: themeColor.green}}
+                  thumbColor={themeColor.white}
+                  ios_backgroundColor={'#474747'}
+                  style={{alignSelf: 'flex-end'}}
+                  onValueChange={async () => {
+                    store.dispatch(toggleButton(!toggle));
+                    store.dispatch(
+                      addAlertData({
+                        type: 'Alert',
+                        message: 'Are You Sure ',
+                        onSuccess: () => {
+                          if (permissionGranted) {
+                            store.dispatch(recordingPermissionAlert(true));
+                          }
+                        },
+                        successText: 'Yes',
+                        destructiveText: 'No',
+                        onDestructive: () => {
+                          store.dispatch(toggleButton(false));
+                        },
+                        // eslint-disable-next-line react/no-unstable-nested-components
+                        onThirdOption: () => setLearnMore(true),
+                        thirdOptionText: 'Learn More Here',
+                      }),
+                    );
+                  }}
+                  value={toggle}
+                />
+              </View>
             </ScrollView>
           </View>
           <RNButton
