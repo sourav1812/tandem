@@ -409,5 +409,8 @@
   "SHAKE_TEXT": "Puoi toccare il pulsante o scuotere il dispositivo in qualsiasi momento per mescolare di nuovo il mazzo.",
   "SHAKE_DEVICE": "Tocca il pulsante o scuoti il dispositivo per giocare di nuovo.",
   "GREAT_WORK": "Ottimo lavoro!",
-  "WELL_DONE_GREAT_IDEAS": "Ben fatto! Ottime idee."
+  "WELL_DONE_GREAT_IDEAS": "Ben fatto! Ottime idee.",
+  "RECORDING_SAVE_TEXT": "Sei sicuro di voler salvare la registrazione?",
+  "RECORD_SESSION_TEXT": "Registrare questa sessione di lettura",
+  "RECORDING_TEXT_MESSAGE": "Sei sicuro di voler iniziare la registrazione?"
 }

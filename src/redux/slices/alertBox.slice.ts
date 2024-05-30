@@ -2,7 +2,7 @@ import {createSlice} from '@reduxjs/toolkit';
 
 interface InitialState {
   data: {
-    type?: string;
+    type: string;
     message: string;
     onSuccess: () => void | Promise<void>;
     onDestructive?: () => void | Promise<void>;
@@ -10,7 +10,6 @@ interface InitialState {
     possibleResolution: string;
     successText?: string;
     destructiveText?: string;
-    thirdOptionText?: string;
   };
 }
 
@@ -22,7 +21,6 @@ const initialState: InitialState = {
     possibleResolution: '',
     successText: '',
     destructiveText: '',
-    thirdOptionText: '',
   },
 };
 

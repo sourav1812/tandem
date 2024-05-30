@@ -409,5 +409,9 @@
   "SHAKE_TEXT": "Sie können jederzeit auf die Schaltfläche tippen oder das Gerät schütteln, um das Deck erneut zu mischen.",
   "SHAKE_DEVICE": "Tippen Sie auf die Schaltfläche oder schütteln Sie das Gerät, um erneut zu spielen.",
   "GREAT_WORK": "Großartige Arbeit!",
-  "WELL_DONE_GREAT_IDEAS": "Gut gemacht! Tolle Ideen."
+  "WELL_DONE_GREAT_IDEAS": "Gut gemacht! Tolle Ideen.",
+  "RECORDING_SAVE_TEXT": "Sind Sie sicher, dass Sie die Aufnahme speichern möchten?",
+  "RECORD_SESSION_TEXT": "Diese Lesesitzung aufzeichnen",
+  "RECORDING_TEXT_MESSAGE": "Sind Sie sicher, dass Sie mit der Aufnahme beginnen möchten?"
+
 }

@@ -50,8 +50,6 @@ async function stopRecording(bookId?: string) {
       await recording.stopAndUnloadAsync();
       store.dispatch(recordingData(recording));
       console.log('Recording stopped and unloaded');
-    } else {
-      console.log('No recording found');
     }
 
     await Audio.setAudioModeAsync({allowsRecordingIOS: false});

@@ -179,9 +179,9 @@ export default ({
           </RNTextComponent>
           {!publicRoute && !state.isStoryRated && (
             <RNButton
-              onClick={async () => {
+              onClick={() => {
                 updateState({ratingModal: true});
-                await stopRecording();
+                stopRecording();
               }}
               title={translation('RATE_THIS_STORY')}
             />
@@ -192,7 +192,7 @@ export default ({
               backgroundColor: themeColor.purple,
               borderColor: themeColor.purple,
             }}
-            onClick={async () => {
+            onClick={() => {
               selfAnalytics({
                 eventType: UsersAnalyticsEvents.COMPREHENSION_QUESTIONS_VISITED,
                 details: {
@@ -203,7 +203,7 @@ export default ({
                 },
               });
               updateState({showQuestion: true});
-              await stopRecording();
+              stopRecording();
             }}
             title={translation('ANSWER_THESE_QUESTION')}
           />
@@ -214,7 +214,7 @@ export default ({
                   backgroundColor: themeColor.gold,
                   borderColor: themeColor.gold,
                 }}
-                onClick={async () => {
+                onClick={() => {
                   selfAnalytics({
                     eventType:
                       UsersAnalyticsEvents.CONVERSATION_STARTERS_VISITED,
@@ -229,7 +229,7 @@ export default ({
                     conversationStarters:
                       book.storyInfo[level].conversationStarters,
                   });
-                  await stopRecording();
+                  stopRecording();
                 }}
                 title={translation('HAVE_YOU_THOUGHT_ABOUT')}
               />
@@ -253,7 +253,7 @@ export default ({
               store.dispatch(
                 addAlertData({
                   type: 'Alert',
-                  message: 'Are You Sure  you want to save recording',
+                  message: translation('RECORDING_SAVE_TEXT'),
                   onSuccess: async () => {
                     await stopRecording(book._id);
                     store.dispatch(resetRecordingState());

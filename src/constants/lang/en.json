@@ -410,5 +410,8 @@
   "SHAKE_TEXT": "You can tap the button or shake the device at any time to shuffle the deck again",
   "SHAKE_DEVICE": "Tap the button or Shake the device to play again",
   "GREAT_WORK": "Great work!",
-  "WELL_DONE_GREAT_IDEAS": "Well done! Great ideas"
+  "WELL_DONE_GREAT_IDEAS": "Well done! Great ideas",
+  "RECORDING_SAVE_TEXT": "Are You Sure  you want to save recording",
+  "RECORD_SESSION_TEXT": "   Record this Reading Session",
+  "RECORDING_TEXT_MESSAGE": "Are you sure you want to start recording?"
 }

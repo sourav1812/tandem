@@ -54,7 +54,7 @@ const Story = () => {
   const routeData: BooksData = route?.params?.routeData;
   const publicRoute: boolean = !!route?.params?.publicRoute;
   const [archive, setArchive] = useState(routeData.book.archived);
-  const [learnMore, setLearnMore] = useState(false);
+
   const [publicBook, setPublicBook] = useState(
     !!routeData.book?.isPubliclyAvailable,
   );
@@ -205,18 +205,6 @@ const Story = () => {
   return (
     <>
       <RNScreenWrapper>
-        {learnMore && (
-          <LearnMore
-            visible={learnMore}
-            renderModal={function (): void {
-              throw new Error('Function not implemented.');
-            }}
-            nextClick={function (): void {
-              throw new Error('Function not implemented.');
-            }}
-          />
-        )}
-
         <View style={styles.headerButtons}>
           <RNButton
             onlyIcon
@@ -277,19 +265,22 @@ const Story = () => {
               </RNTextComponent>
               <View style={styles.recordingButtonContainer}>
                 <RNTextComponent style={{alignSelf: 'center'}}>
-                  Record this Reading Session
+                  {translation('RECORD_SESSION_TEXT')}
                 </RNTextComponent>
                 <Switch
-                  trackColor={{false: '#474747', true: themeColor.green}}
+                  trackColor={{
+                    false: themeColor.Gray28,
+                    true: themeColor.green,
+                  }}
                   thumbColor={themeColor.white}
-                  ios_backgroundColor={'#474747'}
+                  ios_backgroundColor={themeColor.Gray28}
                   style={{alignSelf: 'flex-end'}}
                   onValueChange={async () => {
                     store.dispatch(toggleButton(!toggle));
                     store.dispatch(
                       addAlertData({
-                        type: 'Alert',
-                        message: 'Are You Sure ',
+                        type: 'Message',
+                        message: translation('RECORDING_TEXT_MESSAGE'),
                         onSuccess: () => {
                           if (permissionGranted) {
                             store.dispatch(recordingPermissionAlert(true));
@@ -301,7 +292,7 @@ const Story = () => {
                           store.dispatch(toggleButton(false));
                         },
                         // eslint-disable-next-line react/no-unstable-nested-components
-                        onThirdOption: () => setLearnMore(true),
+                        onThirdOption: () => {},
                         thirdOptionText: 'Learn More Here',
                       }),
                     );

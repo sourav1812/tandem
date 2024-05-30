@@ -411,5 +411,8 @@
   "SHAKE_TEXT": "Vous pouvez appuyer sur le bouton ou secouer l'appareil à tout moment pour mélanger à nouveau le deck.",
   "SHAKE_DEVICE": "Appuyez sur le bouton ou secouez l'appareil pour rejouer.",
   "GREAT_WORK": "Excellent travail!",
-  "WELL_DONE_GREAT_IDEAS": "Bien joué! Excellentes idées."
+  "WELL_DONE_GREAT_IDEAS": "Bien joué! Excellentes idées.",
+  "RECORDING_SAVE_TEXT": "Êtes-vous sûr de vouloir enregistrer l'enregistrement ?",
+  "RECORD_SESSION_TEXT": "Enregistrer cette session de lecture",
+  "RECORDING_TEXT_MESSAGE": "Êtes-vous sûr de vouloir commencer l'enregistrement ?"
 }

@@ -12,6 +12,7 @@ const themeColor = {
   lightGray: '#F1F4F9',
   input: '#F8F9F9',
   tooltipBgcColor: '#000000CC',
+  Gray28: '#474747',
 };
 
 export default themeColor;
