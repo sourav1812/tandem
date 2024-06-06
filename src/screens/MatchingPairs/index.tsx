@@ -20,7 +20,9 @@ import {
 } from '@tandem/redux/slices/activityIndicator.slice';
 import {store} from '@tandem/redux/store';
 import FloatingProgressBar from '@tandem/components/FloatingProgressBar';
+
 const shakeText = translation('SHAKE_TEXT');
+const storyNotDoneButTimesUp = translation('STORY_NEARLY_READY');
 
 const MatchingPairs = () => {
   const [matchingPairsArray, setArray] = React.useState<PlaceType[]>([]);
@@ -72,6 +74,7 @@ const MatchingPairs = () => {
     });
     setMatchedIndex([]);
     setIfPairArray([]);
+    setButtonText(translation('FLIP_CARD_TEXT'));
     setTimeout(() => {
       setArray(shuffle(RANDOMISED_PLAYING_ARRAY));
     }, halfRotationDuration);
@@ -122,6 +125,7 @@ const MatchingPairs = () => {
   React.useEffect(() => {
     if (storyBookNotification) {
       setGameCompleted(true);
+      setButtonText(translation('BOOK_IS_READY'));
       store.dispatch(setStoryBookNotification(false));
     }
   }, [storyBookNotification]);
@@ -129,6 +133,7 @@ const MatchingPairs = () => {
   React.useEffect(() => {
     setTimeout(() => {
       setGameCompleted(true);
+      setButtonText(storyNotDoneButTimesUp);
     }, 90 * 1000); // ! after 90 sec we want to go to bookshelf regardless
   }, []);
 
@@ -180,7 +185,7 @@ const MatchingPairs = () => {
             }
             refreshMatching();
           }}
-          title={gameCompleted ? translation('BOOK_IS_READY') : buttonText}
+          title={buttonText}
           customStyle={gameCompleted ? {} : styles.buttonCustom}
           pressableStyle={styles.buttonPressable}
           textStyle={{fontSize: verticalScale(10)}}

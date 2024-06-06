@@ -8,6 +8,7 @@ import userProfile from '../userProfile';
 import pushChildStats from '@tandem/functions/pushChildStats';
 import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
 import {store} from '@tandem/redux/store';
+import {translation} from '@tandem/utils/methods';
 
 export const addNewChild = async (
   {name, dob, gender, avatar}: CreateChildProfile,
@@ -30,7 +31,7 @@ export const addNewChild = async (
     store.dispatch(
       addAlertData({
         type: 'Message',
-        message: 'Child added successfully',
+        message: translation('CHILD_ADDED_SUCCESS'),
         onSuccess: () => {
           if (onSuccess) {
             onSuccess();

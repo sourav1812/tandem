@@ -414,5 +414,7 @@
   "RECORDING_SAVE_TEXT": "Kaydı kaydetmek istediğinizden emin misiniz?",
   "RECORD_SESSION_TEXT": "Bu Okuma Oturumunu Kaydet",
   "RECORDING_TEXT_MESSAGE": "Kaydı başlatmak istediğinizden emin misiniz?",
-  "STORY_GEN_QUESTION": "Bu seçeneklerden birini seçin veya emin değilseniz '?' seçeneğini seçin."
+  "STORY_GEN_QUESTION": "Bu seçeneklerden birini seçin veya emin değilseniz '?' seçeneğini seçin.",
+  "STORY_NEARLY_READY": "Hikayeniz neredeyse hazır… oynamaya devam edin veya kitap rafına gidin",
+  "CHILD_ADDED_SUCCESS": "Çocuk başarıyla eklendi"
 }
