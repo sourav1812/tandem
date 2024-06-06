@@ -129,16 +129,6 @@ const RNRoadmap = () => {
     illustration,
     colors,
   ];
-  console.log({
-    whatHappens,
-    who,
-    inclusion,
-    whatThings,
-    where,
-    illustration,
-    colors,
-    checkIfClickable,
-  });
 
   const handleNavigate = (index: number) => {
     if (checkIfClickable[index]) {

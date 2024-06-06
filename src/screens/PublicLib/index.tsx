@@ -194,7 +194,7 @@ const PublicLib = () => {
           <RNStoryCard
             item={item}
             onPress={() => {
-              navigateTo(SCREEN_NAME.STORY, {
+              navigateTo(SCREEN_NAME.DISCLAIMER, {
                 routeData: item,
                 publicRoute: true,
               });

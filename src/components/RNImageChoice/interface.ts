@@ -13,4 +13,5 @@ export interface MultipleChoiceProps {
   maxSelections?: number;
   index?: number;
   setDisabled: React.Dispatch<React.SetStateAction<boolean>>;
+  doNotShowLabel?: boolean;
 }

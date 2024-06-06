@@ -5,6 +5,9 @@ import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {getChildStats} from '../childAnalytics';
 import userProfile from '../userProfile';
+import pushChildStats from '@tandem/functions/pushChildStats';
+import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
+import {store} from '@tandem/redux/store';
 
 export const addNewChild = async (
   {name, dob, gender, avatar}: CreateChildProfile,
@@ -19,15 +22,24 @@ export const addNewChild = async (
         gender,
         avatar,
       },
-      onSuccess: async () => {
-        await userProfile();
-        navigateTo(SCREEN_NAME.ACCOUNT);
-        if (onSuccess) {
-          onSuccess();
-        }
-      },
     });
-    // await getChildStats();
+    await pushChildStats();
+    await userProfile();
+    await getChildStats();
+
+    store.dispatch(
+      addAlertData({
+        type: 'Message',
+        message: 'Child added successfully',
+        onSuccess: () => {
+          if (onSuccess) {
+            onSuccess();
+          }
+          navigateTo(SCREEN_NAME.ACCOUNT);
+        },
+      }),
+    );
+
     return response;
   } catch (error) {
     throw error;

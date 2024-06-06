@@ -30,6 +30,7 @@ const RNImageChoice = ({
   customStyle,
   type,
   maxSelections = data.length,
+  doNotShowLabel,
   setDisabled,
 }: MultipleChoiceProps) => {
   const activeState = useAppSelector(state => state.storyGeneration[type]);
@@ -103,6 +104,7 @@ const RNImageChoice = ({
                 textStyle={styles.tooltip}
                 text={translation('CHOOSE_FROM_THE_GIVE_OPTIONS')}>
                 <AnimatedImageChoice
+                  doNotShowLabel={doNotShowLabel}
                   value={value}
                   onPress={() => handlePress(value.name)}
                   activeState={activeState}
@@ -110,6 +112,7 @@ const RNImageChoice = ({
               </RNTooltip>
             ) : (
               <AnimatedImageChoice
+                doNotShowLabel={doNotShowLabel}
                 value={value}
                 onPress={() => handlePress(value.name)}
                 activeState={activeState}
@@ -138,6 +141,7 @@ const AnimatedImageChoice = ({
   value,
   onPress,
   activeState,
+  doNotShowLabel,
 }: {
   value: {
     name: string;
@@ -145,6 +149,7 @@ const AnimatedImageChoice = ({
   };
   onPress: () => void;
   activeState: string[];
+  doNotShowLabel?: boolean;
 }) => {
   const scaleButton = useSharedValue(1);
 
@@ -166,6 +171,8 @@ const AnimatedImageChoice = ({
           colors={
             activeState.includes(value.name)
               ? ['transparent', '#00000095', '#000000']
+              : doNotShowLabel
+              ? ['transparent', 'transparent']
               : ['transparent', 'transparent', '#000000b8']
           }
           style={[
@@ -183,11 +190,13 @@ const AnimatedImageChoice = ({
                 : 'transparent',
             },
           ]}>
-          <RNTextComponent
-            style={{color: 'white', fontSize: verticalScale(12)}}
-            isSemiBold>
-            {value.name}
-          </RNTextComponent>
+          {!doNotShowLabel && (
+            <RNTextComponent
+              style={{color: 'white', fontSize: verticalScale(12)}}
+              isSemiBold>
+              {value.name}
+            </RNTextComponent>
+          )}
         </LinearGradient>
 
         <Image source={{uri: value.file}} style={[styles.illustration]} />

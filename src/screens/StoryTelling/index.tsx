@@ -279,7 +279,7 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
                   ),
                 );
               }}>
-              <Add size={30} />
+              <Add dull={!(sizeIndex < FONT_SIZES.length - 1)} size={30} />
             </Pressable>
             <Pressable
               style={{padding: 7, paddingVertical: 10}}
@@ -288,31 +288,44 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
                   changeTextSize(sizeIndex > 0 ? sizeIndex - 1 : sizeIndex),
                 );
               }}>
-              <Subtract size={20} />
+              <Subtract dull={!(sizeIndex > 0)} size={20} />
             </Pressable>
           </View>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <RNTextComponent style={{marginRight: 'auto'}}>
+            <RNTextComponent
+              style={{
+                marginRight: 'auto',
+                color: book.storyInfo.length === 1 ? 'grey' : 'black',
+              }}>
               {translation('READING_LEVEL')}
             </RNTextComponent>
-            <Pressable
-              style={{paddingHorizontal: 5}}
-              onPress={() => {
-                dispatch(
-                  changeStoryLevel(
-                    level < book.storyInfo.length - 1 ? level + 1 : level,
-                  ),
-                );
-              }}>
-              <Add size={30} />
-            </Pressable>
-            <Pressable
-              style={{padding: 7, paddingVertical: 10}}
-              onPress={() => {
-                dispatch(changeStoryLevel(level > 0 ? level - 1 : level));
-              }}>
-              <Subtract size={20} />
-            </Pressable>
+            {book.storyInfo.length !== 1 && (
+              <>
+                <Pressable
+                  style={{
+                    paddingHorizontal: 5,
+                  }}
+                  onPress={() => {
+                    dispatch(
+                      changeStoryLevel(
+                        level < book.storyInfo.length - 1 ? level + 1 : level,
+                      ),
+                    );
+                  }}>
+                  <Add dull={!(level < book.storyInfo.length - 1)} size={30} />
+                </Pressable>
+                <Pressable
+                  style={{
+                    padding: 7,
+                    paddingVertical: 10,
+                  }}
+                  onPress={() => {
+                    dispatch(changeStoryLevel(level > 0 ? level - 1 : level));
+                  }}>
+                  <Subtract dull={!(level > 0)} size={20} />
+                </Pressable>
+              </>
+            )}
           </View>
 
           <RNButton
