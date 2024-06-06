@@ -244,7 +244,6 @@ export default ({
               }
               store.dispatch(incrementReadStoryBookNumber());
               readBookNotification();
-              navigateTo(SCREEN_NAME.HOME);
             }}
             title={translation('GO_TO_HOME')}
           />
