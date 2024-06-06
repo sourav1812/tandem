@@ -7,6 +7,7 @@ import {
   View,
   Keyboard,
   LayoutAnimation,
+  Platform,
 } from 'react-native';
 import BlueButton from '@tandem/assets/svg/BlueButton';
 import {styles} from './styles';
@@ -21,16 +22,10 @@ import RNTextInputWithLabel from '@tandem/components/RNTextInputWithLabel';
 import RNAvatarComponent from '@tandem/components/RNAvatarComponent';
 import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
-import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {FORM_INPUT_TYPE, ValidationError} from '@tandem/utils/validations';
 import dayjs from 'dayjs';
 import validationFunction from '@tandem/functions/validationFunction';
-import {
-  saveAdultData,
-  saveChildData,
-  saveCurrentAdult,
-  saveCurrentChild,
-} from '@tandem/redux/slices/createChild.slice';
 import {CreateChildProfileProps} from '@tandem/navigation/types';
 import {LanguageDropDown} from '@tandem/components/LanguageDropDown';
 import {addNewChild} from '@tandem/api/creatChildProfile';
@@ -72,7 +67,6 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
     showImageModal: false,
     showRoles: false,
   };
-  const dispatch = useAppDispatch();
   const [state, setState] = useState<ChildProfileStateObject>(initialState);
   const {bulletinArray, questionIndex, gender, showImageModal, showRoles} =
     state;
@@ -91,14 +85,15 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
     });
   };
   React.useEffect(() => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    if (Platform.OS === 'ios')
+      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
   }, [dateModal]);
 
   const nextQuestion = async () => {
     Keyboard.dismiss();
     if (questionIndex <= 2) {
       let indexArry: IndicatorType[] = [...bulletinArray];
-      bulletinArray.map((item, index) => {
+      bulletinArray.map((_, index) => {
         if (questionIndex + 1 > index) {
           indexArry[index].isSelected = true;
         }
@@ -163,15 +158,9 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
         gender,
         avatar,
       };
-      const response = await addNewChild(childObject, () => {
+      await addNewChild(childObject, () => {
         setState(initialState);
       });
-      if (response) {
-        childObject.type = PEOPLE.CHILD;
-        childObject.childId = response?.childId;
-        dispatch(saveCurrentChild(childObject));
-        dispatch(saveChildData(childObject));
-      }
     } catch (error) {
       console.log('error in adding child', error);
     }
@@ -204,15 +193,9 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
         dob: dob.value,
         avatar,
       };
-      const response = await addNewAdult(adultObject, () => {
+      await addNewAdult(adultObject, () => {
         setState(initialState);
       });
-      if (response) {
-        adultObject.profileId = response?.profileId;
-        adultObject.type = PEOPLE.ADULT;
-        dispatch(saveCurrentAdult(adultObject));
-        dispatch(saveAdultData(adultObject));
-      }
     } catch (error) {
       console.log('error in adding  adult data', error);
     }
@@ -532,9 +515,10 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
                 text={role || translation('SELECT')}
                 onPress={() => {
                   toggleRoles();
-                  LayoutAnimation.configureNext(
-                    LayoutAnimation.Presets.easeInEaseOut,
-                  );
+                  if (Platform.OS === 'ios')
+                    LayoutAnimation.configureNext(
+                      LayoutAnimation.Presets.easeInEaseOut,
+                    );
                 }}
               />
               {showRoles && (
@@ -543,6 +527,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
                     {RELATIONSHIP_ARRAY.map((item, index) => {
                       return (
                         <Pressable
+                          key={item.role + index}
                           style={[
                             styles.role,
                             {
@@ -553,9 +538,10 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
                           onPress={() => {
                             setRole(item.role);
                             toggleRoles();
-                            LayoutAnimation.configureNext(
-                              LayoutAnimation.Presets.easeInEaseOut,
-                            );
+                            if (Platform.OS === 'ios')
+                              LayoutAnimation.configureNext(
+                                LayoutAnimation.Presets.easeInEaseOut,
+                              );
                           }}>
                           <RNTextComponent
                             style={{

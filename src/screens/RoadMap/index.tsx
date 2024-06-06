@@ -294,9 +294,10 @@ const RNRoadmap = () => {
             collapsable={false}
             onLayout={event => {
               const layout = event.nativeEvent?.layout;
-              LayoutAnimation.configureNext(
-                LayoutAnimation.Presets.easeInEaseOut,
-              );
+              if (Platform.OS === 'ios')
+                LayoutAnimation.configureNext(
+                  LayoutAnimation.Presets.easeInEaseOut,
+                );
               setPositionRefs(prev => ({
                 ...prev,
                 6: layout,
@@ -352,9 +353,10 @@ const RNRoadmap = () => {
               collapsable={false}
               onLayout={event => {
                 const layout = event.nativeEvent?.layout;
-                LayoutAnimation.configureNext(
-                  LayoutAnimation.Presets.easeInEaseOut,
-                );
+                if (Platform.OS === 'ios')
+                  LayoutAnimation.configureNext(
+                    LayoutAnimation.Presets.easeInEaseOut,
+                  );
                 setPositionRefs(prev => ({
                   ...prev,
                   5: layout,
@@ -388,9 +390,10 @@ const RNRoadmap = () => {
               collapsable={false}
               onLayout={event => {
                 const layout = event.nativeEvent?.layout;
-                LayoutAnimation.configureNext(
-                  LayoutAnimation.Presets.easeInEaseOut,
-                );
+                if (Platform.OS === 'ios')
+                  LayoutAnimation.configureNext(
+                    LayoutAnimation.Presets.easeInEaseOut,
+                  );
                 setPositionRefs(prev => ({
                   ...prev,
                   4: layout,
@@ -424,9 +427,10 @@ const RNRoadmap = () => {
               collapsable={false}
               onLayout={event => {
                 const layout = event.nativeEvent?.layout;
-                LayoutAnimation.configureNext(
-                  LayoutAnimation.Presets.easeInEaseOut,
-                );
+                if (Platform.OS === 'ios')
+                  LayoutAnimation.configureNext(
+                    LayoutAnimation.Presets.easeInEaseOut,
+                  );
                 setPositionRefs(prev => ({
                   ...prev,
                   3: layout,
@@ -458,9 +462,10 @@ const RNRoadmap = () => {
               collapsable={false}
               onLayout={event => {
                 const layout = event.nativeEvent?.layout;
-                LayoutAnimation.configureNext(
-                  LayoutAnimation.Presets.easeInEaseOut,
-                );
+                if (Platform.OS === 'ios')
+                  LayoutAnimation.configureNext(
+                    LayoutAnimation.Presets.easeInEaseOut,
+                  );
                 setPositionRefs(prev => ({
                   ...prev,
                   2: layout,
@@ -492,9 +497,10 @@ const RNRoadmap = () => {
               collapsable={false}
               onLayout={event => {
                 const layout = event.nativeEvent?.layout;
-                LayoutAnimation.configureNext(
-                  LayoutAnimation.Presets.easeInEaseOut,
-                );
+                if (Platform.OS === 'ios')
+                  LayoutAnimation.configureNext(
+                    LayoutAnimation.Presets.easeInEaseOut,
+                  );
                 setPositionRefs(prev => ({
                   ...prev,
                   1: layout,
@@ -527,9 +533,10 @@ const RNRoadmap = () => {
               collapsable={false}
               onLayout={event => {
                 const layout = event.nativeEvent?.layout;
-                LayoutAnimation.configureNext(
-                  LayoutAnimation.Presets.easeInEaseOut,
-                );
+                if (Platform.OS === 'ios')
+                  LayoutAnimation.configureNext(
+                    LayoutAnimation.Presets.easeInEaseOut,
+                  );
                 setPositionRefs(prev => ({
                   ...prev,
                   0: layout,

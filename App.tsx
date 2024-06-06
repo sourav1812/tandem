@@ -51,11 +51,6 @@ const App: FC = () => {
 
   useEffect(() => {
     requestInitialPermission();
-    if (Platform.OS === 'android') {
-      if (UIManager.setLayoutAnimationEnabledExperimental) {
-        UIManager.setLayoutAnimationEnabledExperimental(true);
-      }
-    }
     i18n.locale = setupLangauge();
     store.dispatch(clearAlertData());
     const unsubscribe = messaging().onMessage(async () => {

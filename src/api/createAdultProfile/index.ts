@@ -3,6 +3,7 @@ import {API} from '@tandem/constants/api';
 import {CreateAdultProfile} from './interface';
 import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
+import userProfile from '../userProfile';
 
 export const addNewAdult = async (
   {role, dob, avatar}: CreateAdultProfile,
@@ -16,7 +17,8 @@ export const addNewAdult = async (
         dob,
         avatar,
       },
-      onSuccess: () => {
+      onSuccess: async () => {
+        await userProfile();
         navigateTo(SCREEN_NAME.ACCOUNT);
         if (onSuccess) {
           onSuccess();

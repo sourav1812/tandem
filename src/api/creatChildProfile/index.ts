@@ -4,6 +4,7 @@ import {CreateChildProfile} from './interface';
 import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {getChildStats} from '../childAnalytics';
+import userProfile from '../userProfile';
 
 export const addNewChild = async (
   {name, dob, gender, avatar}: CreateChildProfile,
@@ -18,14 +19,15 @@ export const addNewChild = async (
         gender,
         avatar,
       },
-      onSuccess: () => {
+      onSuccess: async () => {
+        await userProfile();
         navigateTo(SCREEN_NAME.ACCOUNT);
         if (onSuccess) {
           onSuccess();
         }
       },
     });
-    await getChildStats();
+    // await getChildStats();
     return response;
   } catch (error) {
     throw error;

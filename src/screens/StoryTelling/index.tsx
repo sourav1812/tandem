@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {LayoutAnimation, Pressable, View} from 'react-native';
+import {LayoutAnimation, Platform, Pressable, View} from 'react-native';
 import React, {useState, useRef} from 'react';
 import {styles} from './style';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
@@ -345,7 +345,8 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
   }, [dispatch, level, sizeIndex]);
 
   React.useEffect(() => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    if (Platform.OS === 'ios')
+      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
   }, [menu, openReportModal, selectedReason]);
 
   const reportImageRenderModal = React.useCallback(() => {
