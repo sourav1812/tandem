@@ -2,7 +2,6 @@ import React, {FC, useEffect} from 'react';
 import AppNavigator from './src/navigation';
 import {Provider} from 'react-redux';
 import {store} from './src/redux/store';
-import {Platform, UIManager} from 'react-native';
 import messaging from '@react-native-firebase/messaging';
 import {PersistGate} from 'redux-persist/integration/react';
 import {persistStore} from 'redux-persist';
@@ -24,6 +23,7 @@ import {NAVIGATE_TO_BOOKSHELF} from '@tandem/constants/local';
 import {storeKey} from '@tandem/helpers/encryptedStorage';
 import userProfile from '@tandem/api/userProfile';
 import {requestInitialPermission} from '@tandem/functions/permissions';
+import onDisplayNotification from '@tandem/functions/notifee';
 
 const persistor = persistStore(store);
 
@@ -53,7 +53,7 @@ const App: FC = () => {
     requestInitialPermission();
     i18n.locale = setupLangauge();
     store.dispatch(clearAlertData());
-    const unsubscribe = messaging().onMessage(async () => {
+    const unsubscribe = messaging().onMessage(async message => {
       await getStories(1);
       await pushChildStats();
       await getChildStats();
@@ -75,9 +75,6 @@ const App: FC = () => {
           notificationScreenPermissions.notificationStatus)
       ) {
         progressRef.animateProgress(100);
-        setTimeout(() => {
-          store.dispatch(setStoryBookNotification(false));
-        }, 1000);
         // setTimeout(() => {
         //   // ! alert to show book is ready with new text
         //   store.dispatch(
@@ -96,6 +93,14 @@ const App: FC = () => {
         //   );
         // }, 4100);
       }
+      await onDisplayNotification({
+        title: 'Your story is ready!',
+        body: 'Please check you are happy with the pictures before reading with your child.',
+      });
+
+      setTimeout(() => {
+        store.dispatch(setStoryBookNotification(false));
+      }, 1000);
     });
 
     statusbar();

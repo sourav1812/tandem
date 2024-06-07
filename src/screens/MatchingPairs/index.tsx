@@ -108,10 +108,13 @@ const MatchingPairs = () => {
         return;
       }
       setTimeout(() => {
-        setButtonText(shakeText);
+        if (buttonColor === 'red') {
+          setButtonText(shakeText);
+        }
         setIfPairArray([]);
       }, 1000);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [checkIfPairArray, matchingPairsArray]);
 
   React.useEffect(() => {
