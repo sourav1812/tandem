@@ -19,7 +19,9 @@ const RNDeleteAccount = ({
   content,
 }: SignoutModalProps) => {
   let isTablet = useAppSelector(state => state.deviceType.isTablet);
-
+  if (!visible) {
+    return null;
+  }
   return (
     <RNModal
       visible={visible}
