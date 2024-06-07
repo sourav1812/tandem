@@ -2,7 +2,7 @@ import RNButton from '@tandem/components/RNButton';
 import RNEmojiWithText from '@tandem/components/RNEmojiWithText';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {ATTRIBUTE, shuffle} from '@tandem/constants/local';
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import RNShake from 'react-native-shake';
 import {verticalScale} from 'react-native-size-matters';
@@ -20,6 +20,7 @@ import {
 } from '@tandem/redux/slices/activityIndicator.slice';
 import {store} from '@tandem/redux/store';
 import FloatingProgressBar from '@tandem/components/FloatingProgressBar';
+import themeColor from '@tandem/theme/themeColor';
 
 const shakeText = translation('SHAKE_TEXT');
 const storyNotDoneButTimesUp = translation('STORY_NEARLY_READY');
@@ -29,6 +30,8 @@ const MatchingPairs = () => {
   const [matchedIndexes, setMatchedIndex] = React.useState<number[]>([]);
   const [checkIfPairArray, setIfPairArray] = React.useState<number[]>([]);
   const [gameCompleted, setGameCompleted] = React.useState(false);
+
+  const [buttonColor, setButtonColor] = useState('red');
   const [buttonText, setButtonText] = React.useState(
     translation('FLIP_CARD_TEXT'),
   );
@@ -75,6 +78,7 @@ const MatchingPairs = () => {
     setMatchedIndex([]);
     setIfPairArray([]);
     setButtonText(translation('FLIP_CARD_TEXT'));
+    setButtonColor('red');
     setTimeout(() => {
       setArray(shuffle(RANDOMISED_PLAYING_ARRAY));
     }, halfRotationDuration);
@@ -127,6 +131,7 @@ const MatchingPairs = () => {
       setGameCompleted(true);
       setButtonText(translation('BOOK_IS_READY'));
       store.dispatch(setStoryBookNotification(false));
+      setButtonColor(themeColor.themeBlue);
     }
   }, [storyBookNotification]);
 
@@ -134,6 +139,7 @@ const MatchingPairs = () => {
     setTimeout(() => {
       setGameCompleted(true);
       setButtonText(storyNotDoneButTimesUp);
+      setButtonColor('green');
     }, 90 * 1000); // ! after 90 sec we want to go to bookshelf regardless
   }, []);
 
@@ -186,7 +192,10 @@ const MatchingPairs = () => {
             refreshMatching();
           }}
           title={buttonText}
-          customStyle={gameCompleted ? {} : styles.buttonCustom}
+          customStyle={[
+            styles.buttonCustom,
+            {backgroundColor: buttonColor, borderColor: buttonColor},
+          ]}
           pressableStyle={styles.buttonPressable}
           textStyle={{fontSize: verticalScale(10)}}
         />
@@ -209,8 +218,6 @@ const styles = StyleSheet.create({
     marginTop: verticalScale(50),
   },
   buttonCustom: {
-    backgroundColor: 'red',
-    borderColor: 'red',
     height: 'auto',
     padding: verticalScale(10),
   },
