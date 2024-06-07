@@ -1,4 +1,8 @@
-import notifee, {TimestampTrigger, TriggerType} from '@notifee/react-native';
+import notifee, {
+  AndroidImportance,
+  TimestampTrigger,
+  TriggerType,
+} from '@notifee/react-native';
 import {NOTIFICATION_PROMPTS} from '@tandem/constants/local';
 import {store} from '@tandem/redux/store';
 import {PermissionsAndroid, Platform} from 'react-native';
@@ -46,6 +50,11 @@ export async function onCreateTriggerNotification({
   title: string;
   body: string;
 }) {
+  const channelId = await notifee.createChannel({
+    id: 'tandem',
+    name: 'Tandem',
+    importance: AndroidImportance.HIGH,
+  });
   // Create a time-based trigger
   const trigger: TimestampTrigger = {
     type: TriggerType.TIMESTAMP,
@@ -59,7 +68,7 @@ export async function onCreateTriggerNotification({
       title,
       body,
       android: {
-        channelId: 'tandem',
+        channelId,
       },
     },
     trigger,
