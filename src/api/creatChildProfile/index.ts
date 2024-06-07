@@ -24,9 +24,9 @@ export const addNewChild = async (
         avatar,
       },
     });
-    await pushChildStats();
     await userProfile();
-    await getChildStats();
+    pushChildStats();
+    getChildStats();
 
     store.dispatch(
       addAlertData({
