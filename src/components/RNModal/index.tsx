@@ -1,4 +1,10 @@
-import {Pressable, Dimensions, View, LayoutAnimation} from 'react-native';
+import {
+  Pressable,
+  Dimensions,
+  View,
+  LayoutAnimation,
+  Platform,
+} from 'react-native';
 import React from 'react';
 import {RNModalProps} from './interface';
 import {styles} from './styles';
@@ -13,7 +19,8 @@ const RNModal = ({
   const width = Dimensions.get('screen').width;
 
   React.useLayoutEffect(() => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    if (Platform.OS === 'ios')
+      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
   }, [visible]);
 
   if (!visible) {

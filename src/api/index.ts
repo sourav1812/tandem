@@ -81,7 +81,12 @@ const handleError = async (error: {
 }) => {
   const originalRequest = error.config;
   const {status, data} = error.response;
-  console.log('error in intercerpt', {error: data, status});
+  console.log('error in intercerpt', {
+    url: originalRequest.url,
+    error: data,
+    status,
+  });
+  store.dispatch(stopLoader());
   if (status === 401) {
     // Handle token refresh for 401 (Unauthorized) errors
     try {
@@ -175,7 +180,6 @@ const executeRequest = async <T>(
       path,
       data,
     );
-    console.log({response});
     if (response.data.message) {
       store.dispatch(
         addAlertData({

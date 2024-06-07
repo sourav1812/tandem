@@ -416,5 +416,11 @@
   "SHAKE_TEXT": "Możesz w każdej chwili dotknąć przycisku lub potrząsnąć urządzeniem, aby ponownie przetasować talię.",
   "SHAKE_DEVICE": "Dotknij przycisku lub potrząśnij urządzeniem, aby zagrać ponownie.",
   "GREAT_WORK": "Świetna robota!",
-  "WELL_DONE_GREAT_IDEAS": "Dobra robota! Świetne pomysły."
+  "WELL_DONE_GREAT_IDEAS": "Dobra robota! Świetne pomysły.",
+  "RECORDING_SAVE_TEXT": "Jesteś pewien, że chcesz zapisać nagranie?",
+  "RECORD_SESSION_TEXT": "Zarejestruj tę sesję czytania",
+  "RECORDING_TEXT_MESSAGE": "Czy na pewno chcesz rozpocząć nagrywanie?",
+  "STORY_GEN_QUESTION": "Wybierz z tych opcji, a jeśli nie jesteś pewien, wybierz opcję „?”",
+  "STORY_NEARLY_READY": "Twoja historia jest prawie gotowa… graj dalej lub przejdź do półki z książkami",
+  "CHILD_ADDED_SUCCESS": "Dziecko dodane pomyślnie"
 }

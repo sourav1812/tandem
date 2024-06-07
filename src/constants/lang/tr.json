@@ -410,5 +410,11 @@
   "SHAKE_TEXT": "Desteği tekrar karıştırmak için istediğiniz zaman düğmeye dokunabilir veya cihazı sallayabilirsiniz.",
   "SHAKE_DEVICE": "Tekrar oynamak için düğmeye dokunun veya cihazı sallayın.",
   "GREAT_WORK": "Harika iş!",
-  "WELL_DONE_GREAT_IDEAS": "Aferin! Harika fikirler."
+  "WELL_DONE_GREAT_IDEAS": "Aferin! Harika fikirler.",
+  "RECORDING_SAVE_TEXT": "Kaydı kaydetmek istediğinizden emin misiniz?",
+  "RECORD_SESSION_TEXT": "Bu Okuma Oturumunu Kaydet",
+  "RECORDING_TEXT_MESSAGE": "Kaydı başlatmak istediğinizden emin misiniz?",
+  "STORY_GEN_QUESTION": "Bu seçeneklerden birini seçin veya emin değilseniz '?' seçeneğini seçin.",
+  "STORY_NEARLY_READY": "Hikayeniz neredeyse hazır… oynamaya devam edin veya kitap rafına gidin",
+  "CHILD_ADDED_SUCCESS": "Çocuk başarıyla eklendi"
 }

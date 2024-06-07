@@ -16,25 +16,27 @@ export const askPermissionNotifee = async () => {
     );
   }
 };
-async function onDisplayNotification() {
+async function onDisplayNotification({
+  title,
+  body,
+}: {
+  title: string;
+  body: string;
+}) {
   // Request permissions (required for iOS)
 
   // Create a channel (required for Android)
   const channelId = await notifee.createChannel({
-    id: 'default',
-    name: 'Default Channel',
+    id: 'notificationfromfirebase',
+    name: 'firebase',
   });
 
   // Display a notification
   await notifee.displayNotification({
-    title: 'Notification Title',
-    body: 'Main body content of the notification',
+    title: title,
+    body: body,
     android: {
       channelId,
-      // pressAction is needed if you want the notification to open the app when pressed
-      pressAction: {
-        id: 'default',
-      },
     },
   });
 }

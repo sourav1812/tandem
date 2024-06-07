@@ -5,6 +5,7 @@ import {
   ScrollView,
   Pressable,
   LayoutAnimation,
+  Platform,
 } from 'react-native';
 import React, {useRef} from 'react';
 import {styles} from './styles';
@@ -62,7 +63,8 @@ const RNChooseColor = ({
   );
 
   const handleReset = () => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    if (Platform.OS === 'ios')
+      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setPalletArray([]);
     setActiveColor('');
     setFinalColor('');
@@ -246,9 +248,10 @@ const RNChooseColor = ({
                         );
                         return;
                       }
-                      LayoutAnimation.configureNext(
-                        LayoutAnimation.Presets.easeInEaseOut,
-                      );
+                      if (Platform.OS === 'ios')
+                        LayoutAnimation.configureNext(
+                          LayoutAnimation.Presets.easeInEaseOut,
+                        );
                       setPalletArray(prev =>
                         prev.length < 4 ? [...prev, activeColor] : prev,
                       );
