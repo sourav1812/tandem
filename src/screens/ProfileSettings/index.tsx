@@ -5,7 +5,6 @@ import RNLogoHeader from '@tandem/components/RNLogoHeader';
 import {translation} from '@tandem/utils/methods';
 import {AppState, Pressable, Switch, View} from 'react-native';
 import RNTextInputWithLabel from '@tandem/components/RNTextInputWithLabel';
-import {StateObject} from './interface';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import {scale, verticalScale} from 'react-native-size-matters';
 import themeColor from '@tandem/theme/themeColor';
@@ -38,9 +37,7 @@ const ProfileSettings = () => {
   const userData = useAppSelector(
     (state1: RootState) => state1.userData.userDataObject,
   );
-  const [state, setState] = useState<StateObject>({
-    showModal: false,
-  });
+  const [state, setState] = useState(false);
   const [firstName, setFName] = useState<ValidationError>({
     value: userData.firstName,
   });
@@ -48,16 +45,9 @@ const ProfileSettings = () => {
     value: userData.lastName,
   });
   // const [email, setEmail] = useState<ValidationError>({value: ''});
-  const {showModal} = state;
-
-  const updateState = (date: any) => {
-    setState((previouState: any) => {
-      return {...previouState, ...date};
-    });
-  };
 
   const toggleModal = () => {
-    updateState({showModal: !showModal});
+    setState(!state);
   };
 
   const handleUserProfileRequest = async () => {
@@ -174,7 +164,7 @@ const ProfileSettings = () => {
         </RNTextComponent>
       </View>
       <RNDeleteAccount
-        visible={showModal}
+        visible={state}
         renderModal={toggleModal}
         nextClick={handleDeleteUserRequest}
         heading={translation('DELETE_ACCOUNT')}
