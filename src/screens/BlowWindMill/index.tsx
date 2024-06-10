@@ -129,7 +129,8 @@ const BlowWindMill = () => {
   const startFlow = () => {
     setShowInstructions(true);
     setTimeout(() => {
-      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+      if (Platform.OS === 'ios')
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
       setShowInstructions(false);
     }, 4000);
   };
@@ -283,9 +284,10 @@ const BlowWindMill = () => {
         <RNButton
           onlyIcon
           onClick={() => {
-            LayoutAnimation.configureNext(
-              LayoutAnimation.Presets.easeInEaseOut,
-            );
+            if (Platform.OS === 'ios')
+              LayoutAnimation.configureNext(
+                LayoutAnimation.Presets.easeInEaseOut,
+              );
             setShowInstructions(p => !p);
           }}
           icon={<QuestionMark />}

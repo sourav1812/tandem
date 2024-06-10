@@ -7,11 +7,13 @@ import DeviceInfo from 'react-native-device-info';
 import {changeDevice} from '@tandem/redux/slices/tablet.slice';
 import {useAppDispatch} from '@tandem/hooks/navigationHooks';
 import {translation} from '@tandem/utils/methods';
+import {stopLoader} from '@tandem/redux/slices/activityIndicator.slice';
 
 const SplashScreen = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    dispatch(stopLoader());
     let isIpad = DeviceInfo.getSystemName() === 'iPadOS' ? true : false;
     let isAndroidTablet = DeviceInfo.isTablet();
     let isTablet = isIpad || isAndroidTablet ? true : false;

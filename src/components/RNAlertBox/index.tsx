@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {LayoutAnimation, View} from 'react-native';
+import {LayoutAnimation, Platform, View} from 'react-native';
 import React from 'react';
 import RNTextComponent from '../RNTextComponent';
 import RNModal from '../RNModal';
@@ -19,21 +19,15 @@ const RNAlertBox = ({
   possibleResolution,
 }: AlertBoxInterface) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
-  const {
-    onSuccess,
-    onDestructive,
-    onThirdOption,
-    successText,
-    destructiveText,
-    thirdOptionText,
-  } = useAppSelector(state => state.alertBoxReducer.data);
+  const alertData = useAppSelector(state => state.alertBoxReducer.data);
   const progressRef = useAppSelector(
     state => state.activityIndicator.progressRef,
   );
   const dispatch = useAppDispatch();
 
   React.useLayoutEffect(() => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    if (Platform.OS === 'ios')
+      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
   }, [message]);
 
   const fixProgressbarState = () => {
@@ -79,61 +73,73 @@ const RNAlertBox = ({
           style={{
             flexDirection: 'row',
             alignItems: 'center',
-            justifyContent: onDestructive ? 'space-around' : 'center',
+            justifyContent: alertData.onDestructive ? 'space-around' : 'center',
             alignSelf: 'center',
             width: '100%',
-            flexWrap: onThirdOption ? 'wrap' : undefined,
+            flexWrap: alertData.onThirdOption ? 'wrap' : undefined,
           }}>
           <RNButton
             onClick={async () => {
-              if (onSuccess) {
-                await onSuccess();
+              if (alertData.onSuccess) {
+                await alertData.onSuccess();
               }
               dispatch(clearAlertData());
               fixProgressbarState();
             }}
-            title={successText || 'OK'}
+            title={alertData.successText || 'OK'}
             customStyle={[
               styles.button2,
               {
-                maxWidth: onThirdOption ? '90%' : onDestructive ? '70%' : '90%',
-                minWidth: onThirdOption ? '90%' : onDestructive ? '60%' : '90%',
+                maxWidth: alertData.onThirdOption
+                  ? '90%'
+                  : alertData.onDestructive
+                  ? '70%'
+                  : '90%',
+                minWidth: alertData.onThirdOption
+                  ? '90%'
+                  : alertData.onDestructive
+                  ? '60%'
+                  : '90%',
               },
             ]}
-            textStyle={successText ? {fontSize: verticalScale(10)} : {}}
+            textStyle={
+              alertData.successText ? {fontSize: verticalScale(10)} : {}
+            }
           />
-          {onDestructive ? (
+          {alertData.onDestructive ? (
             <RNButton
               onClick={() => {
-                if (onDestructive) {
-                  onDestructive();
+                if (alertData.onDestructive) {
+                  alertData.onDestructive();
                 }
                 dispatch(clearAlertData());
                 fixProgressbarState();
               }}
-              title={destructiveText || 'NO'}
+              title={alertData.destructiveText || 'NO'}
               customStyle={[
                 styles.button2,
                 {
                   backgroundColor: themeColor.red,
                   borderColor: themeColor.red,
-                  minWidth: onThirdOption ? '90%' : '60%',
-                  maxWidth: onThirdOption ? '90%' : '70%',
+                  minWidth: alertData.onThirdOption ? '90%' : '60%',
+                  maxWidth: alertData.onThirdOption ? '90%' : '70%',
                 },
               ]}
-              textStyle={destructiveText ? {fontSize: verticalScale(10)} : {}}
+              textStyle={
+                alertData.destructiveText ? {fontSize: verticalScale(10)} : {}
+              }
             />
           ) : null}
-          {onThirdOption ? (
+          {alertData.onThirdOption ? (
             <RNButton
               onClick={() => {
-                if (onThirdOption) {
-                  onThirdOption();
+                if (alertData.onThirdOption) {
+                  alertData.onThirdOption();
                 }
                 dispatch(clearAlertData());
                 fixProgressbarState();
               }}
-              title={thirdOptionText || ''}
+              title={alertData.thirdOptionText || ''}
               customStyle={[
                 styles.button2,
                 {
@@ -143,7 +149,9 @@ const RNAlertBox = ({
                   maxWidth: '90%',
                 },
               ]}
-              textStyle={destructiveText ? {fontSize: verticalScale(10)} : {}}
+              textStyle={
+                alertData.destructiveText ? {fontSize: verticalScale(10)} : {}
+              }
             />
           ) : null}
         </View>

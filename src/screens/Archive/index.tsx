@@ -6,6 +6,7 @@ import {
   ActivityIndicator,
   SectionList,
   LayoutAnimation,
+  Platform,
 } from 'react-native';
 import React, {useState} from 'react';
 import {styles} from './styles';
@@ -163,7 +164,8 @@ const Archive = () => {
   }, [bookObjects.endReached, isLoading, searchText.value]);
 
   React.useLayoutEffect(() => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    if (Platform.OS === 'ios')
+      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setIsImageLoading(data.some(obj => obj.image === null));
   }, [images, data]);
 

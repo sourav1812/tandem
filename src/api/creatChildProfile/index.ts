@@ -4,6 +4,11 @@ import {CreateChildProfile} from './interface';
 import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {getChildStats} from '../childAnalytics';
+import userProfile from '../userProfile';
+import pushChildStats from '@tandem/functions/pushChildStats';
+import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
+import {store} from '@tandem/redux/store';
+import {translation} from '@tandem/utils/methods';
 
 export const addNewChild = async (
   {name, dob, gender, avatar}: CreateChildProfile,
@@ -18,14 +23,24 @@ export const addNewChild = async (
         gender,
         avatar,
       },
-      onSuccess: () => {
-        navigateTo(SCREEN_NAME.ACCOUNT);
-        if (onSuccess) {
-          onSuccess();
-        }
-      },
     });
-    await getChildStats();
+    await userProfile();
+    pushChildStats();
+    getChildStats();
+
+    store.dispatch(
+      addAlertData({
+        type: 'Message',
+        message: translation('CHILD_ADDED_SUCCESS'),
+        onSuccess: () => {
+          if (onSuccess) {
+            onSuccess();
+          }
+          navigateTo(SCREEN_NAME.ACCOUNT);
+        },
+      }),
+    );
+
     return response;
   } catch (error) {
     throw error;

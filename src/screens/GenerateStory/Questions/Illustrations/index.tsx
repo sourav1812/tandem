@@ -40,6 +40,7 @@ export default () => {
           </RNTextComponent>{' '}
         </RNTextComponent>
         <RNImageChoice
+          doNotShowLabel
           setDisabled={setDisabled}
           type={STORY_PARTS.STYLES}
           maxSelections={1}

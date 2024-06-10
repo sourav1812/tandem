@@ -50,7 +50,7 @@ const validatePassword = (value: string): ValidationError => {
     };
   }
 
-  if (value.length < 8 && value.length > 20) {
+  if (value.length < 8 || value.length > 20) {
     return {
       message: translation('validations.password-length'),
       type: FORM_INPUT_TYPE.PASSWORD,

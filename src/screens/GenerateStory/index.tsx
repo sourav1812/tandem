@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {LayoutAnimation, View} from 'react-native';
+import {LayoutAnimation, Platform, View} from 'react-native';
 import React from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {styles} from './styles';
@@ -14,6 +14,8 @@ import {translation} from '@tandem/utils/methods';
 import RNTooltip from '@tandem/components/RNTooltip';
 import navigateTo from '@tandem/navigation/navigate';
 import {DIRECTION_ARROWS, STORY_PARTS} from '@tandem/constants/enums';
+import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
+import {store} from '@tandem/redux/store';
 // import Pie from '@tandem/components/Pie';
 
 export default ({
@@ -54,7 +56,8 @@ export default ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   React.useEffect(() => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    if (Platform.OS === 'ios')
+      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
   }, [disabled]);
 
   return (
@@ -82,7 +85,18 @@ export default ({
                 {questionNumber}/6
               </RNTextComponent>
             </RNTextComponent>
-            <RNButton onlyIcon onClick={() => {}} icon={<QuestionMark />} />
+            <RNButton
+              onlyIcon
+              onClick={() => {
+                store.dispatch(
+                  addAlertData({
+                    type: 'Message',
+                    message: translation('STORY_GEN_QUESTION'),
+                  }),
+                );
+              }}
+              icon={<QuestionMark />}
+            />
           </View>
           <View style={styles.progressBar}>
             {Array.from({length: 6}, (_, index) => {

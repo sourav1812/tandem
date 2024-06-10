@@ -1,4 +1,8 @@
-import notifee, {TimestampTrigger, TriggerType} from '@notifee/react-native';
+import notifee, {
+  AndroidImportance,
+  TimestampTrigger,
+  TriggerType,
+} from '@notifee/react-native';
 import {NOTIFICATION_PROMPTS} from '@tandem/constants/local';
 import {store} from '@tandem/redux/store';
 import {PermissionsAndroid, Platform} from 'react-native';
@@ -12,25 +16,27 @@ export const askPermissionNotifee = async () => {
     );
   }
 };
-async function onDisplayNotification() {
+async function onDisplayNotification({
+  title,
+  body,
+}: {
+  title: string;
+  body: string;
+}) {
   // Request permissions (required for iOS)
 
   // Create a channel (required for Android)
   const channelId = await notifee.createChannel({
-    id: 'default',
-    name: 'Default Channel',
+    id: 'notificationfromfirebase',
+    name: 'firebase',
   });
 
   // Display a notification
   await notifee.displayNotification({
-    title: 'Notification Title',
-    body: 'Main body content of the notification',
+    title: title,
+    body: body,
     android: {
       channelId,
-      // pressAction is needed if you want the notification to open the app when pressed
-      pressAction: {
-        id: 'default',
-      },
     },
   });
 }
@@ -46,6 +52,11 @@ export async function onCreateTriggerNotification({
   title: string;
   body: string;
 }) {
+  const channelId = await notifee.createChannel({
+    id: 'tandem',
+    name: 'Tandem',
+    importance: AndroidImportance.HIGH,
+  });
   // Create a time-based trigger
   const trigger: TimestampTrigger = {
     type: TriggerType.TIMESTAMP,
@@ -59,7 +70,7 @@ export async function onCreateTriggerNotification({
       title,
       body,
       android: {
-        channelId: 'tandem',
+        channelId,
       },
     },
     trigger,
@@ -76,14 +87,14 @@ export const readBookNotification = () => {
   const notification4 = NOTIFICATION_PROMPTS[5];
   const notification5 = NOTIFICATION_PROMPTS[8];
 
-  const date = new Date(Date.now() + 1000 * 1 * 60 * 60); // ! 1 hr from now
+  // const date = readBookNotificationTime(); // ! 1 hr from now
   console.log({numberOfPages});
   if (numberOfPages === 100) {
     onCreateTriggerNotification({
       body: notification5.body,
       title: 'Tandem',
       id: notification5.id,
-      date,
+      date: readBookNotificationTime(),
     });
   }
 
@@ -93,7 +104,7 @@ export const readBookNotification = () => {
         body: notification1.body,
         title: 'Tandem',
         id: notification1.id,
-        date,
+        date: readBookNotificationTime(),
       });
       break;
     case 3:
@@ -101,7 +112,7 @@ export const readBookNotification = () => {
         body: notification2.body,
         title: 'Tandem',
         id: notification2.id,
-        date,
+        date: readBookNotificationTime(),
       });
       break;
     case 5:
@@ -109,7 +120,7 @@ export const readBookNotification = () => {
         body: notification3.body,
         title: 'Tandem',
         id: notification3.id,
-        date,
+        date: readBookNotificationTime(),
       });
       break;
     case 10:
@@ -117,7 +128,7 @@ export const readBookNotification = () => {
         body: notification4.body,
         title: 'Tandem',
         id: notification4.id,
-        date,
+        date: readBookNotificationTime(),
       });
       break;
     default:
@@ -140,6 +151,39 @@ export const inactiveTriggerNotifications = () => {
     id: notification2.id,
     date: new Date(Date.now() + 7 * 60 * 60 * 24 * 1000),
   });
+};
+export const readBookNotificationTime = () => {
+  const UTC_TIME_FRAMES = {
+    10: `${new Date().toISOString().split('T')[0]}T09:00:00.000Z`,
+    13: `${new Date().toISOString().split('T')[0]}T12:00:00.000Z`,
+    18: `${new Date().toISOString().split('T')[0]}T17:00:00.000Z`,
+    19: `${new Date().toISOString().split('T')[0]}T18:00:00.000Z`,
+  };
+  const currentDate = new Date().toISOString();
+  if (
+    new Date(currentDate).getTime() < new Date(UTC_TIME_FRAMES[10]).getTime()
+  ) {
+    return new Date(UTC_TIME_FRAMES[10]);
+  }
+  if (
+    new Date(currentDate).getTime() < new Date(UTC_TIME_FRAMES[13]).getTime()
+  ) {
+    return new Date(UTC_TIME_FRAMES[13]);
+  }
+  if (
+    new Date(currentDate).getTime() < new Date(UTC_TIME_FRAMES[18]).getTime()
+  ) {
+    return new Date(UTC_TIME_FRAMES[18]);
+  }
+  if (
+    new Date(currentDate).getTime() < new Date(UTC_TIME_FRAMES[19]).getTime()
+  ) {
+    return new Date(UTC_TIME_FRAMES[19]);
+  }
+  // if date is greter than 19:00 we do not want to show the notification today... schedule for tomorrow
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  return new Date(`${tomorrow.toISOString().split('T')[0]}T09:00:00.000Z`);
 };
 
 export default onDisplayNotification;

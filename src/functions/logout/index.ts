@@ -32,7 +32,7 @@ const logout = async ({api = true}: {api?: boolean}) => {
       await logoutApi();
     }
   } catch (error) {}
-  store.dispatch(removeToken);
+  store.dispatch(removeToken());
   store.dispatch(logoutFromRedux());
   store.dispatch(clearAlertData());
   store.dispatch(clearCacheForce());
