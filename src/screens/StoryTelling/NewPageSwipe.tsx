@@ -60,6 +60,9 @@ export default ({
   const level = useAppSelector(rootState => rootState.storyLevel.level);
   const size = useAppSelector(rootState => rootState.storyLevel.size);
   const mode = useAppSelector(rootState => rootState.mode.mode);
+  const recordingpremissionGranted = useAppSelector(
+    state => state.recording.permissionGranted,
+  );
   const translateY = useSharedValue(0);
   React.useEffect(() => {
     if (isTablet) {
@@ -181,7 +184,9 @@ export default ({
             <RNButton
               onClick={() => {
                 updateState({ratingModal: true});
-                stopRecording();
+                if (recordingpremissionGranted) {
+                  stopRecording();
+                }
               }}
               title={translation('RATE_THIS_STORY')}
             />
@@ -203,7 +208,9 @@ export default ({
                 },
               });
               updateState({showQuestion: true});
-              stopRecording();
+              if (recordingpremissionGranted) {
+                stopRecording();
+              }
             }}
             title={translation('ANSWER_THESE_QUESTION')}
           />
@@ -229,7 +236,9 @@ export default ({
                     conversationStarters:
                       book.storyInfo[level].conversationStarters,
                   });
-                  stopRecording();
+                  if (recordingpremissionGranted) {
+                    stopRecording();
+                  }
                 }}
                 title={translation('HAVE_YOU_THOUGHT_ABOUT')}
               />
@@ -250,22 +259,27 @@ export default ({
               }
               store.dispatch(incrementReadStoryBookNumber());
               readBookNotification();
-              store.dispatch(
-                addAlertData({
-                  type: 'Alert',
-                  message: translation('RECORDING_SAVE_TEXT'),
-                  onSuccess: async () => {
-                    await stopRecording(book._id);
-                    store.dispatch(resetRecordingState());
-                    navigateTo(SCREEN_NAME.HOME);
-                  },
-                  successText: 'Yes',
-                  destructiveText: 'No',
-                  onDestructive: () => {
-                    stopRecording();
-                  },
-                }),
-              );
+              if (recordingpremissionGranted) {
+                store.dispatch(
+                  addAlertData({
+                    type: 'Alert',
+                    message: translation('RECORDING_SAVE_TEXT'),
+                    onSuccess: async () => {
+                      await stopRecording(book._id);
+                      store.dispatch(resetRecordingState());
+                      navigateTo(SCREEN_NAME.HOME);
+                    },
+                    successText: 'Yes',
+                    destructiveText: 'No',
+                    onDestructive: () => {
+                      stopRecording();
+                      navigateTo(SCREEN_NAME.HOME);
+                    },
+                  }),
+                );
+                return;
+              }
+              navigateTo(SCREEN_NAME.HOME);
             }}
             title={translation('GO_TO_HOME')}
           />

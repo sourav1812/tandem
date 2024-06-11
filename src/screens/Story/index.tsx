@@ -72,30 +72,33 @@ const Story = () => {
       store.dispatch(toggleButton(false));
     }, []),
   );
-
+  const enableExperimentalFeatures = useAppSelector(
+    state => state.userData.userDataObject.enableExperimentalFeatures,
+  );
   const [permissionGranted, setPermissionGranted] = useState(false);
 
   const permissionsType = Platform.select({
     ios: permissions.PERMISSIONS.IOS.MICROPHONE,
     android: permissions.PERMISSIONS.ANDROID.RECORD_AUDIO,
   });
-
-  React.useEffect(() => {
-    const checkPermission = async () => {
-      const permissionStatus = await permissions.check(permissionsType);
-      if (permissionStatus === permissions.RESULTS.GRANTED) {
+  const checkPermission = async () => {
+    const permissionStatus = await permissions.check(permissionsType);
+    if (permissionStatus === permissions.RESULTS.GRANTED) {
+      setPermissionGranted(true);
+    } else {
+      const permissionResult = await permissions.request(permissionsType);
+      if (permissionResult === permissions.RESULTS.GRANTED) {
         setPermissionGranted(true);
       } else {
-        const permissionResult = await permissions.request(permissionsType);
-        if (permissionResult === permissions.RESULTS.GRANTED) {
-          setPermissionGranted(true);
-        } else {
-          setPermissionGranted(false);
-        }
+        setPermissionGranted(false);
       }
-    };
+    }
+  };
 
-    checkPermission();
+  React.useEffect(() => {
+    if (enableExperimentalFeatures) {
+      checkPermission();
+    }
   }, [permissionsType, toggle]);
 
   React.useEffect(() => {
@@ -263,43 +266,46 @@ const Story = () => {
               <RNTextComponent style={styles.story}>
                 {routeData.teaser}
               </RNTextComponent>
-              <View style={styles.recordingButtonContainer}>
-                <RNTextComponent style={{alignSelf: 'center'}}>
-                  {translation('RECORD_SESSION_TEXT')}
-                </RNTextComponent>
-                <Switch
-                  trackColor={{
-                    false: themeColor.Gray28,
-                    true: themeColor.green,
-                  }}
-                  thumbColor={themeColor.white}
-                  ios_backgroundColor={themeColor.Gray28}
-                  style={{alignSelf: 'flex-end'}}
-                  onValueChange={async () => {
-                    store.dispatch(toggleButton(!toggle));
-                    store.dispatch(
-                      addAlertData({
-                        type: 'Message',
-                        message: translation('RECORDING_TEXT_MESSAGE'),
-                        onSuccess: () => {
-                          if (permissionGranted) {
-                            store.dispatch(recordingPermissionAlert(true));
-                          }
-                        },
-                        successText: 'Yes',
-                        destructiveText: 'No',
-                        onDestructive: () => {
-                          store.dispatch(toggleButton(false));
-                        },
-                        // eslint-disable-next-line react/no-unstable-nested-components
-                        onThirdOption: () => {},
-                        thirdOptionText: 'Learn More Here',
-                      }),
-                    );
-                  }}
-                  value={toggle}
-                />
-              </View>
+
+              {enableExperimentalFeatures && (
+                <View style={styles.recordingButtonContainer}>
+                  <RNTextComponent style={{alignSelf: 'center'}}>
+                    {translation('RECORD_SESSION_TEXT')}
+                  </RNTextComponent>
+                  <Switch
+                    trackColor={{
+                      false: themeColor.Gray28,
+                      true: themeColor.green,
+                    }}
+                    thumbColor={themeColor.white}
+                    ios_backgroundColor={themeColor.Gray28}
+                    style={{alignSelf: 'flex-end'}}
+                    onValueChange={async () => {
+                      store.dispatch(toggleButton(!toggle));
+                      store.dispatch(
+                        addAlertData({
+                          type: 'Message',
+                          message: translation('RECORDING_TEXT_MESSAGE'),
+                          onSuccess: () => {
+                            if (permissionGranted) {
+                              store.dispatch(recordingPermissionAlert(true));
+                            }
+                          },
+                          successText: 'Yes',
+                          destructiveText: 'No',
+                          onDestructive: () => {
+                            store.dispatch(toggleButton(false));
+                          },
+                          // eslint-disable-next-line react/no-unstable-nested-components
+                          onThirdOption: () => {},
+                          thirdOptionText: 'Learn More Here',
+                        }),
+                      );
+                    }}
+                    value={toggle}
+                  />
+                </View>
+              )}
             </ScrollView>
           </View>
           <RNButton
