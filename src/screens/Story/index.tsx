@@ -291,14 +291,14 @@ const Story = () => {
                               store.dispatch(recordingPermissionAlert(true));
                             }
                           },
-                          successText: 'Yes',
-                          destructiveText: 'No',
+                          successText: translation('YES'),
+                          destructiveText: translation('NO'),
                           onDestructive: () => {
                             store.dispatch(toggleButton(false));
                           },
                           // eslint-disable-next-line react/no-unstable-nested-components
                           onThirdOption: () => {},
-                          thirdOptionText: 'Learn More Here',
+                          thirdOptionText: translation('LEARN_MORE_HERE'),
                         }),
                       );
                     }}

@@ -2,13 +2,17 @@ import {Platform} from 'react-native';
 import {Audio} from 'expo-av';
 import * as permissions from 'react-native-permissions';
 import pushVoiceData from '@tandem/api/pushVoiceData';
-import {recordingData} from '@tandem/redux/slices/recordingButton.slice';
+import {
+  recordingData,
+  resetRecordingState,
+} from '@tandem/redux/slices/recordingButton.slice';
 import {store} from '@tandem/redux/store';
 
 const permissionsType = Platform.select({
   ios: permissions.PERMISSIONS.IOS.MICROPHONE,
   android: permissions.PERMISSIONS.ANDROID.RECORD_AUDIO,
 });
+const recordingpremissionGranted = store.getState().recording.permissionGranted;
 async function startRecording() {
   console.log('Recording Started');
   try {
@@ -42,33 +46,35 @@ async function startRecording() {
 }
 
 async function stopRecording(bookId?: string) {
-  try {
-    console.log('Stopping recording...');
-    const recording = store.getState().recording.recording;
+  if (recordingpremissionGranted) {
+    try {
+      console.log('Stopping recording...');
+      const recording = store.getState().recording.recording;
 
-    if (recording && !recording._isDoneRecording) {
-      await recording.stopAndUnloadAsync();
-      store.dispatch(recordingData(recording));
-      console.log('Recording stopped and unloaded');
-    }
-
-    await Audio.setAudioModeAsync({allowsRecordingIOS: false});
-
-    const uri = recording?.getURI();
-
-    console.log('Recording URI:', uri);
-
-    if (bookId && uri) {
-      try {
-        await pushVoiceData({audio: uri, bookId});
-      } catch (apiError) {
-        console.error('Error pushing voice data:', apiError);
+      if (recording && !recording._isDoneRecording) {
+        await recording.stopAndUnloadAsync();
+        store.dispatch(recordingData(recording));
+        console.log('Recording stopped and unloaded');
       }
-    }
 
-    // store.dispatch(recordingData(undefined));
-  } catch (error) {
-    console.error('Error stopping recording:', error);
+      await Audio.setAudioModeAsync({allowsRecordingIOS: false});
+
+      const uri = recording?.getURI();
+
+      console.log('Recording URI:', uri);
+
+      if (bookId && uri) {
+        try {
+          await pushVoiceData({audio: uri, bookId});
+        } catch (apiError) {
+          console.error('Error pushing voice data:', apiError);
+        }
+      }
+      store.dispatch(resetRecordingState());
+      // store.dispatch(recordingData(undefined));
+    } catch (error) {
+      console.error('Error stopping recording:', error);
+    }
   }
 }
 
