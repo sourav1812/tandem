@@ -55,13 +55,10 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
   const activePageNumber = useAppSelector(
     state => state.bookShelf.activePageNumber,
   );
-  const permission = useAppSelector(state => state.recording.permissionGranted);
 
   React.useEffect(() => {
-    if (permission) {
-      startRecording();
-    }
-  }, [permission]);
+    startRecording();
+  }, []);
 
   React.useEffect(() => {
     // logic to calculate time spent reading story

@@ -12,8 +12,14 @@ const permissionsType = Platform.select({
   ios: permissions.PERMISSIONS.IOS.MICROPHONE,
   android: permissions.PERMISSIONS.ANDROID.RECORD_AUDIO,
 });
-const recordingpremissionGranted = store.getState().recording.permissionGranted;
 async function startRecording() {
+  const recordingpremissionGranted =
+    store.getState().recording.permissionGranted;
+  const enableExperimentalFeatures =
+    store.getState().userData.userDataObject.enableExperimentalFeatures;
+  if (!recordingpremissionGranted || !enableExperimentalFeatures) {
+    return;
+  }
   console.log('Recording Started');
   try {
     if (!permissionsType) {
@@ -46,6 +52,8 @@ async function startRecording() {
 }
 
 async function stopRecording(bookId?: string) {
+  const recordingpremissionGranted =
+    store.getState().recording.permissionGranted;
   if (recordingpremissionGranted) {
     try {
       console.log('Stopping recording...');

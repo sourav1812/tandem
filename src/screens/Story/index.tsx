@@ -42,7 +42,6 @@ import {
   toggleButton,
 } from '@tandem/redux/slices/recordingButton.slice';
 import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
-import LearnMore from '@tandem/components/RNLearnMoreModal';
 
 const Story = () => {
   const [visible, setVisible] = useState(false);
@@ -82,15 +81,17 @@ const Story = () => {
     android: permissions.PERMISSIONS.ANDROID.RECORD_AUDIO,
   });
   const checkPermission = async () => {
-    const permissionStatus = await permissions.check(permissionsType);
-    if (permissionStatus === permissions.RESULTS.GRANTED) {
-      setPermissionGranted(true);
-    } else {
-      const permissionResult = await permissions.request(permissionsType);
-      if (permissionResult === permissions.RESULTS.GRANTED) {
+    if (permissionsType) {
+      const permissionStatus = await permissions.check(permissionsType);
+      if (permissionStatus === permissions.RESULTS.GRANTED) {
         setPermissionGranted(true);
       } else {
-        setPermissionGranted(false);
+        const permissionResult = await permissions.request(permissionsType);
+        if (permissionResult === permissions.RESULTS.GRANTED) {
+          setPermissionGranted(true);
+        } else {
+          setPermissionGranted(false);
+        }
       }
     }
   };
@@ -267,7 +268,7 @@ const Story = () => {
                 {routeData.teaser}
               </RNTextComponent>
 
-              {enableExperimentalFeatures && (
+              {permissionGranted && enableExperimentalFeatures && (
                 <View style={styles.recordingButtonContainer}>
                   <RNTextComponent style={{alignSelf: 'center'}}>
                     {translation('RECORD_SESSION_TEXT')}
@@ -281,15 +282,18 @@ const Story = () => {
                     ios_backgroundColor={themeColor.Gray28}
                     style={{alignSelf: 'flex-end'}}
                     onValueChange={async () => {
+                      if (toggle) {
+                        store.dispatch(toggleButton(!toggle));
+                        store.dispatch(recordingPermissionAlert(false));
+                        return;
+                      }
                       store.dispatch(toggleButton(!toggle));
                       store.dispatch(
                         addAlertData({
                           type: 'Message',
                           message: translation('RECORDING_TEXT_MESSAGE'),
                           onSuccess: () => {
-                            if (permissionGranted) {
-                              store.dispatch(recordingPermissionAlert(true));
-                            }
+                            store.dispatch(recordingPermissionAlert(true));
                           },
                           successText: translation('YES'),
                           destructiveText: translation('NO'),
