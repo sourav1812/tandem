@@ -37,4 +37,5 @@ export interface UserDataResponse {
       usedCredits: number;
     };
   };
+  enableExperimentalFeatures: boolean | undefined;
 }

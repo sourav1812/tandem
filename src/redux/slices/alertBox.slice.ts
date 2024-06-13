@@ -10,7 +10,6 @@ interface InitialState {
     possibleResolution: string;
     successText?: string;
     destructiveText?: string;
-    thirdOptionText?: string;
   };
 }
 

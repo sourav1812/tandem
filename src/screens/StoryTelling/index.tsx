@@ -36,6 +36,7 @@ import {MODE} from '@tandem/constants/mode';
 import {Stats, updateChildStats} from '@tandem/redux/slices/createChild.slice';
 import themeColor from '@tandem/theme/themeColor';
 import reportImage from '@tandem/api/reportImage';
+import {startRecording, stopRecording} from '@tandem/functions/RecordButton';
 
 const StoryTelling = ({navigation}: {navigation: any}) => {
   const tooltipArray = useAppSelector(state => state.tooltipReducer);
@@ -54,6 +55,10 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
   const activePageNumber = useAppSelector(
     state => state.bookShelf.activePageNumber,
   );
+
+  React.useEffect(() => {
+    startRecording();
+  }, []);
 
   React.useEffect(() => {
     // logic to calculate time spent reading story
@@ -570,6 +575,7 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
                 icon={<Close />}
                 onClick={() => {
                   navigateTo(SCREEN_NAME.BOOKSHELF);
+                  stopRecording();
                   setGoBack(true);
                 }}
               />

@@ -33,6 +33,8 @@ import {
 } from '@tandem/redux/slices/activityIndicator.slice';
 import selfAnalytics from '@tandem/api/selfAnalytics';
 import {UsersAnalyticsEvents} from '@tandem/api/selfAnalytics/interface';
+import {stopRecording} from '@tandem/functions/RecordButton';
+import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
 interface IPage {
   text: string;
   img: string;
@@ -58,6 +60,9 @@ export default ({
   const size = useAppSelector(rootState => rootState.storyLevel.size);
   const mode = useAppSelector(rootState => rootState.mode.mode);
   const translateY = useSharedValue(0);
+  const recordingpremissionGranted = useAppSelector(
+    state => state.recording.permissionGranted,
+  );
   React.useEffect(() => {
     if (isTablet) {
       Orientation.lockToLandscapeLeft();
@@ -178,6 +183,7 @@ export default ({
             <RNButton
               onClick={() => {
                 updateState({ratingModal: true});
+                stopRecording();
               }}
               title={translation('RATE_THIS_STORY')}
             />
@@ -199,6 +205,7 @@ export default ({
                 },
               });
               updateState({showQuestion: true});
+              stopRecording();
             }}
             title={translation('ANSWER_THESE_QUESTION')}
           />
@@ -224,6 +231,8 @@ export default ({
                     conversationStarters:
                       book.storyInfo[level].conversationStarters,
                   });
+
+                  stopRecording();
                 }}
                 title={translation('HAVE_YOU_THOUGHT_ABOUT')}
               />
@@ -235,7 +244,7 @@ export default ({
               backgroundColor: themeColor.themeBlue,
               borderColor: themeColor.themeBlue,
             }}
-            onClick={() => {
+            onClick={async () => {
               if (!publicRoute) {
                 markBookAsRead(book._id, {
                   ...(mode === MODE.C && {solo: true}),
@@ -244,6 +253,25 @@ export default ({
               }
               store.dispatch(incrementReadStoryBookNumber());
               readBookNotification();
+              if (recordingpremissionGranted) {
+                store.dispatch(
+                  addAlertData({
+                    type: 'Alert',
+                    message: translation('RECORDING_SAVE_TEXT'),
+                    onSuccess: async () => {
+                      await stopRecording(book._id);
+                      navigateTo(SCREEN_NAME.HOME);
+                    },
+                    successText: 'Yes',
+                    destructiveText: 'No',
+                    onDestructive: () => {
+                      stopRecording();
+                      navigateTo(SCREEN_NAME.HOME);
+                    },
+                  }),
+                );
+                return;
+              }
               navigateTo(SCREEN_NAME.HOME);
             }}
             title={translation('GO_TO_HOME')}

@@ -110,4 +110,7 @@ export const styles = StyleSheet.create({
   text: {
     fontSize: verticalScale(16),
   },
+  recordingButtonContainer: {
+    marginTop: verticalScale(40),
+  },
 });
