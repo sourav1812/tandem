@@ -37,6 +37,7 @@ import {Stats, updateChildStats} from '@tandem/redux/slices/createChild.slice';
 import themeColor from '@tandem/theme/themeColor';
 import reportImage from '@tandem/api/reportImage';
 import {startRecording, stopRecording} from '@tandem/functions/RecordButton';
+import {resetRecordingState} from '@tandem/redux/slices/recordingButton.slice';
 
 const StoryTelling = ({navigation}: {navigation: any}) => {
   const tooltipArray = useAppSelector(state => state.tooltipReducer);
@@ -576,6 +577,7 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
                 onClick={() => {
                   navigateTo(SCREEN_NAME.BOOKSHELF);
                   stopRecording();
+                  store.dispatch(resetRecordingState());
                   setGoBack(true);
                 }}
               />

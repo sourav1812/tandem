@@ -301,8 +301,8 @@ const Story = () => {
                             store.dispatch(toggleButton(false));
                           },
                           // eslint-disable-next-line react/no-unstable-nested-components
-                          onThirdOption: () => {},
-                          thirdOptionText: translation('LEARN_MORE_HERE'),
+                          // onThirdOption: () => {},
+                          // thirdOptionText: translation('LEARN_MORE_HERE'),
                         }),
                       );
                     }}
