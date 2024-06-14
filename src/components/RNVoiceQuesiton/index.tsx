@@ -109,16 +109,24 @@ const RNVoiceQuesiton = ({
               </View>
               {questions[nextQuestion].options.map((option, index) => (
                 <RNButton
-                  customStyle={
+                  customStyle={[
                     correctIndex === index
                       ? {
                           backgroundColor: '#00cf00',
                           borderColor: '#00cf00',
                         }
                       : incorrectAnswerIndex.includes(index)
-                      ? {backgroundColor: 'red', borderColor: 'red'}
-                      : {}
-                  }
+                      ? {
+                          backgroundColor: 'red',
+                          borderColor: 'red',
+                        }
+                      : {},
+                    {
+                      height: 'auto',
+                      paddingVertical: verticalScale(10),
+                      marginHorizontal: verticalScale(5),
+                    },
+                  ]}
                   key={option}
                   pressableStyle={{marginVertical: 5}}
                   onClick={() => {
