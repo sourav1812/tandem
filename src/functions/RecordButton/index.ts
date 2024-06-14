@@ -75,10 +75,9 @@ async function stopRecording(bookId?: string) {
         try {
           await pushVoiceData({audio: uri, bookId});
         } catch (apiError) {
-          console.error('Error pushing voice data:', apiError);
+          console.error('Error pushing voice data:');
         }
       }
-      store.dispatch(resetRecordingState());
       // store.dispatch(recordingData(undefined));
     } catch (error) {
       console.error('Error stopping recording:', error);

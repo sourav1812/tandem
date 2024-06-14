@@ -112,5 +112,8 @@ export const styles = StyleSheet.create({
   },
   recordingButtonContainer: {
     marginTop: verticalScale(40),
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 });

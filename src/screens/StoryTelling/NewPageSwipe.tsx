@@ -35,6 +35,7 @@ import selfAnalytics from '@tandem/api/selfAnalytics';
 import {UsersAnalyticsEvents} from '@tandem/api/selfAnalytics/interface';
 import {stopRecording} from '@tandem/functions/RecordButton';
 import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
+import {resetRecordingState} from '@tandem/redux/slices/recordingButton.slice';
 interface IPage {
   text: string;
   img: string;
@@ -259,13 +260,15 @@ export default ({
                     type: 'Alert',
                     message: translation('RECORDING_SAVE_TEXT'),
                     onSuccess: async () => {
-                      await stopRecording(book._id);
+                      stopRecording(book._id);
+                      store.dispatch(resetRecordingState());
                       navigateTo(SCREEN_NAME.HOME);
                     },
                     successText: 'Yes',
                     destructiveText: 'No',
                     onDestructive: () => {
                       stopRecording();
+                      store.dispatch(resetRecordingState());
                       navigateTo(SCREEN_NAME.HOME);
                     },
                   }),
