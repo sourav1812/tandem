@@ -74,6 +74,8 @@
 
   "LEARN_SOMETHING": "Bir şey öğrenin",
   "LEARN_MORE_HERE": "Daha fazla bilgi edinin",
+  "LEARN_MORE": "Daha fazla bilgi edin",
+  "LEARN_MORE_CONTENT": "Bu kayıtları, hem yetişkinlerin hem de çocukların hikayeleri nasıl kullandığını veya okuduğunu izlemek için teknolojimizi geliştirmeye yardımcı olmak için kullanacağız.\n\nBaşlangıçta, kimlerin ne kadar süre okuduğunu ölçmek gibi basit şeyleri ölçmek için çalışıyoruz, ancak yavaş yavaş, sizin ve çocuğunuzun okuma akıcılığı ve etkileşimlerinize daha derinlemesine bakışlar sağlamak için araçlar geliştireceğiz, böylece hikayeler sadece sizin için özelleştirilebilir.\n\nBu çalışma hakkında daha fazla bilgiyi, kayıtları nasıl güvenli tuttuğumuz da dahil olmak üzere, burada okuyabilirsiniz {LINK_DESCRIPTION}.\n\nBuna katılmak tamamen isteğe bağlıdır ve istediğiniz zaman ayrılabilirsiniz ve tüm kayıtlarınızı sileceğiz.",
   "HAVE_FUN": "Eğlenin",
   "START": "Başla",
   "RATE": "Puanla",

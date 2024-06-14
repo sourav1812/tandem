@@ -8,6 +8,7 @@ import RNButton from '../RNButton';
 import {verticalScale} from 'react-native-size-matters';
 import themeColor from '@tandem/theme/themeColor';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {translation} from '@tandem/utils/methods';
 
 const LearnMore = ({visible, renderModal}: LearnMoreModal) => {
   let isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -27,11 +28,11 @@ const LearnMore = ({visible, renderModal}: LearnMoreModal) => {
           },
         ]}>
         <RNTextComponent isSemiBold style={styles.heading}>
-          LearnMore
+          {translation('LEARN_MORE')}
         </RNTextComponent>
         <ScrollView>
           <RNTextComponent style={styles.info}>
-            "content will be added by client"
+            {translation('LEARN_MORE_CONTENT')}
           </RNTextComponent>
         </ScrollView>
 

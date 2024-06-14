@@ -42,6 +42,7 @@ import {
   toggleButton,
 } from '@tandem/redux/slices/recordingButton.slice';
 import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
+import LearnMore from '@tandem/components/RNLearnMoreModal';
 
 const Story = () => {
   const [visible, setVisible] = useState(false);
@@ -53,6 +54,7 @@ const Story = () => {
   const routeData: BooksData = route?.params?.routeData;
   const publicRoute: boolean = !!route?.params?.publicRoute;
   const [archive, setArchive] = useState(routeData.book.archived);
+  const [learnMoreVisible, setLearnMoreVisible] = useState(false);
 
   const [publicBook, setPublicBook] = useState(
     !!routeData.book?.isPubliclyAvailable,
@@ -209,6 +211,12 @@ const Story = () => {
   return (
     <>
       <RNScreenWrapper>
+        <LearnMore
+          visible={learnMoreVisible}
+          renderModal={() => {
+            setLearnMoreVisible(!learnMoreVisible);
+          }}
+        />
         <View style={styles.headerButtons}>
           <RNButton
             onlyIcon
@@ -301,8 +309,11 @@ const Story = () => {
                             store.dispatch(toggleButton(false));
                           },
                           // eslint-disable-next-line react/no-unstable-nested-components
-                          // onThirdOption: () => {},
-                          // thirdOptionText: translation('LEARN_MORE_HERE'),
+                          onThirdOption: () => {
+                            store.dispatch(toggleButton(false));
+                            setLearnMoreVisible(true);
+                          },
+                          thirdOptionText: translation('LEARN_MORE_HERE'),
                         }),
                       );
                     }}
