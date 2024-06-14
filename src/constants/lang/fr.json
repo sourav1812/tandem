@@ -74,6 +74,8 @@
 
   "LEARN_SOMETHING": "Apprendre quelque chose",
   "LEARN_MORE_HERE": "En savoir plus ici",
+  "LEARN_MORE": "Apprendre encore plus",
+  "LEARN_MORE_CONTENT": "Nous utiliserons ces enregistrements pour aider à construire notre technologie pour suivre comment les adultes et les enfants utilisent ou lisent les histoires.\n\nPour commencer, nous travaillons simplement à mesurer des choses simples comme qui lit pendant combien de temps, mais progressivement nous développerons des outils pour vous donner des aperçus plus approfondis de la fluidité de votre lecture et celle de votre enfant, ainsi que de vos interactions, afin que les histoires puissent être adaptées juste pour vous.\n\nVous pouvez en savoir plus sur ce travail, y compris comment nous sécurisons les enregistrements, ici {LINK_DESCRIPTION}.\n\nIl est totalement facultatif de participer à cela, et vous pouvez vous retirer à tout moment, et nous supprimerons tous vos enregistrements.",
   "HAVE_FUN": "S'amuser",
   "START": "Démarrer",
   "RATE": "Évaluer",

@@ -74,6 +74,8 @@
 
   "LEARN_SOMETHING": "Learn something",
   "LEARN_MORE_HERE": "Learn More Here",
+  "LEARN_MORE": "Learn More",
+  "LEARN_MORE_CONTENT": "We will use these recordings to help to build our technology to track how both adults and children are using or reading the stories.\n\nTo begin with, we’re just working to measure simple things like who is reading for how long, but gradually we’ll build tools to give you deeper insights into the fluency of your and your child’s reading and your interactions, so that the stories can be tailored just for you.\n\nYou can read more about this work, including how we’re keeping the recordings secure here {LINK_DESCRIPTION}.\n\nIt is totally optional to take part in this, and you can drop out any time, and we’ll delete all your recordings.",
   "HAVE_FUN": "Have fun",
   "START": "Start",
   "RATE": "Rate",
