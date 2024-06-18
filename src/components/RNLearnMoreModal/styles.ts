@@ -14,6 +14,7 @@ export const styles = StyleSheet.create({
     padding: verticalScale(20),
     backgroundColor: themeColor.white,
     borderRadius: verticalScale(16),
+    maxHeight: verticalScale(450),
   },
   heading: {
     fontSize: verticalScale(21),

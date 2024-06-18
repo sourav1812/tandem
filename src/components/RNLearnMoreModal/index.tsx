@@ -30,7 +30,7 @@ const LearnMore = ({visible, renderModal}: LearnMoreModal) => {
         <RNTextComponent isSemiBold style={styles.heading}>
           {translation('LEARN_MORE')}
         </RNTextComponent>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <RNTextComponent style={styles.info}>
             {translation('LEARN_MORE_CONTENT')}
           </RNTextComponent>
