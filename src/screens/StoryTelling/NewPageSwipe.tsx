@@ -257,7 +257,7 @@ export default ({
               if (recordingpremissionGranted) {
                 store.dispatch(
                   addAlertData({
-                    type: 'Alert',
+                    type: 'FINAL_CHECK',
                     message: translation('RECORDING_SAVE_TEXT'),
                     onSuccess: async () => {
                       stopRecording(book._id);
