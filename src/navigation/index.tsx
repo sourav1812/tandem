@@ -22,13 +22,9 @@ import Archive from '@tandem/screens/Archive';
 import analytics from '@react-native-firebase/analytics';
 import BlowWindMill from '@tandem/screens/BlowWindMill';
 import MatchingPairs from '@tandem/screens/MatchingPairs';
-import MixColors from '@tandem/screens/MixColors';
 import StoryLanguage from '@tandem/screens/GenerateStory/Questions/StoryLangauge';
 import RobotBuildingBook from '@tandem/screens/RobotBuildingBook';
-import {
-  setEnergyGenerated,
-  setProgressRef,
-} from '@tandem/redux/slices/activityIndicator.slice';
+import {setEnergyGenerated} from '@tandem/redux/slices/activityIndicator.slice';
 import Disclaimer from '@tandem/screens/Disclaimer';
 // import {accelerometer} from 'react-native-sensors';
 
@@ -102,7 +98,6 @@ const AppNavigator = () => {
             options={{gestureEnabled: false}}
             name={SCREEN_NAME.BLOW_WINDMILL}
           />
-          <Stack.Screen component={MixColors} name={SCREEN_NAME.MIX_COLORS} />
           <Stack.Screen
             component={MatchingPairs}
             options={{gestureEnabled: false}}

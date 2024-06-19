@@ -17,7 +17,6 @@ import setUserData from './slices/userData.slice';
 import cache from './slices/cache.slice';
 import setPermissions from './slices/permissions.slice';
 import tooltipSlice from './slices/tooltip.slice';
-import snapshotReducer from './slices/animationSnapshots.slice';
 import storyLevelSlice from './slices/storyLevel.slice';
 import recordingButtonSlice from './slices/recordingButton.slice';
 
@@ -40,7 +39,6 @@ export const appReducer = combineReducers({
   bookShelf,
   cache,
   tooltipReducer: tooltipSlice,
-  snapshotReducer,
   storyLevel: storyLevelSlice,
   recording: recordingButtonSlice,
 });

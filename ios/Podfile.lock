@@ -68,14 +68,9 @@ PODS:
     - FirebaseAnalytics (~> 10.24.0)
   - Firebase/CoreOnly (10.24.0):
     - FirebaseCore (= 10.24.0)
-  - Firebase/InAppMessaging (10.24.0):
-    - Firebase/CoreOnly
-    - FirebaseInAppMessaging (~> 10.24.0-beta)
   - Firebase/Messaging (10.24.0):
     - Firebase/CoreOnly
     - FirebaseMessaging (~> 10.24.0)
-  - FirebaseABTesting (10.25.0):
-    - FirebaseCore (~> 10.0)
   - FirebaseAnalytics (10.24.0):
     - FirebaseAnalytics/AdIdSupport (= 10.24.0)
     - FirebaseCore (~> 10.0)
@@ -111,12 +106,6 @@ PODS:
     - FirebaseCore (~> 10.0)
   - FirebaseCoreInternal (10.25.0):
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
-  - FirebaseInAppMessaging (10.24.0-beta):
-    - FirebaseABTesting (~> 10.0)
-    - FirebaseCore (~> 10.0)
-    - FirebaseInstallations (~> 10.0)
-    - GoogleUtilities/Environment (~> 7.8)
-    - nanopb (< 2.30911.0, >= 2.30908.0)
   - FirebaseInstallations (10.25.0):
     - FirebaseCore (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
@@ -477,9 +466,6 @@ PODS:
   - React-jsinspector (0.71.8)
   - React-logger (0.71.8):
     - glog
-  - react-native-blur (4.4.0):
-    - RCT-Folly (= 2021.07.22.00)
-    - React-Core
   - react-native-fbsdk-next (11.3.0):
     - React-Core
     - react-native-fbsdk-next/Core (= 11.3.0)
@@ -509,11 +495,6 @@ PODS:
     - React-Core
   - react-native-shake (5.3.2):
     - React
-  - react-native-skia (1.3.0):
-    - RCT-Folly (= 2021.07.22.00)
-    - React
-    - React-callinvoker
-    - React-Core
   - React-perflogger (0.71.8)
   - React-RCTActionSheet (0.71.8):
     - React-Core/RCTActionSheetHeaders (= 0.71.8)
@@ -602,8 +583,6 @@ PODS:
     - React-Core
   - RNAppleAuthentication (2.3.0):
     - React-Core
-  - RNCClipboard (1.5.1):
-    - React-Core
   - RNDeviceInfo (10.14.0):
     - React-Core
   - RNFBAnalytics (19.3.0):
@@ -613,10 +592,6 @@ PODS:
   - RNFBApp (19.3.0):
     - Firebase/CoreOnly (= 10.24.0)
     - React-Core
-  - RNFBInAppMessaging (19.3.0):
-    - Firebase/InAppMessaging (= 10.24.0)
-    - React-Core
-    - RNFBApp
   - RNFBMessaging (19.3.0):
     - Firebase/Messaging (= 10.24.0)
     - FirebaseCoreExtension
@@ -652,8 +627,6 @@ PODS:
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
     - React-RCTImage
-  - RNSensors (7.3.6):
-    - React-Core
   - RNSVG (13.14.1):
     - React-Core
   - TOCropViewController (2.7.4)
@@ -698,7 +671,6 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
-  - "react-native-blur (from `../node_modules/@react-native-community/blur`)"
   - react-native-fbsdk-next (from `../node_modules/react-native-fbsdk-next`)
   - react-native-loudness (from `../node_modules/react-native-loudness`)
   - react-native-mmkv (from `../node_modules/react-native-mmkv`)
@@ -706,7 +678,6 @@ DEPENDENCIES:
   - react-native-orientation-locker (from `../node_modules/react-native-orientation-locker`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-shake (from `../node_modules/react-native-shake`)
-  - "react-native-skia (from `../node_modules/@shopify/react-native-skia`)"
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
@@ -722,11 +693,9 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - rn-fetch-blob (from `../node_modules/rn-fetch-blob`)
   - "RNAppleAuthentication (from `../node_modules/@invertase/react-native-apple-authentication`)"
-  - "RNCClipboard (from `../node_modules/@react-native-community/clipboard`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - "RNFBAnalytics (from `../node_modules/@react-native-firebase/analytics`)"
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
-  - "RNFBInAppMessaging (from `../node_modules/@react-native-firebase/in-app-messaging`)"
   - "RNFBMessaging (from `../node_modules/@react-native-firebase/messaging`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - "RNGoogleSignin (from `../node_modules/@react-native-google-signin/google-signin`)"
@@ -735,7 +704,6 @@ DEPENDENCIES:
   - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
-  - RNSensors (from `../node_modules/react-native-sensors`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -749,12 +717,10 @@ SPEC REPOS:
     - FBSDKLoginKit
     - FBSDKShareKit
     - Firebase
-    - FirebaseABTesting
     - FirebaseAnalytics
     - FirebaseCore
     - FirebaseCoreExtension
     - FirebaseCoreInternal
-    - FirebaseInAppMessaging
     - FirebaseInstallations
     - FirebaseMessaging
     - fmt
@@ -837,8 +803,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   React-logger:
     :path: "../node_modules/react-native/ReactCommon/logger"
-  react-native-blur:
-    :path: "../node_modules/@react-native-community/blur"
   react-native-fbsdk-next:
     :path: "../node_modules/react-native-fbsdk-next"
   react-native-loudness:
@@ -853,8 +817,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-shake:
     :path: "../node_modules/react-native-shake"
-  react-native-skia:
-    :path: "../node_modules/@shopify/react-native-skia"
   React-perflogger:
     :path: "../node_modules/react-native/ReactCommon/reactperflogger"
   React-RCTActionSheet:
@@ -885,16 +847,12 @@ EXTERNAL SOURCES:
     :path: "../node_modules/rn-fetch-blob"
   RNAppleAuthentication:
     :path: "../node_modules/@invertase/react-native-apple-authentication"
-  RNCClipboard:
-    :path: "../node_modules/@react-native-community/clipboard"
   RNDeviceInfo:
     :path: "../node_modules/react-native-device-info"
   RNFBAnalytics:
     :path: "../node_modules/@react-native-firebase/analytics"
   RNFBApp:
     :path: "../node_modules/@react-native-firebase/app"
-  RNFBInAppMessaging:
-    :path: "../node_modules/@react-native-firebase/in-app-messaging"
   RNFBMessaging:
     :path: "../node_modules/@react-native-firebase/messaging"
   RNGestureHandler:
@@ -911,8 +869,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
-  RNSensors:
-    :path: "../node_modules/react-native-sensors"
   RNSVG:
     :path: "../node_modules/react-native-svg"
   Yoga:
@@ -942,12 +898,10 @@ SPEC CHECKSUMS:
   FBSDKLoginKit: 11995469cd7da16fd4d5245e8d2ec61060479270
   FBSDKShareKit: 9501792c3024580809f811a8a549868699d9bd32
   Firebase: 91fefd38712feb9186ea8996af6cbdef41473442
-  FirebaseABTesting: e6e3c3e0e35813874f571d1b7bdae2aab319dd38
   FirebaseAnalytics: b5efc493eb0f40ec560b04a472e3e1a15d39ca13
   FirebaseCore: 11dc8a16dfb7c5e3c3f45ba0e191a33ac4f50894
   FirebaseCoreExtension: 8a47811d0b155501559ef05d089518152a0a1677
   FirebaseCoreInternal: 910a81992c33715fec9263ca7381d59ab3a750b7
-  FirebaseInAppMessaging: a1374493c04fabef91f3ff54b818c5087b98fb67
   FirebaseInstallations: 91950fe859846fff0fbd296180909dd273103b09
   FirebaseMessaging: 4d52717dd820707cc4eadec5eb981b4832ec8d5d
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
@@ -980,7 +934,6 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 747911ab5921641b4ed7e4900065896597142125
   React-jsinspector: c712f9e3bb9ba4122d6b82b4f906448b8a281580
   React-logger: 342f358b8decfbf8f272367f4eacf4b6154061be
-  react-native-blur: 69ecfe61d81b32ee7baae10f5d17aeb4e2594b10
   react-native-fbsdk-next: 16e652b5f1236492631185c58ec2ae15b029119d
   react-native-loudness: 46937e359d834b3399d65a9143dfcbb49e122903
   react-native-mmkv: 38d484ccd8f5760fe0e46d206ed07add5ddda1fc
@@ -988,7 +941,6 @@ SPEC CHECKSUMS:
   react-native-orientation-locker: 5819fd23ca89cbac0d736fb4314745f62716d517
   react-native-safe-area-context: dcab599c527c2d7de2d76507a523d20a0b83823d
   react-native-shake: 62aa5681863203090a087842da70183c442b97f8
-  react-native-skia: 44fed982cf3f26f27b11ba22194b1f967ab8f468
   React-perflogger: d21f182895de9d1b077f8a3cd00011095c8c9100
   React-RCTActionSheet: 0151f83ef92d2a7139bba7dfdbc8066632a6d47b
   React-RCTAnimation: 5ec9c0705bb2297549c120fe6473aa3e4a01e215
@@ -1004,11 +956,9 @@ SPEC CHECKSUMS:
   ReactCommon: 9957c7530467adbdf4a4a1476d636bd00b2e4dd8
   rn-fetch-blob: f065bb7ab7fb48dd002629f8bdcb0336602d3cba
   RNAppleAuthentication: e99eaf3c4c01ad8ecb6125dd6f0cfd98871685b5
-  RNCClipboard: 41d8d918092ae8e676f18adada19104fa3e68495
   RNDeviceInfo: 59344c19152c4b2b32283005f9737c5c64b42fba
   RNFBAnalytics: 74eebc66e5f2475f2ed3a63822ef6bc913c4b4ff
   RNFBApp: de81f7eb68c1e6107574f2b102b0dee92a9862fa
-  RNFBInAppMessaging: b1ca2159c7db0fe1cbb2c3697d854fc3b0517297
   RNFBMessaging: bcceb47d52080700672f4a46aa9096d9754a988f
   RNGestureHandler: d678f94a8f74de70ce3d9f5d23eb0f97b686e943
   RNGoogleSignin: 9d0ecc3bff939ccef83cb3a26b874130b06a6e81
@@ -1017,11 +967,10 @@ SPEC CHECKSUMS:
   RNPermissions: f9a0380dad4d370b6b983acaf4f9bff07aba9a21
   RNReanimated: c112febb9548b8e0bcc5abddff308f69913c4270
   RNScreens: 93ae3be2f119d955620f9bbb39ad372adb53b7a9
-  RNSensors: 117ba71c7eeeea0407ea0c0bb79e3495d602049b
   RNSVG: af3907ac5d4fa26a862b75a16d8f15bc74f2ceda
   TOCropViewController: 80b8985ad794298fb69d3341de183f33d1853654
   Yoga: 065f0b74dba4832d6e328238de46eb72c5de9556
 
-PODFILE CHECKSUM: adc8dbf169400271a1dee10732306e6a8966779c
+PODFILE CHECKSUM: 9edc33c2145aaf41fb60854e00bf5b96688666cd
 
 COCOAPODS: 1.15.2

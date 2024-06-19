@@ -28,10 +28,6 @@ import themeColor from '@tandem/theme/themeColor';
 import {BooksData} from './interface';
 import {clearStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration.slice';
 import SadFace from '@tandem/assets/svg/Sad';
-import {
-  addSnapShot1,
-  addSnapShot2,
-} from '@tandem/redux/slices/animationSnapshots.slice';
 import bookshelfDays from '@tandem/functions/bookshelfDays';
 import {useDispatch} from 'react-redux';
 import {ratingList} from '@tandem/components/RNRatingModal/interface';
@@ -170,8 +166,6 @@ const PublicLib = () => {
           title={translation('bookshelf.write-a-story')}
           onClick={() => {
             store.dispatch(clearStoryGenerationResponse());
-            store.dispatch(addSnapShot1(null));
-            store.dispatch(addSnapShot2(null));
             navigateTo(SCREEN_NAME.ROADMAP);
           }}
         />

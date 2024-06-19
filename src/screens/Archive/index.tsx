@@ -60,7 +60,6 @@ const Archive = () => {
   const data: BooksData[] = React.useMemo(
     () =>
       bookObjects.books?.map((book, index) => {
-        console.log('archive status: bookId: ', book._id, book.archived);
         const isThisWeek =
           ((new Date().getTime() - new Date(book.createdAt).getTime()) *
             1.157) /

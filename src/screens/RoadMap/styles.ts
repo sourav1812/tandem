@@ -63,7 +63,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: verticalScale(20),
     width: '100%',
-    top: verticalScale(42),
+    top: verticalScale(45),
     zIndex: 10,
   },
 });

@@ -20,7 +20,6 @@ import {COLOR_PALETTE} from '@tandem/constants/local';
 import chroma from 'chroma-js';
 import RNButton from '../RNButton';
 import {scale, verticalScale} from 'react-native-size-matters';
-import RNPaintBrush from '../RNPaintBrush';
 import {pushStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration.slice';
 import {RootState, store} from '@tandem/redux/store';
 import {STORY_PARTS} from '@tandem/constants/enums';
@@ -182,15 +181,6 @@ const RNChooseColor = ({
                 </View>
               );
             })}
-            <View style={styles.colorPatch}>
-              <RNPaintBrush
-                usedColor={usedColor}
-                clear={clear}
-                setPathsParent={setPaths}
-                color={activeColor || 'transparent'}
-                height={verticalScale(170)}
-              />
-            </View>
           </View>
           <View style={styles.footer}>
             {!portrait && <TextData />}
