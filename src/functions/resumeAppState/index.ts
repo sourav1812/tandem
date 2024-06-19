@@ -52,16 +52,13 @@ export default async () => {
     if (store.getState().userData.userDataObject.termsAndConditions) {
       const shouldNavigateToBookShelf = getValueFromKey(NAVIGATE_TO_BOOKSHELF);
       if (shouldNavigateToBookShelf === NAVIGATE_TO_BOOKSHELF) {
+        store.dispatch(changeMode(MODE.A));
         storeKey(NAVIGATE_TO_BOOKSHELF, null);
         selfAnalytics({
           eventType: UsersAnalyticsEvents.APP_OPENED,
           details: {isNotificationTapped: true},
         });
-        store.dispatch(changeMode(MODE.A));
-        navigateTo(SCREEN_NAME.BOTTOM_TAB, {}, true);
-        setTimeout(() => {
-          gotoBookshelf();
-        }, 100);
+        gotoBookshelf();
       } else {
         selfAnalytics({
           eventType: UsersAnalyticsEvents.APP_OPENED,

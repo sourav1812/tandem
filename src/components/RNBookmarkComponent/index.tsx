@@ -29,10 +29,7 @@ const RNBookmarkComponent = ({
   const scaleButton = useSharedValue(1);
 
   const runAnimation = () => {
-    scaleButton.value = withSequence(
-      withTiming(0.9, {duration: 200}),
-      withTiming(1),
-    );
+    scaleButton.value = withSequence(withTiming(0.9), withTiming(1));
   };
   return (
     <Pressable
