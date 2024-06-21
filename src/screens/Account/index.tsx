@@ -9,9 +9,7 @@ import {
   ScrollView,
   Pressable,
   Dimensions,
-  LayoutAnimation,
   ViewStyle,
-  Platform,
 } from 'react-native';
 import Logout from '@tandem/assets/svg/Logout';
 import RNButton from '@tandem/components/RNButton';
@@ -137,8 +135,6 @@ const Account = () => {
   );
   const {signoutModal, playerList} = state;
   const updateState = (date: any) => {
-    if (Platform.OS === 'ios')
-      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setState((previouState: any) => {
       return {...previouState, ...date};
     });

@@ -13,7 +13,7 @@ import Animated, {
 import Loudness from 'react-native-loudness';
 import Windmill from '@tandem/assets/svg/Windmill';
 import WindmillBlades from '@tandem/assets/svg/WindmillBlades';
-import {Dimensions, LayoutAnimation, Platform, View} from 'react-native';
+import {Dimensions, Platform, View} from 'react-native';
 import Orientation from 'react-native-orientation-locker';
 import WindmillRing from '@tandem/assets/svg/WindmillRing';
 import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
@@ -129,8 +129,6 @@ const BlowWindMill = () => {
   const startFlow = () => {
     setShowInstructions(true);
     setTimeout(() => {
-      if (Platform.OS === 'ios')
-        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
       setShowInstructions(false);
     }, 4000);
   };
@@ -284,10 +282,6 @@ const BlowWindMill = () => {
         <RNButton
           onlyIcon
           onClick={() => {
-            if (Platform.OS === 'ios')
-              LayoutAnimation.configureNext(
-                LayoutAnimation.Presets.easeInEaseOut,
-              );
             setShowInstructions(p => !p);
           }}
           icon={<QuestionMark />}

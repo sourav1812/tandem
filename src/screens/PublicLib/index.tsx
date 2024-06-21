@@ -4,7 +4,6 @@ import {
   RefreshControl,
   ActivityIndicator,
   SectionList,
-  LayoutAnimation,
   Platform,
 } from 'react-native';
 import React, {useState} from 'react';
@@ -230,8 +229,6 @@ const PublicLib = () => {
   }, [dispatch, forceReload, refreshing]);
 
   React.useLayoutEffect(() => {
-    if (Platform.OS === 'ios')
-      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setIsImageLoading(data.some(obj => obj.image === null));
   }, [images, data]);
 

@@ -8,12 +8,15 @@ import {changeDevice} from '@tandem/redux/slices/tablet.slice';
 import {useAppDispatch} from '@tandem/hooks/navigationHooks';
 import {translation} from '@tandem/utils/methods';
 import {stopLoader} from '@tandem/redux/slices/activityIndicator.slice';
+import {MODE} from '@tandem/constants/mode';
+import {changeMode} from '@tandem/redux/slices/mode.slice';
 
 const SplashScreen = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(stopLoader());
+    dispatch(changeMode(MODE.A));
     let isIpad = DeviceInfo.getSystemName() === 'iPadOS' ? true : false;
     let isAndroidTablet = DeviceInfo.isTablet();
     let isTablet = isIpad || isAndroidTablet ? true : false;

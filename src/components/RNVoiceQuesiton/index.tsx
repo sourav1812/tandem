@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {View, ScrollView, LayoutAnimation, Platform} from 'react-native';
+import {View, ScrollView, Platform} from 'react-native';
 import React, {useRef, useState} from 'react';
 import {styles} from './styles';
 import RNTextComponent from '../RNTextComponent';
@@ -33,10 +33,7 @@ const RNVoiceQuesiton = ({
     1: {height: 0, width: 0, x: 0, y: 0},
     2: {height: 0, width: 0, x: 0, y: 0},
   });
-  React.useLayoutEffect(() => {
-    if (Platform.OS === 'ios')
-      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-  }, [correctIndex]);
+  React.useLayoutEffect(() => {}, [correctIndex]);
   return (
     <>
       <View

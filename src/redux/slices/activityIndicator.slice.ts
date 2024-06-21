@@ -11,6 +11,7 @@ interface InitialState {
   storyBooksReadThisWeek: number;
   weekMark: Date;
   pagesReadInBooks: number;
+  openedByNotifications: boolean;
 }
 
 const initialState: InitialState = {
@@ -24,6 +25,7 @@ const initialState: InitialState = {
   storyBooksReadThisWeek: 0,
   weekMark: new Date(),
   pagesReadInBooks: 0,
+  openedByNotifications: false,
 };
 const activityIndicatorSlice = createSlice({
   name: 'activityIndicator',
@@ -67,6 +69,9 @@ const activityIndicatorSlice = createSlice({
       state.storyBooksReadThisWeek = 0;
       state.weekMark = new Date();
     },
+    setIsOpenedFromNotifications: (state, action) => {
+      state.openedByNotifications = action.payload;
+    },
   },
 });
 export const {
@@ -82,5 +87,6 @@ export const {
   resetReadStoryBookNumber,
   incrementStoryPageNumber,
   resetStoryPageNumber,
+  setIsOpenedFromNotifications,
 } = activityIndicatorSlice.actions;
 export default activityIndicatorSlice.reducer;

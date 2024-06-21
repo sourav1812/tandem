@@ -7,7 +7,7 @@ import RNTextComponent from '@tandem/components/RNTextComponent';
 import {translation} from '@tandem/utils/methods';
 import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
-import {LayoutAnimation, Platform} from 'react-native';
+
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import RNButton from '@tandem/components/RNButton';
 import selfAnalytics from '@tandem/api/selfAnalytics';
@@ -28,8 +28,6 @@ const RobotBuildingBook = () => {
       progressRef.resetProgressStatus();
     }
     setTimeout(() => {
-      if (Platform.OS === 'ios')
-        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
       setShow(true);
     }, 3000);
 

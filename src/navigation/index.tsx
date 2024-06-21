@@ -25,8 +25,8 @@ import StoryLanguage from '@tandem/screens/GenerateStory/Questions/StoryLangauge
 import RobotBuildingBook from '@tandem/screens/RobotBuildingBook';
 import {setEnergyGenerated} from '@tandem/redux/slices/activityIndicator.slice';
 import Disclaimer from '@tandem/screens/Disclaimer';
-// import {accelerometer} from 'react-native-sensors';
-
+import gotoBookshelf from '@tandem/functions/gotoBookshelf';
+import notifee, {EventType} from '@notifee/react-native';
 const AppNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
   const routeNameRef = React.useRef<any>(null);
@@ -40,7 +40,20 @@ const AppNavigator = () => {
   );
 
   React.useEffect(() => {
-    resumeAppState();
+    const f = async () => {
+      await resumeAppState();
+      return notifee.onForegroundEvent(({type}) => {
+        switch (type) {
+          case EventType.PRESS:
+            gotoBookshelf();
+            break;
+        }
+      });
+    };
+    f();
+  }, []);
+
+  React.useEffect(() => {
     store.dispatch(setEnergyGenerated(true)); // ! on App open we do want to show notification
     // ! logic to make post req for multiple pending posts
     const pendingStory = store.getState().cache.pendingStoryGeneration;

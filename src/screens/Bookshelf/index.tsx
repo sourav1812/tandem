@@ -5,8 +5,6 @@ import {
   RefreshControl,
   ActivityIndicator,
   SectionList,
-  LayoutAnimation,
-  Platform,
 } from 'react-native';
 import React, {useState} from 'react';
 import {styles} from './styles';
@@ -244,8 +242,6 @@ const Bookshelf = () => {
   }, [dispatch, forceReload, refreshing]);
 
   React.useLayoutEffect(() => {
-    if (Platform.OS === 'ios')
-      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setIsImageLoading(data.some(obj => obj.image === null));
   }, [images, data]);
 

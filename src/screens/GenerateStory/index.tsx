@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {LayoutAnimation, Platform, View} from 'react-native';
+import {Platform, View} from 'react-native';
 import React from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {styles} from './styles';
@@ -55,10 +55,7 @@ export default ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  React.useEffect(() => {
-    if (Platform.OS === 'ios')
-      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-  }, [disabled]);
+  React.useEffect(() => {}, [disabled]);
 
   return (
     <RNScreenWrapper>

@@ -52,6 +52,7 @@ export type RootStackParamList = {
   StoryLanguage: undefined;
   RobotBuildingBook: undefined;
   Disclaimer: undefined;
+  Bookshelf: undefined;
 };
 
 export type RootTabParamList = {

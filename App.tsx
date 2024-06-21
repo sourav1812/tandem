@@ -12,15 +12,14 @@ import i18n from '@tandem/constants/lang/i18n';
 import setupLangauge from '@tandem/functions/language';
 import {
   setForceReload,
+  setIsOpenedFromNotifications,
   setStoryBookNotification,
 } from '@tandem/redux/slices/activityIndicator.slice';
 import {getChildStats} from '@tandem/api/childAnalytics';
 import pushChildStats from '@tandem/functions/pushChildStats';
 import getStories from '@tandem/api/getStories';
-import gotoBookshelf from '@tandem/functions/gotoBookshelf';
 import notifee, {EventType} from '@notifee/react-native';
-import {NAVIGATE_TO_BOOKSHELF} from '@tandem/constants/local';
-import {storeKey} from '@tandem/helpers/encryptedStorage';
+
 import userProfile from '@tandem/api/userProfile';
 import {requestInitialPermission} from '@tandem/functions/permissions';
 import onDisplayNotification from '@tandem/functions/notifee';
@@ -29,31 +28,22 @@ const persistor = persistStore(store);
 
 const App: FC = () => {
   useEffect(() => {
-    const f = async () => {
-      const initialNotification = await notifee.getInitialNotification();
-      if (initialNotification) {
-        storeKey(NAVIGATE_TO_BOOKSHELF, NAVIGATE_TO_BOOKSHELF);
-      }
-    };
-    f();
-
-    return notifee.onForegroundEvent(({type, detail}) => {
+    const unsub = notifee.onForegroundEvent(({type}) => {
       switch (type) {
-        case EventType.DISMISSED:
-          console.log('User dismissed notification', detail.notification);
-          break;
         case EventType.PRESS:
-          gotoBookshelf();
+          console.log('ios notificatio set');
+          store.dispatch(setIsOpenedFromNotifications(true));
           break;
       }
+      console.log('unsubbing from first onForegroundEvent');
+      unsub();
     });
   }, []);
-
   useEffect(() => {
     requestInitialPermission();
     i18n.locale = setupLangauge();
     store.dispatch(clearAlertData());
-    const unsubscribe = messaging().onMessage(async message => {
+    const unsubscribe = messaging().onMessage(async () => {
       await getStories(1);
       await pushChildStats();
       await getChildStats();
