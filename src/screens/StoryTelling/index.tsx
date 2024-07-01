@@ -363,8 +363,6 @@ const StoryTelling = ({navigation}: {navigation: any}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, level, sizeIndex]);
 
-  React.useEffect(() => {}, [menu, openReportModal, selectedReason]);
-
   const reportImageRenderModal = React.useCallback(() => {
     return (
       <Pressable
