@@ -17,8 +17,6 @@ const RNEmojiWithText = ({
   emoji,
   icon,
   bgcColor,
-  ref,
-  onLayout,
   onPress = () => {},
   isSelected,
   Svgimg,
@@ -34,10 +32,7 @@ const RNEmojiWithText = ({
   );
 
   const runAnimation = () => {
-    scaleButton.value = withSequence(
-      withTiming(0.9, {duration: 200}),
-      withTiming(1),
-    );
+    scaleButton.value = withSequence(withTiming(0.9), withTiming(1));
   };
   const runRotation = (toggle: boolean) => {
     rotation.value = withSequence(
@@ -67,8 +62,6 @@ const RNEmojiWithText = ({
         onPress();
       }}>
       <Animated.View
-        ref={ref && ref}
-        onLayout={onLayout && onLayout}
         style={[
           styles.container,
           {

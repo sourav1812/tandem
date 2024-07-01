@@ -6,10 +6,6 @@ import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
 import {RootState, store} from '@tandem/redux/store';
-import {
-  addSnapShot1,
-  addSnapShot2,
-} from '@tandem/redux/slices/animationSnapshots.slice';
 import {clearStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration.slice';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import LottieView from 'lottie-react-native';
@@ -37,8 +33,6 @@ const Congratulation = () => {
           },
           onDestructive: () => {
             store.dispatch(clearStoryGenerationResponse());
-            store.dispatch(addSnapShot1(null));
-            store.dispatch(addSnapShot2(null));
             navigateTo(SCREEN_NAME.ROADMAP);
           },
           onThirdOption: () => {

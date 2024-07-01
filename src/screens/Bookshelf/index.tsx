@@ -1,13 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {
-  View,
-  Pressable,
-  RefreshControl,
-  ActivityIndicator,
-  SectionList,
-  LayoutAnimation,
-  Platform,
-} from 'react-native';
+import {View, Pressable, ActivityIndicator, SectionList} from 'react-native';
 import React, {useState} from 'react';
 import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
@@ -31,22 +23,15 @@ import themeColor from '@tandem/theme/themeColor';
 import {BooksData} from './interface';
 import {clearStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration.slice';
 import SadFace from '@tandem/assets/svg/Sad';
-import {
-  addSnapShot1,
-  addSnapShot2,
-} from '@tandem/redux/slices/animationSnapshots.slice';
 import bookshelfDays from '@tandem/functions/bookshelfDays';
-import {useDispatch} from 'react-redux';
 import {ratingList} from '@tandem/components/RNRatingModal/interface';
 import Book from '@tandem/api/getStories/interface';
-import {setForceReload} from '@tandem/redux/slices/activityIndicator.slice';
 import {ImageLoading} from '../PublicLib';
 import selfAnalytics from '@tandem/api/selfAnalytics';
 import {UsersAnalyticsEvents} from '@tandem/api/selfAnalytics/interface';
 import {useFocusEffect} from '@react-navigation/native';
 
 const Bookshelf = () => {
-  const dispatch = useDispatch();
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const [isImageLoading, setIsImageLoading] = React.useState(false);
   const mode = useAppSelector(state => state.mode.mode);
@@ -54,13 +39,9 @@ const Bookshelf = () => {
   const images = useAppSelector(state => state.bookShelf.images);
   const [page, setPage] = React.useState(1);
   const [isLoading, setLoading] = React.useState(false);
-  const [refreshing, setRefreshing] = React.useState(false);
   const [sectionList, setSectionList] = React.useState<
     {title: string; data: BooksData[]}[]
   >([]);
-  const forceReload = useAppSelector(
-    state => state.activityIndicator.forceReload,
-  );
   const [bookObjects, setBookObjects] = useState<{
     endReached: boolean;
     books: Book[];
@@ -79,7 +60,6 @@ const Bookshelf = () => {
   const data: BooksData[] = React.useMemo(
     () =>
       bookObjects.books?.map((book, index) => {
-        console.log('archive status: bookId: ', book._id, book.archived);
         const isThisWeek =
           ((new Date().getTime() - new Date(book.createdAt).getTime()) *
             1.157) /
@@ -188,8 +168,6 @@ const Bookshelf = () => {
           title={translation('bookshelf.write-a-story')}
           onClick={() => {
             store.dispatch(clearStoryGenerationResponse());
-            store.dispatch(addSnapShot1(null));
-            store.dispatch(addSnapShot2(null));
             navigateTo(SCREEN_NAME.ROADMAP);
           }}
         />
@@ -227,32 +205,26 @@ const Bookshelf = () => {
     }
   };
 
-  React.useEffect(() => {
-    const f = async () => {
-      try {
-        setLoading(true);
-        console.log('this runs', page);
-
-        const response = await getStories(1);
-        setBookObjects(response);
-      } catch (e) {
-        console.log('error in bookshelf pagination for page 1', e);
-      } finally {
-        setLoading(false);
-        setRefreshing(false);
-      }
-    };
-    if (forceReload || refreshing || page === 1) {
-      setPage(1);
-      dispatch(setForceReload(false));
+  useFocusEffect(
+    React.useCallback(() => {
+      const f = async () => {
+        try {
+          setLoading(true);
+          setPage(1);
+          setBookObjects({endReached: false, books: []});
+          const response = await getStories(1);
+          setBookObjects(response);
+        } catch (e) {
+          console.log('error in bookshelf pagination for page 1', e);
+        } finally {
+          setLoading(false);
+        }
+      };
       f();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, forceReload, refreshing]);
+    }, []),
+  );
 
   React.useLayoutEffect(() => {
-    if (Platform.OS === 'ios')
-      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setIsImageLoading(data.some(obj => obj.image === null));
   }, [images, data]);
 
@@ -368,15 +340,6 @@ const Bookshelf = () => {
                 {title}
               </RNTextComponent>
             )}
-            refreshControl={
-              <RefreshControl
-                refreshing={refreshing}
-                onRefresh={() => {
-                  setRefreshing(true);
-                }}
-                colors={[themeColor.themeBlue]}
-              />
-            }
             keyExtractor={(_, index) => index.toString()}
             onEndReached={fetchMoreData}
             onEndReachedThreshold={0.2}

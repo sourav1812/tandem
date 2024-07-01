@@ -13,7 +13,7 @@ const getArchivedStories = async (page: number) => {
       noLoader: true,
       params: {page},
     });
-    console.log('books with page: ', page, response);
+    console.log('archived books with page: ', page, response.books.length);
     cacheStoryBookImages(response.books);
     return response;
   } catch (error) {

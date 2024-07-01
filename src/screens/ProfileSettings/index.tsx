@@ -188,8 +188,8 @@ const NotificationSwitch = () => {
     fromBackend: user.allowNotifications,
   });
 
-  const appState = React.useRef(AppState.currentState);
   const dispatch = useAppDispatch();
+  const appState = React.useRef(AppState.currentState);
   React.useEffect(() => {
     const subscription = AppState.addEventListener('change', nextAppState => {
       if (

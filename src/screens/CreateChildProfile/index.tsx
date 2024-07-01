@@ -1,14 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
-import {
-  Pressable,
-  ScrollView,
-  View,
-  Keyboard,
-  LayoutAnimation,
-  Platform,
-} from 'react-native';
+import {Pressable, ScrollView, View, Keyboard, Platform} from 'react-native';
 import BlueButton from '@tandem/assets/svg/BlueButton';
 import {styles} from './styles';
 import RNNumericBulletin from '@tandem/components/RNNumericBulletin';
@@ -84,10 +77,7 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
       return {...previouState, ...date};
     });
   };
-  React.useEffect(() => {
-    if (Platform.OS === 'ios')
-      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-  }, [dateModal]);
+  React.useEffect(() => {}, [dateModal]);
 
   const nextQuestion = async () => {
     Keyboard.dismiss();
@@ -515,10 +505,6 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
                 text={role || translation('SELECT')}
                 onPress={() => {
                   toggleRoles();
-                  if (Platform.OS === 'ios')
-                    LayoutAnimation.configureNext(
-                      LayoutAnimation.Presets.easeInEaseOut,
-                    );
                 }}
               />
               {showRoles && (
@@ -538,10 +524,6 @@ const CreateChildProfile = ({route}: CreateChildProfileProps) => {
                           onPress={() => {
                             setRole(item.role);
                             toggleRoles();
-                            if (Platform.OS === 'ios')
-                              LayoutAnimation.configureNext(
-                                LayoutAnimation.Presets.easeInEaseOut,
-                              );
                           }}>
                           <RNTextComponent
                             style={{

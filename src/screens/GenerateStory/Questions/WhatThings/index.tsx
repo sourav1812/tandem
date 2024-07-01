@@ -10,11 +10,21 @@ import GenerateStory from '../..';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {useNavigation} from '@react-navigation/native';
 import removeQuestionData from '@tandem/functions/removeQuestionData';
+import {InteractionManager} from 'react-native';
 
 export default () => {
   const [disabled, setDisabled] = React.useState(true);
   const navigation: any = useNavigation();
+  const [renderList, setRenderList] = React.useState(false);
   const data = React.useMemo(() => shuffle(ATTRIBUTE), []);
+  React.useEffect(() => {
+    const interactionPromise = InteractionManager.runAfterInteractions(() => {
+      setRenderList(true);
+    });
+
+    // Cleanup the promise if the component unmounts
+    return () => interactionPromise.cancel();
+  }, []);
   return (
     <GenerateStory
       type={STORY_PARTS.WHAT_THINGS}
@@ -36,13 +46,15 @@ export default () => {
           style={[styles.question, {height: verticalScale(70)}]}>
           {translation('generate-story.include-things')}{' '}
         </RNTextComponent>
-        <RNChoiceQuestions
-          setDisabled={setDisabled}
-          type={STORY_PARTS.WHAT_THINGS}
-          maxSelections={1}
-          index={3}
-          data={data}
-        />
+        {renderList ? (
+          <RNChoiceQuestions
+            setDisabled={setDisabled}
+            type={STORY_PARTS.WHAT_THINGS}
+            maxSelections={1}
+            index={3}
+            data={data}
+          />
+        ) : null}
       </>
     </GenerateStory>
   );

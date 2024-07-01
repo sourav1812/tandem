@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {LayoutAnimation, Platform, View} from 'react-native';
+import {Platform, View} from 'react-native';
 import React from 'react';
 import RNTextComponent from '../RNTextComponent';
 import RNModal from '../RNModal';
@@ -25,10 +25,7 @@ const RNAlertBox = ({
   );
   const dispatch = useAppDispatch();
 
-  React.useLayoutEffect(() => {
-    if (Platform.OS === 'ios')
-      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-  }, [message]);
+  React.useLayoutEffect(() => {}, [message]);
 
   const fixProgressbarState = () => {
     if (

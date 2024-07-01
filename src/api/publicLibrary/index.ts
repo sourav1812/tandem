@@ -10,7 +10,7 @@ const getPublicStories = async (page: number) => {
       noLoader: true,
       params: {page},
     });
-    console.log('public books with page: ', page, response);
+    console.log('public books with page: ', page, response.books.length);
     cacheStoryBookImages(response.books);
     return response;
   } catch (error) {

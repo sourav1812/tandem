@@ -5,20 +5,21 @@ import userProfile from '@tandem/api/userProfile';
 import {store} from '@tandem/redux/store';
 import RNFetchBlob from 'rn-fetch-blob';
 import {getValueFromKey, storeKey} from '@tandem/helpers/encryptedStorage';
-import {CACHE_DIR, NAVIGATE_TO_BOOKSHELF} from '@tandem/constants/local';
+import {CACHE_DIR} from '@tandem/constants/local';
 import {reinitialiseCacheDirectory} from '@tandem/redux/slices/cache.slice';
 import {Platform} from 'react-native';
 import {renewImages} from '@tandem/redux/slices/bookShelf.slice';
 import {
   resetReadStoryBookNumber,
   resetStoryPageNumber,
+  setIsOpenedFromNotifications,
 } from '@tandem/redux/slices/activityIndicator.slice';
 import {inactiveTriggerNotifications} from '../notifee';
-import gotoBookshelf from '../gotoBookshelf';
-import {MODE} from '@tandem/constants/mode';
-import {changeMode} from '@tandem/redux/slices/mode.slice';
 import selfAnalytics from '@tandem/api/selfAnalytics';
 import {UsersAnalyticsEvents} from '@tandem/api/selfAnalytics/interface';
+import wait from '../wait';
+import gotoBookshelf from '../gotoBookshelf';
+import messaging from '@react-native-firebase/messaging';
 
 export default async () => {
   // ! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -41,39 +42,42 @@ export default async () => {
   }
   inactiveTriggerNotifications();
   // ! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
   const {token, refreshToken} = getStoredTokens();
-  setTimeout(() => {
-    if (!token && !refreshToken) {
-      navigateTo(SCREEN_NAME.SELECT_LANGUAGE, {}, true);
-      return;
-    } else {
-      userProfile();
-    }
-    if (store.getState().userData.userDataObject.termsAndConditions) {
-      const shouldNavigateToBookShelf = getValueFromKey(NAVIGATE_TO_BOOKSHELF);
-      if (shouldNavigateToBookShelf === NAVIGATE_TO_BOOKSHELF) {
-        storeKey(NAVIGATE_TO_BOOKSHELF, null);
-        selfAnalytics({
-          eventType: UsersAnalyticsEvents.APP_OPENED,
-          details: {isNotificationTapped: true},
-        });
-        store.dispatch(changeMode(MODE.A));
-        navigateTo(SCREEN_NAME.BOTTOM_TAB, {}, true);
-        setTimeout(() => {
-          gotoBookshelf();
-        }, 100);
-      } else {
-        selfAnalytics({
-          eventType: UsersAnalyticsEvents.APP_OPENED,
-          details: {isNotificationTapped: false},
-        });
-        navigateTo(SCREEN_NAME.ACCOUNT, {}, true);
+  if (!token && !refreshToken) {
+    await wait(2000);
+    navigateTo(SCREEN_NAME.SELECT_LANGUAGE, {}, true);
+    return;
+  } else {
+    await userProfile();
+  }
+  resetDirectoriesOfCachedData();
+  await wait(1500);
+  if (store.getState().userData.userDataObject.termsAndConditions) {
+    if (Platform.OS === 'android') {
+      const initialNotification = await messaging().getInitialNotification();
+      if (initialNotification) {
+        console.log({initialNotification: initialNotification.data});
+        store.dispatch(setIsOpenedFromNotifications(true));
       }
-    } else {
-      navigateTo(SCREEN_NAME.TERMS_AND_CONDITIONS, {}, true);
     }
-    resetDirectoriesOfCachedData();
-  }, 2000);
+    if (store.getState().activityIndicator.openedByNotifications) {
+      store.dispatch(setIsOpenedFromNotifications(false));
+      selfAnalytics({
+        eventType: UsersAnalyticsEvents.APP_OPENED,
+        details: {isNotificationTapped: true},
+      });
+      gotoBookshelf();
+      return;
+    }
+    selfAnalytics({
+      eventType: UsersAnalyticsEvents.APP_OPENED,
+      details: {isNotificationTapped: false},
+    });
+    navigateTo(SCREEN_NAME.ACCOUNT, {}, true);
+    return;
+  }
+  navigateTo(SCREEN_NAME.TERMS_AND_CONDITIONS, {}, true);
 };
 
 const resetDirectoriesOfCachedData = () => {

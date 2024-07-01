@@ -65,7 +65,7 @@ const RNChoiceQuestions = ({
   React.useEffect(() => {
     setTimeout(() => {
       setMaxIndex(data.length);
-    }, 1000);
+    }, 500);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (

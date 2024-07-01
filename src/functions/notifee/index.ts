@@ -19,10 +19,16 @@ export const askPermissionNotifee = async () => {
 async function onDisplayNotification({
   title,
   body,
+  data,
 }: {
-  title: string;
-  body: string;
+  title?: string;
+  body?: string;
+  data?: any;
 }) {
+  if (!title && !body) {
+    console.log('title and body must be provided');
+    return;
+  }
   // Request permissions (required for iOS)
 
   // Create a channel (required for Android)
@@ -35,6 +41,7 @@ async function onDisplayNotification({
   await notifee.displayNotification({
     title: title,
     body: body,
+    data: data || {},
     android: {
       channelId,
     },

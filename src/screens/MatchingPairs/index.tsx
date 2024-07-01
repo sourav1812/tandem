@@ -140,10 +140,15 @@ const MatchingPairs = () => {
 
   React.useEffect(() => {
     setTimeout(() => {
+      if (buttonColor === themeColor.themeBlue) {
+        // ! do not modify button now
+        return;
+      }
       setGameCompleted(true);
       setButtonText(storyNotDoneButTimesUp);
       setButtonColor('green');
     }, 90 * 1000); // ! after 90 sec we want to go to bookshelf regardless
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

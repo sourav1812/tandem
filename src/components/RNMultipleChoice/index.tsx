@@ -42,7 +42,7 @@ const RNMultipleChoice = ({onNextPress, customStyle}: multipleChoiceProps) => {
                     customStyle={styles.optionsCustom}
                     icon={value.icon}
                     bgcColor={value.bgc}
-                    key={index}
+                    key={index.toString()}
                   />
                 );
               })}

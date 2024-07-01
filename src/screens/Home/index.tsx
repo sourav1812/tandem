@@ -32,10 +32,6 @@ import {
 import {clearStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration.slice';
 import {DIRECTION_ARROWS} from '@tandem/constants/enums';
 import WavingHand from '@tandem/assets/svg/WavingHand';
-import {
-  addSnapShot1,
-  addSnapShot2,
-} from '@tandem/redux/slices/animationSnapshots.slice';
 import BlueButton from '@tandem/assets/svg/BlueButton';
 import {setForceReload} from '@tandem/redux/slices/activityIndicator.slice';
 
@@ -509,8 +505,6 @@ const Home = () => {
                       onPress={() => {
                         if (index === 0) {
                           store.dispatch(clearStoryGenerationResponse());
-                          store.dispatch(addSnapShot1(null));
-                          store.dispatch(addSnapShot2(null));
                           navigateTo(SCREEN_NAME.STORY_LANGAUGE);
                           return;
                         }

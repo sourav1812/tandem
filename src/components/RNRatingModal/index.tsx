@@ -1,4 +1,4 @@
-import {LayoutAnimation, Platform, Pressable, View} from 'react-native';
+import {Platform, Pressable, View} from 'react-native';
 import React from 'react';
 import {ratingList, ratingModalProps} from './interface';
 import {styles} from './styles';
@@ -31,10 +31,6 @@ const RNRatingModal = ({visible, renderModal, nextClick}: ratingModalProps) => {
             return (
               <Pressable
                 onPress={() => {
-                  if (Platform.OS === 'ios')
-                    LayoutAnimation.configureNext(
-                      LayoutAnimation.Presets.easeInEaseOut,
-                    );
                   setRating(index + 1);
                 }}
                 key={index.toString()}

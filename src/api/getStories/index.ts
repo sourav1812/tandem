@@ -6,16 +6,17 @@ import {store} from '@tandem/redux/store';
 import RNFetchBlob from 'rn-fetch-blob';
 import {addFlush} from '@tandem/redux/slices/cache.slice';
 
-const getStories = async (page: number) => {
+const getStories = async (page: number, childId?: string) => {
   try {
     // logic with pagination
     const response = await get<{endReached: boolean; books: Book[]}>({
       path:
-        API.STORIES + `/${store.getState().createChild.currentChild.childId}`,
+        API.STORIES +
+        `/${childId || store.getState().createChild.currentChild.childId}`,
       noLoader: true,
       params: {page},
     });
-    console.log('books with page: ', page, response);
+    console.log('books with page: ', page, response.books.length);
     cacheStoryBookImages(response.books);
     return response;
   } catch (error) {
