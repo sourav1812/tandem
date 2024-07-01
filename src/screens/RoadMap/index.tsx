@@ -145,6 +145,28 @@ const RNRoadmap = () => {
     }
     return paddingTop;
   };
+
+  const handleCreate = async () => {
+    try {
+      await generateStory({
+        childId: currentChild.childId,
+        storyPromptData: storyGenerationResponse,
+      });
+      analytics().logEvent('newStoryGenerated', {
+        childId: currentChild.childId,
+        characters: JSON.stringify(storyGenerationResponse.characters),
+        childInStory: JSON.stringify(storyGenerationResponse.childInStory),
+        genre: JSON.stringify(storyGenerationResponse.genre),
+        illustrationStyle: JSON.stringify(
+          storyGenerationResponse.illustrationStyle,
+        ),
+        location: JSON.stringify(storyGenerationResponse.location),
+        plotElements: JSON.stringify(storyGenerationResponse.plotElements),
+      });
+    } catch (error) {
+      console.log('error generating story', error);
+    }
+  };
   return (
     <RNScreenWrapper
       // eslint-disable-next-line react-native/no-inline-styles
@@ -192,31 +214,7 @@ const RNRoadmap = () => {
           handleNavigate(5);
         }}
         CREATE_ENABLED={checkIfClickable[6]}
-        onPress_CREATE={async () => {
-          try {
-            await generateStory({
-              childId: currentChild.childId,
-              storyPromptData: storyGenerationResponse,
-            });
-            analytics().logEvent('newStoryGenerated', {
-              childId: currentChild.childId,
-              characters: JSON.stringify(storyGenerationResponse.characters),
-              childInStory: JSON.stringify(
-                storyGenerationResponse.childInStory,
-              ),
-              genre: JSON.stringify(storyGenerationResponse.genre),
-              illustrationStyle: JSON.stringify(
-                storyGenerationResponse.illustrationStyle,
-              ),
-              location: JSON.stringify(storyGenerationResponse.location),
-              plotElements: JSON.stringify(
-                storyGenerationResponse.plotElements,
-              ),
-            });
-          } catch (error) {
-            console.log('error generating story', error);
-          }
-        }}
+        onPress_CREATE={handleCreate}
       />
     </RNScreenWrapper>
   );

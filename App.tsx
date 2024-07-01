@@ -23,48 +23,115 @@ import notifee, {EventType} from '@notifee/react-native';
 import userProfile from '@tandem/api/userProfile';
 import {requestInitialPermission} from '@tandem/functions/permissions';
 import onDisplayNotification from '@tandem/functions/notifee';
+import {AppState} from 'react-native';
+import {getStoredTokens} from '@tandem/functions/tokens';
+import selfAnalytics from '@tandem/api/selfAnalytics';
+import {UsersAnalyticsEvents} from '@tandem/api/selfAnalytics/interface';
 
 const persistor = persistStore(store);
 
 const App: FC = () => {
+  const appState = React.useRef(AppState.currentState);
+  React.useEffect(() => {
+    const subscription = AppState.addEventListener('change', nextAppState => {
+      if (
+        appState.current.match(/inactive|background/) &&
+        nextAppState === 'active'
+      ) {
+        const {token, refreshToken} = getStoredTokens();
+        if (token && refreshToken) {
+          selfAnalytics({
+            eventType: UsersAnalyticsEvents.APP_OPENED,
+            details: {isNotificationTapped: false},
+          });
+          userProfile();
+        }
+      }
+      appState.current = nextAppState;
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
+
   useEffect(() => {
-    const unsub = notifee.onForegroundEvent(({type}) => {
+    const unsub = notifee.onForegroundEvent(({type, detail}) => {
       switch (type) {
         case EventType.PRESS:
-          console.log('ios notificatio set');
+          console.log('ios notificatio set', detail.notification?.data);
           store.dispatch(setIsOpenedFromNotifications(true));
+          unsub();
           break;
       }
       console.log('unsubbing from first onForegroundEvent');
       unsub();
     });
   }, []);
+
   useEffect(() => {
     requestInitialPermission();
     i18n.locale = setupLangauge();
     store.dispatch(clearAlertData());
-    const unsubscribe = messaging().onMessage(async () => {
-      await getStories(1);
-      await pushChildStats();
-      await getChildStats();
-      userProfile();
-      store.dispatch(setForceReload(false)); // forcing a change to trigger useEffect
-      store.dispatch(setForceReload(true));
-      store.dispatch(setStoryBookNotification(true));
-      const progressRef = store.getState().activityIndicator.progressRef;
-      const notificationScreenPermissions = store.getState().permissions;
-      const isEnergyGenerated =
-        store.getState().activityIndicator.isEnergyGenerated;
+    const unsubscribe = messaging().onMessage(async message => {
+      console.log({message});
+      // const mockData = {
+      //   message: {
+      //     data: {
+      //       eventType: 'book.created',
+      //       metaData:
+      //         '{"childId":"66751dfc9ce2f59cd484a2dd","childName":"Child 1"}',
+      //     },
+      //     from: '395516850709',
+      //     messageId: '1719295800950436',
+      //     notification: {
+      //       body: 'Please check you are happy with the pictures before reading with your child.',
+      //       title: 'Your story is ready!',
+      //     },
+      //   },
+      // };
+      if (message.data?.eventType === 'book.created') {
+        const progressRef = store.getState().activityIndicator.progressRef;
+        if (progressRef !== null) {
+          progressRef.animateProgress(100);
+        }
+        const metaData = JSON.parse(message.data.metaData as string);
+        await getStories(1, metaData.childId);
+        await pushChildStats();
+        await getChildStats();
+        userProfile();
+        store.dispatch(setForceReload(false)); // forcing a change to trigger useEffect
+        store.dispatch(setForceReload(true));
 
-      if (
-        progressRef !== undefined &&
-        progressRef !== null &&
-        Object.keys(progressRef).length !== 0 &&
-        isEnergyGenerated &&
-        (!notificationScreenPermissions.isFirstTime ||
-          notificationScreenPermissions.notificationStatus)
-      ) {
-        progressRef.animateProgress(100);
+        if (
+          store.getState().createChild.currentChild.childId === metaData.childId
+        ) {
+          setTimeout(() => {
+            onDisplayNotification({
+              title:
+                (metaData?.childName ? metaData.childName + "'s" : 'Your') +
+                ' story is ready!',
+              body: message.notification?.body,
+              data: message.data,
+            });
+            store.dispatch(setStoryBookNotification(true));
+            setTimeout(() => {
+              store.dispatch(setStoryBookNotification(false));
+            }, 1000);
+          }, 1000);
+        }
+
+        // const notificationScreenPermissions = store.getState().permissions;
+        // const isEnergyGenerated =
+        //   store.getState().activityIndicator.isEnergyGenerated;
+        // if (
+        //   progressRef !== undefined &&
+        //   progressRef !== null &&
+        //   Object.keys(progressRef).length !== 0 &&
+        //   isEnergyGenerated &&
+        //   (!notificationScreenPermissions.isFirstTime ||
+        //     notificationScreenPermissions.notificationStatus)
+        // ) {
         // setTimeout(() => {
         //   // ! alert to show book is ready with new text
         //   store.dispatch(
@@ -82,15 +149,8 @@ const App: FC = () => {
         //     }),
         //   );
         // }, 4100);
+        // }
       }
-      await onDisplayNotification({
-        title: 'Your story is ready!',
-        body: 'Please check you are happy with the pictures before reading with your child.',
-      });
-
-      setTimeout(() => {
-        store.dispatch(setStoryBookNotification(false));
-      }, 1000);
     });
 
     statusbar();

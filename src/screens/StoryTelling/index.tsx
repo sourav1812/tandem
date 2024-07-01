@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {Platform, Pressable, View} from 'react-native';
+import {Pressable, View} from 'react-native';
 import React, {useState, useRef} from 'react';
 import {styles} from './style';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';

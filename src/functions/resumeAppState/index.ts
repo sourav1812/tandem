@@ -57,6 +57,7 @@ export default async () => {
     if (Platform.OS === 'android') {
       const initialNotification = await messaging().getInitialNotification();
       if (initialNotification) {
+        console.log({initialNotification: initialNotification.data});
         store.dispatch(setIsOpenedFromNotifications(true));
       }
     }
