@@ -16,10 +16,10 @@
 		610DEE266F4D06FFABE57862 /* Pods_Tandem_TandemTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 950DD337812DAEC4B6AA38AB /* Pods_Tandem_TandemTests.framework */; };
 		7C52BC6B0D664FF78BBA3BBA /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE1DDC4F7BB5444693DCA1F2 /* Poppins-SemiBold.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		9F9B8AE4A00883B9E74F4306 /* Pods_Tandem.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 757E1814C28ADD66EA306DAD /* Pods_Tandem.framework */; };
 		BD4437C52A8A660D0032E42E /* FIle.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4437C42A8A660D0032E42E /* FIle.swift */; };
 		BD5D4CE62A7A40D3005BA418 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BD5D4CE52A7A40D3005BA418 /* GoogleService-Info.plist */; };
 		D50691271E1BA9BCA243A697 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6E71C73CBF823C85086806 /* ExpoModulesProvider.swift */; };
-		DADA38D10AD60911135FEED3 /* Pods_Tandem.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 757E1814C28ADD66EA306DAD /* Pods_Tandem.framework */; };
 		F4B847CD0D4C416A82288A83 /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1B7C90A90DA54E32B2ED2AB6 /* Poppins-Regular.ttf */; };
 		F7D7137AC3994E9BAEF633C4 /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0A8F9F47C5EB44FBA7A998F6 /* Poppins-Medium.ttf */; };
 /* End PBXBuildFile section */
@@ -77,7 +77,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DADA38D10AD60911135FEED3 /* Pods_Tandem.framework in Frameworks */,
+				9F9B8AE4A00883B9E74F4306 /* Pods_Tandem.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -466,6 +466,14 @@ PODS:
   - React-jsinspector (0.71.8)
   - React-logger (0.71.8):
     - glog
+  - react-native-camera (4.2.1):
+    - React-Core
+    - react-native-camera/RCT (= 4.2.1)
+    - react-native-camera/RN (= 4.2.1)
+  - react-native-camera/RCT (4.2.1):
+    - React-Core
+  - react-native-camera/RN (4.2.1):
+    - React-Core
   - react-native-fbsdk-next (11.3.0):
     - React-Core
     - react-native-fbsdk-next/Core (= 11.3.0)
@@ -495,6 +503,8 @@ PODS:
     - React-Core
   - react-native-shake (5.3.2):
     - React
+  - react-native-view-shot (3.8.0):
+    - React-Core
   - React-perflogger (0.71.8)
   - React-RCTActionSheet (0.71.8):
     - React-Core/RCTActionSheetHeaders (= 0.71.8)
@@ -583,6 +593,8 @@ PODS:
     - React-Core
   - RNAppleAuthentication (2.3.0):
     - React-Core
+  - RNCClipboard (1.14.1):
+    - React-Core
   - RNDeviceInfo (10.14.0):
     - React-Core
   - RNFBAnalytics (19.3.0):
@@ -619,6 +631,9 @@ PODS:
     - React-Core
   - RNPermissions (4.1.5):
     - React-Core
+  - RNQrGenerator (1.4.0):
+    - React
+    - ZXingObjC
   - RNReanimated (3.11.0):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
@@ -627,10 +642,15 @@ PODS:
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
     - React-RCTImage
-  - RNSVG (13.14.1):
+  - RNShare (10.2.1):
+    - React-Core
+  - RNSVG (15.3.0):
     - React-Core
   - TOCropViewController (2.7.4)
   - Yoga (1.14.0)
+  - ZXingObjC (3.6.9):
+    - ZXingObjC/All (= 3.6.9)
+  - ZXingObjC/All (3.6.9)
 
 DEPENDENCIES:
   - boost (from `../node_modules/react-native/third-party-podspecs/boost.podspec`)
@@ -671,6 +691,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
+  - react-native-camera (from `../node_modules/react-native-camera`)
   - react-native-fbsdk-next (from `../node_modules/react-native-fbsdk-next`)
   - react-native-loudness (from `../node_modules/react-native-loudness`)
   - react-native-mmkv (from `../node_modules/react-native-mmkv`)
@@ -678,6 +699,7 @@ DEPENDENCIES:
   - react-native-orientation-locker (from `../node_modules/react-native-orientation-locker`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-shake (from `../node_modules/react-native-shake`)
+  - react-native-view-shot (from `../node_modules/react-native-view-shot`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
@@ -693,6 +715,7 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - rn-fetch-blob (from `../node_modules/rn-fetch-blob`)
   - "RNAppleAuthentication (from `../node_modules/@invertase/react-native-apple-authentication`)"
+  - "RNCClipboard (from `../node_modules/@react-native-clipboard/clipboard`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - "RNFBAnalytics (from `../node_modules/@react-native-firebase/analytics`)"
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
@@ -702,8 +725,10 @@ DEPENDENCIES:
   - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
   - "RNNotifee (from `../node_modules/@notifee/react-native`)"
   - RNPermissions (from `../node_modules/react-native-permissions`)
+  - RNQrGenerator (from `../node_modules/rn-qr-generator`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - RNShare (from `../node_modules/react-native-share`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -737,6 +762,7 @@ SPEC REPOS:
     - nanopb
     - PromisesObjC
     - TOCropViewController
+    - ZXingObjC
 
 EXTERNAL SOURCES:
   boost:
@@ -803,6 +829,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   React-logger:
     :path: "../node_modules/react-native/ReactCommon/logger"
+  react-native-camera:
+    :path: "../node_modules/react-native-camera"
   react-native-fbsdk-next:
     :path: "../node_modules/react-native-fbsdk-next"
   react-native-loudness:
@@ -817,6 +845,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-shake:
     :path: "../node_modules/react-native-shake"
+  react-native-view-shot:
+    :path: "../node_modules/react-native-view-shot"
   React-perflogger:
     :path: "../node_modules/react-native/ReactCommon/reactperflogger"
   React-RCTActionSheet:
@@ -847,6 +877,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/rn-fetch-blob"
   RNAppleAuthentication:
     :path: "../node_modules/@invertase/react-native-apple-authentication"
+  RNCClipboard:
+    :path: "../node_modules/@react-native-clipboard/clipboard"
   RNDeviceInfo:
     :path: "../node_modules/react-native-device-info"
   RNFBAnalytics:
@@ -865,10 +897,14 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@notifee/react-native"
   RNPermissions:
     :path: "../node_modules/react-native-permissions"
+  RNQrGenerator:
+    :path: "../node_modules/rn-qr-generator"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNShare:
+    :path: "../node_modules/react-native-share"
   RNSVG:
     :path: "../node_modules/react-native-svg"
   Yoga:
@@ -934,6 +970,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 747911ab5921641b4ed7e4900065896597142125
   React-jsinspector: c712f9e3bb9ba4122d6b82b4f906448b8a281580
   React-logger: 342f358b8decfbf8f272367f4eacf4b6154061be
+  react-native-camera: 3eae183c1d111103963f3dd913b65d01aef8110f
   react-native-fbsdk-next: 16e652b5f1236492631185c58ec2ae15b029119d
   react-native-loudness: 46937e359d834b3399d65a9143dfcbb49e122903
   react-native-mmkv: 38d484ccd8f5760fe0e46d206ed07add5ddda1fc
@@ -941,6 +978,7 @@ SPEC CHECKSUMS:
   react-native-orientation-locker: 5819fd23ca89cbac0d736fb4314745f62716d517
   react-native-safe-area-context: dcab599c527c2d7de2d76507a523d20a0b83823d
   react-native-shake: 62aa5681863203090a087842da70183c442b97f8
+  react-native-view-shot: 6b7ed61d77d88580fed10954d45fad0eb2d47688
   React-perflogger: d21f182895de9d1b077f8a3cd00011095c8c9100
   React-RCTActionSheet: 0151f83ef92d2a7139bba7dfdbc8066632a6d47b
   React-RCTAnimation: 5ec9c0705bb2297549c120fe6473aa3e4a01e215
@@ -956,6 +994,7 @@ SPEC CHECKSUMS:
   ReactCommon: 9957c7530467adbdf4a4a1476d636bd00b2e4dd8
   rn-fetch-blob: f065bb7ab7fb48dd002629f8bdcb0336602d3cba
   RNAppleAuthentication: e99eaf3c4c01ad8ecb6125dd6f0cfd98871685b5
+  RNCClipboard: 0a720adef5ec193aa0e3de24c3977222c7e52a37
   RNDeviceInfo: 59344c19152c4b2b32283005f9737c5c64b42fba
   RNFBAnalytics: 74eebc66e5f2475f2ed3a63822ef6bc913c4b4ff
   RNFBApp: de81f7eb68c1e6107574f2b102b0dee92a9862fa
@@ -964,13 +1003,16 @@ SPEC CHECKSUMS:
   RNGoogleSignin: 9d0ecc3bff939ccef83cb3a26b874130b06a6e81
   RNImageCropPicker: 44e2807bc410741f35d4c45b6586aedfe3da39d2
   RNNotifee: 8e2d3df3f0e9ce8f5d1fe4c967431138190b6175
-  RNPermissions: f9a0380dad4d370b6b983acaf4f9bff07aba9a21
+  RNPermissions: f61ebf52bb670809d522bba0b09b3e6a9ea5ab7e
+  RNQrGenerator: 1676221c08bfabec978242989c733810dad20959
   RNReanimated: c112febb9548b8e0bcc5abddff308f69913c4270
   RNScreens: 93ae3be2f119d955620f9bbb39ad372adb53b7a9
-  RNSVG: af3907ac5d4fa26a862b75a16d8f15bc74f2ceda
+  RNShare: 0fad69ae2d71de9d1f7b9a43acf876886a6cb99c
+  RNSVG: a48668fd382115bc89761ce291a81c4ca5f2fd2e
   TOCropViewController: 80b8985ad794298fb69d3341de183f33d1853654
   Yoga: 065f0b74dba4832d6e328238de46eb72c5de9556
+  ZXingObjC: 8898711ab495761b2dbbdec76d90164a6d7e14c5
 
-PODFILE CHECKSUM: 9edc33c2145aaf41fb60854e00bf5b96688666cd
+PODFILE CHECKSUM: f4457f75805afb6760c3a0aa2daa683ffa32f4ed
 
 COCOAPODS: 1.15.2

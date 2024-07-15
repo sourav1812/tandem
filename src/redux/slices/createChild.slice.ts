@@ -9,6 +9,7 @@ export interface ChildData {
   avatar: string;
   childId: string;
   type: PEOPLE.CHILD;
+  inviteCode: string;
 }
 
 export interface AdultData {
@@ -56,6 +57,7 @@ const initialState: ChildState = {
     avatar: '',
     childId: '',
     type: PEOPLE.CHILD,
+    inviteCode: '',
   },
   adultList: [],
   currentAdult: {

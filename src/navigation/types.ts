@@ -53,6 +53,9 @@ export type RootStackParamList = {
   RobotBuildingBook: undefined;
   Disclaimer: undefined;
   Bookshelf: undefined;
+  ShareChild: undefined;
+  RecieveChildDetail: undefined;
+  QrScanner: undefined;
 };
 
 export type RootTabParamList = {

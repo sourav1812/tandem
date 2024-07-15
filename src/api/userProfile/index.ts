@@ -21,6 +21,7 @@ export default async () => {
     ...child,
     type: PEOPLE.CHILD,
   }));
+
   const adults = response.adults?.map(adult => ({
     ...adult,
     type: PEOPLE.ADULT,

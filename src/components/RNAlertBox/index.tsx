@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {Platform, View} from 'react-native';
+import {View} from 'react-native';
 import React from 'react';
 import RNTextComponent from '../RNTextComponent';
 import RNModal from '../RNModal';
@@ -77,11 +77,11 @@ const RNAlertBox = ({
           }}>
           <RNButton
             onClick={async () => {
+              dispatch(clearAlertData());
+              fixProgressbarState(); // ! might hv to revert
               if (alertData.onSuccess) {
                 await alertData.onSuccess();
               }
-              dispatch(clearAlertData());
-              fixProgressbarState();
             }}
             title={alertData.successText || 'OK'}
             customStyle={[

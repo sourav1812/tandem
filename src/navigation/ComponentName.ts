@@ -50,4 +50,7 @@ export enum SCREEN_NAME {
   STORY_LANGAUGE = 'StoryLanguage',
   ROBOT_BUILDING_BOOK = 'RobotBuildingBook',
   DISCLAIMER = 'Disclaimer',
+  SHARE_CHILD = 'ShareChild',
+  RECIEVE_CHILD_DETAIL = 'RecieveChildDetail',
+  QR_SCANNER = 'QrScanner',
 }

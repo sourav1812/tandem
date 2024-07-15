@@ -28,6 +28,7 @@ export enum API {
   REPORT_IMAGE = 'story-books/{BOOK_ID_HERE}/report-image',
   PUSH_VOICE_DATA = 'story-books/{BOOK_ID_HERE}/reading-session',
   ANALYTICS_SELF = 'analytics/users/self',
+  CONNECTION_REQUEST = 'accounts/self/request-connection',
 }
 
 export enum ENVIRONMENT {

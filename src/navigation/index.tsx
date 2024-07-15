@@ -4,11 +4,11 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {RootStackParamList} from './types';
 import {SCREEN_NAME} from './ComponentName';
 import BottomTab from './BottomTab';
-import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {useAppDispatch, useAppSelector} from '@tandem/hooks/navigationHooks';
 import Account from '@tandem/screens/Account';
 import SplashScreen from '@tandem/screens/SplashScreen';
 import {navigationRef} from './navigate';
-import {Platform} from 'react-native';
+import {BackHandler, Platform} from 'react-native';
 import {RootState, store} from '@tandem/redux/store';
 import {useOrientation} from '@tandem/hooks/useOrientation';
 import RNAlertBox from '@tandem/components/RNAlertBox';
@@ -27,12 +27,17 @@ import {setEnergyGenerated} from '@tandem/redux/slices/activityIndicator.slice';
 import Disclaimer from '@tandem/screens/Disclaimer';
 import gotoBookshelf from '@tandem/functions/gotoBookshelf';
 import notifee, {EventType} from '@notifee/react-native';
+import ShareChild from '@tandem/screens/ShareChild';
+import RecieveChildDetail from '@tandem/screens/RecieveChildDetail';
+import QRScanner from '@tandem/screens/QrScanner';
+import {clearAlertData} from '@tandem/redux/slices/alertBox.slice';
 const AppNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
   const routeNameRef = React.useRef<any>(null);
   const isTablet = useAppSelector(
     (state: RootState) => state.deviceType.isTablet,
   );
+  const dispatch = useAppDispatch();
 
   useOrientation();
   const alertData = useAppSelector(
@@ -52,6 +57,19 @@ const AppNavigator = () => {
     };
     f();
   }, []);
+  React.useEffect(() => {
+    if (alertData.message) {
+      const backAction = () => {
+        dispatch(clearAlertData());
+        return true;
+      };
+      const backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        backAction,
+      );
+      return () => backHandler.remove();
+    }
+  }, [alertData]);
 
   React.useEffect(() => {
     store.dispatch(setEnergyGenerated(true)); // ! on App open we do want to show notification
@@ -98,6 +116,11 @@ const AppNavigator = () => {
           <Stack.Screen
             component={RobotBuildingBook}
             name={SCREEN_NAME.ROBOT_BUILDING_BOOK}
+          />
+          <Stack.Screen component={ShareChild} name={SCREEN_NAME.SHARE_CHILD} />
+          <Stack.Screen
+            component={RecieveChildDetail}
+            name={SCREEN_NAME.RECIEVE_CHILD_DETAIL}
           />
           <Stack.Screen
             component={StoryLanguage}
@@ -343,6 +366,7 @@ const AppNavigator = () => {
             getComponent={() => require('@tandem/screens/Activities').default}
             name={SCREEN_NAME.ACTIVITIES}
           />
+          <Stack.Screen component={QRScanner} name={SCREEN_NAME.QR_SCANNER} />
         </Stack.Navigator>
       </NavigationContainer>
       <RNAlertBox
