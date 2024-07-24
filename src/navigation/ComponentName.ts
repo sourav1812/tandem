@@ -53,4 +53,5 @@ export enum SCREEN_NAME {
   SHARE_CHILD = 'ShareChild',
   RECIEVE_CHILD_DETAIL = 'RecieveChildDetail',
   QR_SCANNER = 'QrScanner',
+  CONNECTION_REQUESTS = 'ConnectionRequests',
 }

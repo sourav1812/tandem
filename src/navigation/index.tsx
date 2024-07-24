@@ -31,6 +31,8 @@ import ShareChild from '@tandem/screens/ShareChild';
 import RecieveChildDetail from '@tandem/screens/RecieveChildDetail';
 import QRScanner from '@tandem/screens/QrScanner';
 import {clearAlertData} from '@tandem/redux/slices/alertBox.slice';
+import ConnectionRequest from '@tandem/screens/ConnectionRequests';
+import ConnectionRequests from '@tandem/screens/ConnectionRequests';
 const AppNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
   const routeNameRef = React.useRef<any>(null);
@@ -367,6 +369,10 @@ const AppNavigator = () => {
             name={SCREEN_NAME.ACTIVITIES}
           />
           <Stack.Screen component={QRScanner} name={SCREEN_NAME.QR_SCANNER} />
+          <Stack.Screen
+            component={ConnectionRequests}
+            name={SCREEN_NAME.CONNECTION_REQUESTS}
+          />
         </Stack.Navigator>
       </NavigationContainer>
       <RNAlertBox

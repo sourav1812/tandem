@@ -29,6 +29,8 @@ export enum API {
   PUSH_VOICE_DATA = 'story-books/{BOOK_ID_HERE}/reading-session',
   ANALYTICS_SELF = 'analytics/users/self',
   CONNECTION_REQUEST = 'accounts/self/request-connection',
+  GET_CONNECTION_REQUESTS = '/accounts/self/connection-requests/received',
+  ACTION_CONNECTION_REQUEST = '/accounts/self/connection-requests/{REQ_ID_HERE}/actions',
 }
 
 export enum ENVIRONMENT {
@@ -40,7 +42,8 @@ export enum ENVIRONMENT {
 
 const ENV_VARS = {
   [ENVIRONMENT.LOCAL]: {
-    API_URL: 'https://797f-103-223-15-53.ngrok-free.app/v1/', // * LOCAL URL
+    API_URL:
+      'https://5c9e-2409-40d1-d2-f9a4-bdeb-9fea-4f13-ab4.ngrok-free.app/v1/', // * LOCAL URL
   },
   [ENVIRONMENT.TESTING]: {
     API_URL: 'https://tandem-app-backend-beta.azurewebsites.net/v1/', // * TESTING URL

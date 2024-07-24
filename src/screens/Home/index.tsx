@@ -67,7 +67,7 @@ const Home = () => {
         translation('USED_CREDITS') +
         `: ${user?.plan?.usageDetails?.usedCredits || 0}`,
     },
-    {color: themeColor.gold, title: translation('LEARN_SOMETHING')},
+    {color: themeColor.gold, title: 'Connection Requests'},
     {color: themeColor.green, title: translation('SHARE_CHILD')},
     {color: themeColor.pink, title: 'Receive child detail'},
   ];
@@ -508,6 +508,9 @@ const Home = () => {
                           store.dispatch(clearStoryGenerationResponse());
                           navigateTo(SCREEN_NAME.STORY_LANGAUGE);
                           return;
+                        }
+                        if (index === 2) {
+                          navigateTo(SCREEN_NAME.CONNECTION_REQUESTS);
                         }
                         if (index === 3) {
                           navigateTo(SCREEN_NAME.SHARE_CHILD);

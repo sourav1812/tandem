@@ -56,6 +56,7 @@ export type RootStackParamList = {
   ShareChild: undefined;
   RecieveChildDetail: undefined;
   QrScanner: undefined;
+  ConnectionRequests: undefined;
 };
 
 export type RootTabParamList = {
