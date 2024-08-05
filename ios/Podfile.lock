@@ -621,11 +621,11 @@ PODS:
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
     - ReactCommon/turbomodule/core
-  - RNScreens (3.31.1):
+  - RNScreens (3.32.0):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
     - React-RCTImage
-  - RNSVG (15.3.0):
+  - RNSVG (13.14.1):
     - React-Core
   - TOCropViewController (2.7.4)
   - Yoga (1.14.0)
@@ -960,8 +960,8 @@ SPEC CHECKSUMS:
   RNNotifee: 8e2d3df3f0e9ce8f5d1fe4c967431138190b6175
   RNPermissions: f9a0380dad4d370b6b983acaf4f9bff07aba9a21
   RNReanimated: c112febb9548b8e0bcc5abddff308f69913c4270
-  RNScreens: 93ae3be2f119d955620f9bbb39ad372adb53b7a9
-  RNSVG: a48668fd382115bc89761ce291a81c4ca5f2fd2e
+  RNScreens: 0bd9eec783bed1032e02a4db9976dae1664a5c7b
+  RNSVG: af3907ac5d4fa26a862b75a16d8f15bc74f2ceda
   TOCropViewController: 80b8985ad794298fb69d3341de183f33d1853654
   Yoga: 065f0b74dba4832d6e328238de46eb72c5de9556
 

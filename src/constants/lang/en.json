@@ -421,5 +421,6 @@
   "RECORDING_TEXT_MESSAGE": "Are you sure you want to start recording?",
   "STORY_GEN_QUESTION": "Choose from these options, or if you’re not sure, choose the “?” option",
   "STORY_NEARLY_READY": "Your story is nearly ready… play on or go to the bookshelf",
-  "CHILD_ADDED_SUCCESS": "Child added successfully"
+  "CHILD_ADDED_SUCCESS": "Child added successfully",
+  "VERIFY_YOUR_EMAIL": "Verify your email address"
 }

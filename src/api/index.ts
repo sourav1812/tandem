@@ -8,7 +8,7 @@ import {
   stopLoader,
 } from '@tandem/redux/slices/activityIndicator.slice';
 import {store} from '@tandem/redux/store';
-import {API, BASE_URL} from '@tandem/constants/api';
+import {API, BASE_URL, STATUS_CODE} from '@tandem/constants/api';
 import {addParams, clearParams} from '@tandem/redux/slices/paramsReducer';
 import logout from '@tandem/functions/logout';
 import {addGetResponse} from '@tandem/redux/slices/getResponseReducer';
@@ -102,7 +102,7 @@ const handleError = async (error: {
         );
         //! Toast message here
         return await Promise.reject(
-          new Error(originalRequest.url + ': Status: ' + status),
+          new Error(originalRequest.url + ': ' + STATUS_CODE + status),
         );
       }
       const token = await refreshAccessToken();
@@ -110,7 +110,7 @@ const handleError = async (error: {
       return await axiosInstance(originalRequest);
     } catch (error1) {
       return await Promise.reject(
-        new Error(originalRequest.url + ': Status: ' + status),
+        new Error(originalRequest.url + ': ' + STATUS_CODE + status),
       );
     }
   } else if (status >= 400) {
@@ -125,7 +125,7 @@ const handleError = async (error: {
     );
     //! Toast message here
     return await Promise.reject(
-      new Error(originalRequest.url + ': Status: ' + status),
+      new Error(originalRequest.url + ': ' + STATUS_CODE + status),
     );
   } else if (status >= 500) {
     // Handle 5xx (Server Errors) errors
@@ -139,7 +139,7 @@ const handleError = async (error: {
     );
     // !Toast message here
     return await Promise.reject(
-      new Error(originalRequest.url + ': Status: ' + status),
+      new Error(originalRequest.url + ': ' + STATUS_CODE + status),
     );
   }
   store.dispatch(

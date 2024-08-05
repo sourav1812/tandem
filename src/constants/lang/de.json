@@ -420,5 +420,6 @@
   "RECORDING_TEXT_MESSAGE": "Sind Sie sicher, dass Sie mit der Aufnahme beginnen möchten?",
   "STORY_GEN_QUESTION": "Wähle aus diesen Optionen oder, wenn du dir nicht sicher bist, wähle die „?“ Option.",
   "STORY_NEARLY_READY": "Ihre Geschichte ist fast fertig… spielen Sie weiter oder gehen Sie zum Bücherregal",
-  "CHILD_ADDED_SUCCESS": "Kind erfolgreich hinzugefügt"
+  "CHILD_ADDED_SUCCESS": "Kind erfolgreich hinzugefügt",
+  "VERIFY_YOUR_EMAIL": "Bestätigen Sie Ihre E-Mail-Adresse"
 }

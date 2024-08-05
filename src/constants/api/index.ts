@@ -28,6 +28,9 @@ export enum API {
   REPORT_IMAGE = 'story-books/{BOOK_ID_HERE}/report-image',
   PUSH_VOICE_DATA = 'story-books/{BOOK_ID_HERE}/reading-session',
   ANALYTICS_SELF = 'analytics/users/self',
+  SEND_OTP_VERIFY_EMAIL = '/user/email-verification/send-otp',
+  VERIFY_EMAIL = '/user/email-verification/verify-otp',
+  CONSENT_NEWSLETTER = '/user/promotional-email-consent',
 }
 
 export enum ENVIRONMENT {
@@ -39,11 +42,10 @@ export enum ENVIRONMENT {
 
 const ENV_VARS = {
   [ENVIRONMENT.LOCAL]: {
-    API_URL: 'https://797f-103-223-15-53.ngrok-free.app/v1/', // * LOCAL URL
+    API_URL: 'https://a960-38-183-77-201.ngrok-free.app/v1/', // * LOCAL URL
   },
   [ENVIRONMENT.TESTING]: {
-    API_URL:
-      'https://2308-2409-40d1-10c6-3b5-88e1-62f8-e86c-b6f4.ngrok-free.app/v1/', // * TESTING URL
+    API_URL: 'https://tandem-app-backend-beta.azurewebsites.net/v1/', // * TESTING URL
   },
   [ENVIRONMENT.DEVELOPMENT]: {
     API_URL: 'https://tandem-app-backend-beta.azurewebsites.net/v1/', // * DEV URL
@@ -54,9 +56,11 @@ const ENV_VARS = {
 };
 
 // ! Select ENV from here
-export const SELECTED_ENVIRONMENT = ENVIRONMENT.TESTING;
+export const SELECTED_ENVIRONMENT = ENVIRONMENT.LOCAL;
 // ! URLs
 export const BASE_URL = ENV_VARS[SELECTED_ENVIRONMENT].API_URL;
 
 export const PEXELS_API_KEY =
   'EX5cnNzfNvWCwgBYmgPwZzLAR7KX1CMnj1bDHJEHljQk2bEA2lh8oPc5';
+
+export const STATUS_CODE = '~## Status ~~~~-> ';

@@ -15,6 +15,7 @@ export enum SubscriptionPlanStatus {
 }
 
 export interface UserDataResponse {
+  receivePromotinalMails?: boolean;
   firstName: string;
   lastName: string;
   userId: string;

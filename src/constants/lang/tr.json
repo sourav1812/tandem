@@ -421,5 +421,6 @@
   "RECORDING_TEXT_MESSAGE": "Kaydı başlatmak istediğinizden emin misiniz?",
   "STORY_GEN_QUESTION": "Bu seçeneklerden birini seçin veya emin değilseniz '?' seçeneğini seçin.",
   "STORY_NEARLY_READY": "Hikayeniz neredeyse hazır… oynamaya devam edin veya kitap rafına gidin",
-  "CHILD_ADDED_SUCCESS": "Çocuk başarıyla eklendi"
+  "CHILD_ADDED_SUCCESS": "Çocuk başarıyla eklendi",
+  "VERIFY_YOUR_EMAIL": "E-posta adresinizi doğrulayın"
 }

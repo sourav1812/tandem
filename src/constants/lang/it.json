@@ -420,5 +420,6 @@
   "RECORDING_TEXT_MESSAGE": "Sei sicuro di voler iniziare la registrazione?",
   "STORY_GEN_QUESTION": "Scegli tra queste opzioni o, se non sei sicuro, scegli l'opzione « ? ».",
   "STORY_NEARLY_READY": "La tua storia è quasi pronta… continua a giocare o vai alla libreria",
-  "CHILD_ADDED_SUCCESS": "Bambino aggiunto con successo"
+  "CHILD_ADDED_SUCCESS": "Bambino aggiunto con successo",
+  "VERIFY_YOUR_EMAIL": "Verifica il tuo indirizzo email"
 }

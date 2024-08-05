@@ -427,5 +427,6 @@
   "RECORDING_TEXT_MESSAGE": "Czy na pewno chcesz rozpocząć nagrywanie?",
   "STORY_GEN_QUESTION": "Wybierz z tych opcji, a jeśli nie jesteś pewien, wybierz opcję „?”",
   "STORY_NEARLY_READY": "Twoja historia jest prawie gotowa… graj dalej lub przejdź do półki z książkami",
-  "CHILD_ADDED_SUCCESS": "Dziecko dodane pomyślnie"
+  "CHILD_ADDED_SUCCESS": "Dziecko dodane pomyślnie",
+  "VERIFY_YOUR_EMAIL": "Zweryfikuj swój adres e-mail"
 }

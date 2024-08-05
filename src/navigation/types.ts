@@ -53,6 +53,7 @@ export type RootStackParamList = {
   RobotBuildingBook: undefined;
   Disclaimer: undefined;
   Bookshelf: undefined;
+  VerifyEmail: undefined;
 };
 
 export type RootTabParamList = {
