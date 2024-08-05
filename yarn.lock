@@ -2238,6 +2238,11 @@
     redux-thunk "^2.4.2"
     reselect "^4.1.8"
 
+"@revenuecat/purchases-typescript-internal@11.1.1":
+  version "11.1.1"
+  resolved "https://registry.yarnpkg.com/@revenuecat/purchases-typescript-internal/-/purchases-typescript-internal-11.1.1.tgz#ce996cbf4b51ea37016790105a023159211e531e"
+  integrity sha512-xYxv+vZJRPc//XqMAjxtu0fiN66WRmBORap37zA3DQymB9vKAJuTYqv9xMP2xSMglUYsA42M5DgdW2PMBCxfHA==
+
 "@segment/loosely-validate-event@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@segment/loosely-validate-event/-/loosely-validate-event-2.0.0.tgz#87dfc979e5b4e7b82c5f1d8b722dfd5d77644681"
@@ -7973,6 +7978,13 @@ react-native-permissions@^4.1.5:
   version "4.1.5"
   resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-4.1.5.tgz#db4d1ddbf076570043f4fd4168f54bb6020aec92"
   integrity sha512-r6VMRacASmtRHS+GZ+5HQCp9p9kiE+UU9magHOZCXZLTJitdTuVHWZRrb4v4oqZGU+zAp3mZhTQftuMMv+WLUg==
+
+react-native-purchases@^7.28.1:
+  version "7.28.1"
+  resolved "https://registry.yarnpkg.com/react-native-purchases/-/react-native-purchases-7.28.1.tgz#3ee48869017e57ca74230bcc4a5873624ff36163"
+  integrity sha512-5nd8s79dq+O9O+B0Gn9QNrKHn63kMNm5NQx1mnN8awBaDe95YpjqBaAgmVI/K66BSEDAkzTR0ep2BzUMawNmtQ==
+  dependencies:
+    "@revenuecat/purchases-typescript-internal" "11.1.1"
 
 react-native-reanimated@^3.4.2:
   version "3.11.0"

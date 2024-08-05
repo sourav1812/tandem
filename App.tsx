@@ -23,15 +23,44 @@ import notifee, {EventType} from '@notifee/react-native';
 import userProfile from '@tandem/api/userProfile';
 import {requestInitialPermission} from '@tandem/functions/permissions';
 import onDisplayNotification from '@tandem/functions/notifee';
-import {AppState} from 'react-native';
+import {AppState, Platform} from 'react-native';
 import {getStoredTokens} from '@tandem/functions/tokens';
 import selfAnalytics from '@tandem/api/selfAnalytics';
 import {UsersAnalyticsEvents} from '@tandem/api/selfAnalytics/interface';
+import Purchases, {LOG_LEVEL} from 'react-native-purchases';
 
 const persistor = persistStore(store);
 
 const App: FC = () => {
   const appState = React.useRef(AppState.currentState);
+
+  React.useEffect(() => {
+    const f = async () => {
+      try {
+        const offerings = await Purchases.getOfferings();
+        if (offerings.current !== null) {
+          // Display current offering with offerings.current
+          console.log('@@@@@@@', JSON.stringify(offerings));
+        }
+      } catch (e) {
+        console.log('error in offering list,', e);
+        const products = await Purchases.getProducts([
+          'tandem_199_10years_topUp_10credits',
+        ]);
+        console.log({products});
+      }
+    };
+    Purchases.setLogLevel(LOG_LEVEL.VERBOSE);
+    if (Platform.OS === 'ios') {
+      Purchases.configure({apiKey: 'appl_DBHwWDItbHyAvCyjOYMTVituxfI'});
+    } else if (Platform.OS === 'android') {
+      // Purchases.configure({apiKey: ''});
+      // OR: if building for Amazon, be sure to follow the installation instructions then:
+      // Purchases.configure({apiKey: '', useAmazon: true});
+    }
+    f();
+  });
+
   React.useEffect(() => {
     const subscription = AppState.addEventListener('change', nextAppState => {
       if (
