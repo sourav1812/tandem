@@ -25,10 +25,12 @@ const TermsAndConditions = () => {
       isAgreed: false,
     })),
     agreedToAllTerms: false,
+    signInToNewsLetter: true,
   });
-
-  const {terms, agreedToAllTerms} = state;
-
+  const {terms, agreedToAllTerms, signInToNewsLetter} = state;
+  useEffect(() => {
+    console.log(state);
+  }, [state]);
   const updateState = (date: any) => {
     setState((previouState: any) => {
       return {...previouState, ...date};
@@ -46,7 +48,9 @@ const TermsAndConditions = () => {
 
   const handleContentForm = async () => {
     try {
-      consentFormApi({data: {isAgreed: true}});
+      consentFormApi({
+        data: {isAgreed: true, receivePromotinalMails: signInToNewsLetter},
+      });
       navigateTo(SCREEN_NAME.HELP_CENTER, {});
     } catch (error) {
       console.log(error, 'consent from api error');
@@ -101,6 +105,14 @@ const TermsAndConditions = () => {
               />
             );
           })}
+          <RNCheckboxWithText
+            content={translation('SIGN_IN_TO_NEWSLETTER')}
+            onAccept={() => {
+              updateState({signInToNewsLetter: !signInToNewsLetter});
+            }}
+            isRequired={false}
+            isDefaultSelected
+          />
         </ScrollView>
         <View
           style={[styles.footerButton, isTablet && {paddingHorizontal: 100}]}>

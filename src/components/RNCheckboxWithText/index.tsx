@@ -11,6 +11,7 @@ export interface Props {
   onAccept: () => void;
   content: string;
   isRequired: boolean;
+  isDefaultSelected?: boolean;
 }
 
 const RNCheckboxWithText = ({
@@ -18,8 +19,9 @@ const RNCheckboxWithText = ({
   onAccept,
   content,
   isRequired,
+  isDefaultSelected,
 }: Props) => {
-  const [select, setSelect] = useState(false);
+  const [select, setSelect] = useState(isDefaultSelected);
 
   const toggleCheckbox = () => {
     onAccept();

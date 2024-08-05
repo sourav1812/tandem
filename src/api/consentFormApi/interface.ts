@@ -1,3 +1,3 @@
 export interface ConsentFormProps {
-  data: {isAgreed: boolean};
+  data: {isAgreed: boolean; receivePromotinalMails: boolean};
 }
