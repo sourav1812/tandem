@@ -63,7 +63,7 @@ import {
 } from '@tandem/screens/GenerateStory/interface';
 import RedQuestionMark from '@tandem/assets/svg/storySvg/RedQuestionMark.svg';
 import {translation} from '@tandem/utils/methods';
-import {BASE_URL} from '@tandem/constants/api';
+import {BASE_URL, VERSIONS} from '@tandem/constants/api';
 
 import Ayran from '@tandem/assets/svg/storySvg/ayran.svg';
 import Baklava from '@tandem/assets/svg/storySvg/baklava.svg';
@@ -119,6 +119,8 @@ import SO_tractor from '@tandem/assets/speech_objects/SO_tractor.mp3';
 import SO_watermelon from '@tandem/assets/speech_objects/SO_watermelon.mp3';
 import SO_wheelchair from '@tandem/assets/speech_objects/SO_wheelchair.mp3';
 import SO_wind_turbine from '@tandem/assets/speech_objects/SO_wind_turbine.mp3';
+
+const BASE_URL_V1 = BASE_URL + VERSIONS.v1;
 
 export const shuffle = (originalArray: any) => {
   let array = originalArray;
@@ -354,51 +356,51 @@ export const ATTRIBUTE: PlaceType[] = [
 export const ILLUSTRATION = [
   {
     name: 'Candidate 1',
-    url: BASE_URL + 'images/whatHappensNew/question_mark.webp',
+    url: BASE_URL_V1 + 'images/whatHappensNew/question_mark.webp',
   },
   {
     name: 'Candidate 2',
-    url: BASE_URL + 'images/whatHappensNew/question_mark.webp',
+    url: BASE_URL_V1 + 'images/whatHappensNew/question_mark.webp',
   },
   // {
   //   name: 'pixar',
-  //   url: BASE_URL + 'images/illustration-styles/pixar.webp',
+  //   url: BASE_URL_V1 + 'images/illustration-styles/pixar.webp',
   // },
   // {
   //   name: 'low-poly',
-  //   url: BASE_URL + 'images/illustration-styles/low_poly.webp',
+  //   url: BASE_URL_V1 + 'images/illustration-styles/low_poly.webp',
   // },
   // {
   //   name: 'style1-papercut',
-  //   url: BASE_URL + 'images/illustration-styles/papercut.webp',
+  //   url: BASE_URL_V1 + 'images/illustration-styles/papercut.webp',
   // },
   // {
   //   name: 'style2-scrappy',
-  //   url: BASE_URL + 'images/illustration-styles/scrappy.webp',
+  //   url: BASE_URL_V1 + 'images/illustration-styles/scrappy.webp',
   // },
   // {
   //   name: 'style3-wonder',
-  //   url: BASE_URL + 'images/illustration-styles/wonder.webp',
+  //   url: BASE_URL_V1 + 'images/illustration-styles/wonder.webp',
   // },
   // {
   //   name: 'style4-sleepy',
-  //   url: BASE_URL + 'images/illustration-styles/sleepy.webp',
+  //   url: BASE_URL_V1 + 'images/illustration-styles/sleepy.webp',
   // },
   // {
   //   name: 'style5-busy',
-  //   url: BASE_URL + 'images/illustration-styles/busy.webp',
+  //   url: BASE_URL_V1 + 'images/illustration-styles/busy.webp',
   // },
   // {
   //   name: 'style6-anthro',
-  //   url: BASE_URL + 'images/illustration-styles/anthro.webp',
+  //   url: BASE_URL_V1 + 'images/illustration-styles/anthro.webp',
   // },
   // {
   //   name: 'style7-flat',
-  //   url: BASE_URL + 'images/illustration-styles/flat.webp',
+  //   url: BASE_URL_V1 + 'images/illustration-styles/flat.webp',
   // },
   // {
   //   name: 'style8-nature',
-  //   url: BASE_URL + 'images/illustration-styles/nature.webp',
+  //   url: BASE_URL_V1 + 'images/illustration-styles/nature.webp',
   // },
 ];
 
@@ -412,243 +414,243 @@ export const COLOR_PALETTE = [
 ];
 
 export const AVATAR_ARRAY = [...new Array(29).keys()].map(
-  key => BASE_URL + `images/avatars/avatar${key + 1}.webp`,
+  key => BASE_URL_V1 + `images/avatars/avatar${key + 1}.webp`,
 );
 
 export const PLACE: OnlyImageType[] = [
   {
     name: 'Outer Space',
-    url: BASE_URL + 'images/locations/outer_space.webp',
+    url: BASE_URL_V1 + 'images/locations/outer_space.webp',
   },
   {
     name: 'Camping in tents',
-    url: BASE_URL + 'images/locations/camping_in_tents.webp',
+    url: BASE_URL_V1 + 'images/locations/camping_in_tents.webp',
   },
   {
     name: 'Bustling city',
-    url: BASE_URL + 'images/locations/city.webp',
+    url: BASE_URL_V1 + 'images/locations/city.webp',
   },
   {
     name: 'Dark Forest',
-    url: BASE_URL + 'images/locations/dark_forest.webp',
+    url: BASE_URL_V1 + 'images/locations/dark_forest.webp',
   },
   {
     name: 'Noisy fairground',
-    url: BASE_URL + 'images/locations/fair_ground.webp',
+    url: BASE_URL_V1 + 'images/locations/fair_ground.webp',
   },
   {
     name: 'Busy farmyard',
-    url: BASE_URL + 'images/locations/farm_yard.webp',
+    url: BASE_URL_V1 + 'images/locations/farm_yard.webp',
   },
   {
     name: 'The mountains',
-    url: BASE_URL + 'images/locations/snowy_mountain.webp',
+    url: BASE_URL_V1 + 'images/locations/snowy_mountain.webp',
   },
   {
     name: 'Desert island',
-    url: BASE_URL + 'images/locations/sunny_beach.webp',
+    url: BASE_URL_V1 + 'images/locations/sunny_beach.webp',
   },
   {
     name: 'The park',
-    url: BASE_URL + 'images/locations/playground.webp',
+    url: BASE_URL_V1 + 'images/locations/playground.webp',
   },
   {
     name: 'A castle',
-    url: BASE_URL + 'images/locations/castle.webp',
+    url: BASE_URL_V1 + 'images/locations/castle.webp',
   },
   {
     name: 'A magic tree',
-    url: BASE_URL + 'images/locations/magic_tree.webp',
+    url: BASE_URL_V1 + 'images/locations/magic_tree.webp',
   },
 ];
 
 export const WHO: OnlyImageType[] = [
   {
     name: 'Astronaut',
-    url: BASE_URL + 'images/who/astronaut.webp',
+    url: BASE_URL_V1 + 'images/who/astronaut.webp',
   },
   // {
   //   name: 'Boy Who Plays The Drums',
-  //   url: BASE_URL + 'images/who/boy_who_plays_the_drums.webp',
+  //   url: BASE_URL_V1 + 'images/who/boy_who_plays_the_drums.webp',
   // },
   {
     name: 'Bunny Rabbit',
-    url: BASE_URL + 'images/who/bunny_rabbit.webp',
+    url: BASE_URL_V1 + 'images/who/bunny_rabbit.webp',
   },
   {
     name: 'Cute Dinosaur',
-    url: BASE_URL + 'images/who/cute_dinosaur.webp',
+    url: BASE_URL_V1 + 'images/who/cute_dinosaur.webp',
   },
   {
     name: 'Cute Duckling',
-    url: BASE_URL + 'images/who/cute_duckling.webp',
+    url: BASE_URL_V1 + 'images/who/cute_duckling.webp',
   },
   {
     name: 'Cute Kitten',
-    url: BASE_URL + 'images/who/cute_kitten.webp',
+    url: BASE_URL_V1 + 'images/who/cute_kitten.webp',
   },
   // {
   //   name: 'Sea Monster',
-  //   url: BASE_URL + 'images/who/cute_sea_monster.webp',
+  //   url: BASE_URL_V1 + 'images/who/cute_sea_monster.webp',
   // },
   // {
   //   name: 'Farm Animals',
-  //   url: BASE_URL + 'images/who/farm_animals.webp',
+  //   url: BASE_URL_V1 + 'images/who/farm_animals.webp',
   // },
   // {
   //   name: 'Female Doctor',
-  //   url: BASE_URL + 'images/who/female_doctor.webp',
+  //   url: BASE_URL_V1 + 'images/who/female_doctor.webp',
   // },
   // {
   //   name: 'Female Firefighter',
-  //   url: BASE_URL + 'images/who/female_firefighter.webp',
+  //   url: BASE_URL_V1 + 'images/who/female_firefighter.webp',
   // },
   {
     name: 'Female Runner',
-    url: BASE_URL + 'images/who/female_runner.webp',
+    url: BASE_URL_V1 + 'images/who/female_runner.webp',
   },
   {
     name: 'Fisherman',
-    url: BASE_URL + 'images/who/fisherman.webp',
+    url: BASE_URL_V1 + 'images/who/fisherman.webp',
   },
   {
     name: 'Happy Yeti',
-    url: BASE_URL + 'images/who/happy_yeti.webp',
+    url: BASE_URL_V1 + 'images/who/happy_yeti.webp',
   },
   {
     name: 'Mad Professor',
-    url: BASE_URL + 'images/who/mad_professor.webp',
+    url: BASE_URL_V1 + 'images/who/mad_professor.webp',
   },
   {
     name: 'Male Runner',
-    url: BASE_URL + 'images/who/male_runner.webp',
+    url: BASE_URL_V1 + 'images/who/male_runner.webp',
   },
   {
     name: 'Pet Dog',
-    url: BASE_URL + 'images/who/pet_dog.webp',
+    url: BASE_URL_V1 + 'images/who/pet_dog.webp',
   },
   {
     name: 'Policeman',
-    url: BASE_URL + 'images/who/policeman.webp',
+    url: BASE_URL_V1 + 'images/who/policeman.webp',
   },
   {
     name: 'Racing Cyclist',
-    url: BASE_URL + 'images/who/racing_cyclist.webp',
+    url: BASE_URL_V1 + 'images/who/racing_cyclist.webp',
   },
   // {
   //   name: 'Safari Animals',
-  //   url: BASE_URL + 'images/who/safari_animals.webp',
+  //   url: BASE_URL_V1 + 'images/who/safari_animals.webp',
   // },
   {
     name: 'Boy',
-    url: BASE_URL + 'images/who/boy.webp',
+    url: BASE_URL_V1 + 'images/who/boy.webp',
   },
   {
     name: 'Girl',
-    url: BASE_URL + 'images/who/girl.webp',
+    url: BASE_URL_V1 + 'images/who/girl.webp',
   },
   {
     name: 'Pony',
-    url: BASE_URL + 'images/who/pony.webp',
+    url: BASE_URL_V1 + 'images/who/pony.webp',
   },
   {
     name: 'Flamingo',
-    url: BASE_URL + 'images/who/flamingo.webp',
+    url: BASE_URL_V1 + 'images/who/flamingo.webp',
   },
   {
     name: 'Male dancer',
-    url: BASE_URL + 'images/who/male_dancer.webp',
+    url: BASE_URL_V1 + 'images/who/male_dancer.webp',
   },
   {
     name: 'Female dancer',
-    url: BASE_URL + 'images/who/female_dancer.webp',
+    url: BASE_URL_V1 + 'images/who/female_dancer.webp',
   },
   {
     name: 'Male singer',
-    url: BASE_URL + 'images/who/male_singer.webp',
+    url: BASE_URL_V1 + 'images/who/male_singer.webp',
   },
   {
     name: 'Female singer',
-    url: BASE_URL + 'images/who/female_singer.webp',
+    url: BASE_URL_V1 + 'images/who/female_singer.webp',
   },
   {
     name: 'Sheep',
-    url: BASE_URL + 'images/who/sheep.webp',
+    url: BASE_URL_V1 + 'images/who/sheep.webp',
   },
   {
     name: 'Cow',
-    url: BASE_URL + 'images/who/cow.webp',
+    url: BASE_URL_V1 + 'images/who/cow.webp',
   },
   {
     name: 'Pig',
-    url: BASE_URL + 'images/who/pig.webp',
+    url: BASE_URL_V1 + 'images/who/pig.webp',
   },
   {
     name: 'Chicken',
-    url: BASE_URL + 'images/who/chicken.webp',
+    url: BASE_URL_V1 + 'images/who/chicken.webp',
   },
   {
     name: 'Giraffe',
-    url: BASE_URL + 'images/who/giraffe.webp',
+    url: BASE_URL_V1 + 'images/who/giraffe.webp',
   },
   {
     name: 'Elephant',
-    url: BASE_URL + 'images/who/elephant.webp',
+    url: BASE_URL_V1 + 'images/who/elephant.webp',
   },
   {
     name: 'Lion',
-    url: BASE_URL + 'images/who/lion.webp',
+    url: BASE_URL_V1 + 'images/who/lion.webp',
   },
   {
     name: 'Meerkat',
-    url: BASE_URL + 'images/who/meerkat.webp',
+    url: BASE_URL_V1 + 'images/who/meerkat.webp',
   },
   {
     name: 'Train',
-    url: BASE_URL + 'images/who/train.webp',
+    url: BASE_URL_V1 + 'images/who/train.webp',
   },
   {
     name: 'Digger',
-    url: BASE_URL + 'images/who/digger.webp',
+    url: BASE_URL_V1 + 'images/who/digger.webp',
   },
   {
     name: 'Tandem bicycle',
-    url: BASE_URL + 'images/who/tandem_bicycle.webp',
+    url: BASE_URL_V1 + 'images/who/tandem_bicycle.webp',
   },
   {
     name: 'Snowman',
-    url: BASE_URL + 'images/who/snowman.webp',
+    url: BASE_URL_V1 + 'images/who/snowman.webp',
   },
   {
     name: 'Doctor',
-    url: BASE_URL + 'images/who/doctor.webp',
+    url: BASE_URL_V1 + 'images/who/doctor.webp',
   },
   {
     name: 'Tractor',
-    url: BASE_URL + 'images/who/tractor.webp',
+    url: BASE_URL_V1 + 'images/who/tractor.webp',
   },
 ];
 
 export const WHAT_HAPPENS: OnlyImageType[] = [
   {
     name: 'An adventure',
-    url: BASE_URL + 'images/whatHappensNew/adventure.webp',
+    url: BASE_URL_V1 + 'images/whatHappensNew/adventure.webp',
   },
   {
     name: 'Makes you laugh',
-    url: BASE_URL + 'images/whatHappensNew/laugh.webp',
+    url: BASE_URL_V1 + 'images/whatHappensNew/laugh.webp',
   },
   {
     name: 'Move, dance, sing or be silly',
-    url: BASE_URL + 'images/whatHappensNew/move.webp',
+    url: BASE_URL_V1 + 'images/whatHappensNew/move.webp',
   },
   {
     name: 'Bedtime story',
-    url: BASE_URL + 'images/whatHappensNew/sleep.webp',
+    url: BASE_URL_V1 + 'images/whatHappensNew/sleep.webp',
   },
   {
     name: 'A story about things',
-    url: BASE_URL + 'images/whatHappensNew/stuff.webp',
+    url: BASE_URL_V1 + 'images/whatHappensNew/stuff.webp',
   },
 ];
 
@@ -662,7 +664,6 @@ export const RELATIONSHIP_ARRAY = [
   {role: translation('FRIEND')},
   {role: translation('OTHER')},
 ];
-
 export const CACHE_SESSION = 'tandemcache';
 
 export const MONTH_ARRAY: {month: string; monthKey: string}[] = [
@@ -695,31 +696,31 @@ export const FONT_SIZES = [16, 20, 24, 28, 32, 40];
 // export const WHAT_HAPPENS: OnlyImageType[] = [
 //   {
 //     name: 'Adventure',
-//     url: BASE_URL+'images/whatHappens/adventure.webp',
+//     url: BASE_URL_V1+'images/whatHappens/adventure.webp',
 //   },
 //   {
 //     name: 'Fairy Tale',
-//     url: BASE_URL+'images/whatHappens/fairy_tale.webp',
+//     url: BASE_URL_V1+'images/whatHappens/fairy_tale.webp',
 //   },
 //   {
 //     name: 'Fantastic Mystery',
-//     url: BASE_URL+'images/whatHappens/fantastic_mystery.webp',
+//     url: BASE_URL_V1+'images/whatHappens/fantastic_mystery.webp',
 //   },
 //   {
 //     name: 'Friendship ',
-//     url: BASE_URL+'images/whatHappens/friendship_story.webp',
+//     url: BASE_URL_V1+'images/whatHappens/friendship_story.webp',
 //   },
 //   {
 //     name: 'Funny ',
-//     url: BASE_URL+'images/whatHappens/funny_story.webp',
+//     url: BASE_URL_V1+'images/whatHappens/funny_story.webp',
 //   },
 //   {
 //     name: 'Love',
-//     url: BASE_URL+'images/whatHappens/love_story.webp',
+//     url: BASE_URL_V1+'images/whatHappens/love_story.webp',
 //   },
 //   {
 //     name: 'Spooky',
-//     url: BASE_URL+'images/whatHappens/spooky_tale.webp',
+//     url: BASE_URL_V1+'images/whatHappens/spooky_tale.webp',
 //   },
 // ];
 
@@ -775,5 +776,4 @@ export const NOTIFICATION_PROMPTS = [
     body: 'The Tandem Robots were hard at work and now your personalised story is ready to read!',
   },
 ];
-
 export const NAVIGATE_TO_BOOKSHELF = 'NAVIGATE_TO_BOOKSHELF';

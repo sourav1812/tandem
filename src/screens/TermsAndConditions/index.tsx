@@ -15,6 +15,7 @@ import logout from '@tandem/functions/logout';
 import {consentFormApi} from '@tandem/api/consentFormApi';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
+import consentNewsletter from '@tandem/api/consentNewsletter';
 
 const TermsAndConditions = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -49,8 +50,9 @@ const TermsAndConditions = () => {
   const handleContentForm = async () => {
     try {
       consentFormApi({
-        data: {isAgreed: true, receivePromotinalMails: signInToNewsLetter},
+        data: {isAgreed: true},
       });
+      consentNewsletter(signInToNewsLetter);
       navigateTo(SCREEN_NAME.HELP_CENTER, {});
     } catch (error) {
       console.log(error, 'consent from api error');
