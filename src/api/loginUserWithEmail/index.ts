@@ -13,7 +13,13 @@ export default async ({email, password}: LoginUserWithEmail) => {
     const {deviceId, deviceType, fcmToken} = await fcm();
     const response = await post<LoginResponse>({
       path: API.LOGIN_USER_WITH_EMAIL,
-      data: {email, password, deviceId, deviceType, fcmToken},
+      data: {
+        email: email.toLowerCase(),
+        password,
+        deviceId,
+        deviceType,
+        fcmToken,
+      },
     });
     await loginFlow(response); // for every type of login we have to come to this function in the end
   } catch (error: any) {
@@ -27,8 +33,11 @@ export default async ({email, password}: LoginUserWithEmail) => {
       // ! after email verification call login again
 
       // ? if code is 403 check here
-      await getOtp(email);
-      navigateTo(SCREEN_NAME.VERIFY_EMAIL, {email, password});
+      await getOtp(email.toLowerCase());
+      navigateTo(SCREEN_NAME.VERIFY_EMAIL, {
+        email: email.toLowerCase(),
+        password,
+      });
       return;
     }
 
