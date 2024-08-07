@@ -61,7 +61,7 @@ const ENV_VARS = {
 };
 
 // ! Select ENV from here
-export const SELECTED_ENVIRONMENT = ENVIRONMENT.LOCAL;
+export const SELECTED_ENVIRONMENT = ENVIRONMENT.TESTING;
 // ! URLs
 export const BASE_URL = ENV_VARS[SELECTED_ENVIRONMENT].API_URL;
 
