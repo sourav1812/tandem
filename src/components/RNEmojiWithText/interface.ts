@@ -16,6 +16,7 @@ export interface Props {
   mask?: boolean;
   disabled?: boolean;
   halfRotationDuration?: number;
+  soundFile?: any;
 }
 
 export interface IconProps {

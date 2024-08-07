@@ -8,8 +8,6 @@ import {
   saveChildData,
 } from '@tandem/redux/slices/createChild.slice';
 import {PEOPLE} from '@tandem/constants/enums';
-import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
-import consentNewsletter from '../consentNewsletter';
 
 export default async () => {
   const response = await get<UserDataResponse>({
@@ -35,18 +33,5 @@ export default async () => {
   // storing the book in redux
   // ! note api should only send the book if story has been genearted by the child
 
-  if (response?.receivePromotinalMails === undefined) {
-    // ! if not subbed to newsletter ever.... ask user
-    setTimeout(() => {
-      store.dispatch(
-        addAlertData({
-          type: 'Message',
-          message: 'Subcribe to Tandem Newsletter?',
-          onSuccess: () => consentNewsletter(true),
-          onDestructive: () => consentNewsletter(false),
-        }),
-      );
-    }, 2000);
-  }
   return response;
 };
