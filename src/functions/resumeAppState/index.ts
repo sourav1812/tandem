@@ -52,7 +52,7 @@ export default async () => {
     return;
   } else {
     const response = await userProfile();
-    if (response?.receivePromotinalMails === undefined) {
+    if (response?.receivePromotionalMails === undefined) {
       // ! if not subbed to newsletter ever.... ask user
       setTimeout(() => {
         store.dispatch(
