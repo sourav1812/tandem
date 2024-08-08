@@ -6,8 +6,11 @@ import {Image, View} from 'react-native';
 import RNTextComponent from '@tandem/components/RNTextComponent';
 import {verticalScale} from 'react-native-size-matters';
 import {translation} from '@tandem/utils/methods';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
 
 const BuildingTandem = () => {
+  const isTablet = useAppSelector(state => state.deviceType.isTablet);
+
   return (
     <View
       style={{
@@ -18,7 +21,12 @@ const BuildingTandem = () => {
         justifyContent: 'center',
       }}>
       <LottieView
-        style={{flex: 1, width: '100%', height: '100%', position: 'absolute'}}
+        style={{
+          flex: 1,
+          width: isTablet ? '80%' : '100%',
+          height: isTablet ? '80%' : '100%',
+          position: 'absolute',
+        }}
         source={LottieAnimationFile}
         autoPlay
         loop

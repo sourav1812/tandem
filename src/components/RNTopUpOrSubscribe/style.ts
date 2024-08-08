@@ -4,7 +4,7 @@ import {scale, verticalScale} from 'react-native-size-matters';
 
 export const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: scale(22),
+    paddingHorizontal: scale(20),
     backgroundColor: themeColor.white,
     alignItems: 'center',
   },

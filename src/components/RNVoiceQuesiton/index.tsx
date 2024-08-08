@@ -120,8 +120,9 @@ const RNVoiceQuesiton = ({
                       : {},
                     {
                       height: 'auto',
-                      paddingVertical: verticalScale(10),
+                      padding: verticalScale(10),
                       marginHorizontal: verticalScale(5),
+                      maxHeight: 'auto',
                     },
                   ]}
                   key={option}

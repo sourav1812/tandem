@@ -24,7 +24,7 @@ import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
 import Animated, {useSharedValue, withTiming} from 'react-native-reanimated';
 import {updatePage} from '@tandem/redux/slices/bookShelf.slice';
-import {store} from '@tandem/redux/store';
+import {RootState, store} from '@tandem/redux/store';
 import {translation} from '@tandem/utils/methods';
 import {readBookNotification} from '@tandem/functions/notifee';
 import {
@@ -64,6 +64,11 @@ export default ({
   const recordingpremissionGranted = useAppSelector(
     state => state.recording.permissionGranted,
   );
+
+  const portrait = useAppSelector(
+    (state: RootState) => state.orientation.isPortrait,
+  );
+
   React.useEffect(() => {
     if (isTablet) {
       Orientation.lockToLandscapeLeft();
@@ -158,7 +163,7 @@ export default ({
         <View
           style={[
             {
-              height: '65%',
+              height: portrait ? '65%' : '100%',
             },
             styles.bottomSheet,
           ]}>
@@ -169,7 +174,7 @@ export default ({
               marginBottom: verticalScale(15),
             }}
             isSemiBold>
-            The End
+            {translation('THE_END')}
           </RNTextComponent>
           <RNTextComponent
             style={{
@@ -178,7 +183,7 @@ export default ({
               marginBottom: verticalScale(35),
             }}
             isMedium>
-            Great work. Now why don't you...
+            {translation('GREAT_WORK_NOW')}
           </RNTextComponent>
           {!publicRoute && !state.isStoryRated && (
             <RNButton
