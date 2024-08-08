@@ -508,6 +508,8 @@ const Home = () => {
                           navigateTo(SCREEN_NAME.STORY_LANGAUGE);
                           return;
                         }
+                        if (index === 1)
+                          navigateTo(SCREEN_NAME.TOP_UP_AND_SUBSCRIPTION);
                         // navigateTo(SCREEN_NAME.MATCHING_PAIRS);
                       }}
                     />

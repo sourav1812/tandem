@@ -1,3 +1,5 @@
+import {translation} from '@tandem/utils/methods';
+
 export interface TopUpType {
   id: number;
   title: string;
@@ -14,15 +16,15 @@ export interface AboutTopUpType {
 export const TOP_UP_TYPES: TopUpType[] = [
   {
     id: 1,
-    title: 'Buy 10 TANDEM Tokens',
-    description: '10 tokens = 10 stories',
+    title: `${translation('BUY')} 10 ${translation('TANDEM_TOKENS')}`,
+    description: `10 ${translation('TOKENS')} = 10 ${translation('STORIES')}`,
     price: 1.99,
     currencyLogo: '£',
   },
   {
     id: 2,
-    title: 'Buy 50 TANDEM Tokens',
-    description: '50 tokens = 50 stories',
+    title: `${translation('BUY')} 50 ${translation('TANDEM_TOKENS')}`,
+    description: `50 ${translation('TOKENS')} = 50 ${translation('STORIES')}`,
     price: 7.99,
     currencyLogo: '£',
   },
@@ -31,10 +33,10 @@ export const TOP_UP_TYPES: TopUpType[] = [
 export const ABOUT_TOP_UP: AboutTopUpType[] = [
   {
     id: 1,
-    title: 'No expiry date on all tokens',
+    title: translation('NO_EXPIRY_DATE'),
   },
   {
     id: 2,
-    title: '100% satisfaction guaranteed (full refund if you are not happy)',
+    title: translation('SATISFACTION_GUARANTEE'),
   },
 ];

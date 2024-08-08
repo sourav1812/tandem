@@ -149,8 +149,7 @@ const AppNavigator = () => {
           />
           <Stack.Screen
             options={{gestureEnabled: false}}
-            component={TopUpAndSubscribe}
-            // component={Account}
+            component={Account}
             name={SCREEN_NAME.ACCOUNT}
           />
           <Stack.Screen

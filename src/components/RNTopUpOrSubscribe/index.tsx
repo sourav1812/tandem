@@ -1,4 +1,4 @@
-import {View, Text, Image, ScrollView, Pressable} from 'react-native';
+import {View, Image} from 'react-native';
 import React from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {verticalScale} from 'react-native-size-matters';
@@ -12,10 +12,7 @@ import RNTextComponent from '@tandem/components/RNTextComponent';
 import {Props} from './interface';
 import {translation} from '@tandem/utils/methods';
 
-const TopUpAndSubscribeHeader = ({
-  children,
-  title = 'Top Up Or Subscribe',
-}: Props) => {
+const TopUpAndSubscribeHeader = ({children, title}: Props) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
 
   const portrait = useAppSelector(

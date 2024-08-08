@@ -1,20 +1,20 @@
-import { View } from "react-native";
-import React from "react";
-import { ABOUT_SUBSCRIPTION } from "./interface";
+import {View} from 'react-native';
+import React from 'react';
+import {ABOUT_SUBSCRIPTION} from './interface';
 import CheckMark from '../../assets/svg/Check';
-import { styles } from "./style";
-import RNTextComponent from "@tandem/components/RNTextComponent";
-import { verticalScale } from "react-native-size-matters";
-import RNButton from "@tandem/components/RNButton";
-import navigateTo from "@tandem/navigation/navigate";
-import { SCREEN_NAME } from "@tandem/navigation/ComponentName";
-import TopUpAndSubscribeHeader from "@tandem/components/RNTopUpOrSubscribe";
-import { translation } from "@tandem/utils/methods";
+import {styles} from './style';
+import RNTextComponent from '@tandem/components/RNTextComponent';
+import {verticalScale} from 'react-native-size-matters';
+import RNButton from '@tandem/components/RNButton';
+import navigateTo from '@tandem/navigation/navigate';
+import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
+import TopUpAndSubscribeHeader from '@tandem/components/RNTopUpOrSubscribe';
+import {translation} from '@tandem/utils/methods';
 
 const Subscription = () => {
-  const handleClick = ()=>{
+  const handleClick = () => {
     navigateTo(SCREEN_NAME.MANAGE_SUBSCRIPTION);
-  }
+  };
 
   return (
     <TopUpAndSubscribeHeader title="SUBSCRIPTION_TITLE">
@@ -53,12 +53,16 @@ const Subscription = () => {
           onlyBorder
           customStyle={styles.button}
           onClick={handleClick}
-          title={'£7.99/Month = 100 tokens/month'}
+          title={`£7.99/${translation('MONTH')} = 100 ${translation(
+            'TOKENS',
+          )}/${translation('month')}`}
         />
         <RNButton
           customStyle={styles.button}
           onClick={handleClick}
-          title={'£69/Year = 1200 tokens/year'}
+          title={`£69/${translation('YEAR')} = 1200 ${translation(
+            'TOKENS',
+          )}/${translation('year')}`}
         />
       </View>
     </TopUpAndSubscribeHeader>
@@ -66,5 +70,3 @@ const Subscription = () => {
 };
 
 export default Subscription;
-
- 

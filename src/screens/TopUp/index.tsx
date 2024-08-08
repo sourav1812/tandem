@@ -1,22 +1,25 @@
-import { Pressable, View } from "react-native";
-import { styles } from "./style";
-import RNTextComponent from "@tandem/components/RNTextComponent";
-import { ABOUT_TOP_UP, TOP_UP_TYPES, TopUpType } from "./interface";
-import { useState } from "react";
-import themeColor from "@tandem/theme/themeColor";
+import {Pressable, View} from 'react-native';
+import {styles} from './style';
+import RNTextComponent from '@tandem/components/RNTextComponent';
+import {ABOUT_TOP_UP, TOP_UP_TYPES, TopUpType} from './interface';
+import {useState} from 'react';
+import themeColor from '@tandem/theme/themeColor';
 import CheckMark from '../../assets/svg/Check';
-import RNButton from "@tandem/components/RNButton";
-import { verticalScale } from "react-native-size-matters";
-import TopUpAndSubscribeHeader from "@tandem/components/RNTopUpOrSubscribe";
+import RNButton from '@tandem/components/RNButton';
+import {verticalScale} from 'react-native-size-matters';
+import TopUpAndSubscribeHeader from '@tandem/components/RNTopUpOrSubscribe';
+import {translation} from '@tandem/utils/methods';
 
 const TopUp = () => {
-  const [selectedTopUp, setSelectedTopUp] = useState<TopUpType | undefined>(undefined);
+  const [selectedTopUp, setSelectedTopUp] = useState<TopUpType | undefined>(
+    undefined,
+  );
 
   const handlePress = (topup: TopUpType) => {
     setSelectedTopUp(topup);
   };
 
-  const handleClick = ()=>{}
+  const handleClick = () => {};
 
   return (
     <TopUpAndSubscribeHeader title={'TOP_UP_TITLE'}>
@@ -86,8 +89,10 @@ const TopUp = () => {
           onClick={handleClick}
           title={
             !selectedTopUp
-              ? 'Buy'
-              : `Buy - ${selectedTopUp?.currencyLogo}${selectedTopUp?.price}`
+              ? translation('BUY')
+              : `${translation('BUY')} - ${selectedTopUp?.currencyLogo}${
+                  selectedTopUp?.price
+                }`
           }
         />
       </View>
@@ -96,4 +101,3 @@ const TopUp = () => {
 };
 
 export default TopUp;
-

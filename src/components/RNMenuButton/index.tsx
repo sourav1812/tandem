@@ -14,7 +14,7 @@ import Animated from 'react-native-reanimated';
 const RNMenuButton = ({
   title,
   customStyle,
-  isDisabled,
+  isDisabled = false,
   onPress,
   isSemiBold,
 }: MenuButtonProps) => {
@@ -49,7 +49,7 @@ const RNMenuButton = ({
         <RNTextComponent isSemiBold={isSemiBold} style={styles.text}>
           {title}
         </RNTextComponent>
-        <RightArrow color={isDisabled ? '#EEEEEE' : ''}/>
+        <RightArrow color={isDisabled ? '#EEEEEE' : ''} />
       </Animated.View>
     </Pressable>
   );

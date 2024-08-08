@@ -1,37 +1,32 @@
-import { View } from "react-native";
-import React, { useState } from "react";
-import RNTextComponent from "@tandem/components/RNTextComponent";
-import { verticalScale } from "react-native-size-matters";
-import { styles } from "./style";
-import RNButton from "@tandem/components/RNButton";
-import themeColor from "@tandem/theme/themeColor";
-import { translation } from "@tandem/utils/methods";
-import { addAlertData } from "@tandem/redux/slices/alertBox.slice";
-import { useDispatch } from "react-redux";
-import TopUpAndSubscribeHeader from "@tandem/components/RNTopUpOrSubscribe";
+import {View} from 'react-native';
+import React, {useState} from 'react';
+import RNTextComponent from '@tandem/components/RNTextComponent';
+import {verticalScale} from 'react-native-size-matters';
+import {styles} from './style';
+import RNButton from '@tandem/components/RNButton';
+import themeColor from '@tandem/theme/themeColor';
+import {translation} from '@tandem/utils/methods';
+import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
+import {useDispatch} from 'react-redux';
+import TopUpAndSubscribeHeader from '@tandem/components/RNTopUpOrSubscribe';
 
 const ManageSubscription = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const handleOnSuccess = ()=>{
+  const handleOnSuccess = () => {};
+  const handleDestructive = () => {};
 
-  }
-  const handleDestructive = () => {
-  
+  const handleCancel = () => {
+    dispatch(
+      addAlertData({
+        type: 'ARE_YOU_SURE',
+        message: `${translation('IF_YOU_CANCEL')} XX/XX/XXXX`,
+        onSuccess: handleOnSuccess,
+        onDestructive: handleDestructive,
+      }),
+    );
   };
 
-  const handleCancel = ()=>{
-    dispatch(
-
-        addAlertData({
-          type: 'ARE_YOU_SURE',
-          message: translation('IF_YOU_CANCEL'),
-          onSuccess: handleOnSuccess,
-          onDestructive: handleDestructive,
-        })
-
-    );
-  }
   return (
     <TopUpAndSubscribeHeader title="MANAGE_SUBSCRIPTION_TITLE">
       <View style={styles.info}>
@@ -48,7 +43,7 @@ const ManageSubscription = () => {
             fontSize: verticalScale(14),
             textAlign: 'left',
           }}>
-          Subscription plan : Monthly/£7.99
+          {`${translation('SUBSCRIPTION_PLAN_MONTHLY')}£7.99`}
         </RNTextComponent>
         <RNTextComponent
           style={{
@@ -56,7 +51,7 @@ const ManageSubscription = () => {
             fontSize: verticalScale(14),
             textAlign: 'left',
           }}>
-          Monthly Usage: 23 / 100 tokens
+          {`${translation('MONTHLY_USAGE')} 23 / 100 ${translation('TOKENS')}`}
         </RNTextComponent>
       </View>
       <View
@@ -69,7 +64,7 @@ const ManageSubscription = () => {
         }}>
         <RNButton
           customStyle={styles.button}
-          onClick={()=>{}}
+          onClick={() => {}}
           title={translation('UPGRADE_YEARLY_SUBSCRIPTION')}
         />
         <RNButton
