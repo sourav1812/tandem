@@ -51,4 +51,8 @@ export enum SCREEN_NAME {
   ROBOT_BUILDING_BOOK = 'RobotBuildingBook',
   DISCLAIMER = 'Disclaimer',
   VERIFY_EMAIL = 'VerifyEmail',
+  TOP_UP_AND_SUBSCRIPTION = 'TopUpAndSubscription',
+  TOP_UP = 'TopUp',
+  SUBSCRIPTION = 'Subscription',
+  MANAGE_SUBSCRIPTION = 'ManageSubscription'
 }

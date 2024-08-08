@@ -54,6 +54,10 @@ export type RootStackParamList = {
   Disclaimer: undefined;
   Bookshelf: undefined;
   VerifyEmail: undefined;
+  TopUpAndSubscription: undefined;
+  TopUp: undefined;
+  Subscription: undefined;
+  ManageSubscription: undefined;
 };
 
 export type RootTabParamList = {

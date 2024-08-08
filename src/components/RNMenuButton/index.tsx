@@ -11,7 +11,13 @@ import {
 } from 'react-native-reanimated';
 import Animated from 'react-native-reanimated';
 
-const RNMenuButton = ({title, customStyle, onPress}: MenuButtonProps) => {
+const RNMenuButton = ({
+  title,
+  customStyle,
+  isDisabled,
+  onPress,
+  isSemiBold,
+}: MenuButtonProps) => {
   const scaleButton = useSharedValue(1);
 
   const runAnimation = () => {
@@ -23,6 +29,7 @@ const RNMenuButton = ({title, customStyle, onPress}: MenuButtonProps) => {
 
   return (
     <Pressable
+      disabled={isDisabled}
       onPress={() => {
         if (onPress) {
           onPress();
@@ -35,9 +42,14 @@ const RNMenuButton = ({title, customStyle, onPress}: MenuButtonProps) => {
           styles.container,
           {transform: [{scale: scaleButton}]},
           customStyle && customStyle,
+          {
+            opacity: isDisabled ? 0.5 : 1,
+          },
         ]}>
-        <RNTextComponent style={styles.text}>{title}</RNTextComponent>
-        <RightArrow />
+        <RNTextComponent isSemiBold={isSemiBold} style={styles.text}>
+          {title}
+        </RNTextComponent>
+        <RightArrow color={isDisabled ? '#EEEEEE' : ''}/>
       </Animated.View>
     </Pressable>
   );
