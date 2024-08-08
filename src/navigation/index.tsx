@@ -28,6 +28,11 @@ import Disclaimer from '@tandem/screens/Disclaimer';
 import gotoBookshelf from '@tandem/functions/gotoBookshelf';
 import notifee, {EventType} from '@notifee/react-native';
 import VerifyEmail from '@tandem/screens/VerifyEmail';
+import TopUpAndSubscribe from '@tandem/screens/TopUpAndSubscribe';
+import TopUp from '@tandem/screens/TopUp';
+import Subscription from '@tandem/screens/Subscription';
+import ManageSubscription from '@tandem/screens/ManageSubscription';
+
 const AppNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
   const routeNameRef = React.useRef<any>(null);
@@ -110,6 +115,19 @@ const AppNavigator = () => {
           />
           <Stack.Screen component={Disclaimer} name={SCREEN_NAME.DISCLAIMER} />
           <Stack.Screen
+            component={TopUpAndSubscribe}
+            name={SCREEN_NAME.TOP_UP_AND_SUBSCRIPTION}
+          />
+          <Stack.Screen component={TopUp} name={SCREEN_NAME.TOP_UP} />
+          <Stack.Screen
+            component={Subscription}
+            name={SCREEN_NAME.SUBSCRIPTION}
+          />
+          <Stack.Screen
+            component={ManageSubscription}
+            name={SCREEN_NAME.MANAGE_SUBSCRIPTION}
+          />
+          <Stack.Screen
             component={BlowWindMill}
             options={{gestureEnabled: false}}
             name={SCREEN_NAME.BLOW_WINDMILL}
@@ -163,7 +181,6 @@ const AppNavigator = () => {
             getComponent={() => require('@tandem/screens/StoryTelling').default}
             name={SCREEN_NAME.STORY_TELLING}
           />
-
           <Stack.Screen
             getComponent={() =>
               require('@tandem/screens/GenerateStory/Questions/Who').default
@@ -183,7 +200,6 @@ const AppNavigator = () => {
             }
             name={SCREEN_NAME.GENERATE_STORY_WHERE}
           />
-
           <Stack.Screen
             getComponent={() =>
               require('@tandem/screens/GenerateStory/Questions/WhatThings')
@@ -222,10 +238,8 @@ const AppNavigator = () => {
             getComponent={() => require('@tandem/screens/RoadMap').default}
             name={SCREEN_NAME.ROADMAP}
           />
-
           {/* Below mode will be changed to only MODE.A when app in stable
         version.  Only add Screens needed for MODE.A */}
-
           <Stack.Screen
             getComponent={() =>
               require('@tandem/screens/SelectLanguage').default
@@ -320,7 +334,6 @@ const AppNavigator = () => {
             getComponent={() => require('@tandem/screens/AboutApp').default}
             name={SCREEN_NAME.ABOUT_APP}
           />
-
           <Stack.Screen
             getComponent={() =>
               require('@tandem/screens/ProfileSettings').default
@@ -333,17 +346,14 @@ const AppNavigator = () => {
             }
             name={SCREEN_NAME.NOTIFICATION_SCREEN}
           />
-
           <Stack.Screen
             getComponent={() => require('@tandem/screens/SelectPlayer').default}
             name={SCREEN_NAME.SELECT_PLAYER}
           />
-
           <Stack.Screen
             getComponent={() => require('@tandem/screens/Questions').default}
             name={SCREEN_NAME.QUESTIONS}
           />
-
           <Stack.Screen
             getComponent={() => require('@tandem/screens/Activities').default}
             name={SCREEN_NAME.ACTIVITIES}

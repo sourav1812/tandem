@@ -27,6 +27,7 @@ import {AppState} from 'react-native';
 import {getStoredTokens} from '@tandem/functions/tokens';
 import selfAnalytics from '@tandem/api/selfAnalytics';
 import {UsersAnalyticsEvents} from '@tandem/api/selfAnalytics/interface';
+import TopUpAndSubscribe from '@tandem/screens/TopUpAndSubscribe';
 
 const persistor = persistStore(store);
 
