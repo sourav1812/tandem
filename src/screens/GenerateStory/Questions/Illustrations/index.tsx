@@ -13,7 +13,6 @@ import {useAppSelector} from '@tandem/hooks/navigationHooks';
 export default () => {
   const [disabled, setDisabled] = React.useState(true);
   const storyStyles = useAppSelector(state => state.cache.storyStyles);
-  console.log({storyStyles});
   const navigation: any = useNavigation();
   return (
     <GenerateStory
@@ -40,7 +39,7 @@ export default () => {
           </RNTextComponent>{' '}
         </RNTextComponent>
         <RNImageChoice
-          doNotShowLabel
+          // doNotShowLabel
           setDisabled={setDisabled}
           type={STORY_PARTS.STYLES}
           maxSelections={1}

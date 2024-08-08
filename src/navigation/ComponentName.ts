@@ -50,4 +50,5 @@ export enum SCREEN_NAME {
   STORY_LANGAUGE = 'StoryLanguage',
   ROBOT_BUILDING_BOOK = 'RobotBuildingBook',
   DISCLAIMER = 'Disclaimer',
+  VERIFY_EMAIL = 'VerifyEmail',
 }

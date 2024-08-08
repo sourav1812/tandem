@@ -20,6 +20,8 @@ import {UsersAnalyticsEvents} from '@tandem/api/selfAnalytics/interface';
 import wait from '../wait';
 import gotoBookshelf from '../gotoBookshelf';
 import messaging from '@react-native-firebase/messaging';
+import consentNewsletter from '@tandem/api/consentNewsletter';
+import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
 
 export default async () => {
   // ! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -49,7 +51,20 @@ export default async () => {
     navigateTo(SCREEN_NAME.SELECT_LANGUAGE, {}, true);
     return;
   } else {
-    await userProfile();
+    const response = await userProfile();
+    if (response?.receivePromotionalMails === undefined) {
+      // ! if not subbed to newsletter ever.... ask user
+      setTimeout(() => {
+        store.dispatch(
+          addAlertData({
+            type: 'Message',
+            message: 'Subcribe to Tandem Newsletter?',
+            onSuccess: () => consentNewsletter(true),
+            onDestructive: () => consentNewsletter(false),
+          }),
+        );
+      }, 5000);
+    }
   }
   resetDirectoriesOfCachedData();
   await wait(1500);

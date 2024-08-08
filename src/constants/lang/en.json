@@ -25,6 +25,7 @@
   "ENTER_NAME": "Enter name",
   "T_AND_C": "T&Cs",
   "WELCOME_TO_OUR_APP": "Welcome to our app",
+  "SIGN_IN_TO_NEWSLETTER": "Sign in to newsletter",
   "CANCEL": "Cancel",
   "ACCEPT": "Accept",
   "HELP_CENTER": "Help Center",
@@ -420,5 +421,6 @@
   "RECORDING_TEXT_MESSAGE": "Are you sure you want to start recording?",
   "STORY_GEN_QUESTION": "Choose from these options, or if you’re not sure, choose the “?” option",
   "STORY_NEARLY_READY": "Your story is nearly ready… play on or go to the bookshelf",
-  "CHILD_ADDED_SUCCESS": "Child added successfully"
+  "CHILD_ADDED_SUCCESS": "Child added successfully",
+  "VERIFY_YOUR_EMAIL": "Verify your email address"
 }

@@ -3,11 +3,11 @@ import Aeroplane from '@tandem/assets/svg/storySvg/aeroplane.svg';
 import Ambulance from '@tandem/assets/svg/storySvg/ambulance.svg';
 import Avocado from '@tandem/assets/svg/storySvg/avocado.svg';
 import BabyBottle from '@tandem/assets/svg/storySvg/babyBottle.svg';
-import Bag from '@tandem/assets/svg/storySvg/bag.svg';
+// import Bag from '@tandem/assets/svg/storySvg/bag.svg';
 import Banana from '@tandem/assets/svg/storySvg/banana.svg';
 import Basketball from '@tandem/assets/svg/storySvg/basketball.svg';
 import Birthdaycake from '@tandem/assets/svg/storySvg/birthdaycake.svg';
-import Bowl from '@tandem/assets/svg/storySvg/bowl.svg';
+// import Bowl from '@tandem/assets/svg/storySvg/bowl.svg';
 import Box from '@tandem/assets/svg/storySvg/box.svg';
 import Briefcase from '@tandem/assets/svg/storySvg/briefcase.svg';
 import Bubbles from '@tandem/assets/svg/storySvg/bubbles.svg';
@@ -17,15 +17,15 @@ import Camera from '@tandem/assets/svg/storySvg/camera.svg';
 import Canoe from '@tandem/assets/svg/storySvg/canoe.svg';
 import Car from '@tandem/assets/svg/storySvg/car.svg';
 import Carrot from '@tandem/assets/svg/storySvg/carrot.svg';
-import Cat from '@tandem/assets/svg/storySvg/cat.svg';
+// import Cat from '@tandem/assets/svg/storySvg/cat.svg';
 import Chair from '@tandem/assets/svg/storySvg/chair.svg';
 import Chilli from '@tandem/assets/svg/storySvg/chilli.svg';
 import Constructioncrane from '@tandem/assets/svg/storySvg/constructioncrane.svg';
-import Crab from '@tandem/assets/svg/storySvg/crab.svg';
+// import Crab from '@tandem/assets/svg/storySvg/crab.svg';
 import Crayon from '@tandem/assets/svg/storySvg/crayon.svg';
 import Crown from '@tandem/assets/svg/storySvg/crown.svg';
 import Desertisland from '@tandem/assets/svg/storySvg/desertisland.svg';
-import Dog from '@tandem/assets/svg/storySvg/dog.svg';
+// import Dog from '@tandem/assets/svg/storySvg/dog.svg';
 import Dounut from '@tandem/assets/svg/storySvg/dounut.svg';
 import Dress from '@tandem/assets/svg/storySvg/dress.svg';
 import Egg from '@tandem/assets/svg/storySvg/egg.svg';
@@ -38,18 +38,18 @@ import Helicopter from '@tandem/assets/svg/storySvg/helicopter.svg';
 import Icecream from '@tandem/assets/svg/storySvg/icecream.svg';
 import Lemon from '@tandem/assets/svg/storySvg/lemon.svg';
 import Mango from '@tandem/assets/svg/storySvg/mango.svg';
-import Mountain from '@tandem/assets/svg/storySvg/mountain.svg';
+// import Mountain from '@tandem/assets/svg/storySvg/mountain.svg';
 import Oceanwave from '@tandem/assets/svg/storySvg/oceanwave.svg';
-import Parrot from '@tandem/assets/svg/storySvg/parrot.svg';
+// import Parrot from '@tandem/assets/svg/storySvg/parrot.svg';
 import Rainbow from '@tandem/assets/svg/storySvg/rainbow.svg';
 import Rickshaw from '@tandem/assets/svg/storySvg/rickshaw.svg';
 import SailingBoat from '@tandem/assets/svg/storySvg/sailingBoat.svg';
 import Slide from '@tandem/assets/svg/storySvg/slide.svg';
-import Snowman from '@tandem/assets/svg/storySvg/snowman.svg';
+// import Snowman from '@tandem/assets/svg/storySvg/snowman.svg';
 import Steamtrain from '@tandem/assets/svg/storySvg/steamtrain.svg';
 import Strawberry from '@tandem/assets/svg/storySvg/strawberry.svg';
 import Sun from '@tandem/assets/svg/storySvg/sun.svg';
-import TeaCup from '@tandem/assets/svg/storySvg/teaCup.svg';
+// import TeaCup from '@tandem/assets/svg/storySvg/teaCup.svg';
 import Teapot from '@tandem/assets/svg/storySvg/teapot.svg';
 import Torch from '@tandem/assets/svg/storySvg/torch.svg';
 import Tractor from '@tandem/assets/svg/storySvg/tractor.svg';
@@ -63,13 +63,64 @@ import {
 } from '@tandem/screens/GenerateStory/interface';
 import RedQuestionMark from '@tandem/assets/svg/storySvg/RedQuestionMark.svg';
 import {translation} from '@tandem/utils/methods';
-import {BASE_URL} from '@tandem/constants/api';
+import {BASE_URL, VERSIONS} from '@tandem/constants/api';
 
 import Ayran from '@tandem/assets/svg/storySvg/ayran.svg';
 import Baklava from '@tandem/assets/svg/storySvg/baklava.svg';
 import DonerKebab from '@tandem/assets/svg/storySvg/doner-kebab.svg';
 import Lahmacun from '@tandem/assets/svg/storySvg/lahmacun.svg';
 import Pide from '@tandem/assets/svg/storySvg/pide.svg';
+
+import SO_aeroplane from '@tandem/assets/speech_objects/SO_aeroplane.mp3';
+import SO_ambulance from '@tandem/assets/speech_objects/SO_ambulance.mp3';
+import SO_avocado from '@tandem/assets/speech_objects/SO_avocado.mp3';
+import SO_baby_bottle from '@tandem/assets/speech_objects/SO_baby_bottle.mp3';
+import SO_banana from '@tandem/assets/speech_objects/SO_banana.mp3';
+import SO_basketball from '@tandem/assets/speech_objects/SO_basketball.mp3';
+import SO_birthday_cake from '@tandem/assets/speech_objects/SO_birthday_cake.mp3';
+import SO_box from '@tandem/assets/speech_objects/SO_box.mp3';
+import SO_briefcase from '@tandem/assets/speech_objects/SO_briefcase.mp3';
+import SO_bubbles from '@tandem/assets/speech_objects/SO_bubbles.mp3';
+import SO_bus from '@tandem/assets/speech_objects/SO_bus.mp3';
+import SO_cactus from '@tandem/assets/speech_objects/SO_cactus.mp3';
+import SO_camera from '@tandem/assets/speech_objects/SO_camera.mp3';
+import SO_canoe from '@tandem/assets/speech_objects/SO_canoe.mp3';
+import SO_car from '@tandem/assets/speech_objects/SO_car.mp3';
+import SO_carrot from '@tandem/assets/speech_objects/SO_carrot.mp3';
+import SO_chair from '@tandem/assets/speech_objects/SO_chair.mp3';
+import SO_chili from '@tandem/assets/speech_objects/SO_chili.mp3';
+import SO_construction_crane from '@tandem/assets/speech_objects/SO_construction_crane.mp3';
+import SO_crayon from '@tandem/assets/speech_objects/SO_crayon.mp3';
+import SO_crown from '@tandem/assets/speech_objects/SO_crown.mp3';
+import SO_desert_island from '@tandem/assets/speech_objects/SO_desert_island.mp3';
+import SO_doughnut from '@tandem/assets/speech_objects/SO_doughnut.mp3';
+import SO_dress from '@tandem/assets/speech_objects/SO_dress.mp3';
+import SO_egg from '@tandem/assets/speech_objects/SO_egg.mp3';
+import SO_fire_engine from '@tandem/assets/speech_objects/SO_fire_engine.mp3';
+import SO_football from '@tandem/assets/speech_objects/SO_football.mp3';
+import SO_grapes from '@tandem/assets/speech_objects/SO_grapes.mp3';
+import SO_helicopter from '@tandem/assets/speech_objects/SO_helicopter.mp3';
+import SO_ice_cream from '@tandem/assets/speech_objects/SO_ice_cream.mp3';
+import SO_lemon from '@tandem/assets/speech_objects/SO_lemon.mp3';
+import SO_mango from '@tandem/assets/speech_objects/SO_mango.mp3';
+import SO_milk from '@tandem/assets/speech_objects/SO_milk.mp3';
+import SO_moon from '@tandem/assets/speech_objects/SO_moon.mp3';
+import SO_ocean_waves from '@tandem/assets/speech_objects/SO_ocean_waves.mp3';
+import SO_rainbow from '@tandem/assets/speech_objects/SO_rainbow.mp3';
+import SO_rickshaw from '@tandem/assets/speech_objects/SO_rickshaw.mp3';
+import SO_sailing_boat from '@tandem/assets/speech_objects/SO_sailing_boat.mp3';
+import SO_slide from '@tandem/assets/speech_objects/SO_slide.mp3';
+import SO_steam_train from '@tandem/assets/speech_objects/SO_steam_train.mp3';
+import SO_strawberry from '@tandem/assets/speech_objects/SO_strawberry.mp3';
+import SO_sun from '@tandem/assets/speech_objects/SO_sun.mp3';
+import SO_teapot from '@tandem/assets/speech_objects/SO_teapot.mp3';
+import SO_torch from '@tandem/assets/speech_objects/SO_torch.mp3';
+import SO_tractor from '@tandem/assets/speech_objects/SO_tractor.mp3';
+import SO_watermelon from '@tandem/assets/speech_objects/SO_watermelon.mp3';
+import SO_wheelchair from '@tandem/assets/speech_objects/SO_wheelchair.mp3';
+import SO_wind_turbine from '@tandem/assets/speech_objects/SO_wind_turbine.mp3';
+
+const BASE_URL_V1 = BASE_URL + VERSIONS.v1;
 
 export const shuffle = (originalArray: any) => {
   let array = originalArray;
@@ -117,110 +168,239 @@ export const ATTRIBUTE: PlaceType[] = [
   {name: 'Doner Kebab', bgc: themeColor.themeBlue, svgIcon: DonerKebab},
   {name: 'Lahmacun', bgc: themeColor.yellow, svgIcon: Lahmacun},
   {name: 'Pide', bgc: themeColor.gold, svgIcon: Pide},
-  {name: 'Moon', bgc: themeColor.pink, svgIcon: Moon},
-  {name: 'Aeroplane', bgc: themeColor.themeBlue, svgIcon: Aeroplane},
-  {name: 'Wind Turbine', bgc: themeColor.gold, svgIcon: WindTurbine},
-  {name: 'Avocado', bgc: themeColor.lightGreen, svgIcon: Avocado},
-  {name: 'Baby Bottle', bgc: themeColor.pink, svgIcon: BabyBottle},
-  {name: 'Bag', bgc: themeColor.themeBlue, svgIcon: Bag},
-  {name: 'Banana', bgc: themeColor.gold, svgIcon: Banana},
-  {name: 'Basketball', bgc: themeColor.lightGreen, svgIcon: Basketball},
-  {name: 'Birthday Cake', bgc: themeColor.pink, svgIcon: Birthdaycake},
-  {name: 'Bowl', bgc: themeColor.themeBlue, svgIcon: Bowl},
-  {name: 'Box', bgc: themeColor.gold, svgIcon: Box},
-  {name: 'Briefcase', bgc: themeColor.lightGreen, svgIcon: Briefcase},
-  {name: 'Bubbles', bgc: themeColor.pink, svgIcon: Bubbles},
-  {name: 'Bus', bgc: themeColor.themeBlue, svgIcon: Bus},
-  {name: 'Cactus', bgc: themeColor.gold, svgIcon: Cactus},
-  {name: 'Camera', bgc: themeColor.lightGreen, svgIcon: Camera},
-  {name: 'Canoe', bgc: themeColor.pink, svgIcon: Canoe},
-  {name: 'Car', bgc: themeColor.themeBlue, svgIcon: Car},
-  {name: 'Carrot', bgc: themeColor.gold, svgIcon: Carrot},
-  {name: 'Cat', bgc: themeColor.lightGreen, svgIcon: Cat},
-  {name: 'Chair', bgc: themeColor.pink, svgIcon: Chair},
-  {name: 'Chilli', bgc: themeColor.themeBlue, svgIcon: Chilli},
+  {name: 'Moon', bgc: themeColor.pink, svgIcon: Moon, sound: SO_moon},
+  {
+    name: 'Aeroplane',
+    bgc: themeColor.themeBlue,
+    svgIcon: Aeroplane,
+    sound: SO_aeroplane,
+  },
+  {
+    name: 'Wind Turbine',
+    bgc: themeColor.gold,
+    svgIcon: WindTurbine,
+    sound: SO_wind_turbine,
+  },
+  {
+    name: 'Avocado',
+    bgc: themeColor.lightGreen,
+    svgIcon: Avocado,
+    sound: SO_avocado,
+  },
+  {
+    name: 'Baby Bottle',
+    bgc: themeColor.pink,
+    svgIcon: BabyBottle,
+    sound: SO_baby_bottle,
+  },
+  // {name: 'Bag', bgc: themeColor.themeBlue, svgIcon: Bag},
+  {name: 'Banana', bgc: themeColor.gold, svgIcon: Banana, sound: SO_banana},
+  {
+    name: 'Basketball',
+    bgc: themeColor.lightGreen,
+    svgIcon: Basketball,
+    sound: SO_basketball,
+  },
+  {
+    name: 'Birthday Cake',
+    bgc: themeColor.pink,
+    svgIcon: Birthdaycake,
+    sound: SO_birthday_cake,
+  },
+  // {name: 'Bowl', bgc: themeColor.themeBlue, svgIcon: Bowl},
+  {name: 'Box', bgc: themeColor.gold, svgIcon: Box, sound: SO_box},
+  {
+    name: 'Briefcase',
+    bgc: themeColor.lightGreen,
+    svgIcon: Briefcase,
+    sound: SO_briefcase,
+  },
+  {name: 'Bubbles', bgc: themeColor.pink, svgIcon: Bubbles, sound: SO_bubbles},
+  {name: 'Bus', bgc: themeColor.themeBlue, svgIcon: Bus, sound: SO_bus},
+  {name: 'Cactus', bgc: themeColor.gold, svgIcon: Cactus, sound: SO_cactus},
+  {
+    name: 'Camera',
+    bgc: themeColor.lightGreen,
+    svgIcon: Camera,
+    sound: SO_camera,
+  },
+  {name: 'Canoe', bgc: themeColor.pink, svgIcon: Canoe, sound: SO_canoe},
+  {name: 'Car', bgc: themeColor.themeBlue, svgIcon: Car, sound: SO_car},
+  {name: 'Carrot', bgc: themeColor.gold, svgIcon: Carrot, sound: SO_carrot},
+  // {name: 'Cat', bgc: themeColor.lightGreen, svgIcon: Cat},
+  {name: 'Chair', bgc: themeColor.pink, svgIcon: Chair, sound: SO_chair},
+  {name: 'Chilli', bgc: themeColor.themeBlue, svgIcon: Chilli, sound: SO_chili},
   {
     name: 'Construction Crane',
     bgc: themeColor.gold,
     svgIcon: Constructioncrane,
+    sound: SO_construction_crane,
   },
-  {name: 'Crab', bgc: themeColor.lightGreen, svgIcon: Crab},
-  {name: 'Crayon', bgc: themeColor.pink, svgIcon: Crayon},
-  {name: 'Crown', bgc: themeColor.themeBlue, svgIcon: Crown},
-  {name: 'Desert Island', bgc: themeColor.gold, svgIcon: Desertisland},
-  {name: 'Dog', bgc: themeColor.lightGreen, svgIcon: Dog},
-  {name: 'Dounut', bgc: themeColor.pink, svgIcon: Dounut},
-  {name: 'Dress', bgc: themeColor.themeBlue, svgIcon: Dress},
-  {name: 'Egg', bgc: themeColor.gold, svgIcon: Egg},
-  {name: 'Fire Engine', bgc: themeColor.lightGreen, svgIcon: Fireengine},
-  {name: 'Football', bgc: themeColor.pink, svgIcon: Football},
-  {name: 'Glass of milk', bgc: themeColor.themeBlue, svgIcon: Glassofmilk},
-  {name: 'Grapes', bgc: themeColor.gold, svgIcon: Grapes},
-  {name: 'Helicopter', bgc: themeColor.lightGreen, svgIcon: Helicopter},
+  // {name: 'Crab', bgc: themeColor.lightGreen, svgIcon: Crab},
+  {name: 'Crayon', bgc: themeColor.pink, svgIcon: Crayon, sound: SO_crayon},
+  {name: 'Crown', bgc: themeColor.themeBlue, svgIcon: Crown, sound: SO_crown},
+  {
+    name: 'Desert Island',
+    bgc: themeColor.gold,
+    svgIcon: Desertisland,
+    sound: SO_desert_island,
+  },
+  // {name: 'Dog', bgc: themeColor.lightGreen, svgIcon: Dog},
+  {name: 'Dounut', bgc: themeColor.pink, svgIcon: Dounut, sound: SO_doughnut},
+  {name: 'Dress', bgc: themeColor.themeBlue, svgIcon: Dress, sound: SO_dress},
+  {name: 'Egg', bgc: themeColor.gold, svgIcon: Egg, sound: SO_egg},
+  {
+    name: 'Fire Engine',
+    bgc: themeColor.lightGreen,
+    svgIcon: Fireengine,
+    sound: SO_fire_engine,
+  },
+  {
+    name: 'Football',
+    bgc: themeColor.pink,
+    svgIcon: Football,
+    sound: SO_football,
+  },
+  {
+    name: 'Glass of milk',
+    bgc: themeColor.themeBlue,
+    svgIcon: Glassofmilk,
+    sound: SO_milk,
+  },
+  {name: 'Grapes', bgc: themeColor.gold, svgIcon: Grapes, sound: SO_grapes},
+  {
+    name: 'Helicopter',
+    bgc: themeColor.lightGreen,
+    svgIcon: Helicopter,
+    sound: SO_helicopter,
+  },
   // {name: 'Highspeed Train', bgc: themeColor.pink, svgIcon: Highspeedtrain},
-  {name: 'Icecream', bgc: themeColor.pink, svgIcon: Icecream},
-  {name: 'Lemon', bgc: themeColor.themeBlue, svgIcon: Lemon},
-  {name: 'Mango', bgc: themeColor.gold, svgIcon: Mango},
-  {name: 'Mountain', bgc: themeColor.lightGreen, svgIcon: Mountain},
-  {name: 'Oceanwave', bgc: themeColor.pink, svgIcon: Oceanwave},
-  {name: 'Parrot', bgc: themeColor.themeBlue, svgIcon: Parrot},
-  {name: 'Rainbow', bgc: themeColor.gold, svgIcon: Rainbow},
-  {name: 'Rickshaw', bgc: themeColor.lightGreen, svgIcon: Rickshaw},
-  {name: 'Sailing Boat', bgc: themeColor.pink, svgIcon: SailingBoat},
-  {name: 'Slide', bgc: themeColor.themeBlue, svgIcon: Slide},
-  {name: 'Snowman', bgc: themeColor.gold, svgIcon: Snowman},
-  {name: 'Steam Train', bgc: themeColor.lightGreen, svgIcon: Steamtrain},
-  {name: 'Strawberry', bgc: themeColor.pink, svgIcon: Strawberry},
-  {name: 'Sun', bgc: themeColor.themeBlue, svgIcon: Sun},
-  {name: 'TeaCup', bgc: themeColor.gold, svgIcon: TeaCup},
-  {name: 'Teapot', bgc: themeColor.lightGreen, svgIcon: Teapot},
-  {name: 'Torch', bgc: themeColor.pink, svgIcon: Torch},
-  {name: 'Tractor', bgc: themeColor.themeBlue, svgIcon: Tractor},
-  {name: 'Watermelon', bgc: themeColor.gold, svgIcon: Watermelon},
-  {name: 'Wheel Chair', bgc: themeColor.lightGreen, svgIcon: Wheelchair},
-  {name: 'Ambulance', bgc: themeColor.pink, svgIcon: Ambulance},
+  {
+    name: 'Icecream',
+    bgc: themeColor.pink,
+    svgIcon: Icecream,
+    sound: SO_ice_cream,
+  },
+  {name: 'Lemon', bgc: themeColor.themeBlue, svgIcon: Lemon, sound: SO_lemon},
+  {name: 'Mango', bgc: themeColor.gold, svgIcon: Mango, sound: SO_mango},
+  // {name: 'Mountain', bgc: themeColor.lightGreen, svgIcon: Mountain},
+  {
+    name: 'Oceanwave',
+    bgc: themeColor.pink,
+    svgIcon: Oceanwave,
+    sound: SO_ocean_waves,
+  },
+  // {name: 'Parrot', bgc: themeColor.themeBlue, svgIcon: Parrot},
+  {name: 'Rainbow', bgc: themeColor.gold, svgIcon: Rainbow, sound: SO_rainbow},
+  {
+    name: 'Rickshaw',
+    bgc: themeColor.lightGreen,
+    svgIcon: Rickshaw,
+    sound: SO_rickshaw,
+  },
+  {
+    name: 'Sailing Boat',
+    bgc: themeColor.pink,
+    svgIcon: SailingBoat,
+    sound: SO_sailing_boat,
+  },
+  {name: 'Slide', bgc: themeColor.themeBlue, svgIcon: Slide, sound: SO_slide},
+  // {name: 'Snowman', bgc: themeColor.gold, svgIcon: Snowman},
+  {
+    name: 'Steam Train',
+    bgc: themeColor.lightGreen,
+    svgIcon: Steamtrain,
+    sound: SO_steam_train,
+  },
+  {
+    name: 'Strawberry',
+    bgc: themeColor.pink,
+    svgIcon: Strawberry,
+    sound: SO_strawberry,
+  },
+  {name: 'Sun', bgc: themeColor.themeBlue, svgIcon: Sun, sound: SO_sun},
+  // {name: 'TeaCup', bgc: themeColor.gold, svgIcon: TeaCup},
+  {
+    name: 'Teapot',
+    bgc: themeColor.lightGreen,
+    svgIcon: Teapot,
+    sound: SO_teapot,
+  },
+  {name: 'Torch', bgc: themeColor.pink, svgIcon: Torch, sound: SO_torch},
+  {
+    name: 'Tractor',
+    bgc: themeColor.themeBlue,
+    svgIcon: Tractor,
+    sound: SO_tractor,
+  },
+  {
+    name: 'Watermelon',
+    bgc: themeColor.gold,
+    svgIcon: Watermelon,
+    sound: SO_watermelon,
+  },
+  {
+    name: 'Wheel Chair',
+    bgc: themeColor.lightGreen,
+    svgIcon: Wheelchair,
+    sound: SO_wheelchair,
+  },
+  {
+    name: 'Ambulance',
+    bgc: themeColor.pink,
+    svgIcon: Ambulance,
+    sound: SO_ambulance,
+  },
 ];
 
 export const ILLUSTRATION = [
   {
-    name: 'pixar',
-    url: BASE_URL + 'images/illustration-styles/pixar.webp',
+    name: 'Candidate 1',
+    url: BASE_URL_V1 + 'images/whatHappensNew/question_mark.webp',
   },
   {
-    name: 'low-poly',
-    url: BASE_URL + 'images/illustration-styles/low_poly.webp',
+    name: 'Candidate 2',
+    url: BASE_URL_V1 + 'images/whatHappensNew/question_mark.webp',
   },
   // {
+  //   name: 'pixar',
+  //   url: BASE_URL_V1 + 'images/illustration-styles/pixar.webp',
+  // },
+  // {
+  //   name: 'low-poly',
+  //   url: BASE_URL_V1 + 'images/illustration-styles/low_poly.webp',
+  // },
+  // {
   //   name: 'style1-papercut',
-  //   url: BASE_URL + 'images/illustration-styles/papercut.webp',
+  //   url: BASE_URL_V1 + 'images/illustration-styles/papercut.webp',
   // },
   // {
   //   name: 'style2-scrappy',
-  //   url: BASE_URL + 'images/illustration-styles/scrappy.webp',
+  //   url: BASE_URL_V1 + 'images/illustration-styles/scrappy.webp',
   // },
   // {
   //   name: 'style3-wonder',
-  //   url: BASE_URL + 'images/illustration-styles/wonder.webp',
+  //   url: BASE_URL_V1 + 'images/illustration-styles/wonder.webp',
   // },
   // {
   //   name: 'style4-sleepy',
-  //   url: BASE_URL + 'images/illustration-styles/sleepy.webp',
+  //   url: BASE_URL_V1 + 'images/illustration-styles/sleepy.webp',
   // },
   // {
   //   name: 'style5-busy',
-  //   url: BASE_URL + 'images/illustration-styles/busy.webp',
+  //   url: BASE_URL_V1 + 'images/illustration-styles/busy.webp',
   // },
   // {
   //   name: 'style6-anthro',
-  //   url: BASE_URL + 'images/illustration-styles/anthro.webp',
+  //   url: BASE_URL_V1 + 'images/illustration-styles/anthro.webp',
   // },
   // {
   //   name: 'style7-flat',
-  //   url: BASE_URL + 'images/illustration-styles/flat.webp',
+  //   url: BASE_URL_V1 + 'images/illustration-styles/flat.webp',
   // },
   // {
   //   name: 'style8-nature',
-  //   url: BASE_URL + 'images/illustration-styles/nature.webp',
+  //   url: BASE_URL_V1 + 'images/illustration-styles/nature.webp',
   // },
 ];
 
@@ -234,143 +414,243 @@ export const COLOR_PALETTE = [
 ];
 
 export const AVATAR_ARRAY = [...new Array(29).keys()].map(
-  key => BASE_URL + `images/avatars/avatar${key + 1}.webp`,
+  key => BASE_URL_V1 + `images/avatars/avatar${key + 1}.webp`,
 );
 
 export const PLACE: OnlyImageType[] = [
   {
     name: 'Outer Space',
-    url: BASE_URL + 'images/locations/outer_space.webp',
+    url: BASE_URL_V1 + 'images/locations/outer_space.webp',
   },
   {
     name: 'Camping in tents',
-    url: BASE_URL + 'images/locations/camping_in_tents.webp',
+    url: BASE_URL_V1 + 'images/locations/camping_in_tents.webp',
   },
   {
-    name: 'City',
-    url: BASE_URL + 'images/locations/city.webp',
+    name: 'Bustling city',
+    url: BASE_URL_V1 + 'images/locations/city.webp',
   },
   {
     name: 'Dark Forest',
-    url: BASE_URL + 'images/locations/dark_forest.webp',
+    url: BASE_URL_V1 + 'images/locations/dark_forest.webp',
   },
   {
-    name: 'Fair Ground',
-    url: BASE_URL + 'images/locations/fair_ground.webp',
+    name: 'Noisy fairground',
+    url: BASE_URL_V1 + 'images/locations/fair_ground.webp',
   },
   {
-    name: 'Farm Yard',
-    url: BASE_URL + 'images/locations/farm_yard.webp',
+    name: 'Busy farmyard',
+    url: BASE_URL_V1 + 'images/locations/farm_yard.webp',
   },
   {
-    name: 'Snowy Mountain',
-    url: BASE_URL + 'images/locations/snowy_mountain.webp',
+    name: 'The mountains',
+    url: BASE_URL_V1 + 'images/locations/snowy_mountain.webp',
   },
   {
-    name: 'Sunny Beach',
-    url: BASE_URL + 'images/locations/sunny_beach.webp',
+    name: 'Desert island',
+    url: BASE_URL_V1 + 'images/locations/sunny_beach.webp',
+  },
+  {
+    name: 'The park',
+    url: BASE_URL_V1 + 'images/locations/playground.webp',
+  },
+  {
+    name: 'A castle',
+    url: BASE_URL_V1 + 'images/locations/castle.webp',
+  },
+  {
+    name: 'A magic tree',
+    url: BASE_URL_V1 + 'images/locations/magic_tree.webp',
   },
 ];
 
 export const WHO: OnlyImageType[] = [
   {
     name: 'Astronaut',
-    url: BASE_URL + 'images/who/astronaut.webp',
+    url: BASE_URL_V1 + 'images/who/astronaut.webp',
   },
-  {
-    name: 'Boy Who Plays The Drums',
-    url: BASE_URL + 'images/who/boy_who_plays_the_drums.webp',
-  },
+  // {
+  //   name: 'Boy Who Plays The Drums',
+  //   url: BASE_URL_V1 + 'images/who/boy_who_plays_the_drums.webp',
+  // },
   {
     name: 'Bunny Rabbit',
-    url: BASE_URL + 'images/who/bunny_rabbit.webp',
+    url: BASE_URL_V1 + 'images/who/bunny_rabbit.webp',
   },
   {
     name: 'Cute Dinosaur',
-    url: BASE_URL + 'images/who/cute_dinosaur.webp',
+    url: BASE_URL_V1 + 'images/who/cute_dinosaur.webp',
   },
   {
     name: 'Cute Duckling',
-    url: BASE_URL + 'images/who/cute_duckling.webp',
+    url: BASE_URL_V1 + 'images/who/cute_duckling.webp',
   },
   {
     name: 'Cute Kitten',
-    url: BASE_URL + 'images/who/cute_kitten.webp',
+    url: BASE_URL_V1 + 'images/who/cute_kitten.webp',
   },
-  {
-    name: 'Sea Monster',
-    url: BASE_URL + 'images/who/cute_sea_monster.webp',
-  },
-  {
-    name: 'Farm Animals',
-    url: BASE_URL + 'images/who/farm_animals.webp',
-  },
-  {
-    name: 'Female Doctor',
-    url: BASE_URL + 'images/who/female_doctor.webp',
-  },
-  {
-    name: 'Female Firefighter',
-    url: BASE_URL + 'images/who/female_firefighter.webp',
-  },
+  // {
+  //   name: 'Sea Monster',
+  //   url: BASE_URL_V1 + 'images/who/cute_sea_monster.webp',
+  // },
+  // {
+  //   name: 'Farm Animals',
+  //   url: BASE_URL_V1 + 'images/who/farm_animals.webp',
+  // },
+  // {
+  //   name: 'Female Doctor',
+  //   url: BASE_URL_V1 + 'images/who/female_doctor.webp',
+  // },
+  // {
+  //   name: 'Female Firefighter',
+  //   url: BASE_URL_V1 + 'images/who/female_firefighter.webp',
+  // },
   {
     name: 'Female Runner',
-    url: BASE_URL + 'images/who/female_runner.webp',
+    url: BASE_URL_V1 + 'images/who/female_runner.webp',
   },
   {
     name: 'Fisherman',
-    url: BASE_URL + 'images/who/fisherman.webp',
+    url: BASE_URL_V1 + 'images/who/fisherman.webp',
   },
   {
     name: 'Happy Yeti',
-    url: BASE_URL + 'images/who/happy_yeti.webp',
+    url: BASE_URL_V1 + 'images/who/happy_yeti.webp',
   },
   {
     name: 'Mad Professor',
-    url: BASE_URL + 'images/who/mad_professor.webp',
+    url: BASE_URL_V1 + 'images/who/mad_professor.webp',
   },
   {
     name: 'Male Runner',
-    url: BASE_URL + 'images/who/male_runner.webp',
+    url: BASE_URL_V1 + 'images/who/male_runner.webp',
   },
   {
     name: 'Pet Dog',
-    url: BASE_URL + 'images/who/pet_dog.webp',
+    url: BASE_URL_V1 + 'images/who/pet_dog.webp',
   },
   {
     name: 'Policeman',
-    url: BASE_URL + 'images/who/policeman.webp',
+    url: BASE_URL_V1 + 'images/who/policeman.webp',
   },
   {
     name: 'Racing Cyclist',
-    url: BASE_URL + 'images/who/racing_cyclist.webp',
+    url: BASE_URL_V1 + 'images/who/racing_cyclist.webp',
+  },
+  // {
+  //   name: 'Safari Animals',
+  //   url: BASE_URL_V1 + 'images/who/safari_animals.webp',
+  // },
+  {
+    name: 'Boy',
+    url: BASE_URL_V1 + 'images/who/boy.webp',
   },
   {
-    name: 'Safari Animals',
-    url: BASE_URL + 'images/who/safari_animals.webp',
+    name: 'Girl',
+    url: BASE_URL_V1 + 'images/who/girl.webp',
+  },
+  {
+    name: 'Pony',
+    url: BASE_URL_V1 + 'images/who/pony.webp',
+  },
+  {
+    name: 'Flamingo',
+    url: BASE_URL_V1 + 'images/who/flamingo.webp',
+  },
+  {
+    name: 'Male dancer',
+    url: BASE_URL_V1 + 'images/who/male_dancer.webp',
+  },
+  {
+    name: 'Female dancer',
+    url: BASE_URL_V1 + 'images/who/female_dancer.webp',
+  },
+  {
+    name: 'Male singer',
+    url: BASE_URL_V1 + 'images/who/male_singer.webp',
+  },
+  {
+    name: 'Female singer',
+    url: BASE_URL_V1 + 'images/who/female_singer.webp',
+  },
+  {
+    name: 'Sheep',
+    url: BASE_URL_V1 + 'images/who/sheep.webp',
+  },
+  {
+    name: 'Cow',
+    url: BASE_URL_V1 + 'images/who/cow.webp',
+  },
+  {
+    name: 'Pig',
+    url: BASE_URL_V1 + 'images/who/pig.webp',
+  },
+  {
+    name: 'Chicken',
+    url: BASE_URL_V1 + 'images/who/chicken.webp',
+  },
+  {
+    name: 'Giraffe',
+    url: BASE_URL_V1 + 'images/who/giraffe.webp',
+  },
+  {
+    name: 'Elephant',
+    url: BASE_URL_V1 + 'images/who/elephant.webp',
+  },
+  {
+    name: 'Lion',
+    url: BASE_URL_V1 + 'images/who/lion.webp',
+  },
+  {
+    name: 'Meerkat',
+    url: BASE_URL_V1 + 'images/who/meerkat.webp',
+  },
+  {
+    name: 'Train',
+    url: BASE_URL_V1 + 'images/who/train.webp',
+  },
+  {
+    name: 'Digger',
+    url: BASE_URL_V1 + 'images/who/digger.webp',
+  },
+  {
+    name: 'Tandem bicycle',
+    url: BASE_URL_V1 + 'images/who/tandem_bicycle.webp',
+  },
+  {
+    name: 'Snowman',
+    url: BASE_URL_V1 + 'images/who/snowman.webp',
+  },
+  {
+    name: 'Doctor',
+    url: BASE_URL_V1 + 'images/who/doctor.webp',
+  },
+  {
+    name: 'Tractor',
+    url: BASE_URL_V1 + 'images/who/tractor.webp',
   },
 ];
 
 export const WHAT_HAPPENS: OnlyImageType[] = [
   {
     name: 'An adventure',
-    url: BASE_URL + 'images/whatHappensNew/adventure.webp',
+    url: BASE_URL_V1 + 'images/whatHappensNew/adventure.webp',
   },
   {
     name: 'Makes you laugh',
-    url: BASE_URL + 'images/whatHappensNew/laugh.webp',
+    url: BASE_URL_V1 + 'images/whatHappensNew/laugh.webp',
   },
   {
     name: 'Move, dance, sing or be silly',
-    url: BASE_URL + 'images/whatHappensNew/move.webp',
+    url: BASE_URL_V1 + 'images/whatHappensNew/move.webp',
   },
   {
     name: 'Bedtime story',
-    url: BASE_URL + 'images/whatHappensNew/sleep.webp',
+    url: BASE_URL_V1 + 'images/whatHappensNew/sleep.webp',
   },
   {
     name: 'A story about things',
-    url: BASE_URL + 'images/whatHappensNew/stuff.webp',
+    url: BASE_URL_V1 + 'images/whatHappensNew/stuff.webp',
   },
 ];
 
@@ -384,7 +664,6 @@ export const RELATIONSHIP_ARRAY = [
   {role: translation('FRIEND')},
   {role: translation('OTHER')},
 ];
-
 export const CACHE_SESSION = 'tandemcache';
 
 export const MONTH_ARRAY: {month: string; monthKey: string}[] = [
@@ -417,31 +696,31 @@ export const FONT_SIZES = [16, 20, 24, 28, 32, 40];
 // export const WHAT_HAPPENS: OnlyImageType[] = [
 //   {
 //     name: 'Adventure',
-//     url: BASE_URL+'images/whatHappens/adventure.webp',
+//     url: BASE_URL_V1+'images/whatHappens/adventure.webp',
 //   },
 //   {
 //     name: 'Fairy Tale',
-//     url: BASE_URL+'images/whatHappens/fairy_tale.webp',
+//     url: BASE_URL_V1+'images/whatHappens/fairy_tale.webp',
 //   },
 //   {
 //     name: 'Fantastic Mystery',
-//     url: BASE_URL+'images/whatHappens/fantastic_mystery.webp',
+//     url: BASE_URL_V1+'images/whatHappens/fantastic_mystery.webp',
 //   },
 //   {
 //     name: 'Friendship ',
-//     url: BASE_URL+'images/whatHappens/friendship_story.webp',
+//     url: BASE_URL_V1+'images/whatHappens/friendship_story.webp',
 //   },
 //   {
 //     name: 'Funny ',
-//     url: BASE_URL+'images/whatHappens/funny_story.webp',
+//     url: BASE_URL_V1+'images/whatHappens/funny_story.webp',
 //   },
 //   {
 //     name: 'Love',
-//     url: BASE_URL+'images/whatHappens/love_story.webp',
+//     url: BASE_URL_V1+'images/whatHappens/love_story.webp',
 //   },
 //   {
 //     name: 'Spooky',
-//     url: BASE_URL+'images/whatHappens/spooky_tale.webp',
+//     url: BASE_URL_V1+'images/whatHappens/spooky_tale.webp',
 //   },
 // ];
 
@@ -497,5 +776,4 @@ export const NOTIFICATION_PROMPTS = [
     body: 'The Tandem Robots were hard at work and now your personalised story is ready to read!',
   },
 ];
-
 export const NAVIGATE_TO_BOOKSHELF = 'NAVIGATE_TO_BOOKSHELF';

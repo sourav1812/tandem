@@ -89,7 +89,7 @@ const SignUp = () => {
     if (confirmPassword.value === password.value) {
       try {
         await registerUser({
-          email: email.value,
+          email: email.value.toLowerCase(),
           firstName: name.value,
           lastName: surName.value,
           password: password.value,

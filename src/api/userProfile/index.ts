@@ -32,5 +32,6 @@ export default async () => {
   store.dispatch(saveAdultData(adults));
   // storing the book in redux
   // ! note api should only send the book if story has been genearted by the child
+
   return response;
 };

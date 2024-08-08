@@ -27,6 +27,7 @@ import {setEnergyGenerated} from '@tandem/redux/slices/activityIndicator.slice';
 import Disclaimer from '@tandem/screens/Disclaimer';
 import gotoBookshelf from '@tandem/functions/gotoBookshelf';
 import notifee, {EventType} from '@notifee/react-native';
+import VerifyEmail from '@tandem/screens/VerifyEmail';
 const AppNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
   const routeNameRef = React.useRef<any>(null);
@@ -95,6 +96,10 @@ const AppNavigator = () => {
               Platform.OS === 'android' ? 'slide_from_right' : 'default',
           }}>
           <Stack.Screen component={Archive} name={SCREEN_NAME.ARCHIVE} />
+          <Stack.Screen
+            component={VerifyEmail}
+            name={SCREEN_NAME.VERIFY_EMAIL}
+          />
           <Stack.Screen
             component={RobotBuildingBook}
             name={SCREEN_NAME.ROBOT_BUILDING_BOOK}
