@@ -215,6 +215,8 @@ PODS:
   - nanopb/decode (2.30910.0)
   - nanopb/encode (2.30910.0)
   - PromisesObjC (2.4.0)
+  - PurchasesHybridCommon (11.1.1):
+    - RevenueCat (= 4.43.2)
   - RCT-Folly (2021.07.22.00):
     - boost
     - DoubleConversion
@@ -577,6 +579,7 @@ PODS:
     - React-jsi (= 0.71.8)
     - React-logger (= 0.71.8)
     - React-perflogger (= 0.71.8)
+  - RevenueCat (4.43.2)
   - rn-fetch-blob (0.12.0):
     - React-Core
   - RNAppleAuthentication (2.3.0):
@@ -616,6 +619,9 @@ PODS:
   - RNNotifee/NotifeeCore (7.8.2):
     - React-Core
   - RNPermissions (4.1.5):
+    - React-Core
+  - RNPurchases (7.28.1):
+    - PurchasesHybridCommon (= 11.1.1)
     - React-Core
   - RNReanimated (3.11.0):
     - RCT-Folly (= 2021.07.22.00)
@@ -699,6 +705,7 @@ DEPENDENCIES:
   - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
   - "RNNotifee (from `../node_modules/@notifee/react-native`)"
   - RNPermissions (from `../node_modules/react-native-permissions`)
+  - RNPurchases (from `../node_modules/react-native-purchases`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
@@ -733,6 +740,11 @@ SPEC REPOS:
     - MMKVCore
     - nanopb
     - PromisesObjC
+<<<<<<< HEAD
+=======
+    - PurchasesHybridCommon
+    - RevenueCat
+>>>>>>> 326134eabad921d058f9a28011e29bc39603ed6b
     - TOCropViewController
 
 EXTERNAL SOURCES:
@@ -860,6 +872,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@notifee/react-native"
   RNPermissions:
     :path: "../node_modules/react-native-permissions"
+  RNPurchases:
+    :path: "../node_modules/react-native-purchases"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
@@ -915,6 +929,7 @@ SPEC CHECKSUMS:
   MMKVCore: 9e2e5fd529b64a9fe15f1a7afb3d73b2e27b4db9
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
+  PurchasesHybridCommon: 73f4f2c6e4ec3487b4219bf60e1661100fb85da3
   RCT-Folly: 424b8c9a7a0b9ab2886ffe9c3b041ef628fd4fb1
   RCTRequired: 8af6a32dfc2b65ec82193c2dee6e1011ff22ac2a
   RCTTypeSafety: bee9dd161c175896c680d47ef1d9eaacf2b587f4
@@ -948,6 +963,7 @@ SPEC CHECKSUMS:
   React-RCTVibration: 43ffd976a25f6057a7cf95ea3648ba4e00287f89
   React-runtimeexecutor: 7c51ae9d4b3e9608a2366e39ccaa606aa551b9ed
   ReactCommon: 9957c7530467adbdf4a4a1476d636bd00b2e4dd8
+  RevenueCat: 3d934653b7e8b09af88fd47e9e84cfaf5d0a89ba
   rn-fetch-blob: f065bb7ab7fb48dd002629f8bdcb0336602d3cba
   RNAppleAuthentication: e99eaf3c4c01ad8ecb6125dd6f0cfd98871685b5
   RNDeviceInfo: 59344c19152c4b2b32283005f9737c5c64b42fba
@@ -959,12 +975,13 @@ SPEC CHECKSUMS:
   RNImageCropPicker: 44e2807bc410741f35d4c45b6586aedfe3da39d2
   RNNotifee: 8e2d3df3f0e9ce8f5d1fe4c967431138190b6175
   RNPermissions: f9a0380dad4d370b6b983acaf4f9bff07aba9a21
+  RNPurchases: 4305de02b902d3c1e56a50295dc0a6e758b73095
   RNReanimated: c112febb9548b8e0bcc5abddff308f69913c4270
   RNScreens: 0bd9eec783bed1032e02a4db9976dae1664a5c7b
   RNSVG: af3907ac5d4fa26a862b75a16d8f15bc74f2ceda
   TOCropViewController: 80b8985ad794298fb69d3341de183f33d1853654
   Yoga: 065f0b74dba4832d6e328238de46eb72c5de9556
 
-PODFILE CHECKSUM: 9edc33c2145aaf41fb60854e00bf5b96688666cd
+PODFILE CHECKSUM: c8bddc53f8107c77fc5740c1f053410f3190b7e5
 
 COCOAPODS: 1.15.2

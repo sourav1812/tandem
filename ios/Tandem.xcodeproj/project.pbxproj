@@ -14,6 +14,7 @@
 		2E6C29E789E428732D767583 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9FD513032E7EE2ADF6CBA61 /* ExpoModulesProvider.swift */; };
 		56AF9D2281E74AD3B3E3697F /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EAD88FAE73BF49B187A247C4 /* Poppins-Bold.ttf */; };
 		610DEE266F4D06FFABE57862 /* Pods_Tandem_TandemTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 950DD337812DAEC4B6AA38AB /* Pods_Tandem_TandemTests.framework */; };
+		68EC45082C5A2894001EAC64 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68EC45072C5A2894001EAC64 /* StoreKit.framework */; };
 		7C52BC6B0D664FF78BBA3BBA /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE1DDC4F7BB5444693DCA1F2 /* Poppins-SemiBold.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		BD4437C52A8A660D0032E42E /* FIle.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4437C42A8A660D0032E42E /* FIle.swift */; };
@@ -49,6 +50,7 @@
 		1B7C90A90DA54E32B2ED2AB6 /* Poppins-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Regular.ttf"; path = "../src/assets/fonts/Poppins-Regular.ttf"; sourceTree = "<group>"; };
 		2C6E71C73CBF823C85086806 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-Tandem/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		54A8EA9DB7484D732C5C96EE /* Pods-Tandem-TandemTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tandem-TandemTests.release.xcconfig"; path = "Target Support Files/Pods-Tandem-TandemTests/Pods-Tandem-TandemTests.release.xcconfig"; sourceTree = "<group>"; };
+		68EC45072C5A2894001EAC64 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		757E1814C28ADD66EA306DAD /* Pods_Tandem.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tandem.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Tandem/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		857A04B74838818AC23D11AA /* Pods-Tandem.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tandem.debug.xcconfig"; path = "Target Support Files/Pods-Tandem/Pods-Tandem.debug.xcconfig"; sourceTree = "<group>"; };
@@ -78,6 +80,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DADA38D10AD60911135FEED3 /* Pods_Tandem.framework in Frameworks */,
+				68EC45082C5A2894001EAC64 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,6 +140,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				68EC45072C5A2894001EAC64 /* StoreKit.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				757E1814C28ADD66EA306DAD /* Pods_Tandem.framework */,
 				950DD337812DAEC4B6AA38AB /* Pods_Tandem_TandemTests.framework */,
@@ -574,12 +578,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Tandem/Tandem.entitlements;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 7SD32543D5;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Tandem/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Tandem;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -608,11 +612,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Tandem/Tandem.entitlements;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 7SD32543D5;
 				INFOPLIST_FILE = Tandem/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Tandem;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -103,7 +103,10 @@ export default ({
   const renderItem = React.useCallback(
     ({item, index}: {item: IPage; index: number}) => {
       return (
-        <ImageBackground source={{uri: item.img}} style={styles.imageBg}>
+        <ImageBackground
+          imageStyle={{resizeMode: 'center', backgroundColor: 'black'}}
+          source={{uri: item.img}}
+          style={styles.imageBg}>
           <Animated.View
             style={[
               {
@@ -131,6 +134,7 @@ export default ({
         <View
           style={{width: height.hmax, height: '100%', flexDirection: 'row'}}>
           <ImageBackground
+            imageStyle={{resizeMode: 'center'}}
             source={{uri: item.img}}
             style={{height: '100%', width: height.hmax / 2}}
           />
