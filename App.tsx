@@ -42,19 +42,22 @@ const App: FC = () => {
           // Display current offering with offerings.current
           console.log('@@@@@@@', JSON.stringify(offerings));
         }
+        const productId = Platform.select({
+          ios: 'tandem_199_10years_topUp_10credits',
+          android: 'tandem_199_10years_topup_10credits',
+          default: 'tandem_199_10years_topup_10credits',
+        });
+        const products = await Purchases.getProducts([productId]);
+        console.log({products});
       } catch (e) {
         console.log('error in offering list,', e);
-        const products = await Purchases.getProducts([
-          'tandem_199_10years_topUp_10credits',
-        ]);
-        console.log({products});
       }
     };
     Purchases.setLogLevel(LOG_LEVEL.VERBOSE);
     if (Platform.OS === 'ios') {
       Purchases.configure({apiKey: 'appl_DBHwWDItbHyAvCyjOYMTVituxfI'});
     } else if (Platform.OS === 'android') {
-      // Purchases.configure({apiKey: ''});
+      Purchases.configure({apiKey: 'goog_nbinNelyXaTWLeFgmhgtWwTqGhC'});
       // OR: if building for Amazon, be sure to follow the installation instructions then:
       // Purchases.configure({apiKey: '', useAmazon: true});
     }
