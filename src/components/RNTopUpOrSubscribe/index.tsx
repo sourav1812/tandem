@@ -39,7 +39,7 @@ const TopUpAndSubscribeHeader = ({children, title}: Props) => {
         isSemiBold
         style={{
           textAlign: 'center',
-          fontSize: isTablet ? verticalScale(24) : 24,
+          fontSize: verticalScale(24),
           marginVertical: 40,
         }}>
         {translation(title)}
