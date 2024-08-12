@@ -1,3 +1,4 @@
+import userProfile from '@tandem/api/userProfile';
 import {REVENUE_CAT_KEYS} from '@tandem/constants/api';
 import {Platform} from 'react-native';
 import Purchases, {
@@ -39,6 +40,7 @@ export const getRevenueCatProducts = async () => {
 export const makePurchase = async (product: PurchasesStoreProduct) => {
   try {
     await Purchases.purchaseStoreProduct(product);
+    await userProfile();
   } catch (e: any) {
     if (!e.userCancelled) {
       console.log(e);
