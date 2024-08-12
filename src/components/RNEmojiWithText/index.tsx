@@ -48,9 +48,7 @@ const RNEmojiWithText = ({
 
   const playSound = async () => {
     setDisabled(true);
-    console.log('Loading Sound');
     const {sound} = await Audio.Sound.createAsync(soundFile);
-    console.log('Playing Sound');
     await sound.playAsync();
     setTimeout(async () => {
       await sound.unloadAsync();

@@ -26,4 +26,5 @@ export interface Props {
   loadPercentage?: number;
   pressableStyle?: StyleProp<ViewStyle>;
   hitSlop?: number;
+  SoundObject?: any;
 }

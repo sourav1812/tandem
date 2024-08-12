@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import LottieView from 'lottie-react-native';
@@ -12,14 +12,24 @@ import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import RNButton from '@tandem/components/RNButton';
 import selfAnalytics from '@tandem/api/selfAnalytics';
 import {UsersAnalyticsEvents} from '@tandem/api/selfAnalytics/interface';
+import SO_send_to_robots from '@tandem/assets/appInteraction/SO_send_to_robots.mp3';
+import {Audio} from 'expo-av';
 
 const RobotBuildingBook = () => {
   const [showText, setShow] = React.useState(false);
   const progressRef = useAppSelector(
     state => state.activityIndicator.progressRef,
   );
+  const [soundState, setSoundState] = useState<Audio.Sound | undefined>();
+
   React.useEffect(() => {
-    // store.dispatch(setEnergyGenerated(false)); // ! setting energy to false so that we can recreate it
+    // store.dispatch(setEnergyGenerated(false));
+    const f = async () => {
+      const {sound} = await Audio.Sound.createAsync(SO_send_to_robots);
+      setSoundState(sound);
+      sound.playAsync();
+    };
+    f(); // ! setting energy to false so that we can recreate it
     if (
       progressRef !== undefined &&
       progressRef !== null &&
@@ -31,6 +41,9 @@ const RobotBuildingBook = () => {
       setShow(true);
     }, 3000);
 
+    return () => {
+      soundState?.unloadAsync();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
