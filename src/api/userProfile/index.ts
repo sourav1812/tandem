@@ -17,6 +17,7 @@ export default async () => {
   if (!response) {
     return;
   }
+  console.log(JSON.stringify(response));
   const children = response.children?.map(child => ({
     ...child,
     type: PEOPLE.CHILD,

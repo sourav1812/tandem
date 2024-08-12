@@ -47,7 +47,7 @@ export enum ENVIRONMENT {
 
 const ENV_VARS = {
   [ENVIRONMENT.LOCAL]: {
-    API_URL: 'https://ffad-38-183-79-217.ngrok-free.app', // * LOCAL URL
+    API_URL: 'https://bd35-38-183-79-217.ngrok-free.app', // * LOCAL URL
   },
   [ENVIRONMENT.TESTING]: {
     API_URL: 'https://tandem-app-backend-beta.azurewebsites.net', // * TESTING URL
@@ -69,3 +69,8 @@ export const PEXELS_API_KEY =
   'EX5cnNzfNvWCwgBYmgPwZzLAR7KX1CMnj1bDHJEHljQk2bEA2lh8oPc5';
 
 export const STATUS_CODE = '~## Status ~~~~-> ';
+
+export enum REVENUE_CAT_KEYS {
+  ios = 'appl_DBHwWDItbHyAvCyjOYMTVituxfI',
+  android = 'goog_nbinNelyXaTWLeFgmhgtWwTqGhC',
+}

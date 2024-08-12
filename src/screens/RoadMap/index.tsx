@@ -75,6 +75,7 @@ const RNRoadmap = () => {
   ];
 
   const handleNavigate = (index: number) => {
+    console.log('hi');
     if (checkIfClickable[index]) {
       Vibration.vibrate();
       navigation.push(SCREEN[index]);
