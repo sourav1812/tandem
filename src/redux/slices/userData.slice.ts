@@ -25,6 +25,7 @@ interface UserDataState {
 // Define the initial state using that type
 const initialState: UserDataState = {
   userDataObject: {
+    appUserId: '',
     enableExperimentalFeatures: undefined,
     email: '',
     firstName: '',
@@ -70,6 +71,7 @@ export const setUserData = createSlice({
     resetUserData: state => {
       state.userDataObject = {
         firstName: '',
+        appUserId: '',
         lastName: '',
         email: '',
         userId: '',

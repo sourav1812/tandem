@@ -40,4 +40,5 @@ export interface UserDataResponse {
     };
   };
   enableExperimentalFeatures: boolean | undefined;
+  appUserId: string;
 }

@@ -15,6 +15,7 @@ import {storeKey} from '@tandem/helpers/encryptedStorage';
 import RNFetchBlob from 'rn-fetch-blob';
 import {CACHE_DIR} from '@tandem/constants/local';
 import {getChildStats} from '@tandem/api/childAnalytics';
+import {initialiseRevenueCat} from '../revenueCat';
 
 export default async (loginResponse: LoginResponse) => {
   navigateTo(SCREEN_NAME.BUILDING_TANDEM);
@@ -24,7 +25,7 @@ export default async (loginResponse: LoginResponse) => {
   // ! Store user data from login response as well
   store.dispatch(
     saveChildData(
-      loginResponse.userInfo.children.map(child => ({
+      loginResponse.userInfo.children?.map(child => ({
         ...child,
         type: PEOPLE.CHILD,
       })),
@@ -36,7 +37,7 @@ export default async (loginResponse: LoginResponse) => {
 
   store.dispatch(
     saveAdultData(
-      loginResponse.userInfo.adults.map(adult => ({
+      loginResponse.userInfo.adults?.map(adult => ({
         ...adult,
         type: PEOPLE.ADULT,
       })),
@@ -46,16 +47,17 @@ export default async (loginResponse: LoginResponse) => {
   store.dispatch(
     saveUserData({
       ...loginResponse.userInfo,
-      children: loginResponse.userInfo.children.map(child => ({
+      children: loginResponse.userInfo.children?.map(child => ({
         ...child,
         type: PEOPLE.CHILD,
       })),
-      adults: loginResponse.userInfo.adults.map(adult => ({
+      adults: loginResponse.userInfo.adults?.map(adult => ({
         ...adult,
         type: PEOPLE.ADULT,
       })),
     }),
   );
+  await initialiseRevenueCat(loginResponse.userInfo.appUserId);
   await getChildStats();
   setTimeout(() => {
     if (loginResponse.userInfo.termsAndConditions) {
