@@ -36,6 +36,7 @@ export interface UserDataResponse {
     usageDetails: {
       totalCredits: number;
       usedCredits: number;
+      addOnCredits: number;
     };
   };
   enableExperimentalFeatures: boolean | undefined;

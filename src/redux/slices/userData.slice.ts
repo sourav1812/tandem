@@ -25,6 +25,7 @@ interface UserDataState {
 // Define the initial state using that type
 const initialState: UserDataState = {
   userDataObject: {
+    enableExperimentalFeatures: undefined,
     email: '',
     firstName: '',
     lastName: '',
@@ -45,6 +46,7 @@ const initialState: UserDataState = {
       usageDetails: {
         totalCredits: 0,
         usedCredits: 0,
+        addOnCredits: 0,
       },
     },
   },
@@ -77,6 +79,7 @@ export const setUserData = createSlice({
         allowNotifications: false,
         consentForm: {terms: '', options: []},
         name: '',
+        enableExperimentalFeatures: undefined,
         plan: {
           _id: '',
           currentSubscriptionCycle: '',
@@ -87,6 +90,7 @@ export const setUserData = createSlice({
           usageDetails: {
             totalCredits: 0,
             usedCredits: 0,
+            addOnCredits: 0,
           },
         },
       };
