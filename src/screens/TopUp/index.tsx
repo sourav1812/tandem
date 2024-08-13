@@ -8,7 +8,7 @@ import CheckMark from '../../assets/svg/Check';
 import RNButton from '@tandem/components/RNButton';
 import {verticalScale} from 'react-native-size-matters';
 import TopUpAndSubscribeHeader from '@tandem/components/RNTopUpOrSubscribe';
-import {translation} from '@tandem/utils/methods';
+import {dynamicTranslation, translation} from '@tandem/utils/methods';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {PurchasesStoreProduct} from 'react-native-purchases';
 import {makePurchase} from '@tandem/functions/revenueCat';
@@ -51,7 +51,7 @@ const TopUp = () => {
             style={{
               textAlign: 'center',
             }}>
-            {it.title}
+            {dynamicTranslation('BUY_TANDEM_TOKENS', it)}
           </RNTextComponent>
           <RNTextComponent
             style={{
@@ -59,7 +59,9 @@ const TopUp = () => {
               fontSize: verticalScale(14),
               textAlign: 'center',
             }}>
-            {it.description}
+            {`${it.description} ${translation('TOKENS')} = ${
+              it.description
+            } ${translation('STORIES')}`}
           </RNTextComponent>
         </Pressable>
       ))}
@@ -72,7 +74,7 @@ const TopUp = () => {
               fontSize: verticalScale(14),
               textAlign: 'left',
             }}>
-            {it.title}
+            {translation(it.title)}
           </RNTextComponent>
         </View>
       ))}

@@ -33,10 +33,10 @@ export interface AboutTopUpType {
 export const ABOUT_TOP_UP: AboutTopUpType[] = [
   {
     id: 1,
-    title: translation('NO_EXPIRY_DATE'),
+    title: 'NO_EXPIRY_DATE',
   },
   {
     id: 2,
-    title: translation('SATISFACTION_GUARANTEE'),
+    title: 'SATISFACTION_GUARANTEE',
   },
 ];

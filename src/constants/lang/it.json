@@ -19,6 +19,7 @@
   "SATISFACTION_GUARANTEED": "Soddisfazione garantita al 100%",
   "FREE_REFUND": "Rimborso gratuito se non sei soddisfatto",
   "BUY": "Acquista",
+  "BUY_TANDEM_TOKENS": "acquista {description} gettoni TANDEM - {priceString}",
   "SUBSCRIPTION_PLAN_MONTHLY": "Piano di abbonamento: Mensile/",
   "MONTHLY_USAGE": "Utilizzo mensile:",
   "TOKENS": "gettoni",

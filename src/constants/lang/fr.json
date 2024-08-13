@@ -19,6 +19,7 @@
   "SATISFACTION_GUARANTEED": "Satisfaction 100% garantie",
   "FREE_REFUND": "Remboursement gratuit si vous n'êtes pas satisfait",
   "BUY": "Acheter",
+  "BUY_TANDEM_TOKENS": "acheter {description} jetons TANDEM - {priceString}",
   "SUBSCRIPTION_PLAN_MONTHLY": "Plan d'abonnement : Mensuel/",
   "MONTHLY_USAGE": "Utilisation mensuelle :",
   "TOKENS": "jetons",
