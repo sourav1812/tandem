@@ -27,7 +27,17 @@ import {AppState} from 'react-native';
 import {getStoredTokens} from '@tandem/functions/tokens';
 import selfAnalytics from '@tandem/api/selfAnalytics';
 import {UsersAnalyticsEvents} from '@tandem/api/selfAnalytics/interface';
+import {Audio} from 'expo-av';
+import SO_notifications from '@tandem/assets/appInteraction/SO_notifications.mp3';
 const persistor = persistStore(store);
+
+const playSound = async (soundFile: any) => {
+  const {sound} = await Audio.Sound.createAsync(soundFile);
+  await sound.playAsync();
+  setTimeout(async () => {
+    await sound.unloadAsync();
+  }, 1000);
+};
 
 const App: FC = () => {
   const appState = React.useRef(AppState.currentState);
@@ -107,6 +117,7 @@ const App: FC = () => {
           store.getState().createChild.currentChild.childId === metaData.childId
         ) {
           setTimeout(() => {
+            playSound(SO_notifications);
             onDisplayNotification({
               title:
                 (metaData?.childName ? metaData.childName + "'s" : 'Your') +

@@ -44,6 +44,9 @@ async function onDisplayNotification({
     data: data || {},
     android: {
       channelId,
+      pressAction: {
+        id: 'default',
+      },
     },
   });
 }
