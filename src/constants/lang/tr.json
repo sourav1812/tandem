@@ -19,6 +19,7 @@
   "SATISFACTION_GUARANTEED": "%100 memnuniyet garantisi",
   "FREE_REFUND": "Memnun kalmazsanız ücretsiz iade",
   "BUY": "Satın Al",
+  "BUY_TANDEM_TOKENS": "{description} TANDEM token satın al - {priceString}",
   "SUBSCRIPTION_PLAN_MONTHLY": "Abonelik planı: Aylık/",
   "MONTHLY_USAGE": "Aylık Kullanım:",
   "TOKENS": "jetonlar",

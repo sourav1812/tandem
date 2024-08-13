@@ -19,6 +19,7 @@
   "SATISFACTION_GUARANTEED": "100% de satisfação garantida",
   "FREE_REFUND": "Reembolso gratuito se você não estiver satisfeito",
   "BUY": "Comprar",
+  "BUY_TANDEM_TOKENS": "comprar {description} tokens TANDEM - {priceString}",
   "SUBSCRIPTION_PLAN_MONTHLY": "Plano de assinatura: Mensal/",
   "MONTHLY_USAGE": "Uso mensal:",
   "TOKENS": "tokens",
