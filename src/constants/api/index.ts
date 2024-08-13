@@ -47,7 +47,7 @@ export enum ENVIRONMENT {
 
 const ENV_VARS = {
   [ENVIRONMENT.LOCAL]: {
-    API_URL: 'https://bd35-38-183-79-217.ngrok-free.app', // * LOCAL URL
+    API_URL: 'https://a4a5-38-183-79-217.ngrok-free.app', // * LOCAL URL
   },
   [ENVIRONMENT.TESTING]: {
     API_URL: 'https://tandem-app-backend-beta.azurewebsites.net', // * TESTING URL
