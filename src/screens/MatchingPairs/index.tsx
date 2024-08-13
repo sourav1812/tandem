@@ -21,6 +21,10 @@ import {
 import {store} from '@tandem/redux/store';
 import FloatingProgressBar from '@tandem/components/FloatingProgressBar';
 import themeColor from '@tandem/theme/themeColor';
+import SO_matching_pairs_correct from '@tandem/assets/appInteraction/SO_maching_pairs_correct.mp3';
+import SO_matching_pairs_incorrect from '@tandem/assets/appInteraction/SO_maching_pairs_incorrect.mp3';
+import SO_matching_pairs_flip from '@tandem/assets/appInteraction/SO_maching_pairs_flip.mp3';
+import {Audio} from 'expo-av';
 
 const shakeText = translation('SHAKE_TEXT');
 const storyNotDoneButTimesUp = translation('STORY_NEARLY_READY');
@@ -30,7 +34,7 @@ const MatchingPairs = () => {
   const [matchedIndexes, setMatchedIndex] = React.useState<number[]>([]);
   const [checkIfPairArray, setIfPairArray] = React.useState<number[]>([]);
   const [gameCompleted, setGameCompleted] = React.useState(false);
-
+  const [disabledButton, setDisabled] = React.useState(false);
   const [buttonColor, setButtonColor] = useState('red');
   const [buttonText, setButtonText] = React.useState(
     translation('FLIP_CARD_TEXT'),
@@ -41,6 +45,9 @@ const MatchingPairs = () => {
   const handlePress = (index: number) => {
     if (matchedIndexes.includes(index) || checkIfPairArray.includes(index)) {
       return;
+    }
+    if (checkIfPairArray.length === 0) {
+      playSound(SO_matching_pairs_flip);
     }
     setIfPairArray(prev => (prev.length === 1 ? [...prev, index] : [index]));
   };
@@ -103,10 +110,13 @@ const MatchingPairs = () => {
           matchingPairsArray[checkIfPairArray[1]].name
       ) {
         // ! meaning a match add it to matchedIndexes
+        playSound(SO_matching_pairs_correct);
         setMatchedIndex(prev => [...prev, ...checkIfPairArray]);
         setIfPairArray([]);
+
         return;
       }
+      playSound(SO_matching_pairs_incorrect);
       setTimeout(() => {
         if (buttonColor === 'red') {
           setButtonText(shakeText);
@@ -151,6 +161,16 @@ const MatchingPairs = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const playSound = async (soundFile: any) => {
+    setDisabled(true);
+    const {sound} = await Audio.Sound.createAsync(soundFile);
+    await sound.playAsync();
+    setTimeout(async () => {
+      await sound.unloadAsync();
+      setDisabled(false);
+    }, 500);
+  };
+
   return (
     <RNScreenWrapper style={styles.screenWrapper}>
       <>
@@ -158,7 +178,7 @@ const MatchingPairs = () => {
           {matchingPairsArray.map((item, index) => (
             <RNEmojiWithText
               halfRotationDuration={halfRotationDuration}
-              disabled={checkIfPairArray.length === 2}
+              disabled={disabledButton || checkIfPairArray.length === 2}
               mask={true}
               isSelected={
                 matchedIndexes.includes(index) ||

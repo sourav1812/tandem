@@ -23,9 +23,11 @@ import messaging from '@react-native-firebase/messaging';
 import consentNewsletter from '@tandem/api/consentNewsletter';
 import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
 import {initialiseRevenueCat} from '../revenueCat';
+import {Audio} from 'expo-av';
 
 export default async () => {
   // ! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  await Audio.setAudioModeAsync({playsInSilentModeIOS: true});
   const storyBooksThisWeek =
     store.getState().activityIndicator.storyBooksReadThisWeek;
   const pageNumber = store.getState().activityIndicator.pagesReadInBooks;

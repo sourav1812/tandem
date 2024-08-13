@@ -18,7 +18,8 @@ import {
   withTiming,
 } from 'react-native-reanimated';
 import Animated from 'react-native-reanimated';
-
+import {Audio} from 'expo-av';
+import SO_button_click from '@tandem/assets/appInteraction/SO_button_click.mp3';
 const RNButton = ({
   props,
   customStyle,
@@ -37,6 +38,7 @@ const RNButton = ({
   pressableStyle = {},
   onLayout,
   hitSlop,
+  SoundObject,
 }: Props) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const isButtonDisabled = useAppSelector(
@@ -49,15 +51,21 @@ const RNButton = ({
   const runAnimation = () => {
     scaleButton.value = withSequence(withTiming(0.9), withTiming(1));
   };
-
   const handlePress = async () => {
     Keyboard.dismiss();
     if (pressed) {
       return;
     }
     setPressed(true);
+    const {sound} = await Audio.Sound.createAsync(
+      SoundObject || SO_button_click,
+    );
+    sound.playAsync();
     await onClick();
-    setPressed(false);
+    setTimeout(async () => {
+      await sound.unloadAsync();
+      setPressed(false);
+    }, 1500);
   };
 
   return (

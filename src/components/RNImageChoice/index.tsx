@@ -24,7 +24,8 @@ import {translation} from '@tandem/utils/methods';
 import {scale, verticalScale} from 'react-native-size-matters';
 import LinearGradient from 'react-native-linear-gradient';
 import RNTextComponent from '../RNTextComponent';
-
+import SO_select_story_element from '@tandem/assets/appInteraction/SO_select_story_element.mp3';
+import {Audio} from 'expo-av';
 const RNImageChoice = ({
   data = [],
   customStyle,
@@ -104,6 +105,7 @@ const RNImageChoice = ({
                 textStyle={styles.tooltip}
                 text={translation('CHOOSE_FROM_THE_GIVE_OPTIONS')}>
                 <AnimatedImageChoice
+                  SoundObject={SO_select_story_element}
                   doNotShowLabel={doNotShowLabel}
                   value={value}
                   onPress={() => handlePress(value.name)}
@@ -112,6 +114,7 @@ const RNImageChoice = ({
               </RNTooltip>
             ) : (
               <AnimatedImageChoice
+                SoundObject={SO_select_story_element}
                 doNotShowLabel={doNotShowLabel}
                 value={value}
                 onPress={() => handlePress(value.name)}
@@ -142,6 +145,7 @@ const AnimatedImageChoice = ({
   onPress,
   activeState,
   doNotShowLabel,
+  SoundObject,
 }: {
   value: {
     name: string;
@@ -150,16 +154,32 @@ const AnimatedImageChoice = ({
   onPress: () => void;
   activeState: string[];
   doNotShowLabel?: boolean;
+  SoundObject?: any;
 }) => {
   const scaleButton = useSharedValue(1);
 
   const runAnimation = () => {
     scaleButton.value = withSequence(withTiming(0.9), withTiming(1));
   };
+  const [disabledButton, setDisabled] = React.useState(false);
 
+  const playSound = async () => {
+    setDisabled(true);
+    const {sound} = await Audio.Sound.createAsync(SoundObject);
+    await sound.playAsync();
+    setTimeout(async () => {
+      await sound.unloadAsync();
+      setDisabled(false);
+    }, 1000);
+  };
   return (
     <Pressable
+      disabled={disabledButton}
       onPress={() => {
+        if (disabledButton) {
+          return;
+        }
+        playSound();
         onPress();
         runAnimation();
       }}>
