@@ -47,11 +47,10 @@ export const makePurchase = async (product: PurchasesStoreProduct) => {
   try {
     await Purchases.purchaseStoreProduct(product);
     await userProfile();
-
-    navigateTo(SCREEN_NAME.HOME);
   } catch (e: any) {
     if (!e.userCancelled) {
       console.log(e);
     }
+    throw new Error(e.message);
   }
 };

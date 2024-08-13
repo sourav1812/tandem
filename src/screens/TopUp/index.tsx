@@ -12,6 +12,8 @@ import {translation} from '@tandem/utils/methods';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {PurchasesStoreProduct} from 'react-native-purchases';
 import {makePurchase} from '@tandem/functions/revenueCat';
+import navigateTo from '@tandem/navigation/navigate';
+import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 
 const TopUp = () => {
   const products = useAppSelector(state => state.revenueCat.products);
@@ -23,7 +25,10 @@ const TopUp = () => {
   };
 
   const handleClick = async () => {
-    await makePurchase(selectedTopUp!);
+    try {
+      await makePurchase(selectedTopUp!);
+      navigateTo(SCREEN_NAME.HOME);
+    } catch (error) {}
   };
 
   return (
@@ -90,7 +95,7 @@ const TopUp = () => {
                 : themeColor.themeBlue,
             },
           ]}
-          // isDisabled={true}
+          isDisabled={!selectedTopUp}
           onClick={handleClick}
           title={
             !selectedTopUp
