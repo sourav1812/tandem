@@ -500,7 +500,7 @@ const Home = () => {
                           ? translation('TOTAL_CREDITS') +
                             `: ${
                               (user?.plan?.usageDetails?.totalCredits || 0) +
-                              (user?.plan?.usageDetails?.totalCredits || 0)
+                              (user?.plan?.usageDetails?.addOnCredits || 0)
                             }`
                           : translation('COMING_SOON')
                       }

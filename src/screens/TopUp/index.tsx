@@ -1,7 +1,7 @@
 import {Pressable, View} from 'react-native';
 import {styles} from './style';
 import RNTextComponent from '@tandem/components/RNTextComponent';
-import {ABOUT_TOP_UP, TOP_UP_TYPES, TopUpType} from './interface';
+import {ABOUT_TOP_UP} from './interface';
 import {useState} from 'react';
 import themeColor from '@tandem/theme/themeColor';
 import CheckMark from '../../assets/svg/Check';
@@ -9,39 +9,49 @@ import RNButton from '@tandem/components/RNButton';
 import {verticalScale} from 'react-native-size-matters';
 import TopUpAndSubscribeHeader from '@tandem/components/RNTopUpOrSubscribe';
 import {translation} from '@tandem/utils/methods';
+import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import {PurchasesStoreProduct} from 'react-native-purchases';
+import {makePurchase} from '@tandem/functions/revenueCat';
+import navigateTo from '@tandem/navigation/navigate';
+import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 
 const TopUp = () => {
-  const [selectedTopUp, setSelectedTopUp] = useState<TopUpType | undefined>(
-    undefined,
-  );
+  const products = useAppSelector(state => state.revenueCat.products);
 
-  const handlePress = (topup: TopUpType) => {
+  const [selectedTopUp, setSelectedTopUp] = useState<PurchasesStoreProduct>();
+
+  const handlePress = (topup: PurchasesStoreProduct) => {
     setSelectedTopUp(topup);
   };
 
-  const handleClick = () => {};
+  const handleClick = async () => {
+    try {
+      await makePurchase(selectedTopUp!);
+      navigateTo(SCREEN_NAME.HOME);
+    } catch (error) {}
+  };
 
   return (
     <TopUpAndSubscribeHeader title={'TOP_UP_TITLE'}>
-      {TOP_UP_TYPES.map(it => (
+      {products.map(it => (
         <Pressable
           style={[
             styles.info,
             {
               borderColor:
-                selectedTopUp?.id === it.id
+                selectedTopUp?.identifier === it.identifier
                   ? themeColor.themeBlue
                   : themeColor.lightGray,
             },
           ]}
-          key={it.id}
+          key={it.identifier}
           onPress={() => handlePress(it)}>
           <RNTextComponent
             isSemiBold
             style={{
               textAlign: 'center',
             }}>
-            {`${it.title} - ${it.currencyLogo}${it.price}`}
+            {it.title}
           </RNTextComponent>
           <RNTextComponent
             style={{
@@ -85,14 +95,12 @@ const TopUp = () => {
                 : themeColor.themeBlue,
             },
           ]}
-          isDisabled={true}
+          isDisabled={!selectedTopUp}
           onClick={handleClick}
           title={
             !selectedTopUp
               ? translation('BUY')
-              : `${translation('BUY')} - ${selectedTopUp?.currencyLogo}${
-                  selectedTopUp?.price
-                }`
+              : `${translation('BUY')} - ${selectedTopUp?.priceString}`
           }
         />
       </View>

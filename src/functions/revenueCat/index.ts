@@ -1,5 +1,9 @@
 import userProfile from '@tandem/api/userProfile';
 import {REVENUE_CAT_KEYS} from '@tandem/constants/api';
+import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
+import navigateTo from '@tandem/navigation/navigate';
+import {setProducts} from '@tandem/redux/slices/revenueCatProduct.slice';
+import {store} from '@tandem/redux/store';
 import {Platform} from 'react-native';
 import Purchases, {
   LOG_LEVEL,
@@ -19,6 +23,7 @@ export const initialiseRevenueCat = async (appUserID: string) => {
       appUserID,
     });
   }
+  await getRevenueCatProducts();
 };
 
 export const getRevenueCatProducts = async () => {
@@ -30,6 +35,7 @@ export const getRevenueCatProducts = async () => {
       const products = offerings.current.availablePackages.map(
         item => item.product,
       );
+      store.dispatch(setProducts(products));
       return products;
     }
   } catch (e) {
@@ -45,5 +51,6 @@ export const makePurchase = async (product: PurchasesStoreProduct) => {
     if (!e.userCancelled) {
       console.log(e);
     }
+    throw new Error(e.message);
   }
 };
