@@ -14,8 +14,14 @@ import {PurchasesStoreProduct} from 'react-native-purchases';
 import {makePurchase} from '@tandem/functions/revenueCat';
 import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
+import {useDispatch} from 'react-redux';
+import {
+  buttonLoader,
+  stopLoader,
+} from '@tandem/redux/slices/activityIndicator.slice';
 
 const TopUp = () => {
+  const dispatch = useDispatch();
   const products = useAppSelector(state => state.revenueCat.products);
 
   const [selectedTopUp, setSelectedTopUp] = useState<PurchasesStoreProduct>();
@@ -25,10 +31,12 @@ const TopUp = () => {
   };
 
   const handleClick = async () => {
+    dispatch(buttonLoader());
     try {
       await makePurchase(selectedTopUp!);
       navigateTo(SCREEN_NAME.HOME);
     } catch (error) {}
+    dispatch(stopLoader());
   };
 
   return (

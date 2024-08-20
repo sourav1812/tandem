@@ -6,7 +6,6 @@ export const translation = (text: string) => {
 
 export const dynamicTranslation = (text: string, placeholders: any = {}) => {
   let translatedText = i18n.t(text);
-  console.log('translatedText', translatedText);
 
   Object.keys(placeholders).forEach(placeholder => {
     const regex = new RegExp(`{${placeholder}}`, 'g');

@@ -21,7 +21,9 @@ const TopUpAndSubscribe = () => {
               isDisabled={index == 1}
               onPress={() => item.navigate && navigateTo(item.navigate)}
               isSemiBold
-              title={`${translation(item.name)} ${products[0]?.priceString}`}
+              title={`${translation(item.name)} ${products[0]?.priceString}${
+                index == 1 ? '/' + translation('month') : ''
+              }`}
               customStyle={[styles.menu]}
             />
           ))}
