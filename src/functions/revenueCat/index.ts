@@ -1,7 +1,5 @@
 import userProfile from '@tandem/api/userProfile';
 import {REVENUE_CAT_KEYS} from '@tandem/constants/api';
-import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
-import navigateTo from '@tandem/navigation/navigate';
 import {setProducts} from '@tandem/redux/slices/revenueCatProduct.slice';
 import {store} from '@tandem/redux/store';
 import {Platform} from 'react-native';
@@ -10,8 +8,11 @@ import Purchases, {
   PurchasesStoreProduct,
 } from 'react-native-purchases';
 
-export const initialiseRevenueCat = async (appUserID: string) => {
+export const initialiseRevenueCat = async (appUserID?: string) => {
   Purchases.setLogLevel(LOG_LEVEL.VERBOSE);
+  if (!appUserID) {
+    return;
+  }
   if (Platform.OS === 'ios') {
     Purchases.configure({
       apiKey: REVENUE_CAT_KEYS.ios,

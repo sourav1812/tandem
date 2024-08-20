@@ -362,14 +362,14 @@ export const ILLUSTRATION = [
     name: 'Candidate 2',
     url: BASE_URL_V1 + 'images/whatHappensNew/question_mark.webp',
   },
-  // {
-  //   name: 'pixar',
-  //   url: BASE_URL_V1 + 'images/illustration-styles/pixar.webp',
-  // },
-  // {
-  //   name: 'low-poly',
-  //   url: BASE_URL_V1 + 'images/illustration-styles/low_poly.webp',
-  // },
+  {
+    name: 'pixar',
+    url: BASE_URL_V1 + 'images/illustration-styles/pixar.webp',
+  },
+  {
+    name: 'low-poly',
+    url: BASE_URL_V1 + 'images/illustration-styles/low_poly.webp',
+  },
   // {
   //   name: 'style1-papercut',
   //   url: BASE_URL_V1 + 'images/illustration-styles/papercut.webp',
@@ -419,47 +419,47 @@ export const AVATAR_ARRAY = [...new Array(29).keys()].map(
 
 export const PLACE: OnlyImageType[] = [
   {
-    name: 'Outer Space',
+    name: 'In Outer Space',
     url: BASE_URL_V1 + 'images/locations/outer_space.webp',
   },
   {
-    name: 'Camping in tents',
+    name: 'At a Campsite',
     url: BASE_URL_V1 + 'images/locations/camping_in_tents.webp',
   },
   {
-    name: 'Bustling city',
+    name: 'In a Bustling City',
     url: BASE_URL_V1 + 'images/locations/city.webp',
   },
   {
-    name: 'Dark Forest',
+    name: 'In a Dark Forest',
     url: BASE_URL_V1 + 'images/locations/dark_forest.webp',
   },
   {
-    name: 'Noisy fairground',
+    name: 'At a Noisy Fairground',
     url: BASE_URL_V1 + 'images/locations/fair_ground.webp',
   },
   {
-    name: 'Busy farmyard',
+    name: 'On a Busy farmyard',
     url: BASE_URL_V1 + 'images/locations/farm_yard.webp',
   },
   {
-    name: 'The mountains',
+    name: 'In the Mountains',
     url: BASE_URL_V1 + 'images/locations/snowy_mountain.webp',
   },
   {
-    name: 'Desert island',
+    name: 'On a Desert Island',
     url: BASE_URL_V1 + 'images/locations/sunny_beach.webp',
   },
   {
-    name: 'The park',
+    name: 'At the Park',
     url: BASE_URL_V1 + 'images/locations/playground.webp',
   },
   {
-    name: 'A castle',
+    name: 'In a Castle',
     url: BASE_URL_V1 + 'images/locations/castle.webp',
   },
   {
-    name: 'A magic tree',
+    name: 'In a Magic Tree',
     url: BASE_URL_V1 + 'images/locations/magic_tree.webp',
   },
 ];

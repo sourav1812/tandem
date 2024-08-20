@@ -25,7 +25,7 @@ import StoryLanguage from '@tandem/screens/GenerateStory/Questions/StoryLangauge
 import RobotBuildingBook from '@tandem/screens/RobotBuildingBook';
 import {setEnergyGenerated} from '@tandem/redux/slices/activityIndicator.slice';
 import Disclaimer from '@tandem/screens/Disclaimer';
-import gotoBookshelf from '@tandem/functions/gotoBookshelf';
+import {changeChildAndNavigate} from '@tandem/functions/gotoBookshelf';
 import notifee, {EventType} from '@notifee/react-native';
 import VerifyEmail from '@tandem/screens/VerifyEmail';
 import TopUpAndSubscribe from '@tandem/screens/TopUpAndSubscribe';
@@ -48,10 +48,20 @@ const AppNavigator = () => {
   React.useEffect(() => {
     const f = async () => {
       await resumeAppState();
-      return notifee.onForegroundEvent(({type}) => {
+      return notifee.onForegroundEvent(({type, detail}) => {
         switch (type) {
           case EventType.PRESS:
-            gotoBookshelf();
+            console.log(
+              'onForegroundEvent on navigation',
+              detail.notification?.data,
+            );
+            const metaData = detail?.notification?.data?.metaData as string;
+            if (metaData) {
+              const childId = JSON.parse(metaData)?.childId;
+              if (childId) {
+                changeChildAndNavigate(childId);
+              }
+            }
             break;
         }
       });
