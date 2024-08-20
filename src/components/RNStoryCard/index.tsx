@@ -18,7 +18,7 @@ import RNButton from '../RNButton';
 import themeColor from '@tandem/theme/themeColor';
 
 const ProgressIndicator = ({progress}: {progress: number}) => {
-  const progressPercentage = `${progress * 10}%`;
+  const progressPercentage = `${progress}%`;
   return (
     <View style={styles.progressIndicatorTop}>
       <View
@@ -41,7 +41,9 @@ const RNStoryCard = ({
 }) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const portrait = useAppSelector(state => state.orientation.isPortrait);
-
+  const readingProgress = useAppSelector(
+    state => state.bookShelf.readingProgress,
+  );
   const scaleButton = useSharedValue(1);
 
   const runAnimation = () => {
@@ -131,7 +133,7 @@ const RNStoryCard = ({
                 onClick={() => {}}
               />
             )}
-            <ProgressIndicator progress={item.readingTime} />
+            <ProgressIndicator progress={readingProgress?.[item.id] || 0} />
           </View>
         </View>
         <RightArrow />

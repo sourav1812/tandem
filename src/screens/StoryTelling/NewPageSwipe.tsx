@@ -23,7 +23,10 @@ import {MODE} from '@tandem/constants/mode';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
 import Animated, {useSharedValue, withTiming} from 'react-native-reanimated';
-import {updatePage} from '@tandem/redux/slices/bookShelf.slice';
+import {
+  updatePage,
+  updateReadingProgress,
+} from '@tandem/redux/slices/bookShelf.slice';
 import {RootState, store} from '@tandem/redux/store';
 import {translation} from '@tandem/utils/methods';
 import {readBookNotification} from '@tandem/functions/notifee';
@@ -104,7 +107,7 @@ export default ({
     ({item, index}: {item: IPage; index: number}) => {
       return (
         <ImageBackground
-          imageStyle={{resizeMode: 'center', backgroundColor: 'black'}}
+          imageStyle={{resizeMode: 'contain', backgroundColor: 'black'}}
           source={{uri: item.img}}
           style={styles.imageBg}>
           <Animated.View
@@ -292,7 +295,7 @@ export default ({
       </ImageBackground>
     );
   };
-  const onViewableItemsChanged = React.useCallback(({changed}) => {
+  const onViewableItemsChanged = React.useCallback(({changed}: any) => {
     const lastPage = book.storyInfo[0].pages.length - 1 === changed[0].index;
     if (lastPage && !changed[0].isViewable) {
       updateState({endPage: true});
@@ -310,6 +313,13 @@ export default ({
     store.dispatch(updatePage(changed[0].index));
     if (changed[0].isViewable) {
       store.dispatch(incrementStoryPageNumber());
+      store.dispatch(
+        updateReadingProgress({
+          bookId: book._id,
+          progress:
+            ((changed[0].index + 1) * 100) / book.storyInfo[level].pages.length,
+        }),
+      );
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

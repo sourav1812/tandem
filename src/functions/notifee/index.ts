@@ -81,6 +81,9 @@ export async function onCreateTriggerNotification({
       body,
       android: {
         channelId,
+        pressAction: {
+          id: 'default',
+        },
       },
     },
     trigger,

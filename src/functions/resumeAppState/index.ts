@@ -18,7 +18,7 @@ import {inactiveTriggerNotifications} from '../notifee';
 import selfAnalytics from '@tandem/api/selfAnalytics';
 import {UsersAnalyticsEvents} from '@tandem/api/selfAnalytics/interface';
 import wait from '../wait';
-import gotoBookshelf from '../gotoBookshelf';
+import {changeChildAndNavigate} from '../gotoBookshelf';
 import messaging from '@react-native-firebase/messaging';
 import consentNewsletter from '@tandem/api/consentNewsletter';
 import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
@@ -78,8 +78,15 @@ export default async () => {
     if (Platform.OS === 'android') {
       const initialNotification = await messaging().getInitialNotification();
       if (initialNotification) {
-        console.log({initialNotification: initialNotification.data});
         store.dispatch(setIsOpenedFromNotifications(true));
+        console.log({initialNotification: initialNotification.data});
+        const metaData = initialNotification.data?.metaData as string;
+        if (metaData) {
+          const childId = JSON.parse(metaData)?.childId;
+          if (childId) {
+            changeChildAndNavigate(childId);
+          }
+        }
       }
     }
     if (store.getState().activityIndicator.openedByNotifications) {
@@ -88,7 +95,6 @@ export default async () => {
         eventType: UsersAnalyticsEvents.APP_OPENED,
         details: {isNotificationTapped: true},
       });
-      gotoBookshelf();
       return;
     }
     selfAnalytics({

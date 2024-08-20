@@ -34,11 +34,13 @@ import {DIRECTION_ARROWS} from '@tandem/constants/enums';
 import WavingHand from '@tandem/assets/svg/WavingHand';
 import BlueButton from '@tandem/assets/svg/BlueButton';
 import {setForceReload} from '@tandem/redux/slices/activityIndicator.slice';
+import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
 
 const Home = () => {
   const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
+  const products = useAppSelector(state => state.revenueCat.products);
   const mode = useAppSelector(state => state.mode.mode);
   const currentChild = useAppSelector(state => state.createChild.currentChild);
   const currentAdult = useAppSelector(state => state.createChild.currentAdult);
@@ -512,6 +514,17 @@ const Home = () => {
                           return;
                         }
                         if (index === 1) {
+                          if (products.length === 0) {
+                            store.dispatch(
+                              addAlertData({
+                                type: 'Message',
+                                message:
+                                  'Products are not available at the moment',
+                                possibleResolution: 'Please try again later',
+                              }),
+                            );
+                            return;
+                          }
                           navigateTo(SCREEN_NAME.TOP_UP_AND_SUBSCRIPTION);
                         }
                       }}
