@@ -26,6 +26,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import RNTextComponent from '../RNTextComponent';
 import SO_select_story_element from '@tandem/assets/appInteraction/SO_select_story_element.mp3';
 import {Audio} from 'expo-av';
+import FastImage from 'react-native-fast-image';
 const RNImageChoice = ({
   data = [],
   customStyle,
@@ -216,7 +217,15 @@ const AnimatedImageChoice = ({
           )}
         </LinearGradient>
 
-        <Image source={{uri: value.file}} style={[styles.illustration]} />
+        {/* <Image source={{uri: value.file}} style={[styles.illustration]} /> */}
+        <FastImage
+          style={[styles.illustration]}
+          source={{
+            uri: value.file,
+            priority: FastImage.priority.high,
+          }}
+          resizeMode={FastImage.resizeMode.contain}
+        />
       </Animated.View>
     </Pressable>
   );
