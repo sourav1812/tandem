@@ -6,6 +6,7 @@ export enum UsersAnalyticsEvents {
   APP_OPENED = 'app.opened',
   APP_CLOSED = 'app.closed',
   BOOK_CREATED = 'book.created',
+  BOOK_FAILED = 'book.failed',
   BOOK_OPENED = 'book.opened',
   BOOK_END_REACHED = 'book.finished',
   BOOKSHELF_VISITED = 'bookshelf.visited',

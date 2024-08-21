@@ -83,7 +83,7 @@ const App: FC = () => {
             }
           }
           const eventType = detail?.notification?.data?.eventType;
-          if (eventType === 'book.failed') {
+          if (eventType === UsersAnalyticsEvents.BOOK_FAILED) {
             navigateTo(SCREEN_NAME.ACCOUNT, {}, true);
           }
           unsub();
@@ -108,7 +108,7 @@ const App: FC = () => {
           }
         }
         const eventType = notificationData.data?.eventType;
-        if (eventType === 'book.failed') {
+        if (eventType === UsersAnalyticsEvents.BOOK_FAILED) {
           navigateTo(SCREEN_NAME.ACCOUNT, {}, true);
         }
       });
@@ -136,7 +136,7 @@ const App: FC = () => {
       //!   },
       //! };
 
-      if (message.data?.eventType === 'book.created') {
+      if (message.data?.eventType === UsersAnalyticsEvents.BOOK_CREATED) {
         const metaData = JSON.parse(message.data.metaData as string);
         if (
           store.getState().createChild.currentChild.childId === metaData.childId
@@ -204,7 +204,7 @@ const App: FC = () => {
         // }, 4100);
         // }
         return;
-      } else if (message.data?.eventType === 'book.failed') {
+      } else if (message.data?.eventType === UsersAnalyticsEvents.BOOK_FAILED) {
         onDisplayNotification({
           title: message.notification?.title,
           body: message.notification?.body,

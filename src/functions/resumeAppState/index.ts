@@ -92,7 +92,7 @@ export default async () => {
           }
         }
         const eventType = initialNotificationToBeUsed.data?.eventType;
-        if (eventType === 'book.failed') {
+        if (eventType === UsersAnalyticsEvents.BOOK_FAILED) {
           navigateTo(SCREEN_NAME.ACCOUNT, {}, true);
         }
       }
