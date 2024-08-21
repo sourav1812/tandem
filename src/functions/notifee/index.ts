@@ -44,6 +44,9 @@ async function onDisplayNotification({
     data: data || {},
     android: {
       channelId,
+      pressAction: {
+        id: 'default',
+      },
     },
   });
 }
@@ -78,6 +81,9 @@ export async function onCreateTriggerNotification({
       body,
       android: {
         channelId,
+        pressAction: {
+          id: 'default',
+        },
       },
     },
     trigger,

@@ -8,7 +8,7 @@ const SvgComponent = (props: SvgProps) => (
     height={35}
     fill="none"
     {...props}>
-    <Rect width={40} height={40} fill="#4285F6" rx={8} />
+    <Rect width={40} height={40} fill={props.color? props.color:"#4285F6"} rx={8} />
     <Path
       fill="#fff"
       fillRule="evenodd"

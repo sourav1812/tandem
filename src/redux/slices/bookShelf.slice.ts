@@ -5,8 +5,14 @@ interface BookShelf {
   books: StoryData[];
   images: {[bookId: string]: string[]};
   activePageNumber: number;
+  readingProgress: {[bookId: string]: number};
 }
-const initialState: BookShelf = {books: [], images: {}, activePageNumber: -1};
+const initialState: BookShelf = {
+  books: [],
+  images: {},
+  activePageNumber: -1,
+  readingProgress: {},
+};
 
 export const bookShelf = createSlice({
   name: 'bookShelf',
@@ -43,10 +49,23 @@ export const bookShelf = createSlice({
         storyRating: rating,
       });
     },
+    updateReadingProgress: (state, action) => {
+      const {bookId, progress} = action.payload;
+      console.log({bookId, progress});
+      if (progress <= state.readingProgress?.[bookId]) {
+        // only update the max progress
+        return;
+      }
+      if (!state.readingProgress) {
+        state.readingProgress = {};
+      }
+      state.readingProgress[bookId] = progress;
+    },
   },
 });
 
 export const {
+  updateReadingProgress,
   setImagesForBook,
   removeLatestBook,
   clearbookShelf,

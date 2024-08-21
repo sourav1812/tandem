@@ -15,6 +15,7 @@ import logout from '@tandem/functions/logout';
 import {consentFormApi} from '@tandem/api/consentFormApi';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
+import consentNewsletter from '@tandem/api/consentNewsletter';
 
 const TermsAndConditions = () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -25,10 +26,12 @@ const TermsAndConditions = () => {
       isAgreed: false,
     })),
     agreedToAllTerms: false,
+    signInToNewsLetter: true,
   });
-
-  const {terms, agreedToAllTerms} = state;
-
+  const {terms, agreedToAllTerms, signInToNewsLetter} = state;
+  useEffect(() => {
+    console.log(state);
+  }, [state]);
   const updateState = (date: any) => {
     setState((previouState: any) => {
       return {...previouState, ...date};
@@ -46,7 +49,10 @@ const TermsAndConditions = () => {
 
   const handleContentForm = async () => {
     try {
-      consentFormApi({data: {isAgreed: true}});
+      consentFormApi({
+        data: {isAgreed: true},
+      });
+      consentNewsletter(signInToNewsLetter);
       navigateTo(SCREEN_NAME.HELP_CENTER, {});
     } catch (error) {
       console.log(error, 'consent from api error');
@@ -101,6 +107,14 @@ const TermsAndConditions = () => {
               />
             );
           })}
+          <RNCheckboxWithText
+            content={translation('SIGN_IN_TO_NEWSLETTER')}
+            onAccept={() => {
+              updateState({signInToNewsLetter: !signInToNewsLetter});
+            }}
+            isRequired={false}
+            isDefaultSelected
+          />
         </ScrollView>
         <View
           style={[styles.footerButton, isTablet && {paddingHorizontal: 100}]}>

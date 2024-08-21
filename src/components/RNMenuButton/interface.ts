@@ -4,4 +4,6 @@ export interface MenuButtonProps {
   title: string;
   customStyle?: StyleProp<ViewStyle>;
   onPress?: () => void;
+  isSemiBold?: boolean;
+  isDisabled?: boolean;
 }

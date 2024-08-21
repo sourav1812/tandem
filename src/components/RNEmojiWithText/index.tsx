@@ -10,6 +10,7 @@ import {
 } from 'react-native-reanimated';
 import Animated from 'react-native-reanimated';
 import themeColor from '@tandem/theme/themeColor';
+import {Audio} from 'expo-av';
 
 const RNEmojiWithText = ({
   customStyle,
@@ -24,21 +25,35 @@ const RNEmojiWithText = ({
   mask,
   disabled,
   halfRotationDuration = 0,
+  soundFile,
 }: Props) => {
   const scaleButton = useSharedValue(1);
   const rotation = useSharedValue('180deg');
   const [isSelectedAnimation, setSelectedAnimation] = React.useState(
     !!isSelected,
   );
-
+  const [disabledButton, setDisabled] = React.useState(false);
   const runAnimation = () => {
-    scaleButton.value = withSequence(withTiming(0.9), withTiming(1));
+    scaleButton.value = withSequence(
+      withTiming(0.9, {duration: 300}),
+      withTiming(1, {duration: 900}),
+    );
   };
   const runRotation = (toggle: boolean) => {
     rotation.value = withSequence(
       withTiming('90deg', {duration: halfRotationDuration}),
       withTiming(toggle ? '0deg' : '180deg', {duration: halfRotationDuration}),
     );
+  };
+
+  const playSound = async () => {
+    setDisabled(true);
+    const {sound} = await Audio.Sound.createAsync(soundFile);
+    await sound.playAsync();
+    setTimeout(async () => {
+      await sound.unloadAsync();
+      setDisabled(false);
+    }, 1200);
   };
 
   React.useEffect(() => {
@@ -51,13 +66,17 @@ const RNEmojiWithText = ({
 
   return (
     <Pressable
-      disabled={disabled}
+      disabled={disabled || disabledButton}
       onPress={() => {
-        if (disabled) {
+        if (disabled || disabledButton) {
           return;
         }
+
         if (!mask) {
           runAnimation();
+        }
+        if (soundFile) {
+          playSound();
         }
         onPress();
       }}>

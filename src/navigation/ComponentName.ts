@@ -54,4 +54,9 @@ export enum SCREEN_NAME {
   RECIEVE_CHILD_DETAIL = 'RecieveChildDetail',
   QR_SCANNER = 'QrScanner',
   CONNECTION_REQUESTS = 'ConnectionRequests',
+  VERIFY_EMAIL = 'VerifyEmail',
+  TOP_UP_AND_SUBSCRIPTION = 'TopUpAndSubscription',
+  TOP_UP = 'TopUp',
+  SUBSCRIPTION = 'Subscription',
+  MANAGE_SUBSCRIPTION = 'ManageSubscription'
 }

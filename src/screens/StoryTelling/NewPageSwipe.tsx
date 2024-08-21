@@ -23,8 +23,11 @@ import {MODE} from '@tandem/constants/mode';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import navigateTo from '@tandem/navigation/navigate';
 import Animated, {useSharedValue, withTiming} from 'react-native-reanimated';
-import {updatePage} from '@tandem/redux/slices/bookShelf.slice';
-import {store} from '@tandem/redux/store';
+import {
+  updatePage,
+  updateReadingProgress,
+} from '@tandem/redux/slices/bookShelf.slice';
+import {RootState, store} from '@tandem/redux/store';
 import {translation} from '@tandem/utils/methods';
 import {readBookNotification} from '@tandem/functions/notifee';
 import {
@@ -64,6 +67,11 @@ export default ({
   const recordingpremissionGranted = useAppSelector(
     state => state.recording.permissionGranted,
   );
+
+  const portrait = useAppSelector(
+    (state: RootState) => state.orientation.isPortrait,
+  );
+
   React.useEffect(() => {
     if (isTablet) {
       Orientation.lockToLandscapeLeft();
@@ -98,7 +106,10 @@ export default ({
   const renderItem = React.useCallback(
     ({item, index}: {item: IPage; index: number}) => {
       return (
-        <ImageBackground source={{uri: item.img}} style={styles.imageBg}>
+        <ImageBackground
+          imageStyle={{resizeMode: 'contain', backgroundColor: 'black'}}
+          source={{uri: item.img}}
+          style={styles.imageBg}>
           <Animated.View
             style={[
               {
@@ -126,6 +137,7 @@ export default ({
         <View
           style={{width: height.hmax, height: '100%', flexDirection: 'row'}}>
           <ImageBackground
+            imageStyle={{resizeMode: 'center'}}
             source={{uri: item.img}}
             style={{height: '100%', width: height.hmax / 2}}
           />
@@ -158,7 +170,7 @@ export default ({
         <View
           style={[
             {
-              height: '65%',
+              height: portrait ? '65%' : '100%',
             },
             styles.bottomSheet,
           ]}>
@@ -169,7 +181,7 @@ export default ({
               marginBottom: verticalScale(15),
             }}
             isSemiBold>
-            The End
+            {translation('THE_END')}
           </RNTextComponent>
           <RNTextComponent
             style={{
@@ -178,7 +190,7 @@ export default ({
               marginBottom: verticalScale(35),
             }}
             isMedium>
-            Great work. Now why don't you...
+            {translation('GREAT_WORK_NOW')}
           </RNTextComponent>
           {!publicRoute && !state.isStoryRated && (
             <RNButton
@@ -283,7 +295,7 @@ export default ({
       </ImageBackground>
     );
   };
-  const onViewableItemsChanged = React.useCallback(({changed}) => {
+  const onViewableItemsChanged = React.useCallback(({changed}: any) => {
     const lastPage = book.storyInfo[0].pages.length - 1 === changed[0].index;
     if (lastPage && !changed[0].isViewable) {
       updateState({endPage: true});
@@ -301,6 +313,13 @@ export default ({
     store.dispatch(updatePage(changed[0].index));
     if (changed[0].isViewable) {
       store.dispatch(incrementStoryPageNumber());
+      store.dispatch(
+        updateReadingProgress({
+          bookId: book._id,
+          progress:
+            ((changed[0].index + 1) * 100) / book.storyInfo[level].pages.length,
+        }),
+      );
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

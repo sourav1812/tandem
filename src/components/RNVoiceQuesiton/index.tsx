@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {View, ScrollView, Platform} from 'react-native';
+import {View, ScrollView} from 'react-native';
 import React, {useRef, useState} from 'react';
 import {styles} from './styles';
 import RNTextComponent from '../RNTextComponent';
@@ -11,7 +11,8 @@ import {translation} from '@tandem/utils/methods';
 import RNTooltip from '../RNTooltip';
 import {RootState} from '@tandem/redux/store';
 import {DIRECTION_ARROWS} from '@tandem/constants/enums';
-
+import SO_comprehension_correct from '@tandem/assets/appInteraction/SO_comprehension_correct.mp3';
+import SO_comprehension_incorrect from '@tandem/assets/appInteraction/SO_comprehension_incorrect.mp3';
 const RNVoiceQuesiton = ({
   onClick,
   customStyle,
@@ -106,6 +107,11 @@ const RNVoiceQuesiton = ({
               </View>
               {questions[nextQuestion].options.map((option, index) => (
                 <RNButton
+                  SoundObject={
+                    option === questions[nextQuestion].answer
+                      ? SO_comprehension_correct
+                      : SO_comprehension_incorrect
+                  }
                   customStyle={[
                     correctIndex === index
                       ? {
@@ -120,8 +126,9 @@ const RNVoiceQuesiton = ({
                       : {},
                     {
                       height: 'auto',
-                      paddingVertical: verticalScale(10),
+                      padding: verticalScale(10),
                       marginHorizontal: verticalScale(5),
+                      maxHeight: 'auto',
                     },
                   ]}
                   key={option}

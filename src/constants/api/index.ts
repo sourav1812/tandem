@@ -1,36 +1,44 @@
+export enum VERSIONS {
+  v1 = '/v1/',
+  v2 = '/v2/',
+}
+
 export enum API {
-  REGISTER_USER = 'user/sign-up', //? POST
-  LOGIN_USER_WITH_EMAIL = 'user/sign-in', //? POST
-  CREATE_CHILD_PROFILE = 'children', //? POST
-  REFRESH_TOKEN = 'user/refresh-access-token', //? POST
-  AUTH = 'user/auth', //? POST
-  GENERATE_STORY = 'story-books', //? POST
-  RATE_STORY = 'story-books/rate-book', //? POST
-  STORIES = 'story-books', //* GET
-  PUBLIC_STORIES = 'story-books/public/books', //* GET
-  LOGOUT = 'user/log-out', //? POST
-  USER_PROFILE = 'user/profile', //* GET
-  CHANGE_PASSWORD = 'user/password', //? PUT
-  ADD_BIG_PEOPLE = 'big-people', //?POST
-  AGREEMENT = 'user/profile/consent-form', //?POST
-  SEND_OTP_RESET_PASSWORD = 'user/forgot-password/send-email', //?POST
-  CONFIRM_OTP_RESET_PASSWORD = 'user/forgot-password/confirm-otp', //?POST
-  RESET_PASSWORD = 'user/forgot-password/reset-password', //?POST
-  GET_STORY_ILLUSTRATIONS = 'story-books/illustrations', // * GET
-  MARK_BOOK_AS_READ = 'story-books/update-reading-status', // ? POST
-  MARK_BOOK_AS_ARCHIVED = 'story-books/archive-status', // ? POST
-  MARK_BOOK_AS_PUBLIC = 'story-books/public-status', // ? POST
-  GET_STORY_THUMBNAILS = 'story-books/{BOOK_ID_HERE}/thumbnail',
-  POST_CHILD_ANALYTICS = 'analytics/children',
-  GET_CHILD_ANALYTICS = 'analytics/children',
-  CONTACT_US = 'user/contact-us',
-  ARCHIVED_STORIES = 'story-books/archive',
-  REPORT_IMAGE = 'story-books/{BOOK_ID_HERE}/report-image',
-  PUSH_VOICE_DATA = 'story-books/{BOOK_ID_HERE}/reading-session',
-  ANALYTICS_SELF = 'analytics/users/self',
-  CONNECTION_REQUEST = 'accounts/self/request-connection',
-  GET_CONNECTION_REQUESTS = '/accounts/self/connection-requests/received',
-  ACTION_CONNECTION_REQUEST = '/accounts/self/connection-requests/{REQ_ID_HERE}/actions',
+  CONNECTION_REQUEST =  VERSIONS.v1 +'accounts/self/request-connection',
+  GET_CONNECTION_REQUESTS =  VERSIONS.v1 +'/accounts/self/connection-requests/received',
+  ACTION_CONNECTION_REQUEST =  VERSIONS.v1 +'/accounts/self/connection-requests/{REQ_ID_HERE}/actions',
+  REGISTER_USER = VERSIONS.v1 + 'user/sign-up',
+  LOGIN_USER_WITH_EMAIL = VERSIONS.v2 + 'user/sign-in',
+  CREATE_CHILD_PROFILE = VERSIONS.v1 + 'children',
+  REFRESH_TOKEN = VERSIONS.v1 + 'user/refresh-access-token',
+  AUTH = VERSIONS.v1 + 'user/auth',
+  GENERATE_STORY = VERSIONS.v1 + 'story-books',
+  RATE_STORY = VERSIONS.v1 + 'story-books/rate-book',
+  STORIES = VERSIONS.v1 + 'story-books',
+  PUBLIC_STORIES = VERSIONS.v1 + 'story-books/public/books',
+  LOGOUT = VERSIONS.v1 + 'user/log-out',
+  USER_PROFILE = VERSIONS.v1 + 'user/profile',
+  CHANGE_PASSWORD = VERSIONS.v1 + 'user/password',
+  ADD_BIG_PEOPLE = VERSIONS.v1 + 'big-people',
+  AGREEMENT = VERSIONS.v1 + 'user/profile/consent-form',
+  SEND_OTP_RESET_PASSWORD = VERSIONS.v1 + 'user/forgot-password/send-email',
+  CONFIRM_OTP_RESET_PASSWORD = VERSIONS.v1 + 'user/forgot-password/confirm-otp',
+  RESET_PASSWORD = VERSIONS.v1 + 'user/forgot-password/reset-password',
+  GET_STORY_ILLUSTRATIONS = VERSIONS.v1 + 'story-books/illustrations',
+  MARK_BOOK_AS_READ = VERSIONS.v1 + 'story-books/update-reading-status',
+  MARK_BOOK_AS_ARCHIVED = VERSIONS.v1 + 'story-books/archive-status',
+  MARK_BOOK_AS_PUBLIC = VERSIONS.v1 + 'story-books/public-status',
+  GET_STORY_THUMBNAILS = VERSIONS.v1 + 'story-books/{BOOK_ID_HERE}/thumbnail',
+  POST_CHILD_ANALYTICS = VERSIONS.v1 + 'analytics/children',
+  GET_CHILD_ANALYTICS = VERSIONS.v1 + 'analytics/children',
+  CONTACT_US = VERSIONS.v1 + 'user/contact-us',
+  ARCHIVED_STORIES = VERSIONS.v1 + 'story-books/archive',
+  REPORT_IMAGE = VERSIONS.v1 + 'story-books/{BOOK_ID_HERE}/report-image',
+  PUSH_VOICE_DATA = VERSIONS.v1 + 'story-books/{BOOK_ID_HERE}/reading-session',
+  ANALYTICS_SELF = VERSIONS.v1 + 'analytics/users/self',
+  SEND_OTP_VERIFY_EMAIL = VERSIONS.v1 + 'user/email-verification/send-otp',
+  VERIFY_EMAIL = VERSIONS.v1 + 'user/email-verification/verify-otp',
+  CONSENT_NEWSLETTER = VERSIONS.v1 + 'user/promotional-email-consent',
 }
 
 export enum ENVIRONMENT {
@@ -42,17 +50,16 @@ export enum ENVIRONMENT {
 
 const ENV_VARS = {
   [ENVIRONMENT.LOCAL]: {
-    API_URL:
-      'https://5c9e-2409-40d1-d2-f9a4-bdeb-9fea-4f13-ab4.ngrok-free.app/v1/', // * LOCAL URL
+    API_URL: 'https://a4a5-38-183-79-217.ngrok-free.app', // * LOCAL URL
   },
   [ENVIRONMENT.TESTING]: {
-    API_URL: 'https://tandem-app-backend-beta.azurewebsites.net/v1/', // * TESTING URL
+    API_URL: 'https://tandem-app-backend-beta.azurewebsites.net', // * TESTING URL
   },
   [ENVIRONMENT.DEVELOPMENT]: {
-    API_URL: 'https://tandem-app-backend-beta.azurewebsites.net/v1/', // * DEV URL
+    API_URL: 'https://tandem-app-backend-beta.azurewebsites.net', // * DEV URL
   },
   [ENVIRONMENT.PRODUCTION]: {
-    API_URL: 'https://tandem-app-backend-prod.azurewebsites.net/v1/', // * PROD URL
+    API_URL: 'https://tandem-app-backend-prod.azurewebsites.net', // * PROD URL
   },
 };
 
@@ -63,3 +70,10 @@ export const BASE_URL = ENV_VARS[SELECTED_ENVIRONMENT].API_URL;
 
 export const PEXELS_API_KEY =
   'EX5cnNzfNvWCwgBYmgPwZzLAR7KX1CMnj1bDHJEHljQk2bEA2lh8oPc5';
+
+export const STATUS_CODE = '~## Status ~~~~-> ';
+
+export enum REVENUE_CAT_KEYS {
+  ios = 'appl_DBHwWDItbHyAvCyjOYMTVituxfI',
+  android = 'goog_nbinNelyXaTWLeFgmhgtWwTqGhC',
+}

@@ -57,6 +57,11 @@ export type RootStackParamList = {
   RecieveChildDetail: undefined;
   QrScanner: undefined;
   ConnectionRequests: undefined;
+  VerifyEmail: undefined;
+  TopUpAndSubscription: undefined;
+  TopUp: undefined;
+  Subscription: undefined;
+  ManageSubscription: undefined;
 };
 
 export type RootTabParamList = {

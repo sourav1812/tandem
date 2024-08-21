@@ -20,6 +20,7 @@ export interface PlaceType {
   bgc: string;
   icon?: string;
   svgIcon?: SVGElement;
+  sound?: any;
 }
 
 export interface OnlyImageType {

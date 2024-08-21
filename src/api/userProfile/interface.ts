@@ -15,6 +15,7 @@ export enum SubscriptionPlanStatus {
 }
 
 export interface UserDataResponse {
+  receivePromotionalMails?: boolean;
   firstName: string;
   lastName: string;
   userId: string;
@@ -35,7 +36,9 @@ export interface UserDataResponse {
     usageDetails: {
       totalCredits: number;
       usedCredits: number;
+      addOnCredits: number;
     };
   };
   enableExperimentalFeatures: boolean | undefined;
+  appUserId: string;
 }

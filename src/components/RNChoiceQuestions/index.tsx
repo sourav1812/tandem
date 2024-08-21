@@ -85,6 +85,7 @@ const RNChoiceQuestions = ({
             icon={value?.icon}
             bgcColor={value.bgc}
             Svgimg={value.svgIcon}
+            soundFile={value?.sound}
           />
         );
       })}

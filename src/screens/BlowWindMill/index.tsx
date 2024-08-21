@@ -9,8 +9,7 @@ import Animated, {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
-//@ts-expect-error
-import Loudness from 'react-native-loudness';
+// import Loudness from 'react-native-loudness';
 import Windmill from '@tandem/assets/svg/Windmill';
 import WindmillBlades from '@tandem/assets/svg/WindmillBlades';
 import {Dimensions, Platform, View} from 'react-native';
@@ -94,7 +93,7 @@ const BlowWindMill = () => {
           if (permissionsType) {
             permissions.check(permissionsType).then(result => {
               if (result === 'granted') {
-                Loudness.stop();
+                // Loudness.stop();
               }
             });
           }
@@ -138,17 +137,16 @@ const BlowWindMill = () => {
     checkMicrophonePermission();
 
     interval = setInterval(() => {
-      Loudness.getLoudness((loudness: any) => {
-        if (loudness === 1) {
-          return;
-        }
-        const level = 160 + loudness;
-
-        if (level > mark) {
-          rotateBlade(level * 5);
-          return;
-        }
-      });
+      // Loudness.getLoudness((loudness: any) => {
+      //   if (loudness === 1) {
+      //     return;
+      //   }
+      //   const level = 160 + loudness;
+      //   if (level > mark) {
+      //     rotateBlade(level * 5);
+      //     return;
+      //   }
+      // });
     }, 200);
 
     return () => {
@@ -165,7 +163,7 @@ const BlowWindMill = () => {
       return;
     }
     if (permissionState === 'granted' || permissionState === 'limited') {
-      Loudness.start();
+      // Loudness.start();
       startFlow();
       return;
     }

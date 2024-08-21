@@ -18,11 +18,16 @@ import {inactiveTriggerNotifications} from '../notifee';
 import selfAnalytics from '@tandem/api/selfAnalytics';
 import {UsersAnalyticsEvents} from '@tandem/api/selfAnalytics/interface';
 import wait from '../wait';
-import gotoBookshelf from '../gotoBookshelf';
+import {changeChildAndNavigate} from '../gotoBookshelf';
 import messaging from '@react-native-firebase/messaging';
+import consentNewsletter from '@tandem/api/consentNewsletter';
+import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
+import {initialiseRevenueCat} from '../revenueCat';
+import {Audio} from 'expo-av';
 
 export default async () => {
   // ! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  await Audio.setAudioModeAsync({playsInSilentModeIOS: true});
   const storyBooksThisWeek =
     store.getState().activityIndicator.storyBooksReadThisWeek;
   const pageNumber = store.getState().activityIndicator.pagesReadInBooks;
@@ -49,7 +54,23 @@ export default async () => {
     navigateTo(SCREEN_NAME.SELECT_LANGUAGE, {}, true);
     return;
   } else {
-    await userProfile();
+    const response = await userProfile();
+    if (response) {
+      if (response?.receivePromotionalMails === undefined) {
+        // ! if not subbed to newsletter ever.... ask user
+        setTimeout(() => {
+          store.dispatch(
+            addAlertData({
+              type: 'Message',
+              message: 'Subcribe to Tandem Newsletter?',
+              onSuccess: () => consentNewsletter(true),
+              onDestructive: () => consentNewsletter(false),
+            }),
+          );
+        }, 5000);
+      }
+      await initialiseRevenueCat(response?.appUserId);
+    }
   }
   resetDirectoriesOfCachedData();
   await wait(1500);
@@ -57,8 +78,15 @@ export default async () => {
     if (Platform.OS === 'android') {
       const initialNotification = await messaging().getInitialNotification();
       if (initialNotification) {
-        console.log({initialNotification: initialNotification.data});
         store.dispatch(setIsOpenedFromNotifications(true));
+        console.log({initialNotification: initialNotification.data});
+        const metaData = initialNotification.data?.metaData as string;
+        if (metaData) {
+          const childId = JSON.parse(metaData)?.childId;
+          if (childId) {
+            changeChildAndNavigate(childId);
+          }
+        }
       }
     }
     if (store.getState().activityIndicator.openedByNotifications) {
@@ -67,7 +95,6 @@ export default async () => {
         eventType: UsersAnalyticsEvents.APP_OPENED,
         details: {isNotificationTapped: true},
       });
-      gotoBookshelf();
       return;
     }
     selfAnalytics({

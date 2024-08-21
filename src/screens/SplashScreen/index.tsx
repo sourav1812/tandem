@@ -35,7 +35,7 @@ const SplashScreen = () => {
         {translation('READING_TIME_WITH_CHILD')}
       </RNTextComponent>
       <RNTextComponent style={styles.license}>
-        ©️ Early Ideas Limted 2023
+        ©️ Early Ideas Limited {new Date().getFullYear()}
       </RNTextComponent>
     </RNScreenWrapper>
   );

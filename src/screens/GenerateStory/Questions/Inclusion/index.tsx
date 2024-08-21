@@ -15,6 +15,7 @@ import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {useNavigation} from '@react-navigation/native';
 import removeQuestionData from '@tandem/functions/removeQuestionData';
+import SO_select_story_element from '@tandem/assets/appInteraction/SO_select_story_element.mp3';
 
 export default () => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -98,6 +99,7 @@ export default () => {
               <View
                 style={[styles.buttonView, isTablet && {width: scale(180)}]}>
                 <RNButton
+                  SoundObject={SO_select_story_element}
                   title="✔"
                   customStyle={styles.buttonStyle}
                   onlyBorder={selected !== 1}
@@ -114,6 +116,7 @@ export default () => {
                   textStyle={styles.YesbuttonText}
                 />
                 <RNButton
+                  SoundObject={SO_select_story_element}
                   title="✕"
                   customStyle={styles.buttonStyle}
                   onlyBorder={selected !== 2}

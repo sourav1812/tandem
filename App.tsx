@@ -27,11 +27,22 @@ import {AppState} from 'react-native';
 import {getStoredTokens} from '@tandem/functions/tokens';
 import selfAnalytics from '@tandem/api/selfAnalytics';
 import {UsersAnalyticsEvents} from '@tandem/api/selfAnalytics/interface';
-
+import {Audio} from 'expo-av';
+import SO_notifications from '@tandem/assets/appInteraction/SO_notifications.mp3';
+import {changeChildAndNavigate} from '@tandem/functions/gotoBookshelf';
 const persistor = persistStore(store);
+
+const playSound = async (soundFile: any) => {
+  const {sound} = await Audio.Sound.createAsync(soundFile);
+  await sound.playAsync();
+  setTimeout(async () => {
+    await sound.unloadAsync();
+  }, 1000);
+};
 
 const App: FC = () => {
   const appState = React.useRef(AppState.currentState);
+
   React.useEffect(() => {
     const subscription = AppState.addEventListener('change', nextAppState => {
       if (
@@ -59,8 +70,18 @@ const App: FC = () => {
     const unsub = notifee.onForegroundEvent(({type, detail}) => {
       switch (type) {
         case EventType.PRESS:
-          console.log('ios notificatio set', detail.notification?.data);
+          console.log(
+            'onForegroundEvent on app open',
+            detail.notification?.data,
+          );
           store.dispatch(setIsOpenedFromNotifications(true));
+          const metaData = detail?.notification?.data?.metaData as string;
+          if (metaData) {
+            const childId = JSON.parse(metaData)?.childId;
+            if (childId) {
+              changeChildAndNavigate(childId);
+            }
+          }
           unsub();
           break;
       }
@@ -74,7 +95,6 @@ const App: FC = () => {
     i18n.locale = setupLangauge();
     store.dispatch(clearAlertData());
     const unsubscribe = messaging().onMessage(async message => {
-      console.log({message});
       // const mockData = {
       //   message: {
       //     data: {
@@ -90,6 +110,7 @@ const App: FC = () => {
       //     },
       //   },
       // };
+
       if (message.data?.eventType === 'book.created') {
         const progressRef = store.getState().activityIndicator.progressRef;
         if (progressRef !== null) {
@@ -107,6 +128,7 @@ const App: FC = () => {
           store.getState().createChild.currentChild.childId === metaData.childId
         ) {
           setTimeout(() => {
+            playSound(SO_notifications);
             onDisplayNotification({
               title:
                 (metaData?.childName ? metaData.childName + "'s" : 'Your') +
@@ -150,6 +172,15 @@ const App: FC = () => {
         //   );
         // }, 4100);
         // }
+        return;
+      }
+      if (message.data?.eventType === 'book.failed') {
+        onDisplayNotification({
+          title: message.notification?.title,
+          body: message.notification?.body,
+          data: message.data,
+        });
+        return;
       }
     });
 

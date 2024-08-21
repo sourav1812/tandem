@@ -34,11 +34,13 @@ import {DIRECTION_ARROWS} from '@tandem/constants/enums';
 import WavingHand from '@tandem/assets/svg/WavingHand';
 import BlueButton from '@tandem/assets/svg/BlueButton';
 import {setForceReload} from '@tandem/redux/slices/activityIndicator.slice';
+import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
 
 const Home = () => {
   const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
+  const products = useAppSelector(state => state.revenueCat.products);
   const mode = useAppSelector(state => state.mode.mode);
   const currentChild = useAppSelector(state => state.createChild.currentChild);
   const currentAdult = useAppSelector(state => state.createChild.currentAdult);
@@ -499,7 +501,10 @@ const Home = () => {
                       subHeading={
                         index === 1
                           ? translation('TOTAL_CREDITS') +
-                            `: ${user?.plan?.usageDetails?.totalCredits || 0}`
+                            `: ${
+                              (user?.plan?.usageDetails?.totalCredits || 0) +
+                              (user?.plan?.usageDetails?.addOnCredits || 0)
+                            }`
                           : translation('COMING_SOON')
                       }
                       emoji="🪄"
@@ -509,7 +514,21 @@ const Home = () => {
                           navigateTo(SCREEN_NAME.STORY_LANGAUGE);
                           return;
                         }
-                        if (index === 2) {
+                        if (index === 1) {
+                          if (products.length === 0) {
+                            store.dispatch(
+                              addAlertData({
+                                type: 'Message',
+                                message:
+                                  'Products are not available at the moment',
+                                possibleResolution: 'Please try again later',
+                              }),
+                            );
+                            return;
+                          }
+                          navigateTo(SCREEN_NAME.TOP_UP_AND_SUBSCRIPTION);
+                        }
+                                                if (index === 2) {
                           navigateTo(SCREEN_NAME.CONNECTION_REQUESTS);
                         }
                         if (index === 3) {
@@ -518,7 +537,6 @@ const Home = () => {
                         if (index === 4) {
                           navigateTo(SCREEN_NAME.RECIEVE_CHILD_DETAIL);
                         }
-                        // navigateTo(SCREEN_NAME.MATCHING_PAIRS);
                       }}
                     />
                   ))
