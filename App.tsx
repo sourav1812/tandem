@@ -11,7 +11,6 @@ import statusbar from '@tandem/functions/statusbar';
 import i18n from '@tandem/constants/lang/i18n';
 import setupLangauge from '@tandem/functions/language';
 import {
-  setForceReload,
   setIsOpenedFromNotifications,
   setStoryBookNotification,
 } from '@tandem/redux/slices/activityIndicator.slice';
@@ -19,17 +18,18 @@ import {getChildStats} from '@tandem/api/childAnalytics';
 import pushChildStats from '@tandem/functions/pushChildStats';
 import getStories from '@tandem/api/getStories';
 import notifee, {EventType} from '@notifee/react-native';
-
 import userProfile from '@tandem/api/userProfile';
 import {requestInitialPermission} from '@tandem/functions/permissions';
 import onDisplayNotification from '@tandem/functions/notifee';
-import {AppState} from 'react-native';
+import {AppState, Platform} from 'react-native';
 import {getStoredTokens} from '@tandem/functions/tokens';
 import selfAnalytics from '@tandem/api/selfAnalytics';
 import {UsersAnalyticsEvents} from '@tandem/api/selfAnalytics/interface';
 import {Audio} from 'expo-av';
 import SO_notifications from '@tandem/assets/appInteraction/SO_notifications.mp3';
 import {changeChildAndNavigate} from '@tandem/functions/gotoBookshelf';
+import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
+import navigateTo from '@tandem/navigation/navigate';
 const persistor = persistStore(store);
 
 const playSound = async (soundFile: any) => {
@@ -82,12 +82,37 @@ const App: FC = () => {
               changeChildAndNavigate(childId);
             }
           }
+          const eventType = detail?.notification?.data?.eventType;
+          if (eventType === UsersAnalyticsEvents.BOOK_FAILED) {
+            navigateTo(SCREEN_NAME.ACCOUNT, {}, true);
+          }
           unsub();
           break;
       }
       console.log('unsubbing from first onForegroundEvent');
       unsub();
     });
+    if (Platform.OS === 'android') {
+      messaging().onNotificationOpenedApp(async notificationData => {
+        console.log(
+          'onNotificationOpenedApp is triggering',
+          notificationData?.data,
+        );
+
+        // Remove the notification
+        const metaData = notificationData.data?.metaData as string;
+        if (metaData) {
+          const childId = JSON.parse(metaData)?.childId;
+          if (childId) {
+            changeChildAndNavigate(childId);
+          }
+        }
+        const eventType = notificationData.data?.eventType;
+        if (eventType === UsersAnalyticsEvents.BOOK_FAILED) {
+          navigateTo(SCREEN_NAME.ACCOUNT, {}, true);
+        }
+      });
+    }
   }, []);
 
   useEffect(() => {
@@ -95,53 +120,59 @@ const App: FC = () => {
     i18n.locale = setupLangauge();
     store.dispatch(clearAlertData());
     const unsubscribe = messaging().onMessage(async message => {
-      // const mockData = {
-      //   message: {
-      //     data: {
-      //       eventType: 'book.created',
-      //       metaData:
-      //         '{"childId":"66751dfc9ce2f59cd484a2dd","childName":"Child 1"}',
-      //     },
-      //     from: '395516850709',
-      //     messageId: '1719295800950436',
-      //     notification: {
-      //       body: 'Please check you are happy with the pictures before reading with your child.',
-      //       title: 'Your story is ready!',
-      //     },
-      //   },
-      // };
+      //! const mockData = {
+      //!   message: {
+      //!     data: {
+      //!       eventType: 'book.created',
+      //!       metaData:
+      //!         '{"childId":"66751dfc9ce2f59cd484a2dd","childName":"Child 1"}',
+      //!     },
+      //!     from: '395516850709',
+      //!     messageId: '1719295800950436',
+      //!     notification: {
+      //!       body: 'Please check you are happy with the pictures before reading with your child.',
+      //!       title: 'Your story is ready!',
+      //!     },
+      //!   },
+      //! };
 
-      if (message.data?.eventType === 'book.created') {
-        const progressRef = store.getState().activityIndicator.progressRef;
-        if (progressRef !== null) {
-          progressRef.animateProgress(100);
-        }
+      if (message.data?.eventType === UsersAnalyticsEvents.BOOK_CREATED) {
         const metaData = JSON.parse(message.data.metaData as string);
+        if (
+          store.getState().createChild.currentChild.childId === metaData.childId
+        ) {
+          try {
+            const progressRef = store.getState().activityIndicator.progressRef;
+            if (progressRef !== null) {
+              progressRef.animateProgress(100);
+            }
+          } catch (error) {
+            console.log('error in animation of progress bar to 100%', error);
+          }
+        }
         await getStories(1, metaData.childId);
         await pushChildStats();
         await getChildStats();
         userProfile();
-        store.dispatch(setForceReload(false)); // forcing a change to trigger useEffect
-        store.dispatch(setForceReload(true));
-
-        if (
-          store.getState().createChild.currentChild.childId === metaData.childId
-        ) {
-          setTimeout(() => {
-            playSound(SO_notifications);
-            onDisplayNotification({
-              title:
-                (metaData?.childName ? metaData.childName + "'s" : 'Your') +
-                ' story is ready!',
-              body: message.notification?.body,
-              data: message.data,
-            });
-            store.dispatch(setStoryBookNotification(true));
+        setTimeout(() => {
+          playSound(SO_notifications);
+          onDisplayNotification({
+            title:
+              (metaData?.childName ? metaData.childName + "'s" : 'Your') +
+              ' story is ready!',
+            body: message.notification?.body,
+            data: message.data,
+          });
+          if (
+            store.getState().createChild.currentChild.childId ===
+            metaData.childId
+          ) {
+            store.dispatch(setStoryBookNotification(true)); // only for matching pairs screen
             setTimeout(() => {
               store.dispatch(setStoryBookNotification(false));
             }, 1000);
-          }, 1000);
-        }
+          }
+        }, 1000);
 
         // const notificationScreenPermissions = store.getState().permissions;
         // const isEnergyGenerated =
@@ -173,8 +204,7 @@ const App: FC = () => {
         // }, 4100);
         // }
         return;
-      }
-      if (message.data?.eventType === 'book.failed') {
+      } else if (message.data?.eventType === UsersAnalyticsEvents.BOOK_FAILED) {
         onDisplayNotification({
           title: message.notification?.title,
           body: message.notification?.body,

@@ -33,7 +33,6 @@ import {clearStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration
 import {DIRECTION_ARROWS} from '@tandem/constants/enums';
 import WavingHand from '@tandem/assets/svg/WavingHand';
 import BlueButton from '@tandem/assets/svg/BlueButton';
-import {setForceReload} from '@tandem/redux/slices/activityIndicator.slice';
 import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
 
 const Home = () => {
@@ -614,7 +613,6 @@ const ChangeChild = ({
       <Pressable
         onPress={() => {
           dispatch(saveCurrentChild(userProfile));
-          dispatch(setForceReload(true));
           toggleDrawer({changeUser: !changeUser});
         }}
         style={{alignItems: 'center'}}>
