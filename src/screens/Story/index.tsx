@@ -31,7 +31,6 @@ import {
 } from '@tandem/redux/slices/storyLevel.slice';
 import themeColor from '@tandem/theme/themeColor';
 import markBookAsArchived from '@tandem/api/markBookAsArchived';
-import {setForceReload} from '@tandem/redux/slices/activityIndicator.slice';
 import analytics from '@react-native-firebase/analytics';
 import markBookAsPublic from '@tandem/api/markBookAsPublic';
 import {updatePage} from '@tandem/redux/slices/bookShelf.slice';
@@ -102,6 +101,7 @@ const Story = () => {
     if (enableExperimentalFeatures) {
       checkPermission();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [permissionsType, toggle]);
 
   React.useEffect(() => {
@@ -167,7 +167,6 @@ const Story = () => {
                 try {
                   setArchive(!archive);
                   await markBookAsArchived(routeData.book._id, !archive);
-                  store.dispatch(setForceReload(true));
                 } catch (error) {
                   setArchive(archive);
                 }
@@ -194,7 +193,6 @@ const Story = () => {
                   try {
                     setPublicBook(!publicBook);
                     await markBookAsPublic(routeData.book._id, !publicBook);
-                    store.dispatch(setForceReload(true));
                   } catch (error) {
                     setPublicBook(publicBook);
                   }

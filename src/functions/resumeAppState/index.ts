@@ -24,6 +24,7 @@ import consentNewsletter from '@tandem/api/consentNewsletter';
 import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
 import {initialiseRevenueCat} from '../revenueCat';
 import {Audio} from 'expo-av';
+import notifee from '@notifee/react-native';
 
 export default async () => {
   // ! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -77,15 +78,22 @@ export default async () => {
   if (store.getState().userData.userDataObject.termsAndConditions) {
     if (Platform.OS === 'android') {
       const initialNotification = await messaging().getInitialNotification();
-      if (initialNotification) {
+      const initialNotification2 = await notifee.getInitialNotification();
+      const initialNotificationToBeUsed =
+        initialNotification2?.notification || initialNotification;
+      if (initialNotificationToBeUsed) {
         store.dispatch(setIsOpenedFromNotifications(true));
-        console.log({initialNotification: initialNotification.data});
-        const metaData = initialNotification.data?.metaData as string;
+        console.log({initialNotification: initialNotificationToBeUsed.data});
+        const metaData = initialNotificationToBeUsed.data?.metaData as string;
         if (metaData) {
           const childId = JSON.parse(metaData)?.childId;
           if (childId) {
             changeChildAndNavigate(childId);
           }
+        }
+        const eventType = initialNotificationToBeUsed.data?.eventType;
+        if (eventType === 'book.failed') {
+          navigateTo(SCREEN_NAME.ACCOUNT, {}, true);
         }
       }
     }
