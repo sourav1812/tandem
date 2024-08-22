@@ -1,4 +1,9 @@
 {
+  "SELECT_A_CHILD": "Selecione uma criança",
+  "RECEIVED_CHILD": "Criança recebida",
+  "CONNECTION_REQUESTS": "Solicitações de conexão",
+  "SHARE_CHILD": "Compartilhar criança",
+  "RECEIVE_CHILD": "Receber criança",
   "THE_END": "O fim",
   "GREAT_WORK_NOW": "Bom trabalho. Agora, por que você não...",
   "TOP_UP_AND_SUBSCRIPTION": "Recarregar ou Assinar",

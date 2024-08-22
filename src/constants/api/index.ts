@@ -4,9 +4,11 @@ export enum VERSIONS {
 }
 
 export enum API {
-  CONNECTION_REQUEST =  VERSIONS.v1 +'accounts/self/request-connection',
-  GET_CONNECTION_REQUESTS =  VERSIONS.v1 +'/accounts/self/connection-requests/received',
-  ACTION_CONNECTION_REQUEST =  VERSIONS.v1 +'/accounts/self/connection-requests/{REQ_ID_HERE}/actions',
+  CONNECTION_REQUEST = VERSIONS.v1 + 'accounts/self/request-connection',
+  GET_CONNECTION_REQUESTS = VERSIONS.v1 +
+    '/accounts/self/connection-requests/received',
+  ACTION_CONNECTION_REQUEST = VERSIONS.v1 +
+    '/accounts/self/connection-requests/{REQ_ID_HERE}/actions',
   REGISTER_USER = VERSIONS.v1 + 'user/sign-up',
   LOGIN_USER_WITH_EMAIL = VERSIONS.v2 + 'user/sign-in',
   CREATE_CHILD_PROFILE = VERSIONS.v1 + 'children',
@@ -50,7 +52,7 @@ export enum ENVIRONMENT {
 
 const ENV_VARS = {
   [ENVIRONMENT.LOCAL]: {
-    API_URL: 'https://a4a5-38-183-79-217.ngrok-free.app', // * LOCAL URL
+    API_URL: 'https://d0a6-38-183-10-208.ngrok-free.app', // * LOCAL URL
   },
   [ENVIRONMENT.TESTING]: {
     API_URL: 'https://tandem-app-backend-beta.azurewebsites.net', // * TESTING URL

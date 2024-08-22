@@ -38,6 +38,7 @@ import TopUpAndSubscribe from '@tandem/screens/TopUpAndSubscribe';
 import TopUp from '@tandem/screens/TopUp';
 import Subscription from '@tandem/screens/Subscription';
 import ManageSubscription from '@tandem/screens/ManageSubscription';
+import LittlePeople from '@tandem/screens/LittlePeople';
 
 const AppNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -186,6 +187,10 @@ const AppNavigator = () => {
             options={{gestureEnabled: false}}
             component={Account}
             name={SCREEN_NAME.ACCOUNT}
+          />
+          <Stack.Screen
+            component={LittlePeople}
+            name={SCREEN_NAME.LITTLE_PEOPLE}
           />
           <Stack.Screen
             getComponent={() => require('@tandem/screens/Story').default}

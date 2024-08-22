@@ -58,5 +58,6 @@ export enum SCREEN_NAME {
   TOP_UP_AND_SUBSCRIPTION = 'TopUpAndSubscription',
   TOP_UP = 'TopUp',
   SUBSCRIPTION = 'Subscription',
-  MANAGE_SUBSCRIPTION = 'ManageSubscription'
+  MANAGE_SUBSCRIPTION = 'ManageSubscription',
+  LITTLE_PEOPLE = 'LittlePeople',
 }

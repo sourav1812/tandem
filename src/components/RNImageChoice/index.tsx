@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {Pressable, ScrollView, Image, View} from 'react-native';
+import {Pressable, ScrollView, View} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
 import {MultipleChoiceProps} from './interface';

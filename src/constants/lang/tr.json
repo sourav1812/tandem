@@ -1,4 +1,9 @@
 {
+  "CONNECTION_REQUESTS": "Bağlantı İstekleri",
+  "SELECT_A_CHILD": "Bir çocuk seçin",
+  "SHARE_CHILD": "Çocuğu paylaş",
+  "RECEIVED_CHILD": "Çocuk alındı",
+  "RECEIVE_CHILD": "Çocuğu al",
   "THE_END": "Son",
   "GREAT_WORK_NOW": "Harika iş. Şimdi neden sen...",
   "TOP_UP_AND_SUBSCRIPTION": "Yükle veya Abone Ol",

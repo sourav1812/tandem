@@ -4,17 +4,22 @@ import {verticalScale} from 'react-native-size-matters';
 import themeColor from '@tandem/theme/themeColor';
 const styles = StyleSheet.create({
   container: {
-    paddingTop: verticalScale(40),
+    // paddingTop: verticalScale(40),
+    paddingHorizontal: scale(21),
   },
   modalHeading: {
     textAlign: 'center',
     marginBottom: verticalScale(10),
   },
-  header: {
+  heading: {
+    marginTop: verticalScale(44),
     alignItems: 'center',
   },
+  text: {
+    fontSize: verticalScale(18),
+  },
   listContentContainer: {
-    paddingHorizontal: scale(20),
+    paddingBottom: scale(30),
     marginTop: verticalScale(15),
   },
   modalContainer: {
@@ -41,6 +46,15 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: scale(250),
     marginTop: verticalScale(10),
+  },
+  footerButton: {
+    position: 'absolute',
+    bottom: '2%',
+    alignSelf: 'center',
+    width: '100%',
+  },
+  button: {
+    width: '100%',
   },
 });
 export default styles;

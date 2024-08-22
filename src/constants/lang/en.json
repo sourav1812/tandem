@@ -1,5 +1,8 @@
 {
   "THE_END": "The End",
+  "SELECT_A_CHILD": "Select a child",
+  "RECEIVED_CHILD": "Received Child",
+  "RECEIVE_CHILD": "Receive Child",
   "GREAT_WORK_NOW": "Great work. Now why don't you...",
   "TOP_UP_AND_SUBSCRIPTION": "Top Up Or Subscribe",
   "TOP_UP": "Top up - from",
@@ -139,6 +142,7 @@
   "BIG_PEOPLE": "Big People",
   "LITTLE_PEOPLE": "Little People",
   "PROFILE_SETTINGS": "Profile Settings",
+  "CONNECTION_REQUESTS": "Connection Requests",
   "CHANGE_PASSWORD": "Change Password",
   "ABOUT_APP": "About Tandem",
   "TERMS_OF_USE": "Terms of Use",

@@ -62,6 +62,7 @@ export type RootStackParamList = {
   TopUp: undefined;
   Subscription: undefined;
   ManageSubscription: undefined;
+  LittlePeople: undefined;
 };
 
 export type RootTabParamList = {

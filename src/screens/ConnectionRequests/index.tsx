@@ -16,11 +16,17 @@ import RNCheckboxWithText from '@tandem/components/RNCheckboxWithText';
 import RNButton from '@tandem/components/RNButton';
 import {scale} from 'react-native-size-matters';
 import actionOnReq from '@tandem/api/connectionReqAction';
+import {translation} from '@tandem/utils/methods';
+import navigateTo from '@tandem/navigation/navigate';
+import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 
 const ConnectionRequests = () => {
+  const isTablet = useAppSelector(state => state.deviceType.isTablet);
+
   const [connectionRequests, setConnectionRequests] = useState<
     ConnectionRequestsObj[]
   >([]);
+
   const permissionsArr = [
     {permission: 'Read Story Book', itemToset: 'readStoryBooks'},
     {permission: 'Create Story Book', itemToset: 'createStoryBooks'},
@@ -127,29 +133,32 @@ const ConnectionRequests = () => {
     <RNScreenWrapper style={styles.container}>
       <RNLogoHeader
         textHeading
-        heading="Connection Requests"
-        customStyle={styles.header}
+        heading={translation('CONNECTION_REQUESTS')}
+        customStyle={styles.heading}
+        titleStyle={styles.text}
       />
-      <FlatList
-        data={connectionRequests}
-        renderItem={({item}) => {
-          return (
-            <ConnectionRequest
-              item={item}
-              permissionsModalData={permissionsModalData}
-              setPermissionModalData={setPermissionModalData}
-            />
-          );
-        }}
-        onEndReached={() => {
-          if (page > 1) {
-            getRequests();
-          }
-        }}
-        contentContainerStyle={styles.listContentContainer}
-        ListEmptyComponent={listEmptyComponent}
-        ListFooterComponent={listFooterComponent}
-      />
+      <View style={{height: '72%', paddingBottom: 10}}>
+        <FlatList
+          data={connectionRequests}
+          renderItem={({item}) => {
+            return (
+              <ConnectionRequest
+                item={item}
+                permissionsModalData={permissionsModalData}
+                setPermissionModalData={setPermissionModalData}
+              />
+            );
+          }}
+          onEndReached={() => {
+            if (page > 1) {
+              getRequests();
+            }
+          }}
+          contentContainerStyle={styles.listContentContainer}
+          ListEmptyComponent={listEmptyComponent}
+          ListFooterComponent={listFooterComponent}
+        />
+      </View>
       <RNModal
         visible={permissionsModalData.visible}
         renderModal={() =>
@@ -246,6 +255,25 @@ const ConnectionRequests = () => {
           </View>
         </View>
       </RNModal>
+      <View
+        style={[
+          styles.footerButton,
+          isTablet && {paddingHorizontal: scale(65)},
+        ]}>
+        <RNButton
+          customStyle={[styles.button]}
+          title={translation('SHARE_CHILD')}
+          onClick={() => navigateTo(SCREEN_NAME.SHARE_CHILD)}
+          isDisabled={false}
+        />
+        <RNButton
+          customStyle={{
+            marginTop: isTablet ? 0 : verticalScale(10),
+          }}
+          title={translation('RECEIVE_CHILD')}
+          onClick={() => navigateTo(SCREEN_NAME.RECIEVE_CHILD_DETAIL)}
+        />
+      </View>
     </RNScreenWrapper>
   );
 };

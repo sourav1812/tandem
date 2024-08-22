@@ -33,7 +33,6 @@ import {clearStoryGenerationResponse} from '@tandem/redux/slices/storyGeneration
 import {DIRECTION_ARROWS} from '@tandem/constants/enums';
 import WavingHand from '@tandem/assets/svg/WavingHand';
 import BlueButton from '@tandem/assets/svg/BlueButton';
-import {setForceReload} from '@tandem/redux/slices/activityIndicator.slice';
 import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
 
 const Home = () => {
@@ -528,7 +527,7 @@ const Home = () => {
                           }
                           navigateTo(SCREEN_NAME.TOP_UP_AND_SUBSCRIPTION);
                         }
-                                                if (index === 2) {
+                        if (index === 2) {
                           navigateTo(SCREEN_NAME.CONNECTION_REQUESTS);
                         }
                         if (index === 3) {
@@ -624,7 +623,6 @@ const ChangeChild = ({
       <Pressable
         onPress={() => {
           dispatch(saveCurrentChild(userProfile));
-          dispatch(setForceReload(true));
           toggleDrawer({changeUser: !changeUser});
         }}
         style={{alignItems: 'center'}}>

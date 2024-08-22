@@ -8,19 +8,12 @@ export const styles = StyleSheet.create({
     backgroundColor: themeColor.white,
     paddingHorizontal: scale(21),
   },
-  button: {
-    marginTop: verticalScale(40),
-    alignSelf: 'flex-end',
-  },
-  customTab: {
-    flexDirection: 'row',
+  heading: {
+    marginTop: verticalScale(44),
     alignItems: 'center',
-    marginTop: verticalScale(5),
-    height: verticalScale(40),
   },
-  tab: {
-    flex: 1,
-    borderRadius: 0,
+  text: {
+    fontSize: verticalScale(18),
   },
   profile: {
     height: verticalScale(84),
@@ -32,27 +25,9 @@ export const styles = StyleSheet.create({
     borderColor: '#D3D3D3',
   },
   name: {
-    fontSize: verticalScale(14),
+    fontSize: verticalScale(17),
     textAlign: 'center',
     marginTop: 8,
-  },
-  menu: {
-    marginTop: verticalScale(13),
-  },
-  firstTab: {
-    flex: 1,
-  },
-  bigpeople: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: themeColor.white,
-  },
-  addButton: {
-    marginTop: verticalScale(18),
-    height: verticalScale(85),
-    width: verticalScale(85),
   },
   littlePeople: {
     flex: 1,
@@ -61,9 +36,18 @@ export const styles = StyleSheet.create({
   scrollview: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
   },
   addText: {
     marginTop: verticalScale(10),
+  },
+  footerButton: {
+    position: 'absolute',
+    bottom: '2%',
+    alignSelf: 'center',
+    width: '100%',
+  },
+  button: {
+    width: '100%',
   },
 });

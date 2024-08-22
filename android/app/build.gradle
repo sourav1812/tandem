@@ -100,9 +100,9 @@ android {
         applicationId "playtandem.com"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        missingDimensionStrategy 'react-native-camera', 'general'
         versionCode 18
         versionName "1.9.0"
+        missingDimensionStrategy 'react-native-camera', 'general'
     }
 
     splits {

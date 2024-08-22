@@ -12,7 +12,7 @@ import RNTextComponent from '@tandem/components/RNTextComponent';
 import {Props} from './interface';
 import {translation} from '@tandem/utils/methods';
 
-const TopUpAndSubscribeHeader = ({children, title}: Props) => {
+const TopUpAndSubscribeHeader = ({children, title, customeStyle}: Props) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
 
   const portrait = useAppSelector(
@@ -41,6 +41,7 @@ const TopUpAndSubscribeHeader = ({children, title}: Props) => {
           textAlign: 'center',
           fontSize: verticalScale(24),
           marginVertical: 40,
+          ...customeStyle,
         }}>
         {translation(title)}
       </RNTextComponent>
