@@ -120,8 +120,11 @@ const People = ({}: PeopleScreenProps) => {
               onPress={() =>
                 navigateTo(SCREEN_NAME.EDIT_CHILD_PROFILE, {editAdult: true})
               }>
-              <Image
-                source={{uri: currentAdultAvatar || currentAdult.avatar}}
+              <FastImage
+                source={{
+                  uri: currentAdultAvatar || currentAdult.avatar,
+                  priority: FastImage.priority.high,
+                }}
                 style={[
                   styles.profile,
                   isTablet && {
@@ -182,9 +185,10 @@ const People = ({}: PeopleScreenProps) => {
                           childId: child.childId,
                         });
                       }}>
-                      <Image
+                      <FastImage
                         source={{
                           uri: childcacheImage || child.avatar,
+                          priority: FastImage.priority.high,
                         }}
                         style={[
                           styles.profile,

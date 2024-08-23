@@ -1,4 +1,4 @@
-import {Image, ImageStyle, StyleProp} from 'react-native';
+import {ImageStyle, StyleProp} from 'react-native';
 import React, {useEffect} from 'react';
 import {styles} from './styles';
 import RNTextComponent from '@tandem/components/RNTextComponent';
@@ -6,6 +6,7 @@ import {KidsProfileProps} from './interface';
 import {useSharedValue, withTiming} from 'react-native-reanimated';
 import Animated from 'react-native-reanimated';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
+import FastImage from 'react-native-fast-image';
 
 const RNKidsProfile = ({
   style,
@@ -31,8 +32,12 @@ const RNKidsProfile = ({
 
   return (
     <Animated.View style={[styles.container, {opacity: opacity}]}>
-      <Image
-        source={{uri: filePath || avatar}}
+      <FastImage
+        onProgress={() => console.log('FastImage Loading...')}
+        source={{
+          uri: filePath || avatar,
+          priority: FastImage.priority.high,
+        }}
         style={[styles.profile, style]}
       />
       <RNTextComponent caps style={styles.name} isMedium>
