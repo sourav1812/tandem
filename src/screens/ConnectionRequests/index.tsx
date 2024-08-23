@@ -59,13 +59,13 @@ const ConnectionRequests = () => {
           permissions: permissionsModalData.permissions,
         },
       });
-      if (resp.message === 'Connection request status updated.') {
-        setPermissionModalData(prev => ({
-          ...prev,
-          isRequestedAccepted: true,
-          visible: false,
-        }));
-      }
+      // if (resp.message === 'Connection request status updated.') {
+      //   setPermissionModalData(prev => ({
+      //     ...prev,
+      //     isRequestedAccepted: true,
+      //     visible: false,
+      //   }));
+      // }
     } catch (error) {}
   };
   const getRequests = async () => {

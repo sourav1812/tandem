@@ -12,6 +12,7 @@ import {useAppDispatch} from '@tandem/hooks/navigationHooks';
 import {post} from '@tandem/api';
 import {API} from '@tandem/constants/api';
 import {getStoredTokens} from '@tandem/functions/tokens';
+import {Invitation} from '@tandem/api/connectionRequests';
 
 const QRScanner = () => {
   const [qrval, setQrVal] = useState({
@@ -26,15 +27,10 @@ const QRScanner = () => {
           type: 'Alert',
           message: dynamicTranslation('CONNECT_CONFIRMATION', qrval),
           onSuccess: async () => {
-            try {
-              const response = await post({
-                path: API.CONNECTION_REQUEST,
-                data: {inviteCode: qrval.inviteCode},
-              });
-              if (response.message) {
-                setMessage(response.message);
-              }
-            } catch (error) {}
+            const response: any = await Invitation(qrval.inviteCode);
+            if (response.message) {
+              setMessage(response.message);
+            }
           },
           successText: translation('YES'),
           destructiveText: translation('NO'),

@@ -530,12 +530,12 @@ const Home = () => {
                         // if (index === 2) {
                         //   navigateTo(SCREEN_NAME.CONNECTION_REQUESTS);
                         // }
-                        if (index === 3) {
-                          navigateTo(SCREEN_NAME.SHARE_CHILD);
-                        }
-                        if (index === 4) {
-                          navigateTo(SCREEN_NAME.RECIEVE_CHILD_DETAIL);
-                        }
+                        // if (index === 3) {
+                        //   navigateTo(SCREEN_NAME.SHARE_CHILD);
+                        // }
+                        // if (index === 4) {
+                        //   navigateTo(SCREEN_NAME.RECIEVE_CHILD_DETAIL);
+                        // }
                       }}
                     />
                   ))

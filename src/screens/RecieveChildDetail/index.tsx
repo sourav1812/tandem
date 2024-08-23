@@ -20,6 +20,7 @@ import {dynamicTranslation, translation} from '@tandem/utils/methods';
 import Toast from '@tandem/components/Toast';
 import {post} from '@tandem/api';
 import {API} from '@tandem/constants/api';
+import {Invitation} from '@tandem/api/connectionRequests';
 const RecieveChildDetail = () => {
   const portrait = useAppSelector(
     (state1: RootState) => state1.orientation.isPortrait,
@@ -40,15 +41,11 @@ const RecieveChildDetail = () => {
           type: 'Alert',
           message: dynamicTranslation('CONNECT_CONFIRMATION', qrVal),
           onSuccess: async () => {
-            try {
-              const response = await post({
-                path: API.CONNECTION_REQUEST,
-                data: {inviteCode: qrVal.inviteCode},
-              });
-              if (response.message) {
-                setMessage(response.message);
-              }
-            } catch (error) {}
+            const response: any = await Invitation(qrVal.inviteCode);
+
+            if (response.message) {
+              setMessage(response.message);
+            }
           },
           successText: translation('YES'),
           destructiveText: translation('NO'),
