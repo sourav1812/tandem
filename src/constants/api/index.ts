@@ -55,7 +55,7 @@ const ENV_VARS = {
     API_URL: 'https://08b4-38-183-10-208.ngrok-free.app', // * LOCAL URL
   },
   [ENVIRONMENT.TESTING]: {
-    API_URL: 'https://08b4-38-183-10-208.ngrok-free.app', // * TESTING URL
+    API_URL: 'https://tandem-app-backend-beta.azurewebsites.net', // * TESTING URL
   },
   [ENVIRONMENT.DEVELOPMENT]: {
     API_URL: 'https://tandem-app-backend-beta.azurewebsites.net', // * DEV URL
@@ -66,7 +66,7 @@ const ENV_VARS = {
 };
 
 // ! Select ENV from here
-export const SELECTED_ENVIRONMENT = ENVIRONMENT.TESTING;
+export const SELECTED_ENVIRONMENT = ENVIRONMENT.LOCAL;
 // ! URLs
 export const BASE_URL = ENV_VARS[SELECTED_ENVIRONMENT].API_URL;
 
