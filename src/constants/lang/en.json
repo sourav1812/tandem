@@ -1,5 +1,13 @@
 {
   "THE_END": "The End",
+  "SCAN_QR_CODE": "Scan The QR Code",
+  "ENTER_INVITATION_CODE_OR_SCAN": "Please Enter The Invitation Code or Scan",
+  "SHARE_VIA": "Share via",
+  "INVITATION_MESSAGE": "Hello! You have an invitation to connect with {name}. Use this invitation code: {inviteCode}.",
+  "QR_CODE": "QR Code",
+  "INVITE": "Invite",
+  "CONNECT_CONFIRMATION": "Are you sure you want to connect with {name} using invitation code {inviteCode}?",
+  "NO_CONNECTION_REQUESTS_FOUND": "No Connection Requests Found",
   "SELECT_A_CHILD": "Select a child",
   "RECEIVED_CHILD": "Received Child",
   "RECEIVE_CHILD": "Receive Child",

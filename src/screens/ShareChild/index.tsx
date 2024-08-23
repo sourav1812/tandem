@@ -12,6 +12,7 @@ import ShareIcon from '@tandem/assets/svg/Share';
 import {styles} from './styles';
 import Clipboard from '@react-native-clipboard/clipboard';
 import {captureScreen} from 'react-native-view-shot';
+import {dynamicTranslation, translation} from '@tandem/utils/methods';
 const ShareChild = () => {
   const portrait = useAppSelector(
     (state1: RootState) => state1.orientation.isPortrait,
@@ -32,10 +33,10 @@ const ShareChild = () => {
 
   const shareImageAndText = async (uri: string) => {
     const shareOptions = {
-      title: 'Share via',
-      message: `Hello! You have an invitation to connect with ${currentChild.name}. Use this invitation code: ${currentChild.inviteCode}`,
+      title: translation('SHARE_VIA'),
+      message: dynamicTranslation('INVITATION_MESSAGE', currentChild),
       url: uri,
-      subject: 'QR Code',
+      subject: translation('QR_CODE'),
     };
 
     try {
@@ -62,7 +63,7 @@ const ShareChild = () => {
           style={styles.logo}
         />
         <RNTextComponent style={styles.heading} isMedium>
-          Scan The Qr Code
+          {translation('SCAN_QR_CODE')}
         </RNTextComponent>
         <View style={styles.qrContainer}>
           <QRCode value={JSON.stringify(qrContent)} size={250} />

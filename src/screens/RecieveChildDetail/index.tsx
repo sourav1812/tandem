@@ -16,7 +16,7 @@ import ImageCropPicker from 'react-native-image-crop-picker';
 import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
 import RNQRGenerator from 'rn-qr-generator';
 import {useDispatch} from 'react-redux';
-import {translation} from '@tandem/utils/methods';
+import {dynamicTranslation, translation} from '@tandem/utils/methods';
 import Toast from '@tandem/components/Toast';
 import {post} from '@tandem/api';
 import {API} from '@tandem/constants/api';
@@ -38,7 +38,7 @@ const RecieveChildDetail = () => {
       dispatch(
         addAlertData({
           type: 'Alert',
-          message: `Are you Sure you want to connect with ${qrVal.name} using invitation code ${qrVal.inviteCode}`,
+          message: dynamicTranslation('CONNECT_CONFIRMATION', qrVal),
           onSuccess: async () => {
             try {
               const response = await post({
@@ -97,6 +97,18 @@ const RecieveChildDetail = () => {
       });
   };
 
+  const sendInvitation = async () => {
+    try {
+      const response = await post({
+        path: API.CONNECTION_REQUEST,
+        data: {inviteCode: val.value},
+      });
+      if (response.message) {
+        setMessage(response.message);
+      }
+    } catch (error) {}
+  };
+
   return (
     <>
       <RNScreenWrapper>
@@ -112,7 +124,7 @@ const RecieveChildDetail = () => {
           />
         </View>
         <RNTextComponent style={styles.heading} isMedium>
-          Please Enter The Invitaion code or Scan
+          {translation('ENTER_INVITATION_CODE_OR_SCAN')}
         </RNTextComponent>
         <RNTextInputWithLabel
           inputViewStyle={{borderColor: themeColor.themeBlue}}
@@ -126,8 +138,8 @@ const RecieveChildDetail = () => {
         />
         {val.value && (
           <RNButton
-            onClick={() => {}}
-            title="Invite"
+            onClick={sendInvitation}
+            title={translation('INVITE')}
             customStyle={{
               width: '80%',
               alignSelf: 'center',
@@ -154,7 +166,7 @@ const RecieveChildDetail = () => {
               }),
             );
           }}
-          title="Scan Qr"
+          title={translation('QR_CODE')}
           customStyle={{width: '80%', alignSelf: 'center'}}
         />
         <Toast message={message} setMessage={setMessage} />

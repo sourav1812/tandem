@@ -1,5 +1,13 @@
 {
   "CONNECTION_REQUESTS": "Demandes de connexion",
+  "SCAN_QR_CODE": "Scannez le code QR",
+  "ENTER_INVITATION_CODE_OR_SCAN": "Veuillez entrer le code d'invitation ou scanner",
+  "SHARE_VIA": "Partager via",
+  "INVITATION_MESSAGE": "Bonjour! Vous avez une invitation à vous connecter avec {name}. Utilisez ce code d'invitation: {inviteCode}.",
+  "QR_CODE": "Code QR",
+  "INVITE": "Inviter",
+  "CONNECT_CONFIRMATION": "Êtes-vous sûr de vouloir vous connecter avec {name} en utilisant le code d'invitation {inviteCode} ?",
+  "NO_CONNECTION_REQUESTS_FOUND": "Aucune demande de connexion trouvée",
   "SELECT_A_CHILD": "Sélectionner un enfant",
   "RECEIVED_CHILD": "Enfant reçu",
   "SHARE_CHILD": "Partager un enfant",

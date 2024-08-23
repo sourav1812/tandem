@@ -52,7 +52,7 @@ const People = ({}: PeopleScreenProps) => {
   );
 
   useEffect(() => {
-    setConnectedChild(children.filter(child => child.connected == true));
+    setConnectedChild(children.filter(child => child.connected));
   }, []);
 
   const avatars = useAppSelector(stateL => stateL.cache.avatars);

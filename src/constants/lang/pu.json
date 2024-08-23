@@ -1,5 +1,13 @@
 {
   "CONNECTION_REQUESTS": "ਕਨੈਕਸ਼ਨ ਦੀਆਂ ਬੇਨਤੀਆਂ",
+  "SCAN_QR_CODE": "QR ਕੋਡ ਸਕੈਨ ਕਰੋ",
+  "ENTER_INVITATION_CODE_OR_SCAN": "ਕਿਰਪਾ ਕਰਕੇ ਸੱਦਾ ਕੋਡ ਦਰਜ ਕਰੋ ਜਾਂ ਸਕੈਨ ਕਰੋ",
+  "SHARE_VIA": "ਵੱਸੂਲ ਕਰੋ",
+  "INVITATION_MESSAGE": "ਹੈਲੋ! ਤੁਹਾਨੂੰ {name} ਨਾਲ ਜੁੜਨ ਲਈ ਸੱਦਾ ਮਿਲਿਆ ਹੈ। ਇਸ ਸੱਦਾ ਕੋਡ ਦੀ ਵਰਤੋਂ ਕਰੋ: {inviteCode}.",
+  "QR_CODE": "QR ਕੋਡ",
+  "INVITE": "ਨਿਵੋਤਣਾ",
+  "CONNECT_CONFIRMATION": "ਕੀ ਤੁਸੀਂ ਯਕੀਨੀ ਤੌਰ 'ਤੇ {name} ਨਾਲ ਜੁੜਨਾ ਚਾਹੁੰਦੇ ਹੋ {inviteCode} ਸੱਦਾ ਕੋਡ ਦੀ ਵਰਤੋਂ ਕਰਕੇ?",
+  "NO_CONNECTION_REQUESTS_FOUND": "ਕੋਈ ਕਨੈਕਸ਼ਨ ਬੇਨਤ ਨਹੀਂ ਮਿਲੀ",
   "SELECT_A_CHILD": "ਇੱਕ ਬੱਚਾ ਚੁਣੋ",
   "SHARE_CHILD": "ਬੱਚਾ ਸਾਂਝਾ ਕਰੋ",
   "RECEIVED_CHILD": "ਮਿਲਿਆ ਹੋਇਆ ਬੱਚਾ",

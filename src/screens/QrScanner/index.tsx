@@ -7,7 +7,7 @@ import RNButton from '@tandem/components/RNButton';
 import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
-import {translation} from '@tandem/utils/methods';
+import {dynamicTranslation, translation} from '@tandem/utils/methods';
 import {useAppDispatch} from '@tandem/hooks/navigationHooks';
 import {post} from '@tandem/api';
 import {API} from '@tandem/constants/api';
@@ -24,7 +24,7 @@ const QRScanner = () => {
       dispatch(
         addAlertData({
           type: 'Alert',
-          message: `Are you Sure you want to connect with ${qrval.name} using invitation code ${qrval.inviteCode}`,
+          message: dynamicTranslation('CONNECT_CONFIRMATION', qrval),
           onSuccess: async () => {
             try {
               const response = await post({

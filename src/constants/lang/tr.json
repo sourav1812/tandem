@@ -1,5 +1,13 @@
 {
   "CONNECTION_REQUESTS": "Bağlantı İstekleri",
+  "SCAN_QR_CODE": "QR Kodunu Taratın",
+  "ENTER_INVITATION_CODE_OR_SCAN": "Lütfen Davet Kodunu Girin veya Taratın",
+  "SHARE_VIA": "Paylaş via",
+  "INVITATION_MESSAGE": "Merhaba! {name} ile bağlantı kurmak için bir davet aldınız. Bu davet kodunu kullanın: {inviteCode}.",
+  "QR_CODE": "QR Kodu",
+  "INVITE": "Davet Et",
+  "CONNECT_CONFIRMATION": "{name} ile {inviteCode} davet kodunu kullanarak bağlanmak istediğinizden emin misiniz?",
+  "NO_CONNECTION_REQUESTS_FOUND": "Bağlantı isteği bulunamadı",
   "SELECT_A_CHILD": "Bir çocuk seçin",
   "SHARE_CHILD": "Çocuğu paylaş",
   "RECEIVED_CHILD": "Çocuk alındı",

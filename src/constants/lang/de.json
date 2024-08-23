@@ -1,5 +1,13 @@
 {
   "SELECT_A_CHILD": "Wählen Sie ein Kind",
+  "SCAN_QR_CODE": "Scannen Sie den QR-Code",
+  "ENTER_INVITATION_CODE_OR_SCAN": "Bitte geben Sie den Einladungscode ein oder scannen Sie",
+  "SHARE_VIA": "Teilen via",
+  "INVITATION_MESSAGE": "Hallo! Sie haben eine Einladung, sich mit {name} zu verbinden. Verwenden Sie diesen Einladungscode: {inviteCode}.",
+  "QR_CODE": "QR-Code",
+  "INVITE": "Einladen",
+  "CONNECT_CONFIRMATION": "Sind Sie sicher, dass Sie sich mit {name} verbinden möchten, indem Sie den Einladungscode {inviteCode} verwenden?",
+  "NO_CONNECTION_REQUESTS_FOUND": "Keine Verbindungsanforderungen gefunden",
   "CONNECTION_REQUESTS": "Verbindungsanfragen",
   "RECEIVED_CHILD": "Kind empfangen",
   "SHARE_CHILD": "Kind teilen",

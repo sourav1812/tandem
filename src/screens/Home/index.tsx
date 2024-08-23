@@ -527,9 +527,9 @@ const Home = () => {
                           }
                           navigateTo(SCREEN_NAME.TOP_UP_AND_SUBSCRIPTION);
                         }
-                        if (index === 2) {
-                          navigateTo(SCREEN_NAME.CONNECTION_REQUESTS);
-                        }
+                        // if (index === 2) {
+                        //   navigateTo(SCREEN_NAME.CONNECTION_REQUESTS);
+                        // }
                         if (index === 3) {
                           navigateTo(SCREEN_NAME.SHARE_CHILD);
                         }

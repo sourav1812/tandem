@@ -110,7 +110,7 @@ const ConnectionRequests = () => {
               textAlign: 'center',
               marginTop: verticalScale(250),
             }}>
-            No Connection Requests Found
+            {translation('NO_CONNECTION_REQUESTS_FOUND')}
           </RNTextComponent>
         )}
       </>
