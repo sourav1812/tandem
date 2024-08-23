@@ -9,4 +9,5 @@ export const MENU_ARRAY = [
 export interface Props {
   children: ReactNode;
   title: string;
+  customeStyle?: Object;
 }

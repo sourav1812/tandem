@@ -11,6 +11,10 @@ export const MENU_ARRAY = [
     navigate: SCREEN_NAME.PROFILE_SETTINGS,
   },
   {
+    name: 'CONNECTION_REQUESTS',
+    navigate: SCREEN_NAME.LITTLE_PEOPLE,
+  },
+  {
     name: 'HELP_CENTER',
     navigate: SCREEN_NAME.HELP_CENTER,
     param: {fromPeople: true},

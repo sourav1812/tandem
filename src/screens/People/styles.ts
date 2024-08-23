@@ -32,7 +32,7 @@ export const styles = StyleSheet.create({
     borderColor: '#D3D3D3',
   },
   name: {
-    fontSize: verticalScale(17),
+    fontSize: verticalScale(14),
     textAlign: 'center',
     marginTop: 8,
   },

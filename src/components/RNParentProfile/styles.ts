@@ -9,6 +9,7 @@ export const styles = StyleSheet.create({
   profile: {
     height: verticalScale(90),
     width: verticalScale(90),
+    borderRadius: verticalScale(45),
   },
   name: {
     fontSize: verticalScale(14),

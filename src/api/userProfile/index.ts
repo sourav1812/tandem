@@ -21,7 +21,12 @@ export default async () => {
   const children = response.children?.map(child => ({
     ...child,
     type: PEOPLE.CHILD,
+    permissions:
+      Array.isArray(child.permissions) && child.permissions.length > 0
+        ? child?.permissions[0]
+        : {},
   }));
+
   const adults = response.adults?.map(adult => ({
     ...adult,
     type: PEOPLE.ADULT,

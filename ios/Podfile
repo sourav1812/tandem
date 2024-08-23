@@ -12,7 +12,7 @@ setup_permissions([
   # 'Bluetooth',
   # 'Calendars',
   # 'CalendarsWriteOnly',
-  # 'Camera',
+  'Camera',
   # 'Contacts',
   # 'FaceID',
   # 'LocationAccuracy',
@@ -75,7 +75,8 @@ target 'Tandem' do
   config = use_native_modules!
   # Flags change depending on the env values.
   flags = get_default_flags()
-
+  # permissions_path = '../node_modules/react-native-permissions/ios'
+  # pod 'Permission-Camera', :path => "#{permissions_path}/Camera.podspec"
   pod 'Firebase', :modular_headers => true
   pod 'FirebaseCoreInternal', :modular_headers => true
   pod 'GoogleUtilities', :modular_headers => true

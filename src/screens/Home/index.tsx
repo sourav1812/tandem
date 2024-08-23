@@ -68,8 +68,9 @@ const Home = () => {
         translation('USED_CREDITS') +
         `: ${user?.plan?.usageDetails?.usedCredits || 0}`,
     },
-    {color: themeColor.gold, title: translation('LEARN_SOMETHING')},
-    // {color: themeColor.green, title: translation('HAVE_FUN')},
+    {color: themeColor.gold, title: 'Connection Requests'},
+    {color: themeColor.green, title: translation('SHARE_CHILD')},
+    {color: themeColor.pink, title: 'Receive child detail'},
   ];
   const stats = useAppSelector(state => state.createChild.stats);
   const childStat = stats?.[currentChild?.childId];
@@ -461,7 +462,7 @@ const Home = () => {
           <ScrollView
             style={styles.content}
             contentContainerStyle={{
-              paddingVertical: verticalScale(0),
+              paddingBottom: verticalScale(25),
             }}
             showsVerticalScrollIndicator={false}>
             {mode !== MODE.A && (
@@ -526,6 +527,15 @@ const Home = () => {
                           }
                           navigateTo(SCREEN_NAME.TOP_UP_AND_SUBSCRIPTION);
                         }
+                        // if (index === 2) {
+                        //   navigateTo(SCREEN_NAME.CONNECTION_REQUESTS);
+                        // }
+                        // if (index === 3) {
+                        //   navigateTo(SCREEN_NAME.SHARE_CHILD);
+                        // }
+                        // if (index === 4) {
+                        //   navigateTo(SCREEN_NAME.RECIEVE_CHILD_DETAIL);
+                        // }
                       }}
                     />
                   ))

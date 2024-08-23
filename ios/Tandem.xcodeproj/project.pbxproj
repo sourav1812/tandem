@@ -16,6 +16,7 @@
 		68EC45082C5A2894001EAC64 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68EC45072C5A2894001EAC64 /* StoreKit.framework */; };
 		7C52BC6B0D664FF78BBA3BBA /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE1DDC4F7BB5444693DCA1F2 /* Poppins-SemiBold.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		9F9B8AE4A00883B9E74F4306 /* Pods_Tandem.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 757E1814C28ADD66EA306DAD /* Pods_Tandem.framework */; };
 		BD4437C52A8A660D0032E42E /* FIle.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4437C42A8A660D0032E42E /* FIle.swift */; };
 		BD5D4CE62A7A40D3005BA418 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BD5D4CE52A7A40D3005BA418 /* GoogleService-Info.plist */; };
 		D50691271E1BA9BCA243A697 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6E71C73CBF823C85086806 /* ExpoModulesProvider.swift */; };

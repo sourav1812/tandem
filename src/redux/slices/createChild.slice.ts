@@ -1,6 +1,14 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {PEOPLE} from '@tandem/constants/enums';
 
+export interface permissions {
+  readStoryBooks: Boolean;
+  createStoryBooks: Boolean;
+  createReadingSessions: Boolean;
+  changeArchiveStatus: Boolean;
+  changePublicStatus: Boolean;
+}
+
 // Define a type for the slice state
 export interface ChildData {
   name: string;
@@ -9,6 +17,9 @@ export interface ChildData {
   avatar: string;
   childId: string;
   type: PEOPLE.CHILD;
+  inviteCode: string;
+  connected?: Boolean;
+  permissions?: permissions;
 }
 
 export interface AdultData {
@@ -56,6 +67,15 @@ const initialState: ChildState = {
     avatar: '',
     childId: '',
     type: PEOPLE.CHILD,
+    inviteCode: '',
+    connected: false,
+    permissions: {
+      readStoryBooks: false,
+      createStoryBooks: false,
+      createReadingSessions: false,
+      changeArchiveStatus: false,
+      changePublicStatus: false,
+    },
   },
   adultList: [],
   currentAdult: {

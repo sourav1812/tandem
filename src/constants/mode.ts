@@ -1,5 +1,5 @@
 export enum MODE {
-  A = 'A_MODE',
-  B = 'B_MODE',
-  C = 'C_MODE',
+  A = 'A_MODE', //Adult
+  B = 'B_MODE', //Both
+  C = 'C_MODE', //Child
 }

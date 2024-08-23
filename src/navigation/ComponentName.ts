@@ -50,9 +50,14 @@ export enum SCREEN_NAME {
   STORY_LANGAUGE = 'StoryLanguage',
   ROBOT_BUILDING_BOOK = 'RobotBuildingBook',
   DISCLAIMER = 'Disclaimer',
+  SHARE_CHILD = 'ShareChild',
+  RECIEVE_CHILD_DETAIL = 'RecieveChildDetail',
+  QR_SCANNER = 'QrScanner',
+  CONNECTION_REQUESTS = 'ConnectionRequests',
   VERIFY_EMAIL = 'VerifyEmail',
   TOP_UP_AND_SUBSCRIPTION = 'TopUpAndSubscription',
   TOP_UP = 'TopUp',
   SUBSCRIPTION = 'Subscription',
-  MANAGE_SUBSCRIPTION = 'ManageSubscription'
+  MANAGE_SUBSCRIPTION = 'ManageSubscription',
+  LITTLE_PEOPLE = 'LittlePeople',
 }

@@ -1,4 +1,4 @@
-import {Pressable, Dimensions, View, Platform} from 'react-native';
+import {Pressable, Dimensions, View} from 'react-native';
 import React from 'react';
 import {RNModalProps} from './interface';
 import {styles} from './styles';

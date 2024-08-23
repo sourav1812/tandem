@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {styles} from './styles';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {PeopleScreenProps} from '@tandem/navigation/types';
@@ -17,6 +17,8 @@ import {verticalScale} from 'react-native-size-matters';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {useAppSelector} from '@tandem/hooks/navigationHooks';
 import {RootState} from '@tandem/redux/store';
+import FastImage from 'react-native-fast-image';
+import {ChildData} from '@tandem/redux/slices/createChild.slice';
 
 const People = ({}: PeopleScreenProps) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
@@ -24,6 +26,8 @@ const People = ({}: PeopleScreenProps) => {
   const [state, setState] = useState<StateObject>({
     firstTab: false,
   });
+
+  const [connectedChild, setConnectedChild] = useState<ChildData[]>([]);
 
   const {firstTab} = state;
 
@@ -46,6 +50,11 @@ const People = ({}: PeopleScreenProps) => {
   const children = useAppSelector(
     (state1: RootState) => state1.createChild.childList,
   );
+
+  useEffect(() => {
+    setConnectedChild(children.filter(child => child.connected));
+  }, []);
+
   const avatars = useAppSelector(stateL => stateL.cache.avatars);
 
   const currentAdultAvatar = avatars.filter(
@@ -111,8 +120,11 @@ const People = ({}: PeopleScreenProps) => {
               onPress={() =>
                 navigateTo(SCREEN_NAME.EDIT_CHILD_PROFILE, {editAdult: true})
               }>
-              <Image
-                source={{uri: currentAdultAvatar || currentAdult.avatar}}
+              <FastImage
+                source={{
+                  uri: currentAdultAvatar || currentAdult.avatar,
+                  priority: FastImage.priority.high,
+                }}
                 style={[
                   styles.profile,
                   isTablet && {
@@ -161,34 +173,37 @@ const People = ({}: PeopleScreenProps) => {
           <View style={styles.littlePeople}>
             <ScrollView contentContainerStyle={styles.scrollview}>
               {children.map((child, index) => {
-                const childcacheImage = avatars.filter(
-                  obj => obj.path === child?.avatar,
-                )[0]?.file;
-                return (
-                  <Pressable
-                    key={index.toString()}
-                    onPress={() => {
-                      navigateTo(SCREEN_NAME.EDIT_CHILD_PROFILE, {
-                        childId: child.childId,
-                      });
-                    }}>
-                    <Image
-                      source={{
-                        uri: childcacheImage || child.avatar,
-                      }}
-                      style={[
-                        styles.profile,
-                        isTablet && {
-                          height: verticalScale(94),
-                          width: verticalScale(94),
-                        },
-                      ]}
-                    />
-                    <RNTextComponent caps style={styles.name} isSemiBold>
-                      {child.name}
-                    </RNTextComponent>
-                  </Pressable>
-                );
+                if (!child?.connected) {
+                  const childcacheImage = avatars.filter(
+                    obj => obj.path === child?.avatar,
+                  )[0]?.file;
+                  return (
+                    <Pressable
+                      key={index.toString()}
+                      onPress={() => {
+                        navigateTo(SCREEN_NAME.EDIT_CHILD_PROFILE, {
+                          childId: child.childId,
+                        });
+                      }}>
+                      <FastImage
+                        source={{
+                          uri: childcacheImage || child.avatar,
+                          priority: FastImage.priority.high,
+                        }}
+                        style={[
+                          styles.profile,
+                          isTablet && {
+                            height: verticalScale(94),
+                            width: verticalScale(94),
+                          },
+                        ]}
+                      />
+                      <RNTextComponent caps style={styles.name} isSemiBold>
+                        {child.name}
+                      </RNTextComponent>
+                    </Pressable>
+                  );
+                }
               })}
               <Pressable
                 onPress={() => {
@@ -201,6 +216,51 @@ const People = ({}: PeopleScreenProps) => {
               </Pressable>
             </ScrollView>
           </View>
+          {connectedChild.length ? (
+            <>
+              <RNTextComponent
+                caps
+                style={[styles.name, {fontSize: verticalScale(15)}]}
+                isSemiBold>
+                {translation('RECEIVED_CHILD')}
+              </RNTextComponent>
+              <View style={[styles.littlePeople, {paddingTop: 0}]}>
+                <ScrollView contentContainerStyle={styles.scrollview}>
+                  {connectedChild.map((child, index) => {
+                    const childcacheImage = avatars.filter(
+                      obj => obj.path === child?.avatar,
+                    )[0]?.file;
+                    return (
+                      <Pressable
+                        key={index.toString()}
+                        onPress={() => {
+                          navigateTo(SCREEN_NAME.EDIT_CHILD_PROFILE, {
+                            childId: child.childId,
+                          });
+                        }}>
+                        <FastImage
+                          source={{
+                            uri: childcacheImage || child.avatar,
+                            priority: FastImage.priority.high,
+                          }}
+                          style={[
+                            styles.profile,
+                            isTablet && {
+                              height: verticalScale(94),
+                              width: verticalScale(94),
+                            },
+                          ]}
+                        />
+                        <RNTextComponent caps style={styles.name} isSemiBold>
+                          {child.name}
+                        </RNTextComponent>
+                      </Pressable>
+                    );
+                  })}
+                </ScrollView>
+              </View>
+            </>
+          ) : null}
         </>
       )}
     </RNScreenWrapper>

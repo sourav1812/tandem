@@ -53,11 +53,16 @@ export type RootStackParamList = {
   RobotBuildingBook: undefined;
   Disclaimer: undefined;
   Bookshelf: undefined;
+  ShareChild: undefined;
+  RecieveChildDetail: undefined;
+  QrScanner: undefined;
+  ConnectionRequests: undefined;
   VerifyEmail: undefined;
   TopUpAndSubscription: undefined;
   TopUp: undefined;
   Subscription: undefined;
   ManageSubscription: undefined;
+  LittlePeople: undefined;
 };
 
 export type RootTabParamList = {

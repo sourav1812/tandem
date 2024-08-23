@@ -3,8 +3,12 @@ import React from 'react';
 import {Props} from './interface';
 import {styles} from './styles';
 
-const RNScreenWrapper = ({children, style}: Props) => {
-  return <View style={[styles.container, style && style]}>{children}</View>;
+const RNScreenWrapper = ({children, style, ref}: Props) => {
+  return (
+    <View style={[styles.container, style && style]} ref={ref}>
+      {children}
+    </View>
+  );
 };
 
 export default RNScreenWrapper;
