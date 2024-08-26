@@ -13,6 +13,7 @@ import {
 } from 'react-native-reanimated';
 import Animated from 'react-native-reanimated';
 import RNButton from '../RNButton';
+import {translation} from '@tandem/utils/methods';
 
 const RNBookmarkComponent = ({
   props,
@@ -109,28 +110,27 @@ const RNBookmarkComponent = ({
             </>
           )
         )}
-        {!showIcon ||
-          (iconBorder && (
-            <>
-              <View
-                style={[
-                  styles.imgContainer,
-                  {backgroundColor: themeColor.themeBlue},
-                ]}>
-                {emoji && (
-                  <RNTextComponent style={styles.img}>
-                    {typeof emoji === 'string' ? emoji : null}
-                  </RNTextComponent>
-                )}
-              </View>
-              <RNButton
-                onClick={() => {}}
-                title="Contact Us"
-                pressableStyle={{width: '100%', padding: 16}}
-                customStyle={{height: verticalScale(35)}}
-              />
-            </>
-          ))}
+        {iconBorder && (
+          <>
+            <View
+              style={[
+                styles.imgContainer,
+                {backgroundColor: themeColor.themeBlue},
+              ]}>
+              {emoji && (
+                <RNTextComponent style={styles.img}>
+                  {typeof emoji === 'string' ? emoji : null}
+                </RNTextComponent>
+              )}
+            </View>
+            <RNButton
+              onClick={() => {}}
+              title={translation('CONTACT_US')}
+              pressableStyle={{width: '100%', padding: 16}}
+              customStyle={{height: verticalScale(35)}}
+            />
+          </>
+        )}
       </Animated.View>
     </Pressable>
   );

@@ -82,6 +82,11 @@ const Home = () => {
       title: translation('TOP_UPS_AND_SUBSCRIPTIONS'),
       emoji: '💳',
     },
+    {
+      color: themeColor.themeBlue,
+      title: '',
+      emoji: '✉️',
+    },
     {color: themeColor.gold, title: 'Connection Requests'},
     {color: themeColor.green, title: translation('SHARE_CHILD')},
     {color: themeColor.pink, title: 'Receive child detail'},
@@ -557,7 +562,8 @@ const Home = () => {
                         ...(!portrait && styles.cardPortrait),
                       }}
                       borderIconColor={item.color}
-                      showIcon={index <= 1}
+                      iconBorder={index === 2}
+                      showIcon={index <= 2}
                       headingStyle={
                         index <= 1
                           ? {
@@ -575,6 +581,8 @@ const Home = () => {
                               (user?.plan?.usageDetails?.totalCredits || 0) +
                               (user?.plan?.usageDetails?.addOnCredits || 0)
                             }`
+                          : index === 2
+                          ? ''
                           : translation('COMING_SOON')
                       }
                       emoji={item.emoji}
