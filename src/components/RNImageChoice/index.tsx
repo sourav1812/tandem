@@ -176,13 +176,15 @@ const AnimatedImageChoice = ({
   return (
     <Pressable
       disabled={disabledButton}
-      onPress={() => {
+      onPressIn={() => {
         if (disabledButton) {
           return;
         }
         playSound();
-        onPress();
         runAnimation();
+      }}
+      onPress={() => {
+        onPress();
       }}>
       <Animated.View style={{transform: [{scale: scaleButton}]}}>
         <LinearGradient

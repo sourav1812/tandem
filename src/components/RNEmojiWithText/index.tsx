@@ -67,16 +67,20 @@ const RNEmojiWithText = ({
   return (
     <Pressable
       disabled={disabled || disabledButton}
-      onPress={() => {
+      onPressIn={() => {
         if (disabled || disabledButton) {
           return;
         }
-
         if (!mask) {
           runAnimation();
         }
         if (soundFile) {
           playSound();
+        }
+      }}
+      onPress={() => {
+        if (disabled) {
+          return;
         }
         onPress();
       }}>
