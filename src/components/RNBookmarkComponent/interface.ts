@@ -5,6 +5,7 @@ export interface Props {
   props?: ViewProps;
   customStyle?: StyleProp<ViewStyle>;
   borderIconColor: string;
+  iconBorder?: Boolean;
   heading: string;
   subHeading: string | undefined;
   showIcon?: boolean;

@@ -12,11 +12,14 @@ import {
   withTiming,
 } from 'react-native-reanimated';
 import Animated from 'react-native-reanimated';
+import RNButton from '../RNButton';
+import {translation} from '@tandem/utils/methods';
 
 const RNBookmarkComponent = ({
   props,
   customStyle,
   borderIconColor,
+  iconBorder,
   heading,
   subHeading,
   showIcon = true,
@@ -46,10 +49,11 @@ const RNBookmarkComponent = ({
           {transform: [{scale: scaleButton}]},
           {...(borderIconColor && {borderColor: borderIconColor})},
           {
-            ...(showIcon && {
-              backgroundColor: borderIconColor,
-              paddingVertical: verticalScale(6),
-            }),
+            ...(showIcon &&
+              !iconBorder && {
+                backgroundColor: borderIconColor,
+                paddingVertical: verticalScale(6),
+              }),
           },
           {...(!showIcon && {justifyContent: 'center'})},
           {
@@ -77,29 +81,54 @@ const RNBookmarkComponent = ({
             </RNTextComponent>
           </>
         ) : (
+          !iconBorder && (
+            <>
+              <View style={styles.imgContainer}>
+                {emoji && (
+                  <RNTextComponent style={styles.img}>
+                    {typeof emoji === 'string' ? emoji : null}
+                  </RNTextComponent>
+                )}
+              </View>
+              <RNTextComponent
+                numberOfLines={2}
+                isSemiBold
+                style={[
+                  styles.text2,
+                  {marginTop: verticalScale(6)},
+                  headingStyle && headingStyle,
+                ]}>
+                {heading}
+              </RNTextComponent>
+              {showSubheading && (
+                <RNTextComponent
+                  numberOfLines={1}
+                  style={[styles.subHeading, {color: themeColor.white}]}>
+                  {subHeading}
+                </RNTextComponent>
+              )}
+            </>
+          )
+        )}
+        {iconBorder && (
           <>
-            <View style={styles.imgContainer}>
+            <View
+              style={[
+                styles.imgContainer,
+                {backgroundColor: themeColor.themeBlue},
+              ]}>
               {emoji && (
-                <RNTextComponent style={styles.img}>{emoji}</RNTextComponent>
+                <RNTextComponent style={styles.img}>
+                  {typeof emoji === 'string' ? emoji : null}
+                </RNTextComponent>
               )}
             </View>
-            <RNTextComponent
-              numberOfLines={2}
-              isSemiBold
-              style={[
-                styles.text2,
-                {marginTop: verticalScale(6)},
-                headingStyle && headingStyle,
-              ]}>
-              {heading}
-            </RNTextComponent>
-            {showSubheading && (
-              <RNTextComponent
-                numberOfLines={1}
-                style={[styles.subHeading, {color: themeColor.white}]}>
-                {subHeading}
-              </RNTextComponent>
-            )}
+            <RNButton
+              onClick={() => {}}
+              title={translation('CONTACT_US')}
+              pressableStyle={{width: '100%', padding: 16}}
+              customStyle={{height: verticalScale(35)}}
+            />
           </>
         )}
       </Animated.View>

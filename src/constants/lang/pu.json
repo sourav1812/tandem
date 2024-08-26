@@ -6,6 +6,7 @@
   "INVITATION_MESSAGE": "ਹੈਲੋ! ਤੁਹਾਨੂੰ {name} ਨਾਲ ਜੁੜਨ ਲਈ ਸੱਦਾ ਮਿਲਿਆ ਹੈ। ਇਸ ਸੱਦਾ ਕੋਡ ਦੀ ਵਰਤੋਂ ਕਰੋ: {inviteCode}.",
   "QR_CODE": "QR ਕੋਡ",
   "INVITE": "ਨਿਵੋਤਣਾ",
+  "TOP_UPS_AND_SUBSCRIPTIONS": "ਟੌਪ ਅੱਪਸ ਅਤੇ ਸਬਸਕ੍ਰਿਪਸ਼ਨ",
   "CONNECT_CONFIRMATION": "ਕੀ ਤੁਸੀਂ ਯਕੀਨੀ ਤੌਰ 'ਤੇ {name} ਨਾਲ ਜੁੜਨਾ ਚਾਹੁੰਦੇ ਹੋ {inviteCode} ਸੱਦਾ ਕੋਡ ਦੀ ਵਰਤੋਂ ਕਰਕੇ?",
   "NO_CONNECTION_REQUESTS_FOUND": "ਕੋਈ ਕਨੈਕਸ਼ਨ ਬੇਨਤ ਨਹੀਂ ਮਿਲੀ",
   "SELECT_A_CHILD": "ਇੱਕ ਬੱਚਾ ਚੁਣੋ",

@@ -60,13 +60,32 @@ const Home = () => {
   });
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const widthDimention = useWindowDimensions().width;
-  const modeBC: {color: string; title: string}[] = [
-    {color: themeColor.purple, title: translation('WRITE_A_STORY')},
+
+  const modeC: {color: string; title: string; emoji?: string}[] = [
     {
-      color: themeColor.purple,
-      title:
-        translation('USED_CREDITS') +
-        `: ${user?.plan?.usageDetails?.usedCredits || 0}`,
+      color: themeColor.themeBlue,
+      title: translation('WRITE_A_STORY'),
+      emoji: '🖊️',
+    },
+    {color: themeColor.purple, title: "I can't decide"},
+    {color: themeColor.green, title: 'Have fun'},
+  ];
+
+  const modeBC: {color: string; title: string; emoji?: string}[] = [
+    {
+      color: themeColor.themeBlue,
+      title: translation('WRITE_A_STORY'),
+      emoji: '🖊️',
+    },
+    {
+      color: themeColor.lightGreen,
+      title: translation('TOP_UPS_AND_SUBSCRIPTIONS'),
+      emoji: '💳',
+    },
+    {
+      color: themeColor.themeBlue,
+      title: '',
+      emoji: '✉️',
     },
     {color: themeColor.gold, title: 'Connection Requests'},
     {color: themeColor.green, title: translation('SHARE_CHILD')},
@@ -127,6 +146,18 @@ const Home = () => {
       title: secondsToDhms(childStat?.generation?.totalTime),
       subHeading: translation('TIME_CREATING'),
       emoji: '💡',
+    },
+    {
+      color: themeColor.lightGreen,
+      title: translation('TOP_UPS_AND_SUBSCRIPTIONS'),
+      subHeading: translation('COMING_SOON'),
+      emoji: '💳',
+    },
+    {
+      color: themeColor.themeBlue,
+      title: translation('TOP_UPS_AND_SUBSCRIPTIONS'),
+      subHeading: translation('COMING_SOON'),
+      emoji: '✉️',
     },
     {
       color: '#a9a9a9',
@@ -484,7 +515,45 @@ const Home = () => {
                   paddingHorizontal: portrait ? scale(20) : scale(100),
                 }),
               }}>
-              {mode === MODE.B || mode === MODE.C
+              {mode === MODE.C &&
+                modeC.map((item, index) => (
+                  <RNBookmarkComponent
+                    key={index.toString()}
+                    customStyle={{
+                      marginTop: verticalScale(24),
+                      ...(!portrait && styles.cardPortrait),
+                    }}
+                    borderIconColor={item.color}
+                    showIcon={index == 0}
+                    // large={index === 0}
+                    showSubheading={!!(index % 2)}
+                    heading={item.title}
+                    subHeading={translation('COMING_SOON')}
+                    emoji={item.emoji}
+                    onPress={() => {
+                      if (index === 0) {
+                        store.dispatch(clearStoryGenerationResponse());
+                        navigateTo(SCREEN_NAME.STORY_LANGAUGE);
+                        return;
+                      }
+                      if (index === 1) {
+                        if (products.length === 0) {
+                          store.dispatch(
+                            addAlertData({
+                              type: 'Message',
+                              message:
+                                'Products are not available at the moment',
+                              possibleResolution: 'Please try again later',
+                            }),
+                          );
+                          return;
+                        }
+                        navigateTo(SCREEN_NAME.TOP_UP_AND_SUBSCRIPTION);
+                      }
+                    }}
+                  />
+                ))}
+              {mode === MODE.B
                 ? modeBC.map((item, index) => (
                     <RNBookmarkComponent
                       key={index.toString()}
@@ -493,9 +562,17 @@ const Home = () => {
                         ...(!portrait && styles.cardPortrait),
                       }}
                       borderIconColor={item.color}
-                      showIcon={index === 0}
-                      large={index === 0}
-                      showSubheading={index !== 0}
+                      iconBorder={index === 2}
+                      showIcon={index <= 2}
+                      headingStyle={
+                        index <= 1
+                          ? {
+                              fontSize: verticalScale(16),
+                              marginVertical: verticalScale(8),
+                            }
+                          : null
+                      }
+                      showSubheading={index > 1}
                       heading={item.title}
                       subHeading={
                         index === 1
@@ -504,9 +581,11 @@ const Home = () => {
                               (user?.plan?.usageDetails?.totalCredits || 0) +
                               (user?.plan?.usageDetails?.addOnCredits || 0)
                             }`
+                          : index === 2
+                          ? ''
                           : translation('COMING_SOON')
                       }
-                      emoji="🪄"
+                      emoji={item.emoji}
                       onPress={() => {
                         if (index === 0) {
                           store.dispatch(clearStoryGenerationResponse());
@@ -539,7 +618,8 @@ const Home = () => {
                       }}
                     />
                   ))
-                : modeA.map((item, index) => (
+                : mode === MODE.A &&
+                  modeA.map((item, index) => (
                     <RNBookmarkComponent
                       key={index.toString()}
                       customStyle={{
@@ -547,8 +627,9 @@ const Home = () => {
                         ...(!portrait && styles.cardPortrait),
                       }}
                       borderIconColor={item.color}
-                      showIcon={index <= 3}
+                      showIcon={index <= 4}
                       showSubheading={index !== 3}
+                      iconBorder={index === 4}
                       heading={item.title}
                       subHeading={item.subHeading}
                       emoji={item.emoji}
@@ -556,6 +637,11 @@ const Home = () => {
                         index > 3
                           ? {
                               fontSize: verticalScale(12),
+                              marginVertical: verticalScale(8),
+                            }
+                          : index == 3
+                          ? {
+                              fontSize: verticalScale(16),
                               marginVertical: verticalScale(8),
                             }
                           : null
@@ -572,7 +658,7 @@ const Home = () => {
 
                             break;
                           case 3:
-                            // navigateTo(SCREEN_NAME.REDEEM_VOUCHER);
+                            navigateTo(SCREEN_NAME.TOP_UP_AND_SUBSCRIPTION);
                             break;
                         }
                       }}

@@ -3,6 +3,7 @@
   "SCAN_QR_CODE": "Scannez le code QR",
   "ENTER_INVITATION_CODE_OR_SCAN": "Veuillez entrer le code d'invitation ou scanner",
   "SHARE_VIA": "Partager via",
+  "TOP_UPS_AND_SUBSCRIPTIONS": "Recharges & Abonnements",
   "INVITATION_MESSAGE": "Bonjour! Vous avez une invitation à vous connecter avec {name}. Utilisez ce code d'invitation: {inviteCode}.",
   "QR_CODE": "Code QR",
   "INVITE": "Inviter",
