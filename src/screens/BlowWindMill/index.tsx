@@ -34,7 +34,6 @@ import themeColor from '@tandem/theme/themeColor';
 import {translation} from '@tandem/utils/methods';
 import {useDispatch} from 'react-redux';
 import animateProgressBar from '@tandem/functions/animateProgressBar';
-import {setEnergyGenerated} from '@tandem/redux/slices/activityIndicator.slice';
 const {width: xMax, height: yMax} = Dimensions.get('screen');
 
 const permissionsType = Platform.select({
@@ -50,7 +49,6 @@ const BlowWindMill = () => {
   const [canShowProgress, setCanShowProgress] = React.useState(false);
   const [notificationDispatched, setNotificationDispatched] =
     React.useState(false);
-  const mark = Platform.select({ios: 140, android: 130, default: 125});
   const [permissionState, setPermissionState] =
     React.useState<permissions.PermissionStatus | null>(null);
 
@@ -82,7 +80,6 @@ const BlowWindMill = () => {
       return;
     }
     setNotificationDispatched(true);
-    dispatch(setEnergyGenerated(true));
     dispatch(
       addAlertData({
         type: 'Alert',

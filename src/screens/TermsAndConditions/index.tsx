@@ -96,7 +96,7 @@ const TermsAndConditions = () => {
                     terms: termsArray,
                     agreedToAllTerms:
                       termsArray.filter(
-                        item => item.isRequired && !item.isAgreed,
+                        item1 => item1.isRequired && !item1.isAgreed,
                       ).length === 0
                         ? true
                         : false,
@@ -122,7 +122,7 @@ const TermsAndConditions = () => {
             onlyBorder
             buttonColor={themeColor.themeBlue}
             onClick={() => {
-              logout({});
+              logout({api: false});
             }}
             title={translation('CANCEL')}
             customStyle={styles.button}

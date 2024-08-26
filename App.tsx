@@ -14,7 +14,6 @@ import {
   setIsOpenedFromNotifications,
   setStoryBookNotification,
 } from '@tandem/redux/slices/activityIndicator.slice';
-import {getChildStats} from '@tandem/api/childAnalytics';
 import pushChildStats from '@tandem/functions/pushChildStats';
 import getStories from '@tandem/api/getStories';
 import notifee, {EventType} from '@notifee/react-native';
@@ -152,7 +151,6 @@ const App: FC = () => {
         }
         await getStories(1, metaData.childId);
         await pushChildStats();
-        await getChildStats();
         userProfile();
         setTimeout(() => {
           playSound(SO_notifications);

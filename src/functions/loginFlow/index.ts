@@ -11,11 +11,11 @@ import {PEOPLE} from '@tandem/constants/enums';
 import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
 import {clearCacheForce} from '@tandem/redux/slices/cache.slice';
-import {storeKey} from '@tandem/helpers/encryptedStorage';
-import RNFetchBlob from 'rn-fetch-blob';
-import {CACHE_DIR} from '@tandem/constants/local';
 import {getChildStats} from '@tandem/api/childAnalytics';
 import {initialiseRevenueCat} from '../revenueCat';
+import {APP_VERSION} from '@tandem/constants/local';
+import {storeKey} from '@tandem/helpers/encryptedStorage';
+import DeviceInfo from 'react-native-device-info';
 
 export default async (loginResponse: LoginResponse) => {
   navigateTo(SCREEN_NAME.BUILDING_TANDEM);
@@ -32,9 +32,6 @@ export default async (loginResponse: LoginResponse) => {
     ),
   );
 
-  reCache();
-  storeKey(CACHE_DIR, RNFetchBlob.fs.dirs.DocumentDir);
-
   store.dispatch(
     saveAdultData(
       loginResponse.userInfo.adults?.map(adult => ({
@@ -43,6 +40,7 @@ export default async (loginResponse: LoginResponse) => {
       })),
     ),
   );
+
   // ! we will have to decide where we should keep children
   store.dispatch(
     saveUserData({
@@ -57,14 +55,17 @@ export default async (loginResponse: LoginResponse) => {
       })),
     }),
   );
+
+  const curentAppVersion = DeviceInfo.getVersion();
+  storeKey(APP_VERSION, curentAppVersion);
+
+  await reCache();
   await initialiseRevenueCat(loginResponse.userInfo.appUserId);
   await getChildStats();
-  setTimeout(() => {
-    if (loginResponse.userInfo.termsAndConditions) {
-      // storeKey(TERMS_ACCEPTED, TERMS_ACCEPTED);
-      navigateTo(SCREEN_NAME.ACCOUNT, {}, true);
-    } else {
-      navigateTo(SCREEN_NAME.TERMS_AND_CONDITIONS, {}, true);
-    }
-  }, 6000);
+
+  if (loginResponse.userInfo.termsAndConditions) {
+    navigateTo(SCREEN_NAME.ACCOUNT, {}, true);
+  } else {
+    navigateTo(SCREEN_NAME.TERMS_AND_CONDITIONS, {}, true);
+  }
 };

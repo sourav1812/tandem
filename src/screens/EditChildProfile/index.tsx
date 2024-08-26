@@ -17,7 +17,6 @@ import RNChangeAvatarModal from '@tandem/components/RNChangeAvatarModal';
 import {LanguageDropDown} from '@tandem/components/LanguageDropDown';
 import validationFunction from '@tandem/functions/validationFunction';
 import {editChildProfile} from '@tandem/api/editChildProfile';
-import userProfile from '@tandem/api/userProfile';
 import {
   resetAdultData,
   saveCurrentAdult,
@@ -102,23 +101,12 @@ const EditChildProfile = ({route}: EditChildProfileProps) => {
     ) {
       return;
     }
-    const response = await editChildProfile({
+    await editChildProfile({
       name: name.value,
       dob: dob.value, // ! pass in the whole date object
       avatar: localAvatarState || currentChild.avatar,
       childId: currentChild.childId,
     });
-    if (response) {
-      userProfile();
-      dispatch(
-        saveCurrentChild({
-          ...currentChild,
-          name: name.value,
-          dob: dob.value,
-          avatar: localAvatarState || currentChild.avatar,
-        }),
-      );
-    }
   };
 
   const handleEditAdultProfileRequest = async () => {
@@ -133,23 +121,12 @@ const EditChildProfile = ({route}: EditChildProfileProps) => {
     ) {
       return;
     }
-    const response = await editAdultProfile({
+    await editAdultProfile({
       role: name.value,
       dob: dob.value, // ! pass in the whole date object
       avatar: localAvatarState || currentAdult.avatar,
       adultId: currentAdult.profileId,
     });
-    if (response) {
-      userProfile();
-      dispatch(
-        saveCurrentAdult({
-          ...currentAdult,
-          role: name.value,
-          dob: dob.value,
-          avatar: localAvatarState || currentAdult.avatar,
-        }),
-      );
-    }
   };
 
   const handleDeleteChildRequest = async () => {

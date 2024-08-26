@@ -17,7 +17,6 @@ export default async () => {
   if (!response) {
     return;
   }
-  console.log(JSON.stringify(response));
   const children = response.children?.map(child => ({
     ...child,
     type: PEOPLE.CHILD,
@@ -32,12 +31,9 @@ export default async () => {
     type: PEOPLE.ADULT,
   }));
   const userData = store.getState().userData.userDataObject;
-  // ! we will have to decide where we should keep children
   store.dispatch(saveUserData({...userData, ...response, children, adults}));
   store.dispatch(saveChildData(children));
   store.dispatch(saveAdultData(adults));
-  // storing the book in redux
-  // ! note api should only send the book if story has been genearted by the child
 
   return response;
 };

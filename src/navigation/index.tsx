@@ -23,7 +23,6 @@ import BlowWindMill from '@tandem/screens/BlowWindMill';
 import MatchingPairs from '@tandem/screens/MatchingPairs';
 import StoryLanguage from '@tandem/screens/GenerateStory/Questions/StoryLangauge';
 import RobotBuildingBook from '@tandem/screens/RobotBuildingBook';
-import {setEnergyGenerated} from '@tandem/redux/slices/activityIndicator.slice';
 import Disclaimer from '@tandem/screens/Disclaimer';
 import {changeChildAndNavigate} from '@tandem/functions/gotoBookshelf';
 import notifee, {EventType} from '@notifee/react-native';
@@ -31,7 +30,6 @@ import ShareChild from '@tandem/screens/ShareChild';
 import RecieveChildDetail from '@tandem/screens/RecieveChildDetail';
 import QRScanner from '@tandem/screens/QrScanner';
 import {clearAlertData} from '@tandem/redux/slices/alertBox.slice';
-import ConnectionRequest from '@tandem/screens/ConnectionRequests';
 import ConnectionRequests from '@tandem/screens/ConnectionRequests';
 import VerifyEmail from '@tandem/screens/VerifyEmail';
 import TopUpAndSubscribe from '@tandem/screens/TopUpAndSubscribe';
@@ -54,8 +52,11 @@ const AppNavigator = () => {
   );
 
   React.useEffect(() => {
+    resumeAppState();
+  }, []);
+
+  React.useEffect(() => {
     const f = async () => {
-      await resumeAppState();
       return notifee.onForegroundEvent(({type, detail}) => {
         switch (type) {
           case EventType.PRESS:
@@ -76,6 +77,7 @@ const AppNavigator = () => {
     };
     f();
   }, []);
+
   React.useEffect(() => {
     if (alertData.message) {
       const backAction = () => {
@@ -88,18 +90,38 @@ const AppNavigator = () => {
       );
       return () => backHandler.remove();
     }
-  }, [alertData]);
+  }, [alertData, dispatch]);
 
   React.useEffect(() => {
-    store.dispatch(setEnergyGenerated(true)); // ! on App open we do want to show notification
     // ! logic to make post req for multiple pending posts
-    const pendingStory = store.getState().cache.pendingStoryGeneration;
-    if (pendingStory.length > 0) {
-      pendingStory.forEach(story => {
-        hitStoryGenApiStandalone(story);
-      });
-      store.dispatch(clearPendingStoriesGen());
-    }
+    const processPendingStories = async () => {
+      const pendingStory = store.getState().cache.pendingStoryGeneration;
+
+      if (pendingStory.length > 0) {
+        // Create an array of promises using map and await all of them
+        let errorOccurred = false;
+        const promises = pendingStory.map(async story => {
+          try {
+            await hitStoryGenApiStandalone(story);
+          } catch (error) {
+            console.error(
+              `Error processing story in hitStoryGenApiStandalone: ${story.childId}`,
+              error,
+            ); // Log any errors that occur during API call
+            errorOccurred = true; // Set flag to true if an error occurs
+          }
+        });
+
+        // Wait for all story generation API calls to complete
+        await Promise.all(promises);
+
+        // Only clear pending stories if no errors occurred
+        if (!errorOccurred) {
+          store.dispatch(clearPendingStoriesGen());
+        }
+      }
+    };
+    processPendingStories();
   }, []);
 
   return (

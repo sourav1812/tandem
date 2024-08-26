@@ -88,6 +88,7 @@ export const cacheSlice = createSlice({
         state.isAvatarArrayFull
       ) {
         state.avatars = [];
+        state.isAvatarArrayFull = false;
       }
     },
     addPlaceFile: (state, action) => {
@@ -103,6 +104,7 @@ export const cacheSlice = createSlice({
     clearPlaces: state => {
       if (state.places.length < PLACE.length && state.isPlaceArrayFull) {
         state.places = [];
+        state.isPlaceArrayFull = false;
       }
     },
     addWhoFile: (state, action) => {
@@ -118,6 +120,7 @@ export const cacheSlice = createSlice({
     clearWho: state => {
       if (state.who.length < WHO.length && state.isWhoArrayFull) {
         state.who = [];
+        state.isWhoArrayFull = false;
       }
     },
     addWhatHappensFile: (state, action) => {
@@ -136,6 +139,7 @@ export const cacheSlice = createSlice({
         state.isWhatHappensArrayFull
       ) {
         state.whatHappens = [];
+        state.isWhatHappensArrayFull = false;
       }
     },
     addStoryStylesFile: (state, action) => {
@@ -154,6 +158,7 @@ export const cacheSlice = createSlice({
         state.isStoryStylesArrayFull
       ) {
         state.storyStyles = [];
+        state.isStoryStylesArrayFull = false;
       }
     },
     clearCacheForce: state => {

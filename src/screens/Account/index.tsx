@@ -91,6 +91,7 @@ const Account = () => {
     0: {height: 0, width: 0, x: 0, y: 0},
     1: {height: 0, width: 0, x: 0, y: 0},
   });
+
   useEffect(() => {
     if (
       !tooltipArray?.[1] &&
@@ -101,6 +102,7 @@ const Account = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   React.useEffect(() => {
     pushChildStats();
   }, []);

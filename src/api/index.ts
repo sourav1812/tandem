@@ -1,6 +1,6 @@
 import axios, {AxiosResponse} from 'axios';
 import NetInfo from '@react-native-community/netinfo';
-import {getStoredTokens, storeTokens} from '@tandem/functions/tokens';
+import {getStoredTokens} from '@tandem/functions/tokens';
 import Api from './interface';
 import {
   buttonLoader,
@@ -8,12 +8,13 @@ import {
   stopLoader,
 } from '@tandem/redux/slices/activityIndicator.slice';
 import {store} from '@tandem/redux/store';
-import {API, BASE_URL, STATUS_CODE} from '@tandem/constants/api';
+import {BASE_URL, STATUS_CODE} from '@tandem/constants/api';
 import {addParams, clearParams} from '@tandem/redux/slices/paramsReducer';
 import logout from '@tandem/functions/logout';
 import {addGetResponse} from '@tandem/redux/slices/getResponseReducer';
 import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
 import i18n from '@tandem/constants/lang/i18n';
+import refreshToken from './refreshToken';
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
@@ -40,29 +41,18 @@ const requestQueue: ((token: any) => void)[] = [];
 let isRefreshing = false;
 
 const refreshAccessToken = async () => {
-  const {refreshToken} = getStoredTokens();
-
   if (!isRefreshing) {
     isRefreshing = true;
 
     try {
-      if (!refreshToken) {
-        logout({api: false});
-        throw new Error('No refreshToken found');
-      }
-
-      const response = await axios.post(BASE_URL + API.REFRESH_TOKEN, {
-        refreshToken,
-      });
-      const {accessToken, refreshToken: newRefreshToken} = response.data;
-      storeTokens(accessToken, newRefreshToken);
+      const {accessToken} = await refreshToken();
       requestQueue.forEach(resolve => resolve(accessToken));
       requestQueue.length = 0;
       isRefreshing = false;
       return accessToken;
     } catch (error) {
       console.log('error in refresh token logic:', error);
-      logout({api: false});
+      await logout({api: false});
     }
   } else {
     // If another request is already refreshing the token, wait for it to complete
