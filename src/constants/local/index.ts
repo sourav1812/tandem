@@ -142,7 +142,6 @@ export const shuffle = (originalArray: any) => {
 };
 
 export const TOOLTIP = 'ToolTip';
-// export const TERMS_ACCEPTED = 'TERMS_ACCEPTED';
 
 export const AUDIENCE: PlaceType[] = [
   {name: 'Domestic animals', icon: '🐱', bgc: themeColor.themeBlue},
@@ -777,3 +776,4 @@ export const NOTIFICATION_PROMPTS = [
   },
 ];
 export const NAVIGATE_TO_BOOKSHELF = 'NAVIGATE_TO_BOOKSHELF';
+export const APP_VERSION = 'APP_VERSION';

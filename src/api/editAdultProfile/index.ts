@@ -3,6 +3,7 @@ import {API} from '@tandem/constants/api';
 import {CreateAdultProfile} from './interface';
 import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
+import userProfile from '../userProfile';
 
 export const editAdultProfile = async ({
   role,
@@ -18,6 +19,7 @@ export const editAdultProfile = async ({
       avatar,
     },
     onSuccess: () => {
+      userProfile();
       navigateTo(SCREEN_NAME.BOTTOM_TAB);
     },
   });

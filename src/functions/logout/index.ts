@@ -18,25 +18,36 @@ import RNFetchBlob from 'rn-fetch-blob';
 const logout = async ({api = true}: {api?: boolean}) => {
   try {
     const flush = store.getState().cache.flush;
-    console.log(flush);
-    flush.forEach(item => {
+
+    // Map over flush items to create an array of unlink promises
+    const unlinkPromises = flush.map(async item => {
       try {
-        RNFetchBlob.fs.unlink(item);
+        await RNFetchBlob.fs.unlink(item);
       } catch (error) {
-        console.log('#####', error);
+        console.error('Error while unlinking images in logout:', error);
+        // You might want to decide if you need to continue unlinking or handle this error differently
       }
     });
+
+    // Start loader before unlink operations
     store.dispatch(startLoader());
+
+    // Wait for all unlink operations to complete
+    await Promise.all(unlinkPromises);
+
+    // Optional API call if the `api` parameter is true
     if (api) {
       console.log('logoutapidone');
       await logoutApi();
     }
-  } catch (error) {}
+  } catch (error) {
+    console.error('Error in processing flush:', error);
+    // Optionally handle the error, such as dispatching a failure action or logging additional information
+  }
   store.dispatch(removeToken());
   store.dispatch(logoutFromRedux());
   store.dispatch(clearAlertData());
   store.dispatch(clearCacheForce());
-  // removeKey(TERMS_ACCEPTED);
   firebase.messaging().deleteToken();
   store.dispatch(changeMode(MODE.A));
   navigateTo(SCREEN_NAME.SOCIAL_SIGN_IN, {}, true);

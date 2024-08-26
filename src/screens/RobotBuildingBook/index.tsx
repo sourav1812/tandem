@@ -23,7 +23,6 @@ const RobotBuildingBook = () => {
   const [soundState, setSoundState] = useState<Audio.Sound | undefined>();
 
   React.useEffect(() => {
-    // store.dispatch(setEnergyGenerated(false));
     const f = async () => {
       const {sound} = await Audio.Sound.createAsync(SO_send_to_robots);
       setSoundState(sound);

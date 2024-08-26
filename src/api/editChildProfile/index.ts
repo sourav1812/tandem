@@ -3,6 +3,7 @@ import {API} from '@tandem/constants/api';
 import {CreateChildProfile} from './interface';
 import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
+import userProfile from '../userProfile';
 
 export const editChildProfile = async ({
   name,
@@ -19,6 +20,7 @@ export const editChildProfile = async ({
       avatar,
     },
     onSuccess: () => {
+      userProfile();
       navigateTo(SCREEN_NAME.BOTTOM_TAB);
     },
   });

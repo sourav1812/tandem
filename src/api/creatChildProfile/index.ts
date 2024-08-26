@@ -3,7 +3,6 @@ import {API} from '@tandem/constants/api';
 import {CreateChildProfile} from './interface';
 import navigateTo from '@tandem/navigation/navigate';
 import {SCREEN_NAME} from '@tandem/navigation/ComponentName';
-import {getChildStats} from '../childAnalytics';
 import userProfile from '../userProfile';
 import pushChildStats from '@tandem/functions/pushChildStats';
 import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
@@ -25,8 +24,7 @@ export const addNewChild = async (
       },
     });
     await userProfile();
-    pushChildStats();
-    getChildStats();
+    await pushChildStats();
 
     store.dispatch(
       addAlertData({
