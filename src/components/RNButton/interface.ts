@@ -27,4 +27,5 @@ export interface Props {
   pressableStyle?: StyleProp<ViewStyle>;
   hitSlop?: number;
   SoundObject?: any;
+  enlargeAnimation?: boolean;
 }

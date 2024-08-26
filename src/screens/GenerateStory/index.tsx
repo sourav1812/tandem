@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {Platform, View} from 'react-native';
+import {View} from 'react-native';
 import React from 'react';
 import RNScreenWrapper from '@tandem/components/RNScreenWrapper';
 import {styles} from './styles';
@@ -25,7 +25,6 @@ export default ({
   questionNumber,
   onBack,
   type,
-  maxSelections,
 }: {
   onNextQuestion?: () => void;
   children: React.ReactElement;
@@ -130,6 +129,7 @@ export default ({
           textStyle={styles.tooltip}>
           <View style={{width: '100%'}}>
             <RNButton
+              enlargeAnimation
               isDisabled={disabled}
               customStyle={[
                 styles.footerButton,

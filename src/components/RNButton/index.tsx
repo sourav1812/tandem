@@ -39,6 +39,7 @@ const RNButton = ({
   onLayout,
   hitSlop,
   SoundObject,
+  enlargeAnimation,
 }: Props) => {
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
   const isButtonDisabled = useAppSelector(
@@ -49,19 +50,33 @@ const RNButton = ({
   const scaleButton = useSharedValue(1);
 
   const runAnimation = () => {
+    if (enlargeAnimation) {
+      scaleButton.value = withSequence(withTiming(1.5), withTiming(1));
+      return;
+    }
     scaleButton.value = withSequence(withTiming(0.9), withTiming(1));
   };
   const handlePress = async () => {
-    Keyboard.dismiss();
-    if (pressed) {
+    if (pressed || disabled) {
       return;
     }
     setPressed(true);
+    await onClick();
+  };
+
+  const handlePressIn = async () => {
+    if (disabled) {
+      return;
+    }
+    Keyboard.dismiss();
+    runAnimation();
+    if (pressed) {
+      return;
+    }
     const {sound} = await Audio.Sound.createAsync(
       SoundObject || SO_button_click,
     );
-    sound.playAsync();
-    await onClick();
+    await sound.playAsync();
     setTimeout(async () => {
       await sound.unloadAsync();
       setPressed(false);
@@ -77,12 +92,9 @@ const RNButton = ({
           {...props}
           onLongPress={runAnimation}
           hitSlop={hitSlop}
+          onPressIn={handlePressIn}
           onPress={() => {
-            if (disabled) {
-              return;
-            }
             if (handlePress) {
-              runAnimation();
               handlePress();
             }
           }}>

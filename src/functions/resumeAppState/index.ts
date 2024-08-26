@@ -21,7 +21,8 @@ import {initialiseRevenueCat} from '../revenueCat';
 import {Audio} from 'expo-av';
 import notifee from '@notifee/react-native';
 import refreshCacheAfterAppUpdate from '../refreshCacheAfterAppUpdate';
-
+import refreshTokenFunction from '@tandem/api/refreshToken';
+import logout from '../logout';
 export default async () => {
   await Audio.setAudioModeAsync({playsInSilentModeIOS: true});
   const storyBooksThisWeek =
@@ -50,23 +51,28 @@ export default async () => {
     navigateTo(SCREEN_NAME.SELECT_LANGUAGE, {}, true);
     return;
   } else {
-    const response = await userProfile();
-    await refreshCacheAfterAppUpdate();
-    await initialiseRevenueCat(response?.appUserId);
-    if (response) {
-      if (response?.receivePromotionalMails === undefined) {
-        // ! if not subbed to newsletter ever.... ask user
-        setTimeout(() => {
-          store.dispatch(
-            addAlertData({
-              type: 'Message',
-              message: 'Subcribe to Tandem Newsletter?',
-              onSuccess: () => consentNewsletter(true),
-              onDestructive: () => consentNewsletter(false),
-            }),
-          );
-        }, 5000);
+    try {
+      await refreshTokenFunction();
+      const response = await userProfile();
+      await refreshCacheAfterAppUpdate();
+      await initialiseRevenueCat(response?.appUserId);
+      if (response) {
+        if (response?.receivePromotionalMails === undefined) {
+          // ! if not subbed to newsletter ever.... ask user
+          setTimeout(() => {
+            store.dispatch(
+              addAlertData({
+                type: 'Message',
+                message: 'Subcribe to Tandem Newsletter?',
+                onSuccess: () => consentNewsletter(true),
+                onDestructive: () => consentNewsletter(false),
+              }),
+            );
+          }, 5000);
+        }
       }
+    } catch (error) {
+      console.log('error in app resume', error);
     }
   }
   if (store.getState().userData.userDataObject.termsAndConditions) {
@@ -105,6 +111,12 @@ export default async () => {
     });
     navigateTo(SCREEN_NAME.ACCOUNT, {}, true);
     return;
+  } else if (
+    !store.getState().userData.userDataObject.termsAndConditions &&
+    store.getState().userData.userDataObject.userId
+  ) {
+    navigateTo(SCREEN_NAME.TERMS_AND_CONDITIONS, {}, true);
+    return;
   }
-  navigateTo(SCREEN_NAME.TERMS_AND_CONDITIONS, {}, true);
+  logout({api: false});
 };

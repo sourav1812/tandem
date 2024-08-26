@@ -48,7 +48,8 @@ export default () => {
       questionNumber={3}>
       <>
         <RNTextComponent isSemiBold style={styles.question}>
-          {translation('generate-story.included-in-story')} {currentChild.name}?
+          {translation('generate-story.included-in-story')} {currentChild?.name}
+          ?
         </RNTextComponent>
         <View
           style={[

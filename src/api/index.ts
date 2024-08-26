@@ -14,7 +14,7 @@ import logout from '@tandem/functions/logout';
 import {addGetResponse} from '@tandem/redux/slices/getResponseReducer';
 import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
 import i18n from '@tandem/constants/lang/i18n';
-import refreshToken from './refreshToken';
+import refreshTokenFunction from './refreshToken';
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
@@ -45,7 +45,7 @@ const refreshAccessToken = async () => {
     isRefreshing = true;
 
     try {
-      const {accessToken} = await refreshToken();
+      const {accessToken} = await refreshTokenFunction();
       requestQueue.forEach(resolve => resolve(accessToken));
       requestQueue.length = 0;
       isRefreshing = false;
