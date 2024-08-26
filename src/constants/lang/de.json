@@ -6,6 +6,7 @@
   "INVITATION_MESSAGE": "Hallo! Sie haben eine Einladung, sich mit {name} zu verbinden. Verwenden Sie diesen Einladungscode: {inviteCode}.",
   "QR_CODE": "QR-Code",
   "INVITE": "Einladen",
+  "TOP_UPS_AND_SUBSCRIPTIONS": "Aufladungen & Abonnements",
   "CONNECT_CONFIRMATION": "Sind Sie sicher, dass Sie sich mit {name} verbinden möchten, indem Sie den Einladungscode {inviteCode} verwenden?",
   "NO_CONNECTION_REQUESTS_FOUND": "Keine Verbindungsanforderungen gefunden",
   "CONNECTION_REQUESTS": "Verbindungsanfragen",

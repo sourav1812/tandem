@@ -6,6 +6,7 @@
   "INVITATION_MESSAGE": "Ciao! Hai un invito a connetterti con {name}. Usa questo codice di invito: {inviteCode}.",
   "QR_CODE": "Codice QR",
   "INVITE": "Invita",
+  "TOP_UPS_AND_SUBSCRIPTIONS": "Ricariche & Abbonamenti",
   "CONNECT_CONFIRMATION": "Sei sicuro di voler connetterti con {name} utilizzando il codice di invito {inviteCode}?",
   "NO_CONNECTION_REQUESTS_FOUND": "Nessuna richiesta di connessione trovata",
   "CONNECTION_REQUESTS": "Richieste di connessione",

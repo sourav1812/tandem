@@ -5,6 +5,7 @@
   "SHARE_VIA": "Paylaş via",
   "INVITATION_MESSAGE": "Merhaba! {name} ile bağlantı kurmak için bir davet aldınız. Bu davet kodunu kullanın: {inviteCode}.",
   "QR_CODE": "QR Kodu",
+  "TOP_UPS_AND_SUBSCRIPTIONS": "Yüklemeler & Abonelikler",
   "INVITE": "Davet Et",
   "CONNECT_CONFIRMATION": "{name} ile {inviteCode} davet kodunu kullanarak bağlanmak istediğinizden emin misiniz?",
   "NO_CONNECTION_REQUESTS_FOUND": "Bağlantı isteği bulunamadı",
