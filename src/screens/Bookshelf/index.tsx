@@ -30,9 +30,17 @@ import {ImageLoading} from '../PublicLib';
 import selfAnalytics from '@tandem/api/selfAnalytics';
 import {UsersAnalyticsEvents} from '@tandem/api/selfAnalytics/interface';
 import {useFocusEffect} from '@react-navigation/native';
+import {resetPermissionData} from '@tandem/redux/slices/permission.slice';
+import {useDispatch} from 'react-redux';
 
 const Bookshelf = () => {
+  const dispatch = useDispatch();
   const isTablet = useAppSelector(state => state.deviceType.isTablet);
+  const {readStoryBooks} = useAppSelector(
+    state => state.childPermission.permission,
+  );
+
+  //permissionData
   const [isImageLoading, setIsImageLoading] = React.useState(false);
   const mode = useAppSelector(state => state.mode.mode);
   const [searchText, setText] = useState<ValidationError>({value: ''});
@@ -230,6 +238,7 @@ const Bookshelf = () => {
 
   React.useEffect(() => {
     const f = async () => {
+      if (!readStoryBooks) return;
       try {
         setLoading(true);
         console.log('currentPage', page);
@@ -281,7 +290,11 @@ const Bookshelf = () => {
           <RNTextComponent style={styles.bookshelfHeaderText} isSemiBold>
             {translation('BOOKSHELF')}
           </RNTextComponent>
-          <Pressable onPress={() => navigateTo(SCREEN_NAME.ACCOUNT)}>
+          <Pressable
+            onPress={() => {
+              navigateTo(SCREEN_NAME.ACCOUNT);
+              dispatch(resetPermissionData());
+            }}>
             {mode === MODE.B && <BothButton style={styles.button} />}
             {mode === MODE.A && <BlueBotton style={styles.button} />}
             {mode === MODE.C && (

@@ -42,8 +42,10 @@ import {
 } from '@tandem/redux/slices/recordingButton.slice';
 import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
 import LearnMore from '@tandem/components/RNLearnMoreModal';
+import {useDispatch} from 'react-redux';
 
 const Story = () => {
+  const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const [menu, setMenu] = useState(false);
   const [progress, setProgress] = useState({val: 0, len: 0});
@@ -54,6 +56,10 @@ const Story = () => {
   const publicRoute: boolean = !!route?.params?.publicRoute;
   const [archive, setArchive] = useState(routeData.book.archived);
   const [learnMoreVisible, setLearnMoreVisible] = useState(false);
+
+  const {changeArchiveStatus, changePublicStatus} = useAppSelector(
+    state => state.childPermission.permission,
+  );
 
   const [publicBook, setPublicBook] = useState(
     !!routeData.book?.isPubliclyAvailable,
@@ -131,6 +137,23 @@ const Story = () => {
     f();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const hasPermission = (permissionFor: string) => {
+    const permissionGranted =
+      (permissionFor === 'public' && changePublicStatus) ||
+      (permissionFor === 'archive' && changeArchiveStatus);
+
+    if (permissionGranted) return true;
+
+    dispatch(
+      addAlertData({
+        type: 'Alert',
+        message: translation('PERMISSION_NOT_GRANTED_FOR_CONNECTED_CHILD'),
+      }),
+    );
+    return false;
+  };
+
   const menuRenderItem = React.useCallback(() => {
     return (
       <Pressable
@@ -165,6 +188,7 @@ const Story = () => {
               onValueChange={async () => {
                 // // ! api req to toogle archive and update state
                 try {
+                  if (!hasPermission('archive')) return;
                   setArchive(!archive);
                   await markBookAsArchived(routeData.book._id, !archive);
                 } catch (error) {
@@ -191,6 +215,7 @@ const Story = () => {
                 onValueChange={async () => {
                   // ! api req to toogle archive and update state
                   try {
+                    if (!hasPermission('public')) return;
                     setPublicBook(!publicBook);
                     await markBookAsPublic(routeData.book._id, !publicBook);
                   } catch (error) {

@@ -20,6 +20,7 @@ import tooltipSlice from './slices/tooltip.slice';
 import storyLevelSlice from './slices/storyLevel.slice';
 import recordingButtonSlice from './slices/recordingButton.slice';
 import revenueCat from './slices/revenueCatProduct.slice';
+import childPermission from './slices/permission.slice';
 
 export const storage = new MMKV();
 
@@ -43,6 +44,7 @@ export const appReducer = combineReducers({
   storyLevel: storyLevelSlice,
   recording: recordingButtonSlice,
   revenueCat,
+  childPermission,
 });
 
 export const reduxStorage: Storage = {

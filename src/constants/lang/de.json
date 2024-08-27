@@ -3,6 +3,7 @@
   "SCAN_QR_CODE": "Scannen Sie den QR-Code",
   "ENTER_INVITATION_CODE_OR_SCAN": "Bitte geben Sie den Einladungscode ein oder scannen Sie",
   "SHARE_VIA": "Teilen via",
+  "PERMISSION_NOT_GRANTED_FOR_CONNECTED_CHILD": "Berechtigung für verbundenes Kind nicht erteilt",
   "INVITATION_MESSAGE": "Hallo! Sie haben eine Einladung, sich mit {name} zu verbinden. Verwenden Sie diesen Einladungscode: {inviteCode}.",
   "QR_CODE": "QR-Code",
   "INVITE": "Einladen",

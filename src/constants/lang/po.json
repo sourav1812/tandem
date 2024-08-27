@@ -7,6 +7,7 @@
   "INVITATION_MESSAGE": "Olá! Você tem um convite para se conectar com {name}. Use este código de convite: {inviteCode}.",
   "QR_CODE": "Código QR",
   "INVITE": "Convidar",
+  "PERMISSION_NOT_GRANTED_FOR_CONNECTED_CHILD": "Permissão não concedida para a criança conectada",
   "TOP_UPS_AND_SUBSCRIPTIONS": "Recargas & Assinaturas",
   "CONNECT_CONFIRMATION": "Tem certeza de que deseja se conectar com {name} usando o código de convite {inviteCode}?",
   "NO_CONNECTION_REQUESTS_FOUND": "Nenhum pedido de conexão encontrado",
