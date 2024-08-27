@@ -5,7 +5,7 @@ export interface Props {
   props?: ViewProps;
   customStyle?: StyleProp<ViewStyle>;
   borderIconColor: string;
-  iconBorder?: Boolean;
+  iconBorder?: boolean;
   heading: string;
   subHeading: string | undefined;
   showIcon?: boolean;
@@ -14,5 +14,5 @@ export interface Props {
   emoji?: string;
   headingStyle?: StyleProp<TextStyle>;
   onPress?: () => void | undefined;
-  disabled?: Boolean;
+  disabled?: boolean;
 }

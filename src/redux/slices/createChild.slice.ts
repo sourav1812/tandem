@@ -11,7 +11,7 @@ export interface ChildData {
   childId: string;
   type: PEOPLE.CHILD;
   inviteCode: string;
-  connected?: Boolean;
+  connected?: boolean;
   permissions?: permissions;
 }
 

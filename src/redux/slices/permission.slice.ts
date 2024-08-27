@@ -1,11 +1,11 @@
 import {createSlice} from '@reduxjs/toolkit';
 
 export interface permissions {
-  readStoryBooks: Boolean;
-  createStoryBooks: Boolean;
-  createReadingSessions: Boolean;
-  changeArchiveStatus: Boolean;
-  changePublicStatus: Boolean;
+  readStoryBooks: boolean;
+  createStoryBooks: boolean;
+  createReadingSessions: boolean;
+  changeArchiveStatus: boolean;
+  changePublicStatus: boolean;
 }
 
 interface childPermission {
