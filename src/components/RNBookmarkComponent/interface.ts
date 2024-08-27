@@ -14,4 +14,5 @@ export interface Props {
   emoji?: string;
   headingStyle?: StyleProp<TextStyle>;
   onPress?: () => void | undefined;
+  disabled?: Boolean;
 }

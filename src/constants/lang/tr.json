@@ -7,6 +7,7 @@
   "QR_CODE": "QR Kodu",
   "TOP_UPS_AND_SUBSCRIPTIONS": "Yüklemeler & Abonelikler",
   "INVITE": "Davet Et",
+  "PERMISSION_NOT_GRANTED_FOR_CONNECTED_CHILD": "Bağlı çocuk için izin verilmedi",
   "CONNECT_CONFIRMATION": "{name} ile {inviteCode} davet kodunu kullanarak bağlanmak istediğinizden emin misiniz?",
   "NO_CONNECTION_REQUESTS_FOUND": "Bağlantı isteği bulunamadı",
   "SELECT_A_CHILD": "Bir çocuk seçin",

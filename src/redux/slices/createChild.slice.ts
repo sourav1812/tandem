@@ -1,13 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {PEOPLE} from '@tandem/constants/enums';
-
-export interface permissions {
-  readStoryBooks: Boolean;
-  createStoryBooks: Boolean;
-  createReadingSessions: Boolean;
-  changeArchiveStatus: Boolean;
-  changePublicStatus: Boolean;
-}
+import {permissions} from './permission.slice';
 
 // Define a type for the slice state
 export interface ChildData {

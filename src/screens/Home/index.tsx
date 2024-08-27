@@ -34,8 +34,12 @@ import {DIRECTION_ARROWS} from '@tandem/constants/enums';
 import WavingHand from '@tandem/assets/svg/WavingHand';
 import BlueButton from '@tandem/assets/svg/BlueButton';
 import {addAlertData} from '@tandem/redux/slices/alertBox.slice';
+import {useDispatch} from 'react-redux';
+import FastImage from 'react-native-fast-image';
+import {permissionData} from '@tandem/redux/slices/permission.slice';
 
 const Home = () => {
+  const dispatch = useDispatch();
   const portrait = useAppSelector(
     (state: RootState) => state.orientation.isPortrait,
   );
@@ -50,6 +54,10 @@ const Home = () => {
   );
   const avatars = useAppSelector(state => state.cache.avatars);
   const user = useAppSelector(state => state.userData.userDataObject);
+  const {createStoryBooks} = useAppSelector(
+    state => state.childPermission.permission,
+  );
+
   const filePath = avatars.filter(obj => obj.path === currentChild?.avatar)[0];
   const navigation: any = useNavigation();
   const refOne = useRef<any>(null);
@@ -67,8 +75,8 @@ const Home = () => {
       title: translation('WRITE_A_STORY'),
       emoji: '🖊️',
     },
-    {color: themeColor.purple, title: "I can't decide"},
-    {color: themeColor.green, title: 'Have fun'},
+    {color: themeColor.purple, title: translation('I_CANT_DECIDE')},
+    {color: themeColor.green, title: translation('HAVE_FUN')},
   ];
 
   const modeBC: {color: string; title: string; emoji?: string}[] = [
@@ -225,6 +233,19 @@ const Home = () => {
     value: 0,
     fromLayout: false,
   });
+
+  const hasPermission = () => {
+    if (createStoryBooks) return true;
+    dispatch(
+      addAlertData({
+        type: 'Alert',
+        message: translation('PERMISSION_NOT_GRANTED_FOR_CONNECTED_CHILD'),
+        // possibleResolution: "data.possibleResolution",
+      }),
+    );
+    return false;
+  };
+
   return (
     <>
       <Pressable
@@ -523,6 +544,7 @@ const Home = () => {
                       marginTop: verticalScale(24),
                       ...(!portrait && styles.cardPortrait),
                     }}
+                    disabled={index === 0 && !createStoryBooks}
                     borderIconColor={item.color}
                     showIcon={index == 0}
                     // large={index === 0}
@@ -532,6 +554,7 @@ const Home = () => {
                     emoji={item.emoji}
                     onPress={() => {
                       if (index === 0) {
+                        if (!hasPermission()) return;
                         store.dispatch(clearStoryGenerationResponse());
                         navigateTo(SCREEN_NAME.STORY_LANGAUGE);
                         return;
@@ -561,6 +584,7 @@ const Home = () => {
                         marginTop: verticalScale(24),
                         ...(!portrait && styles.cardPortrait),
                       }}
+                      disabled={index === 0 && !createStoryBooks}
                       borderIconColor={item.color}
                       iconBorder={index === 2}
                       showIcon={index <= 2}
@@ -588,6 +612,7 @@ const Home = () => {
                       emoji={item.emoji}
                       onPress={() => {
                         if (index === 0) {
+                          if (!hasPermission()) return;
                           store.dispatch(clearStoryGenerationResponse());
                           navigateTo(SCREEN_NAME.STORY_LANGAUGE);
                           return;
@@ -698,6 +723,13 @@ const ChangeChild = ({
     }).start();
   });
 
+  const handleChangeChild = () => {
+    dispatch(saveCurrentChild(userProfile));
+    toggleDrawer({changeUser: !changeUser});
+
+    dispatch(permissionData(userProfile.permissions));
+  };
+
   return (
     <Animated.View
       style={[
@@ -706,15 +738,13 @@ const ChangeChild = ({
         },
         styles.changeChildWrapper,
       ]}>
-      <Pressable
-        onPress={() => {
-          dispatch(saveCurrentChild(userProfile));
-          toggleDrawer({changeUser: !changeUser});
-        }}
-        style={{alignItems: 'center'}}>
-        <Image
+      <Pressable onPress={handleChangeChild} style={{alignItems: 'center'}}>
+        <FastImage
           style={styles.changeChildImage}
-          source={{uri: filePath?.file || userProfile?.avatar}}
+          source={{
+            uri: filePath?.file || userProfile?.avatar,
+            priority: FastImage.priority.high,
+          }}
         />
         <RNTextComponent
           style={{

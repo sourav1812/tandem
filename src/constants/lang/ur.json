@@ -6,6 +6,7 @@
   "INVITATION_MESSAGE": "ہیلو! آپ کو {name} کے ساتھ جڑنے کی دعوت ملی ہے۔ اس دعوتی کوڈ کا استعمال کریں: {inviteCode}.",
   "QR_CODE": "QR کوڈ",
   "INVITE": "مدعو کریں",
+  "PERMISSION_NOT_GRANTED_FOR_CONNECTED_CHILD": "متصل بچے کے لیے اجازت نہیں دی گئی",
   "CONNECT_CONFIRMATION": "کیا آپ واقعی {name} سے کنیکٹ ہونا چاہتے ہیں اس دعوتی کوڈ {inviteCode} کے ساتھ؟",
   "NO_CONNECTION_REQUESTS_FOUND": "کوئی کنکشن کی درخواست نہیں ملی",
   "SELECT_A_CHILD": "ایک بچہ منتخب کریں",

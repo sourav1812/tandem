@@ -39,6 +39,7 @@ import logout from '@tandem/functions/logout';
 import {DIRECTION_ARROWS, PEOPLE} from '@tandem/constants/enums';
 import {changeTooltipStateIfChildListNotEmpty} from '@tandem/redux/slices/tooltip.slice';
 import pushChildStats from '@tandem/functions/pushChildStats';
+import {permissionData} from '@tandem/redux/slices/permission.slice';
 // import {changeTooltipState} from '@tandem/redux/slices/tooltip.slice';
 
 const Account = () => {
@@ -226,16 +227,20 @@ const Account = () => {
       dispatch(changeMode(MODE.B));
       dispatch(saveCurrentAdult(currentAdult));
       dispatch(saveCurrentChild(currentChild));
+      dispatch(permissionData(currentChild.permissions));
     } else if (
       playerList.filter(item => item.type === PEOPLE.CHILD).length > 0
     ) {
       dispatch(changeMode(MODE.C));
       dispatch(saveCurrentChild(currentChild));
+      dispatch(permissionData(currentChild.permissions));
     } else if (
       playerList.filter(item => item.type === PEOPLE.ADULT).length > 0
     ) {
       dispatch(changeMode(MODE.A));
       dispatch(saveCurrentAdult(currentAdult));
+      const defaultChild = childList.find(it => !it.connected);
+      dispatch(saveCurrentChild(defaultChild));
       if (currentChild) {
         dispatch(saveCurrentChild(childList[0]));
       }

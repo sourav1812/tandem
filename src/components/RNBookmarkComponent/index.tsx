@@ -17,6 +17,7 @@ import {translation} from '@tandem/utils/methods';
 
 const RNBookmarkComponent = ({
   props,
+  disabled,
   customStyle,
   borderIconColor,
   iconBorder,
@@ -45,6 +46,7 @@ const RNBookmarkComponent = ({
       onLongPress={runAnimation}>
       <Animated.View
         style={[
+          {opacity: disabled ? 0.5 : 1},
           styles.container,
           {transform: [{scale: scaleButton}]},
           {...(borderIconColor && {borderColor: borderIconColor})},
