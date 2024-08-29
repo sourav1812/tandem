@@ -63,7 +63,7 @@ import {
 } from '@tandem/screens/GenerateStory/interface';
 import RedQuestionMark from '@tandem/assets/svg/storySvg/RedQuestionMark.svg';
 import {translation} from '@tandem/utils/methods';
-import {BASE_URL, VERSIONS} from '@tandem/constants/api';
+import {BASE_URL, IMAGE_BASE_URL, VERSIONS} from '@tandem/constants/api';
 
 import Ayran from '@tandem/assets/svg/storySvg/ayran.svg';
 import Baklava from '@tandem/assets/svg/storySvg/baklava.svg';
@@ -119,8 +119,13 @@ import SO_tractor from '@tandem/assets/speech_objects/SO_tractor.mp3';
 import SO_watermelon from '@tandem/assets/speech_objects/SO_watermelon.mp3';
 import SO_wheelchair from '@tandem/assets/speech_objects/SO_wheelchair.mp3';
 import SO_wind_turbine from '@tandem/assets/speech_objects/SO_wind_turbine.mp3';
+import {IMAGE_FOLDERS} from '../enums';
 
-const BASE_URL_V1 = BASE_URL + VERSIONS.v1;
+// const BASE_URL_V1 = BASE_URL + VERSIONS.v1;
+const BASE_URL_V1 = IMAGE_BASE_URL;
+
+const IMAGE_PRIVATE_KEY =
+  '?sp=r&st=2024-08-28T08:26:47Z&se=2029-12-31T16:26:47Z&spr=https&sv=2022-11-02&sr=c&sig=OG7jToDgakKvlM9sX6Fj84usWCV2WlGNhgi2xSvvHuY%3D';
 
 export const shuffle = (originalArray: any) => {
   let array = originalArray;
@@ -355,19 +360,34 @@ export const ATTRIBUTE: PlaceType[] = [
 export const ILLUSTRATION = [
   {
     name: 'Candidate 1',
-    url: BASE_URL_V1 + 'images/whatHappensNew/question_mark.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.WHAT_HAPPENS}/question_mark.webp` +
+      IMAGE_PRIVATE_KEY,
   },
   {
     name: 'Candidate 2',
-    url: BASE_URL_V1 + 'images/whatHappensNew/question_mark.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.WHAT_HAPPENS}/question_mark.webp` +
+      IMAGE_PRIVATE_KEY,
+    // url: BASE_URL_V1 + 'images/whatHappensNew/question_mark.webp',
   },
   {
     name: 'pixar',
-    url: BASE_URL_V1 + 'images/illustration-styles/pixar.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.ILLUSTRATION_STYLES}/pixar.webp` +
+      IMAGE_PRIVATE_KEY,
+    // url: BASE_URL_V1 + 'images/illustration-styles/pixar.webp',
   },
   {
     name: 'low-poly',
-    url: BASE_URL_V1 + 'images/illustration-styles/low_poly.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.ILLUSTRATION_STYLES}/low_poly.webp` +
+      IMAGE_PRIVATE_KEY,
+    // url: BASE_URL_V1 + 'images/illustration-styles/low_poly.webp',
   },
   // {
   //   name: 'style1-papercut',
@@ -413,80 +433,131 @@ export const COLOR_PALETTE = [
 ];
 
 export const AVATAR_ARRAY = [...new Array(29).keys()].map(
-  key => BASE_URL_V1 + `images/avatars/avatar${key + 1}.webp`,
+  key =>
+    BASE_URL_V1 +
+    `images/${IMAGE_FOLDERS.AVATARS}/avatar${key + 1}.webp` +
+    IMAGE_PRIVATE_KEY,
 );
 
 export const PLACE: OnlyImageType[] = [
   {
     name: 'In Outer Space',
-    url: BASE_URL_V1 + 'images/locations/outer_space.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.LOCATIONS}/outer_space.webp` +
+      IMAGE_PRIVATE_KEY,
   },
   {
     name: 'At a Campsite',
-    url: BASE_URL_V1 + 'images/locations/camping_in_tents.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.LOCATIONS}/camping_in_tents.webp` +
+      IMAGE_PRIVATE_KEY,
   },
   {
     name: 'In a Bustling City',
-    url: BASE_URL_V1 + 'images/locations/city.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.LOCATIONS}/city.webp` +
+      IMAGE_PRIVATE_KEY,
   },
   {
     name: 'In a Dark Forest',
-    url: BASE_URL_V1 + 'images/locations/dark_forest.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.LOCATIONS}/dark_forest.webp` +
+      IMAGE_PRIVATE_KEY,
   },
   {
     name: 'At a Noisy Fairground',
-    url: BASE_URL_V1 + 'images/locations/fair_ground.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.LOCATIONS}/fair_ground.webp` +
+      IMAGE_PRIVATE_KEY,
   },
   {
     name: 'On a Busy farmyard',
-    url: BASE_URL_V1 + 'images/locations/farm_yard.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.LOCATIONS}/farm_yard.webp` +
+      IMAGE_PRIVATE_KEY,
   },
   {
     name: 'In the Mountains',
-    url: BASE_URL_V1 + 'images/locations/snowy_mountain.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.LOCATIONS}/snowy_mountain.webp` +
+      IMAGE_PRIVATE_KEY,
   },
   {
     name: 'On a Desert Island',
-    url: BASE_URL_V1 + 'images/locations/sunny_beach.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.LOCATIONS}/sunny_beach.webp` +
+      IMAGE_PRIVATE_KEY,
   },
   {
     name: 'At the Park',
-    url: BASE_URL_V1 + 'images/locations/playground.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.LOCATIONS}/playground.webp` +
+      IMAGE_PRIVATE_KEY,
   },
   {
     name: 'In a Castle',
-    url: BASE_URL_V1 + 'images/locations/castle.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.LOCATIONS}/castle.webp` +
+      IMAGE_PRIVATE_KEY,
   },
   {
     name: 'In a Magic Tree',
-    url: BASE_URL_V1 + 'images/locations/magic_tree.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.LOCATIONS}/magic_tree.webp` +
+      IMAGE_PRIVATE_KEY,
   },
 ];
 
 export const WHO: OnlyImageType[] = [
   {
     name: 'Astronaut',
-    url: BASE_URL_V1 + 'images/who/astronaut.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.WHO}/astronaut.webp` +
+      IMAGE_PRIVATE_KEY,
   },
   // {
   //   name: 'Boy Who Plays The Drums',
-  //   url: BASE_URL_V1 + 'images/who/boy_who_plays_the_drums.webp',
+  //   url: BASE_URL_V1 + `images/${IMAGE_FOLDERS.WHO}/boy_who_plays_the_drums.webp` + IMAGE_PRIVATE_KEY,
   // },
   {
     name: 'Bunny Rabbit',
-    url: BASE_URL_V1 + 'images/who/bunny_rabbit.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.WHO}/bunny_rabbit.webp` +
+      IMAGE_PRIVATE_KEY,
   },
   {
     name: 'Cute Dinosaur',
-    url: BASE_URL_V1 + 'images/who/cute_dinosaur.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.WHO}/cute_dinosaur.webp` +
+      IMAGE_PRIVATE_KEY,
   },
   {
     name: 'Cute Duckling',
-    url: BASE_URL_V1 + 'images/who/cute_duckling.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.WHO}/cute_duckling.webp` +
+      IMAGE_PRIVATE_KEY,
   },
   {
     name: 'Cute Kitten',
-    url: BASE_URL_V1 + 'images/who/cute_kitten.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.WHO}/cute_kitten.webp` +
+      IMAGE_PRIVATE_KEY,
   },
   // {
   //   name: 'Sea Monster',
@@ -506,150 +577,245 @@ export const WHO: OnlyImageType[] = [
   // },
   {
     name: 'Female Runner',
-    url: BASE_URL_V1 + 'images/who/female_runner.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.WHO}/female_runner.webp` +
+      IMAGE_PRIVATE_KEY,
   },
   {
     name: 'Fisherman',
-    url: BASE_URL_V1 + 'images/who/fisherman.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.WHO}/fisherman.webp` +
+      IMAGE_PRIVATE_KEY,
   },
   {
     name: 'Happy Yeti',
-    url: BASE_URL_V1 + 'images/who/happy_yeti.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.WHO}/happy_yeti.webp` +
+      IMAGE_PRIVATE_KEY,
   },
   {
     name: 'Mad Professor',
-    url: BASE_URL_V1 + 'images/who/mad_professor.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.WHO}/mad_professor.webp` +
+      IMAGE_PRIVATE_KEY,
   },
   {
     name: 'Male Runner',
-    url: BASE_URL_V1 + 'images/who/male_runner.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.WHO}/male_runner.webp` +
+      IMAGE_PRIVATE_KEY,
   },
   {
     name: 'Pet Dog',
-    url: BASE_URL_V1 + 'images/who/pet_dog.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.WHO}/pet_dog.webp` +
+      IMAGE_PRIVATE_KEY,
   },
   {
     name: 'Policeman',
-    url: BASE_URL_V1 + 'images/who/policeman.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.WHO}/policeman.webp` +
+      IMAGE_PRIVATE_KEY,
   },
   {
     name: 'Racing Cyclist',
-    url: BASE_URL_V1 + 'images/who/racing_cyclist.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.WHO}/racing_cyclist.webp` +
+      IMAGE_PRIVATE_KEY,
   },
   // {
   //   name: 'Safari Animals',
-  //   url: BASE_URL_V1 + 'images/who/safari_animals.webp',
+  //   url: BASE_URL_V1 + `images/${IMAGE_FOLDERS.WHO}/safari_animals.webp` + IMAGE_PRIVATE_KEY,
   // },
   {
     name: 'Boy',
-    url: BASE_URL_V1 + 'images/who/boy.webp',
+    url:
+      BASE_URL_V1 + `images/${IMAGE_FOLDERS.WHO}/boy.webp` + IMAGE_PRIVATE_KEY,
   },
   {
     name: 'Girl',
-    url: BASE_URL_V1 + 'images/who/girl.webp',
+    url:
+      BASE_URL_V1 + `images/${IMAGE_FOLDERS.WHO}/girl.webp` + IMAGE_PRIVATE_KEY,
   },
   {
     name: 'Pony',
-    url: BASE_URL_V1 + 'images/who/pony.webp',
+    url:
+      BASE_URL_V1 + `images/${IMAGE_FOLDERS.WHO}/pony.webp` + IMAGE_PRIVATE_KEY,
   },
   {
     name: 'Flamingo',
-    url: BASE_URL_V1 + 'images/who/flamingo.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.WHO}/flamingo.webp` +
+      IMAGE_PRIVATE_KEY,
   },
   {
     name: 'Male dancer',
-    url: BASE_URL_V1 + 'images/who/male_dancer.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.WHO}/male_dancer.webp` +
+      IMAGE_PRIVATE_KEY,
   },
   {
     name: 'Female dancer',
-    url: BASE_URL_V1 + 'images/who/female_dancer.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.WHO}/female_dancer.webp` +
+      IMAGE_PRIVATE_KEY,
   },
   {
     name: 'Male singer',
-    url: BASE_URL_V1 + 'images/who/male_singer.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.WHO}/male_singer.webp` +
+      IMAGE_PRIVATE_KEY,
   },
   {
     name: 'Female singer',
-    url: BASE_URL_V1 + 'images/who/female_singer.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.WHO}/female_singer.webp` +
+      IMAGE_PRIVATE_KEY,
   },
   {
     name: 'Sheep',
-    url: BASE_URL_V1 + 'images/who/sheep.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.WHO}/sheep.webp` +
+      IMAGE_PRIVATE_KEY,
   },
   {
     name: 'Cow',
-    url: BASE_URL_V1 + 'images/who/cow.webp',
+    url:
+      BASE_URL_V1 + `images/${IMAGE_FOLDERS.WHO}/cow.webp` + IMAGE_PRIVATE_KEY,
   },
   {
     name: 'Pig',
-    url: BASE_URL_V1 + 'images/who/pig.webp',
+    url:
+      BASE_URL_V1 + `images/${IMAGE_FOLDERS.WHO}/pig.webp` + IMAGE_PRIVATE_KEY,
   },
   {
     name: 'Chicken',
-    url: BASE_URL_V1 + 'images/who/chicken.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.WHO}/chicken.webp` +
+      IMAGE_PRIVATE_KEY,
   },
   {
     name: 'Giraffe',
-    url: BASE_URL_V1 + 'images/who/giraffe.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.WHO}/giraffe.webp` +
+      IMAGE_PRIVATE_KEY,
   },
   {
     name: 'Elephant',
-    url: BASE_URL_V1 + 'images/who/elephant.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.WHO}/elephant.webp` +
+      IMAGE_PRIVATE_KEY,
   },
   {
     name: 'Lion',
-    url: BASE_URL_V1 + 'images/who/lion.webp',
+    url:
+      BASE_URL_V1 + `images/${IMAGE_FOLDERS.WHO}/lion.webp` + IMAGE_PRIVATE_KEY,
   },
   {
     name: 'Meerkat',
-    url: BASE_URL_V1 + 'images/who/meerkat.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.WHO}/meerkat.webp` +
+      IMAGE_PRIVATE_KEY,
   },
   {
     name: 'Train',
-    url: BASE_URL_V1 + 'images/who/train.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.WHO}/train.webp` +
+      IMAGE_PRIVATE_KEY,
   },
   {
     name: 'Digger',
-    url: BASE_URL_V1 + 'images/who/digger.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.WHO}/digger.webp` +
+      IMAGE_PRIVATE_KEY,
   },
   {
     name: 'Tandem bicycle',
-    url: BASE_URL_V1 + 'images/who/tandem_bicycle.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.WHO}/tandem_bicycle.webp` +
+      IMAGE_PRIVATE_KEY,
   },
   {
     name: 'Snowman',
-    url: BASE_URL_V1 + 'images/who/snowman.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.WHO}/snowman.webp` +
+      IMAGE_PRIVATE_KEY,
   },
   {
     name: 'Doctor',
-    url: BASE_URL_V1 + 'images/who/doctor.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.WHO}/doctor.webp` +
+      IMAGE_PRIVATE_KEY,
   },
   {
     name: 'Tractor',
-    url: BASE_URL_V1 + 'images/who/tractor.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.WHO}/tractor.webp` +
+      IMAGE_PRIVATE_KEY,
   },
 ];
 
 export const WHAT_HAPPENS: OnlyImageType[] = [
   {
     name: 'An adventure',
-    url: BASE_URL_V1 + 'images/whatHappensNew/adventure.webp',
+    // url: BASE_URL_V1 + 'images/whatHappensNew/adventure.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.WHAT_HAPPENS}/adventure.webp` +
+      IMAGE_PRIVATE_KEY,
   },
   {
     name: 'Makes you laugh',
-    url: BASE_URL_V1 + 'images/whatHappensNew/laugh.webp',
+    // url: BASE_URL_V1 + 'images/whatHappensNew/laugh.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.WHAT_HAPPENS}/laugh.webp` +
+      IMAGE_PRIVATE_KEY,
   },
   {
     name: 'Move, dance, sing or be silly',
-    url: BASE_URL_V1 + 'images/whatHappensNew/move.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.WHAT_HAPPENS}/move.webp` +
+      IMAGE_PRIVATE_KEY,
   },
   {
     name: 'Bedtime story',
-    url: BASE_URL_V1 + 'images/whatHappensNew/sleep.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.WHAT_HAPPENS}/sleep.webp` +
+      IMAGE_PRIVATE_KEY,
   },
   {
     name: 'A story about things',
-    url: BASE_URL_V1 + 'images/whatHappensNew/stuff.webp',
+    url:
+      BASE_URL_V1 +
+      `images/${IMAGE_FOLDERS.WHAT_HAPPENS}/stuff.webp` +
+      IMAGE_PRIVATE_KEY,
   },
 ];
 

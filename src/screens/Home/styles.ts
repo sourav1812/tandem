@@ -64,7 +64,7 @@ export const styles = StyleSheet.create({
   },
   tooltipUserWrapper: {
     height: verticalScale(89),
-    width: verticalScale(89),
+    width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'visible',
@@ -79,7 +79,7 @@ export const styles = StyleSheet.create({
   tooltipUserName: {
     marginTop: 5,
     position: 'absolute',
-    bottom: -verticalScale(10),
+    bottom: -verticalScale(14),
     fontSize: verticalScale(16),
   },
   curveViewHeaderWrapper: {

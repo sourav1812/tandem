@@ -265,17 +265,22 @@ const Account = () => {
           <RNButton onlyIcon icon={<Logout />} onClick={toggleSignOut} />
         </View>
       </View>
-      <RNTextComponent
-        isSemiBold
-        style={[
-          styles.heading,
-          {
-            marginTop: portrait ? verticalScale(30) : 0,
-          },
-          isTablet ? {fontSize: 24} : {fontSize: verticalScale(20)},
-        ]}>
-        {translation('WHO_IS_USING_THE_APP_NEXT')}
-      </RNTextComponent>
+      <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+        <RNTextComponent
+          isSemiBold
+          style={[
+            styles.heading,
+            {
+              marginTop: portrait ? verticalScale(30) : 0,
+              flex: 1,
+              flexWrap: 'wrap',
+            },
+            isTablet ? {fontSize: 24} : {fontSize: verticalScale(20)},
+          ]}>
+          {translation('WHO_IS_USING_THE_APP_NEXT')}
+        </RNTextComponent>
+      </View>
+
       <View style={[styles.content]}>
         <View
           style={[

@@ -36,6 +36,7 @@ export const styles = StyleSheet.create({
     height: verticalScale(200),
     justifyContent: 'flex-start',
     flexDirection: 'column',
+    paddingTop: 16,
   },
   button: {
     marginBottom: '5%',

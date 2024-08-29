@@ -21,6 +21,9 @@ const RobotBuildingBook = () => {
     state => state.activityIndicator.progressRef,
   );
   const [soundState, setSoundState] = useState<Audio.Sound | undefined>();
+  const {readStoryBooks} = useAppSelector(
+    state => state.childPermission.permission,
+  );
 
   React.useEffect(() => {
     const f = async () => {
@@ -72,6 +75,10 @@ const RobotBuildingBook = () => {
           <RNButton
             pressableStyle={styles.button}
             onClick={() => {
+              if (!readStoryBooks) {
+                navigateTo(SCREEN_NAME.HOME);
+                return;
+              }
               navigateTo(SCREEN_NAME.MATCHING_PAIRS);
               selfAnalytics({
                 eventType: UsersAnalyticsEvents.SEND_TO_ROBOT,

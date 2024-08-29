@@ -1,6 +1,7 @@
 {
   "CONNECTION_REQUESTS": "Demandes de connexion",
   "SCAN_QR_CODE": "Scannez le code QR",
+  "ABOUT_US": "À propos de nous",
   "PERMISSION_NOT_GRANTED_FOR_CONNECTED_CHILD": "Autorisation non accordée pour l'enfant connecté",
   "ENTER_INVITATION_CODE_OR_SCAN": "Veuillez entrer le code d'invitation ou scanner",
   "SHARE_VIA": "Partager via",

@@ -14,7 +14,7 @@ const AboutApp = () => {
       <RNLogoHeader
         customStyle={styles.header}
         textHeading
-        heading={'About Us'}
+        heading={translation('ABOUT_US')}
       />
       <ScrollView
         style={{height: '100%', width: '100%'}}

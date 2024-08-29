@@ -70,6 +70,8 @@ export const SELECTED_ENVIRONMENT = ENVIRONMENT.TESTING;
 // ! URLs
 export const BASE_URL = ENV_VARS[SELECTED_ENVIRONMENT].API_URL;
 
+export const IMAGE_BASE_URL = 'https://tandemappassets.blob.core.windows.net/';
+
 export const PEXELS_API_KEY =
   'EX5cnNzfNvWCwgBYmgPwZzLAR7KX1CMnj1bDHJEHljQk2bEA2lh8oPc5';
 

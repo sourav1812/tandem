@@ -54,6 +54,14 @@ export enum RATING_INFO {
   V = '__V',
 }
 
+export enum IMAGE_FOLDERS {
+  WHO = 'who',
+  WHAT_HAPPENS = 'whatHappens',
+  LOCATIONS = 'locations',
+  ILLUSTRATION_STYLES = 'illustrationStyles',
+  AVATARS = 'avatars',
+}
+
 export enum PEOPLE {
   ADULT = 'adult',
   CHILD = 'child',
