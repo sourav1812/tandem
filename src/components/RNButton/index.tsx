@@ -164,7 +164,8 @@ const RNButton = ({
             IconButtoncustomStyle && IconButtoncustomStyle,
           ]}
           {...props}
-          onPress={onClick}>
+          onPressIn={handlePressIn}
+          onPress={handlePress}>
           {isButtonDisabled && pressed ? (
             <ActivityIndicator
               color={
